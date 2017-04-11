@@ -1,4 +1,3 @@
-prova
 # Project Template - Prova Finale (Ingegneria del Software)
 PROVA DI MODIFICA by gmpal2
 ## Project Setup
