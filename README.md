@@ -6,11 +6,11 @@ In order to set up your project, follow these steps
 Using the git command line client for your OS, type the following commands:
 ```bash
  # clone the repo on your current folder, naming the remote as 'template'
- git clone https://github.com/deib-polimi/prova-finale-template --origin template
+ git clone https://github.com/deib-polimi/prova-finale-template --origin template (o git clone https://github.com/gmpal/Lorenzo-il-Magnifico)
  # move to the cloned repo
  cd prova-finale-template/
  # add your repository as 'origin' (default) remote
- git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO_NAME
+ git remote add origin https://github.com/gmpal/Lorenzo-il-Magnifico
  # push the template project to your github repository, setting 
  git push --set-upstream origin master
  # alternatively, if you already have some content in your repo (e.g., a README)
