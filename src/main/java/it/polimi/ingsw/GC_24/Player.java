@@ -6,7 +6,7 @@ public class Player {
 	private FamilyMember[] myFamily;
 	private PersonalBoard myBoard; 
 	//per il momento è un array di Values
-	private Value[] myValues;
+	private Values[] myValues;
 
 	private PlayerColour myColour;
 	
