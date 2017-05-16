@@ -2,19 +2,19 @@ package it.polimi.ingsw.GC_24.values;
 
 public class Value {
 
-	private int value;
+	private int quantity;
 
-	public int getValue() {
-		return value;
+	public int getQuantity() {
+		return quantity;
 	}
 
-	public void setValue(int value) {
-		this.value = value;
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 	
 	//costruttore
-	public Value(int value){
-		this.value=value;
+	public Value(int quantity){
+		this.quantity=quantity;
 	}
 
 	

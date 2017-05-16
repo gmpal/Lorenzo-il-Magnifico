@@ -10,17 +10,20 @@ public class SetOfValues {
 	private MilitaryPoint militaryPoints;
 	private VictoryPoint victoryPoints;
 	
+
 	
 	//costruttore
 	public SetOfValues (int numplayer){
-		this.woods.setValue(3);
-		this.stones.setValue(3);
-		this.servants.setValue(3);
-		this.coins.setValue(4+numplayer);
-		this.faithPoints.setValue(0);
-		this.militaryPoints.setValue(0);
-		this.victoryPoints.setValue(0);
+		this.woods.setQuantity(3);
+		this.stones.setQuantity(3);
+		this.servants.setQuantity(3);
+		this.coins.setQuantity(4+numplayer);
+		this.faithPoints.setQuantity(0);
+		this.militaryPoints.setQuantity(0);
+		this.victoryPoints.setQuantity(0);
 	}
+	
+	
 	
 	//getters and setters
 	public Wood getWoods() {
@@ -66,6 +69,6 @@ public class SetOfValues {
 		this.victoryPoints = victoryPoints;
 	} 
 	
-	
+
 	
 }
