@@ -7,6 +7,7 @@ public class Player {
 	private PersonalBoard myBoard; 
 	//per il momento è un array di Values
 	private Value[] myValues;
+
 	private PlayerColour myColour;
 	
 	
@@ -38,11 +39,11 @@ public class Player {
 		this.myBoard = myBoard;
 	}
 
-	public value[] getMyValues() {
+	public Values[] getMyValues() {
 		return myValues;
 	}
 
-	public void setMyValues(value[] myValues) {
+	public void setMyValues(Values[] myValues) {
 		this.myValues = myValues;
 	}
 
