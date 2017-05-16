@@ -11,6 +11,10 @@ public class Value {
 	public void setValue(int value) {
 		this.value = value;
 	}
+	//costruttore
+	public Value(int value){
+		this.value=value;
+	}
 
 	
 
