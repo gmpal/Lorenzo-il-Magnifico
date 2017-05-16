@@ -3,10 +3,10 @@ package it.polimi.ingsw.GC_24;
 public class Player {
 	
 	private String myName;
-	private FamilyMembers[] myFamily;
+	private FamilyMember[] myFamily;
 	private PersonalBoard myBoard; 
 	//per il momento è un array di Values
-	private value[] myValues;
+	private Values[] myValues;
 	private PlayerColour myColour;
 	
 	
@@ -22,11 +22,11 @@ public class Player {
 		this.myName = myName;
 	}
 
-	public FamilyMembers[] getMyFamily() {
+	public FamilyMember[] getMyFamily() {
 		return myFamily;
 	}
 
-	public void setMyFamily(FamilyMembers[] myFamily) {
+	public void setMyFamily(FamilyMember[] myFamily) {
 		this.myFamily = myFamily;
 	}
 
@@ -38,11 +38,11 @@ public class Player {
 		this.myBoard = myBoard;
 	}
 
-	public value[] getMyValues() {
+	public Values[] getMyValues() {
 		return myValues;
 	}
 
-	public void setMyValues(value[] myValues) {
+	public void setMyValues(Values[] myValues) {
 		this.myValues = myValues;
 	}
 
