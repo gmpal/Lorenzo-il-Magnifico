@@ -1,4 +1,4 @@
-package it.polimi.ingsw.GC_24;
+﻿package it.polimi.ingsw.GC_24;
 
 public class Player {
 	
@@ -7,6 +7,7 @@ public class Player {
 	private PersonalBoard myBoard; 
 	private SetOfValues myValues;
 	private PlayerColour mycolour;
+
 	
 	
 	
@@ -52,6 +53,7 @@ public class Player {
 	public void setMycolour(PlayerColour mycolour) {
 		this.mycolour = mycolour;
 	}
+}
 	
 	
 }
