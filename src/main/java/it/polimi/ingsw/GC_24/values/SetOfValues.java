@@ -1,6 +1,4 @@
-package it.polimi.ingsw.GC_24;
-
-import it.polimi.ingsw.GC_24.ciao.Coin;
+package it.polimi.ingsw.GC_24.values;
 
 public class SetOfValues {
 
