@@ -6,7 +6,6 @@ import it.polimi.ingsw.GC_24.values.Wood;
 public class Main {
 	public static void main(String[] args) {
 	SetOfValues insieme = new SetOfValues();
-	Wood legno = new Wood(5);
-	insieme.setWoods(legno);
+	Wood legno = new Wood();
 	System.out.println(insieme.getWoods().getValue());}
 }
