@@ -5,6 +5,7 @@ import it.polimi.ingsw.GC_24.values.SetOfValues;
 public class Player {
 	
 	private String myName;
+	
 	private FamilyMember[] myFamily;
 	private PersonalBoard myBoard; 
 	private SetOfValues myValues;
