@@ -17,7 +17,7 @@ public class Value {
 	public Value(int quantity){
 		this.quantity=quantity;
 	}
-
+}
 	
 
 	
