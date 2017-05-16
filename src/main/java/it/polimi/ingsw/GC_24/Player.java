@@ -5,9 +5,8 @@ public class Player {
 	private String myName;
 	private FamilyMember[] myFamily;
 	private PersonalBoard myBoard; 
-	//per il momento è un array di Values
-	private Values[] myValues;
-	private PlayerColour myColour;
+	private SetOfValues myValues;
+	private PlayerColour mycolour;
 	
 	
 	
@@ -38,22 +37,24 @@ public class Player {
 		this.myBoard = myBoard;
 	}
 
-	public Values[] getMyValues() {
+	public SetOfValues getMyValues() {
 		return myValues;
 	}
 
-	public void setMyValues(Values[] myValues) {
+	public void setMyValues(SetOfValues myValues) {
 		this.myValues = myValues;
 	}
 
-	public PlayerColour getMyColour() {
-		return myColour;
+	public PlayerColour getMycolour() {
+		return mycolour;
 	}
 
-	public void setMyColour(PlayerColour myColour) {
-		this.myColour = myColour;
+	public void setMycolour(PlayerColour mycolour) {
+		this.mycolour = mycolour;
 	}
 	
+	
+}
 	
 	
 	
