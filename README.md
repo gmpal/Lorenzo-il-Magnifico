@@ -1,5 +1,7 @@
 # Project Template - Prova Finale (Ingegneria del Software)
-PROVA DI MODIFICA by gmpal2.0 --> modificanelmaster2
+
+PROVA DI MODIFICA
+
 ## Project Setup
 In order to set up your project, follow these steps
 ### Clone and push the template to your repo
