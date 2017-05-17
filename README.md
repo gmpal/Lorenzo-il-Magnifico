@@ -1,4 +1,4 @@
-# Project Template - Prova Finale (Ingegneria del Software)
+Project Template - Prova Finale (Ingegneria del Software)
 PROVA DI MODIFICA by gmpal2.0 --> modificanelmaster2
 ## Project Setup
 In order to set up your project, follow these steps
