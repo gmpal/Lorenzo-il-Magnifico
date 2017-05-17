@@ -14,9 +14,16 @@ public class Player {
 	
 	
 	
+	//useful methods
+/*	
+	public Player givePlayerfromColour(PlayerColour colour){
+		if (this.getMycolour()==colour){
+			return this.Player;
+		}
+	}
+*/
 	
 	//getters and setters
-	
 	public String getMyName() {
 		return myName;
 	}
