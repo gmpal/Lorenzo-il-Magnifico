@@ -8,6 +8,7 @@ public class MarketPlace extends Place {
 
 	private Value extraResource;
 	private Effect privilegeEffect;
+	private ArrayList(Coin coins) portafoglio = new Arraylist(); 
 	
 	//new constructor
 /*	public MarketPlace(int position){

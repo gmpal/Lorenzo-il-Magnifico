@@ -12,6 +12,10 @@ public class Value {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
+	
+	public void addQuantity(int quantity) {
+		this.quantity += quantity;
+	}
 
 	//costruttore
 	public Value(int quantity){
@@ -22,4 +26,4 @@ public class Value {
 
 	
 
-}
+

@@ -6,9 +6,15 @@ import it.polimi.ingsw.GC_24.cards.*;
 public class PersonalBoard {
 	
 	protected PlayerColour player; 
-	protected ArrayList cards = new ArrayList();
+	protected ArrayList<Card> cards;
+	
+	public PersonalBoard(PlayerColour player){
+		this.player=player;
+		this.cards= new ArrayList<Card>();
+	}
 	
 	public void setCards(Development card){
+		this.cards.add(card);
 	}
 
 }
