@@ -6,7 +6,7 @@ public class Buildings extends Development{
 	
 	public void setCardOnPersonalBoard(PersonalBuildings personalBuildings){
 		
-		personalBuildings.set(this);
+		personalBuildings.setCards(this);
 		
 	}
 
