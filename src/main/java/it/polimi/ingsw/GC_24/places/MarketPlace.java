@@ -10,9 +10,10 @@ public class MarketPlace extends Place {
 	private Effect privilegeEffect;
 	
 	//new constructor
-	public MarketPlace(int position){
+/*	public MarketPlace(int position){
 		this.costDice=1;
 		if(position == 1){this.extraResource= new Coin(5);  }
 		
 	}
+*/
 }
