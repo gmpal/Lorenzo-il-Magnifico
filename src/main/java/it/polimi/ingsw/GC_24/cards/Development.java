@@ -33,8 +33,6 @@ public class Development extends Card{
 	
 	
 	public void setCardOnPersonalBoard(PersonalBoard personalBoard){
-		
-		
 	}
 
 }
