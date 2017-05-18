@@ -1,6 +1,6 @@
 package it.polimi.ingsw.GC_24.values;
 
-public class Value {
+public abstract class Value {
 
 	protected int quantity;
 
@@ -23,7 +23,7 @@ public class Value {
 		this.quantity += quantity;
 	}
 
-	//adds a specific value to a paramenter setofvalues
+    //adds a specific value to a paramenter setofvalues
 	public SetOfValues addValueToSet(SetOfValues values){
 		return values;		//redefined in subclasses
 	}
