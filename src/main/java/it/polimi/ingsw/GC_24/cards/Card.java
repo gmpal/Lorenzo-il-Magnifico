@@ -14,5 +14,44 @@ public class Card {
 		this.specialEffect = speceff;
 	}
 
+	//getters and setters
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public boolean isPermanentEffect() {
+		return permanentEffect;
+	}
+
+	public void setPermanentEffect(boolean permanentEffect) {
+		this.permanentEffect = permanentEffect;
+	}
+
+	public boolean isImmediateEffect() {
+		return immediateEffect;
+	}
+
+	public void setImmediateEffect(boolean immediateEffect) {
+		this.immediateEffect = immediateEffect;
+	}
+
+	public boolean isSpecialEffect() {
+		return specialEffect;
+	}
+
+	public void setSpecialEffect(boolean specialEffect) {
+		this.specialEffect = specialEffect;
+	}
+	
+	//toString method
+	@Override
+	public String toString() {
+		return "Card [name=" + name + ", permanentEffect=" + permanentEffect + ", immediateEffect=" + immediateEffect
+				+ ", specialEffect=" + specialEffect + "]";
+	}
 	
 }

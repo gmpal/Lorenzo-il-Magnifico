@@ -7,16 +7,24 @@ import it.polimi.ingsw.GC_24.values.*;
 
 public class Main {
 	public static void main(String[] args) {
-
-
-public class Main {
-	public static void main(String[] args) {
-		Wood w2= new Wood(3);
-	SetOfValues insieme = new SetOfValues(1);
-	Wood w1=new Wood(6);
-	
-	w1.addValueToSet(insieme);
-
-	System.out.println(insieme.getWoods().getQuantity());
+		
+		PersonalBoard myboard = new PersonalBoard();
+		myboard.setPlayerColour(null);
+		
+		Buildings myBuilding = new Buildings("ciao", false, false, false, null);
+		Characters myCharacter = new Characters("bau", false, false, false, null);
+		Buildings myBuilding2 = new Buildings("miap", false, false, false, null);
+		
+		//myboard.getPersonalBuildings().setCards(5);		
+		System.out.print(myBuilding.getName());
+	//	myBuilding.setCardOnPersonalBoard(PersonalBoard myboard);
+		//myBuilding2.setCardOnPersonalBoard(myboard.getPersonalBuildings());
+		myCharacter.setCardOnPersonalBoard(myboard);
+		
+		
+		System.out.print(myboard.getPersonalBuildings().getCards().toString()+"\n");
+		System.out.print(myboard.getPersonalCharacters().getCards().toString());
+		
+		
 	}
 }

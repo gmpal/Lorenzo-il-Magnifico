@@ -1,6 +1,7 @@
 package it.polimi.ingsw.GC_24.cards;
 
-import it.polimi.ingsw.GC_24.PersonalBuildings;
+import it.polimi.ingsw.GC_24.PersonalBoard;
+import it.polimi.ingsw.GC_24.PersonalCards;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 
 public class Buildings extends Development{
@@ -10,8 +11,9 @@ public class Buildings extends Development{
 		// TODO Auto-generated constructor stub
 	}
 
-	public void setCardOnPersonalBoard(PersonalBuildings personalBuildings){
-		personalBuildings.setCards(this);
+	@Override
+	public void setCardOnPersonalBoard(PersonalBoard personalBoard){
+		personalBoard.getPersonalBuildings().setCards(this);
 	}
 
 }
