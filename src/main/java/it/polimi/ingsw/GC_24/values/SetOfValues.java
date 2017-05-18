@@ -14,21 +14,32 @@ public class SetOfValues {
 	
 	//costruttore
 	public SetOfValues (int numplayer){
-		this.woods.setQuantity(3);
-		this.stones.setQuantity(3);
-		this.servants.setQuantity(3);
-		this.coins.setQuantity(4+numplayer);
-		this.faithPoints.setQuantity(0);
-		this.militaryPoints.setQuantity(0);
-		this.victoryPoints.setQuantity(0);
+		this.woods = new Wood(3);
+		this.stones = new Stone(3);
+		this.servants = new Servant(3);
+		this.coins = new Coin(4+numplayer);
+		this.faithPoints = new FaithPoint(0);
+		this.militaryPoints = new MilitaryPoint(0);
+		this.victoryPoints = new VictoryPoint(0);
 	}
 	
-	
+	//toString
+	@Override
+	public String toString() {
+		return "[woods=" + woods.getQuantity() + 
+				", stones=" + stones.getQuantity() + 
+				", coins=" + coins.getQuantity() + 
+				", servants=" + servants.getQuantity()+ 
+				", faithPoints=" + faithPoints.getQuantity() + 
+				", militaryPoints=" + militaryPoints.getQuantity() + 
+				", victoryPoints=" + victoryPoints.getQuantity() + "]\n\n";
+	}
 	
 	//getters and setters
 	public Wood getWoods() {
 		return woods;
 	}
+	
 	
 	public void setWoods(Wood woods) {
 		this.woods = woods;
