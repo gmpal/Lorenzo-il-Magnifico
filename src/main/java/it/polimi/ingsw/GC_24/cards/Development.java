@@ -11,11 +11,19 @@ public class Development extends Card{
 	//private PermanentEffect permanentEffect;
 	private int round;
 	
+	//constructor
+	
+	public Development(String name, boolean permeff, boolean immeff, boolean speceff, SetOfValues cost) {
+		super(name, permeff, immeff, speceff);
+		this.cost = cost;
+		// TODO Auto-generated constructor stub
+	}
 	
 	//getter and setters
 	public SetOfValues getCost() {
 		return cost;
 	}
+
 	public void setCost(SetOfValues cost) {
 		this.cost = cost;
 	}
