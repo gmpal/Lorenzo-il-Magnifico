@@ -7,5 +7,4 @@ public class PersonalCharacters extends PersonalBoard{
 		super(player);
 		// TODO Auto-generated constructor stub
 	}
-
 }
