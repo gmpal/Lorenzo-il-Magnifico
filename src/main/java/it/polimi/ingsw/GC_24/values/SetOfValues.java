@@ -23,6 +23,7 @@ public class SetOfValues {
 		this.victoryPoints = new VictoryPoint(0);
 	}
 	
+
 	//toString
 	@Override
 	public String toString() {
@@ -35,6 +36,8 @@ public class SetOfValues {
 				", victoryPoints=" + victoryPoints.getQuantity() + "]\n\n";
 	}
 	
+
+
 	//getters and setters
 	public Wood getWoods() {
 		return woods;
@@ -93,6 +96,16 @@ public class SetOfValues {
 		this.victoryPoints = victoryPoints;
 	} 
 	
-
+	//method to sum two sets of values
+	public SetOfValues addTwoSetsOfValues(SetOfValues v){
+		v.setCoins(new Coin(this.coins.getQuantity() + v.getCoins().getQuantity()));
+		v.setWoods(new Wood(this.woods.getQuantity() + v.getWoods().getQuantity()));
+		v.setStones(new Stone(this.stones.getQuantity() + v.getStones().getQuantity()));
+		v.setServants(new Servant(this.servants.getQuantity() + v.getServants().getQuantity()));
+		v.setFaithPoints(new FaithPoint(this.faithPoints.getQuantity() + v.getFaithPoints().getQuantity()));
+		v.setMilitaryPoints(new MilitaryPoint(this.militaryPoints.getQuantity() + v.getMilitaryPoints().getQuantity()));
+		v.setVictoryPoints(new VictoryPoint(this.victoryPoints.getQuantity() + v.getVictoryPoints().getQuantity()));
+		return v;	
+	}
 	
 }

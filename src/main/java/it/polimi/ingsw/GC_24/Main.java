@@ -7,6 +7,7 @@ import it.polimi.ingsw.GC_24.values.*;
 
 public class Main {
 	public static void main(String[] args) {
+//Gianmarco main
 					
 			Player giocatore1 = new Player ("Marco", 1, null,null,null,null);
 			Player giocatore2 = new Player ("Luca", 2, null,null,null,null);
@@ -31,5 +32,26 @@ public class Main {
 			System.out.println("Risorse di " + giocatore3 + " :"+giocatore3.getMyValues());
 			System.out.println(famiglia4);
 			System.out.println("Risorse di " + giocatore4 + " :"+giocatore4.getMyValues());
+//Giorgia main
+		
+		PersonalBoard myboard = new PersonalBoard();
+		myboard.setPlayerColour(null);
+		
+		Buildings myBuilding = new Buildings("ciao", false, false, false, null);
+		Characters myCharacter = new Characters("bau", false, false, false, null);
+		Buildings myBuilding2 = new Buildings("miap", false, false, false, null);
+		
+		//myboard.getPersonalBuildings().setCards(5);		
+		System.out.print(myBuilding.getName());
+	//	myBuilding.setCardOnPersonalBoard(PersonalBoard myboard);
+		//myBuilding2.setCardOnPersonalBoard(myboard.getPersonalBuildings());
+		myCharacter.setCardOnPersonalBoard(myboard);
+		
+		
+		System.out.print(myboard.getPersonalBuildings().getCards().toString()+"\n");
+		System.out.print(myboard.getPersonalCharacters().getCards().toString());
+		
+		
+
 	}
 }

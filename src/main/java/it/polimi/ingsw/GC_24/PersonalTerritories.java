@@ -1,7 +1,7 @@
 package it.polimi.ingsw.GC_24;
 
 
-public class PersonalTerritories extends PersonalBoard{
+public class PersonalTerritories extends PersonalCards{
 	
 	public PersonalTerritories(PlayerColour player) {
 		super(player);

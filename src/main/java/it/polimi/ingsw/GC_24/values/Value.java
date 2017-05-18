@@ -3,6 +3,11 @@ package it.polimi.ingsw.GC_24.values;
 public abstract class Value {
 
 	protected int quantity;
+	
+	//constructor
+	public Value(int quantity){
+		this.quantity=quantity;
+	}
 
 
 	//useful methods
@@ -16,7 +21,8 @@ public abstract class Value {
 	}
 	
 	
-	//getters and setters 
+	//getter and setter
+
 	public int getQuantity() {
 		return quantity;
 	}
@@ -25,9 +31,4 @@ public abstract class Value {
 		this.quantity = quantity;
 	}
 	
-	
-	//costruttore
-	public Value(int quantity){
-		this.quantity=quantity;
-	}
 }

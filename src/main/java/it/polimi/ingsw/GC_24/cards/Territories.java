@@ -1,6 +1,7 @@
 package it.polimi.ingsw.GC_24.cards;
 
-import it.polimi.ingsw.GC_24.PersonalTerritories;
+import it.polimi.ingsw.GC_24.PersonalBoard;
+import it.polimi.ingsw.GC_24.PersonalCards;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 
 public class Territories extends Development{
@@ -10,7 +11,7 @@ public class Territories extends Development{
 		// TODO Auto-generated constructor stub
 	}
 	
-	public void setCardOnPersonalBoard(PersonalTerritories personalTerritories){
-		personalTerritories.setCards(this);
+	public void setCardOnPersonalBoard(PersonalBoard personalBoard){
+		personalBoard.getPersonalTerritories().setCards(this);
 	}
 }
