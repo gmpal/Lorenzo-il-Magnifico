@@ -14,6 +14,6 @@ public class TowerPlaceCharacters extends TowerPlace {
 	
 	@Override
 	public void takeWithoutPlacing(){
-		this.correspondingCard.setCardOnPersonalBoard(this.getFamMemberOnPlace().getPlayer().getPersonalBoard());
+		this.correspondingCard.setCardOnPersonalBoard(this.getFamMemberOnPlace().getPlayer().getMyBoard());
 	}
 }

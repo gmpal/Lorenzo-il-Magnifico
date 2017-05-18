@@ -19,7 +19,8 @@ public class HarvestPlace extends Place{
 	}
 	
 	public void doHarvest(){
-		this.famMemberOnPlace.getPlayer().getMyBoard().getMyBonusTile().giveHarvestValue();
+		Player player=this.famMemberOnPlace.getPlayer();
+		player.getMyBoard().getBonusTile().giveHarvestValues(player.getMyValues());
 	}
 }
 	

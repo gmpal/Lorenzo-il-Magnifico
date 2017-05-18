@@ -1,5 +1,6 @@
 package it.polimi.ingsw.GC_24.places;
 
+import it.polimi.ingsw.GC_24.Player;
 import it.polimi.ingsw.GC_24.values.Value;
 
 public class ProductionPlace extends Place{
@@ -16,6 +17,7 @@ public class ProductionPlace extends Place{
 	}
 		
 	public void doProduction(){
-		this.famMemberOnPlace.getPlayer().getMyBoard().getMyBonusTile().giveProductionValues();
+		Player player=this.famMemberOnPlace.getPlayer();
+		player.getMyBoard().getBonusTile().giveProductiontValues(player.getMyValues());
 	}
 }
