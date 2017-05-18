@@ -6,5 +6,11 @@ public class Servant extends Value {
 		super(value);
 		// TODO Auto-generated constructor stub
 	}
+	
+	@Override
+	public SetOfValues addValueToSet(SetOfValues values){
+		values.setServants(new Servant(values.getServants().getQuantity()+this.getQuantity()));
+		return values;
+	} 
 
 }

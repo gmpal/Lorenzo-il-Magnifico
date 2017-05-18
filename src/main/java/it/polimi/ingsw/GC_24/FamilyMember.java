@@ -34,6 +34,8 @@ public class FamilyMember {
 		this.playerColour = playerColour;
 	}
 	
+	public Player
+	
 	
 	
 }

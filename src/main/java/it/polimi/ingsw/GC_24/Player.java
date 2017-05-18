@@ -1,6 +1,8 @@
 ﻿package it.polimi.ingsw.GC_24;
 
+import it.polimi.ingsw.GC_24.places.Place;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
+import it.polimi.ingsw.GC_24.values.Value;
 
 public class Player {
 	
@@ -9,7 +11,7 @@ public class Player {
 	private FamilyMember[] myFamily;
 	private PersonalBoard myBoard; 
 	private SetOfValues myValues;
-	private PlayerColour mycolour;
+	private PlayerColour myColour;
 
 	
 	
@@ -65,11 +67,21 @@ public class Player {
 	}
 
 	public PlayerColour getMycolour() {
-		return mycolour;
+		return myColour;
 	}
 
 	public void setMycolour(PlayerColour mycolour) {
-		this.mycolour = mycolour;
+		this.myColour = mycolour;
+	}
+	
+	public SetOfValues getMyValuesFromColour(PlayerColour playerColour) {
+		if(this.myColour.equals(playerColour));
+		return myValues;
+	}
+	
+	public void takeValuesFromPlace(Place place){
+		Value value = place.getValues();
+		this.myValues=value.addValueToSet(this.myValues);
 	}
 }
 	

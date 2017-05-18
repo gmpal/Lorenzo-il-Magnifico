@@ -6,5 +6,10 @@ public class VictoryPoint extends Value {
 		super(value);
 		// TODO Auto-generated constructor stub
 	}
-
+	
+	@Override
+	public SetOfValues addValueToSet(SetOfValues values){
+		values.setVictoryPoints(new VictoryPoint(values.getVictoryPoints().getQuantity()+this.getQuantity()));
+		return values;
+	}
 }

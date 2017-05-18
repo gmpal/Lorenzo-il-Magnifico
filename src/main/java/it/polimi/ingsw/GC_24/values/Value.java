@@ -2,7 +2,7 @@ package it.polimi.ingsw.GC_24.values;
 
 public class Value {
 
-	private int quantity;
+	protected int quantity;
 
 
 	public int getQuantity() {
@@ -17,9 +17,8 @@ public class Value {
 	public Value(int quantity){
 		this.quantity=quantity;
 	}
-}
 	
-
-	
-
+	public SetOfValues addValueToSet(SetOfValues values){
+		return values;		//redefined in subclasses
+	}
 }
