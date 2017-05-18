@@ -6,5 +6,11 @@ public class Coin extends Value {
 		super(value);
 		// TODO Auto-generated constructor stub
 	}
+	
+	@Override
+	public SetOfValues addValueToSet(SetOfValues values){
+		values.setCoins(new Coin(values.getCoins().getQuantity()+this.getQuantity()));
+		return values;
+	}
 
 }

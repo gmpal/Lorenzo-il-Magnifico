@@ -6,5 +6,11 @@ public class FaithPoint extends Value {
 		super(value);
 		// TODO Auto-generated constructor stub
 	}
+	
+	@Override
+	public SetOfValues addValueToSet(SetOfValues values){
+		values.setFaithPoints(new FaithPoint(values.getFaithPoints().getQuantity()+this.getQuantity()));
+		return values;
+	}
 
 }

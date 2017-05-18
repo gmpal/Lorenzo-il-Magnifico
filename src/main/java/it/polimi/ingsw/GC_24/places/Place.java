@@ -27,12 +27,7 @@ public class Place {
 		this.famMemberOnPlace = null;
 	}
 	
-	//gives the Value to the player
-/*	public void giveValues(){
-		PlayerColour colour = this.famMemberOnPlace.getPlayerColour();
-		Player player = 
-	}
-*/	
+	
 	//getters and setters
 	public int getCostDice() {
 		return costDice;
