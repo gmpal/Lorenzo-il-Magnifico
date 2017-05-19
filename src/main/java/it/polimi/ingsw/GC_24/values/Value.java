@@ -1,15 +1,28 @@
 package it.polimi.ingsw.GC_24.values;
 
-public class Value {
+public abstract class Value {
 
 	protected int quantity;
-
+	
 	//constructor
 	public Value(int quantity){
 		this.quantity=quantity;
 	}
+
+
+	//useful methods
+	
+	//adds a single value to a set
+	public abstract SetOfValues addValueToSet(SetOfValues values);
+	
+	//adds quantity to a single value
+	public void addQuantity(int quantity) {
+		this.quantity += quantity;
+	}
+	
 	
 	//getter and setter
+
 	public int getQuantity() {
 		return quantity;
 	}
@@ -18,13 +31,4 @@ public class Value {
 		this.quantity = quantity;
 	}
 	
-	//adds a parameter quantity to the object's quantity 
-	public void addQuantity(int quantity) {
-		this.quantity += quantity;
-	}
-
-	//adds a specific value to a paramenter setofvalues
-	public SetOfValues addValueToSet(SetOfValues values){
-		return values;		//redefined in subclasses
-	}
 }

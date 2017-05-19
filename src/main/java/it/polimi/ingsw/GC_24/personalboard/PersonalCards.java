@@ -1,6 +1,8 @@
-package it.polimi.ingsw.GC_24;
+package it.polimi.ingsw.GC_24.personalboard;
 
 import java.util.ArrayList;
+
+import it.polimi.ingsw.GC_24.PlayerColour;
 import it.polimi.ingsw.GC_24.cards.*;
 
 public abstract class PersonalCards {

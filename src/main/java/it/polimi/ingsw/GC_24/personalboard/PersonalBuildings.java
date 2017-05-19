@@ -1,6 +1,7 @@
-package it.polimi.ingsw.GC_24;
+package it.polimi.ingsw.GC_24.personalboard;
 
 
+import it.polimi.ingsw.GC_24.PlayerColour;
 import it.polimi.ingsw.GC_24.cards.Buildings;
 
 public class PersonalBuildings extends PersonalCards{

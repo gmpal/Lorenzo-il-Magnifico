@@ -1,5 +1,6 @@
 ﻿package it.polimi.ingsw.GC_24;
 
+import it.polimi.ingsw.GC_24.personalboard.PersonalBoard;
 import it.polimi.ingsw.GC_24.places.Place;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 import it.polimi.ingsw.GC_24.values.Value;
@@ -8,23 +9,43 @@ public class Player {
 	
 	private String myName;
 	private int myNumber;
-	private FamilyMember[] myFamily;
+	private Family myFamily;
 	private PersonalBoard myBoard; 
 	private SetOfValues myValues;
 	private PlayerColour myColour;
 
 	
-	
+	//AUTO-GENERATED contructor, NEEDS TO BE CORRECTED
+	public Player(String myName, int myNumber, Family myFamily, PersonalBoard myBoard, SetOfValues myValues,
+			PlayerColour myColour) {
+		this.myName = myName;
+		this.myNumber = myNumber;
+		this.myFamily = myFamily;
+		this.myBoard = myBoard;
+		this.myValues = new SetOfValues(myNumber);
+		this.myColour = myColour;
+	}
 	
 	//useful methods
-/*	
-	public Player givePlayerfromColour(PlayerColour colour){
-		if (this.getMycolour()==colour){
-			return this.Player;
-		}
-	}
-*/
 	
+	public SetOfValues getMyValuesFromColour(PlayerColour playerColour) {
+		if(this.myColour.equals(playerColour));
+		return myValues;
+	}
+	
+	public void takeValuesFromPlace(Place place){
+		Value value = place.getValues();
+		this.myValues=value.addValueToSet(this.myValues);
+	}
+	
+	//Prints name and number of a Player
+	@Override
+	public String toString() {
+		return myName + ", player "+ myNumber;
+	}
+		
+	
+
 	//getters and setters
 	public String getMyName() {
 		return myName;
@@ -42,12 +63,20 @@ public class Player {
 		this.myNumber = myNumber;
 	}
 
-	public FamilyMember[] getMyFamily() {
+	 public Family getMyFamily() {
 		return myFamily;
 	}
 
-	public void setMyFamily(FamilyMember[] myFamily) {
+	public void setMyFamily(Family myFamily) {
 		this.myFamily = myFamily;
+	}
+
+	public PlayerColour getMyColour() {
+		return myColour;
+	}
+
+	public void setMyColour(PlayerColour myColour) {
+		this.myColour = myColour;
 	}
 
 	public PersonalBoard getMyBoard() {
@@ -74,15 +103,6 @@ public class Player {
 		this.myColour = mycolour;
 	}
 	
-	public SetOfValues getMyValuesFromColour(PlayerColour playerColour) {
-		if(this.myColour.equals(playerColour));
-		return myValues;
-	}
-	
-	public void takeValuesFromPlace(Place place){
-		Value value = place.getValues();
-		this.myValues=value.addValueToSet(this.myValues);
-	}
 }
 	
 	

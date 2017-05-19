@@ -2,10 +2,9 @@ package it.polimi.ingsw.GC_24.places;
 
 import it.polimi.ingsw.GC_24.FamilyMember;
 import it.polimi.ingsw.GC_24.Player;
-import it.polimi.ingsw.GC_24.PlayerColour;
 import it.polimi.ingsw.GC_24.values.Value;
 
-public class Place {
+public abstract class Place {
 	
 	protected int costDice; 
 	protected boolean available;
@@ -55,7 +54,8 @@ public class Place {
 	
 	public void setValues(Value values) {
 		this.value = values;
-	} 
+	}
 	
+	public abstract void giveEffects(); //redefined in MarketPlace, Tower, CouncilPlace change parameter in Familymember
 	
 }
