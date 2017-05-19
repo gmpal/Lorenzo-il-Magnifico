@@ -10,13 +10,12 @@ public class PersonalBoard {
 	private PersonalTerritories personalTerritories;
 	private PersonalCharacters personalCharacters;
 	private Player player;
-	private PlayerColour playerColour;
 	private BonusTile mybonusTile;
 	
 	//constructor
 	public PersonalBoard(){
 		this.personalBuildings = new PersonalBuildings(player.getMyColour());
-		this.personalVentures = new PersonalVentures(playerColour);
+		this.personalVentures = new PersonalVentures(player.getMyColour());
 		this.personalTerritories = new PersonalTerritories(player.getMyColour());
 		this.personalCharacters = new PersonalCharacters(player.getMyColour());
 	}
