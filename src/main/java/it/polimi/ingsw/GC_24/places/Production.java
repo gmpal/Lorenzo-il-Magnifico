@@ -8,6 +8,12 @@ public class Production {
 	public Production() {
 		this.productionPlaces = new ArrayList<ProductionPlace>();
 	}
+	
+	public void clearPlaces(){
+		for(ProductionPlace productionPlace:this.productionPlaces){
+			productionPlace.clearPlace();
+		}
+	}
 
 	public ArrayList<ProductionPlace> getProductionPlaces() {
 		return productionPlaces;
@@ -16,5 +22,7 @@ public class Production {
 	public void setProductionPlaces(ArrayList<ProductionPlace> productionPlaces) {
 		this.productionPlaces = productionPlaces;
 	}
+	
+	
 }
 

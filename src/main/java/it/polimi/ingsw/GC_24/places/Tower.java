@@ -19,6 +19,22 @@ public class Tower {
 		}
 		return false;
 	}
+
+	public void clearPlaces(){
+		for(TowerPlace towerPlace:this.tower){
+			towerPlace.clearPlace();
+		}
+	}
+	
+	public ArrayList<TowerPlace> getTower() {
+		return tower;
+	}
+
+	public void setTower(ArrayList<TowerPlace> tower) {
+		this.tower = tower;
+	}
+	
+	
 }
 
 

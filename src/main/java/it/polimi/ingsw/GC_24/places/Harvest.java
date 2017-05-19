@@ -8,6 +8,12 @@ public class Harvest {
 	public Harvest() {
 		this.harvestPlaces = new ArrayList<HarvestPlace>();
 	}
+	
+	public void clearPlaces(){
+		for(HarvestPlace harvestPlace:this.harvestPlaces){
+			harvestPlace.clearPlace();
+		}
+	}
 
 	public ArrayList<HarvestPlace> getHarvestPlaces() {
 		return harvestPlaces;

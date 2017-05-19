@@ -30,10 +30,17 @@ public class Board {
 		if(numPlayer< maxNumPlayerToLock)return true;
 		else return false;
 	}
-	
+		
 	public void clear(){
 		//dealCardsOnTower
-		//setFamOnPlace(null)
+		this.towerTerritories.clearPlaces();
+		this.towerCharacters.clearPlaces();
+		this.towerBuildings.clearPlaces();
+		this.towerVentures.clearPlaces();
+		this.harvest.clearPlaces();
+		this.production.clearPlaces();
+		this.market.clearPlaces();
+		this.councilPalace.clearPlaces();
 	}
 
 	public int getGameID() {

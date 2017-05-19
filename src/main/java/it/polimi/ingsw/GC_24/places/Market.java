@@ -8,6 +8,12 @@ public class Market {
 	public Market() {
 		this.marketPlaces = new ArrayList<MarketPlace>();
 	}
+	
+	public void clearPlaces(){
+		for(MarketPlace marketplace:this.marketPlaces){
+			marketplace.clearPlace();
+		}
+	}
 
 	public ArrayList<MarketPlace> getMarketPlaces() {
 		return marketPlaces;
