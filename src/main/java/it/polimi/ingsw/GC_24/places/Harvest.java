@@ -2,6 +2,8 @@ package it.polimi.ingsw.GC_24.places;
 
 import java.util.ArrayList;
 
+import it.polimi.ingsw.GC_24.PlayerColour;
+
 public class Harvest {
 	private ArrayList<HarvestPlace> harvestPlaces;
 
@@ -13,6 +15,15 @@ public class Harvest {
 		for(HarvestPlace harvestPlace:this.harvestPlaces){
 			harvestPlace.clearPlace();
 		}
+	}
+	
+	public boolean isThereSameColour(PlayerColour playerColour){
+		for(HarvestPlace harvestPlace:this.harvestPlaces){
+			if(harvestPlace.getFamMemberOnPlace().getMemberColour().equals(playerColour)){
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public ArrayList<HarvestPlace> getHarvestPlaces() {

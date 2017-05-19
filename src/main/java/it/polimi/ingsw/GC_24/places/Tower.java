@@ -19,6 +19,15 @@ public class Tower {
 		}
 		return false;
 	}
+	
+	public boolean isTowerFree(){
+		for(TowerPlace towerPlace:this.tower){
+			if(!(towerPlace.getFamMemberOnPlace().equals(null))){
+				return false;
+			}
+		}
+		return true;
+	}
 
 	public void clearPlaces(){
 		for(TowerPlace towerPlace:this.tower){
