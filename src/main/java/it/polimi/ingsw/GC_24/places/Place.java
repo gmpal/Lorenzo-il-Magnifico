@@ -27,6 +27,8 @@ public abstract class Place {
 	}
 	
 	
+	
+	
 	//getters and setters
 	public int getCostDice() {
 		return costDice;

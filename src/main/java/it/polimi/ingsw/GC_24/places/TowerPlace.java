@@ -11,6 +11,7 @@ public abstract class TowerPlace extends Place {
 	
 	public abstract void takeWithoutPlacing();
 	
+	@Override
 	public void giveEffects(){
 		Player player=this.famMemberOnPlace.getPlayer();
 		player.setMyValues(this.value.addValueToSet(player.getMyValues())); 
