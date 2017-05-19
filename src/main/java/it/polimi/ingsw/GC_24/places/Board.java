@@ -3,7 +3,7 @@ package it.polimi.ingsw.GC_24.places;
 import it.polimi.ingsw.GC_24.board.Towers;
 
 public class Board {
-	private static final int maxNumPlayerToLock==3; 
+	private static final int maxNumPlayerToLock =3; 
 	private int gameID;
 	private int numPlayer;
 	private Towers towers;
@@ -15,7 +15,8 @@ public class Board {
 	public Board(int gameID, int numPlayer, Towers towers, Harvest harvest, Production production, Market market,
 			CouncilPanel concilPane) {
 		super();
-		this.gameID = gameID;
+		this.gameID = gameID;gianmarco@gianmarco-acer:~/Lorenzo-il-Magnifico$ 
+
 		this.numPlayer = numPlayer;
 		this.towers = towers;
 		this.harvest = harvest;

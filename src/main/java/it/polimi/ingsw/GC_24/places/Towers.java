@@ -15,6 +15,7 @@ public class Towers {
 		this.towerVentures = new ArrayList<TowerPlaceVentures>();
 	}
 
+	//getters and setters 
 	public ArrayList<TowerPlaceTerritories> getTowerTerritories() {
 		return towerTerritories;
 	}
