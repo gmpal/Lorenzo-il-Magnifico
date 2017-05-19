@@ -1,4 +1,4 @@
-package it.polimi.ingsw.GC_24;
+package it.polimi.ingsw.GC_24.personalboard;
 
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.GC_24;
 
 import it.polimi.ingsw.GC_24.cards.*;
+import it.polimi.ingsw.GC_24.personalboard.PersonalBoard;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 import it.polimi.ingsw.GC_24.values.Wood;
 import it.polimi.ingsw.GC_24.values.*;

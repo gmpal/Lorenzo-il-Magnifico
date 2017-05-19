@@ -1,7 +1,7 @@
 package it.polimi.ingsw.GC_24.cards;
 
-import it.polimi.ingsw.GC_24.PersonalBoard;
-import it.polimi.ingsw.GC_24.PersonalCards;
+import it.polimi.ingsw.GC_24.personalboard.PersonalBoard;
+import it.polimi.ingsw.GC_24.personalboard.PersonalCards;
 import it.polimi.ingsw.GC_24.values.MilitaryPoint;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 

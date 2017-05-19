@@ -1,4 +1,7 @@
-package it.polimi.ingsw.GC_24;
+package it.polimi.ingsw.GC_24.personalboard;
+
+import it.polimi.ingsw.GC_24.Player;
+import it.polimi.ingsw.GC_24.PlayerColour;
 
 public class PersonalBoard {
 	
@@ -6,15 +9,16 @@ public class PersonalBoard {
 	private PersonalVentures personalVentures;
 	private PersonalTerritories personalTerritories;
 	private PersonalCharacters personalCharacters;
-	private PlayerColour playerColour; 
+	private Player player;
+	private PlayerColour playerColour;
 	private BonusTile mybonusTile;
 	
 	//constructor
 	public PersonalBoard(){
-		this.personalBuildings = new PersonalBuildings(playerColour);
+		this.personalBuildings = new PersonalBuildings(player.getMyColour());
 		this.personalVentures = new PersonalVentures(playerColour);
-		this.personalTerritories = new PersonalTerritories(playerColour);
-		this.personalCharacters = new PersonalCharacters(playerColour);
+		this.personalTerritories = new PersonalTerritories(player.getMyColour());
+		this.personalCharacters = new PersonalCharacters(player.getMyColour());
 	}
 	
 	//getters and setters
@@ -50,12 +54,12 @@ public class PersonalBoard {
 		this.personalCharacters = personalCharacters;
 	}
 
-	public PlayerColour getPlayerColour() {
-		return playerColour;
+	public Player getPlayer() {
+		return player;
 	}
 
-	public void setPlayerColour(PlayerColour playerColour) {
-		this.playerColour = playerColour;
+	public void setPlayer(Player player) {
+		this.player = player;
 	}
 
 	public BonusTile getBonusTile() {

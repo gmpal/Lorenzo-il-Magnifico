@@ -1,8 +1,8 @@
 package it.polimi.ingsw.GC_24.places;
 
 import it.polimi.ingsw.GC_24.FamilyMember;
-import it.polimi.ingsw.GC_24.PersonalBoard;
 import it.polimi.ingsw.GC_24.Player;
+import it.polimi.ingsw.GC_24.personalboard.PersonalBoard;
 import it.polimi.ingsw.GC_24.values.Value;
 
 public class HarvestPlace extends Place{
