@@ -38,7 +38,7 @@ public class SetOfValues {
 	
 
 
-	//getters and setters
+	//getters and setters	
 	public Wood getWoods() {
 		return woods;
 	}

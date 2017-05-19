@@ -4,7 +4,7 @@ import it.polimi.ingsw.GC_24.personalboard.PersonalBoard;
 import it.polimi.ingsw.GC_24.personalboard.PersonalCards;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 
-public class Development extends Card{
+public abstract class Development extends Card{
 	
 	private SetOfValues cost;
 	private String type;
@@ -42,7 +42,6 @@ public class Development extends Card{
 	}
 	
 	//add the card to the right arraylist on the personal board
-	public void setCardOnPersonalBoard(PersonalBoard personalBoard){
-	} // redefined in every subclass
+	public abstract void setCardOnPersonalBoard(PersonalBoard personalBoard); // redefined in every subclass
 
 }

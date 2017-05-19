@@ -1,5 +1,7 @@
 package it.polimi.ingsw.GC_24.values;
 
+import it.polimi.ingsw.GC_24.Player;
+
 public class Servant extends Value {
 
 	public Servant(int value) {
@@ -13,4 +15,8 @@ public class Servant extends Value {
 		return values;
 	} 
 
+	@Override
+	public Value FindValueInPlayer(Player player){
+		return player.getMyValues().getServants();
+	}
 }
