@@ -1,13 +1,14 @@
 package it.polimi.ingsw.GC_24;
 
 import it.polimi.ingsw.GC_24.cards.*;
-import it.polimi.ingsw.GC_24.personalboard.PersonalBoard;
+import it.polimi.ingsw.GC_24.PersonalBoard;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 import it.polimi.ingsw.GC_24.values.Wood;
 import it.polimi.ingsw.GC_24.values.*;
 
 public class Main {
 	public static void main(String[] args) {
+		//commento
 //Gianmarco main
 					
 			Player giocatore1 = new Player ("Marco", 1, null,null,null,null);
@@ -48,7 +49,8 @@ public class Main {
 	//	myBuilding.setCardOnPersonalBoard(PersonalBoard myboard);
 		//myBuilding2.setCardOnPersonalBoard(myboard.getPersonalBuildings());
 		myCharacter.setCardOnPersonalBoard(myboard);
-		
+		//	myBuilding.setCardOnPersonalBoard(PersonalBoard myboard);
+
 		
 		System.out.print(myboard.getPersonalBuildings().getCards().toString()+"\n");
 		System.out.print(myboard.getPersonalCharacters().getCards().toString());
