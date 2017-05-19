@@ -1,6 +1,5 @@
-package it.polimi.ingsw.GC_24.personalboard;
+package it.polimi.ingsw.GC_24.effects;
 
-import it.polimi.ingsw.GC_24.effects.Moltiplication;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 import it.polimi.ingsw.GC_24.values.Value;
 import java.util.*;

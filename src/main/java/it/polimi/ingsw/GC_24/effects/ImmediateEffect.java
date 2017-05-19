@@ -2,7 +2,7 @@ package it.polimi.ingsw.GC_24.effects;
 
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 
-public class ImmediateEffect extends Effect{
+public abstract class ImmediateEffect extends Effect{
 	
 	private SetOfValues effectValues;
 	

@@ -4,7 +4,7 @@ import it.polimi.ingsw.GC_24.personalboard.PersonalBoard;
 import it.polimi.ingsw.GC_24.personalboard.PersonalCards;
 import it.polimi.ingsw.GC_24.values.*;
 
-public class Moltiplication extends ImmediateEffect{
+public abstract class Moltiplication extends ImmediateEffect{
 	
 	protected Value value;
 	protected PersonalBoard playersBoard;
@@ -17,7 +17,6 @@ public class Moltiplication extends ImmediateEffect{
 	}
 	
 	//
-	public void moltiplicationEffect(){
-	}
+	public abstract void moltiplicationEffect();
 
 }

@@ -2,8 +2,8 @@
 
 import it.polimi.ingsw.GC_24.personalboard.PersonalBoard;
 import it.polimi.ingsw.GC_24.places.Place;
-import it.polimi.ingsw.GC_24.values.SetOfValues;
-import it.polimi.ingsw.GC_24.values.Value;
+import it.polimi.ingsw.GC_24.values.*;
+
 
 public class Player {
 	
