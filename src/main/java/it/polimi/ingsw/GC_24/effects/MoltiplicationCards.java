@@ -15,9 +15,15 @@ public class MoltiplicationCards extends Moltiplication{
 		// TODO Auto-generated constructor stub
 	}
 	
+	
 	@Override
 	public void moltiplicationEffect(){
-		value.setQuantity((this.value.getQuantity()) * (this.personalCards.FindCardsInPersonalBoard(playersBoard).getCards().size()));
-		value.addValueToSet(playersBoard.getPlayer().getMyValues());
+		int valueQuantity = this.value.getQuantity();
+		PersonalCards correspondingArrayList = this.personalCards.FindCardsInPersonalBoard(playersBoard);
+		int sizeOfArray = correspondingArrayList.getCards().size();
+		int newQuantity =(valueQuantity) * (sizeOfArray);
+		value.setQuantity(newQuantity);
+		SetOfValues setOfValues = playersBoard.getPlayer().getMyValues();
+		value.addValueToSet(setOfValues);
 	}
 }
