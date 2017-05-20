@@ -9,6 +9,8 @@ public class MoltiplicationCards extends Moltiplication{
 	
 	private PersonalCards personalCards;
 
+	
+	//constructor
 	public MoltiplicationCards(String name, SetOfValues effectValues, PersonalBoard playersBoard, Value value, PersonalCards personalCards) {
 		super(name, effectValues, playersBoard, value);
 		this.personalCards = personalCards;
@@ -19,7 +21,7 @@ public class MoltiplicationCards extends Moltiplication{
 	@Override
 	public void moltiplicationEffect(){
 		int valueQuantity = this.value.getQuantity();
-		PersonalCards correspondingArrayList = this.personalCards.FindCardsInPersonalBoard(playersBoard);
+		PersonalCards correspondingArrayList = this.personalCards.findCardsInPersonalBoard(playersBoard);
 		int sizeOfArray = correspondingArrayList.getCards().size();
 		int newQuantity =(valueQuantity) * (sizeOfArray);
 		value.setQuantity(newQuantity);
