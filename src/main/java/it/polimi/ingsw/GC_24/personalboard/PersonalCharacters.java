@@ -4,8 +4,13 @@ import it.polimi.ingsw.GC_24.PlayerColour;
 
 public class PersonalCharacters extends PersonalCards{
 	
-	public PersonalCharacters(PlayerColour player) {
-		super(player);
+	public PersonalCharacters() {
+		super();
 		// TODO Auto-generated constructor stub
+	}
+	
+	@Override
+	public PersonalCards FindCardsInPersonalBoard(PersonalBoard playersBoard){
+		return playersBoard.getPersonalCharacters();
 	}
 }

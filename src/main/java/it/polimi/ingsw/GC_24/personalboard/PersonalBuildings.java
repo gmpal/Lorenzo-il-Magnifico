@@ -1,16 +1,17 @@
 package it.polimi.ingsw.GC_24.personalboard;
 
 
-import it.polimi.ingsw.GC_24.PlayerColour;
-import it.polimi.ingsw.GC_24.cards.Buildings;
-
 public class PersonalBuildings extends PersonalCards{
 
-	public PersonalBuildings(PlayerColour player) {
-		super(player);
+	public PersonalBuildings() {
+		super();
 		// TODO Auto-generated constructor stub
 	}
-
+	
+	@Override
+	public PersonalCards FindCardsInPersonalBoard(PersonalBoard playersBoard){
+		return playersBoard.getPersonalBuildings();
+	}
 }
 
 

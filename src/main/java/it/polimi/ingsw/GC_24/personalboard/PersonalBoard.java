@@ -15,10 +15,10 @@ public class PersonalBoard {
 	//constructor
 	public PersonalBoard(Player player){
 		this.player = player;
-		this.personalBuildings = new PersonalBuildings(player.getMyColour());
-		this.personalVentures = new PersonalVentures(player.getMyColour());
-		this.personalTerritories = new PersonalTerritories(player.getMyColour());
-		this.personalCharacters = new PersonalCharacters(player.getMyColour());
+		this.personalBuildings = new PersonalBuildings();
+		this.personalVentures = new PersonalVentures();
+		this.personalTerritories = new PersonalTerritories();
+		this.personalCharacters = new PersonalCharacters();
 	}
 	
 	//getters and setters
