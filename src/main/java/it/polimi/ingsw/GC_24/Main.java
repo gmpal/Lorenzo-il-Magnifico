@@ -36,17 +36,21 @@ public class Main {
 			System.out.println("Risorse di " + giocatore3 + " :"+giocatore3.getMyValues());
 			System.out.println(famiglia4);
 			System.out.println("Risorse di " + giocatore4 + " :"+giocatore4.getMyValues());
+			
 //Giorgia main
 		
 		Coin coins = new Coin(3);
 		MilitaryPoint points = new MilitaryPoint(3);
 		SetOfValues values = new SetOfValues(1);
+
 		Player player = new Player("Pippo", 1, null, null, values, PlayerColour.BLUE);
 		PersonalBoard board = new PersonalBoard(player);
 		Buildings edificio = new Buildings("miao", false, false, false, null);
 		edificio.setCardOnPersonalBoard(board);
 		player.setMyBoard(board);
+
 		PersonalBuildings buildings = new PersonalBuildings();
+
 		
 		System.out.println(values);
 		System.out.println((coins.FindValueInPlayer(player)).getQuantity());
@@ -58,6 +62,7 @@ public class Main {
 
 		MoltiplicationCards effettocarte = new MoltiplicationCards("ciao", null, board, coins, buildings);
 		effettocarte.moltiplicationEffect();
+
 		System.out.println(player.getMyValues());
 		
 	}

@@ -1,7 +1,7 @@
 package it.polimi.ingsw.GC_24.personalboard;
 
 import it.polimi.ingsw.GC_24.Player;
-import it.polimi.ingsw.GC_24.PlayerColour;
+//import it.polimi.ingsw.GC_24.PlayerColour;
 
 public class PersonalBoard {
 	
@@ -14,11 +14,20 @@ public class PersonalBoard {
 	
 	//constructor
 	public PersonalBoard(Player player){
+
 		this.player = player;
 		this.personalBuildings = new PersonalBuildings();
 		this.personalVentures = new PersonalVentures();
 		this.personalTerritories = new PersonalTerritories();
 		this.personalCharacters = new PersonalCharacters();
+
+
+	/*	this.personalBuildings = new PersonalBuildings(player.getMyColour());
+		this.personalVentures = new PersonalVentures(player.getMyColour());
+		this.personalTerritories = new PersonalTerritories(player.getMyColour());
+		this.personalCharacters = new PersonalCharacters(player.getMyColour());
+		this.player=player;*/
+
 	}
 	
 	//getters and setters

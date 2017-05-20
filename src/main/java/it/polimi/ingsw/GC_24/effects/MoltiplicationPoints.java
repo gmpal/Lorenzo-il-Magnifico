@@ -20,8 +20,10 @@ public class MoltiplicationPoints extends Moltiplication{
 		int quanityplayervalue2 = value2.FindValueInPlayer(playersBoard.getPlayer()).getQuantity();
 		int dividervalue2 = value2.getQuantity();
 		int factor2 = (quanityplayervalue2/dividervalue2);
-		//value.setQuantity((this.value.getQuantity()) * ((this.value2.FindValueInPlayer(playersBoard.getPlayer()).getQuantity())/(value2.getQuantity())));
+		
 		value.setQuantity(factor1*factor2);
+		
 		value.addValueToSet(playersBoard.getPlayer().getMyValues());
+		
 	}
 }
