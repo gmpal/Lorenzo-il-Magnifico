@@ -9,7 +9,7 @@ public abstract class Moltiplication extends ImmediateEffect{
 	protected PersonalBoard playersBoard;
 	
 	//constructor
-	public Moltiplication(String name, SetOfValues effectValues,Value value) {
+	public Moltiplication(String name, SetOfValues effectValues, PersonalBoard playersBoard, Value value) {
 		super(name, effectValues);
 		// TODO Auto-generated constructor stub
 		this.value = value;

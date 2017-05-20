@@ -1,9 +1,9 @@
 package it.polimi.ingsw.GC_24;
 
 import it.polimi.ingsw.GC_24.cards.*;
-import it.polimi.ingsw.GC_24.PersonalBoard;
+import it.polimi.ingsw.GC_24.effects.MoltiplicationPoints;
+import it.polimi.ingsw.GC_24.personalboard.PersonalBoard;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
-import it.polimi.ingsw.GC_24.values.Wood;
 import it.polimi.ingsw.GC_24.values.*;
 
 public class Main {
@@ -36,26 +36,17 @@ public class Main {
 			System.out.println("Risorse di " + giocatore4 + " :"+giocatore4.getMyValues());
 //Giorgia main
 		
-		//commento
-		PersonalBoard myboard = new PersonalBoard();
-		myboard.setPlayerColour(null);
+		Coin coins = new Coin(3);
+		MilitaryPoint points = new MilitaryPoint(3);
+		SetOfValues values = new SetOfValues(1);
+		PersonalBoard board = new PersonalBoard();
+		Player player = new Player("Pippo", 1, null, board, values, PlayerColour.BLUE);
 		
-		Buildings myBuilding = new Buildings("ciao", false, false, false, null);
-		Characters myCharacter = new Characters("bau", false, false, false, null);
-		Buildings myBuilding2 = new Buildings("miap", false, false, false, null);
+		System.out.println(values);
 		
-		//myboard.getPersonalBuildings().setCards(5);		
-		System.out.print(myBuilding.getName());
-	//	myBuilding.setCardOnPersonalBoard(PersonalBoard myboard);
-		//myBuilding2.setCardOnPersonalBoard(myboard.getPersonalBuildings());
-		myCharacter.setCardOnPersonalBoard(myboard);
-		//	myBuilding.setCardOnPersonalBoard(PersonalBoard myboard);
-
-		
-		System.out.print(myboard.getPersonalBuildings().getCards().toString()+"\n");
-		System.out.print(myboard.getPersonalCharacters().getCards().toString());
-		
-		
-
+		System.out.println(coins.FindValueInPlayer(player));
+		MoltiplicationPoints effetto = new MoltiplicationPoints("bau", null, board, coins, points);
+		effetto.moltiplicationEffect();
+		System.out.println(values);
 	}
 }
