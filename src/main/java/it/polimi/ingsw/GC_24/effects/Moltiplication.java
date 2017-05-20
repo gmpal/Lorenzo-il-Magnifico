@@ -11,7 +11,7 @@ public abstract class Moltiplication extends ImmediateEffect{
 	//constructor
 	public Moltiplication(String name, SetOfValues effectValues, PersonalBoard playersBoard, Value value) {
 		super(name, effectValues);
-		// TODO Auto-generated constructor stub
+		this.playersBoard=playersBoard;
 		this.value = value;
 	}
 	

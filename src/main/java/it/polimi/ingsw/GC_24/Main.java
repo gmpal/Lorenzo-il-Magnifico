@@ -10,7 +10,7 @@ public class Main {
 	public static void main(String[] args) {
 		//commento
 //Gianmarco main
-					
+/*					
 			Player giocatore1 = new Player ("Marco", 1, null,null,null,null);
 			Player giocatore2 = new Player ("Luca", 2, null,null,null,null);
 			Player giocatore3 = new Player ("Andrea", 3, null,null,null,null);
@@ -35,18 +35,21 @@ public class Main {
 			System.out.println(famiglia4);
 			System.out.println("Risorse di " + giocatore4 + " :"+giocatore4.getMyValues());
 //Giorgia main
-		
+	*/	
 		Coin coins = new Coin(3);
 		MilitaryPoint points = new MilitaryPoint(3);
 		SetOfValues values = new SetOfValues(1);
-		PersonalBoard board = new PersonalBoard();
-		Player player = new Player("Pippo", 1, null, board, values, PlayerColour.BLUE);
+		
+		Player player = new Player("Pippo", 1, null, null, values, PlayerColour.BLUE);
+		PersonalBoard board = new PersonalBoard(player);
+		player.setMyBoard(board);
+		
 		
 		System.out.println(values);
 		
-		System.out.println(coins.FindValueInPlayer(player));
+		System.out.println(coins.FindValueInPlayer(player).getQuantity());
 		MoltiplicationPoints effetto = new MoltiplicationPoints("bau", null, board, coins, points);
 		effetto.moltiplicationEffect();
-		System.out.println(values);
+		System.out.println(player.getMyValues());
 	}
 }
