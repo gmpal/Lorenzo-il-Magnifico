@@ -19,7 +19,7 @@ public class SetOfValues {
 		this.servants = new Servant(3);
 		this.coins = new Coin(4+numplayer);
 		this.faithPoints = new FaithPoint(0);
-		this.militaryPoints = new MilitaryPoint(0);
+		this.militaryPoints = new MilitaryPoint(10);
 		this.victoryPoints = new VictoryPoint(0);
 	}
 	
@@ -38,7 +38,7 @@ public class SetOfValues {
 	
 
 
-	//getters and setters
+	//getters and setters	
 	public Wood getWoods() {
 		return woods;
 	}

@@ -1,5 +1,7 @@
 package it.polimi.ingsw.GC_24.values;
 
+import it.polimi.ingsw.GC_24.Player;
+
 public abstract class Value {
 
 	protected int quantity;
@@ -20,9 +22,17 @@ public abstract class Value {
 		this.quantity += quantity;
 	}
 	
+	//finds a value in the SetOfValue of a player if you don't already know the type
+	public abstract Value FindValueInPlayer(Player player);// redefined in every subclass
 	
-	//getter and setter
+	//toString method to print a Value
+	@Override
+	public String toString() {
+		return "Value [quantity=" + quantity + "]";
+	}
 
+
+	//getter and setter
 	public int getQuantity() {
 		return quantity;
 	}
