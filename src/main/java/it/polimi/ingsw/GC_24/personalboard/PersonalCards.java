@@ -14,8 +14,10 @@ public abstract class PersonalCards {
 		this.cards= new ArrayList<Card>();
 	}
 	
-	//finds an ArrayList of PersonalCards in the PersonalBoard if you don't already know the type
-	public abstract PersonalCards FindCardsInPersonalBoard(PersonalBoard playersBoard);
+	/*finds an ArrayList of PersonalCards in the PersonalBoard if you don't already know the type
+	It's called on a specific PersonalCard and returns 
+	the corresponding subClass of PersonalCards in a specific Personal board */
+	public abstract PersonalCards findCardsInPersonalBoard(PersonalBoard playersBoard);
 	
 	
 	//getters and setters

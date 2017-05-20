@@ -9,7 +9,7 @@ public class PersonalBuildings extends PersonalCards{
 	}
 	
 	@Override
-	public PersonalCards FindCardsInPersonalBoard(PersonalBoard playersBoard){
+	public PersonalCards findCardsInPersonalBoard(PersonalBoard playersBoard){
 		return playersBoard.getPersonalBuildings();
 	}
 }
