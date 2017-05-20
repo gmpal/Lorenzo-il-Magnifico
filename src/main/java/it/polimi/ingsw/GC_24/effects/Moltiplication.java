@@ -13,6 +13,7 @@ public abstract class Moltiplication extends ImmediateEffect{
 		super(name, effectValues);
 		// TODO Auto-generated constructor stub
 		this.value = value;
+		this.playersBoard = playersBoard;
 	}
 	
 	//gives the effect to the player
