@@ -13,6 +13,7 @@ public abstract class Moltiplication extends ImmediateEffect{
 		super(name, effectValues);
 		this.playersBoard=playersBoard;
 		this.value = value;
+		this.playersBoard = playersBoard;
 	}
 	
 	//gives the effect to the player

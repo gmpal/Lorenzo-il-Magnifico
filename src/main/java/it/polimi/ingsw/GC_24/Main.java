@@ -39,15 +39,17 @@ public class Main {
 		Coin coins = new Coin(3);
 		MilitaryPoint points = new MilitaryPoint(3);
 		SetOfValues values = new SetOfValues(1);
-		
+
 		Player player = new Player("Pippo", 1, null, null, values, PlayerColour.BLUE);
 		PersonalBoard board = new PersonalBoard(player);
 		player.setMyBoard(board);
-		
+
 		
 		System.out.println(values);
+		System.out.println((coins.FindValueInPlayer(player)).getQuantity());
+		System.out.println(coins);
 		
-		System.out.println(coins.FindValueInPlayer(player).getQuantity());
+
 		MoltiplicationPoints effetto = new MoltiplicationPoints("bau", null, board, coins, points);
 		effetto.moltiplicationEffect();
 		System.out.println(player.getMyValues());
