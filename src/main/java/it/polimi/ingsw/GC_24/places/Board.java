@@ -1,7 +1,9 @@
 package it.polimi.ingsw.GC_24.places;
 
 public class Board {
+
 	private static final int maxNumPlayerToLock=3; 
+
 	private int gameID;
 	private int numPlayer;
 	private Tower towerTerritories;
