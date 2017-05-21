@@ -45,6 +45,7 @@ public abstract class Place {
 	}
 	public void setFamMemberOnPlace(FamilyMember famMemberOnPlace) {
 		this.famMemberOnPlace = famMemberOnPlace;
+		this.setAvailable(false);
 	}
 	
 	

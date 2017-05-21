@@ -13,25 +13,26 @@ public class Tower {
 	
 	public boolean isThereSameColour(PlayerColour playerColour){
 		for(TowerPlace towerPlace:this.tower){
-			if(towerPlace.getFamMemberOnPlace().getMemberColour().equals(playerColour)){
+			if((towerPlace.getFamMemberOnPlace().getPlayer().getMyColour()).equals(playerColour)){
 				return true;
 			}
 		}
 		return false;
 	}
 	
-	public boolean isTowerFree(){
+	public boolean isTowerOccupied(){
 		for(TowerPlace towerPlace:this.tower){
-			if(!(towerPlace.getFamMemberOnPlace().equals(null))){
-				return false;
+			if(!towerPlace.isAvailable()){
+				return true;
 			}
 		}
-		return true;
+		return false;
 	}
 
 	public void clearPlaces(){
 		for(TowerPlace towerPlace:this.tower){
 			towerPlace.clearPlace();
+			towerPlace.setAvailable(true);
 		}
 	}
 	
