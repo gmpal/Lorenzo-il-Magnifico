@@ -1,5 +1,7 @@
 package it.polimi.ingsw.GC_24.values;
 
+import it.polimi.ingsw.GC_24.Player;
+
 public class Wood extends Value {
 	public Wood(int value){
 	super(value);
@@ -9,5 +11,10 @@ public class Wood extends Value {
 	public SetOfValues addValueToSet(SetOfValues values){
 		values.setWoods(new Wood(values.getWoods().getQuantity()+this.getQuantity()));
 		return values;
+	}
+	
+	@Override
+	public Value FindValueInPlayer(Player player){
+		return player.getMyValues().getWoods();
 	}
 }
