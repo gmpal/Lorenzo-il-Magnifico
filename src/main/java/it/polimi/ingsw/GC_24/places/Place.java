@@ -27,8 +27,6 @@ public abstract class Place {
 	}
 	
 	
-	
-	
 	//getters and setters
 	public int getCostDice() {
 		return costDice;
@@ -47,6 +45,7 @@ public abstract class Place {
 	}
 	public void setFamMemberOnPlace(FamilyMember famMemberOnPlace) {
 		this.famMemberOnPlace = famMemberOnPlace;
+		this.setAvailable(false);
 	}
 	
 	

@@ -104,14 +104,6 @@ public class Player {
 	public void setMyValues(SetOfValues myValues) {
 		this.myValues = myValues;
 	}
-
-	public PlayerColour getMycolour() {
-		return myColour;
-	}
-
-	public void setMycolour(PlayerColour mycolour) {
-		this.myColour = mycolour;
-	}
 	
 }
 	
