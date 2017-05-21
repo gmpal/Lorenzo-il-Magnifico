@@ -15,8 +15,7 @@ public class Board {
 	public Board(int gameID, int numPlayer, Towers towers, Harvest harvest, Production production, Market market,
 			CouncilPanel concilPane) {
 		super();
-		this.gameID = gameID;gianmarco@gianmarco-acer:~/Lorenzo-il-Magnifico$ 
-
+		this.gameID = gameID;
 		this.numPlayer = numPlayer;
 		this.towers = towers;
 		this.harvest = harvest;
