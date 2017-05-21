@@ -1,13 +1,10 @@
 package it.polimi.ingsw.GC_24.effects;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Scanner;
 
 import it.polimi.ingsw.GC_24.Player;
-import it.polimi.ingsw.GC_24.personalboard.PersonalBoard;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
-import it.polimi.ingsw.GC_24.values.Value;
 
 public class CouncilPrivilege extends ImmediateEffect {
 	/*ATTENTION: when created, the constructor creates an empty Arraylist<SetOfValues>, 
@@ -17,7 +14,7 @@ public class CouncilPrivilege extends ImmediateEffect {
 	
 	/*constructor --> Creates an empty arraylist and fills it with SetCouncil() method 
 	(Needs a name because it's an effect).*/
-	public CouncilPrivilege(String name, SetOfValues effectValues, ArrayList<SetOfValues> councilPrivileges) {
+	public CouncilPrivilege(String name, SetOfValues effectValues) {
 		super(name, effectValues);
 		this.councilPrivileges = new ArrayList<SetOfValues>();
 		SetCouncil();
@@ -50,11 +47,7 @@ public class CouncilPrivilege extends ImmediateEffect {
 	
 	
 	
-	public CouncilPrivilege(String name, SetOfValues effectValues) {
-		super(name, effectValues);
-		// TODO Auto-generated constructor stub
-	}
-
+	
 
 
 	//Gives n different privileges to the selected player 
@@ -82,6 +75,7 @@ public class CouncilPrivilege extends ImmediateEffect {
 			System.out.println("Privilegio ("+index+") aggiunto alle tue risorse");
 		}
 		//reset the council
+		scanner.close();
 		councilPrivileges.clear();
 		SetCouncil();
 	}
