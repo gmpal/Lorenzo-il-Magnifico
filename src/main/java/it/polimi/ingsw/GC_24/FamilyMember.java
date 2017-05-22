@@ -38,6 +38,11 @@ public class FamilyMember {
 				;
 	}
 
+	public String isAvailableString() {
+		if (this.isAvailable()){ return "available";}
+		else return "Not available"; 
+	}
+	
 	//getters and setters
 	public int getMemberValue() {
 		return memberValue;
