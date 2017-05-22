@@ -28,9 +28,9 @@ public class Family {
 	public String toString() {
 		return "Family of " + player + 
 				":\n member1 --> " + member1 + 
-				",\n member2 --> " + member2 + 
-				",\n member3 --> " + member3 +
-				",\n member4 --> " + member4 + ".\n";
+				"\n member2 --> " + member2 + 
+				"\n member3 --> " + member3 +
+				"\n member4 --> " + member4 + ".\n";
 	}
 	
 	//getters and setters

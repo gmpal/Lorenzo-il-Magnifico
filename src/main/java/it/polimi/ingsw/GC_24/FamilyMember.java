@@ -33,9 +33,14 @@ public class FamilyMember {
 	@Override
 	public String toString() {
 		return "Value=" + memberValue + 
-				", available=" + available + 
-				", Colour=" + memberColour
+				"\tColour=" + memberColour+
+				 "\t Status= "+isAvailableString()
 				;
+	}
+	
+	public String isAvailableString() {
+		if (this.isAvailable()){ return "available";}
+		else return "Not available"; 
 	}
 
 	//getters and setters
