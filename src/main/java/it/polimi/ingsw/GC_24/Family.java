@@ -35,7 +35,6 @@ public class Family {
 		return member1;
 	}
 	
-
 	public void setMember1(FamilyMember member1) {
 		this.member1 = member1;
 	}
@@ -57,7 +56,13 @@ public class Family {
 	public void setMember4(FamilyMember member4) {
 		this.member4 = member4;
 	}
-	
+	public SetOfDice getDice() {
+		return dice;
+	}
+
+	public void setDice(SetOfDice dice) {
+		this.dice = dice;
+	}
 	
 	
 }

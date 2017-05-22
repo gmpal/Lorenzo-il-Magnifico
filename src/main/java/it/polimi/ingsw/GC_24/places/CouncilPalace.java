@@ -6,7 +6,7 @@ public class CouncilPalace {
 	private ArrayList<CouncilPlace> councilPlaces;
 
 	public CouncilPalace() {
-		this.councilPlaces = new ArrayList<CouncilPlace>();
+		this.councilPlaces = new ArrayList<>();
 	}
 	
 	public void clearPlaces(){

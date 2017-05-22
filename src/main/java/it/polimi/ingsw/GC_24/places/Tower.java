@@ -1,18 +1,18 @@
 package it.polimi.ingsw.GC_24.places;
 
 import java.util.ArrayList;
-
 import it.polimi.ingsw.GC_24.PlayerColour;
 
 public class Tower {
-	private ArrayList<TowerPlace> tower;
+	
+	private ArrayList<TowerPlace> towerArray;
 	
 	public Tower() {
-		this.tower = new ArrayList<TowerPlace>();
+		this.towerArray = new ArrayList<>();
 	}
 	
 	public boolean isThereSameColour(PlayerColour playerColour){
-		for(TowerPlace towerPlace:this.tower){
+		for(TowerPlace towerPlace:this.towerArray){
 			if(!towerPlace.isAvailable()&&(towerPlace.getFamMemberOnPlace().getPlayer().getMyColour()).equals(playerColour)){
 				return true;
 			}
@@ -21,7 +21,7 @@ public class Tower {
 	}
 	
 	public boolean isTowerOccupied(){
-		for(TowerPlace towerPlace:this.tower){
+		for(TowerPlace towerPlace:this.towerArray){
 			if(!towerPlace.isAvailable()){
 				return true;
 			}
@@ -30,18 +30,18 @@ public class Tower {
 	}
 
 	public void clearPlaces(){
-		for(TowerPlace towerPlace:this.tower){
+		for(TowerPlace towerPlace:this.towerArray){
 			towerPlace.clearPlace();
 			towerPlace.setAvailable(true);
 		}
 	}
 	
 	public ArrayList<TowerPlace> getTower() {
-		return tower;
+		return towerArray;
 	}
 
 	public void setTower(ArrayList<TowerPlace> tower) {
-		this.tower = tower;
+		this.towerArray = tower;
 	}
 	
 	
