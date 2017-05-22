@@ -36,12 +36,12 @@ public class Tower {
 		}
 	}
 	
-	public ArrayList<TowerPlace> getTower() {
+	public ArrayList<TowerPlace> getTowerArray() {
 		return towerArray;
 	}
 
-	public void setTower(ArrayList<TowerPlace> tower) {
-		this.towerArray = tower;
+	public void setTower(ArrayList<TowerPlace> towerArray) {
+		this.towerArray = towerArray;
 	}
 	
 	

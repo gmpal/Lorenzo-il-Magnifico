@@ -19,7 +19,7 @@ public class SetOfValues {
 		this.servants = new Servant(3);
 		this.coins = new Coin(4+numplayer);
 		this.faithPoints = new FaithPoint(0);
-		this.militaryPoints = new MilitaryPoint(10);
+		this.militaryPoints = new MilitaryPoint(0);
 		this.victoryPoints = new VictoryPoint(0);
 	}
 	
@@ -127,7 +127,7 @@ public class SetOfValues {
 		this.victoryPoints = victoryPoints;
 	} 
 	
-	//getters and setters with INT
+/*	//getters and setters with INT
 	public int getIntWoods() {
 		return woods.getQuantity();
 	}
@@ -187,10 +187,10 @@ public class SetOfValues {
 		return victoryPoints.getQuantity();
 	}
 	
-	public void setIntVictoryPoints(int victoryPoints) {
+	/*public void setIntVictoryPoints(int victoryPoints) {
 		this.victoryPoints = new VictoryPoint(0);
 		this.victoryPoints.setQuantity(victoryPoints);
-	} 
+	} */
 	
 	
 	

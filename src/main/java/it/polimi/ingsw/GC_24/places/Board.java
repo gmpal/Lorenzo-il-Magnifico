@@ -5,7 +5,7 @@ public class Board {
 	private static final int maxNumPlayerToLock=3; 
 
 	private int gameID;
-	private int numPlayer;
+	private int numPlayers;
 	private Tower towerTerritories;
 	private Tower towerCharacters;
 	private Tower towerBuildings;
@@ -15,9 +15,9 @@ public class Board {
 	private Market market;
 	private CouncilPalace councilPalace;
 	
-	public Board(int gameID, int numPlayer) {
+	public Board(int gameID, int numPlayers) {
 		this.gameID = gameID;
-		this.numPlayer = numPlayer;
+		this.numPlayers = numPlayers;
 		this.towerTerritories = new Tower();
 		this.towerCharacters = new Tower();
 		this.towerBuildings = new Tower();
@@ -28,8 +28,8 @@ public class Board {
 		this.councilPalace = new CouncilPalace();
 	}
 	
-	public boolean lockPlaces(int numPlayer){
-		if(numPlayer< maxNumPlayerToLock)return true;
+	public boolean lockPlaces(int numPlayers){
+		if(numPlayers< maxNumPlayerToLock)return true;
 		else return false;
 	}
 		
@@ -53,12 +53,12 @@ public class Board {
 		this.gameID = gameID;
 	}
 
-	public int getNumPlayer() {
-		return numPlayer;
+	public int getNumPlayers() {
+		return numPlayers;
 	}
 
-	public void setNumPlayer(int numPlayer) {
-		this.numPlayer = numPlayer;
+	public void setNumPlayers(int numPlayers) {
+		this.numPlayers = numPlayers;
 	}
 
 	public Tower getTowerTerritories() {
