@@ -19,7 +19,7 @@ public class Production {
 	
 	public boolean isThereSameColour(PlayerColour playerColour){
 		for(ProductionPlace productionPlace:this.productionPlaces){
-			if(productionPlace.getFamMemberOnPlace().getMemberColour().equals(playerColour)){
+			if(!productionPlace.isAvailable()&&(productionPlace.getFamMemberOnPlace().getPlayer().getMyColour()).equals(playerColour)){
 				return true;
 			}
 		}
