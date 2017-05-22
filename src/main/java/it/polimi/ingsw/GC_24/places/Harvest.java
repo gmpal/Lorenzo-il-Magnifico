@@ -19,7 +19,7 @@ public class Harvest {
 	
 	public boolean isThereSameColour(PlayerColour playerColour){
 		for(HarvestPlace harvestPlace:this.harvestPlaces){
-			if(harvestPlace.getFamMemberOnPlace().getMemberColour().equals(playerColour)){
+			if(!harvestPlace.isAvailable()&&(harvestPlace.getFamMemberOnPlace().getPlayer().getMyColour()).equals(playerColour)){
 				return true;
 			}
 		}
