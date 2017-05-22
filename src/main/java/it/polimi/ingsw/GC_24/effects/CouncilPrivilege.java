@@ -10,7 +10,6 @@ public class CouncilPrivilege extends ImmediateEffect {
 	/*ATTENTION: when created, the constructor creates an empty Arraylist<SetOfValues>, 
 	 * but calls the method SetCoucil() and fills itself*/
 	private ArrayList<SetOfValues> councilPrivileges;
-
 	
 	/*constructor --> Creates an empty arraylist and fills it with SetCouncil() method 
 	(Needs a name because it's an effect).*/

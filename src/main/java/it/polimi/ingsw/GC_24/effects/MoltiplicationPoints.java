@@ -8,14 +8,14 @@ public class MoltiplicationPoints extends Moltiplication{
 
 	private Value value2;
 	
-	public MoltiplicationPoints(String name, SetOfValues effectValues, PersonalBoard playersBoard, Value value, Value value2) {
-		super(name, effectValues, playersBoard, value);
+	public MoltiplicationPoints(String name, SetOfValues effectValues, Value value, Value value2) {
+		super(name, effectValues, value);
 		this.value2 = value2;
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public void moltiplicationEffect(){
+	public void moltiplicationEffect(PersonalBoard playersBoard){
 		int factor1 = value.getQuantity();
 		int quanityplayervalue2 = value2.FindValueInPlayer(playersBoard.getPlayer()).getQuantity();
 		int dividervalue2 = value2.getQuantity();

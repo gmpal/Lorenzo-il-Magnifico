@@ -8,7 +8,7 @@ public class Die {
 	//constructor
 	public Die(int value, DieColour colour){
 		this.value = value;
-		this.colour=colour;
+		this.colour = colour;
 	}
 	
 	//getters and setters

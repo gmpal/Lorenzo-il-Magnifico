@@ -9,14 +9,12 @@ public abstract class Moltiplication extends ImmediateEffect{
 	protected PersonalBoard playersBoard;
 	
 	//constructor
-	public Moltiplication(String name, SetOfValues effectValues, PersonalBoard playersBoard, Value value) {
+	public Moltiplication(String name, SetOfValues effectValues, Value value) {
 		super(name, effectValues);
-		this.playersBoard=playersBoard;
 		this.value = value;
-		this.playersBoard = playersBoard;
-	}
+		}
 	
 	//gives the effect to the player
-	public abstract void moltiplicationEffect(); //redefined for every subclass
+	public abstract void moltiplicationEffect(PersonalBoard playersBoard); //redefined for every subclass
 
 }
