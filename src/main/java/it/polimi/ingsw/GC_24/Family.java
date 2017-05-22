@@ -3,13 +3,15 @@ package it.polimi.ingsw.GC_24;
 public class Family {
 	
 	private Player player;
-	private SetOfDice dice;
+	private SetOfDice dice; 
 	private FamilyMember member1;
 	private FamilyMember member2;
 	private FamilyMember member3;
 	private FamilyMember member4;
 	
 	//constructor
+	
+	
 	
 	public Family(Player player, SetOfDice dice){
 		this.player = player;
@@ -18,6 +20,7 @@ public class Family {
 		this.member2 = new FamilyMember(player, dice.getDie2());
 		this.member3 = new FamilyMember(player, dice.getDie3());
 		this.member4 = new FamilyMember(player);
+	
 	}
 	
 	//Prints a whole family

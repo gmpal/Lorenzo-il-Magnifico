@@ -55,6 +55,7 @@ public class CouncilPrivilege extends ImmediateEffect {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Ciao " + player.getMyName());
 		
+
 		for (int i=0; i<n; i++){
 			
 			System.out.println("Ecco i privilegi:\n" + this);
@@ -63,9 +64,10 @@ public class CouncilPrivilege extends ImmediateEffect {
 			if (i!=0) {System.out.println("Scegli un altro elemento");}
 			
 			int index = scanner.nextInt();
+			System.out.println(index);
 			while (index<1 || index>councilPrivileges.size()){
 				System.out.println("Il valore non è corretto, riprova:");
-				index = scanner.nextInt();;
+				index = scanner.nextInt();
 			}
 			SetOfValues chosenPrivilege = councilPrivileges.get(index-1);
 			chosenPrivilege.addTwoSetsOfValues(player.getMyValues());
@@ -74,10 +76,12 @@ public class CouncilPrivilege extends ImmediateEffect {
 			System.out.println("Privilegio ("+index+") aggiunto alle tue risorse");
 		}
 		//reset the council
-		scanner.close();
+		//scanner.close();
 		councilPrivileges.clear();
 		SetCouncil();
+		
 	}
+	
 
 	
 	//Prints the composition of the Council

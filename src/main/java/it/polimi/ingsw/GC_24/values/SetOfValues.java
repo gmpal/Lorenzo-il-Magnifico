@@ -49,7 +49,7 @@ public class SetOfValues {
 			return v;	
 		}
 
-	//toString
+	//toString TODO:un po' troppi if, c'è un modo migliore?
 	@Override
 	public String toString() {
 	
@@ -69,6 +69,7 @@ public class SetOfValues {
 			return builder.toString();
 	}
 
+	
 	//getters and setters with VALUES	
 	public Wood getWoods() {
 		return woods;
