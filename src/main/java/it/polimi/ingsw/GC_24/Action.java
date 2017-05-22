@@ -4,6 +4,7 @@ public abstract class Action {
 	
 	private final Model game;
 
+	//constructor
 	public Action(Model game) {
 		this.game = game;
 	}

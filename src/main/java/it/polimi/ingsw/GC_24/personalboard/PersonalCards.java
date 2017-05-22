@@ -19,7 +19,6 @@ public abstract class PersonalCards {
 	
 	
 	//getters and setters
-
 	public void setCards(Card card){
 		this.cards.add(card);
 	}

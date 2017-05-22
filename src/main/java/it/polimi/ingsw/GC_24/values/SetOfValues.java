@@ -10,8 +10,6 @@ public class SetOfValues {
 	private MilitaryPoint militaryPoints;
 	private VictoryPoint victoryPoints;
 	
-
-	
 	//constructor with player number
 	public SetOfValues (int numplayer){
 		this.woods = new Wood(3);
@@ -22,7 +20,6 @@ public class SetOfValues {
 		this.militaryPoints = new MilitaryPoint(0);
 		this.victoryPoints = new VictoryPoint(0);
 	}
-	
 	
 	//constructor with no parameters --> Sets everything to 0
 	public SetOfValues() {
@@ -35,8 +32,8 @@ public class SetOfValues {
 		this.victoryPoints = new VictoryPoint(0);
 	}
 
-
 	//useful methods
+	
 	//method to sum two sets of values
 		public SetOfValues addTwoSetsOfValues(SetOfValues v){
 			v.setCoins(new Coin(this.coins.getQuantity() + v.getCoins().getQuantity()));
@@ -73,7 +70,6 @@ public class SetOfValues {
 	public Wood getWoods() {
 		return woods;
 	}
-	
 	
 	public void setWoods(Wood woods) {
 		this.woods = woods;

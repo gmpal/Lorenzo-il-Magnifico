@@ -8,6 +8,7 @@ public class PerformHarvestProduction extends ImmediateEffect{
 	
 	private Die dieValue;
 
+	//constructor
 	public PerformHarvestProduction(String name, SetOfValues effectValues, Die dieValue) {
 		super(name, effectValues);
 		this.setDieValue(dieValue);

@@ -9,6 +9,7 @@ public class Rankings {
 	private MilitaryPoint militaryPoints;
 	private VictoryPoint victoryPoints;
 	
+	//constructor
 	public Rankings(Player player) {
 		this.player = player;
 		this.militaryPoints = player.getMyValues().getMilitaryPoints();
@@ -23,8 +24,6 @@ public class Rankings {
 				", militaryPoints=" + militaryPoints.getQuantity()
 				+ ", victoryPoints=" + victoryPoints.getQuantity() + "]";
 	}
-
-
 
 	//getters and setters
 	public Player getPlayer() {

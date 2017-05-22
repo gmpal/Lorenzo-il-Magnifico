@@ -53,7 +53,6 @@ public abstract class Place {
 	}
 	public void setValues(Value values) {
 		this.value = values;
-	}
-	
+	}	
 	
 }

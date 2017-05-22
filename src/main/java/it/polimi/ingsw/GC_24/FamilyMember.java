@@ -8,7 +8,6 @@ public class FamilyMember {
 	private boolean neutral;
 	private Player player;
 	
-	
 	//constructors
 	//creates a valuated family member
 	public FamilyMember(Player player, Die die) {
@@ -69,10 +68,5 @@ public class FamilyMember {
 	public void setPlayer(Player player) {
 		this.player = player;
 	}
-	
-	
-	
-	
-	
 	
 }

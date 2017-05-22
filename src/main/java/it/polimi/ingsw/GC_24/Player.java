@@ -54,8 +54,6 @@ public class Player {
 		return myName /*+ ", player "+ myNumber*/;
 	}
 		
-	
-
 	//getters and setters
 	public String getMyName() {
 		return myName;
@@ -106,11 +104,3 @@ public class Player {
 	}
 	
 }
-	
-	
-	
-	
-	
-	
-	
-	

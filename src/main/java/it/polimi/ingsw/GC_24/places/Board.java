@@ -15,6 +15,7 @@ public class Board {
 	private Market market;
 	private CouncilPalace councilPalace;
 	
+	//constructor
 	public Board(int gameID, int numPlayers) {
 		this.gameID = gameID;
 		this.numPlayers = numPlayers;
@@ -28,6 +29,7 @@ public class Board {
 		this.councilPalace = new CouncilPalace();
 	}
 	
+	//
 	public boolean lockPlaces(int numPlayers){
 		if(numPlayers< maxNumPlayerToLock)return true;
 		else return false;
@@ -44,7 +46,8 @@ public class Board {
 		this.market.clearPlaces();
 		this.councilPalace.clearPlaces();
 	}
-
+	
+	//gerres and setters
 	public int getGameID() {
 		return gameID;
 	}

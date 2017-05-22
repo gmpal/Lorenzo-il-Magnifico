@@ -4,8 +4,10 @@ import it.polimi.ingsw.GC_24.Player;
 import it.polimi.ingsw.GC_24.values.Value;
 
 public class HarvestPlace extends Place{
+	
 	private int additionalCostDice;
 
+	//constructor
 	public HarvestPlace(int costDice, Value value, int additionalCostDice) {
 		super(costDice, value);
 		this.additionalCostDice = additionalCostDice;
@@ -30,7 +32,6 @@ public class HarvestPlace extends Place{
 	public void setAdditionalCostDice(int additionalCostDice) {
 		this.additionalCostDice = additionalCostDice;
 	}
-	
 	
 }
 	

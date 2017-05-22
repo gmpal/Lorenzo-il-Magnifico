@@ -10,7 +10,6 @@ public class Family {
 	private FamilyMember member4;
 	
 	//constructor
-	
 	public Family(Player player, SetOfDice dice){
 		this.player = player;
 		this.dice = dice;
@@ -63,6 +62,5 @@ public class Family {
 	public void setDice(SetOfDice dice) {
 		this.dice = dice;
 	}
-	
 	
 }

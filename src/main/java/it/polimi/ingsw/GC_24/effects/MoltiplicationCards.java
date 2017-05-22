@@ -2,21 +2,17 @@ package it.polimi.ingsw.GC_24.effects;
 
 import it.polimi.ingsw.GC_24.personalboard.PersonalBoard;
 import it.polimi.ingsw.GC_24.personalboard.PersonalCards;
-import it.polimi.ingsw.GC_24.values.SetOfValues;
-import it.polimi.ingsw.GC_24.values.Value;
+import it.polimi.ingsw.GC_24.values.*;
 
 public class MoltiplicationCards extends Moltiplication{
 	
 	private PersonalCards personalCards;
 
-	
 	//constructor
 	public MoltiplicationCards(String name, SetOfValues effectValues, Value value, PersonalCards personalCards) {
 		super(name, effectValues, value);
 		this.personalCards = personalCards;
-		// TODO Auto-generated constructor stub
 	}
-	
 	
 	@Override
 	public void moltiplicationEffect(PersonalBoard playersBoard){
