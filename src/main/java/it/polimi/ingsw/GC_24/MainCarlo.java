@@ -1,7 +1,6 @@
 package it.polimi.ingsw.GC_24;
 
 import it.polimi.ingsw.GC_24.cards.Territories;
-import it.polimi.ingsw.GC_24.places.TowerPlaceTerritories;
 import it.polimi.ingsw.GC_24.places.*;
 import it.polimi.ingsw.GC_24.values.Coin;
 
@@ -11,9 +10,9 @@ public class MainCarlo {
 		Player player1= new Player(null, 0, new Family(null, new SetOfDice()), null, null, PlayerColour.BLUE);
 		Player player2= new Player(null, 0, new Family(null, new SetOfDice()), null, null, PlayerColour.GREEN);
 
-		board1.getTowerTerritories().getTower().add(new TowerPlaceTerritories(3, new Coin(3), null));
-		board1.getTowerTerritories().getTower().add(new TowerPlaceTerritories(3, new Coin(3), null));
-		board1.getTowerCharacters().getTower().add(new TowerPlaceCharacters(2, new Coin(3), null));
+		board1.getTowerTerritories().getTower().add(new TowerPlace(3, new Coin(3)));
+		board1.getTowerTerritories().getTower().add(new TowerPlace(3, new Coin(3)));
+		board1.getTowerCharacters().getTower().add(new TowerPlace(2, new Coin(3)));
 		board1.getTowerTerritories().getTower().get(0).setFamMemberOnPlace(new FamilyMember(player1));
 		board1.getTowerTerritories().getTower().get(1).setFamMemberOnPlace(new FamilyMember(player2));
 		
