@@ -11,15 +11,15 @@ public class MoltiplicationCards extends Moltiplication{
 
 	
 	//constructor
-	public MoltiplicationCards(String name, SetOfValues effectValues, PersonalBoard playersBoard, Value value, PersonalCards personalCards) {
-		super(name, effectValues, playersBoard, value);
+	public MoltiplicationCards(String name, SetOfValues effectValues, Value value, PersonalCards personalCards) {
+		super(name, effectValues, value);
 		this.personalCards = personalCards;
 		// TODO Auto-generated constructor stub
 	}
 	
 	
 	@Override
-	public void moltiplicationEffect(){
+	public void moltiplicationEffect(PersonalBoard playersBoard){
 		int valueQuantity = this.value.getQuantity();
 		PersonalCards correspondingArrayList = this.personalCards.findCardsInPersonalBoard(playersBoard);
 		int sizeOfArray = correspondingArrayList.getCards().size();

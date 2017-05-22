@@ -16,7 +16,7 @@ public class Main {
 		
 		//MAIN FOR PRINTING COUNCIL PRIVILEGES
 		
-		CouncilPrivilege consiglio = new CouncilPrivilege("effettoPrivilegio",null);
+/*		CouncilPrivilege consiglio = new CouncilPrivilege("effettoPrivilegio",null);
 		SetOfValues marcovalues = new SetOfValues();
 		Player marco = new Player ("Marco", 0, null,null,marcovalues,null);
 		SetOfValues giuseppevalues = new SetOfValues();
@@ -29,7 +29,7 @@ public class Main {
 		System.out.println(marco.getMyValues());
 		
 		System.out.println("\nEcco le risorse di giuseppe");
-		System.out.println(giuseppe.getMyValues());
+		System.out.println(giuseppe.getMyValues());*/
 		
 		
 		
@@ -63,7 +63,7 @@ public class Main {
 			*/
 		
 //Giorgia main
-/*		
+		
 		Coin coins = new Coin(3);
 		MilitaryPoint points = new MilitaryPoint(3);
 		SetOfValues values = new SetOfValues(1);
@@ -81,14 +81,14 @@ public class Main {
 		System.out.println((coins.FindValueInPlayer(player)).getQuantity());
 		System.out.println(coins);
 		
-		MoltiplicationPoints effettopunti = new MoltiplicationPoints("bau", null, board, coins, points);
-		effettopunti.moltiplicationEffect();
-		System.out.println(player.getMyValues());
+		/*MoltiplicationPoints effettopunti = new MoltiplicationPoints("bau", null,coins, points);
+		effettopunti.moltiplicationEffect(board);
+		System.out.println(player.getMyValues());*/
 
-		MoltiplicationCards effettocarte = new MoltiplicationCards("ciao", null, board, coins, buildings);
-		effettocarte.moltiplicationEffect();
+		MoltiplicationCards effettocarte = new MoltiplicationCards("ciao", null, coins, buildings);
+		effettocarte.moltiplicationEffect(board);
 
 		System.out.println(player.getMyValues());
-*/		
+		
 	}
 }
