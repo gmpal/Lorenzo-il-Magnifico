@@ -1,14 +1,13 @@
 package it.polimi.ingsw.GC_24.places;
 
 import java.util.ArrayList;
-
 import it.polimi.ingsw.GC_24.PlayerColour;
 
 public class Production {
 	private ArrayList<ProductionPlace> productionPlaces;
 
 	public Production() {
-		this.productionPlaces = new ArrayList<ProductionPlace>();
+		this.productionPlaces = new ArrayList<>();
 	}
 	
 	public void clearPlaces(){

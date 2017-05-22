@@ -1,14 +1,13 @@
 package it.polimi.ingsw.GC_24.places;
 
 import java.util.ArrayList;
-
 import it.polimi.ingsw.GC_24.PlayerColour;
 
 public class Harvest {
 	private ArrayList<HarvestPlace> harvestPlaces;
 
 	public Harvest() {
-		this.harvestPlaces = new ArrayList<HarvestPlace>();
+		this.harvestPlaces = new ArrayList<>();
 	}
 	
 	public void clearPlaces(){

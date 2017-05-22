@@ -1,8 +1,6 @@
 package it.polimi.ingsw.GC_24.places;
 
-import it.polimi.ingsw.GC_24.FamilyMember;
 import it.polimi.ingsw.GC_24.Player;
-import it.polimi.ingsw.GC_24.personalboard.PersonalBoard;
 import it.polimi.ingsw.GC_24.values.Value;
 
 public class HarvestPlace extends Place{
@@ -18,10 +16,22 @@ public class HarvestPlace extends Place{
 		doHarvest();
 	}
 	
+	//gives the production value of the bonus tile to the player
 	public void doHarvest(){
 		Player player=this.famMemberOnPlace.getPlayer();
 		player.getMyBoard().getBonusTile().giveHarvestValues(player.getMyValues());
 	}
+	
+	//getter and setter
+	public int getAdditionalCostDice() {
+		return additionalCostDice;
+	}
+
+	public void setAdditionalCostDice(int additionalCostDice) {
+		this.additionalCostDice = additionalCostDice;
+	}
+	
+	
 }
 	
 	

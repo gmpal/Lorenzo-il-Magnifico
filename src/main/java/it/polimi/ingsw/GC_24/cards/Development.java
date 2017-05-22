@@ -1,15 +1,16 @@
 package it.polimi.ingsw.GC_24.cards;
 
+import it.polimi.ingsw.GC_24.effects.*;
 import it.polimi.ingsw.GC_24.personalboard.PersonalBoard;
-import it.polimi.ingsw.GC_24.personalboard.PersonalCards;
+
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 
 public abstract class Development extends Card{
 	
 	private SetOfValues cost;
 	private String type;
-	//private SpecialEffect specialEffect;
-	//private PermanentEffect permanentEffect;
+	private ImmediateEffect immediateEffect;
+	private PermanentEffect permanentEffect;
 	private int round;
 	
 	//constructor
@@ -17,7 +18,6 @@ public abstract class Development extends Card{
 	public Development(String name, boolean permeff, boolean immeff, boolean speceff, SetOfValues cost) {
 		super(name, permeff, immeff, speceff);
 		this.cost = cost;
-		// TODO Auto-generated constructor stub
 	}
 	
 	//getter and setters
@@ -39,8 +39,23 @@ public abstract class Development extends Card{
 	}
 	public void setRound(int round) {
 		this.round = round;
+	}	
+	public ImmediateEffect getImmediateEffect() {
+		return immediateEffect;
 	}
-	
+
+	public void setImmediateEffect(ImmediateEffect immediateEffect) {
+		this.immediateEffect = immediateEffect;
+	}
+
+	public PermanentEffect getPermanentEffect() {
+		return permanentEffect;
+	}
+
+	public void setPermanentEffect(PermanentEffect permanentEffect) {
+		this.permanentEffect = permanentEffect;
+	}
+
 	//add the card to the right arraylist on the personal board
 	public abstract void setCardOnPersonalBoard(PersonalBoard personalBoard); // redefined in every subclass
 

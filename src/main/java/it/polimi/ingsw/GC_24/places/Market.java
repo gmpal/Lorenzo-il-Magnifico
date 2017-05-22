@@ -6,7 +6,7 @@ public class Market {
 	private ArrayList<MarketPlace> marketPlaces;
 
 	public Market() {
-		this.marketPlaces = new ArrayList<MarketPlace>();
+		this.marketPlaces = new ArrayList<>();
 	}
 	
 	public void clearPlaces(){

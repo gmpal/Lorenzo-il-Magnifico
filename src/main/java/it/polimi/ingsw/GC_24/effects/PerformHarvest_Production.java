@@ -10,8 +10,7 @@ public class PerformHarvest_Production extends ImmediateEffect{
 
 	public PerformHarvest_Production(String name, SetOfValues effectValues, Die dieValue) {
 		super(name, effectValues);
-		this.dieValue = dieValue;
-		// TODO Auto-generated constructor stub
+		this.setDieValue(dieValue);
 	}
 	
 	public void performHarvest(Player player){
@@ -20,6 +19,15 @@ public class PerformHarvest_Production extends ImmediateEffect{
 	
 	public void performProduction(Player player){
 		player.getMyBoard().getBonusTile().giveProductiontValues(player.getMyValues());
+	}
+	
+	//getter and setter
+	public Die getDieValue() {
+		return dieValue;
+	}
+
+	public void setDieValue(Die dieValue) {
+		this.dieValue = dieValue;
 	}
 
 }
