@@ -1,15 +1,21 @@
 package it.polimi.ingsw.GC_24.places;
 
 import it.polimi.ingsw.GC_24.Player;
+import it.polimi.ingsw.GC_24.cards.Development;
 import it.polimi.ingsw.GC_24.values.Value;
 
-public abstract class TowerPlace extends Place {
+public class TowerPlace extends Place {
+	
+	private Development correspondingCard;
 	
 	public TowerPlace(int costDice, Value value){
 		super(costDice, value);
+		this.correspondingCard=null;
 	}
 	
-	public abstract void takeWithoutPlacing();
+	public void takeWithoutPlacing(){
+		this.correspondingCard.setCardOnPersonalBoard(this.getFamMemberOnPlace().getPlayer().getMyBoard());
+	}
 	
 	@Override
 	public void giveEffects(){

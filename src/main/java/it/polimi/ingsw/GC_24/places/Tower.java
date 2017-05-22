@@ -13,7 +13,7 @@ public class Tower {
 	
 	public boolean isThereSameColour(PlayerColour playerColour){
 		for(TowerPlace towerPlace:this.tower){
-			if((towerPlace.getFamMemberOnPlace().getPlayer().getMyColour()).equals(playerColour)){
+			if(!towerPlace.isAvailable()&&(towerPlace.getFamMemberOnPlace().getPlayer().getMyColour()).equals(playerColour)){
 				return true;
 			}
 		}
