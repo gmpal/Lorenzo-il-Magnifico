@@ -1,4 +1,4 @@
-package it.polimi.ingsw.GC_24.effects;
+ package it.polimi.ingsw.GC_24.effects;
 
 import it.polimi.ingsw.GC_24.Die;
 import it.polimi.ingsw.GC_24.Player;

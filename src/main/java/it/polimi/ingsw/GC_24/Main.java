@@ -16,7 +16,6 @@ public class Main {
 		
 		//MAIN FOR PRINTING COUNCIL PRIVILEGES
 		
-/*		CouncilPrivilege consiglio = new CouncilPrivilege("effettoPrivilegio",null);
 		SetOfValues marcovalues = new SetOfValues();
 		Player marco = new Player ("Marco", 0, null,null,marcovalues,null);
 		SetOfValues giuseppevalues = new SetOfValues();
