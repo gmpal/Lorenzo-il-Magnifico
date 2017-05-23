@@ -26,6 +26,12 @@ public class View extends Observable implements Observer {
 	public void update() {
 		System.out.println("View here. I've been notified by the controller");
 	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 
 

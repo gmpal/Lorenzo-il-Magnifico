@@ -52,9 +52,7 @@ public class Board {
 		this.councilPalace.clearPlaces();
 	}
 	
-	//gerres and setters
-
-
+	//getters and setters
 	public int getNumPlayers() {
 		return numPlayers;
 	}
