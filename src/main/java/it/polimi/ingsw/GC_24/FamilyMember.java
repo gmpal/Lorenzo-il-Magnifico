@@ -29,6 +29,12 @@ public class FamilyMember {
 	}
 	
 	
+	//sets a family member value and colour from a SetOfDice
+	public void setMember(Die die) {
+		this.setMemberColour(die.getColour());
+		this.setMemberValue(die.getValue());
+	}
+	
 	//Prints a family member
 	@Override
 	public String toString() {
@@ -74,6 +80,10 @@ public class FamilyMember {
 	public void setPlayer(Player player) {
 		this.player = player;
 	}
+
+	
+
+
 	
 	
 	

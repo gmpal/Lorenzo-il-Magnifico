@@ -3,24 +3,32 @@ package it.polimi.ingsw.GC_24;
 public class Family {
 	
 	private Player player;
-	private SetOfDice dice; 
+	
 	private FamilyMember member1;
 	private FamilyMember member2;
 	private FamilyMember member3;
 	private FamilyMember member4;
 	
+	
 	//constructor
-	
-	
-	
-	public Family(Player player, SetOfDice dice){
+		
+	public Family(Player player){
 		this.player = player;
-		this.dice = dice;
-		this.member1 = new FamilyMember(player, dice.getDie1());
-		this.member2 = new FamilyMember(player, dice.getDie2());
-		this.member3 = new FamilyMember(player, dice.getDie3());
+	
+		this.member1 = new FamilyMember(player, null);
+		this.member2 = new FamilyMember(player, null);
+		this.member3 = new FamilyMember(player, null);
 		this.member4 = new FamilyMember(player);
 	
+	}
+	
+	
+	//
+	public void setFamily(SetOfDice dice) {
+		this.member1.setMember(dice.getDie1());
+		this.member2.setMember(dice.getDie2());
+		this.member3.setMember(dice.getDie3());
+				
 	}
 	
 	//Prints a whole family
@@ -60,6 +68,8 @@ public class Family {
 	public void setMember4(FamilyMember member4) {
 		this.member4 = member4;
 	}
+
+	
 	
 	
 	
