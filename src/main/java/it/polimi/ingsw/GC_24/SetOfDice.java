@@ -13,11 +13,11 @@ public class SetOfDice {
 	
 	Random rnd = new Random();
 	
-	//random constructor
+	//null constructor
 	public SetOfDice() {
-		this.die1 = new Die(rnd.nextInt(6)+1, DieColour.BLACK);
-		this.die2 = new Die(rnd.nextInt(6)+1, DieColour.WHITE);
-		this.die3 = new Die(rnd.nextInt(6)+1, DieColour.ORANGE);
+		this.die1 = null;
+		this.die2 = null;
+		this.die3 = null;
 	}
 	
 	//useful methods

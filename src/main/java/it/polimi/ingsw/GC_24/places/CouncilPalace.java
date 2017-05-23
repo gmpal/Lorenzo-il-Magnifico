@@ -11,13 +11,16 @@ public class CouncilPalace {
 		this.councilPlaces = new ArrayList<>();
 	}
 	
+	
+	//useful methods
+
 	//empties all the places
+
 	public void clearPlaces(){
 		for(CouncilPlace councilPlace:this.councilPlaces){
 			councilPlace.clearPlace();
 		}
 	}
-
 	//getters and setters
 	public ArrayList<CouncilPlace> getCouncilPlaces() {
 		return councilPlaces;

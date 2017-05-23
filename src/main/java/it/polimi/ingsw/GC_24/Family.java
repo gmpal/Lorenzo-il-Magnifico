@@ -3,30 +3,40 @@ package it.polimi.ingsw.GC_24;
 public class Family {
 	
 	private Player player;
-	private SetOfDice dice;
+	
 	private FamilyMember member1;
 	private FamilyMember member2;
 	private FamilyMember member3;
 	private FamilyMember member4;
-	
+		
 	//constructor
-	public Family(Player player, SetOfDice dice){
-		this.player = player;
-		this.dice = dice;
-		this.member1 = new FamilyMember(player, dice.getDie1());
-		this.member2 = new FamilyMember(player, dice.getDie2());
-		this.member3 = new FamilyMember(player, dice.getDie3());
+		
+	public Family(Player player){
+  	this.player = player;
+		this.member1 = new FamilyMember(player, null);
+		this.member2 = new FamilyMember(player, null);
+		this.member3 = new FamilyMember(player, null);
 		this.member4 = new FamilyMember(player);
+	
+	}
+	
+	
+	//
+	public void setFamily(SetOfDice dice) {
+		this.member1.setMember(dice.getDie1());
+		this.member2.setMember(dice.getDie2());
+		this.member3.setMember(dice.getDie3());
+				
 	}
 	
 	//Prints a whole family
 	@Override
 	public String toString() {
 		return "Family of " + player + 
-				":\n member1 --> " + member1.isAvailableString() + 
-				",\n member2 --> " + member2.isAvailableString() + 
-				",\n member3 --> " + member3.isAvailableString() +
-				",\n member4 --> " + member4.isAvailableString() + ".\n";
+				":\n member1 --> " + member1 + 
+				"\n member2 --> " + member2 + 
+				"\n member3 --> " + member3 +
+				"\n member4 --> " + member4 + ".\n";
 	}
 	
 	//getters and setters
@@ -55,12 +65,3 @@ public class Family {
 	public void setMember4(FamilyMember member4) {
 		this.member4 = member4;
 	}
-	public SetOfDice getDice() {
-		return dice;
-	}
-
-	public void setDice(SetOfDice dice) {
-		this.dice = dice;
-	}
-	
-}

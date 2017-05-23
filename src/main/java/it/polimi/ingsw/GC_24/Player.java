@@ -8,7 +8,6 @@ import it.polimi.ingsw.GC_24.values.*;
 public class Player {
 	
 	private String myName;
-	private int myNumber;
 	private Family myFamily;
 	private PersonalBoard myBoard; 
 	private SetOfValues myValues;
@@ -18,21 +17,11 @@ public class Player {
 	//AUTO-GENERATED contructor, NEEDS TO BE CORRECTED
 	
 	//Constructor number1 --> NEED to create a setOfValues
-	public Player(String myName, int myNumber, Family myFamily, PersonalBoard myBoard, SetOfValues myValues, PlayerColour myColour) {
+	public Player(String myName, PlayerColour myColour) {
 		this.myName = myName;
-		this.myNumber = myNumber;
-		this.myFamily = myFamily;
-		this.myBoard = myBoard;
-		this.myValues = myValues;
-		this.myColour = myColour;
-	}
-	//Constructor number1 --> NO NEED to create a setOfValues, automatically created from player number
-	public Player(String myName, int myNumber, Family myFamily, PersonalBoard myBoard, PlayerColour myColour) {
-		this.myName = myName;
-		this.myNumber = myNumber;
-		this.myFamily = myFamily;
-		this.myBoard = myBoard;
-		this.myValues = new SetOfValues(myNumber);
+		this.myFamily =  new Family(this);
+		this.myBoard = new PersonalBoard(this);
+		this.myValues = new SetOfValues();
 		this.myColour = myColour;
 	}
 	
@@ -52,6 +41,7 @@ public class Player {
 	@Override
 	public String toString() {
 		return myName;
+
 	}
 		
 	//getters and setters
@@ -63,15 +53,7 @@ public class Player {
 		this.myName = myName;
 	}
 
-	public int getMyNumber() {
-		return myNumber;
-	}
-
-	public void setMyNumber(int myNumber) {
-		this.myNumber = myNumber;
-	}
-
-	 public Family getMyFamily() {
+	public Family getMyFamily() {
 		return myFamily;
 	}
 

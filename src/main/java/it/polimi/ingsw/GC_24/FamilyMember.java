@@ -28,13 +28,24 @@ public class FamilyMember {
 	}
 	
 	
+	//sets a family member value and colour from a SetOfDice
+	public void setMember(Die die) {
+		this.setMemberColour(die.getColour());
+		this.setMemberValue(die.getValue());
+	}
+	
 	//Prints a family member
 	@Override
 	public String toString() {
 		return "Value=" + memberValue + 
-				", available=" + available + 
-				", Colour=" + memberColour
+				"\tColour=" + memberColour+
+				 "\t Status= "+isAvailableString()
 				;
+	}
+	
+	public String isAvailableString() {
+		if (this.isAvailable()){ return "available";}
+		else return "Not available"; 
 	}
 
 	public String isAvailableString() {
@@ -73,5 +84,9 @@ public class FamilyMember {
 	public void setPlayer(Player player) {
 		this.player = player;
 	}
+
+	
+
+
 	
 }

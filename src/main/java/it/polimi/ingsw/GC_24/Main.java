@@ -14,9 +14,20 @@ public class Main {
 		
 //Gianmarco main
 		
-		//MAIN FOR PRINTING COUNCIL PRIVILEGES
+	  //MAIN FOR PRINTING EVERYTHING
+		SetOfDice dadi = new SetOfDice();
+		Player giuseppe = new Player ("Giuseppe", 2, null,null,null);
+		Family famiglia = new Family (giuseppe,dadi);
+		giuseppe.setMyFamily(famiglia);
 		
-/*		CouncilPrivilege consiglio = new CouncilPrivilege("effettoPrivilegio",null);
+		
+		System.out.println(giuseppe.getMyFamily());
+	 
+		
+		
+	/*	//MAIN FOR PRINTING COUNCIL PRIVILEGES
+		
+		CouncilPrivilege consiglio = new CouncilPrivilege("effettoPrivilegio",null);
 		SetOfValues marcovalues = new SetOfValues();
 		Player marco = new Player ("Marco", 0, null,null,marcovalues,null);
 		SetOfValues giuseppevalues = new SetOfValues();
@@ -29,14 +40,14 @@ public class Main {
 		System.out.println(marco.getMyValues());
 		
 		System.out.println("\nEcco le risorse di giuseppe");
-		System.out.println(giuseppe.getMyValues());*/
+		System.out.println(giuseppe.getMyValues());
+		*/
 		
 		
 		
 		
+	/*	//MAIN FOR PRINTING FAMILIES AND RESOURCES
 		
-		//MAIN FOR PRINTING FAMILIES AND RESOURCES
-		/*
 			Player giocatore1 = new Player ("Marco", 1, null,null,null,null);
 			Player giocatore2 = new Player ("Luca", 2, null,null,null,null);
 			Player giocatore3 = new Player ("Andrea", 3, null,null,null,null);
@@ -62,8 +73,15 @@ public class Main {
 			System.out.println("Risorse di " + giocatore4 + " :"+giocatore4.getMyValues());
 			*/
 		
-//Giorgia main
+
 		
+		
+		
+		
+		
+//Giorgia main
+	
+		/*	
 		Coin coins = new Coin(3);
 		MilitaryPoint points = new MilitaryPoint(3);
 		SetOfValues values = new SetOfValues(1);
@@ -85,14 +103,14 @@ public class Main {
 		System.out.println((coins.FindValueInPlayer(player)).getQuantity());
 		System.out.println(coins);*/
 		
-		/*MoltiplicationPoints effettopunti = new MoltiplicationPoints("bau", null,coins, points);
+		MoltiplicationPoints effettopunti = new MoltiplicationPoints("bau", null,coins, points);
 		effettopunti.moltiplicationEffect(board);
-		System.out.println(player.getMyValues());*/
+		System.out.println(player.getMyValues());
 
 		MoltiplicationCards effettocarte = new MoltiplicationCards("ciao", null, coins, buildings);
 		effettocarte.moltiplicationEffect(board);
 
 		System.out.println(player.getMyValues());
-		
+		*/
 	}
 }

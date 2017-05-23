@@ -1,5 +1,7 @@
 package it.polimi.ingsw.GC_24.values;
 
+import it.polimi.ingsw.GC_24.Player;
+
 public class SetOfValues {
 
 	private Wood woods;
@@ -10,29 +12,32 @@ public class SetOfValues {
 	private MilitaryPoint militaryPoints;
 	private VictoryPoint victoryPoints;
 	
-	//constructor with player number
-	public SetOfValues (int numplayer){
-		this.woods = new Wood(3);
-		this.stones = new Stone(3);
-		this.servants = new Servant(3);
-		this.coins = new Coin(4+numplayer);
-		this.faithPoints = new FaithPoint(0);
-		this.militaryPoints = new MilitaryPoint(0);
-		this.victoryPoints = new VictoryPoint(0);
-	}
-	
+
 	//constructor with no parameters --> Sets everything to 0
 	public SetOfValues() {
-		this.woods = new Wood(0);
-		this.stones = new Stone(0);
-		this.coins = new Coin(0);
-		this.servants = new Servant(0);
-		this.faithPoints = new FaithPoint(0);
-		this.militaryPoints = new MilitaryPoint(0);
-		this.victoryPoints = new VictoryPoint(0);
+		this.woods = null;
+		this.stones = null;
+		this.coins = null;
+		this.servants = null;
+		this.faithPoints = null;
+		this.militaryPoints = null;
+		this.victoryPoints = null;
 	}
 
 	//useful methods
+
+  
+	//method to set a SetOfValue from a numPlayer
+	public void setValues (int playerNumber){
+		this.woods = new Wood(3);
+		this.stones = new Stone(3);
+		this.servants = new Servant(3);
+		this.coins = new Coin(4+playerNumber);
+		this.faithPoints = new FaithPoint(0);
+		this.militaryPoints = new MilitaryPoint(10);
+		this.victoryPoints = new VictoryPoint(0);
+	}
+
 	
 	//method to sum two sets of values
 		public SetOfValues addTwoSetsOfValues(SetOfValues v){
@@ -46,7 +51,7 @@ public class SetOfValues {
 			return v;	
 		}
 
-	//toString
+	//toString TODO:un po' troppi if, c'è un modo migliore?
 	@Override
 	public String toString() {
 	
@@ -73,6 +78,7 @@ public class SetOfValues {
 			return builder.toString();
 	}
 
+	
 	//getters and setters with VALUES	
 	public Wood getWoods() {
 		return woods;
