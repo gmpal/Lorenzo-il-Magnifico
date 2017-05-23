@@ -140,4 +140,5 @@ public class Model extends Observable {
 		this.currentPeriod = currentPeriod;
 	}
 	
+}
 

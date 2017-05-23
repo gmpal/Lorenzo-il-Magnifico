@@ -31,7 +31,7 @@ public class Controller extends Observable implements Observer {
 		 * cosa fare con l'azione, quali sono le possibili azioni
 		 * in base a cosa riceve crea l'azione specificata e conclude con
 		 * action.esegui();*/
-		action.esegui();
+	//	action.run();
 	
 	}
 	

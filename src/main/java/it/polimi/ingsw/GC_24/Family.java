@@ -65,3 +65,4 @@ public class Family {
 	public void setMember4(FamilyMember member4) {
 		this.member4 = member4;
 	}
+}

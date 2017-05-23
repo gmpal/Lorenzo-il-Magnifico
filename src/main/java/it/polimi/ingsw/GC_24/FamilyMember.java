@@ -42,11 +42,6 @@ public class FamilyMember {
 				 "\t Status= "+isAvailableString()
 				;
 	}
-	
-	public String isAvailableString() {
-		if (this.isAvailable()){ return "available";}
-		else return "Not available"; 
-	}
 
 	public String isAvailableString() {
 		if (this.isAvailable()){ return "available";}
@@ -84,9 +79,5 @@ public class FamilyMember {
 	public void setPlayer(Player player) {
 		this.player = player;
 	}
-
-	
-
-
 	
 }

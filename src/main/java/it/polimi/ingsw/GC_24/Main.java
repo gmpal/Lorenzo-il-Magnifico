@@ -15,7 +15,7 @@ public class Main {
 //Gianmarco main
 		
 	  //MAIN FOR PRINTING EVERYTHING
-		SetOfDice dadi = new SetOfDice();
+/*		SetOfDice dadi = new SetOfDice();
 		Player giuseppe = new Player ("Giuseppe", 2, null,null,null);
 		Family famiglia = new Family (giuseppe,dadi);
 		giuseppe.setMyFamily(famiglia);
@@ -25,7 +25,7 @@ public class Main {
 	 
 		
 		
-	/*	//MAIN FOR PRINTING COUNCIL PRIVILEGES
+	//MAIN FOR PRINTING COUNCIL PRIVILEGES
 		
 		CouncilPrivilege consiglio = new CouncilPrivilege("effettoPrivilegio",null);
 		SetOfValues marcovalues = new SetOfValues();
@@ -110,7 +110,8 @@ public class Main {
 		MoltiplicationCards effettocarte = new MoltiplicationCards("ciao", null, coins, buildings);
 		effettocarte.moltiplicationEffect(board);
 
-		System.out.println(player.getMyValues());
+		System.out.println(player.getMyValues());*/
 		
-	}*/
+	}
 }
+

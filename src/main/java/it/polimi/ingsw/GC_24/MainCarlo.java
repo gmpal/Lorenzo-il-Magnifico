@@ -8,7 +8,7 @@ import it.polimi.ingsw.GC_24.values.Coin;
 
 public class MainCarlo {
 	public static void main(String[] args) {
-		Board board1=new Board(1, 2);
+	/*	Board board1=new Board(1, 2);
 		Player player1= new Player(null, 1, new Family(null, new SetOfDice()), null, null, PlayerColour.BLUE);
 		Player player2= new Player(null, 2, new Family(null, new SetOfDice()), null, null, PlayerColour.GREEN);
 		ArrayList<Player> players=new ArrayList<>();
@@ -26,7 +26,7 @@ public class MainCarlo {
 		councilPalace.getCouncilPlaces().get(1).setFamMemberOnPlace(player1.getMyFamily().getMember1());
 		
 		turnPlayer.updateListOfPlayerTurn(councilPalace);
-		System.out.println(turnPlayer);
+		System.out.println(turnPlayer);*/
 
 
 		/*board1.getTowerTerritories().getTower().add(new TowerPlace(3, new Coin(3)));
