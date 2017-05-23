@@ -1,7 +1,6 @@
 package it.polimi.ingsw.GC_24.personalboard;
 
 import it.polimi.ingsw.GC_24.Player;
-//import it.polimi.ingsw.GC_24.PlayerColour;
 
 public class PersonalBoard {
 	
@@ -14,7 +13,6 @@ public class PersonalBoard {
 	
 	//constructor
 	public PersonalBoard(Player player){
-
 		this.personalBuildings = new PersonalBuildings();
 		this.personalVentures = new PersonalVentures();
 		this.personalTerritories = new PersonalTerritories();
@@ -67,7 +65,7 @@ public class PersonalBoard {
 		return mybonusTile;
 	}
 
-	public void setBonusTile(BonusTile bonusTile) {
+	public void setBonusTile(BonusTile mybonusTile) {
 		this.mybonusTile = mybonusTile;
 	}
 

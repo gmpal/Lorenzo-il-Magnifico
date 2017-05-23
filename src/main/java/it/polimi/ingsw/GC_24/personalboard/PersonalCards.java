@@ -1,8 +1,6 @@
 package it.polimi.ingsw.GC_24.personalboard;
 
 import java.util.ArrayList;
-
-import it.polimi.ingsw.GC_24.PlayerColour;
 import it.polimi.ingsw.GC_24.cards.*;
 
 public abstract class PersonalCards {
@@ -11,7 +9,7 @@ public abstract class PersonalCards {
 	
 	//constructor
 	public PersonalCards(){
-		this.cards= new ArrayList<Card>();
+		this.cards= new ArrayList<>();
 	}
 	
 	/*finds an ArrayList of PersonalCards in the PersonalBoard if you don't already know the type

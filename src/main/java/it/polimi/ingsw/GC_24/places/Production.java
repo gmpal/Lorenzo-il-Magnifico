@@ -1,14 +1,13 @@
 package it.polimi.ingsw.GC_24.places;
 
 import java.util.ArrayList;
-
 import it.polimi.ingsw.GC_24.PlayerColour;
 
 public class Production {
 	private ArrayList<ProductionPlace> productionPlaces;
 
 	public Production() {
-		this.productionPlaces = new ArrayList<ProductionPlace>();
+		this.productionPlaces = new ArrayList<>();
 	}
 	
 	public void clearPlaces(){
@@ -19,7 +18,7 @@ public class Production {
 	
 	public boolean isThereSameColour(PlayerColour playerColour){
 		for(ProductionPlace productionPlace:this.productionPlaces){
-			if(productionPlace.getFamMemberOnPlace().getMemberColour().equals(playerColour)){
+			if(!productionPlace.isAvailable()&&(productionPlace.getFamMemberOnPlace().getPlayer().getMyColour()).equals(playerColour)){
 				return true;
 			}
 		}
