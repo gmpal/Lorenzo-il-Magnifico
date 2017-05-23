@@ -15,13 +15,13 @@ public class CouncilPrivilege extends ImmediateEffect {
 	public CouncilPrivilege(String name, SetOfValues effectValues) {
 		super(name, effectValues);
 		this.councilPrivileges = new ArrayList<>();
-		SetCouncil();
+		setCouncil();
 	}
 	
 	//useful methods
 	
 	//SETS THE COUNCIL ARRAY WITH THE CORRECT ELEMENTS
-	public void SetCouncil(){
+	public void setCouncil(){
 		SetOfValues element1 = new SetOfValues();
 		element1.getWoods().setQuantity(1);
 		element1.getStones().setQuantity(1);
@@ -54,8 +54,10 @@ public class CouncilPrivilege extends ImmediateEffect {
 			
 			System.out.println("Ecco i privilegi:\n" + this);
 			
-			if (i==0) {System.out.println("Scegli un elemento");}
-			if (i!=0) {System.out.println("Scegli un altro elemento");}
+			if (i==0) 
+				System.out.println("Scegli un elemento");
+			if (i!=0) 
+				System.out.println("Scegli un altro elemento");
 			
 			int index = scanner.nextInt();
 			while (index<1 || index>councilPrivileges.size()){
@@ -71,7 +73,7 @@ public class CouncilPrivilege extends ImmediateEffect {
 		//reset the council
 		scanner.close();
 		councilPrivileges.clear();
-		SetCouncil();
+		setCouncil();
 	}
 
 	//Prints the composition of the Council
