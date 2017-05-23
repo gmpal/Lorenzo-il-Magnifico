@@ -31,8 +31,15 @@ public class Controller extends Observable implements Observer {
 		 * cosa fare con l'azione, quali sono le possibili azioni
 		 * in base a cosa riceve crea l'azione specificata e conclude con
 		 * action.esegui();*/
-	//	action.run();
+
+	//	action.esegui();
 	
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

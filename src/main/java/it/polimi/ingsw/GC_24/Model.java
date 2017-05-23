@@ -1,4 +1,4 @@
-package it.polimi.ingsw.GC_24;
+﻿package it.polimi.ingsw.GC_24;
 
 
 import java.util.ArrayList;
@@ -139,6 +139,6 @@ public class Model extends Observable {
 	public void setCurrentPeriod(Period currentPeriod) {
 		this.currentPeriod = currentPeriod;
 	}
-	
-}
+
+}	
 
