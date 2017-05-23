@@ -8,12 +8,10 @@ public abstract class ImmediateEffect extends Effect{
 	// this class gives to the player the resource immediate effect and the immediate special effect
 	private SetOfValues effectValues;
 	
-	
 	//constructor needed for subclasses
 	public ImmediateEffect(String name, SetOfValues effectValues) {
 		super(name);
 		this.effectValues = effectValues;
-		// TODO Auto-generated constructor stub
 	}
 
 	//useful methods
@@ -24,20 +22,14 @@ public abstract class ImmediateEffect extends Effect{
 			this.effectValues.addTwoSetsOfValues(player.getMyValues());			
 		}
 	}
-
 	
 	//getters and setters
 	public SetOfValues getEffectValues() {
 		return effectValues;
 	}
 
-
 	public void setEffectValues(SetOfValues effectValues) {
 		this.effectValues = effectValues;
 	}
-	
-
-	
-	
 						
 }

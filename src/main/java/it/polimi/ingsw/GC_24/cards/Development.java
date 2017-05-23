@@ -14,7 +14,6 @@ public abstract class Development extends Card{
 	private int round;
 	
 	//constructor
-	
 	public Development(String name, boolean permeff, boolean immeff, boolean speceff, SetOfValues cost) {
 		super(name, permeff, immeff, speceff);
 		this.cost = cost;
@@ -56,7 +55,7 @@ public abstract class Development extends Card{
 		this.permanentEffect = permanentEffect;
 	}
 
-	//add the card to the right arraylist on the personal board
+	//add the card to the right ArrayList on the personal board
 	public abstract void setCardOnPersonalBoard(PersonalBoard personalBoard); // redefined in every subclass
 
 }

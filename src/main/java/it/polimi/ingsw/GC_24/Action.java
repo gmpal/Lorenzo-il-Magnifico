@@ -2,6 +2,7 @@ package it.polimi.ingsw.GC_24;
 
 public abstract class Action {
 	
+
 		private final Model gioco;
 		
 		//constructor
@@ -17,5 +18,5 @@ public abstract class Action {
 		
 		public abstract void run();
 		
-	
+
 }

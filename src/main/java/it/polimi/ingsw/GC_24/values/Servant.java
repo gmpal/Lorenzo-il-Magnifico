@@ -4,9 +4,9 @@ import it.polimi.ingsw.GC_24.Player;
 
 public class Servant extends Value {
 
+	//constructor
 	public Servant(int value) {
 		super(value);
-		// TODO Auto-generated constructor stub
 	}
 	
 	@Override
@@ -16,7 +16,7 @@ public class Servant extends Value {
 	} 
 
 	@Override
-	public Value FindValueInPlayer(Player player){
+	public Value findValueInPlayer(Player player){
 		return player.getMyValues().getServants();
 	}
 }

@@ -8,11 +8,13 @@ public class TowerPlace extends Place {
 	
 	private Development correspondingCard;
 	
+	//constructor
 	public TowerPlace(int costDice, Value value){
 		super(costDice, value);
 		this.correspondingCard=null;
 	}
 	
+	//method to take a card without placing a family member
 	public void takeWithoutPlacing(){
 		this.correspondingCard.setCardOnPersonalBoard(this.getFamMemberOnPlace().getPlayer().getMyBoard());
 	}

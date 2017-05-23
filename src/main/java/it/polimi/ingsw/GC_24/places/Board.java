@@ -1,11 +1,16 @@
 package it.polimi.ingsw.GC_24.places;
 
+import it.polimi.ingsw.GC_24.Model;
+
 public class Board {
 
 	private static final int maxNumPlayerToLock=3; 
 
-	private int gameID;
-	private int numPlayer;
+
+	//rimosso attributo GameID --> passiamo direttamente il game
+	//private final Model game;
+	
+	private int numPlayers;
 	private Tower towerTerritories;
 	private Tower towerCharacters;
 	private Tower towerBuildings;
@@ -15,9 +20,10 @@ public class Board {
 	private Market market;
 	private CouncilPalace councilPalace;
 	
-	public Board(int gameID, int numPlayer) {
-		this.gameID = gameID;
-		this.numPlayer = numPlayer;
+	public Board(int numPlayers) {
+		
+		//this.game=game;
+		this.numPlayers = numPlayers;
 		this.towerTerritories = new Tower();
 		this.towerCharacters = new Tower();
 		this.towerBuildings = new Tower();
@@ -28,8 +34,9 @@ public class Board {
 		this.councilPalace = new CouncilPalace();
 	}
 	
-	public boolean lockPlaces(int numPlayer){
-		if(numPlayer< maxNumPlayerToLock)return true;
+	//
+	public boolean lockPlaces(int numPlayers){
+		if(numPlayers< maxNumPlayerToLock)return true;
 		else return false;
 	}
 		
@@ -44,7 +51,8 @@ public class Board {
 		this.market.clearPlaces();
 		this.councilPalace.clearPlaces();
 	}
-
+	
+	//gerres and setters
 	public int getGameID() {
 		return gameID;
 	}
@@ -53,12 +61,12 @@ public class Board {
 		this.gameID = gameID;
 	}
 
-	public int getNumPlayer() {
-		return numPlayer;
+	public int getNumPlayers() {
+		return numPlayers;
 	}
 
-	public void setNumPlayer(int numPlayer) {
-		this.numPlayer = numPlayer;
+	public void setNumPlayers(int numPlayers) {
+		this.numPlayers = numPlayers;
 	}
 
 	public Tower getTowerTerritories() {

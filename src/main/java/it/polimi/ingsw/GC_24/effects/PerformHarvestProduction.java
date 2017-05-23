@@ -4,11 +4,12 @@ import it.polimi.ingsw.GC_24.Die;
 import it.polimi.ingsw.GC_24.Player;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 
-public class PerformHarvest_Production extends ImmediateEffect{
+public class PerformHarvestProduction extends ImmediateEffect{
 	
 	private Die dieValue;
 
-	public PerformHarvest_Production(String name, SetOfValues effectValues, Die dieValue) {
+	//constructor
+	public PerformHarvestProduction(String name, SetOfValues effectValues, Die dieValue) {
 		super(name, effectValues);
 		this.setDieValue(dieValue);
 	}

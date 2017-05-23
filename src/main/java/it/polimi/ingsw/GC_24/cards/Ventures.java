@@ -8,15 +8,18 @@ public class Ventures extends Development{
 	
 	private MilitaryPoint requiredMilitaryPoints;
 	
+	//constructor
 	public Ventures(String name, boolean permeff, boolean immeff, boolean speceff, SetOfValues cost, MilitaryPoint requiredMilitaryPoints) {
 		super(name, permeff, immeff, speceff, cost);
 		this.requiredMilitaryPoints = requiredMilitaryPoints;
 	}
 	
+	@Override
 	public void setCardOnPersonalBoard(PersonalBoard personalBoard){
 		personalBoard.getPersonalVentures().setCards(this);
 	}
-
+	
+	//getters and setters
 	public MilitaryPoint getRequiredMilitaryPoints() {
 		return requiredMilitaryPoints;
 	}

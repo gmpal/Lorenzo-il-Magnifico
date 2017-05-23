@@ -9,6 +9,7 @@ public class MarketPlace extends Place {
 	private Value extraValue;
 	private Effect privilegeEffect;
 	
+	//constructor
 	public MarketPlace(Value extraValue, Value value, Effect privilegeEffect, int costDice){
 		super(costDice, value);
 		this.extraValue=extraValue;
@@ -24,6 +25,7 @@ public class MarketPlace extends Place {
 		player.setMyValues(this.extraValue.addValueToSet(player.getMyValues()));
 	}
 
+	//getters and setters
 	public Value getExtraValue() {
 		return extraValue;
 	}

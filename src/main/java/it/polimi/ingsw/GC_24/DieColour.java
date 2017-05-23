@@ -4,5 +4,4 @@ public enum DieColour {
 	BLACK, 
 	ORANGE, 
 	WHITE;
-	
 }
