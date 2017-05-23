@@ -12,9 +12,11 @@ import it.polimi.ingsw.GC_24.values.*;
 public class Main {
 	public static void main(String[] args) {
 		
+		
+		System.out.println("Compile ok");
 //Gianmarco main
 		
-	  //MAIN FOR PRINTING EVERYTHING
+	  /*MAIN FOR PRINTING EVERYTHING
 		SetOfDice dadi = new SetOfDice();
 		Player giuseppe = new Player ("Giuseppe", 2, null,null,null);
 		Family famiglia = new Family (giuseppe,dadi);
@@ -22,7 +24,7 @@ public class Main {
 		
 	
 		System.out.println(giuseppe.getMyFamily());
-	 
+	 */
 		
 		
 	/*	//MAIN FOR PRINTING COUNCIL PRIVILEGES
@@ -110,7 +112,7 @@ public class Main {
 		MoltiplicationCards effettocarte = new MoltiplicationCards("ciao", null, coins, buildings);
 		effettocarte.moltiplicationEffect(board);
 
-		System.out.println(player.getMyValues());
+		System.out.println(player.getMyValues());*/
 		
-	}*/
+	}
 }
