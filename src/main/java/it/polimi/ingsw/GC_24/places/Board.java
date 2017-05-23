@@ -52,15 +52,7 @@ public class Board {
 		this.councilPalace.clearPlaces();
 	}
 	
-	//gerres and setters
-	public int getGameID() {
-		return gameID;
-	}
-
-	public void setGameID(int gameID) {
-		this.gameID = gameID;
-	}
-
+	//getters and setters
 	public int getNumPlayers() {
 		return numPlayers;
 	}
