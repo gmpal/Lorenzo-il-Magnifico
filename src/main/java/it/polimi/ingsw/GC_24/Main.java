@@ -91,13 +91,17 @@ public class Main {
 		Buildings edificio = new Buildings("miao", false, false, false, null);
 		edificio.setCardOnPersonalBoard(board);
 		player.setMyBoard(board);
+		values.getMilitaryPoints().setQuantity(10);
+		values.getFaithPoints().setQuantity(5);
 
 		PersonalBuildings buildings = new PersonalBuildings();
-
 		
-		System.out.println(values);
+		Rankings ranking = new Rankings(player);
+
+		System.out.println(ranking);
+	/*	System.out.println(values);
 		System.out.println((coins.FindValueInPlayer(player)).getQuantity());
-		System.out.println(coins);
+		System.out.println(coins);*/
 		
 		MoltiplicationPoints effettopunti = new MoltiplicationPoints("bau", null,coins, points);
 		effettopunti.moltiplicationEffect(board);

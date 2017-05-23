@@ -8,13 +8,11 @@ public class Family {
 	private FamilyMember member2;
 	private FamilyMember member3;
 	private FamilyMember member4;
-	
-	
+		
 	//constructor
 		
 	public Family(Player player){
-		this.player = player;
-	
+  	this.player = player;
 		this.member1 = new FamilyMember(player, null);
 		this.member2 = new FamilyMember(player, null);
 		this.member3 = new FamilyMember(player, null);
@@ -46,7 +44,6 @@ public class Family {
 		return member1;
 	}
 	
-
 	public void setMember1(FamilyMember member1) {
 		this.member1 = member1;
 	}
@@ -68,9 +65,3 @@ public class Family {
 	public void setMember4(FamilyMember member4) {
 		this.member4 = member4;
 	}
-
-	
-	
-	
-	
-}

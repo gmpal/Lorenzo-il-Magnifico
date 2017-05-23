@@ -2,38 +2,38 @@ package it.polimi.ingsw.GC_24.effects;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-
 import it.polimi.ingsw.GC_24.Player;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 
 public class CouncilPrivilege extends ImmediateEffect {
-	/*ATTENTION: when created, the constructor creates an empty Arraylist<SetOfValues>, 
+	/*ATTENTION: when created, the constructor creates an empty ArrayList<SetOfValues>, 
 	 * but calls the method SetCoucil() and fills itself*/
 	private ArrayList<SetOfValues> councilPrivileges;
 	
-	/*constructor --> Creates an empty arraylist and fills it with SetCouncil() method 
+	/*constructor --> Creates an empty ArrayList and fills it with SetCouncil() method 
 	(Needs a name because it's an effect).*/
 	public CouncilPrivilege(String name, SetOfValues effectValues) {
 		super(name, effectValues);
-		this.councilPrivileges = new ArrayList<SetOfValues>();
-		SetCouncil();
+		this.councilPrivileges = new ArrayList<>();
+		setCouncil();
 	}
+	
 	//useful methods
 	
 	//SETS THE COUNCIL ARRAY WITH THE CORRECT ELEMENTS
-	public void SetCouncil(){
+	public void setCouncil(){
 		SetOfValues element1 = new SetOfValues();
-		element1.setIntWoods(1);
-		element1.setIntStones(1);
+		element1.getWoods().setQuantity(1);
+		element1.getStones().setQuantity(1);
 		
 		SetOfValues element2 = new SetOfValues();
-		element2.setIntServants(2);
+		element2.getServants().setQuantity(2);
 		SetOfValues element3 = new SetOfValues();
-		element3.setIntCoins(2);
+		element3.getCoins().setQuantity(2);
 		SetOfValues element4 = new SetOfValues();
-		element4.setIntMilitaryPoints(2);
+		element4.getMilitaryPoints().setQuantity(2);
 		SetOfValues element5 = new SetOfValues();
-		element5.setIntFaithPoints(1);
+		element5.getFaithPoints().setQuantity(1);
 		
 		
 		councilPrivileges.add(0,element1);
@@ -43,11 +43,6 @@ public class CouncilPrivilege extends ImmediateEffect {
 		councilPrivileges.add(4,element5);
 			
 	}
-	
-	
-	
-	
-
 
 	//Gives n different privileges to the selected player 
 	public void givePrivilegeEffect(Player player, int n){
@@ -60,8 +55,10 @@ public class CouncilPrivilege extends ImmediateEffect {
 			
 			System.out.println("Ecco i privilegi:\n" + this);
 			
-			if (i==0) {System.out.println("Scegli un elemento");}
-			if (i!=0) {System.out.println("Scegli un altro elemento");}
+			if (i==0) 
+				System.out.println("Scegli un elemento");
+			if (i!=0) 
+				System.out.println("Scegli un altro elemento");
 			
 			int index = scanner.nextInt();
 			System.out.println(index);
@@ -78,12 +75,11 @@ public class CouncilPrivilege extends ImmediateEffect {
 		//reset the council
 		//scanner.close();
 		councilPrivileges.clear();
-		SetCouncil();
-		
+
+		setCouncil();
 	}
 	
 
-	
 	//Prints the composition of the Council
 	@Override
 	public String toString() {

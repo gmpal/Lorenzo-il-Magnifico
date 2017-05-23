@@ -1,7 +1,6 @@
 package it.polimi.ingsw.GC_24.places;
 
 import it.polimi.ingsw.GC_24.FamilyMember;
-import it.polimi.ingsw.GC_24.Player;
 import it.polimi.ingsw.GC_24.values.Value;
 
 public abstract class Place {
@@ -13,10 +12,10 @@ public abstract class Place {
 	
 	//constructor
 	public Place(int costDice, Value value ){
-		this.costDice=costDice;
-		this.available=true;
-		this.famMemberOnPlace=null;
-		this.value=value;
+		this.costDice = costDice;
+		this.available = true;
+		this.famMemberOnPlace = null;
+		this.value = value;
 	}
 	
 	//Useful methods
@@ -26,6 +25,8 @@ public abstract class Place {
 		this.famMemberOnPlace = null;
 	}
 	
+	//redefined in MarketPlace, Tower, CouncilPlace change parameter in FamilyMember	
+	public abstract void giveEffects(); 
 	
 	//getters and setters
 	public int getCostDice() {
@@ -47,16 +48,11 @@ public abstract class Place {
 		this.famMemberOnPlace = famMemberOnPlace;
 		this.setAvailable(false);
 	}
-	
-	
 	public Value getValues() {
 		return value;
 	}
-	
 	public void setValues(Value values) {
 		this.value = values;
-	}
-	
-	public abstract void giveEffects(); //redefined in MarketPlace, Tower, CouncilPlace change parameter in Familymember
+	}	
 	
 }

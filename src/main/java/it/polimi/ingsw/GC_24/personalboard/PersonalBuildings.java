@@ -1,11 +1,10 @@
 package it.polimi.ingsw.GC_24.personalboard;
 
-
 public class PersonalBuildings extends PersonalCards{
 
+	//constructor
 	public PersonalBuildings() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 	@Override

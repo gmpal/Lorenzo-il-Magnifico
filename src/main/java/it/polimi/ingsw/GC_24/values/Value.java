@@ -11,7 +11,6 @@ public abstract class Value {
 		this.quantity=quantity;
 	}
 
-
 	//useful methods
 	
 	//adds a single value to a set
@@ -23,14 +22,13 @@ public abstract class Value {
 	}
 	
 	//finds a value in the SetOfValue of a player if you don't already know the type
-	public abstract Value FindValueInPlayer(Player player);// redefined in every subclass
+	public abstract Value findValueInPlayer(Player player);// redefined in every subclass
 	
 	//toString method to print a Value
 	@Override
 	public String toString() {
 		return "Value [quantity=" + quantity + "]";
 	}
-
 
 	//getter and setter
 	public int getQuantity() {

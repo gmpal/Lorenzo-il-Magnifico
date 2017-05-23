@@ -25,5 +25,4 @@ public class Die {
 		this.colour = colour;
 	}
 	
-	
 }

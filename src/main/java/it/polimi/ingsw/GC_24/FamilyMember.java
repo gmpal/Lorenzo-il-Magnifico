@@ -8,7 +8,6 @@ public class FamilyMember {
 	private boolean neutral;
 	private Player player;
 	
-	
 	//constructors
 	//creates a valuated family member
 	public FamilyMember(Player player, Die die) {
@@ -49,6 +48,11 @@ public class FamilyMember {
 		else return "Not available"; 
 	}
 
+	public String isAvailableString() {
+		if (this.isAvailable()){ return "available";}
+		else return "Not available"; 
+	}
+	
 	//getters and setters
 	public int getMemberValue() {
 		return memberValue;
@@ -84,10 +88,5 @@ public class FamilyMember {
 	
 
 
-	
-	
-	
-	
-	
 	
 }
