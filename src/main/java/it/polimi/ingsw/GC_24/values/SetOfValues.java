@@ -10,8 +10,6 @@ public class SetOfValues {
 	private MilitaryPoint militaryPoints;
 	private VictoryPoint victoryPoints;
 	
-
-	
 	//constructor with player number
 	public SetOfValues (int numplayer){
 		this.woods = new Wood(3);
@@ -19,10 +17,9 @@ public class SetOfValues {
 		this.servants = new Servant(3);
 		this.coins = new Coin(4+numplayer);
 		this.faithPoints = new FaithPoint(0);
-		this.militaryPoints = new MilitaryPoint(10);
+		this.militaryPoints = new MilitaryPoint(0);
 		this.victoryPoints = new VictoryPoint(0);
 	}
-	
 	
 	//constructor with no parameters --> Sets everything to 0
 	public SetOfValues() {
@@ -35,8 +32,8 @@ public class SetOfValues {
 		this.victoryPoints = new VictoryPoint(0);
 	}
 
-
 	//useful methods
+	
 	//method to sum two sets of values
 		public SetOfValues addTwoSetsOfValues(SetOfValues v){
 			v.setCoins(new Coin(this.coins.getQuantity() + v.getCoins().getQuantity()));
@@ -57,13 +54,20 @@ public class SetOfValues {
 			
 			builder.append("{");
 			
-			if (woods.getQuantity()!=0) builder.append(" woods=" + woods.getQuantity() + " "); 
-			if (stones.getQuantity()!=0) builder.append(" stones=" + stones.getQuantity() + " "); 
-			if (coins.getQuantity()!=0) builder.append(" coins=" + coins.getQuantity() + " ");
-			if (servants.getQuantity()!=0) builder.append(" servants=" + servants.getQuantity() + " ");
-			if (faithPoints.getQuantity()!=0) builder.append(" faithPoints=" + faithPoints.getQuantity() + " ");
-			if (militaryPoints.getQuantity()!=0) builder.append(" militaryPoints=" + militaryPoints.getQuantity() + " ");
-			if (victoryPoints.getQuantity()!=0) builder.append(" victoryPoints=" + victoryPoints.getQuantity());
+			if (woods.getQuantity()!=0)
+				builder.append(" woods=" + woods.getQuantity() + " "); 
+			if (stones.getQuantity()!=0) 
+				builder.append(" stones=" + stones.getQuantity() + " "); 
+			if (coins.getQuantity()!=0) 
+				builder.append(" coins=" + coins.getQuantity() + " ");
+			if (servants.getQuantity()!=0) 
+				builder.append(" servants=" + servants.getQuantity() + " ");
+			if (faithPoints.getQuantity()!=0) 
+				builder.append(" faithPoints=" + faithPoints.getQuantity() + " ");
+			if (militaryPoints.getQuantity()!=0)
+				builder.append(" militaryPoints=" + militaryPoints.getQuantity() + " ");
+			if (victoryPoints.getQuantity()!=0) 
+				builder.append(" victoryPoints=" + victoryPoints.getQuantity());
 
 			builder.append("}");
 			return builder.toString();
@@ -73,7 +77,6 @@ public class SetOfValues {
 	public Wood getWoods() {
 		return woods;
 	}
-	
 	
 	public void setWoods(Wood woods) {
 		this.woods = woods;
@@ -126,72 +129,5 @@ public class SetOfValues {
 	public void setVictoryPoints(VictoryPoint victoryPoints) {
 		this.victoryPoints = victoryPoints;
 	} 
-	
-	//getters and setters with INT
-	public int getIntWoods() {
-		return woods.getQuantity();
-	}
-	
-	
-	public void setIntWoods(int woods) {
-		this.woods = new Wood(0);
-		this.woods.setQuantity(woods);
-	}
-	
-	public int getIntStones() {
-		return stones.getQuantity();
-	}
-	
-	public void setIntStones(int stones) {
-		this.stones = new Stone(0);
-		this.stones.setQuantity(stones);
-	}
-	
-	public int getIntCoins() {
-		return coins.getQuantity();
-	}
-	
-	public void setIntCoins(int coins) {
-		this.coins = new Coin(0);
-		this.coins.setQuantity(coins);
-	}
-	
-	public int getIntServants() {
-		return servants.getQuantity();
-	}
-	
-	public void setIntServants(int servants) {
-		this.servants = new Servant(0);
-		this.servants.setQuantity(servants);
-	}
-	
-	public int getIntFaithPoints() {
-		return faithPoints.getQuantity();
-	}
-	
-	public void setIntFaithPoints(int faithPoints) {
-		this.faithPoints = new FaithPoint(0);
-		this.faithPoints.setQuantity(faithPoints);
-	}
-	
-	public int getIntMilitaryPoints() {
-		return militaryPoints.getQuantity();
-	}
-	
-	public void setIntMilitaryPoints(int militaryPoints) {
-		this.militaryPoints = new MilitaryPoint(0);
-		this.militaryPoints.setQuantity(militaryPoints);
-	}
-	
-	public int getIntVictoryPoints() {
-		return victoryPoints.getQuantity();
-	}
-	
-	public void setIntVictoryPoints(int victoryPoints) {
-		this.victoryPoints = new VictoryPoint(0);
-		this.victoryPoints.setQuantity(victoryPoints);
-	} 
-	
-	
 	
 }

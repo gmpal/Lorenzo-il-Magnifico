@@ -51,11 +51,9 @@ public class Player {
 	//Prints name and number of a Player
 	@Override
 	public String toString() {
-		return myName + ", player "+ myNumber;
+		return myName;
 	}
 		
-	
-
 	//getters and setters
 	public String getMyName() {
 		return myName;
@@ -106,11 +104,3 @@ public class Player {
 	}
 	
 }
-	
-	
-	
-	
-	
-	
-	
-	
