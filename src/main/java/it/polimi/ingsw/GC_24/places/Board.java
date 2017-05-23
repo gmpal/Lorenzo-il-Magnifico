@@ -53,13 +53,7 @@ public class Board {
 	}
 	
 	//gerres and setters
-	public int getGameID() {
-		return gameID;
-	}
 
-	public void setGameID(int gameID) {
-		this.gameID = gameID;
-	}
 
 	public int getNumPlayers() {
 		return numPlayers;

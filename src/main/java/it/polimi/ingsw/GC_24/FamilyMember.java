@@ -48,10 +48,7 @@ public class FamilyMember {
 		else return "Not available"; 
 	}
 
-	public String isAvailableString() {
-		if (this.isAvailable()){ return "available";}
-		else return "Not available"; 
-	}
+	
 	
 	//getters and setters
 	public int getMemberValue() {
