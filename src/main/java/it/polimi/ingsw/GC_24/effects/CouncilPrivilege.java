@@ -2,24 +2,27 @@ package it.polimi.ingsw.GC_24.effects;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-import it.polimi.ingsw.GC_24.Player;
-import it.polimi.ingsw.GC_24.PlayerColour;
+
+import it.polimi.ingsw.GC_24.model.Player;
+import it.polimi.ingsw.GC_24.model.PlayerColour;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 
 public class CouncilPrivilege extends ImmediateEffect {
 	
 	private ArrayList<SetOfValues> councilPrivileges;
+	private int numberOfPrivileges;
 	
-	public CouncilPrivilege(String name, SetOfValues effectValues) {
+	public CouncilPrivilege(String name, SetOfValues effectValues, int numberOfPrivileges) {
 		super(name, effectValues);
 		this.councilPrivileges = CreateCouncil();
+		this.numberOfPrivileges = numberOfPrivileges;
 	}
 	
 	//useful methods
 	
 	//SETS THE COUNCIL ARRAY WITH THE CORRECT ELEMENTS
 	public ArrayList<SetOfValues> CreateCouncil(){
-		ArrayList<SetOfValues> al = new ArrayList<SetOfValues>();
+		ArrayList<SetOfValues> al = new ArrayList<>();
 		
 		SetOfValues element1= new SetOfValues();
 		element1.getWoods().setQuantity(1);
@@ -48,13 +51,13 @@ public class CouncilPrivilege extends ImmediateEffect {
 	}
 
 	//Gives n different privileges to the selected player 
-	public void givePrivilegeEffect(Player player, int n){
+	public void giveImmediateEffect(Player player){
 		
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Ciao " + player.getMyName());
 		
 
-		for (int i=0; i<n; i++){
+		for (int i=0; i<numberOfPrivileges; i++){
 			
 			System.out.println("Ecco i privilegi:\n" + this);
 			
@@ -103,8 +106,13 @@ public class CouncilPrivilege extends ImmediateEffect {
 	public void setCouncilPrivileges(ArrayList<SetOfValues> councilPrivileges) {
 		this.councilPrivileges = councilPrivileges;
 	}
-	
-	
-	
+
+	public int getNumberOfPrivileges() {
+		return numberOfPrivileges;
+	}
+
+	public void setNumberOfPrivileges(int numberOfPrivileges) {
+		this.numberOfPrivileges = numberOfPrivileges;
+	}
 	
 }

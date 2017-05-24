@@ -5,11 +5,11 @@ import it.polimi.ingsw.GC_24.cards.*;
 
 public abstract class PersonalCards {
 	
-	protected ArrayList<Card> cards;
+	protected ArrayList<Development> cards;
 	
 	//constructor
 	public PersonalCards(){
-		this.cards= new ArrayList<>();
+		this.cards = new ArrayList<>();
 	}
 	
 	/*finds an ArrayList of PersonalCards in the PersonalBoard if you don't already know the type
@@ -19,11 +19,11 @@ public abstract class PersonalCards {
 	
 	
 	//getters and setters
-	public void setCards(Card card){
+	public void setCards(Development card){
 		this.cards.add(card);
 	}
 	
-	public ArrayList<Card> getCards(){
+	public ArrayList<Development> getCards(){
 		return cards;
 	}
 

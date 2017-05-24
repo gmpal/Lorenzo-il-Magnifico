@@ -1,7 +1,7 @@
 package it.polimi.ingsw.GC_24.places;
 
-import it.polimi.ingsw.GC_24.Player;
 import it.polimi.ingsw.GC_24.cards.Development;
+import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.values.Value;
 
 public class TowerPlace extends Place {
@@ -24,4 +24,10 @@ public class TowerPlace extends Place {
 		Player player=this.famMemberOnPlace.getPlayer();
 		player.setMyValues(this.value.addValueToSet(player.getMyValues())); 
 	}
+
+	@Override
+	public String toString() {
+		return "TowerPlace Card=" + correspondingCard;
+	}
+	
 }

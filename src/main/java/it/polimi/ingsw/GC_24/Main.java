@@ -1,21 +1,63 @@
 package it.polimi.ingsw.GC_24;
 
+
+import java.awt.List;
+import java.util.ArrayList;
+
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
 import it.polimi.ingsw.GC_24.cards.*;
+import it.polimi.ingsw.GC_24.controller.Controller;
 import it.polimi.ingsw.GC_24.effects.CouncilPrivilege;
 import it.polimi.ingsw.GC_24.effects.MoltiplicationCards;
 import it.polimi.ingsw.GC_24.effects.MoltiplicationPoints;
+import it.polimi.ingsw.GC_24.model.Model;
+import it.polimi.ingsw.GC_24.model.Player;
+import it.polimi.ingsw.GC_24.model.PlayerColour;
 import it.polimi.ingsw.GC_24.personalboard.PersonalBoard;
 import it.polimi.ingsw.GC_24.personalboard.PersonalBuildings;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
+import it.polimi.ingsw.GC_24.view.View;
 import it.polimi.ingsw.GC_24.values.*;
 
 public class Main {
 	public static void main(String[] args) {
+
+		Scanner scanner = new Scanner(System.in);
 		
-		//aggiunto commento
+		//cosa mi serve per creare un Model?
+		ArrayList<Player> giocatori = new ArrayList<>();
+		
+		Player marco = new Player("marco", PlayerColour.BLUE);
+		Player giuseppe = new Player("giuseppe", PlayerColour.RED);
+		
+		giocatori.add(marco);
+		giocatori.add(giuseppe);
+		
+		//posso creare un model adesso
+		Model game = new Model(giocatori);
+		View view = new View(game);
+		Controller controller = new Controller(game,view);
+		
+		
+		//LOGICA DI GIOCO
+		for(int i=0; i<50; i++){
+			System.out.println("What's your move? (1) Play (2) View");
+			int comando = scanner.nextInt();
+			if (comando==2 ||comando==1) view.input(comando);
+				else System.out.println("Comando errato, riprova");
+			}
+
+
 		
 		/*		
+
 	
+		System.out.println(giuseppe.getMyFamily());
+
 		
 		//MAIN FOR PRINTING COUNCIL PRIVILEGES
 		SetOfDice dadi= new SetOfDice();
@@ -75,23 +117,30 @@ public class Main {
 		
 //Giorgia main
 	
-		/*	
-		Coin coins = new Coin(3);
+	/*	Coin coins = new Coin(3);
 		MilitaryPoint points = new MilitaryPoint(3);
-		SetOfValues values = new SetOfValues(1);
+		//SetOfValues values = new SetOfValues(1);
 
-		Player player = new Player("Pippo", 1, null, null, values, PlayerColour.BLUE);
-		PersonalBoard board = new PersonalBoard(player);
+		//Player player = new Player("Pippo", 1, null, null, values, PlayerColour.BLUE);
+		//PersonalBoard board = new PersonalBoard(player);
 		Buildings edificio = new Buildings("miao", false, false, false, null);
-		edificio.setCardOnPersonalBoard(board);
-		player.setMyBoard(board);
-		values.getMilitaryPoints().setQuantity(10);
-		values.getFaithPoints().setQuantity(5);
+		Ventures impresa = new Ventures("bau", false, false, false, null, points);
+		//edificio.setCardOnPersonalBoard(board);
+		//player.setMyBoard(board);
+	//	values.getMilitaryPoints().setQuantity(10);
+//		values.getFaithPoints().setQuantity(5);
 
 		PersonalBuildings buildings = new PersonalBuildings();
 		
-		Rankings ranking = new Rankings(player);
+		//Rankings ranking = new Rankings(player);
 
+		ArrayList<Card> lista = new ArrayList<>();
+		lista.add(edificio);
+		lista.add(impresa);
+		Gson gson = new Gson();
+		String stringGson = gson.toJson(lista);
+		System.out.println(stringGson);
+		
 		System.out.println(ranking);
 		System.out.println(values);
 		System.out.println((coins.FindValueInPlayer(player)).getQuantity());
@@ -105,6 +154,20 @@ public class Main {
 		effettocarte.moltiplicationEffect(board);
 
 		System.out.println(player.getMyValues());*/
+		SetOfValues values = new SetOfValues();
+		Development edificio = new Buildings("miao", false, false, false, values,3);
+		Development ventura = new Characters("miao", false, false, false, values);
+		ArrayList<Development> buildings = new ArrayList<>();
+		buildings.add(edificio);
+		buildings.add(ventura);
+		Development palazzo = buildings.get(0);
+		Development avventura = buildings.get(1);
+	
+		System.out.println(palazzo);
+		System.out.println(avventura);
+		
+		
 		
 	}
 }
+

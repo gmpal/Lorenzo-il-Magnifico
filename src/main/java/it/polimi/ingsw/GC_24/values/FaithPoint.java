@@ -1,6 +1,6 @@
 package it.polimi.ingsw.GC_24.values;
 
-import it.polimi.ingsw.GC_24.Player;
+import it.polimi.ingsw.GC_24.model.Player;
 
 public class FaithPoint extends Value {
 

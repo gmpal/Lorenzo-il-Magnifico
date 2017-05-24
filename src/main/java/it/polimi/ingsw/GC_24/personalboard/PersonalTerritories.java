@@ -12,4 +12,5 @@ public class PersonalTerritories extends PersonalCards{
 		return playersBoard.getPersonalTerritories();
 	}
 
+	
 }

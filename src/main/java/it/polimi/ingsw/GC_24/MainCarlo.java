@@ -7,6 +7,7 @@ import it.polimi.ingsw.GC_24.places.*;
 import it.polimi.ingsw.GC_24.values.Coin;
 
 public class MainCarlo {
+
 	/*public static void main(String[] args) {
 		Board board1=new Board(1, 2);
 		Player player1= new Player(null, 1, new Family(null, new SetOfDice()), null, null, PlayerColour.BLUE);
