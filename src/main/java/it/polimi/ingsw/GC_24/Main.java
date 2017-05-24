@@ -38,7 +38,7 @@ public class Main {
 		
 		
 		//LOGICA DI GIOCO
-		while(true){
+		for(int i=0; i<50; i++){
 			System.out.println("What's your move? (1) Play (2) View");
 			int comando = scanner.nextInt();
 			if (comando==2 ||comando==1) view.input(comando);
