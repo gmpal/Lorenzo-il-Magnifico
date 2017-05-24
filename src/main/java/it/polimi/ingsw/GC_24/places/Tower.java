@@ -6,10 +6,19 @@ import it.polimi.ingsw.GC_24.PlayerColour;
 public class Tower {
 	
 	private ArrayList<TowerPlace> towerArray;
+	private static final int NUMTOWERPLACE=4;
 	
 	//constructor
 	public Tower() {
-		this.towerArray = new ArrayList<>();
+		this.towerArray = createTower();
+	}
+	
+	//inserts empty TowerPlaces in Tower
+	public ArrayList<TowerPlace> createTower(){
+		for(int num=0;num<NUMTOWERPLACE;num++){
+			this.towerArray.add(new TowerPlace(0, null));
+		}
+		return towerArray;
 	}
 	
 	//returns true if in the same Tower there already is a family member of the same colour as the parameter 
@@ -36,7 +45,6 @@ public class Tower {
 	public void clearPlaces(){
 		for(TowerPlace towerPlace:this.towerArray){
 			towerPlace.clearPlace();
-			towerPlace.setAvailable(true);
 		}
 	}
 	
