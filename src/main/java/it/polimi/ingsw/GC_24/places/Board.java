@@ -1,14 +1,9 @@
 package it.polimi.ingsw.GC_24.places;
 
-import it.polimi.ingsw.GC_24.Model;
 
 public class Board {
 
 	private static final int maxNumPlayerToLock=3; 
-
-
-	//rimosso attributo GameID --> passiamo direttamente il game
-	//private final Model game;
 	
 	private int numPlayers;
 	private Tower towerTerritories;
@@ -20,9 +15,10 @@ public class Board {
 	private Market market;
 	private CouncilPalace councilPalace;
 	
+	
+	//constructor
 	public Board(int numPlayers) {
 		
-		//this.game=game;
 		this.numPlayers = numPlayers;
 		this.towerTerritories = new Tower();
 		this.towerCharacters = new Tower();
@@ -34,14 +30,15 @@ public class Board {
 		this.councilPalace = new CouncilPalace();
 	}
 	
-	//
+	//tells if the places needs to be locked
 	public boolean lockPlaces(int numPlayers){
 		if(numPlayers< maxNumPlayerToLock)return true;
 		else return false;
 	}
 		
+	
+	//clears the board
 	public void clear(){
-		//dealCardsOnTower
 		this.towerTerritories.clearPlaces();
 		this.towerCharacters.clearPlaces();
 		this.towerBuildings.clearPlaces();
@@ -51,6 +48,8 @@ public class Board {
 		this.market.clearPlaces();
 		this.councilPalace.clearPlaces();
 	}
+	
+	
 	
 	//getters and setters
 	public int getNumPlayers() {

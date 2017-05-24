@@ -1,4 +1,4 @@
-package it.polimi.ingsw.GC_24;
+package it.polimi.ingsw.GC_24.dice;
 
 import java.util.Random;
 
@@ -13,11 +13,11 @@ public class SetOfDice {
 	
 	Random rnd = new Random();
 	
-	//null constructor
+	//constructor --> Set of Dice which value is 0
 	public SetOfDice() {
-		this.die1 = new Die(rnd.nextInt(6)+1, DieColour.BLACK);
-		this.die2 = new Die(rnd.nextInt(6)+1, DieColour.WHITE);
-		this.die3 = new Die(rnd.nextInt(6)+1, DieColour.ORANGE);
+		this.die1 = new Die(0, DieColour.BLACK);
+		this.die2 = new Die(0, DieColour.WHITE);
+		this.die3 = new Die(0, DieColour.ORANGE);
 	}
 	
 	//useful methods

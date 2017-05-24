@@ -1,5 +1,6 @@
 package it.polimi.ingsw.GC_24;
 
+import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.values.*;
 
 public class Rankings {

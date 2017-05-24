@@ -1,4 +1,7 @@
-package it.polimi.ingsw.GC_24;
+package it.polimi.ingsw.GC_24.model;
+
+import it.polimi.ingsw.GC_24.dice.Die;
+import it.polimi.ingsw.GC_24.dice.DieColour;
 
 public class FamilyMember {
 
@@ -9,7 +12,7 @@ public class FamilyMember {
 	private Player player;
 	
 	//constructors
-	//creates a valuated family member
+	//creates a valued family member
 	public FamilyMember(Player player, Die die) {
 		this.memberValue = die.getValue();
 		this.available = true;
@@ -39,8 +42,7 @@ public class FamilyMember {
 	public String toString() {
 		return "Value=" + memberValue + 
 				"\tColour=" + memberColour+
-				 "\t Status= "+isAvailableString()
-				;
+				 "\t Status= "+isAvailableString();
 	}
 
 	public String isAvailableString() {

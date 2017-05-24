@@ -1,12 +1,15 @@
-﻿package it.polimi.ingsw.GC_24;
+package it.polimi.ingsw.GC_24.model;
+
 
 import java.util.ArrayList;
 import java.util.Observable;
+import java.util.Set;
+
+import it.polimi.ingsw.GC_24.dice.SetOfDice;
+
 import it.polimi.ingsw.GC_24.places.Board;
 
 public class Model extends Observable {
-	
-	private Controller controller;
 	
 	private ArrayList<Player> players;
 	private Board board;
@@ -20,9 +23,7 @@ public class Model extends Observable {
 	
 	/*Constructor --> ONLY PLAYERS NEEDS TO BE PASSED
 	 * other fields are created or set */
-	public Model(Controller controller, ArrayList<Player> players ) {
-		
-		this.addObserver(controller);
+	public Model(ArrayList<Player> players ) {
 		
 		this.players = players;
 		this.board = new Board(players.size());
@@ -33,10 +34,7 @@ public class Model extends Observable {
 		this.currentPeriod = null;
 	}
 
-	
-	
-	
-	/*OGNI VOLTA CHE c'è una modifica nel mio stato, devo notificare il controllore*/
+
 	
 	
 	//useful methods
@@ -50,6 +48,7 @@ public class Model extends Observable {
 		}
 		this.currentRound = Round.ONE;
 		this.currentPeriod = Period.ONE;
+		this.gameState = State.PLAYING;
 		
 		this.notifyObservers(this);
 	}
@@ -58,11 +57,6 @@ public class Model extends Observable {
 	
 	// getters and setters
 	
-	public Controller getController() {
-		return controller;
-	}
-
-
 	public ArrayList<Player> getPlayers() {
 		return players;
 	}
@@ -95,11 +89,6 @@ public class Model extends Observable {
 
 	public Period getCurrentPeriod() {
 		return currentPeriod;
-	}
-
-
-	public void setController(Controller controller) {
-		this.controller = controller;
 	}
 
 
