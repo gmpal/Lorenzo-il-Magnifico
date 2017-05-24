@@ -11,11 +11,11 @@ public class Family {
 		
 	//constructor
 		
-	public Family(Player player){
+	public Family(Player player, SetOfDice dice){
   	this.player = player;
-		this.member1 = new FamilyMember(player, null);
-		this.member2 = new FamilyMember(player, null);
-		this.member3 = new FamilyMember(player, null);
+		this.member1 = new FamilyMember(player, dice.getDie1());
+		this.member2 = new FamilyMember(player, dice.getDie2());
+		this.member3 = new FamilyMember(player, dice.getDie3());
 		this.member4 = new FamilyMember(player);
 	
 	}
