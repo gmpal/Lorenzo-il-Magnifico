@@ -12,28 +12,18 @@ import it.polimi.ingsw.GC_24.values.*;
 public class Main {
 	public static void main(String[] args) {
 		
-		
-		System.out.println("Compile ok");
-//Gianmarco main
-		
-	  /*MAIN FOR PRINTING EVERYTHING
-		SetOfDice dadi = new SetOfDice();
-		Player giuseppe = new Player ("Giuseppe", 2, null,null,null);
-		Family famiglia = new Family (giuseppe,dadi);
-		giuseppe.setMyFamily(famiglia);
-		
+		/*		
 	
-		System.out.println(giuseppe.getMyFamily());
-	 */
 		
-		
-	/*	//MAIN FOR PRINTING COUNCIL PRIVILEGES
-		
+		//MAIN FOR PRINTING COUNCIL PRIVILEGES
+		SetOfDice dadi= new SetOfDice();
 		CouncilPrivilege consiglio = new CouncilPrivilege("effettoPrivilegio",null);
 		SetOfValues marcovalues = new SetOfValues();
-		Player marco = new Player ("Marco", 0, null,null,marcovalues,null);
+		Player marco = new Player ("Marco", PlayerColour.BLUE,dadi);
+		marco.getMyFamily().setFamily(dadi);
 		SetOfValues giuseppevalues = new SetOfValues();
-		Player giuseppe = new Player ("Giuseppe", 2, null,null,giuseppevalues,null);
+		Player giuseppe = new Player ("Giuseppe",PlayerColour.BLUE,dadi);
+		giuseppe.getMyFamily().setFamily(dadi);;
 		
 		consiglio.givePrivilegeEffect(marco, 3);
 		consiglio.givePrivilegeEffect(giuseppe, 2);
@@ -43,9 +33,9 @@ public class Main {
 		
 		System.out.println("\nEcco le risorse di giuseppe");
 		System.out.println(giuseppe.getMyValues());
+	
+		
 		*/
-		
-		
 		
 		
 	/*	//MAIN FOR PRINTING FAMILIES AND RESOURCES

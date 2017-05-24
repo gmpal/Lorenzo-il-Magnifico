@@ -3,44 +3,47 @@ package it.polimi.ingsw.GC_24.effects;
 import java.util.ArrayList;
 import java.util.Scanner;
 import it.polimi.ingsw.GC_24.Player;
+import it.polimi.ingsw.GC_24.PlayerColour;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 
 public class CouncilPrivilege extends ImmediateEffect {
-	/*ATTENTION: when created, the constructor creates an empty ArrayList<SetOfValues>, 
-	 * but calls the method SetCoucil() and fills itself*/
+	
 	private ArrayList<SetOfValues> councilPrivileges;
 	
-	/*constructor --> Creates an empty ArrayList and fills it with SetCouncil() method 
-	(Needs a name because it's an effect).*/
 	public CouncilPrivilege(String name, SetOfValues effectValues) {
 		super(name, effectValues);
-		this.councilPrivileges = new ArrayList<>();
-		setCouncil();
+		this.councilPrivileges = CreateCouncil();
 	}
 	
 	//useful methods
 	
 	//SETS THE COUNCIL ARRAY WITH THE CORRECT ELEMENTS
-	public void setCouncil(){
-		SetOfValues element1 = new SetOfValues();
+	public ArrayList<SetOfValues> CreateCouncil(){
+		ArrayList<SetOfValues> al = new ArrayList<SetOfValues>();
+		
+		SetOfValues element1= new SetOfValues();
 		element1.getWoods().setQuantity(1);
 		element1.getStones().setQuantity(1);
 		
 		SetOfValues element2 = new SetOfValues();
 		element2.getServants().setQuantity(2);
+		
 		SetOfValues element3 = new SetOfValues();
 		element3.getCoins().setQuantity(2);
+		
 		SetOfValues element4 = new SetOfValues();
 		element4.getMilitaryPoints().setQuantity(2);
+		
 		SetOfValues element5 = new SetOfValues();
 		element5.getFaithPoints().setQuantity(1);
 		
 		
-		councilPrivileges.add(0,element1);
-		councilPrivileges.add(1,element2);
-		councilPrivileges.add(2,element3);
-		councilPrivileges.add(3,element4);
-		councilPrivileges.add(4,element5);
+		al.add(0,element1);
+		al.add(1,element2);
+		al.add(2,element3);
+		al.add(3,element4);
+		al.add(4,element5);
+		return al;
 			
 	}
 
@@ -73,10 +76,10 @@ public class CouncilPrivilege extends ImmediateEffect {
 			System.out.println("Privilegio ("+index+") aggiunto alle tue risorse");
 		}
 		//reset the council
-		//scanner.close();
+		scanner.close();
 		councilPrivileges.clear();
 
-		setCouncil();
+		this.councilPrivileges = CreateCouncil();
 	}
 	
 

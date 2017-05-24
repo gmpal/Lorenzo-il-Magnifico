@@ -1,4 +1,4 @@
-﻿package it.polimi.ingsw.GC_24;
+package it.polimi.ingsw.GC_24;
 
 import it.polimi.ingsw.GC_24.personalboard.PersonalBoard;
 import it.polimi.ingsw.GC_24.places.Place;
@@ -17,9 +17,9 @@ public class Player {
 	//AUTO-GENERATED contructor, NEEDS TO BE CORRECTED
 	
 	//Constructor number1 --> NEED to create a setOfValues
-	public Player(String myName, PlayerColour myColour) {
+	public Player(String myName, PlayerColour myColour, SetOfDice dice) {
 		this.myName = myName;
-		this.myFamily =  new Family(this);
+		this.myFamily =  new Family(this, dice);
 		this.myBoard = new PersonalBoard(this);
 		this.myValues = new SetOfValues();
 		this.myColour = myColour;
@@ -86,3 +86,5 @@ public class Player {
 	}
 	
 }
+
+

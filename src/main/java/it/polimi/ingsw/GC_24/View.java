@@ -32,6 +32,8 @@ public class View extends Observable implements Observer {
 		// TODO Auto-generated method stub
 		
 	}
+
+	
 	
 
 
