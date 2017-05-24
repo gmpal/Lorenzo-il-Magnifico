@@ -1,8 +1,8 @@
-package it.polimi.ingsw.GC_24;
+package it.polimi.ingsw.GC_24.model;
+
+import it.polimi.ingsw.GC_24.dice.SetOfDice;
 
 public class Family {
-	
-	private Player player;
 	
 	private FamilyMember member1;
 	private FamilyMember member2;
@@ -10,18 +10,17 @@ public class Family {
 	private FamilyMember member4;
 		
 	//constructor
-		
-	public Family(Player player, SetOfDice dice){
-  	this.player = player;
-		this.member1 = new FamilyMember(player, dice.getDie1());
-		this.member2 = new FamilyMember(player, dice.getDie2());
-		this.member3 = new FamilyMember(player, dice.getDie3());
+	
+	//when creating a family, it creates a family of neutral members. Then this family is set from a SetOfDice.
+	public Family(Player player){
+		this.member1 = new FamilyMember(player);
+		this.member2 = new FamilyMember(player);
+		this.member3 = new FamilyMember(player);
 		this.member4 = new FamilyMember(player);
 	
 	}
-	
-	
-	//
+		
+	//sets the family with a SetOfDice after it has been created
 	public void setFamily(SetOfDice dice) {
 		this.member1.setMember(dice.getDie1());
 		this.member2.setMember(dice.getDie2());
@@ -32,7 +31,7 @@ public class Family {
 	//Prints a whole family
 	@Override
 	public String toString() {
-		return "Family of " + player + 
+		return  
 				":\n member1 --> " + member1 + 
 				"\n member2 --> " + member2 + 
 				"\n member3 --> " + member3 +

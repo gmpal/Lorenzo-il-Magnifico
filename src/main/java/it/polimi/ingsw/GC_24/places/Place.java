@@ -1,6 +1,6 @@
 package it.polimi.ingsw.GC_24.places;
 
-import it.polimi.ingsw.GC_24.FamilyMember;
+import it.polimi.ingsw.GC_24.model.FamilyMember;
 import it.polimi.ingsw.GC_24.values.Value;
 
 public abstract class Place {

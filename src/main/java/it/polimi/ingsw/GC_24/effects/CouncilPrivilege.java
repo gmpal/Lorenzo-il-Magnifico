@@ -2,8 +2,9 @@ package it.polimi.ingsw.GC_24.effects;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-import it.polimi.ingsw.GC_24.Player;
-import it.polimi.ingsw.GC_24.PlayerColour;
+
+import it.polimi.ingsw.GC_24.model.Player;
+import it.polimi.ingsw.GC_24.model.PlayerColour;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 
 public class CouncilPrivilege extends ImmediateEffect {
