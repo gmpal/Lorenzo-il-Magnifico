@@ -17,17 +17,11 @@ import it.polimi.ingsw.GC_24.values.*;
 public class Main {
 	public static void main(String[] args) {
 		
-		
-		System.out.println("Compile ok");
-//Gianmarco main
-		
 
-	  /*MAIN FOR PRINTING EVERYTHING
-		SetOfDice dadi = new SetOfDice();
-		Player giuseppe = new Player ("Giuseppe", 2, null,null,null);
-		Family famiglia = new Family (giuseppe,dadi);
-		giuseppe.setMyFamily(famiglia);
+		//aggiunto commento
 		
+		/*		
+
 	
 		System.out.println(giuseppe.getMyFamily());
 
