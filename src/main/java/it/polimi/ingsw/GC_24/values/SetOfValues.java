@@ -13,13 +13,13 @@ public class SetOfValues {
 
 	//constructor with no parameters --> Sets everything to 0
 	public SetOfValues() {
-		this.woods = null;
-		this.stones = null;
-		this.coins = null;
-		this.servants = null;
-		this.faithPoints = null;
-		this.militaryPoints = null;
-		this.victoryPoints = null;
+		this.woods = new Wood(0);
+		this.stones = new Stone(0);
+		this.servants = new Servant(0);
+		this.coins = new Coin(0);
+		this.faithPoints = new FaithPoint(0);
+		this.militaryPoints = new MilitaryPoint(0);
+		this.victoryPoints = new VictoryPoint(0);
 	}
 
 	//useful methods

@@ -32,14 +32,15 @@ public class Main {
 		System.out.println(giuseppe.getMyFamily());
 
 		
-		
-	//MAIN FOR PRINTING COUNCIL PRIVILEGES
-		
+		//MAIN FOR PRINTING COUNCIL PRIVILEGES
+		SetOfDice dadi= new SetOfDice();
 		CouncilPrivilege consiglio = new CouncilPrivilege("effettoPrivilegio",null);
 		SetOfValues marcovalues = new SetOfValues();
-		Player marco = new Player ("Marco", 0, null,null,marcovalues,null);
+		Player marco = new Player ("Marco", PlayerColour.BLUE,dadi);
+		marco.getMyFamily().setFamily(dadi);
 		SetOfValues giuseppevalues = new SetOfValues();
-		Player giuseppe = new Player ("Giuseppe", 2, null,null,giuseppevalues,null);
+		Player giuseppe = new Player ("Giuseppe",PlayerColour.BLUE,dadi);
+		giuseppe.getMyFamily().setFamily(dadi);;
 		
 		consiglio.givePrivilegeEffect(marco, 3);
 		consiglio.givePrivilegeEffect(giuseppe, 2);
@@ -49,9 +50,9 @@ public class Main {
 		
 		System.out.println("\nEcco le risorse di giuseppe");
 		System.out.println(giuseppe.getMyValues());
+	
+		
 		*/
-		
-		
 		
 		
 	/*	//MAIN FOR PRINTING FAMILIES AND RESOURCES

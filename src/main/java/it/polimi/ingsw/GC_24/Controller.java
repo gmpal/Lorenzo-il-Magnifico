@@ -24,7 +24,7 @@ public class Controller extends Observable implements Observer {
 		this.notifyObservers(change);
 	}
 	
-	public <C> void update (View view, C change){
+	public void update (View view, Object change){
 		System.out.println("Controller here. I've been notified by the view with an action");
 		Action action;
 		/*
@@ -40,6 +40,8 @@ public class Controller extends Observable implements Observer {
 	public void update(Observable o, Object arg) {
 		
 	}
+
+	
 	
 	
 
