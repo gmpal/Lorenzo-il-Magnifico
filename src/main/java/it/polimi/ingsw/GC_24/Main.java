@@ -44,6 +44,8 @@ public class Main {
 			if (comando==2 ||comando==1) view.input(comando);
 				else System.out.println("Comando errato, riprova");
 			}
+
+		
 		/*		
 	
 		
