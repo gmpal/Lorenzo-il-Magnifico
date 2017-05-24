@@ -23,6 +23,7 @@ public abstract class Place {
 	//clears the place from the Family Member
 	public void clearPlace(){
 		this.famMemberOnPlace = null;
+		this.setAvailable(true);
 	}
 	
 	//redefined in MarketPlace, Tower, CouncilPlace change parameter in FamilyMember	

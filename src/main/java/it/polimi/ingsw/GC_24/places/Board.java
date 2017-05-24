@@ -1,9 +1,11 @@
 package it.polimi.ingsw.GC_24.places;
 
 
+
 public class Board {
 
 	private static final int maxNumPlayerToLock=3; 
+
 	
 	private int numPlayers;
 	private Tower towerTerritories;
@@ -18,22 +20,21 @@ public class Board {
 	
 	//constructor
 	public Board(int numPlayers) {
-		
+
 		this.numPlayers = numPlayers;
 		this.towerTerritories = new Tower();
 		this.towerCharacters = new Tower();
 		this.towerBuildings = new Tower();
 		this.towerVentures = new Tower();
-		this.harvest = new Harvest();
-		this.production = new Production();
-		this.market = new Market();
+		this.harvest = new Harvest(lockPlaces(this.numPlayers), this.numPlayers);
+		this.production = new Production(lockPlaces(this.numPlayers), this.numPlayers);
+		this.market = new Market(lockPlaces(this.numPlayers));
 		this.councilPalace = new CouncilPalace();
 	}
 	
 	//tells if the places needs to be locked
 	public boolean lockPlaces(int numPlayers){
-		if(numPlayers< maxNumPlayerToLock)return true;
-		else return false;
+		return numPlayers< MAXNUMPLAYERTOLOCK;
 	}
 		
 	
@@ -125,7 +126,7 @@ public class Board {
 	}
 
 	public static int getMaxnumplayertolock() {
-		return maxNumPlayerToLock;
+		return MAXNUMPLAYERTOLOCK;
 	}
 
 }
