@@ -1,4 +1,7 @@
-package it.polimi.ingsw.GC_24;
+package it.polimi.ingsw.GC_24.model;
+
+import it.polimi.ingsw.GC_24.dice.Die;
+import it.polimi.ingsw.GC_24.dice.DieColour;
 
 public class FamilyMember {
 

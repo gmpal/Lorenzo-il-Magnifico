@@ -1,10 +1,11 @@
-package it.polimi.ingsw.GC_24;
+package it.polimi.ingsw.GC_24.model;
 
 
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Set;
 
+import it.polimi.ingsw.GC_24.dice.SetOfDice;
 import it.polimi.ingsw.GC_24.places.Board;
 
 public class Model extends Observable {
@@ -55,11 +56,6 @@ public class Model extends Observable {
 	
 	// getters and setters
 	
-	public Controller getController() {
-		return controller;
-	}
-
-
 	public ArrayList<Player> getPlayers() {
 		return players;
 	}
@@ -92,11 +88,6 @@ public class Model extends Observable {
 
 	public Period getCurrentPeriod() {
 		return currentPeriod;
-	}
-
-
-	public void setController(Controller controller) {
-		this.controller = controller;
 	}
 
 

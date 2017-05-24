@@ -1,4 +1,4 @@
-package it.polimi.ingsw.GC_24;
+package it.polimi.ingsw.GC_24.dice;
 
 import java.util.Random;
 

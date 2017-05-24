@@ -1,7 +1,7 @@
 package it.polimi.ingsw.GC_24.places;
 
-import it.polimi.ingsw.GC_24.Player;
 import it.polimi.ingsw.GC_24.effects.Effect;
+import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.values.Value;
 
 public class CouncilPlace extends Place {

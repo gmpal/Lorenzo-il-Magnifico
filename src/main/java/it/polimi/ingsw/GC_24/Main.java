@@ -1,19 +1,28 @@
 package it.polimi.ingsw.GC_24;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import it.polimi.ingsw.GC_24.cards.*;
+import it.polimi.ingsw.GC_24.controller.Controller;
 import it.polimi.ingsw.GC_24.effects.CouncilPrivilege;
 import it.polimi.ingsw.GC_24.effects.MoltiplicationCards;
 import it.polimi.ingsw.GC_24.effects.MoltiplicationPoints;
+import it.polimi.ingsw.GC_24.model.Model;
+import it.polimi.ingsw.GC_24.model.Player;
+import it.polimi.ingsw.GC_24.model.PlayerColour;
 import it.polimi.ingsw.GC_24.personalboard.PersonalBoard;
 import it.polimi.ingsw.GC_24.personalboard.PersonalBuildings;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
+import it.polimi.ingsw.GC_24.view.View;
 import it.polimi.ingsw.GC_24.values.*;
 
 public class Main {
 	public static void main(String[] args) {
 		
+		Scanner scanner = new Scanner(System.in);
+		
+		//cosa mi serve per creare un Model?
 		ArrayList<Player> giocatori = new ArrayList<>();
 		
 		Player marco = new Player("marco", PlayerColour.BLUE);
@@ -22,10 +31,19 @@ public class Main {
 		giocatori.add(marco);
 		giocatori.add(giuseppe);
 		
+		//posso creare un model adesso
 		Model game = new Model(giocatori);
-		View view = new View();
+		View view = new View(game);
 		Controller controller = new Controller(game,view);
 		
+		
+		//LOGICA DI GIOCO
+		while(true){
+			System.out.println("What's your move? (1) Play (2) View");
+			int comando = scanner.nextInt();
+			if (comando==2 ||comando==1) view.input(comando);
+				else System.out.println("Comando errato, riprova");
+			}
 		/*		
 	
 		

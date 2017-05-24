@@ -1,4 +1,6 @@
-package it.polimi.ingsw.GC_24;
+package it.polimi.ingsw.GC_24.model;
+
+import it.polimi.ingsw.GC_24.dice.SetOfDice;
 
 public class Family {
 	

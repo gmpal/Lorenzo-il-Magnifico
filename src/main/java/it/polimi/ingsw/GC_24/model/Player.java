@@ -1,4 +1,4 @@
-package it.polimi.ingsw.GC_24;
+package it.polimi.ingsw.GC_24.model;
 
 import it.polimi.ingsw.GC_24.personalboard.PersonalBoard;
 import it.polimi.ingsw.GC_24.places.Place;
