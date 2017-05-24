@@ -1,12 +1,12 @@
 package it.polimi.ingsw.GC_24.effects;
 
-import it.polimi.ingsw.GC_24.personalboard.PersonalBoard;
+import it.polimi.ingsw.GC_24.Player;
 import it.polimi.ingsw.GC_24.values.*;
 
 public abstract class Moltiplication extends ImmediateEffect{
 	
 	protected Value value;
-	protected PersonalBoard playersBoard;
+	protected Player player;
 	
 	//constructor
 	public Moltiplication(String name, SetOfValues effectValues, Value value) {
@@ -15,6 +15,5 @@ public abstract class Moltiplication extends ImmediateEffect{
 		}
 	
 	//gives the effect to the player
-	public abstract void moltiplicationEffect(PersonalBoard playersBoard); //redefined for every subclass
-
+	public abstract void moltiplicationEffect(Player player); //redefined for every subclass
 }

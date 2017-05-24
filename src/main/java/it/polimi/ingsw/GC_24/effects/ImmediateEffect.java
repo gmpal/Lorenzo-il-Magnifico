@@ -1,6 +1,10 @@
 package it.polimi.ingsw.GC_24.effects;
 
+
+import it.polimi.ingsw.GC_24.personalboard.PersonalBoard;
+
 import it.polimi.ingsw.GC_24.model.Player;
+
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 
 public abstract class ImmediateEffect extends Effect{
@@ -14,6 +18,8 @@ public abstract class ImmediateEffect extends Effect{
 		this.effectValues = effectValues;
 	}
 
+	public abstract void giveImmediateEffect(Player player);
+	
 	//useful methods
 	
 	//adds the immediate effect related set of values to the player's set (given as parameter) 
@@ -25,7 +31,7 @@ public abstract class ImmediateEffect extends Effect{
 	
 	//getters and setters
 	public SetOfValues getEffectValues() {
-		return effectValues;
+		return effectValues;		
 	}
 
 	public void setEffectValues(SetOfValues effectValues) {

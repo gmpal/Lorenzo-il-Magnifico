@@ -28,6 +28,12 @@ public abstract class Place {
 	//redefined in MarketPlace, Tower, CouncilPlace change parameter in FamilyMember	
 	public abstract void giveEffects(); 
 	
+	@Override
+	public String toString() {
+		return " - costDice=" + costDice + ", available=" + available + ", "
+				+ "famMemberOnPlace=" + famMemberOnPlace + ", value=" + value;
+	}
+
 	//getters and setters
 	public int getCostDice() {
 		return costDice;
@@ -48,11 +54,11 @@ public abstract class Place {
 		this.famMemberOnPlace = famMemberOnPlace;
 		this.setAvailable(false);
 	}
-	public Value getValues() {
+	public Value getValue() {
 		return value;
 	}
-	public void setValues(Value values) {
-		this.value = values;
+	public void setValue(Value value) {
+		this.value = value;
 	}	
 	
 }

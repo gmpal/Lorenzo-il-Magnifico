@@ -19,8 +19,6 @@ public class Model extends Observable {
 	private Round currentRound;
 	private Period currentPeriod;
 	
-	
-	
 	/*Constructor --> ONLY PLAYERS NEEDS TO BE PASSED
 	 * other fields are created or set */
 	public Model(ArrayList<Player> players ) {
