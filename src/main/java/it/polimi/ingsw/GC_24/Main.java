@@ -1,5 +1,7 @@
 package it.polimi.ingsw.GC_24;
 
+import java.util.ArrayList;
+
 import it.polimi.ingsw.GC_24.cards.*;
 import it.polimi.ingsw.GC_24.effects.CouncilPrivilege;
 import it.polimi.ingsw.GC_24.effects.MoltiplicationCards;
@@ -11,6 +13,18 @@ import it.polimi.ingsw.GC_24.values.*;
 
 public class Main {
 	public static void main(String[] args) {
+		
+		ArrayList<Player> giocatori = new ArrayList<>();
+		
+		Player marco = new Player("marco", PlayerColour.BLUE);
+		Player giuseppe = new Player("giuseppe", PlayerColour.RED);
+		
+		giocatori.add(marco);
+		giocatori.add(giuseppe);
+		
+		Model game = new Model(giocatori);
+		View view = new View();
+		Controller controller = new Controller(game,view);
 		
 		/*		
 	

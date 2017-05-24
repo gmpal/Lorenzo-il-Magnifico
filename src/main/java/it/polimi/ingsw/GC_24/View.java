@@ -3,13 +3,12 @@ package it.polimi.ingsw.GC_24;
 import java.util.Observable;
 import java.util.Observer;
 
-public class View extends Observable implements Observer {
+public class View extends MyObservable implements MyObserver {
 
-	private Controller controller;
 	
-	public View (Controller controller){
-		controller.addObserver(this);
-		this.controller=controller;
+	
+	public View (){
+		
 	}
 	
 	public void input(String input){

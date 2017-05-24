@@ -17,9 +17,9 @@ public class Player {
 	//AUTO-GENERATED contructor, NEEDS TO BE CORRECTED
 	
 	//Constructor number1 --> NEED to create a setOfValues
-	public Player(String myName, PlayerColour myColour, SetOfDice dice) {
+	public Player(String myName, PlayerColour myColour) {
 		this.myName = myName;
-		this.myFamily =  new Family(this, dice);
+		this.myFamily =  new Family(this);
 		this.myBoard = new PersonalBoard(this);
 		this.myValues = new SetOfValues();
 		this.myColour = myColour;
