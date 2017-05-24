@@ -9,12 +9,12 @@ public class FamilyMember {
 	private Player player;
 	
 	//constructors
-	//creates a valuated family member
+	//creates an evaluated family member
 	public FamilyMember(Player player, Die die) {
 		this.memberValue = die.getValue();
 		this.available = true;
 		this.memberColour = die.getColour();
-		this.neutral=false;
+		this.neutral = false;
 		this.player = player;
 	}
 	

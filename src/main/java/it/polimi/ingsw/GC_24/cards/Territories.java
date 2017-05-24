@@ -18,6 +18,12 @@ private int costDie;
 		personalBoard.getPersonalTerritories().setCards(this);
 	}
 	
+	@Override
+	public String toString() {
+		return "Territory [name=" + getName() + ", immediateEffect=" + getImmediateEffect() + 
+				", costDie=" + costDie + "]";
+	}
+	
 	//getter and setter
 	public int getCostDie() {
 		return costDie;

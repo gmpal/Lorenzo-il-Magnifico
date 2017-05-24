@@ -3,12 +3,12 @@ package it.polimi.ingsw.GC_24.places;
 import it.polimi.ingsw.GC_24.FamilyMember;
 import it.polimi.ingsw.GC_24.values.Value;
 
-public abstract class Place {
+public abstract class Place { 
 	
-	protected int costDice; 
+	private int costDice; 
 	protected boolean available;
 	protected FamilyMember famMemberOnPlace;
-	protected Value value;
+	private Value value;
 	
 	//constructor
 	public Place(int costDice, Value value ){
@@ -27,12 +27,6 @@ public abstract class Place {
 	
 	//redefined in MarketPlace, Tower, CouncilPlace change parameter in FamilyMember	
 	public abstract void giveEffects(); 
-	
-	@Override
-	public String toString() {
-		return " - costDice=" + costDice + ", available=" + available + ", "
-				+ "famMemberOnPlace=" + famMemberOnPlace + ", value=" + value;
-	}
 
 	//getters and setters
 	public int getCostDice() {

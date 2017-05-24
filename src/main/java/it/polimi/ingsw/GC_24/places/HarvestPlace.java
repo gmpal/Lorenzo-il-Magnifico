@@ -18,12 +18,12 @@ public class HarvestPlace extends Place{
 		this.additionalCostDice = additionalCostDice;
 	}
 	
-	@Override
+	@Override //TODO serve???
 	public void giveEffects(){
 		doHarvest();
 	}
 	
-	//gives the production value of the bonus tile to the player
+	//gives the harvest value of the bonus tile and the effects of the activated cards to the player 
 	public void doHarvest(){
 		Player player = getFamMemberOnPlace().getPlayer();
 		player.getMyBoard().getBonusTile().giveHarvestValues(player.getMyValues());
@@ -32,16 +32,19 @@ public class HarvestPlace extends Place{
 			Territories territory = (Territories) card;
 			if (territory.getCostDie() <= (getCostDice()+additionalCostDice)){
 				territory.getImmediateEffect().giveEffectValues(player);
-				territory.getImmediateEffect().giveImmediateEffect();
-			}
-				
-				 
+				territory.getImmediateEffect().giveImmediateEffect(player);
+			} 
 		}
-	}
+	} //TODO da provare
 	
 	@Override
 	public String toString() {
-		return "HarvestPlace [additionalCostDice=" + additionalCostDice + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append( "HarvestPlace free: " + isAvailable());
+		if (!isAvailable()){
+			builder.append("extra die cost: " + additionalCostDice);
+		}
+		return builder.toString();
 	}
 
 	//getter and setter
