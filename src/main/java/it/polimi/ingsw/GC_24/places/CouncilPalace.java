@@ -2,6 +2,8 @@ package it.polimi.ingsw.GC_24.places;
 
 import java.util.ArrayList;
 
+import it.polimi.ingsw.GC_24.values.SetOfValues;
+
 public class CouncilPalace {
 	
 	private ArrayList<CouncilPlace> councilPlaces;
@@ -21,6 +23,7 @@ public class CouncilPalace {
 			councilPlace.clearPlace();
 		}
 	}
+
 	//getters and setters
 	public ArrayList<CouncilPlace> getCouncilPlaces() {
 		return councilPlaces;

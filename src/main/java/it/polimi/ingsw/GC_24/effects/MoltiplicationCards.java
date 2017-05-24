@@ -1,6 +1,6 @@
 package it.polimi.ingsw.GC_24.effects;
 
-import it.polimi.ingsw.GC_24.personalboard.PersonalBoard;
+import it.polimi.ingsw.GC_24.Player;
 import it.polimi.ingsw.GC_24.personalboard.PersonalCards;
 import it.polimi.ingsw.GC_24.values.*;
 
@@ -15,13 +15,18 @@ public class MoltiplicationCards extends Moltiplication{
 	}
 	
 	@Override
-	public void moltiplicationEffect(PersonalBoard playersBoard){
+	public void moltiplicationEffect(Player player){
 		int valueQuantity = this.value.getQuantity();
-		PersonalCards correspondingArrayList = this.personalCards.findCardsInPersonalBoard(playersBoard);
+		PersonalCards correspondingArrayList = this.personalCards.findCardsInPersonalBoard(player.getMyBoard());
 		int sizeOfArray = correspondingArrayList.getCards().size();
 		int newQuantity =(valueQuantity) * (sizeOfArray);
 		value.setQuantity(newQuantity);
-		SetOfValues setOfValues = playersBoard.getPlayer().getMyValues();
+		SetOfValues setOfValues = player.getMyBoard().getPlayer().getMyValues();
 		value.addValueToSet(setOfValues);
+	}
+	
+	@Override
+	public void giveImmediateEffect(Player player){
+		moltiplicationEffect(player);
 	}
 }

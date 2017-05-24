@@ -24,4 +24,10 @@ public class TowerPlace extends Place {
 		Player player=this.famMemberOnPlace.getPlayer();
 		player.setMyValues(this.value.addValueToSet(player.getMyValues())); 
 	}
+
+	@Override
+	public String toString() {
+		return "TowerPlace Card=" + correspondingCard;
+	}
+	
 }

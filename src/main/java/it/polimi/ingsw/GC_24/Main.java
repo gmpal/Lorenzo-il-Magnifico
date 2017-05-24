@@ -121,6 +121,19 @@ public class Main {
 		effettocarte.moltiplicationEffect(board);
 
 		System.out.println(player.getMyValues());*/
+		SetOfValues values = new SetOfValues();
+		Development edificio = new Buildings("miao", false, false, false, values,3);
+		Development ventura = new Characters("miao", false, false, false, values);
+		ArrayList<Development> buildings = new ArrayList<>();
+		buildings.add(edificio);
+		buildings.add(ventura);
+		Development palazzo = buildings.get(0);
+		Development avventura = buildings.get(1);
+	
+		System.out.println(palazzo);
+		System.out.println(avventura);
+		
+		
 		
 	}
 }

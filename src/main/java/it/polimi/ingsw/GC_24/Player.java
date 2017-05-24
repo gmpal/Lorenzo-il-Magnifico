@@ -33,7 +33,7 @@ public class Player {
 	}
 	
 	public void takeValuesFromPlace(Place place){
-		Value value = place.getValues();
+		Value value = place.getValue();
 		this.myValues=value.addValueToSet(this.myValues);
 	}
 	
