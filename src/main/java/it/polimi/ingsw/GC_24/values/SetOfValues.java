@@ -1,7 +1,5 @@
 package it.polimi.ingsw.GC_24.values;
 
-import it.polimi.ingsw.GC_24.Player;
-
 public class SetOfValues {
 
 	private Wood woods;

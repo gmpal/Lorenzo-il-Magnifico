@@ -1,10 +1,7 @@
 ﻿package it.polimi.ingsw.GC_24;
 
-
 import java.util.ArrayList;
 import java.util.Observable;
-import java.util.Set;
-
 import it.polimi.ingsw.GC_24.places.Board;
 
 public class Model extends Observable {

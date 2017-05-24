@@ -27,7 +27,7 @@ public class MainCarlo {
 		councilPalace.getCouncilPlaces().get(1).setFamMemberOnPlace(player1.getMyFamily().getMember1());
 		
 		turnPlayer.updateListOfPlayerTurn(councilPalace);
-		System.out.println(turnPlayer);*/
+		System.out.println(turnPlayer);
 
 
 		board1.getTowerTerritories().getTower().add(new TowerPlace(3, new Coin(3)));

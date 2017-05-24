@@ -9,7 +9,7 @@ public abstract class PersonalCards {
 	
 	//constructor
 	public PersonalCards(){
-		this.cards= new ArrayList<>();
+		this.cards = new ArrayList<>();
 	}
 	
 	/*finds an ArrayList of PersonalCards in the PersonalBoard if you don't already know the type

@@ -1,5 +1,10 @@
 package it.polimi.ingsw.GC_24;
 
+import java.awt.List;
+import java.util.ArrayList;
+
+import com.google.gson.Gson;
+
 import it.polimi.ingsw.GC_24.cards.*;
 import it.polimi.ingsw.GC_24.effects.CouncilPrivilege;
 import it.polimi.ingsw.GC_24.effects.MoltiplicationCards;
@@ -25,7 +30,7 @@ public class Main {
 		
 	
 		System.out.println(giuseppe.getMyFamily());
-	 */
+
 		
 		
 	//MAIN FOR PRINTING COUNCIL PRIVILEGES
@@ -84,23 +89,30 @@ public class Main {
 		
 //Giorgia main
 	
-		/*	
-		Coin coins = new Coin(3);
+	/*	Coin coins = new Coin(3);
 		MilitaryPoint points = new MilitaryPoint(3);
-		SetOfValues values = new SetOfValues(1);
+		//SetOfValues values = new SetOfValues(1);
 
-		Player player = new Player("Pippo", 1, null, null, values, PlayerColour.BLUE);
-		PersonalBoard board = new PersonalBoard(player);
+		//Player player = new Player("Pippo", 1, null, null, values, PlayerColour.BLUE);
+		//PersonalBoard board = new PersonalBoard(player);
 		Buildings edificio = new Buildings("miao", false, false, false, null);
-		edificio.setCardOnPersonalBoard(board);
-		player.setMyBoard(board);
-		values.getMilitaryPoints().setQuantity(10);
-		values.getFaithPoints().setQuantity(5);
+		Ventures impresa = new Ventures("bau", false, false, false, null, points);
+		//edificio.setCardOnPersonalBoard(board);
+		//player.setMyBoard(board);
+	//	values.getMilitaryPoints().setQuantity(10);
+//		values.getFaithPoints().setQuantity(5);
 
 		PersonalBuildings buildings = new PersonalBuildings();
 		
-		Rankings ranking = new Rankings(player);
+		//Rankings ranking = new Rankings(player);
 
+		ArrayList<Card> lista = new ArrayList<>();
+		lista.add(edificio);
+		lista.add(impresa);
+		Gson gson = new Gson();
+		String stringGson = gson.toJson(lista);
+		System.out.println(stringGson);
+		
 		System.out.println(ranking);
 		System.out.println(values);
 		System.out.println((coins.FindValueInPlayer(player)).getQuantity());
