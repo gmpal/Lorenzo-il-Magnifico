@@ -30,7 +30,7 @@ public class Main {
 		//posso creare un model adesso
 		Model game = new Model(giocatori);
 		View view = new View(game);
-		Controller controller = new Controller(game,view);
+		//Controller controller = new Controller(game,view);
 		
 		
 		//LOGICA DI GIOCO
