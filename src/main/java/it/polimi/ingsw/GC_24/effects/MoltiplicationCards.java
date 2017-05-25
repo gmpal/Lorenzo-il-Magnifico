@@ -29,4 +29,5 @@ public class MoltiplicationCards extends Moltiplication{
 	public void giveImmediateEffect(Player player){
 		moltiplicationEffect(player);
 	}
+
 }
