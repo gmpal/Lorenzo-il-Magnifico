@@ -1,6 +1,6 @@
 package it.polimi.ingsw.GC_24.effects;
 
-import it.polimi.ingsw.GC_24.Player;
+import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.personalboard.PersonalBoard;
 import it.polimi.ingsw.GC_24.values.*;
 
