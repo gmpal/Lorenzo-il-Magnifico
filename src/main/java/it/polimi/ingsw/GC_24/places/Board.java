@@ -29,7 +29,7 @@ public class Board {
 		this.harvest = new Harvest(lockPlaces(this.numPlayers), this.numPlayers);
 		this.production = new Production(lockPlaces(this.numPlayers), this.numPlayers);
 		this.market = new Market(lockPlaces(this.numPlayers));
-		this.councilPalace = new CouncilPalace();
+		this.councilPalace = new CouncilPalace(numPlayers);
 	}
 	
 	//tells if the places needs to be locked
