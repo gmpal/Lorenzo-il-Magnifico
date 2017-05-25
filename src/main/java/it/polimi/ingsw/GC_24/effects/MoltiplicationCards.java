@@ -1,6 +1,6 @@
 package it.polimi.ingsw.GC_24.effects;
 
-import it.polimi.ingsw.GC_24.Player;
+import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.personalboard.PersonalCards;
 import it.polimi.ingsw.GC_24.values.*;
 
@@ -29,4 +29,5 @@ public class MoltiplicationCards extends Moltiplication{
 	public void giveImmediateEffect(Player player){
 		moltiplicationEffect(player);
 	}
+
 }

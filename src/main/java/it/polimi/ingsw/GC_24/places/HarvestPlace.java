@@ -35,7 +35,7 @@ public class HarvestPlace extends Place{
 			Territories territory = (Territories) card;
 			if (territory.getCostDie() <= (getCostDice()+additionalCostDice)){
 				territory.getImmediateEffect().giveEffectValues(player);
-				territory.getImmediateEffect().giveImmediateEffect();
+				territory.getImmediateEffect().giveImmediateEffect(player);
 			}
 				
 				 

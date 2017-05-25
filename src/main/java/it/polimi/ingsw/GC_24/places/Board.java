@@ -34,7 +34,7 @@ public class Board {
 	
 	//tells if the places needs to be locked
 	public boolean lockPlaces(int numPlayers){
-		return numPlayers< MAXNUMPLAYERTOLOCK;
+		return numPlayers< maxNumPlayerToLock;
 	}
 		
 	
@@ -126,7 +126,7 @@ public class Board {
 	}
 
 	public static int getMaxnumplayertolock() {
-		return MAXNUMPLAYERTOLOCK;
+		return maxNumPlayerToLock;
 	}
 
 }
