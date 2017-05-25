@@ -1,10 +1,9 @@
 package it.polimi.ingsw.GC_24.places;
 
 import java.util.ArrayList;
-
-import it.polimi.ingsw.GC_24.Player;
 import it.polimi.ingsw.GC_24.cards.Development;
 import it.polimi.ingsw.GC_24.cards.Buildings;
+import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.values.Value;
 
 public class ProductionPlace extends Place{

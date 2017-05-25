@@ -1,6 +1,6 @@
 package it.polimi.ingsw.GC_24.places;
 
-import it.polimi.ingsw.GC_24.FamilyMember;
+import it.polimi.ingsw.GC_24.model.FamilyMember;
 import it.polimi.ingsw.GC_24.values.Value;
 
 public abstract class Place { 
@@ -23,6 +23,7 @@ public abstract class Place {
 	//clears the place from the Family Member
 	public void clearPlace(){
 		this.famMemberOnPlace = null;
+		this.setAvailable(true);
 	}
 	
 	//redefined in MarketPlace, Tower, CouncilPlace change parameter in FamilyMember	
