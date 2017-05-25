@@ -1,7 +1,6 @@
 package it.polimi.ingsw.GC_24.places;
 
 import java.util.ArrayList;
-
 import it.polimi.ingsw.GC_24.model.PlayerColour;
 
 public class Production {
