@@ -22,7 +22,7 @@ public class TowerPlace extends Place {
 	@Override
 	public void giveEffects(){
 		Player player=this.famMemberOnPlace.getPlayer();
-		player.setMyValues(this.value.addValueToSet(player.getMyValues())); 
+		player.setMyValues(this.getValue().addValueToSet(player.getMyValues())); 
 	}
 
 	@Override

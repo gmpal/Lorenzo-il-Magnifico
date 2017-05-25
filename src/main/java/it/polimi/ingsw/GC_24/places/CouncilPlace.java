@@ -17,7 +17,17 @@ public class CouncilPlace extends Place {
 	@Override
 	public void giveEffects(){
 		Player player=this.famMemberOnPlace.getPlayer();
-		player.setMyValues(this.value.addValueToSet(player.getMyValues()));
+		player.setMyValues(this.getValue().addValueToSet(player.getMyValues()));
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append( "CouncilPlace free: " + isAvailable());
+		if (isAvailable()){
+			builder.append("You get: " + getValue() + ", " + privilegeEffect);
+		}
+		return builder.toString();
 	}
 	
 	//getter and setter

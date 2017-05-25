@@ -19,6 +19,12 @@ public class Ventures extends Development{
 		personalBoard.getPersonalVentures().setCards(this);
 	}
 	
+	@Override
+	public String toString() {
+		return "Buildings [name=" + getName() + ", permanentEffect=" + getPermanentEffect() + 
+				", requiredMilitaryPoints=" + requiredMilitaryPoints + "]";
+	}
+	
 	//getters and setters
 	public MilitaryPoint getRequiredMilitaryPoints() {
 		return requiredMilitaryPoints;

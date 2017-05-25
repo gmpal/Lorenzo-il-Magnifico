@@ -5,7 +5,7 @@ import it.polimi.ingsw.GC_24.cards.*;
 
 public abstract class PersonalCards {
 	
-	protected ArrayList<Development> cards;
+	private ArrayList<Development> cards;
 	
 	//constructor
 	public PersonalCards(){

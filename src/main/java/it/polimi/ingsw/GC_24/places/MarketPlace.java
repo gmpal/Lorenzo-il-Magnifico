@@ -21,7 +21,7 @@ public class MarketPlace extends Place {
 	@Override
 	public void giveEffects(){
 		Player player=this.famMemberOnPlace.getPlayer();
-		player.setMyValues(this.value.addValueToSet(player.getMyValues()));
+		player.setMyValues(this.getValue().addValueToSet(player.getMyValues()));
 		player.setMyValues(this.extraValue.addValueToSet(player.getMyValues()));
 	}
 	
@@ -29,7 +29,7 @@ public class MarketPlace extends Place {
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append( "MarketPlace free: " + isAvailable());
-		if (isAvailable() == true){
+		if (isAvailable()){
 			builder.append("You can get: ");
 			if (getValue() != null)
 				builder.append(getValue());
