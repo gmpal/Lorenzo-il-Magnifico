@@ -37,6 +37,11 @@ public class Player {
 		this.myValues=value.addValueToSet(this.myValues);
 	}
 	
+	public boolean isPossibleIncreaseDieValue(int increment){
+		int myservants = this.getMyValues().getServants().getQuantity();
+		return myservants>=increment;
+	}
+	
 	//Prints name and number of a Player
 	@Override
 	public String toString() {
