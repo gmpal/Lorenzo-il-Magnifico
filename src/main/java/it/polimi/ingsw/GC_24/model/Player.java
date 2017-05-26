@@ -12,9 +12,6 @@ public class Player {
 	private PersonalBoard myBoard; 
 	private SetOfValues myValues;
 	private PlayerColour myColour;
-
-	
-	//AUTO-GENERATED contructor, NEEDS TO BE CORRECTED
 	
 	//Constructor number1 --> NEED to create a setOfValues
 	public Player(String myName, PlayerColour myColour) {
@@ -27,19 +24,22 @@ public class Player {
 	
 	//useful methods
 	
+	//useful to find the value of the player if you only know his colour
 	public SetOfValues getMyValuesFromColour(PlayerColour playerColour) {
-		if(this.myColour.equals(playerColour));
-		return myValues;
+		if(this.myColour.equals(playerColour))
+			return myValues;
+		else
+			return null;
 	}
 	
 	public void takeValuesFromPlace(Place place){
 		Value value = place.getValue();
-		this.myValues=value.addValueToSet(this.myValues);
+		this.myValues = value.addValueToSet(this.myValues);
 	}
 	
 	public boolean isPossibleIncreaseDieValue(int increment){
 		int myservants = this.getMyValues().getServants().getQuantity();
-		return myservants>=increment;
+		return myservants >= increment;
 	}
 	
 	//Prints name and number of a Player
