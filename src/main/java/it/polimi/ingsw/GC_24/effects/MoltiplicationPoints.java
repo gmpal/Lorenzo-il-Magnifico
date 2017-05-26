@@ -14,7 +14,7 @@ public class MoltiplicationPoints extends Moltiplication{
 	}
 
 	@Override
-	public void moltiplicationEffect(Player player){
+public void moltiplicationEffect(Player player){
 		int factor1 = value.getQuantity();
 		int quanityplayervalue2 = value2.findValueInPlayer(player.getMyBoard().getPlayer()).getQuantity();
 		int dividervalue2 = value2.getQuantity();
