@@ -1,7 +1,5 @@
 package it.polimi.ingsw.GC_24.places;
 
-
-
 public class Board {
 
 	private static final int maxNumPlayerToLock=3; 
