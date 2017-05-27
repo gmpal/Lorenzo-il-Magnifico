@@ -18,6 +18,7 @@ public abstract class ImmediateEffect extends Effect{
 		this.effectValues = effectValues;
 	}
 
+	//this method gives the immediate effect of the card to the player when called
 	public abstract void giveImmediateEffect(Player player);
 	
 	//useful methods

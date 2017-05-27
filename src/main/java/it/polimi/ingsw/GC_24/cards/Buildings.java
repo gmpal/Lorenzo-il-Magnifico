@@ -20,7 +20,8 @@ public class Buildings extends Development{
 	
 	@Override
 	public String toString() {
-		return "Buildings [costDie=" + costDie + "]";
+		return "Building [name=" + getName() + ", immediateEffect=" + getImmediateEffect() + 
+				", costDie=" + costDie + "]";
 	}
 
 	//getter and setter

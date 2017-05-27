@@ -13,6 +13,13 @@ public class Card {
 		this.immediateEffect = immeff;
 		this.specialEffect = speceff;
 	}
+	
+		@Override
+		public String toString() {
+			return "Card [name=" + name + ", permanentEffect=" + permanentEffect +
+					", immediateEffect=" + immediateEffect
+					+ ", specialEffect=" + specialEffect + "]";
+		}
 
 	//getters and setters
 	public String getName() {
@@ -46,12 +53,4 @@ public class Card {
 	public void setSpecialEffect(boolean specialEffect) {
 		this.specialEffect = specialEffect;
 	}
-	
-	//toString method
-	@Override
-	public String toString() {
-		return "\nCard [name=" + name + ", permanentEffect=" + permanentEffect + ", immediateEffect=" + immediateEffect
-				+ ", specialEffect=" + specialEffect + "]";
-	}
-	
 }

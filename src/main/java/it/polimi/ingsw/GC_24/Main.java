@@ -16,6 +16,11 @@ import it.polimi.ingsw.GC_24.view.View;
 public class Main {
 	public static void main(String[] args) {
 
+		Player marco = new Player("marco", PlayerColour.BLUE);
+		Player marco2 = new Player("marco", PlayerColour.BLUE);
+		System.out.println(marco.equals(marco2));
+		System.out.println(marco2.equals(marco2));
+		/* GAME 
 		Scanner scanner = new Scanner(System.in);
 		
 		//cosa mi serve per creare un Model?
@@ -30,7 +35,7 @@ public class Main {
 		//posso creare un model adesso
 		Model game = new Model(giocatori);
 		View view = new View(game);
-		Controller controller = new Controller(game,view);
+		//Controller controller = new Controller(game,view);
 		
 		
 		//LOGICA DI GIOCO
@@ -40,7 +45,7 @@ public class Main {
 			if (comando==2 ||comando==1) view.input(comando);
 				else System.out.println("Comando errato, riprova");
 			}
-
+		*/
 
 		
 		/*		
