@@ -53,5 +53,4 @@ public class Card {
 	public void setSpecialEffect(boolean specialEffect) {
 		this.specialEffect = specialEffect;
 	}
-	
 }

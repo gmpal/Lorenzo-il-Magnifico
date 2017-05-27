@@ -9,8 +9,8 @@ public abstract class Development extends Card{
 	
 	private SetOfValues cost;
 	private String type;
-	private ImmediateEffect immediateEffect;
-	private PermanentEffect permanentEffect;
+	private ImmediateEffect immediateEffects;
+	private PermanentEffect permanentEffects;
 	private int round;
 	
 	//constructor
@@ -40,19 +40,19 @@ public abstract class Development extends Card{
 		this.round = round;
 	}	
 	public ImmediateEffect getImmediateEffect() {
-		return immediateEffect;
+		return immediateEffects;
 	}
 
 	public void setImmediateEffect(ImmediateEffect immediateEffect) {
-		this.immediateEffect = immediateEffect;
+		this.immediateEffects = immediateEffect;
 	}
 
 	public PermanentEffect getPermanentEffect() {
-		return permanentEffect;
+		return permanentEffects;
 	}
 
 	public void setPermanentEffect(PermanentEffect permanentEffect) {
-		this.permanentEffect = permanentEffect;
+		this.permanentEffects = permanentEffect;
 	}
 
 	//add the card to the right ArrayList on the personal board
