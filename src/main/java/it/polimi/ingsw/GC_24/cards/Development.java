@@ -19,6 +19,9 @@ public abstract class Development extends Card{
 		this.cost = cost;
 	}
 	
+	//add the card to the right ArrayList on the personal board
+	public abstract void setCardOnPersonalBoard(PersonalBoard personalBoard); // redefined in every subclass
+	
 	//getter and setters
 	public SetOfValues getCost() {
 		return cost;
@@ -54,8 +57,5 @@ public abstract class Development extends Card{
 	public void setPermanentEffect(PermanentEffect permanentEffect) {
 		this.permanentEffects = permanentEffect;
 	}
-
-	//add the card to the right ArrayList on the personal board
-	public abstract void setCardOnPersonalBoard(PersonalBoard personalBoard); // redefined in every subclass
 
 }

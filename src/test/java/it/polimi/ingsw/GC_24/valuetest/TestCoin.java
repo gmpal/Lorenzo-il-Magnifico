@@ -1,20 +1,20 @@
-package it.polimi.ingsw.GC_24;
+package it.polimi.ingsw.GC_24.valuetest;
 
 import static org.junit.Assert.*;
-import org.junit.Test;
+import org.junit.Before;
+import it.polimi.ingsw.GC_24.values.Coin;
 
-import it.polimi.ingsw.GC_24.model.*;
-import it.polimi.ingsw.GC_24.values.*;
-
-public class TestCoin {
+public class TestCoin extends TestValue {
 	
-	private SetOfValues values = new SetOfValues();
-	private Coin coin = new Coin(0);
-	private SetOfValues valuesexpected = new SetOfValues();
-	private Player player = new Player("Giorgia", PlayerColour.RED);
+	Coin coin;
 	
-	@Test
-	public void testAddValueToSetPositive() {
+	@Before
+	public void setUp() throws Exception {
+		coin = new Coin(0);
+	}
+	
+	@Override
+	public void testAddValueToSetPositive() throws Exception {
 		coin.setQuantity(3);
 		values.setInitialValues(1);
 		valuesexpected.setInitialValues(1);
@@ -22,8 +22,8 @@ public class TestCoin {
 		assertEquals(valuesexpected, coin.addValueToSet(values));
 	}
 
-	@Test
-	public void testAddValueToSetNegative() {
+	@Override
+	public void testAddValueToSetNegative() throws Exception {
 		coin.setQuantity(-3);
 		values.setInitialValues(1);
 		valuesexpected.setInitialValues(1);
@@ -31,8 +31,8 @@ public class TestCoin {
 		assertFalse(valuesexpected.equals(coin.addValueToSet(values)));
 	}
 	
-	@Test
-	public void testAddValueToSetZero() {
+	@Override
+	public void testAddValueToSetZero() throws Exception {
 		coin.setQuantity(0);
 		values.setInitialValues(1);
 		valuesexpected.setInitialValues(1);
@@ -40,8 +40,8 @@ public class TestCoin {
 		assertEquals(valuesexpected, coin.addValueToSet(values));
 	}
 	
-	@Test
-	public void testFindValueInPlayer() {
+	@Override
+	public void testFindValueInPlayer() throws Exception {
 		coin.setQuantity(5);
 		player.getMyValues().getCoins().setQuantity(10);
 		assertEquals(player.getMyValues().getCoins(), coin.findValueInPlayer(player));

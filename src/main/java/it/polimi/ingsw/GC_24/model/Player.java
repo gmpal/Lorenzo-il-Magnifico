@@ -37,9 +37,15 @@ public class Player {
 		this.myValues = value.addValueToSet(this.myValues);
 	}
 	
+	//returns false if the increment is a negative number(not allowed) or if it is grater 
+	//than the number of servants of the player, hence it is not possible to raise the die's
+	//value of the required increment
 	public boolean isPossibleIncreaseDieValue(int increment){
 		int myservants = this.getMyValues().getServants().getQuantity();
-		return myservants >= increment;
+		if (increment >= 0)
+			return myservants >= increment;
+		else
+			return false;
 	}
 	
 	//Prints name and number of a Player

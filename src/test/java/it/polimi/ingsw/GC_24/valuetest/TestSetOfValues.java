@@ -1,18 +1,25 @@
-package it.polimi.ingsw.GC_24;
+package it.polimi.ingsw.GC_24.valuetest;
 
 import static org.junit.Assert.*;
-
+import org.junit.Before;
 import org.junit.Test;
-
 import it.polimi.ingsw.GC_24.values.Coin;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 
 public class TestSetOfValues {
 	
-	private SetOfValues values = new SetOfValues();
-	private Coin coin = new Coin(0);
-	private SetOfValues values2 = new SetOfValues();
-	private SetOfValues valuesexpected = new SetOfValues();
+	SetOfValues values;
+	Coin coin;
+	SetOfValues values2;
+	SetOfValues valuesexpected;
+	
+	@Before
+	public void setUp() throws Exception {
+		coin = new Coin(0);
+		values = new SetOfValues();
+		values2 = new SetOfValues();
+		valuesexpected = new SetOfValues();
+	}
 
 	@Test
 	public void testAddTwoSetsOfValues() {
