@@ -50,7 +50,7 @@ public class Card {
 	//toString method
 	@Override
 	public String toString() {
-		return "Card [name=" + name + ", permanentEffect=" + permanentEffect + ", immediateEffect=" + immediateEffect
+		return "\nCard [name=" + name + ", permanentEffect=" + permanentEffect + ", immediateEffect=" + immediateEffect
 				+ ", specialEffect=" + specialEffect + "]";
 	}
 	
