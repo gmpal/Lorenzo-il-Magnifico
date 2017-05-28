@@ -12,8 +12,8 @@ public class CouncilPrivilege extends ImmediateEffect {
 	private ArrayList<SetOfValues> councilPrivileges;
 	private int numberOfPrivileges;
 	
-	public CouncilPrivilege(String name, SetOfValues effectValues, int numberOfPrivileges) {
-		super(name, effectValues);
+	public CouncilPrivilege(String name, int numberOfPrivileges) {
+		super(name);
 		this.councilPrivileges = CreateCouncil();
 		this.numberOfPrivileges = numberOfPrivileges;
 	}

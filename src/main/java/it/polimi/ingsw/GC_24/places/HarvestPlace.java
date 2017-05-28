@@ -8,7 +8,7 @@ import it.polimi.ingsw.GC_24.values.Value;
 
 public class HarvestPlace extends ActivityPlace{
 
-	//constructor
+	// constructor
 	public HarvestPlace(int costDice, Value value, int additionalCostDice) {
 		super(costDice, value, additionalCostDice);
 	}
@@ -21,7 +21,7 @@ public class HarvestPlace extends ActivityPlace{
 	for (Development  card:harvestCards){
 		Territories territory = (Territories) card;
 		if (territory.getCostDie() <= (getCostDice() + getAdditionalCostDice())){
-			territory.getImmediateEffect().giveEffectValues(player);
+				territory.getValueEffect().giveImmediateEffect(player);
 			territory.getImmediateEffect().giveImmediateEffect(player);
 			} 
 		}
@@ -35,10 +35,5 @@ public class HarvestPlace extends ActivityPlace{
 			builder.append("extra die's cost: " + getAdditionalCostDice());
 		}
 		return builder.toString();
-	}
-
+  }
 }
-	
-	
-
-

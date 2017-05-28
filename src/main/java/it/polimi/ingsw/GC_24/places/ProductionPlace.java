@@ -18,13 +18,14 @@ public class ProductionPlace extends ActivityPlace{
 		Player player = getFamMemberOnPlace().getPlayer();
 		player.getMyBoard().getBonusTile().giveHarvestValues(player.getMyValues());
 		ArrayList<Development> harvestCards = player.getMyBoard().getPersonalBuildings().getCards();
-		for (Development  card:harvestCards){
+		for (Development card : harvestCards) {
 			Buildings buildings = (Buildings) card;
-			if (buildings.getCostDie() <= (getCostDice() + getAdditionalCostDice())){
-				buildings.getImmediateEffect().giveEffectValues(player);
+			if (buildings.getCostDie() <= (getCostDice() + additionalCostDice)) {
+				buildings.getValueEffect().giveImmediateEffect(player);
 				buildings.getImmediateEffect().giveImmediateEffect(player);
-			} 
+			}
 		}
+
 	}
 	
 	@Override
@@ -36,5 +37,4 @@ public class ProductionPlace extends ActivityPlace{
 		}
 		return builder.toString();
 	}
-
 }

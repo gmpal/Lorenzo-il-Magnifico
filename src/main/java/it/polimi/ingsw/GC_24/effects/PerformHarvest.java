@@ -1,10 +1,8 @@
 package it.polimi.ingsw.GC_24.effects;
 
 import java.util.ArrayList;
-import it.polimi.ingsw.GC_24.cards.Development;
-import it.polimi.ingsw.GC_24.cards.Territories;
+import it.polimi.ingsw.GC_24.cards.*;
 import it.polimi.ingsw.GC_24.model.Player;
-import it.polimi.ingsw.GC_24.values.SetOfValues;
 
 public class PerformHarvest extends PerformActivity{
 	
@@ -25,5 +23,4 @@ public class PerformHarvest extends PerformActivity{
 			} 
 		}
 	}
-
 }

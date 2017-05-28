@@ -9,8 +9,8 @@ public abstract class Moltiplication extends ImmediateEffect{
 	protected Player player;
 	
 	//constructor
-	public Moltiplication(String name, SetOfValues effectValues, Value value) {
-		super(name, effectValues);
+	public Moltiplication(String name, Value value) {
+		super(name);
 		this.value = value;
 		}
 	
