@@ -14,8 +14,8 @@ public class TestPersonalTerritories extends TestPersonalCards {
 
 	@Before
 	public void setUp() throws Exception {
-		territory1 = new Territories("Territory1", false, false, false, null,0);
-		territory2 = new Territories("Territory2", false, false, false, null,0);
+		territory1 = new Territories("Territory1", false, false, false, 0, "Territory", null, null, null, 2, null);
+		territory2 = new Territories("Territory2", false, false, false, 0, "Territory", null, null, null, 3, null);
 		territories = new PersonalTerritories();
 		territoriesexpected = new PersonalTerritories();
 	}

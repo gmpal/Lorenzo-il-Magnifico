@@ -15,8 +15,8 @@ public class TestPersonalCharacters extends TestPersonalCards {
 
 	@Before
 	public void setUp() throws Exception {
-		character1 = new Characters("Building1", false, false, false, null);
-		character2 = new Characters("Building2", false, false, false, null);
+		character1 = new Characters("Character1", false, false, false, "Character", null, null, null, 1, null);
+		character2 = new Characters("Character2", false, false, false, "Character", null, null, null, 2, null);
 		characters = new PersonalCharacters();
 		charactersexpected = new PersonalCharacters();
 	}

@@ -2,26 +2,25 @@ package it.polimi.ingsw.GC_24.effects;
 
 import java.util.ArrayList;
 import it.polimi.ingsw.GC_24.cards.Development;
-import it.polimi.ingsw.GC_24.cards.Territories;
+import it.polimi.ingsw.GC_24.cards.Buildings;
 import it.polimi.ingsw.GC_24.model.Player;
-import it.polimi.ingsw.GC_24.values.SetOfValues;
 
 public class PerformProduction extends PerformActivity{
 
 	//constructor
-		public PerformProduction(String name, SetOfValues effectValues, int dieValue) {
-			super(name, effectValues, dieValue);
+		public PerformProduction(String name, int dieValue) {
+			super(name, dieValue);
 		}
 
 		@Override
 		public void giveImmediateEffect(Player player){
-		player.getMyBoard().getBonusTile().giveHarvestValues(player.getMyValues());
-		ArrayList<Development> harvestCards = player.getMyBoard().getPersonalBuildings().getCards();
-		for (Development  card:harvestCards){
-			Territories territory = (Territories) card;
-			if (territory.getCostDie() <= getDieValue()){
-				territory.getImmediateEffect().giveEffectValues(player);
-				territory.getImmediateEffect().giveImmediateEffect(player);
+		player.getMyBoard().getBonusTile().giveProductiontValues(player.getMyValues());
+		ArrayList<Development> productionCards = player.getMyBoard().getPersonalBuildings().getCards();
+		for (Development  card:productionCards){
+			Buildings building = (Buildings) card;
+			if (building.getCostDie() <= getDieValue()){
+				building.getValueEffect().giveImmediateEffect(player);
+				building.getImmediateEffect().giveImmediateEffect(player);
 				} 
 			}
 		}
