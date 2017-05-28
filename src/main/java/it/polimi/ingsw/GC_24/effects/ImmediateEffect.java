@@ -2,6 +2,7 @@ package it.polimi.ingsw.GC_24.effects;
 
 import it.polimi.ingsw.GC_24.model.Player;
 
+
 public abstract class ImmediateEffect extends Effect {
 
 	// this class gives to the player the resource immediate effect and the

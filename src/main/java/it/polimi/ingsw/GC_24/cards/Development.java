@@ -25,8 +25,11 @@ public abstract class Development extends Card {
 		this.round = round;
 		this.valueEffects = valueEffects;
 	}
-
-	// getter and setters
+	
+	//add the card to the right ArrayList on the personal board
+	public abstract void setCardOnPersonalBoard(PersonalBoard personalBoard); // redefined in every subclass
+	
+	//getter and setters
 	public SetOfValues getCost() {
 		return cost;
 	}
@@ -74,11 +77,4 @@ public abstract class Development extends Card {
 	public void setValueEffect(ValueEffect valueEffects) {
 		this.valueEffects = valueEffects;
 	}
-
-	// add the card to the right ArrayList on the personal board
-	public abstract void setCardOnPersonalBoard(PersonalBoard personalBoard); // redefined
-																				// in
-																				// every
-																				// subclass
-
 }
