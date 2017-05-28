@@ -9,8 +9,8 @@ public class MoltiplicationCards extends Moltiplication{
 	private PersonalCards personalCards;
 
 	//constructor
-	public MoltiplicationCards(String name, SetOfValues effectValues, Value value, PersonalCards personalCards) {
-		super(name, effectValues, value);
+	public MoltiplicationCards(String name, Value value, PersonalCards personalCards) {
+		super(name, value);
 		this.personalCards = personalCards;
 	}
 	

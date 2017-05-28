@@ -9,8 +9,8 @@ public class PerformProduction extends ImmediateEffect{
 	private Die dieValue;
 
 	//constructor
-	public PerformProduction(String name, SetOfValues effectValues, Die dieValue) {
-		super(name, effectValues);
+	public PerformProduction(String name, Die dieValue) {
+		super(name);
 		this.setDieValue(dieValue);
 	}
 	

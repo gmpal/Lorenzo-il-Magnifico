@@ -148,7 +148,7 @@ public class Main {
 		MoltiplicationCards effettocarte = new MoltiplicationCards("ciao", null, coins, buildings);
 		effettocarte.moltiplicationEffect(board);
 
-		System.out.println(player.getMyValues());*/
+		System.out.println(player.getMyValues());
 		SetOfValues values = new SetOfValues();
 		Development edificio = new Buildings("miao", false, false, false, values,3);
 		Development ventura = new Characters("miao", false, false, false, values);
@@ -159,7 +159,7 @@ public class Main {
 		Development avventura = buildings.get(1);
 	
 		System.out.println(palazzo);
-		System.out.println(avventura);
+		System.out.println(avventura);*/
 		
 		
 		

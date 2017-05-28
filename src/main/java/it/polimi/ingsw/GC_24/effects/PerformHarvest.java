@@ -1,36 +1,34 @@
 package it.polimi.ingsw.GC_24.effects;
 
 import java.util.ArrayList;
-import it.polimi.ingsw.GC_24.cards.Development;
-import it.polimi.ingsw.GC_24.cards.Territories;
-import it.polimi.ingsw.GC_24.dice.Die;
+import it.polimi.ingsw.GC_24.cards.*;
 import it.polimi.ingsw.GC_24.model.Player;
-import it.polimi.ingsw.GC_24.values.SetOfValues;
 
-public class PerformHarvest extends ImmediateEffect{
-	
+public class PerformHarvest extends ImmediateEffect {
+
 	private int dieValue;
-	
-	//constructor
-	public PerformHarvest(String name, SetOfValues effectValues, int dieValue) {
-		super(name, effectValues);
+
+	// constructor
+	public PerformHarvest(String name, int dieValue) {
+		super(name);
 		this.dieValue = dieValue;
 	}
-	
-	//e se il player vuole aumentare l'azione??
-	public void giveImmediateEffect(Player player){
-	player.getMyBoard().getBonusTile().giveHarvestValues(player.getMyValues());
+
+	// e se il player vuole aumentare l'azione??
+	@Override
+	public void giveImmediateEffect(Player player) {
+		player.getMyBoard().getBonusTile().giveHarvestValues(player.getMyValues());
 		ArrayList<Development> harvestCards = player.getMyBoard().getPersonalTerritories().getCards();
-		for (Development  card:harvestCards){
+		for (Development card : harvestCards) {
 			Territories territory = (Territories) card;
-			if (territory.getCostDie() <= dieValue){
-				territory.getImmediateEffect().giveEffectValues(player);
+			if (territory.getCostDie() <= dieValue) {
+				territory.getValueEffect().giveImmediateEffect(player);
 				territory.getImmediateEffect().giveImmediateEffect(player);
-			} 
+			}
 		}
 	}
-	
-	//getter and setter
+
+	// getter and setter
 	public int getDieValue() {
 		return dieValue;
 	}
