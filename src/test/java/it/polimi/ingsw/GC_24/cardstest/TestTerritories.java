@@ -13,9 +13,9 @@ public class TestTerritories extends TestDevelopment {
 	
 	@Before
 	public void setUp() throws Exception {
-		territory = new Territories("Territory", false, false, false, null,0);
+		territory = new Territories("Territory", false, false, false, 0, "Territory", null, null, null, 2, null);
 		territories = new PersonalTerritories();
-		territory2 = new Territories("Territory2", false, false, false, null,0);
+		territory2 = new Territories("Territory2", false, false, false, 0, "Territory", null, null, null, 1, null);
 	}
 	
 	@Override

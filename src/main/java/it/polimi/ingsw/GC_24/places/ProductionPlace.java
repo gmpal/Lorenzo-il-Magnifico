@@ -20,7 +20,7 @@ public class ProductionPlace extends ActivityPlace{
 		ArrayList<Development> harvestCards = player.getMyBoard().getPersonalBuildings().getCards();
 		for (Development card : harvestCards) {
 			Buildings buildings = (Buildings) card;
-			if (buildings.getCostDie() <= (getCostDice() + additionalCostDice)) {
+			if (buildings.getCostDie() <= (getCostDice() + getAdditionalCostDice())) {
 				buildings.getValueEffect().giveImmediateEffect(player);
 				buildings.getImmediateEffect().giveImmediateEffect(player);
 			}

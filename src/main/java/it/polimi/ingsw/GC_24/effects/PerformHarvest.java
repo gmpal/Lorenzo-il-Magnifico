@@ -7,8 +7,8 @@ import it.polimi.ingsw.GC_24.model.Player;
 public class PerformHarvest extends PerformActivity{
 	
 	//constructor
-	public PerformHarvest(String name, SetOfValues effectValues, int dieValue) {
-		super(name, effectValues, dieValue);
+	public PerformHarvest(String name, int dieValue) {
+		super(name, dieValue);
 	}
 
 	@Override
@@ -18,7 +18,7 @@ public class PerformHarvest extends PerformActivity{
 	for (Development  card:harvestCards){
 		Territories territory = (Territories) card;
 		if (territory.getCostDie() <= getDieValue()){
-			territory.getImmediateEffect().giveEffectValues(player);
+			territory.getValueEffect().giveImmediateEffect(player);
 			territory.getImmediateEffect().giveImmediateEffect(player);
 			} 
 		}

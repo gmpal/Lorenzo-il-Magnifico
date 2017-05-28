@@ -13,9 +13,9 @@ public class TestBuildings extends TestDevelopment {
 	
 	@Before
 	public void setUp() throws Exception {
-		building = new Buildings("Building", false, false, false, null,0);
+		building = new Buildings("Building", false, false, false, 0, "Building", null, null, null, 1, null);
 		buildings = new PersonalBuildings();
-		building2 = new Buildings("Building2", false, false, false, null,0);
+		building2 = new Buildings("Building2", false, false, false, 0, "Building", null, null, null, 3, null);
 	}
 	
 	@Override

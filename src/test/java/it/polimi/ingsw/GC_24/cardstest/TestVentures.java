@@ -13,9 +13,9 @@ public class TestVentures extends TestDevelopment {
 	
 	@Before
 	public void setUp() throws Exception {
-		venture = new Ventures("Venture", false, false, false, null,null);
+		venture = new Ventures("Venture", false, false, false, "Venture", null, null, null, null, 3, null);
 		ventures = new PersonalVentures();
-		ventures2 = new Ventures("Venture2", false, false, false, null,null);
+		ventures2 = new Ventures("Venture2", false, false, false, "Venture", null, null, null, null, 3, null);
 	}
 	
 	@Override

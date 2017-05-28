@@ -13,9 +13,9 @@ public class TestCharacters extends TestDevelopment{
 	
 	@Before
 	public void setUp() throws Exception {
-		character = new Characters("Character", false, false, false, null);
+		character = new Characters("Character", false, false, false, "Character", null, null, null, 1, null);
 		characters = new PersonalCharacters();
-		characters2 = new Characters("Character2", false, false, false, null);
+		characters2 = new Characters("Character2", false, false, false, "Character", null, null, null, 2, null);
 	}
 	
 	@Override

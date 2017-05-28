@@ -14,8 +14,8 @@ public class TestPersonalVentures extends TestPersonalCards {
 
 	@Before
 	public void setUp() throws Exception {
-		building1 = new Ventures("Venture1", false, false, false, null, null);
-		building2 = new Ventures("Venture2", false, false, false, null, null);
+		building1 = new Ventures("Venture1", false, false, false, "Venture", null, null, null, null, 1, null);
+		building2 = new Ventures("Venture2", false, false, false, "Venture", null, null, null, null, 1, null);
 		buildings = new PersonalVentures();
 		buildingsexpected = new PersonalVentures();
 	}

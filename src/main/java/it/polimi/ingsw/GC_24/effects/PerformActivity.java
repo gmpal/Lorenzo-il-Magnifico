@@ -1,15 +1,14 @@
 package it.polimi.ingsw.GC_24.effects;
 
 import it.polimi.ingsw.GC_24.model.Player;
-import it.polimi.ingsw.GC_24.values.SetOfValues;
 
 public abstract class PerformActivity  extends ImmediateEffect{
 
 	private int dieValue;
 
 	//constructor
-	public PerformActivity(String name, SetOfValues effectValues, int dieValue) {
-		super(name, effectValues);
+	public PerformActivity(String name, int dieValue) {
+		super(name);
 		this.dieValue = dieValue;	
 	}
 	
