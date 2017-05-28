@@ -1,23 +1,23 @@
-package it.polimi.ingsw.GC_24.personalboard;
+package it.polimi.ingsw.GC_24.personalboardtest;
 
 import static org.junit.Assert.*;
 import org.junit.Before;
-import it.polimi.ingsw.GC_24.cards.Buildings;
-import it.polimi.ingsw.GC_24.personalboard.PersonalBuildings;
+import it.polimi.ingsw.GC_24.cards.Ventures;
+import it.polimi.ingsw.GC_24.personalboard.PersonalVentures;
 
-public class TestPersonalBuildings extends TestPersonalCards {
+public class TestPersonalVentures extends TestPersonalCards {
 	
-	Buildings building1;
-	Buildings building2;
-	PersonalBuildings buildings;
-	PersonalBuildings buildingsexpected;	
+	Ventures building1;
+	Ventures building2;
+	PersonalVentures buildings;
+	PersonalVentures buildingsexpected;	
 
 	@Before
 	public void setUp() throws Exception {
-		building1 = new Buildings("Building1", false, false, false, null,0);
-		building2 = new Buildings("Building2", false, false, false, null,0);
-		buildings = new PersonalBuildings();
-		buildingsexpected = new PersonalBuildings();
+		building1 = new Ventures("Venture1", false, false, false, null, null);
+		building2 = new Ventures("Venture2", false, false, false, null, null);
+		buildings = new PersonalVentures();
+		buildingsexpected = new PersonalVentures();
 	}
 
 	@Override
