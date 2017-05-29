@@ -2,19 +2,29 @@ package it.polimi.ingsw.GC_24.valuetest;
 
 import static org.junit.Assert.*;
 import org.junit.Before;
+import org.junit.Test;
+import it.polimi.ingsw.GC_24.model.Player;
+import it.polimi.ingsw.GC_24.model.PlayerColour;
 import it.polimi.ingsw.GC_24.values.FaithPoint;
+import it.polimi.ingsw.GC_24.values.SetOfValues;
 
 
-public class TestFaithPoint extends TestValue {
+public class TestFaithPoint {
 
 	FaithPoint faithPoint;
+	SetOfValues values;
+	SetOfValues valuesexpected;
+	Player player;
 	
 	@Before
 	public void setUp() throws Exception {
 		faithPoint = new FaithPoint(0);
+		values = new SetOfValues();
+		player = new Player("Giorgia", PlayerColour.RED);
+		valuesexpected = new SetOfValues();
 	}
 	
-	@Override
+	@Test
 	public void testAddValueToSetPositive() throws Exception {
 		faithPoint.setQuantity(3);
 		values.setInitialValues(1);
@@ -23,7 +33,7 @@ public class TestFaithPoint extends TestValue {
 		assertEquals(valuesexpected, faithPoint.addValueToSet(values));
 	}
 
-	@Override
+	@Test
 	public void testAddValueToSetNegative() throws Exception {
 		faithPoint.setQuantity(-3);
 		values.setInitialValues(1);
@@ -32,7 +42,7 @@ public class TestFaithPoint extends TestValue {
 		assertFalse(valuesexpected.equals(faithPoint.addValueToSet(values)));
 	}
 	
-	@Override
+	@Test
 	public void testAddValueToSetZero() throws Exception {
 		faithPoint.setQuantity(0);
 		values.setInitialValues(1);
@@ -41,7 +51,7 @@ public class TestFaithPoint extends TestValue {
 		assertEquals(valuesexpected, faithPoint.addValueToSet(values));
 	}
 	
-	@Override
+	@Test
 	public void testFindValueInPlayer() throws Exception {
 		faithPoint.setQuantity(5);
 		player.getMyValues().getFaithPoints().setQuantity(10);

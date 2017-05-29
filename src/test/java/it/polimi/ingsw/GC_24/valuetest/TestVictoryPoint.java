@@ -1,20 +1,29 @@
 package it.polimi.ingsw.GC_24.valuetest;
 
 import static org.junit.Assert.*;
-
 import org.junit.Before;
+import org.junit.Test;
+import it.polimi.ingsw.GC_24.model.Player;
+import it.polimi.ingsw.GC_24.model.PlayerColour;
+import it.polimi.ingsw.GC_24.values.SetOfValues;
 import it.polimi.ingsw.GC_24.values.VictoryPoint;
 
-public class TestVictoryPoint extends TestValue {
+public class TestVictoryPoint {
 	
 	VictoryPoint victoryPoint;
+	SetOfValues values;
+	SetOfValues valuesexpected;
+	Player player;
 
 	@Before
 	public void setUp() throws Exception {
 		victoryPoint = new VictoryPoint(0);
+		values = new SetOfValues();
+		player = new Player("Giorgia", PlayerColour.RED);
+		valuesexpected = new SetOfValues();
 	}
 	
-	@Override
+	@Test
 	public void testAddValueToSetPositive() throws Exception {
 		victoryPoint.setQuantity(3);
 		values.setInitialValues(1);
@@ -23,7 +32,7 @@ public class TestVictoryPoint extends TestValue {
 		assertEquals(valuesexpected, victoryPoint.addValueToSet(values));
 	}
 
-	@Override
+	@Test
 	public void testAddValueToSetNegative() throws Exception {
 		victoryPoint.setQuantity(-3);
 		values.setInitialValues(1);
@@ -32,7 +41,7 @@ public class TestVictoryPoint extends TestValue {
 		assertFalse(valuesexpected.equals(victoryPoint.addValueToSet(values)));
 	}
 	
-	@Override
+	@Test
 	public void testAddValueToSetZero() throws Exception {
 		victoryPoint.setQuantity(0);
 		values.setInitialValues(1);
@@ -41,7 +50,7 @@ public class TestVictoryPoint extends TestValue {
 		assertEquals(valuesexpected, victoryPoint.addValueToSet(values));
 	}
 	
-	@Override
+	@Test
 	public void testFindValueInPlayer() throws Exception {
 		victoryPoint.setQuantity(5);
 		player.getMyValues().getVictoryPoints().setQuantity(10);

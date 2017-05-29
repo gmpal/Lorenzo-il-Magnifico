@@ -2,19 +2,30 @@ package it.polimi.ingsw.GC_24.valuetest;
 
 import static org.junit.Assert.*;
 import org.junit.Before;
+import org.junit.Test;
+
+import it.polimi.ingsw.GC_24.model.Player;
+import it.polimi.ingsw.GC_24.model.PlayerColour;
+import it.polimi.ingsw.GC_24.values.SetOfValues;
 import it.polimi.ingsw.GC_24.values.Stone;
 
 
-public class TestStone extends TestValue {
+public class TestStone {
 
 	Stone stone;
+	SetOfValues values;
+	SetOfValues valuesexpected;
+	Player player;
 	
 	@Before
 	public void setUp() throws Exception {
 		stone = new Stone(0);
+		values = new SetOfValues();
+		player = new Player("Giorgia", PlayerColour.RED);
+		valuesexpected = new SetOfValues();
 	}
 	
-	@Override
+	@Test
 	public void testAddValueToSetPositive() throws Exception {
 		stone.setQuantity(3);
 		values.setInitialValues(1);
@@ -23,7 +34,7 @@ public class TestStone extends TestValue {
 		assertEquals(valuesexpected, stone.addValueToSet(values));
 	}
 
-	@Override
+	@Test
 	public void testAddValueToSetNegative() throws Exception {
 		stone.setQuantity(-3);
 		values.setInitialValues(1);
@@ -32,7 +43,7 @@ public class TestStone extends TestValue {
 		assertFalse(valuesexpected.equals(stone.addValueToSet(values)));
 	}
 	
-	@Override
+	@Test
 	public void testAddValueToSetZero() throws Exception {
 		stone.setQuantity(0);
 		values.setInitialValues(1);
@@ -41,7 +52,7 @@ public class TestStone extends TestValue {
 		assertEquals(valuesexpected, stone.addValueToSet(values));
 	}
 	
-	@Override
+	@Test
 	public void testFindValueInPlayer() throws Exception {
 		stone.setQuantity(5);
 		player.getMyValues().getStones().setQuantity(10);

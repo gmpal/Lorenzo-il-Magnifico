@@ -2,18 +2,29 @@ package it.polimi.ingsw.GC_24.valuetest;
 
 import static org.junit.Assert.*;
 import org.junit.Before;
+import org.junit.Test;
+import it.polimi.ingsw.GC_24.model.Player;
+import it.polimi.ingsw.GC_24.model.PlayerColour;
 import it.polimi.ingsw.GC_24.values.Servant;
+import it.polimi.ingsw.GC_24.values.SetOfValues;
 
-public class TestServant extends TestValue {
+public class TestServant {
 
 	Servant servant;
+	SetOfValues values;
+	SetOfValues valuesexpected;
+	Player player;
+	
 	
 	@Before
 	public void setUp() throws Exception {
 		servant = new Servant(0);
+		values = new SetOfValues();
+		player = new Player("Giorgia", PlayerColour.RED);
+		valuesexpected = new SetOfValues();
 	}
 	
-	@Override
+	@Test
 	public void testAddValueToSetPositive() throws Exception {
 		servant.setQuantity(3);
 		values.setInitialValues(1);
@@ -22,7 +33,7 @@ public class TestServant extends TestValue {
 		assertEquals(valuesexpected, servant.addValueToSet(values));
 	}
 
-	@Override
+	@Test
 	public void testAddValueToSetNegative() throws Exception {
 		servant.setQuantity(-3);
 		values.setInitialValues(1);
@@ -31,7 +42,7 @@ public class TestServant extends TestValue {
 		assertFalse(valuesexpected.equals(servant.addValueToSet(values)));
 	}
 	
-	@Override
+	@Test
 	public void testAddValueToSetZero() throws Exception {
 		servant.setQuantity(0);
 		values.setInitialValues(1);
@@ -40,7 +51,7 @@ public class TestServant extends TestValue {
 		assertEquals(valuesexpected, servant.addValueToSet(values));
 	}
 	
-	@Override
+	@Test
 	public void testFindValueInPlayer() throws Exception {
 		servant.setQuantity(5);
 		player.getMyValues().getServants().setQuantity(10);
