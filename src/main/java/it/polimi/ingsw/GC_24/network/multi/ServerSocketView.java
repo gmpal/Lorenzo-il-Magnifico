@@ -36,7 +36,7 @@ public class ServerSocketView extends View implements Runnable{
 
 	@Override
 	public void run() {
-		try{
+		
 			while(true){
 				String line = socketIn.nextLine();
 				
@@ -51,7 +51,8 @@ public class ServerSocketView extends View implements Runnable{
 				 * to the values --> IT CREATES (!) a new Player from the passed name
 				 * and creates an action */
 			}
-		}
+		
 	}
 
 }
+

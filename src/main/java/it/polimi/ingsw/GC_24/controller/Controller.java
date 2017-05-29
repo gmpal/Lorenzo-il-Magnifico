@@ -13,9 +13,9 @@ public class Controller implements Observer {
 	private final Model game;
 	
 	//constructor
-	public Controller(Model game, View view) {
+	public Controller(Model game) {
 		this.game = game;
-		view.addObserver(this);
+		
 	}
 	
 	

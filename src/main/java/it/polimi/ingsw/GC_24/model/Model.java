@@ -26,7 +26,7 @@ public class Model extends Observable {
 		this.players = players;
 		this.board = new Board(players.size());
 		this.currentPlayer = players.get(0);
-		this.gameState = State.SETTING;
+		this.gameState = State.WAITINGFORPLAYERONE;
 		this.dice = new SetOfDice();
 		this.currentRound = null;
 		this.currentPeriod = null;
@@ -46,7 +46,7 @@ public class Model extends Observable {
 		}
 		this.currentRound = Round.ONE;
 		this.currentPeriod = Period.ONE;
-		this.gameState = State.PLAYING;
+		this.gameState = State.RUNNING;
 		
 		this.notifyObservers(this);
 	}
