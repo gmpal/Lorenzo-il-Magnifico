@@ -2,25 +2,33 @@ package it.polimi.ingsw.GC_24.personalboardtest;
 
 import static org.junit.Assert.*;
 import org.junit.Before;
+import org.junit.Test;
 import it.polimi.ingsw.GC_24.cards.Buildings;
+import it.polimi.ingsw.GC_24.model.Player;
+import it.polimi.ingsw.GC_24.model.PlayerColour;
+import it.polimi.ingsw.GC_24.personalboard.PersonalBoard;
 import it.polimi.ingsw.GC_24.personalboard.PersonalBuildings;
 
-public class TestPersonalBuildings extends TestPersonalCards {
+public class TestPersonalBuildings {
 	
 	Buildings building1;
 	Buildings building2;
 	PersonalBuildings buildings;
-	PersonalBuildings buildingsexpected;	
+	PersonalBuildings buildingsexpected;
+	Player player;
+	PersonalBoard personalBoard; 
 
 	@Before
 	public void setUp() throws Exception {
-		building1 = new Buildings("Building1", false, false, false, 0, "Building", null, null, null, 1, null);
-		building2 = new Buildings("Building2", false, false, false, 0, "Building", null, null, null, 3, null);
+		player = new Player("Giorgia", PlayerColour.RED);
+		personalBoard = new PersonalBoard(player);
+		building1 = new Buildings("Building1", 0, "Building", null, null, null, 1, null);
+		building2 = new Buildings("Building2", 0, "Building", null, null, null, 3, null);
 		buildings = new PersonalBuildings();
 		buildingsexpected = new PersonalBuildings();
 	}
 
-	@Override
+	@Test
 	public void testFindCardsInPersonalBoard() {
 		building1.setCardOnPersonalBoard(personalBoard);
 		building2.setCardOnPersonalBoard(personalBoard);
@@ -29,7 +37,7 @@ public class TestPersonalBuildings extends TestPersonalCards {
 		assertEquals(buildingsexpected.getCards(), buildings.findCardsInPersonalBoard(personalBoard).getCards());
 	}
 	
-	@Override
+	@Test
 	public void testFindCardsInPersonalBoardFalse1() {
 		building1.setCardOnPersonalBoard(personalBoard);
 		building2.setCardOnPersonalBoard(personalBoard);
@@ -37,7 +45,7 @@ public class TestPersonalBuildings extends TestPersonalCards {
 		assertFalse(buildingsexpected.getCards().equals(buildings.findCardsInPersonalBoard(personalBoard).getCards()));
 	}
 	
-	@Override
+	@Test
 	public void testFindCardsInPersonalBoardFalse2() {
 		building1.setCardOnPersonalBoard(personalBoard);
 		buildingsexpected.getCards().add(building1);

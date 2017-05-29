@@ -2,18 +2,28 @@ package it.polimi.ingsw.GC_24.valuetest;
 
 import static org.junit.Assert.*;
 import org.junit.Before;
+import org.junit.Test;
+import it.polimi.ingsw.GC_24.model.Player;
+import it.polimi.ingsw.GC_24.model.PlayerColour;
+import it.polimi.ingsw.GC_24.values.SetOfValues;
 import it.polimi.ingsw.GC_24.values.Wood;
 
-public class TestWood extends TestValue {
+public class TestWood {
 
 	Wood wood;
+	SetOfValues values;
+	SetOfValues valuesexpected;
+	Player player;
 	
 	@Before
 	public void setUp() throws Exception {
 		wood = new Wood(0);
+		values = new SetOfValues();
+		player = new Player("Giorgia", PlayerColour.RED);
+		valuesexpected = new SetOfValues();
 	}
 	
-	@Override
+	@Test
 	public void testAddValueToSetPositive() throws Exception {
 		wood.setQuantity(3);
 		values.setInitialValues(1);
@@ -22,7 +32,7 @@ public class TestWood extends TestValue {
 		assertEquals(valuesexpected, wood.addValueToSet(values));
 	}
 
-	@Override
+	@Test
 	public void testAddValueToSetNegative() throws Exception {
 		wood.setQuantity(-3);
 		values.setInitialValues(1);
@@ -31,7 +41,7 @@ public class TestWood extends TestValue {
 		assertFalse(valuesexpected.equals(wood.addValueToSet(values)));
 	}
 	
-	@Override
+	@Test
 	public void testAddValueToSetZero() throws Exception {
 		wood.setQuantity(0);
 		values.setInitialValues(1);
@@ -40,7 +50,7 @@ public class TestWood extends TestValue {
 		assertEquals(valuesexpected, wood.addValueToSet(values));
 	}
 	
-	@Override
+	@Test
 	public void testFindValueInPlayer() throws Exception {
 		wood.setQuantity(5);
 		player.getMyValues().getWoods().setQuantity(10);
