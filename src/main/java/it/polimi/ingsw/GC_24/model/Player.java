@@ -12,9 +12,6 @@ public class Player {
 	private PersonalBoard myBoard; 
 	private SetOfValues myValues;
 	private PlayerColour myColour;
-
-	
-	//AUTO-GENERATED contructor, NEEDS TO BE CORRECTED
 	
 	//Constructor number1 --> NEED to create a setOfValues
 	public Player(String myName, PlayerColour myColour) {
@@ -27,14 +24,28 @@ public class Player {
 	
 	//useful methods
 	
+	//useful to find the value of the player if you only know his colour
 	public SetOfValues getMyValuesFromColour(PlayerColour playerColour) {
-		if(this.myColour.equals(playerColour));
-		return myValues;
+		if(this.myColour.equals(playerColour))
+			return myValues;
+		else
+			return null;
 	}
 	
 	public void takeValuesFromPlace(Place place){
 		Value value = place.getValue();
-		this.myValues=value.addValueToSet(this.myValues);
+		this.myValues = value.addValueToSet(this.myValues);
+	}
+	
+	//returns false if the increment is a negative number(not allowed) or if it is grater 
+	//than the number of servants of the player, hence it is not possible to raise the die's
+	//value of the required increment
+	public boolean isPossibleIncreaseDieValue(int increment){
+		int myservants = this.getMyValues().getServants().getQuantity();
+		if (increment >= 0)
+			return myservants >= increment;
+		else
+			return false;
 	}
 	
 	//Prints name and number of a Player

@@ -9,8 +9,8 @@ public class MoltiplicationCards extends Moltiplication{
 	private PersonalCards personalCards;
 
 	//constructor
-	public MoltiplicationCards(String name, SetOfValues effectValues, Value value, PersonalCards personalCards) {
-		super(name, effectValues, value);
+	public MoltiplicationCards(String name, Value value, PersonalCards personalCards) {
+		super(name, value);
 		this.personalCards = personalCards;
 	}
 	
@@ -19,7 +19,7 @@ public class MoltiplicationCards extends Moltiplication{
 		int valueQuantity = this.value.getQuantity();
 		PersonalCards correspondingArrayList = this.personalCards.findCardsInPersonalBoard(player.getMyBoard());
 		int sizeOfArray = correspondingArrayList.getCards().size();
-		int newQuantity =(valueQuantity) * (sizeOfArray);
+		int newQuantity = (valueQuantity) * (sizeOfArray);
 		value.setQuantity(newQuantity);
 		SetOfValues setOfValues = player.getMyBoard().getPlayer().getMyValues();
 		value.addValueToSet(setOfValues);

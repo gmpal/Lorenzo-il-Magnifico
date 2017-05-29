@@ -41,7 +41,7 @@ public class Model extends Observable {
 		this.dice.reset();
 		
 		for(Player p:players){
-			p.getMyValues().setValues(players.indexOf(p));
+			p.getMyValues().setInitialValues(players.indexOf(p));
 			p.getMyFamily().setFamily(this.dice);
 		}
 		this.currentRound = Round.ONE;

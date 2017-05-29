@@ -1,15 +1,14 @@
 package it.polimi.ingsw.GC_24.effects;
 
 import it.polimi.ingsw.GC_24.model.Player;
-import it.polimi.ingsw.GC_24.personalboard.PersonalBoard;
 import it.polimi.ingsw.GC_24.values.*;
 
 public class MoltiplicationPoints extends Moltiplication{
 
 	private Value value2;
 	
-	public MoltiplicationPoints(String name, SetOfValues effectValues, Value value, Value value2) {
-		super(name, effectValues, value);
+	public MoltiplicationPoints(String name, Value value, Value value2) {
+		super(name, value);
 		this.value2 = value2;
 	}
 

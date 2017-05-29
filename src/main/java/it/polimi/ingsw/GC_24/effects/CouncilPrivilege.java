@@ -2,9 +2,7 @@ package it.polimi.ingsw.GC_24.effects;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-
 import it.polimi.ingsw.GC_24.model.Player;
-import it.polimi.ingsw.GC_24.model.PlayerColour;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 
 public class CouncilPrivilege extends ImmediateEffect {
@@ -12,8 +10,8 @@ public class CouncilPrivilege extends ImmediateEffect {
 	private ArrayList<SetOfValues> councilPrivileges;
 	private int numberOfPrivileges;
 	
-	public CouncilPrivilege(String name, SetOfValues effectValues, int numberOfPrivileges) {
-		super(name, effectValues);
+	public CouncilPrivilege(String name, int numberOfPrivileges) {
+		super(name);
 		this.councilPrivileges = CreateCouncil();
 		this.numberOfPrivileges = numberOfPrivileges;
 	}
