@@ -9,10 +9,10 @@ public class Ventures extends Development {
 	private MilitaryPoint requiredMilitaryPoints;
 
 	// constructor
-	public Ventures(String name, boolean permeff, boolean immeff, boolean speceff, String type, SetOfValues cost,
+	public Ventures(String name, String type, SetOfValues cost,
 			MilitaryPoint requiredMilitaryPoints, ImmediateEffect immediateEffects, PermanentEffect permanentEffects,
 			int round, ValueEffect valueEffects) {
-		super(name, permeff, immeff, speceff, type, cost, immediateEffects, permanentEffects, round, valueEffects);
+		super(name, type, cost, immediateEffects, permanentEffects, round, valueEffects);
 		this.requiredMilitaryPoints = requiredMilitaryPoints;
 	}
 

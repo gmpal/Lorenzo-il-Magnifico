@@ -15,9 +15,9 @@ public abstract class Development extends Card {
 	private int round;
 
 	// constructor
-	public Development(String name, boolean permeff, boolean immeff, boolean speceff, String type, SetOfValues cost,
-			ImmediateEffect immediateEffects, PermanentEffect permanentEffects, int round, ValueEffect valueEffects) {
-		super(name, permeff, immeff, speceff);
+	public Development(String name, String type, SetOfValues cost, ImmediateEffect immediateEffects,
+			PermanentEffect permanentEffects, int round, ValueEffect valueEffects) {
+		super(name);
 		this.type = type;
 		this.cost = cost;
 		this.immediateEffects = immediateEffects;
@@ -25,11 +25,11 @@ public abstract class Development extends Card {
 		this.round = round;
 		this.valueEffects = valueEffects;
 	}
-	
-	//add the card to the right ArrayList on the personal board
+
+	// add the card to the right ArrayList on the personal board
 	public abstract void setCardOnPersonalBoard(PersonalBoard personalBoard); // redefined in every subclass
-	
-	//getter and setters
+
+	// getter and setters
 	public SetOfValues getCost() {
 		return cost;
 	}

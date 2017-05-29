@@ -7,9 +7,9 @@ import it.polimi.ingsw.GC_24.values.SetOfValues;
 public class Characters extends Development {
 
 	// constructor
-	public Characters(String name, boolean permeff, boolean immeff, boolean speceff, String type, SetOfValues cost,
+	public Characters(String name, String type, SetOfValues cost,
 			ImmediateEffect immediateEffects, PermanentEffect permanentEffects, int round, ValueEffect valueEffects) {
-		super(name, permeff, immeff, speceff, type, cost, immediateEffects, permanentEffects, round, valueEffects);
+		super(name, type, cost, immediateEffects, permanentEffects, round, valueEffects);
 	}
 
 	@Override
