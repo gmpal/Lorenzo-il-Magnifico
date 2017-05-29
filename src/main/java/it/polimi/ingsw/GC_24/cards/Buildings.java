@@ -9,9 +9,9 @@ public class Buildings extends Development {
 	private int costDie;
 
 	// constructor
-	public Buildings(String name, boolean permeff, boolean immeff, boolean speceff, int costDie, String type,
-			SetOfValues cost, ImmediateEffect immediateEffects, PermanentEffect permanentEffects, int round, ValueEffect valueEffects) {
-		super(name, permeff, immeff, speceff, type, cost, immediateEffects, permanentEffects, round, valueEffects);
+	public Buildings(String name, int costDie, String type, SetOfValues cost, ImmediateEffect immediateEffects,
+			PermanentEffect permanentEffects, int round, ValueEffect valueEffects) {
+		super(name, type, cost, immediateEffects, permanentEffects, round, valueEffects);
 		this.costDie = costDie;
 	}
 

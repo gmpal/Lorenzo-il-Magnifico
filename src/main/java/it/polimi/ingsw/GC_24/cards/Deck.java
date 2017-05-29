@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import com.google.gson.Gson;
 
 import it.polimi.ingsw.GC_24.effects.*;
+import it.polimi.ingsw.GC_24.values.MilitaryPoint;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 
 public class Deck {
@@ -90,8 +91,8 @@ public class Deck {
 	}
 
 	public static void main(String args[]) {
-		Development card = new Territories("ciao", true, false, false, 3, "territories", new SetOfValues(),
-				new PerformHarvest("harvest", 3), null, 1, new ValueEffect(null));
+		Development card = new Ventures("ciao", "territories", new SetOfValues(),
+				new MilitaryPoint(3), new PerformHarvest("harvest", 3), null, 1, new ValueEffect(null));
 		Gson gson = new Gson();
 		System.out.println(gson.toJson(card));
 	}
