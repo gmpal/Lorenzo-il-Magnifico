@@ -9,13 +9,13 @@ import it.polimi.ingsw.GC_24.controller.Controller;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.PlayerColour;
+import it.polimi.ingsw.GC_24.places.Tower;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 import it.polimi.ingsw.GC_24.view.View;
 
 
 public class Main {
 	public static void main(String[] args) {
-
 		Player marco = new Player("marco", PlayerColour.BLUE);
 		Player marco2 = new Player("marco", PlayerColour.BLUE);
 		System.out.println(marco.equals(marco2));
