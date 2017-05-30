@@ -59,5 +59,8 @@ public class PersonalBoard {
 	public void setBonusTile(BonusTile mybonusTile) {
 		this.mybonusTile = mybonusTile;
 	}
-
 }
+
+
+
+//
