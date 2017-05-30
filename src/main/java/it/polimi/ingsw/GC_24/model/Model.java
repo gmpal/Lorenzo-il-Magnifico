@@ -3,8 +3,6 @@ package it.polimi.ingsw.GC_24.model;
 
 import java.util.ArrayList;
 import java.util.Observable;
-import java.util.Set;
-
 import it.polimi.ingsw.GC_24.dice.SetOfDice;
 
 import it.polimi.ingsw.GC_24.places.Board;

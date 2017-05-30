@@ -38,7 +38,7 @@ public class Server {
 
 	// private static final String IP = "127.0.0.1";
 
-	// Crea un Cached Threa Pool e un serverSocket , poi si mette in attesa dei
+	// Crea un Cached Thread Pool e un serverSocket , poi si mette in attesa dei
 	// socket
 	// Quando un client si connette crea un ClientHandler e lo fa partire
 	public void startServer() throws IOException {
