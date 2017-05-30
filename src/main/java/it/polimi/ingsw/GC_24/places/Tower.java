@@ -1,12 +1,12 @@
 package it.polimi.ingsw.GC_24.places;
 
-import java.util.ArrayList;
+import java.util.*;
 
 import it.polimi.ingsw.GC_24.model.PlayerColour;
 
 public class Tower {
 	
-	private ArrayList<TowerPlace> towerArray;
+	private List<TowerPlace> towerArray = new ArrayList<>();
 	private static final int NUMTOWERPLACE=4;
 	
 	//constructor
@@ -15,7 +15,7 @@ public class Tower {
 	}
 	
 	//inserts empty TowerPlaces in Tower
-	public ArrayList<TowerPlace> createTower(){
+	public List<TowerPlace> createTower(){
 		for(int num=0;num<NUMTOWERPLACE;num++){
 			this.towerArray.add(new TowerPlace(0, null));
 		}
@@ -50,11 +50,11 @@ public class Tower {
 	}
 	
 	//getter and setter
-	public ArrayList<TowerPlace> getTowerArray() {
+	public List<TowerPlace> getTowerArray() {
 		return towerArray;
 	}
 
-	public void setTower(ArrayList<TowerPlace> towerArray) {
+	public void setTower(List<TowerPlace> towerArray) {
 		this.towerArray = towerArray;
 	}
 	

@@ -1,13 +1,13 @@
 package it.polimi.ingsw.GC_24.effects;
 
-import java.util.ArrayList;
+import java.util.*;
 import java.util.Scanner;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 
 public class CouncilPrivilege extends ImmediateEffect {
 	
-	private ArrayList<SetOfValues> councilPrivileges;
+	private List<SetOfValues> councilPrivileges;
 	private int numberOfPrivileges;
 	
 	public CouncilPrivilege(String name, int numberOfPrivileges) {
@@ -19,8 +19,8 @@ public class CouncilPrivilege extends ImmediateEffect {
 	//useful methods
 	
 	//SETS THE COUNCIL ARRAY WITH THE CORRECT ELEMENTS
-	public ArrayList<SetOfValues> CreateCouncil(){
-		ArrayList<SetOfValues> al = new ArrayList<>();
+	public List<SetOfValues> CreateCouncil(){
+		List<SetOfValues> al = new ArrayList<>();
 		
 		SetOfValues element1= new SetOfValues();
 		element1.getWoods().setQuantity(1);
@@ -87,7 +87,7 @@ public class CouncilPrivilege extends ImmediateEffect {
 	//Prints the composition of the Council
 	@Override
 	public String toString() {
-			ArrayList<SetOfValues> array = this.getCouncilPrivileges();
+			List<SetOfValues> array = this.getCouncilPrivileges();
 			StringBuilder builder = new StringBuilder();
 			for (int i=0; i<array.size(); i++){
 				builder.append( "(" +(i+1)+ ") " + array.get(i) + "\n");
@@ -97,11 +97,11 @@ public class CouncilPrivilege extends ImmediateEffect {
 	}
 
 	//getters and setters
-	public ArrayList<SetOfValues> getCouncilPrivileges() {
+	public List<SetOfValues> getCouncilPrivileges() {
 		return councilPrivileges;
 	}
 
-	public void setCouncilPrivileges(ArrayList<SetOfValues> councilPrivileges) {
+	public void setCouncilPrivileges(List<SetOfValues> councilPrivileges) {
 		this.councilPrivileges = councilPrivileges;
 	}
 

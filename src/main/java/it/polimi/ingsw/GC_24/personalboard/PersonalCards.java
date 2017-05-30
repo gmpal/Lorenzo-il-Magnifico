@@ -1,11 +1,11 @@
 package it.polimi.ingsw.GC_24.personalboard;
 
-import java.util.ArrayList;
+import java.util.*;
 import it.polimi.ingsw.GC_24.cards.*;
 
 public abstract class PersonalCards {
 	
-	private ArrayList<Development> cards;
+	private List<Development> cards;
 	
 	//constructor
 	public PersonalCards(){
@@ -23,7 +23,7 @@ public abstract class PersonalCards {
 		this.cards.add(card);
 	}
 	
-	public ArrayList<Development> getCards(){
+	public List<Development> getCards(){
 		return cards;
 	}
 

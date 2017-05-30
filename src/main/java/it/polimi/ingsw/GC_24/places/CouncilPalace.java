@@ -1,13 +1,13 @@
 package it.polimi.ingsw.GC_24.places;
 
-import java.util.ArrayList;
+import java.util.*;
 
 import it.polimi.ingsw.GC_24.effects.*;
 import it.polimi.ingsw.GC_24.values.*;
 
 public class CouncilPalace {
 	
-	private ArrayList<CouncilPlace> councilArray;
+	private List<CouncilPlace> councilArray = new ArrayList<>();
 	private int numPlayers;
 	private static final int COSTDICE=1;
 	private static final int MAXFAM=4;						//max familyMember per player
@@ -23,7 +23,7 @@ public class CouncilPalace {
 	
 	
 	//useful methods
-	public ArrayList<CouncilPlace> createCouncil(){
+	public List<CouncilPlace> createCouncil(){
 		for(int num=0;num<this.numPlayers*MAXFAM;num++){
 			councilArray.add(new CouncilPlace(COSTDICE, VALUE, EFFECTPRIVILEGE));
 		}
@@ -38,11 +38,11 @@ public class CouncilPalace {
 	}
 
 	//getters and setters
-	public ArrayList<CouncilPlace> getCouncilPlaces() {
+	public List<CouncilPlace> getCouncilPlaces() {
 		return councilArray;
 	}
 
-	public void setCouncilPlaces(ArrayList<CouncilPlace> councilPlaces) {
+	public void setCouncilPlaces(List<CouncilPlace> councilPlaces) {
 		this.councilArray = councilPlaces;
 	}
 	

@@ -1,7 +1,7 @@
 package it.polimi.ingsw.GC_24.model;
 
 
-import java.util.ArrayList;
+import java.util.*;
 import java.util.Observable;
 import java.util.Set;
 
@@ -11,7 +11,7 @@ import it.polimi.ingsw.GC_24.places.Board;
 
 public class Model extends Observable {
 	
-	private ArrayList<Player> players;
+	private List<Player> players;
 	private Board board;
 	private Player currentPlayer;
 	private State gameState;
@@ -21,7 +21,7 @@ public class Model extends Observable {
 	
 	/*Constructor --> ONLY PLAYERS NEEDS TO BE PASSED
 	 * other fields are created or set */
-	public Model(ArrayList<Player> players ) {
+	public Model(List<Player> players ) {
 		
 		this.players = players;
 		this.board = new Board(players.size());
@@ -55,7 +55,7 @@ public class Model extends Observable {
 	
 	// getters and setters
 	
-	public ArrayList<Player> getPlayers() {
+	public List<Player> getPlayers() {
 		return players;
 	}
 
@@ -90,7 +90,7 @@ public class Model extends Observable {
 	}
 
 
-	public void setPlayers(ArrayList<Player> players) {
+	public void setPlayers(List<Player> players) {
 		this.players = players;
 	}
 
