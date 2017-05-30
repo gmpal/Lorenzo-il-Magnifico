@@ -15,11 +15,11 @@ public class Player {
 	
 	//Constructor number1 --> NEED to create a setOfValues
 	public Player(String myName, PlayerColour myColour) {
+		this.myColour = myColour;
 		this.myName = myName;
-		this.myFamily =  new Family(this);
+		this.myFamily =  new Family(myColour);
 		this.myBoard = new PersonalBoard(this);
 		this.myValues = new SetOfValues();
-		this.myColour = myColour;
 	}
 	
 	//useful methods

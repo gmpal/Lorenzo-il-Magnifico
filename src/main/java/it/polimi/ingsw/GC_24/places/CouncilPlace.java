@@ -15,8 +15,7 @@ public class CouncilPlace extends Place {
 	}
 
 	@Override
-	public void giveEffects(){
-		Player player=this.famMemberOnPlace.getPlayer();
+	public void giveEffects(Player player){
 		player.setMyValues(this.getValue().addValueToSet(player.getMyValues()));
 	}
 	

@@ -8,16 +8,15 @@ public class PersonalBoard {
 	private PersonalVentures personalVentures;
 	private PersonalTerritories personalTerritories;
 	private PersonalCharacters personalCharacters;
-	private Player player;
 	private BonusTile mybonusTile;
 	
 	//constructor
-	public PersonalBoard(Player player){
+	public PersonalBoard(){
 		this.personalBuildings = new PersonalBuildings();
 		this.personalVentures = new PersonalVentures();
 		this.personalTerritories = new PersonalTerritories();
 		this.personalCharacters = new PersonalCharacters();
-		this.player = player;
+		this.mybonusTile = new BonusTile(null, null);
 	}
 	
 	//getters and setters
@@ -51,14 +50,6 @@ public class PersonalBoard {
 
 	public void setPersonalCharacters(PersonalCharacters personalCharacters) {
 		this.personalCharacters = personalCharacters;
-	}
-
-	public Player getPlayer() {
-		return player;
-	}
-
-	public void setPlayer(Player player) {
-		this.player = player;
 	}
 
 	public BonusTile getBonusTile() {

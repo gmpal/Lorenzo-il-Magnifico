@@ -1,6 +1,6 @@
 package it.polimi.ingsw.GC_24.places;
 
-import java.util.ArrayList;
+import java.util.*;
 import it.polimi.ingsw.GC_24.cards.Development;
 import it.polimi.ingsw.GC_24.cards.Territories;
 import it.polimi.ingsw.GC_24.model.Player;
@@ -14,14 +14,13 @@ public class HarvestPlace extends ActivityPlace{
 	}
 
 	@Override
-	public void doActivity(){
-	Player player = getFamMemberOnPlace().getPlayer();
+	public void doActivity(Player player){
 	player.getMyBoard().getBonusTile().giveHarvestValues(player.getMyValues());
-	ArrayList<Development> harvestCards = player.getMyBoard().getPersonalTerritories().getCards();
+	List<Development> harvestCards = player.getMyBoard().getPersonalTerritories().getCards();
 	for (Development  card:harvestCards){
 		Territories territory = (Territories) card;
-		if (territory.getCostDie() <= (getCostDice() + getAdditionalCostDice())){
-				territory.getValueEffect().giveImmediateEffect(player);
+		if (territory.getCostDie() <= (getFamMemberOnPlace().getMemberValue() + getAdditionalCostDice())){
+			territory.getValueEffect().giveImmediateEffect(player);
 			territory.getImmediateEffect().giveImmediateEffect(player);
 			} 
 		}

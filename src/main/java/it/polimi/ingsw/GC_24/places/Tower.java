@@ -25,7 +25,7 @@ public class Tower {
 	//returns true if in the same Tower there already is a family member of the same colour as the parameter 
 	public boolean isThereSameColour(PlayerColour playerColour){
 		for(TowerPlace towerPlace:this.towerArray){
-			if(!towerPlace.isAvailable()&&(towerPlace.getFamMemberOnPlace().getPlayer().getMyColour()).equals(playerColour)){
+			if(!towerPlace.isAvailable()&&(towerPlace.getFamMemberOnPlace().getPlayerColour()).equals(playerColour)){
 				return true;
 			}
 		}

@@ -3,6 +3,7 @@ package it.polimi.ingsw.GC_24;
 
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import it.polimi.ingsw.GC_24.cards.*;
 import it.polimi.ingsw.GC_24.controller.Controller;
@@ -16,10 +17,17 @@ import it.polimi.ingsw.GC_24.view.View;
 public class Main {
 	public static void main(String[] args) {
 
-		Player marco = new Player("marco", PlayerColour.BLUE);
+	/*	Player marco = new Player("marco", PlayerColour.BLUE);
 		Player marco2 = new Player("marco", PlayerColour.BLUE);
 		System.out.println(marco.equals(marco2));
-		System.out.println(marco2.equals(marco2));
+		System.out.println(marco2.equals(marco2));*/
+		
+		List<Integer> array = new ArrayList<>();
+		array.add(2);
+		array.add(3);
+		array.add(0,4);
+		System.out.println(array);
+		
 		/* GAME 
 		Scanner scanner = new Scanner(System.in);
 		

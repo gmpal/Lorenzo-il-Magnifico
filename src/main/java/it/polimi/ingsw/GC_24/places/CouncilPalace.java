@@ -3,6 +3,7 @@ package it.polimi.ingsw.GC_24.places;
 import java.util.*;
 
 import it.polimi.ingsw.GC_24.effects.*;
+import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.values.*;
 
 public class CouncilPalace {
@@ -13,6 +14,8 @@ public class CouncilPalace {
 	private static final int MAXFAM=4;						//max familyMember per player
 	private static final Value VALUE=new Coin(1);
 	private static final Effect EFFECTPRIVILEGE=new CouncilPrivilege("CouncilPrivilege", 1);
+	private List<Player> temporaryTurn = new ArrayList<>();
+;
 	
 
 	//constructor
@@ -29,6 +32,13 @@ public class CouncilPalace {
 		}
 		return councilArray;
 	} 
+	
+	//returns the updated list of players' turn
+	public List<Player> updateTurn(Player player) {
+		if(!temporaryTurn.contains(player))
+			temporaryTurn.add(player);
+		return temporaryTurn;
+	}
 
 	//empties all the places
 	public void clearPlaces(){
