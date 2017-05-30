@@ -3,8 +3,6 @@ package it.polimi.ingsw.GC_24.model;
 
 import java.util.ArrayList;
 import java.util.Observable;
-import java.util.Set;
-
 import it.polimi.ingsw.GC_24.dice.SetOfDice;
 
 import it.polimi.ingsw.GC_24.places.Board;
@@ -26,7 +24,7 @@ public class Model extends Observable {
 		this.players = players;
 		this.board = new Board(players.size());
 		this.currentPlayer = players.get(0);
-		this.gameState = State.SETTING;
+		this.gameState = State.WAITINGFORPLAYERONE;
 		this.dice = new SetOfDice();
 		this.currentRound = null;
 		this.currentPeriod = null;
@@ -41,12 +39,12 @@ public class Model extends Observable {
 		this.dice.reset();
 		
 		for(Player p:players){
-			p.getMyValues().setValues(players.indexOf(p));
+			p.getMyValues().setInitialValues(players.indexOf(p));
 			p.getMyFamily().setFamily(this.dice);
 		}
 		this.currentRound = Round.ONE;
 		this.currentPeriod = Period.ONE;
-		this.gameState = State.PLAYING;
+		this.gameState = State.RUNNING;
 		
 		this.notifyObservers(this);
 	}

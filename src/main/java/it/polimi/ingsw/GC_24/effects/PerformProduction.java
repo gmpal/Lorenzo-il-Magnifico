@@ -1,28 +1,27 @@
 package it.polimi.ingsw.GC_24.effects;
 
-import it.polimi.ingsw.GC_24.dice.Die;
+import java.util.ArrayList;
+import it.polimi.ingsw.GC_24.cards.Development;
+import it.polimi.ingsw.GC_24.cards.Buildings;
 import it.polimi.ingsw.GC_24.model.Player;
-import it.polimi.ingsw.GC_24.values.SetOfValues;
 
-public class PerformProduction extends ImmediateEffect{
-
-	private Die dieValue;
+public class PerformProduction extends PerformActivity{
 
 	//constructor
-	public PerformProduction(String name, SetOfValues effectValues, Die dieValue) {
-		super(name, effectValues);
-		this.setDieValue(dieValue);
-	}
-	
-	public void giveImmediateEffect(Player player){
-		player.getMyBoard().getBonusTile().giveHarvestValues(player.getMyValues());
-	}
+		public PerformProduction(String name, int dieValue) {
+			super(name, dieValue);
+		}
 
-	public Die getDieValue() {
-		return dieValue;
-	}
-
-	public void setDieValue(Die dieValue) {
-		this.dieValue = dieValue;
-	}
+		@Override
+		public void giveImmediateEffect(Player player){
+		player.getMyBoard().getBonusTile().giveProductiontValues(player.getMyValues());
+		ArrayList<Development> productionCards = player.getMyBoard().getPersonalBuildings().getCards();
+		for (Development  card:productionCards){
+			Buildings building = (Buildings) card;
+			if (building.getCostDie() <= getDieValue()){
+				building.getValueEffect().giveImmediateEffect(player);
+				building.getImmediateEffect().giveImmediateEffect(player);
+				} 
+			}
+		}
 }

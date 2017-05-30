@@ -11,7 +11,7 @@ public abstract class Place {
 	private Value value;
 	
 	//constructor
-	public Place(int costDice, Value value ){
+	public Place(int costDice, Value value){
 		this.costDice = costDice;
 		this.available = true;
 		this.famMemberOnPlace = null;

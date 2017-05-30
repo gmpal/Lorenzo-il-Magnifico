@@ -1,4 +1,4 @@
-
+﻿
 package it.polimi.ingsw.GC_24.view;
 
 
@@ -7,9 +7,11 @@ import java.util.Observer;
 
 import it.polimi.ingsw.GC_24.model.Model;
 
-public class ViewPlayers extends Observable implements Observer {
 
-	
+public abstract class ViewPlayers extends Observable implements Observer {
+
+
+/*	
 	
 	public ViewPlayers (Model game){
 		game.addObserver(this);
@@ -26,12 +28,15 @@ public class ViewPlayers extends Observable implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 
+
 		System.out.println("ViewPlayers here. I've been notified by the controller with an update");
 		/* IN base a ciò che riceve decide cosa stampare su schermo*/
+
+
 		System.exit(0);
 
 	}
 
 	
-	
+*/	
 }

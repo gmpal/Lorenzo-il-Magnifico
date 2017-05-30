@@ -12,7 +12,7 @@ public class CouncilPalace {
 	private static final int COSTDICE=1;
 	private static final int MAXFAM=4;						//max familyMember per player
 	private static final Value VALUE=new Coin(1);
-	private static final Effect EFFECTPRIVILEGE=new CouncilPrivilege("CouncilPrivilege", null, 1);
+	private static final Effect EFFECTPRIVILEGE=new CouncilPrivilege("CouncilPrivilege", 1);
 	
 
 	//constructor

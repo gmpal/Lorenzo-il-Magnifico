@@ -142,7 +142,7 @@ public class Main {
 		MilitaryPoint points = new MilitaryPoint(3);
 		//SetOfValues values = new SetOfValues(1);
 
-		//Player player = new Player("Pippo", 1, null, null, values, PlayerColour.BLUE);
+		//Player player = new Player("Pippo", PlayerColour.BLUE);
 		//PersonalBoard board = new PersonalBoard(player);
 		Buildings edificio = new Buildings("miao", false, false, false, null);
 		Ventures impresa = new Ventures("bau", false, false, false, null, points);
@@ -174,18 +174,18 @@ public class Main {
 		MoltiplicationCards effettocarte = new MoltiplicationCards("ciao", null, coins, buildings);
 		effettocarte.moltiplicationEffect(board);
 
-		System.out.println(player.getMyValues());*/
+		System.out.println(player.getMyValues());
 		SetOfValues values = new SetOfValues();
 		Development edificio = new Buildings("miao", false, false, false, values,3);
-		Development ventura = new Characters("miao", false, false, false, values);
+		Development persona = new Characters("miao", false, false, false, values);
 		ArrayList<Development> buildings = new ArrayList<>();
 		buildings.add(edificio);
-		buildings.add(ventura);
+		buildings.add(persona);
 		Development palazzo = buildings.get(0);
 		Development avventura = buildings.get(1);
 	
 		System.out.println(palazzo);
-		System.out.println(avventura);
+		System.out.println(avventura);*/
 		
 		
 		
