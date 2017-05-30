@@ -9,7 +9,7 @@ public class FamilyMember {
 	private boolean available;
 	private DieColour memberColour;
 	private boolean neutral;
-	private Player player;
+	private PlayerColour playerColour;
 	
 	//constructors
 
@@ -19,7 +19,7 @@ public class FamilyMember {
 		this.available = true;
 		this.memberColour = die.getColour();
 		this.neutral = false;
-		this.player = player;
+		this.playerColour = player.getMyColour();
 	}
 	
 	//creates a neutral family member
@@ -28,7 +28,7 @@ public class FamilyMember {
 		this.available = true;
 		this.memberColour = null;
 		this.neutral=true;
-		this.player = player;
+		this.playercolour = player;
 	}
 	
 	
@@ -80,10 +80,10 @@ public class FamilyMember {
 		this.neutral = neutral;
 	}
 	public Player getPlayer() {
-		return player;
+		return playercolour;
 	}
 	public void setPlayer(Player player) {
-		this.player = player;
+		this.playercolour = player;
 	}
 	
 }
