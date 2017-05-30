@@ -2,7 +2,9 @@ package it.polimi.ingsw.GC_24.places;
 
 import java.util.*;
 
+import it.polimi.ingsw.GC_24.model.FamilyMember;
 import it.polimi.ingsw.GC_24.model.PlayerColour;
+
 
 public class Tower {
 	
@@ -21,34 +23,39 @@ public class Tower {
 		}
 		return towerArray;
 	}
-	
-	//returns true if in the same Tower there already is a family member of the same colour as the parameter 
-	public boolean isThereSameColour(PlayerColour playerColour){
-		for(TowerPlace towerPlace:this.towerArray){
-			if(!towerPlace.isAvailable()&&(towerPlace.getFamMemberOnPlace().getPlayer().getMyColour()).equals(playerColour)){
-				return true;
-			}
+
+	// returns true if in the same Tower there already is a family member of the
+	// same colour as the parameter
+	public boolean isThereSameColour(FamilyMember familyMember) {
+		PlayerColour colour = familyMember.getPlayer().getMyColour();
+		if (familyMember.isNeutral()) {
+			return false;
 		}
-		return false;
-	}
-	
-	//return true if a family member is already on a place in the Tower
-	public boolean isTowerOccupied(){
-		for(TowerPlace towerPlace:this.towerArray){
-			if(!towerPlace.isAvailable()){
+		for (TowerPlace towerPlace : this.towerArray) {
+			if (!towerPlace.isAvailable() && (!towerPlace.getFamMemberOnPlace().isNeutral())
+					&& (towerPlace.getFamMemberOnPlace().getPlayer().getMyColour()).equals(colour)) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	//empties all the places
-	public void clearPlaces(){
-		for(TowerPlace towerPlace:this.towerArray){
+	// return true if a family member is already on a place in the Tower
+	public boolean isTowerOccupied() {
+		for (TowerPlace towerPlace : this.towerArray) {
+			if (!towerPlace.isAvailable()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	// empties all the places
+	public void clearPlaces() {
+		for (TowerPlace towerPlace : this.towerArray) {
 			towerPlace.clearPlace();
 		}
 	}
-	
 	//getter and setter
 	public List<TowerPlace> getTowerArray() {
 		return towerArray;
@@ -57,7 +64,5 @@ public class Tower {
 	public void setTower(List<TowerPlace> towerArray) {
 		this.towerArray = towerArray;
 	}
-	
+
 }
-
-
