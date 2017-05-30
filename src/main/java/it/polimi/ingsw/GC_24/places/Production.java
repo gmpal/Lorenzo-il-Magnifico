@@ -1,11 +1,11 @@
 package it.polimi.ingsw.GC_24.places;
 
-import java.util.ArrayList;
+import java.util.*;
 import it.polimi.ingsw.GC_24.model.PlayerColour;
 
 public class Production {
 	
-	private ArrayList<ProductionPlace> productionArray;
+	private List<ProductionPlace> productionArray = new ArrayList<>();
 	private boolean placesLocked;
 	private int numPlayers;
 	private static final int FACTOR=2; 						//Max number of player's familyMember in Production
@@ -22,7 +22,7 @@ public class Production {
 	}
 	
 	//inserts empty ProductionPlaces in Production
-	public ArrayList<ProductionPlace> createProduction(){
+	public List<ProductionPlace> createProduction(){
 		int numProducionPlaces;	
 		
 		if(this.placesLocked){
@@ -57,11 +57,11 @@ public class Production {
 	}
 
 	//getter and setter
-	public ArrayList<ProductionPlace> getProductionPlaces() {
+	public List<ProductionPlace> getProductionPlaces() {
 		return productionArray;
 	}
 
-	public void setProductionPlaces(ArrayList<ProductionPlace> productionPlaces) {
+	public void setProductionPlaces(List<ProductionPlace> productionPlaces) {
 		this.productionArray = productionPlaces;
 	}
 	

@@ -1,12 +1,12 @@
 package it.polimi.ingsw.GC_24.model;
 
-import java.util.ArrayList;
+import java.util.*;
 
 import it.polimi.ingsw.GC_24.places.*;
 
 public class Turn {
 	
-	private ArrayList<Player> playerTurn;
+	private List<Player> playerTurn;
 	
 
 	//constructor
@@ -36,12 +36,12 @@ public class Turn {
 	}
 	
 	// getter and setter
-	public ArrayList<Player> getPlayerTurn() {
+	public List<Player> getPlayerTurn() {
 		return playerTurn;
 	}
 
 
-	public void setPlayerTurn(ArrayList<Player> playerTurn) {
+	public void setPlayerTurn(List<Player> playerTurn) {
 		this.playerTurn = playerTurn;
 	}
 	

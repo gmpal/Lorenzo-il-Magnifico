@@ -1,10 +1,10 @@
 package it.polimi.ingsw.GC_24.places;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class Market {
 	
-	private ArrayList<MarketPlace> marketArray;
+	private List<MarketPlace> marketArray = new ArrayList<>();
 	private boolean placesLocked;
 	private static final int MINPLACES=2;				//Place with 2 players
 	private static final int MAXPLACES=4;				//Place from 3 players
@@ -16,7 +16,7 @@ public class Market {
 		this.marketArray = createMarket();
 	}
 	
-	public ArrayList<MarketPlace> createMarket(){
+	public List<MarketPlace> createMarket(){
 		int numPlaces;
 		
 		if(this.placesLocked){
@@ -38,11 +38,11 @@ public class Market {
 	}
 	
 	//getter and setter
-	public ArrayList<MarketPlace> getMarketPlaces() {
+	public List<MarketPlace> getMarketPlaces() {
 		return marketArray;
 	}
 
-	public void setMarketPlaces(ArrayList<MarketPlace> marketPlaces) {
+	public void setMarketPlaces(List<MarketPlace> marketPlaces) {
 		this.marketArray = marketPlaces;
 	}
 }
