@@ -18,7 +18,7 @@ public class Player {
 		this.myColour = myColour;
 		this.myName = myName;
 		this.myFamily =  new Family(myColour);
-		this.myBoard = new PersonalBoard(this);
+		this.myBoard = new PersonalBoard();
 		this.myValues = new SetOfValues();
 	}
 	
