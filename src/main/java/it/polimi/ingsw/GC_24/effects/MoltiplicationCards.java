@@ -21,7 +21,7 @@ public class MoltiplicationCards extends Moltiplication{
 		int sizeOfArray = correspondingArrayList.getCards().size();
 		int newQuantity = (valueQuantity) * (sizeOfArray);
 		value.setQuantity(newQuantity);
-		SetOfValues setOfValues = player.getMyBoard().getPlayer().getMyValues();
+		SetOfValues setOfValues = player.getMyValues();
 		value.addValueToSet(setOfValues);
 	}
 	

@@ -1,32 +1,26 @@
 package it.polimi.ingsw.GC_24.model;
 
-import java.util.ArrayList;
-
-import it.polimi.ingsw.GC_24.places.*;
+import java.util.*;
 
 public class Turn {
 	
-	private ArrayList<Player> playerTurn;
+	private List<Player> playerTurn;
 	
 
 	//constructor
 	public Turn() {
 		this.playerTurn = new ArrayList<>() ;
 	}
-	
-	//Update the turn list from the councilPalace
-	public void updateListOfPlayerTurn(CouncilPalace councilPalace){
-		
-		Player player;
-		ArrayList<CouncilPlace> councilPlaces=councilPalace.getCouncilPlaces();
-		
-		playerTurn.clear();
-		
-		for(CouncilPlace councilPlace:councilPlaces){
-			player=councilPlace.getFamMemberOnPlace().getPlayer();
-			if(!playerTurn.contains(player)){
-				playerTurn.add(player);
+
+	//update the turn list from the councilPalace
+	public void updateListOfPlayerTurn(List<Player> temporaryTurn){
+		int i;
+		for (Player player:temporaryTurn){
+			if (playerTurn.contains(player)){
+				playerTurn.remove(player);
 			}
+			i = temporaryTurn.indexOf(player);
+			playerTurn.add(i, player);
 		}
 	}
 	
@@ -36,15 +30,12 @@ public class Turn {
 	}
 	
 	// getter and setter
-	public ArrayList<Player> getPlayerTurn() {
+	public List<Player> getPlayerTurn() {
 		return playerTurn;
 	}
 
 
-	public void setPlayerTurn(ArrayList<Player> playerTurn) {
+	public void setPlayerTurn(List<Player> playerTurn) {
 		this.playerTurn = playerTurn;
-	}
-	
-	
-		
+	}	
 }

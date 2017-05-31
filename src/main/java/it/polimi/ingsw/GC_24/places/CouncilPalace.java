@@ -1,18 +1,21 @@
 package it.polimi.ingsw.GC_24.places;
 
-import java.util.ArrayList;
+import java.util.*;
 
 import it.polimi.ingsw.GC_24.effects.*;
+import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.values.*;
 
 public class CouncilPalace {
 	
-	private ArrayList<CouncilPlace> councilArray;
+	private List<CouncilPlace> councilArray = new ArrayList<>();
 	private int numPlayers;
 	private static final int COSTDICE=1;
 	private static final int MAXFAM=4;						//max familyMember per player
 	private static final Value VALUE=new Coin(1);
 	private static final Effect EFFECTPRIVILEGE=new CouncilPrivilege("CouncilPrivilege", 1);
+	private List<Player> temporaryTurn = new ArrayList<>();
+;
 	
 
 	//constructor
@@ -23,12 +26,19 @@ public class CouncilPalace {
 	
 	
 	//useful methods
-	public ArrayList<CouncilPlace> createCouncil(){
+	public List<CouncilPlace> createCouncil(){
 		for(int num=0;num<this.numPlayers*MAXFAM;num++){
 			councilArray.add(new CouncilPlace(COSTDICE, VALUE, EFFECTPRIVILEGE));
 		}
 		return councilArray;
 	} 
+	
+	//returns the updated list of players' turn
+	public List<Player> updateTurn(Player player) {
+		if(!temporaryTurn.contains(player))
+			temporaryTurn.add(player);
+		return temporaryTurn;
+	}
 
 	//empties all the places
 	public void clearPlaces(){
@@ -38,11 +48,11 @@ public class CouncilPalace {
 	}
 
 	//getters and setters
-	public ArrayList<CouncilPlace> getCouncilPlaces() {
+	public List<CouncilPlace> getCouncilPlaces() {
 		return councilArray;
 	}
 
-	public void setCouncilPlaces(ArrayList<CouncilPlace> councilPlaces) {
+	public void setCouncilPlaces(List<CouncilPlace> councilPlaces) {
 		this.councilArray = councilPlaces;
 	}
 	

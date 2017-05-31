@@ -1,5 +1,6 @@
 package it.polimi.ingsw.GC_24.places;
 
+import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.values.Value;
 
 public abstract class ActivityPlace extends Place{
@@ -14,11 +15,11 @@ public abstract class ActivityPlace extends Place{
 	
 	//gives the harvest or production value of the
 	//bonus tile and the effects of the activated cards to the player 
-	public abstract void doActivity();
+	public abstract void doActivity(Player player);
 	
 	@Override 
-	public void giveEffects(){
-		doActivity();
+	public void giveEffects(Player player){
+		doActivity(player);
 	}
 	
 	//getter and setter

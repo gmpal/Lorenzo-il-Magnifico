@@ -21,7 +21,7 @@ public class TestPlace {
 	@Before
 	public void setUp() throws Exception {
 		player = new Player("Giorgia", PlayerColour.RED);
-		familyMember = new FamilyMember(player);
+		familyMember = new FamilyMember(player.getMyColour());
 		place = new CouncilPlace(0, null, null);
 		place.setAvailable(false);
 		place.setFamMemberOnPlace(familyMember);

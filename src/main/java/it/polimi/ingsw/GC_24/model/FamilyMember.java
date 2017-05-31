@@ -14,21 +14,23 @@ public class FamilyMember {
 	//constructors
 
 	//creates a family member with a value
-	public FamilyMember(Player player, Die die) {
+	public FamilyMember(PlayerColour playerColour, Die die) {
 		this.memberValue = die.getValue();
 		this.available = true;
 		this.memberColour = die.getColour();
 		this.neutral = false;
-		this.playerColour = player.getMyColour();
+		this.playerColour = playerColour;
+
 	}
 	
 	//creates a neutral family member
-	public FamilyMember(Player player) {
+	public FamilyMember(PlayerColour playerColour) {
 		this.memberValue = 0;
 		this.available = true;
 		this.memberColour = null;
 		this.neutral=true;
-		this.playercolour = player;
+		this.playerColour = playerColour;
+
 	}
 	
 	
@@ -79,11 +81,13 @@ public class FamilyMember {
 	public void setNeutral(boolean neutral) {
 		this.neutral = neutral;
 	}
-	public Player getPlayer() {
-		return playercolour;
+
+	public PlayerColour getPlayerColour() {
+		return playerColour;
 	}
-	public void setPlayer(Player player) {
-		this.playercolour = player;
+	public void setPlayerColour(PlayerColour playerColour) {
+		this.playerColour = playerColour;
+
 	}
 	
 }

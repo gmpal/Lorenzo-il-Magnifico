@@ -1,6 +1,6 @@
 package it.polimi.ingsw.GC_24.effects;
 
-import java.util.ArrayList;
+import java.util.*;
 import it.polimi.ingsw.GC_24.cards.Development;
 import it.polimi.ingsw.GC_24.cards.Buildings;
 import it.polimi.ingsw.GC_24.model.Player;
@@ -15,7 +15,7 @@ public class PerformProduction extends PerformActivity{
 		@Override
 		public void giveImmediateEffect(Player player){
 		player.getMyBoard().getBonusTile().giveProductiontValues(player.getMyValues());
-		ArrayList<Development> productionCards = player.getMyBoard().getPersonalBuildings().getCards();
+		List<Development> productionCards = player.getMyBoard().getPersonalBuildings().getCards();
 		for (Development  card:productionCards){
 			Buildings building = (Buildings) card;
 			if (building.getCostDie() <= getDieValue()){

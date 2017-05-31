@@ -1,12 +1,12 @@
 package it.polimi.ingsw.GC_24.places;
 
-import java.util.ArrayList;
+import java.util.*;
 
 import it.polimi.ingsw.GC_24.model.PlayerColour;
 
 public class Harvest {
 	
-	private ArrayList<HarvestPlace> harvestArray;
+	private List<HarvestPlace> harvestArray = new ArrayList<>();
 	private boolean placesLocked;
 	private int numPlayers;
 	private static final int FACTOR=2; 						//Max number of player's familyMember in Production
@@ -23,7 +23,7 @@ public class Harvest {
 	}
 	
 	//inserts empty ProductionPlaces in Production
-	public ArrayList<HarvestPlace> createHarvest(){
+	public List<HarvestPlace> createHarvest(){
 		int numProducionPlaces;	
 		if(this.placesLocked){
 			numProducionPlaces=MINPLACES;
@@ -49,7 +49,7 @@ public class Harvest {
 	//returns true if in the Harvest there already is a family member of the same colour as the parameter 
 	public boolean isThereSameColour(PlayerColour playerColour){
 		for(HarvestPlace harvestPlace:this.harvestArray){
-			if(!harvestPlace.isAvailable()&&(harvestPlace.getFamMemberOnPlace().getPlayer().getMyColour()).equals(playerColour)){
+			if(!harvestPlace.isAvailable()&&(harvestPlace.getFamMemberOnPlace().getPlayerColour()).equals(playerColour)){
 				return true;
 			}
 		}
@@ -57,11 +57,11 @@ public class Harvest {
 	}
 	
 	//getter and setter
-	public ArrayList<HarvestPlace> getHarvestPlaces() {
+	public List<HarvestPlace> getHarvestPlaces() {
 		return harvestArray;
 	}
 
-	public void setHarvestPlaces(ArrayList<HarvestPlace> harvestPlaces) {
+	public void setHarvestPlaces(List<HarvestPlace> harvestPlaces) {
 		this.harvestArray = harvestPlaces;
 	}
 }

@@ -3,19 +3,17 @@ package it.polimi.ingsw.GC_24.cards;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-
+import java.util.*;
 import com.google.gson.Gson;
-
 import it.polimi.ingsw.GC_24.effects.*;
 import it.polimi.ingsw.GC_24.values.MilitaryPoint;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 
 public class Deck {
-	private ArrayList<Territories> deckTerritories = new ArrayList<>();
-	private ArrayList<Characters> deckCharacters = new ArrayList<>();
-	private ArrayList<Buildings> deckBuildings = new ArrayList<>();
-	private ArrayList<Ventures> deckVentures = new ArrayList<>();
+	private List<Territories> deckTerritories = new ArrayList<>();
+	private List<Characters> deckCharacters = new ArrayList<>();
+	private List<Buildings> deckBuildings = new ArrayList<>();
+	private List<Ventures> deckVentures = new ArrayList<>();
 
 	// constructor
 	public Deck() throws IOException {
@@ -58,35 +56,35 @@ public class Deck {
 	}
 
 	// getters and setters
-	public ArrayList<Territories> getDeckTerritories() {
+	public List<Territories> getDeckTerritories() {
 		return deckTerritories;
 	}
 
-	public void setDeckTerritories(ArrayList<Territories> deckTerritories) {
+	public void setDeckTerritories(List<Territories> deckTerritories) {
 		this.deckTerritories = deckTerritories;
 	}
 
-	public ArrayList<Characters> getDeckCharacters() {
+	public List<Characters> getDeckCharacters() {
 		return deckCharacters;
 	}
 
-	public void setDeckCharacters(ArrayList<Characters> deckCharacters) {
+	public void setDeckCharacters(List<Characters> deckCharacters) {
 		this.deckCharacters = deckCharacters;
 	}
 
-	public ArrayList<Buildings> getDeckBuildings() {
+	public List<Buildings> getDeckBuildings() {
 		return deckBuildings;
 	}
 
-	public void setDeckBuildings(ArrayList<Buildings> deckBuildings) {
+	public void setDeckBuildings(List<Buildings> deckBuildings) {
 		this.deckBuildings = deckBuildings;
 	}
 
-	public ArrayList<Ventures> getDeckVentures() {
+	public List<Ventures> getDeckVentures() {
 		return deckVentures;
 	}
 
-	public void setDeckVentures(ArrayList<Ventures> deckVentures) {
+	public void setDeckVentures(List<Ventures> deckVentures) {
 		this.deckVentures = deckVentures;
 	}
 
