@@ -6,7 +6,6 @@ import org.junit.Test;
 import it.polimi.ingsw.GC_24.cards.Characters;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.PlayerColour;
-import it.polimi.ingsw.GC_24.personalboard.PersonalBoard;
 import it.polimi.ingsw.GC_24.personalboard.PersonalCharacters;
 
 
@@ -17,12 +16,10 @@ public class TestPersonalCharacters {
 	PersonalCharacters characters;
 	PersonalCharacters charactersexpected;	
 	Player player;
-	PersonalBoard personalBoard; 
 
 	@Before
 	public void setUp() throws Exception {
 		player = new Player("Giorgia", PlayerColour.RED);
-		personalBoard = new PersonalBoard(player);
 		character1 = new Characters("Character1", "Character", null, null, null, 1, null);
 		character2 = new Characters("Character2", "Character", null, null, null, 2, null);
 		characters = new PersonalCharacters();
@@ -31,26 +28,26 @@ public class TestPersonalCharacters {
 
 	@Test
 	public void testFindCardsInPersonalBoard() {
-		character1.setCardOnPersonalBoard(personalBoard);
-		character2.setCardOnPersonalBoard(personalBoard);
+		character1.setCardOnPersonalBoard(player.getMyBoard());
+		character2.setCardOnPersonalBoard(player.getMyBoard());
 		charactersexpected.getCards().add(character1);
 		charactersexpected.getCards().add(character2);
-		assertEquals(charactersexpected.getCards(), characters.findCardsInPersonalBoard(personalBoard).getCards());
+		assertEquals(charactersexpected.getCards(), characters.findCardsInPersonalBoard(player.getMyBoard()).getCards());
 	}
 	
 	@Test
 	public void testFindCardsInPersonalBoardFalse1() {
-		character1.setCardOnPersonalBoard(personalBoard);
-		character2.setCardOnPersonalBoard(personalBoard);
+		character1.setCardOnPersonalBoard(player.getMyBoard());
+		character2.setCardOnPersonalBoard(player.getMyBoard());
 		charactersexpected.getCards().add(character1);
-		assertFalse(charactersexpected.getCards().equals(characters.findCardsInPersonalBoard(personalBoard).getCards()));
+		assertFalse(charactersexpected.getCards().equals(characters.findCardsInPersonalBoard(player.getMyBoard()).getCards()));
 	}
 	
 	@Test
 	public void testFindCardsInPersonalBoardFalse2() {
-		character1.setCardOnPersonalBoard(personalBoard);
+		character1.setCardOnPersonalBoard(player.getMyBoard());
 		charactersexpected.getCards().add(character1);
 		charactersexpected.getCards().add(character2);
-		assertFalse(charactersexpected.getCards().equals(characters.findCardsInPersonalBoard(personalBoard).getCards()));
+		assertFalse(charactersexpected.getCards().equals(characters.findCardsInPersonalBoard(player.getMyBoard()).getCards()));
 	}
 }

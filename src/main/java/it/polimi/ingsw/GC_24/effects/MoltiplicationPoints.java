@@ -21,7 +21,7 @@ public void moltiplicationEffect(Player player){
 		
 		value.setQuantity(factor1*factor2);
 		
-		value.addValueToSet(player.getMyBoard().getPlayer().getMyValues());
+		value.addValueToSet(player.getMyValues());
 	}
 	
 	@Override
