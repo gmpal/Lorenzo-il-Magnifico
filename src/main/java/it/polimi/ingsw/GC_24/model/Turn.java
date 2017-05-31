@@ -2,8 +2,6 @@ package it.polimi.ingsw.GC_24.model;
 
 import java.util.*;
 
-import it.polimi.ingsw.GC_24.places.*;
-
 public class Turn {
 	
 	private List<Player> playerTurn;
@@ -13,20 +11,16 @@ public class Turn {
 	public Turn() {
 		this.playerTurn = new ArrayList<>() ;
 	}
-	
-	//Update the turn list from the councilPalace
-	public void updateListOfPlayerTurn(CouncilPalace councilPalace){
-		
-		Player player;
-		List<CouncilPlace> councilPlaces=councilPalace.getCouncilPlaces();
-		
-		playerTurn.clear();
-		
-		for(CouncilPlace councilPlace:councilPlaces){
-			player=councilPlace.getFamMemberOnPlace().getPlayer();
-			if(!playerTurn.contains(player)){
-				playerTurn.add(player);
+
+	//update the turn list from the councilPalace
+	public void updateListOfPlayerTurn(List<Player> temporaryTurn){
+		int i;
+		for (Player player:temporaryTurn){
+			if (playerTurn.contains(player)){
+				playerTurn.remove(player);
 			}
+			i = temporaryTurn.indexOf(player);
+			playerTurn.add(i, player);
 		}
 	}
 	
@@ -43,8 +37,5 @@ public class Turn {
 
 	public void setPlayerTurn(List<Player> playerTurn) {
 		this.playerTurn = playerTurn;
-	}
-	
-	
-		
+	}	
 }

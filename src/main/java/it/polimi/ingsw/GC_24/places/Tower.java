@@ -24,16 +24,17 @@ public class Tower {
 		return towerArray;
 	}
 
+
 	// returns true if in the same Tower there already is a family member of the
 	// same colour as the parameter
 	public boolean isThereSameColour(FamilyMember familyMember) {
-		PlayerColour colour = familyMember.getPlayer().getMyColour();
+		PlayerColour colour = familyMember.getPlayerColour();
 		if (familyMember.isNeutral()) {
 			return false;
 		}
 		for (TowerPlace towerPlace : this.towerArray) {
 			if (!towerPlace.isAvailable() && (!towerPlace.getFamMemberOnPlace().isNeutral())
-					&& (towerPlace.getFamMemberOnPlace().getPlayer().getMyColour()).equals(colour)) {
+					&& (towerPlace.getFamMemberOnPlace().getPlayerColour()).equals(colour)) {
 				return true;
 			}
 		}

@@ -1,7 +1,6 @@
 package it.polimi.ingsw.GC_24.places;
 
 import java.util.*;
-
 import it.polimi.ingsw.GC_24.cards.Development;
 import it.polimi.ingsw.GC_24.cards.Buildings;
 import it.polimi.ingsw.GC_24.model.Player;
@@ -15,13 +14,13 @@ public class ProductionPlace extends ActivityPlace{
 	}
 	
 	//gives the production value of the bonus tile and the effects of the activated cards to the player 
-	public void doActivity(){
-		Player player = getFamMemberOnPlace().getPlayer();
+	@Override
+	public void doActivity(Player player){
 		player.getMyBoard().getBonusTile().giveHarvestValues(player.getMyValues());
-		List<Development> harvestCards = player.getMyBoard().getPersonalBuildings().getCards();
-		for (Development card : harvestCards) {
+		List<Development> productionCards = player.getMyBoard().getPersonalBuildings().getCards();
+		for (Development card : productionCards) {
 			Buildings buildings = (Buildings) card;
-			if (buildings.getCostDie() <= (getCostDice() + getAdditionalCostDice())) {
+			if (buildings.getCostDie() <= (getFamMemberOnPlace().getMemberValue() + getAdditionalCostDice())) {
 				buildings.getValueEffect().giveImmediateEffect(player);
 				buildings.getImmediateEffect().giveImmediateEffect(player);
 			}

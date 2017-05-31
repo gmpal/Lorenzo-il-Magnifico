@@ -49,7 +49,7 @@ public class Production {
 	//returns true if in the Production there already is a family member of the same colour as the parameter 
 	public boolean isThereSameColour(PlayerColour playerColour){
 		for(ProductionPlace productionPlace:this.productionArray){
-			if(!productionPlace.isAvailable()&&(productionPlace.getFamMemberOnPlace().getPlayer().getMyColour()).equals(playerColour)){
+			if(!productionPlace.isAvailable()&&(productionPlace.getFamMemberOnPlace().getPlayerColour()).equals(playerColour)){
 				return true;
 			}
 		}

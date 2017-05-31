@@ -12,11 +12,11 @@ public class Family {
 	//constructor
 	
 	//when creating a family, it creates a family of neutral members. Then this family is set from a SetOfDice.
-	public Family(Player player){
-		this.member1 = new FamilyMember(player);
-		this.member2 = new FamilyMember(player);
-		this.member3 = new FamilyMember(player);
-		this.member4 = new FamilyMember(player);
+	public Family(PlayerColour playerColour){
+		this.member1 = new FamilyMember(playerColour);
+		this.member2 = new FamilyMember(playerColour);
+		this.member3 = new FamilyMember(playerColour);
+		this.member4 = new FamilyMember(playerColour);
 	
 	}
 		

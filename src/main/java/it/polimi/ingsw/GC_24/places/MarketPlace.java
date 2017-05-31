@@ -19,8 +19,7 @@ public class MarketPlace extends Place {
 	}
 	
 	@Override
-	public void giveEffects(){
-		Player player=this.famMemberOnPlace.getPlayer();
+	public void giveEffects(Player player){
 		player.setMyValues(this.getValue().addValueToSet(player.getMyValues()));
 		player.setMyValues(this.extraValue.addValueToSet(player.getMyValues()));
 	}

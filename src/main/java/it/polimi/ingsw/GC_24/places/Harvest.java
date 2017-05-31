@@ -49,7 +49,7 @@ public class Harvest {
 	//returns true if in the Harvest there already is a family member of the same colour as the parameter 
 	public boolean isThereSameColour(PlayerColour playerColour){
 		for(HarvestPlace harvestPlace:this.harvestArray){
-			if(!harvestPlace.isAvailable()&&(harvestPlace.getFamMemberOnPlace().getPlayer().getMyColour()).equals(playerColour)){
+			if(!harvestPlace.isAvailable()&&(harvestPlace.getFamMemberOnPlace().getPlayerColour()).equals(playerColour)){
 				return true;
 			}
 		}
