@@ -1,6 +1,6 @@
 package it.polimi.ingsw.GC_24.effects;
 
-import java.util.ArrayList;
+import java.util.*;
 import it.polimi.ingsw.GC_24.cards.*;
 import it.polimi.ingsw.GC_24.model.Player;
 
@@ -14,7 +14,7 @@ public class PerformHarvest extends PerformActivity{
 	@Override
 	public void giveImmediateEffect(Player player){
 	player.getMyBoard().getBonusTile().giveHarvestValues(player.getMyValues());
-	ArrayList<Development> harvestCards = player.getMyBoard().getPersonalTerritories().getCards();
+	List<Development> harvestCards = player.getMyBoard().getPersonalTerritories().getCards();
 	for (Development  card:harvestCards){
 		Territories territory = (Territories) card;
 		if (territory.getCostDie() <= getDieValue()){

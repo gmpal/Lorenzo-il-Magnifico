@@ -18,7 +18,7 @@ public class Turn {
 	public void updateListOfPlayerTurn(CouncilPalace councilPalace){
 		
 		Player player;
-		ArrayList<CouncilPlace> councilPlaces=councilPalace.getCouncilPlaces();
+		List<CouncilPlace> councilPlaces=councilPalace.getCouncilPlaces();
 		
 		playerTurn.clear();
 		
