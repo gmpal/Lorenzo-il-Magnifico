@@ -10,41 +10,32 @@ import it.polimi.ingsw.GC_24.controller.Controller;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.PlayerColour;
+import it.polimi.ingsw.GC_24.model.Turn;
 import it.polimi.ingsw.GC_24.places.Tower;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
-import it.polimi.ingsw.GC_24.view.View;
+import it.polimi.ingsw.GC_24.view.ViewPlayers;
 
 
 public class Main {
+	
+	Scanner scanner = new Scanner(System.in);
+	Turn turn = new Turn();
+	
 	public static void main(String[] args) {
 
 
-	/*	Player marco = new Player("marco", PlayerColour.BLUE);
-		Player marco2 = new Player("marco", PlayerColour.BLUE);
-		System.out.println(marco.equals(marco2));
-		System.out.println(marco2.equals(marco2));*/
+
+		// GAME 
+	 takePlayers();
+
 		
-		List<Integer> array = new ArrayList<>();
-		array.add(2);
-		array.add(3);
-		array.add(0,4);
-		System.out.println(array);
+	
+	
 		
-		/* GAME 
-		Scanner scanner = new Scanner(System.in);
-		
-		//cosa mi serve per creare un Model?
-		ArrayList<Player> giocatori = new ArrayList<>();
-		
-		Player marco = new Player("marco", PlayerColour.BLUE);
-		Player giuseppe = new Player("giuseppe", PlayerColour.RED);
-		
-		giocatori.add(marco);
-		giocatori.add(giuseppe);
 		
 		//posso creare un model adesso
 		Model game = new Model(giocatori);
-		View view = new View(game);
+		ViewPlayers view = new ViewPlayers(game);
 		//Controller controller = new Controller(game,view);
 		
 		
@@ -55,7 +46,36 @@ public class Main {
 			if (comando==2 ||comando==1) view.input(comando);
 				else System.out.println("Comando errato, riprova");
 			}
-		*/
+	}
+	
+	public static ArrayList<Player> takePlayers(){
+		int i=0;
+		PlayerColour[] colours = PlayerColour.values();
+		while(i!=4){
+		System.out.println("Ciao, inserisci il nome del giocatore");
+		String name = scanner.nextLine();
+		System.out.println("Bevenuto "+name+ " scegli un colore");
+		System.out.println(colours);
+		String chosencolour = scanner.nextLine();
+		 switch (chosencolour) {
+         case "yellow":
+             System.out.println("Mondays are bad.");
+             break;
+                 
+         case "green":
+             System.out.println("Fridays are better.");
+             break;
+                      
+         case "blue":
+             System.out.println("Weekends are best.");
+             break;
+                     
+         case RED:
+             System.out.println("Midweek days are so-so.");
+             break;
+     }
+	}
+		
 
 		
 		/*		
