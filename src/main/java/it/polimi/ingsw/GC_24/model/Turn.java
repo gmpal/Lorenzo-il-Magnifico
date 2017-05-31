@@ -11,7 +11,7 @@ public class Turn {
 	public Turn() {
 		this.playerTurn = new ArrayList<>() ;
 	}
-	
+
 	//update the turn list from the councilPalace
 	public void updateListOfPlayerTurn(List<Player> temporaryTurn){
 		int i;
