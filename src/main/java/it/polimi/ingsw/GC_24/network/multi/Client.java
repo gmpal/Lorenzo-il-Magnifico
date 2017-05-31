@@ -7,9 +7,14 @@ import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import javax.swing.JOptionPane;
+
+import it.polimi.ingsw.GC_24.view.ViewPlayer;
+
 public class Client {
+
+	private ViewPlayer viewPlayer;
 	
-	//MAIN --> Crea un client e fa partire il metodo startClient();
 	
 	public static void main(String[] args) {
 		Client client = new Client();
@@ -20,20 +25,46 @@ public class Client {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 	private final static int PORT = 28469;
-	private final static String IP="127.0.0.1";
-	
-	//Crea un socket e un FixedThreadPool, poi lancia un nuovo ClientInHandler e un nuovo ClientOutHandler in parallelo
+	private final static String IP = "127.0.0.1";
+
+	// Crea un socket e un FixedThreadPool, poi lancia un nuovo ClientInHandler
+	// e un nuovo ClientOutHandler in parallelo
 	public void startClient() throws IOException {
-		
-		Socket socket = new Socket(IP,PORT);
+
+		Socket socket = new Socket(IP, PORT);
 		System.out.println("Connection established");
-		
+
+		/*n=0 --> GUI ; n=1 --> CLI*/
+		int n = selectInterface();
+		if (n==0){
+			//viewPlayer = new ViewGUI();
+		}else{
+			 viewPlayer = new ViewCLI();
+		}
+		viewPlayer.start();
+				
 		ExecutorService executor = Executors.newFixedThreadPool(2);
-		
+
 		executor.submit(new ClientInHandler(new Scanner(socket.getInputStream())));
 		executor.submit(new ClientOutHandler(new PrintWriter(socket.getOutputStream())));
 	}
+
+	
+/*Shows an Option Dialog that lets the user choose between CLI and GUI*/	
+	public static int selectInterface(){
+
+		String[] array = {"GUI","CLI"};
+
+		int choice = JOptionPane.showOptionDialog(null,
+			 "GUI or CLI?",
+			 "Choose an option",
+    		 JOptionPane.YES_NO_OPTION, 
+    		 JOptionPane.QUESTION_MESSAGE,
+    		 null,array,null); 
+     
+     return choice;
+}
+
 }

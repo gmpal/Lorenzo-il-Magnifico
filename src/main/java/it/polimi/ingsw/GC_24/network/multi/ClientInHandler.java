@@ -2,7 +2,13 @@ package it.polimi.ingsw.GC_24.network.multi;
 
 import java.util.Scanner;
 
-public class ClientInHandler implements Runnable {
+import it.polimi.ingsw.GC_24.MyObservable;
+import it.polimi.ingsw.GC_24.MyObserver;
+
+
+//ClientInHandler is observed by the ViewPLayer,
+//whenever the server communicates something, ClientInHandler notifies ViewPLayer
+public class ClientInHandler extends MyObservable implements Runnable {
 
 	private Scanner socketIn;
 
@@ -18,4 +24,6 @@ public class ClientInHandler implements Runnable {
 			System.out.println(line);
 		}
 	}
+
+
 }

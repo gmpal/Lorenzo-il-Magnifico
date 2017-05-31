@@ -4,20 +4,22 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.rmi.RemoteException;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import it.polimi.ingsw.GC_24.controller.Controller;
 import it.polimi.ingsw.GC_24.model.Model;
+import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.State;
-import it.polimi.ingsw.GC_24.view.View;
 
 public class Server {
 
 	private static final int PORT = 28469;
+	private List<Player> players;
 	private Model game;
 	private Controller controller;
-
+	
 	// Crea un server e fa partire il suo metodo startServer()
 	public static void main(String[] args) throws RemoteException {
 		Server server = new Server();
@@ -32,11 +34,8 @@ public class Server {
 
 	// constructor
 	public Server() throws RemoteException {
-		//TODO: game = new Model();
-		controller = new Controller(game);
+	
 	}
-
-	// private static final String IP = "127.0.0.1";
 
 	// Crea un Cached Thread Pool e un serverSocket , poi si mette in attesa dei
 	// socket
@@ -51,6 +50,7 @@ public class Server {
 		while(true){
 			try {
 				Socket socket = serverSocket.accept();
+				System.out.println("SERVER: Connection established");
 				ServerSocketView serverView = new ServerSocketView(socket);
 				this.addClient(serverView);
 				threadPool.submit(serverView);
@@ -63,9 +63,8 @@ public class Server {
 		serverSocket.close();
 	}
 
-	public void addClient(View view) {
-		view.addObserver(controller);
-		game.addObserver(view);
+	public void addClient(ServerSocketView serverView) {
+		game.registerMyObserver(serverView);
 		// Submits a Runnable task for execution
 		game.setGameState(game.getGameState().nextState());
 		if (game.getGameState().equals(State.RUNNING)) {

@@ -17,10 +17,7 @@ public class Controller implements MyObserver {
 		
 	}
 	
-	@Override
-	public void update (Object change){
-			
-	}
+	
 
 	@Override
 	public void update() {
