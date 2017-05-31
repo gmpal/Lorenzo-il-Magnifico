@@ -2,12 +2,12 @@ package it.polimi.ingsw.GC_24.model;
 
 
 import java.util.ArrayList;
-import java.util.Observable;
-import it.polimi.ingsw.GC_24.dice.SetOfDice;
 
+import it.polimi.ingsw.GC_24.MyObservable;
+import it.polimi.ingsw.GC_24.dice.SetOfDice;
 import it.polimi.ingsw.GC_24.places.Board;
 
-public class Model extends Observable {
+public class Model extends MyObservable {
 	
 	private ArrayList<Player> players;
 	private Board board;
@@ -46,7 +46,7 @@ public class Model extends Observable {
 		this.currentPeriod = Period.ONE;
 		this.gameState = State.RUNNING;
 		
-		this.notifyObservers(this);
+		this.notifyMyObservers(this);
 	}
 		
 	
