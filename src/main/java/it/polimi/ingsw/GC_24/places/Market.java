@@ -12,7 +12,7 @@ public class Market {
 	
 	//constructor
 	public Market(boolean placesLocked) {
-		this.placesLocked=placesLocked;
+		this.placesLocked = placesLocked;
 		this.marketArray = createMarket();
 	}
 	
@@ -20,9 +20,9 @@ public class Market {
 		int numPlaces;
 		
 		if(this.placesLocked){
-			numPlaces=MINPLACES;
+			numPlaces = MINPLACES;
 		}
-		else numPlaces=MAXPLACES;
+		else numPlaces = MAXPLACES;
 		
 		for(int num=0;num<numPlaces;num++){
 			marketArray.add(new MarketPlace(null, null, null, COSTDICE));

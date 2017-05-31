@@ -1,6 +1,7 @@
 package it.polimi.ingsw.GC_24.places;
 
 import it.polimi.ingsw.GC_24.model.FamilyMember;
+import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.values.Value;
 
 public abstract class Place { 
@@ -27,7 +28,7 @@ public abstract class Place {
 	}
 	
 	//redefined in MarketPlace, Tower, CouncilPlace change parameter in FamilyMember	
-	public abstract void giveEffects(); 
+	public abstract void giveEffects(Player player); 
 
 	//getters and setters
 	public int getCostDice() {

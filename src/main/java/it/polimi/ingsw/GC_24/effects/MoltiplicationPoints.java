@@ -15,13 +15,13 @@ public class MoltiplicationPoints extends Moltiplication{
 	@Override
 public void moltiplicationEffect(Player player){
 		int factor1 = value.getQuantity();
-		int quanityplayervalue2 = value2.findValueInPlayer(player.getMyBoard().getPlayer()).getQuantity();
+		int quanityplayervalue2 = value2.findValueInPlayer(player).getQuantity();
 		int dividervalue2 = value2.getQuantity();
 		int factor2 = (quanityplayervalue2/dividervalue2);
 		
 		value.setQuantity(factor1*factor2);
 		
-		value.addValueToSet(player.getMyBoard().getPlayer().getMyValues());
+		value.addValueToSet(player.getMyValues());
 	}
 	
 	@Override

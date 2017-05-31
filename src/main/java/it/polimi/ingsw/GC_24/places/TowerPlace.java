@@ -15,13 +15,12 @@ public class TowerPlace extends Place {
 	}
 	
 	//method to take a card without placing a family member
-	public void takeWithoutPlacing(){
-		this.correspondingCard.setCardOnPersonalBoard(this.getFamMemberOnPlace().getPlayer().getMyBoard());
+	public void takeWithoutPlacing(Player player){
+		this.correspondingCard.setCardOnPersonalBoard(player.getMyBoard());
 	}
 	
 	@Override
-	public void giveEffects(){
-		Player player=this.famMemberOnPlace.getPlayer();
+	public void giveEffects(Player player){
 		player.setMyValues(this.getValue().addValueToSet(player.getMyValues())); 
 	}
 
