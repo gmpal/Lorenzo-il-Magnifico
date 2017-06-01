@@ -9,8 +9,8 @@ import java.util.Set;
 
 
 import it.polimi.ingsw.GC_24.MyObservable;
+import it.polimi.ingsw.GC_24.board.Board;
 import it.polimi.ingsw.GC_24.dice.SetOfDice;
-import it.polimi.ingsw.GC_24.places.Board;
 
 public class Model extends MyObservable {
 	
