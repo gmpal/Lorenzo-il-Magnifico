@@ -1,5 +1,6 @@
 package it.polimi.ingsw.GC_24.network.multi;
 
+import java.io.ObjectInputStream;
 import java.util.Scanner;
 
 import it.polimi.ingsw.GC_24.MyObservable;
@@ -8,18 +9,18 @@ import it.polimi.ingsw.GC_24.MyObserver;
 
 //ClientInHandler is observed by the ViewPLayer,
 //whenever the server communicates something, ClientInHandler notifies ViewPLayer
-public class ClientInHandler extends MyObservable implements Runnable {
+public class ClientInHandler extends MyObservable{
 
-	private Scanner socketIn;
+	private ObjectInputStream objFromServer;
 
-	public ClientInHandler(Scanner socketIn) {
-		this.socketIn = socketIn;
+	public ClientInHandler(ObjectInputStream objFromServer) {
+		this.objFromServer = objFromServer;
 	}
 
-	public void run() {
+	public void start() {
 		while (true) {
 			// reads a new Line from the Scanner
-			String line = socketIn.nextLine();
+			Object obj = 
 			// print the message sent by the server
 			System.out.println(line);
 		}

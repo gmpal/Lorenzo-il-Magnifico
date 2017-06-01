@@ -1,5 +1,8 @@
 package it.polimi.ingsw.GC_24.network.multi;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
@@ -9,41 +12,33 @@ import it.polimi.ingsw.GC_24.MyObserver;
 //ClientOutHandler is observes the ViewPLayer,
 //whenever the viewPLayer communicates something, ClientOutHandler is notified by ViewPLayer
 //and send the message to the server
-public class ClientOutHandler implements Runnable, MyObserver {
+public class ClientOutHandler implements MyObserver {
 
 	
-	private boolean start;
-	private PrintWriter socketOut;
+	private ObjectOutputStream objToServer;
 	
 
-	public ClientOutHandler(PrintWriter socketOut) {
-		this.socketOut = socketOut;
+	public ClientOutHandler(ObjectOutputStream objToServer) {
+		this.objToServer = objToServer;
 	}
 
 	
-	public void run() {
-		// creates a new scanner to read input from standard input
-		Scanner stdin = new Scanner(System.in);
-		while (true) {
-			if(start){ 
-				sockeOut.println(change);
-				start=false;
-			}
-		}
-	}
-
-
-	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-		
-	}
-
-
 	@Override
 	public <O extends MyObservable, C> void update(O observed, C change) {
 		System.out.println("ClientOutHandler here: I have been notified by the PlayerView");
-		socketOut.println(change);
+		try {
+			objToServer.writeObject(change);
+			System.out.println("ClientOutHandler here: I have sent the change to the Server");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@Override
+	public void update() {
+		System.out.println("ClientOutHandler here: I have been notified by the PlayerView");
 		
 	}
 }

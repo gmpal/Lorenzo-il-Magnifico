@@ -1,18 +1,16 @@
 package it.polimi.ingsw.GC_24.network.multi;
 
 import java.io.BufferedInputStream;
+
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.rmi.RemoteException;
 import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
 
-import it.polimi.chat.Message;
-import it.polimi.chat.User;
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.MyObserver;
 import it.polimi.ingsw.GC_24.model.Player;
@@ -29,6 +27,7 @@ public class ServerSocketView extends MyObservable implements MyObserver, Runnab
 	private ObjectInputStream objFromClient;
 	private boolean end;
 	
+	
 	//constructor --> Receive a socket and creates Scanner and PrintWriter
 	public ServerSocketView(Socket socket) throws IOException{
 		
@@ -40,7 +39,9 @@ public class ServerSocketView extends MyObservable implements MyObserver, Runnab
 	}
 	
 	
-
+/**This methods keeps receiving Objects from the socket Input Stream 
+ * and handling them, giving a response. If the request contains "EXIT" 
+ * the connection is closed*/
 	@Override
 	public void run() {
 		
@@ -54,14 +55,20 @@ public class ServerSocketView extends MyObservable implements MyObserver, Runnab
                 objToClient.flush();
                 end = request.containsKey("EXIT");
                 
-            }catch (IOException ioe){
+            }catch (IOException | ClassNotFoundException ioe){
                 end = true;
             }
             
             System.out.println("Socket connection closed");
-            objToClient.close();
-            objFromClient.close();
-            socket.close();
+            
+            try {
+				objToClient.close();
+	            objFromClient.close();
+	            socket.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
          	}
 		
 	}
@@ -100,7 +107,7 @@ public class ServerSocketView extends MyObservable implements MyObserver, Runnab
 	}
 
 
-
+   /**Creates a new Player from a string containing his name and his colour*/
 	public Player tokenizeFromPLayer(String string) {
 		StringTokenizer tokenizer = new StringTokenizer(string);
 		Player player = new Player(

@@ -1,6 +1,10 @@
 package it.polimi.ingsw.GC_24.network.multi;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
@@ -9,11 +13,15 @@ import java.util.concurrent.Executors;
 
 import javax.swing.JOptionPane;
 
+import it.polimi.ingsw.GC_24.view.ViewCLI;
 import it.polimi.ingsw.GC_24.view.ViewPlayer;
 
 public class Client {
 
 	private ViewPlayer viewPlayer;
+	private ObjectOutputStream objToServer;
+	private ObjectInputStream objFromServer;
+	
 	
 	
 	public static void main(String[] args) {
@@ -45,10 +53,17 @@ public class Client {
 		}
 		viewPlayer.start();
 				
-		ExecutorService executor = Executors.newFixedThreadPool(2);
+		objToServer = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+		objFromServer = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
 
-		executor.submit(new ClientInHandler(new Scanner(socket.getInputStream())));
-		executor.submit(new ClientOutHandler(new PrintWriter(socket.getOutputStream())));
+		
+		/**The clientInHandler needs to start since it's listening for everything from
+		 * the socketOutputStream, while the clientOutHandler starts when is notified by the 
+		 * PlayerView*/
+		
+		
+		new ClientInHandler(objFromServer).start();
+		new ClientOutHandler(objToServer);
 	}
 
 	
