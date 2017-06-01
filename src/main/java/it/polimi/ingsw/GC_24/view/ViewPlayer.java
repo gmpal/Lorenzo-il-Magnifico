@@ -7,13 +7,23 @@ import it.polimi.ingsw.GC_24.MyObservable;
 
 public abstract class ViewPlayer extends MyObservable {
 
-	//contains NamePlayer and PLayerColour
-	private String player;
-	
-	public String getInformation();
+		protected String name;
+		protected String colour;
+		
+		public String getName() {
+			return name;
+		}
+		
+		public String getColour() {
+			return colour;
+		}
+		
+		public abstract void start();
+		
+		public abstract String setName();
+		
+		public abstract String setColour();
+		
+		public abstract String createMessage(String name, String Colour);
 
-	}
-
-	
-*/	
 }

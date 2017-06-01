@@ -1,15 +1,22 @@
 package it.polimi.ingsw.GC_24.network.multi;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.Scanner;
+import java.rmi.RemoteException;
+import java.util.Map;
+import java.util.Set;
 import java.util.StringTokenizer;
 
+import it.polimi.chat.Message;
+import it.polimi.chat.User;
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.MyObserver;
+import it.polimi.ingsw.GC_24.model.Player;
+import it.polimi.ingsw.GC_24.model.PlayerColour;
 
 
 
@@ -18,20 +25,18 @@ import it.polimi.ingsw.GC_24.MyObserver;
 public class ServerSocketView extends MyObservable implements MyObserver, Runnable{
 
 	private Socket socket;
-	private Scanner stringFromClient;
-	private PrintWriter stringToClient;
 	private ObjectOutputStream objToClient;
 	private ObjectInputStream objFromClient;
-	
+	private boolean end;
 	
 	//constructor --> Receive a socket and creates Scanner and PrintWriter
 	public ServerSocketView(Socket socket) throws IOException{
+		
 		this.socket=socket;
 		
-		stringFromClient = new Scanner(socket.getInputStream());
-		stringToClient = new PrintWriter (socket.getOutputStream());
-		objToClient = new ObjectOutputStream(socket.getOutputStream());
-		objFromClient = new ObjectInputStream(socket.getInputStream());
+		objToClient = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+		objFromClient = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
+		end = false;
 	}
 	
 	
@@ -39,33 +44,76 @@ public class ServerSocketView extends MyObservable implements MyObserver, Runnab
 	@Override
 	public void run() {
 		
-		//receive the name and the colour from the client
-		String nameAndColour = stringFromClient.nextLine();
+		       
+        while (!end){
+            try{
+                Map<String,Object> request = (Map<String, Object>) objFromClient.readObject();
+                
+                String response = this.handleRequest(request);
+                objToClient.writeObject(response);
+                objToClient.flush();
+                end = request.containsKey("EXIT");
+                
+            }catch (IOException ioe){
+                end = true;
+            }
+            
+            System.out.println("Socket connection closed");
+            objToClient.close();
+            objFromClient.close();
+            socket.close();
+         	}
 		
-			while(true){
-				String line = stringFromClient.nextLine();
-				
-				
-				
-				System.out.println("Server: getting the command "+line);
-				
-				//TOKENIZES THE LINE (CUTS IT IN PIECES)
-				StringTokenizer tokenizer = new StringTokenizer((String) line);
-				
-				
-				//TODO: decidere come passare il comando
-				/*This block of codes assign the pieces of the command line 
-				 * to the values --> IT CREATES (!) a new Player from the passed name
-				 * and creates an action */
-			}
+	}
+
+	
+
+	/**This method analyzes the incoming HashMap. If it finds specific keywords
+	 * in the keySet, it does different things with different objects*/
+	private String handleRequest(Map<String, Object> request) {
+		Set<String> command = request.keySet();
 		
+		/**If commands contains "player" than the corresponding object is a string with a player
+		 * name and a player colour --> used to create the Player*/
+		if (command.contains("player")){
+           Player player = tokenizeFromPLayer((String) request.get("player"));
+		}/*else if (command.contains("leave")){
+            User user = (User) request.get("leave");
+            try {
+                this.leave(user);
+                return user.getRepr() + " left the chat";
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }else if (command.contains("send")){
+            Message msg = (Message) request.get("send");
+            try {
+                this.send(msg);
+                return msg.toString();
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        } else if (command.contains("BYE")){
+            return "User left the chat";
+        }*/
+        return "bad command";
+	}
+
+
+
+	public Player tokenizeFromPLayer(String string) {
+		StringTokenizer tokenizer = new StringTokenizer(string);
+		Player player = new Player(
+						(String) tokenizer.nextToken(),
+						PlayerColour.valueOf(tokenizer.nextToken()));
+		return player;		
 	}
 
 
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
+		System.out.println("ServerView here, i have been notified by the Model --> it's changed!");
 		
 	}
 
