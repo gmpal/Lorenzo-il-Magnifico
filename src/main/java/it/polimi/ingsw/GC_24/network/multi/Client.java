@@ -5,14 +5,13 @@ import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import javax.swing.JOptionPane;
 
+import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.view.ViewCLI;
 import it.polimi.ingsw.GC_24.view.ViewPlayer;
 
@@ -44,26 +43,37 @@ public class Client {
 		Socket socket = new Socket(IP, PORT);
 		System.out.println("Connection established");
 
+		
+		/*THIS BLOCK OF CODE CREATES THE ViewPlayer!*/
 		/*n=0 --> GUI ; n=1 --> CLI*/
-		int n = selectInterface();
-		if (n==0){
-			//viewPlayer = new ViewGUI();
-		}else{
+	//	int n = this.selectInterface();
+	//	if (n==0){
+	//		//viewPlayer = new ViewGUI();
+	//	}else{
 			 viewPlayer = new ViewCLI();
-		}
+	//	}
+		System.out.println("Created the view");
+		
+		
+		/*Creating an Executor Service in order to run the ClientIN and ClientOut
+		 * simoultaneously*/
+		ExecutorService executor = Executors.newFixedThreadPool(2);
+	
+		//creates the handlers
+		executor.submit(new ClientInHandler(new ObjectInputStream(new BufferedInputStream(socket.getInputStream()))));
+		System.out.println("Created the InHandler");
+		ClientOutHandler cientOutHandler = new ClientOutHandler(new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream())));
+		System.out.println("Created the OutHandler");
+		Model localModel = new Model();
+		System.out.println("Created the model");
+		
+		
+		//set Observers in Client
+		viewPlayer.registerMyObserver(cientOutHandler);
+		cientInHandler.registerMyObserver(viewPlayer);
+		System.out.println("Setted the observers");
 		viewPlayer.start();
-				
-		objToServer = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
-		objFromServer = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
-
 		
-		/**The clientInHandler needs to start since it's listening for everything from
-		 * the socketOutputStream, while the clientOutHandler starts when is notified by the 
-		 * PlayerView*/
-		
-		
-		new ClientInHandler(objFromServer).start();
-		new ClientOutHandler(objToServer);
 	}
 
 	
@@ -72,7 +82,8 @@ public class Client {
 
 		String[] array = {"GUI","CLI"};
 
-		int choice = JOptionPane.showOptionDialog(null,
+		int choice = JOptionPane.showOptionDialog(
+			 null,
 			 "GUI or CLI?",
 			 "Choose an option",
     		 JOptionPane.YES_NO_OPTION, 

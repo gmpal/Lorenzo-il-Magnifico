@@ -3,9 +3,10 @@ package it.polimi.ingsw.GC_24.view;
 
 
 import it.polimi.ingsw.GC_24.MyObservable;
+import it.polimi.ingsw.GC_24.MyObserver;
 
 
-public abstract class ViewPlayer extends MyObservable {
+public abstract class ViewPlayer extends MyObservable implements MyObserver {
 
 		protected String name;
 		protected String colour;

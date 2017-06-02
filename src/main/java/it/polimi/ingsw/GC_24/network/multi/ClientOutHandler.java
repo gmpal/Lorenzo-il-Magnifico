@@ -25,7 +25,7 @@ public class ClientOutHandler implements MyObserver {
 	
 	@Override
 	public <O extends MyObservable, C> void update(O observed, C change) {
-		System.out.println("ClientOutHandler here: I have been notified by the PlayerView");
+		System.out.println("ClientOutHandler here: I have been notified by "+observed.getClass().getSimpleName());
 		try {
 			objToServer.writeObject(change);
 			System.out.println("ClientOutHandler here: I have sent the change to the Server");

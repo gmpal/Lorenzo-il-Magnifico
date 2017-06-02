@@ -1,7 +1,6 @@
 package it.polimi.ingsw.GC_24.network.multi;
 
 import java.io.BufferedInputStream;
-
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -15,6 +14,7 @@ import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.MyObserver;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.PlayerColour;
+import it.polimi.ingsw.GC_24.values.SetOfValues;
 
 
 
@@ -50,7 +50,7 @@ public class ServerSocketView extends MyObservable implements MyObserver, Runnab
             try{
                 Map<String,Object> request = (Map<String, Object>) objFromClient.readObject();
                 
-                String response = this.handleRequest(request);
+                Map<String, Object> response = this.handleRequestFromClient(request);
                 objToClient.writeObject(response);
                 objToClient.flush();
                 end = request.containsKey("EXIT");
@@ -59,7 +59,7 @@ public class ServerSocketView extends MyObservable implements MyObserver, Runnab
                 end = true;
             }
             
-            System.out.println("Socket connection closed");
+            System.out.println("SERVER: Socket connection closed");
             
             try {
 				objToClient.close();
@@ -77,14 +77,20 @@ public class ServerSocketView extends MyObservable implements MyObserver, Runnab
 
 	/**This method analyzes the incoming HashMap. If it finds specific keywords
 	 * in the keySet, it does different things with different objects*/
-	private String handleRequest(Map<String, Object> request) {
+	private Map<String, Object> handleRequestFromClient(Map<String, Object> request) {
 		Set<String> command = request.keySet();
 		
 		/**If commands contains "player" than the corresponding object is a string with a player
 		 * name and a player colour --> used to create the Player*/
-		if (command.contains("player")){
+		if (command.contains("TEST")){
+			SetOfValues setofvalues = (SetOfValues) request.get("TEST");
+			setofvalues.getCoins().addQuantity(5);;
+			request.put("TEST", setofvalues);
+			
+			return request;}
+		/*if (command.contains("player")){
            Player player = tokenizeFromPLayer((String) request.get("player"));
-		}/*else if (command.contains("leave")){
+		}else if (command.contains("leave")){
             User user = (User) request.get("leave");
             try {
                 this.leave(user);
@@ -102,9 +108,11 @@ public class ServerSocketView extends MyObservable implements MyObserver, Runnab
             }
         } else if (command.contains("BYE")){
             return "User left the chat";
-        }*/
-        return "bad command";
+        }
+       return "bad command";*/
+		else return null;
 	}
+	
 
 
    /**Creates a new Player from a string containing his name and his colour*/

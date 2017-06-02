@@ -9,6 +9,7 @@ import java.util.Set;
 
 
 import it.polimi.ingsw.GC_24.MyObservable;
+import it.polimi.ingsw.GC_24.MyObserver;
 import it.polimi.ingsw.GC_24.dice.SetOfDice;
 import it.polimi.ingsw.GC_24.places.Board;
 
@@ -59,7 +60,7 @@ public class Model extends MyObservable {
 	}
 
 
-	
+
 	
 	
 	
@@ -135,5 +136,7 @@ public class Model extends MyObservable {
 		this.currentPeriod = currentPeriod;
 	}
 
+
+	
 }	
 
