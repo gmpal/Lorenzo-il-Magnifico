@@ -13,11 +13,11 @@ import it.polimi.ingsw.GC_24.model.PlayerColour;
 import it.polimi.ingsw.GC_24.model.Turn;
 import it.polimi.ingsw.GC_24.places.Tower;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
-import it.polimi.ingsw.GC_24.view.ViewPlayers;
+
 
 
 public class Main {
-	
+	/*
 	Scanner scanner = new Scanner(System.in);
 	Turn turn = new Turn();
 	
@@ -75,7 +75,7 @@ public class Main {
              break;
      }
 	}
-		
+		*/
 
 		
 		/*		
@@ -194,5 +194,5 @@ public class Main {
 		
 		
 	}
-}
+
 

@@ -8,6 +8,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JOptionPane;
 
@@ -41,39 +42,39 @@ public class Client {
 	public void startClient() throws IOException {
 
 		Socket socket = new Socket(IP, PORT);
-		System.out.println("Connection established");
+		System.out.println("CLIENT: Connection established");
 
 		
 		/*THIS BLOCK OF CODE CREATES THE ViewPlayer!*/
 		/*n=0 --> GUI ; n=1 --> CLI*/
-	//	int n = this.selectInterface();
-	//	if (n==0){
-	//		//viewPlayer = new ViewGUI();
-	//	}else{
-			 viewPlayer = new ViewCLI();
-	//	}
+		int n = this.selectInterface();
+		if (n==0){
+			//viewPlayer = new ViewGUI();
+		}else{
+			viewPlayer = new ViewCLI();
+		}
 		System.out.println("Created the view");
 		
 		
 		/*Creating an Executor Service in order to run the ClientIN and ClientOut
 		 * simoultaneously*/
 		ExecutorService executor = Executors.newFixedThreadPool(2);
-	
+		System.out.println("Created the executor service");
 		//creates the handlers
-		executor.submit(new ClientInHandler(new ObjectInputStream(new BufferedInputStream(socket.getInputStream()))));
-		System.out.println("Created the InHandler");
-		ClientOutHandler cientOutHandler = new ClientOutHandler(new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream())));
+	
+		
+		ClientOutHandler clientOut = new ClientOutHandler(new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream())), viewPlayer);
 		System.out.println("Created the OutHandler");
-		Model localModel = new Model();
-		System.out.println("Created the model");
 		
 		
-		//set Observers in Client
-		viewPlayer.registerMyObserver(cientOutHandler);
-		cientInHandler.registerMyObserver(viewPlayer);
-		System.out.println("Setted the observers");
-		viewPlayer.start();
 		
+		executor.submit(new ClientInHandler(new ObjectInputStream(new BufferedInputStream(socket.getInputStream())), viewPlayer));
+		System.out.println("CLIENT: Created the InHandler --> in a separate thread");
+		executor.submit(viewPlayer);
+		System.out.println("CLIENT: Executed the ViewPlayer --> in a separate thread");
+//		Model localModel = new Model();
+//		System.out.println("CLIENT: Created the local model");
+			
 	}
 
 	

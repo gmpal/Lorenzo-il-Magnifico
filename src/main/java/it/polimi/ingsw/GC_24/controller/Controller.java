@@ -27,11 +27,11 @@ public class Controller implements MyObserver {
 
 	@Override
 	public <O extends MyObservable, C> void update(O observed, C change) {
-		MyObservable origin = observed;
-		Action action = (Action) change;
-		System.out.println("SERVER CONTROLLER: the thread that is performing the action has been launched");
-		/*Do something to the model by an action*/
-		action.run(game);	
+		
+		System.out.println("Controller here: I have been notified by" +observed.getClass().getSimpleName());
+		
+		System.out.println("Controller: i received this:"+change);
+		
 		
 	}
 

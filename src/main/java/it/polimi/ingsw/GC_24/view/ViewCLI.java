@@ -8,13 +8,10 @@ import it.polimi.ingsw.GC_24.values.SetOfValues;
 
 public class ViewCLI extends ViewPlayer {
 	private static Scanner scanner=new Scanner(System.in);
-	public static void main(String args[]){
-		ViewPlayer vp=new ViewCLI();
-		vp.start();
-	}
+	
 	
 	@Override
-	public void start() {
+	public void run() {
 		System.out.println("STARTING VIEW");
 		SetOfValues set = new SetOfValues();
 		set.getCoins().addQuantity(1);

@@ -6,7 +6,7 @@ import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.MyObserver;
 
 
-public abstract class ViewPlayer extends MyObservable implements MyObserver {
+public abstract class ViewPlayer extends MyObservable implements MyObserver,Runnable {
 
 		protected String name;
 		protected String colour;
@@ -18,8 +18,8 @@ public abstract class ViewPlayer extends MyObservable implements MyObserver {
 		public String getColour() {
 			return colour;
 		}
-		
-		public abstract void start();
+		@Override
+		public abstract void run();
 		
 		public abstract String setName();
 		

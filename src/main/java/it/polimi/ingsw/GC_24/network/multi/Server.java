@@ -23,6 +23,7 @@ public class Server {
 	// Crea un server e fa partire il suo metodo startServer()
 	public static void main(String[] args) throws RemoteException {
 		Server server = new Server();
+		
 
 		try {
 			server.startServer();
@@ -43,17 +44,30 @@ public class Server {
 	public void startServer() throws IOException {
 		
 		ExecutorService threadPool = Executors.newCachedThreadPool();
-		
+		System.out.println("SERVER: ThreadPool Created");
 		ServerSocket serverSocket = new ServerSocket(PORT);
-		System.out.println("Server ready");
-		
+		System.out.println("SERVER: ServerSocket created");	
+		game = new Model();
+		System.out.println("SERVER: Model Created");
+		controller = new Controller(game);
+		System.out.println("SERVER: Controller Created");
+		System.out.println("SERVER: ready");
 		while(true){
 			try {
 				Socket socket = serverSocket.accept();
 				System.out.println("SERVER: Connection established");
-				ServerSocketView serverView = new ServerSocketView(socket);
-				this.addClient(serverView);
-				threadPool.submit(serverView);
+				ServerOut serverOut = new ServerOut(socket);
+				System.out.println("SERVER: ServerOut created");
+				ServerIn serverIn = new ServerIn(socket);
+				threadPool.submit(serverIn);
+				System.out.println("SERVER: ServerIn created");
+				
+				game.registerMyObserver(serverOut);
+				serverIn.registerMyObserver(controller);
+		//		this.addClient(serverOut); //now only adds the observer
+				System.out.println("SERVER: observers setted!");
+				
+			
 			} catch (IOException e) {
 				break;
 			}
@@ -63,16 +77,17 @@ public class Server {
 		serverSocket.close();
 	}
 
-	public void addClient(ServerSocketView serverView) {
-		game.registerMyObserver(serverView);
-		// Submits a Runnable task for execution
+	//TODO:gestire questo metodo! 
+	public void addClient(ServerOut serverOut) {
+		game.registerMyObserver(serverOut);
+	/*	// Submits a Runnable task for execution
 		game.setGameState(game.getGameState().nextState());
 		if (game.getGameState().equals(State.RUNNING)) {
 			System.out.println("creo una nuova game");
 		//TODO:	game = new Model();
 			System.out.println(game.getGameState());
 			controller = new Controller(game);
-		}
+		}*/
 }
 	
 	

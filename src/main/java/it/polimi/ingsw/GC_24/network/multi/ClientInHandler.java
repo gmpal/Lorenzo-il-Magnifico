@@ -1,53 +1,53 @@
 package it.polimi.ingsw.GC_24.network.multi;
 
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.Map;
 import java.util.Set;
 
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
-
+import it.polimi.ingsw.GC_24.view.ViewPlayer;
 
 //ClientInHandler is observed by the ViewPLayer,
 //whenever the server communicates something, ClientInHandler notifies ViewPLayer
-public class ClientInHandler extends MyObservable{
+public class ClientInHandler extends MyObservable implements Runnable {
 
 	private ObjectInputStream objFromServer;
+	private ViewPlayer view;
 	private boolean end = false;
 
-	public ClientInHandler(ObjectInputStream objFromServer) {
+	public ClientInHandler(ObjectInputStream objFromServer, ViewPlayer view) {
 		this.objFromServer = objFromServer;
+		this.view=view;
+		this.registerMyObserver(view);
 	}
 
-	public void start() {
-		while (!end) {
-			
+	@Override
+	public void run() {
+	//	while (!end) {
+
 			Map<String, Object> requestFromServer;
 			try {
 				requestFromServer = (Map<String, Object>) objFromServer.readObject();
 				this.handleRequestFromServer(requestFromServer);
-			
-			} catch (ClassNotFoundException e ) {
+
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			};
-			
-			
-			
+			}
+
 		}
-	}
-	/**Based on the key of the object received, this method handles the request*/
+//	}
+
+	/** Based on the key of the object received, this method handles the request
+	 */
 	private void handleRequestFromServer(Map<String, Object> request) {
 		Set<String> command = request.keySet();
-		
-		if (command.contains("TEST")){
-			 SetOfValues set = (SetOfValues) request.get("TEST");
-			 System.out.println("ClientIn: preso oggetto test");
-			 System.out.println(set.toString());
+
+		if (command.contains("TEST")) {
+			SetOfValues set = (SetOfValues) request.get("TEST");
+			System.out.println("ClientIn: preso oggetto test");
+			System.out.println(set.toString());
 		}
 	}
 

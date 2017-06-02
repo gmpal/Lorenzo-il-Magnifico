@@ -20,21 +20,17 @@ import it.polimi.ingsw.GC_24.values.SetOfValues;
 
 //There's a ServerSocketView for each Client --> SERVER SIDE
 //It's this class that controls the communication from SERVER to CLIENT 
-public class ServerSocketView extends MyObservable implements MyObserver, Runnable{
+public class ServerIn extends MyObservable implements Runnable{
 
 	private Socket socket;
-	private ObjectOutputStream objToClient;
 	private ObjectInputStream objFromClient;
 	private boolean end;
 	
 	
 	//constructor --> Receive a socket and creates Scanner and PrintWriter
-	public ServerSocketView(Socket socket) throws IOException{
+	public ServerIn(Socket socket) throws IOException{
 		
 		this.socket=socket;
-		
-		objToClient = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
-		objFromClient = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
 		end = false;
 	}
 	
@@ -44,26 +40,30 @@ public class ServerSocketView extends MyObservable implements MyObserver, Runnab
  * the connection is closed*/
 	@Override
 	public void run() {
-		
+		try {
+			objFromClient = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		       
         while (!end){
             try{
+            	
                 Map<String,Object> request = (Map<String, Object>) objFromClient.readObject();
+                System.out.println("ServerIn: object received from client");
+                this.handleRequestFromClient(request);
                 
-                Map<String, Object> response = this.handleRequestFromClient(request);
-                objToClient.writeObject(response);
-                objToClient.flush();
+                
                 end = request.containsKey("EXIT");
-                
             }catch (IOException | ClassNotFoundException ioe){
                 end = true;
             }
             
-            System.out.println("SERVER: Socket connection closed");
+            System.out.println("SERVERIn: Socket connection closed");
             
             try {
-				objToClient.close();
-	            objFromClient.close();
+				 objFromClient.close();
 	            socket.close();
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -73,21 +73,22 @@ public class ServerSocketView extends MyObservable implements MyObserver, Runnab
 		
 	}
 
-	
+	//IN CHE MODO LA questa VIEW GESTISCE CIO' CHE RICEVE? 
+	//è davvero lei che gestisce o si limita ad inoltrare al controller?
+	//oppure --> in base al tipo di richiesta decide se inoltrare oppure no
 
 	/**This method analyzes the incoming HashMap. If it finds specific keywords
 	 * in the keySet, it does different things with different objects*/
-	private Map<String, Object> handleRequestFromClient(Map<String, Object> request) {
+	private String handleRequestFromClient(Map<String, Object> request) {
+		System.out.println("ServerIn: handling the request...");
 		Set<String> command = request.keySet();
 		
-		/**If commands contains "player" than the corresponding object is a string with a player
-		 * name and a player colour --> used to create the Player*/
+
 		if (command.contains("TEST")){
 			SetOfValues setofvalues = (SetOfValues) request.get("TEST");
-			setofvalues.getCoins().addQuantity(5);;
-			request.put("TEST", setofvalues);
-			
-			return request;}
+			notifyMyObservers(setofvalues);
+			return "okay";
+			}
 		/*if (command.contains("player")){
            Player player = tokenizeFromPLayer((String) request.get("player"));
 		}else if (command.contains("leave")){
@@ -108,9 +109,9 @@ public class ServerSocketView extends MyObservable implements MyObserver, Runnab
             }
         } else if (command.contains("BYE")){
             return "User left the chat";
-        }
-       return "bad command";*/
-		else return null;
+        }*/
+       return "bad command";
+		
 	}
 	
 
@@ -125,20 +126,6 @@ public class ServerSocketView extends MyObservable implements MyObserver, Runnab
 	}
 
 
-
-	@Override
-	public void update() {
-		System.out.println("ServerView here, i have been notified by the Model --> it's changed!");
-		
-	}
-
-
-
-	@Override
-	public <O extends MyObservable, C> void update(O observed, C change) {
-		// TODO Auto-generated method stub
-		
-	}
 
 }
 
