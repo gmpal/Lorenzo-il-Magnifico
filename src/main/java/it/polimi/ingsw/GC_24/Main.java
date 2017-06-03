@@ -1,7 +1,5 @@
 package it.polimi.ingsw.GC_24;
 
-
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -11,7 +9,6 @@ import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.PlayerColour;
 import it.polimi.ingsw.GC_24.model.Turn;
-import it.polimi.ingsw.GC_24.places.Tower;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 
 
