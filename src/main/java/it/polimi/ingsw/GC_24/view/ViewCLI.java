@@ -6,19 +6,17 @@ public class ViewCLI extends ViewPlayer {
 
 	private static Scanner scanner = new Scanner(System.in);
 
-	public static void main(String args[]) {
-		ViewPlayer vp = new ViewCLI();
-		ViewCLI viewCLI = (ViewCLI) vp;
-		viewCLI.start();
-		viewCLI.showAndGetOption();
-	}
-
+	/*
+	 * public static void main(String args[]) { ViewPlayer vp = new ViewCLI();
+	 * ViewCLI viewCLI = (ViewCLI) vp; viewCLI.start();
+	 * viewCLI.showAndGetOption(); }
+	 */
 	@Override
 	public void start() {
 		name = setName();
 		colour = setColour();
-		// notifyMyObservers(name+" "+colour);
-		System.out.println(name + " " + colour);
+		notifyMyObservers(name + " " + colour);
+		// System.out.println(name + " " + colour);
 	}
 
 	@Override
@@ -79,8 +77,8 @@ public class ViewCLI extends ViewPlayer {
 				commandOk = false;
 			}
 			if (commandOk) {
-				// notifyMyObservers(command);
-				System.out.println(command);
+				notifyMyObservers(command);
+				// System.out.println(command);
 			}
 		}
 	}
@@ -92,7 +90,7 @@ public class ViewCLI extends ViewPlayer {
 					+ "c)Tower buildings\n" + "d)Tower ventures\n" + "e)Market\n" + "f)Production\n" + "g)Harvest\n"
 					+ "h)Council Palace\n" + "i)Cancel");
 			commandZone = scanner.nextLine();
-			String cf=null;
+			String cf = null;
 			if (commandZone.equals("a") && !((cf = fourChoice("floor")).equals("cancel"))) {
 				commandZone = "territories " + cf;
 			} else if (commandZone.equals("b") && !((cf = fourChoice("floor")).equals("cancel"))) {
