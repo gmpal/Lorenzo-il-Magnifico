@@ -1,11 +1,14 @@
 package it.polimi.ingsw.GC_24.controller;
 
+import java.util.HashMap;
+
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.MyObserver;
 import it.polimi.ingsw.GC_24.model.Model;
+import it.polimi.ingsw.GC_24.values.SetOfValues;
 
 //SOLO UN CONTROLLER LATO SERVER per ogni partita
-public class Controller implements MyObserver {
+public class Controller extends MyObservable implements MyObserver {
 
 	private final Model game;
 	
@@ -17,10 +20,7 @@ public class Controller implements MyObserver {
 		
 	}
 	
-	@Override
-	public void update (Object change){
-			
-	}
+	
 
 	@Override
 	public void update() {
@@ -30,11 +30,21 @@ public class Controller implements MyObserver {
 
 	@Override
 	public <O extends MyObservable, C> void update(O observed, C change) {
-		MyObservable origin = observed;
-		Action action = (Action) change;
-		System.out.println("SERVER CONTROLLER: the thread that is performing the action has been launched");
-		/*Do something to the model by an action*/
-		action.run(game);	
+		
+		System.out.println("Controller: I have been notified by " +observed.getClass().getSimpleName());
+		
+		System.out.println("Controller: i received this :"+change);
+		System.out.println("Controller: i know  it is a " +change.getClass().getSimpleName());
+		System.out.println("So I cast it");
+		SetOfValues set = (SetOfValues) change;
+		System.out.println("Casted! Now I change something");
+		set.getCoins().addQuantity(5);
+		System.out.println("Added 5 coins");
+		HashMap<String, Object> obj = new HashMap<String, Object>();
+		obj.put("TEST", set);
+		System.out.println("Created a HashMap with TEST key assigned to the set");
+		System.out.println("Only this time i notify my temporary observer ServerOut with the set");
+		this.notifyMyObservers(obj);
 		
 	}
 

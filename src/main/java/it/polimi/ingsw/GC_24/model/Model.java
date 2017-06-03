@@ -23,22 +23,29 @@ public class Model extends MyObservable {
 	
 	/*Constructor --> ONLY PLAYERS NEEDS TO BE PASSED
 	 * other fields are created or set */
-	public Model(List<Player> players ) {
+	public Model() {
+		
+		this.players = null;
+		this.board = null;
+		this.currentPlayer = null;
+		this.gameState = State.WAITINGFORPLAYERONE;
+		this.dice = null;
+		this.currentRound = null;
+		this.currentPeriod = null;
+	}
+	
+	/*After a Model is created and the players are get, this
+	 * method sets the model so the game could start */
+	public void setModel(ArrayList<Player> players) {
 		
 		this.players = players;
 		this.board = new Board(players.size());
 		this.currentPlayer = players.get(0);
-		this.gameState = State.WAITINGFORPLAYERONE;
+		this.gameState = State.RUNNING;
 		this.dice = new SetOfDice();
-		this.currentRound = null;
-		this.currentPeriod = null;
-	}
-
-
-	
-	
-	//useful methods
-	public void initialSettings(){
+		this.currentRound = Round.ONE;
+		this.currentPeriod = Period.ONE;
+		
 		
 		this.dice.reset();
 		
@@ -46,13 +53,14 @@ public class Model extends MyObservable {
 			p.getMyValues().setInitialValues(players.indexOf(p));
 			p.getMyFamily().setFamily(this.dice);
 		}
-		this.currentRound = Round.ONE;
-		this.currentPeriod = Period.ONE;
-		this.gameState = State.RUNNING;
-		
-		this.notifyMyObservers(this);
+			
+	//	this.notifyMyObservers(this);
 	}
-		
+
+
+
+	
+	
 	
 	
 	// getters and setters
@@ -126,5 +134,7 @@ public class Model extends MyObservable {
 		this.currentPeriod = currentPeriod;
 	}
 
+
+	
 }	
 
