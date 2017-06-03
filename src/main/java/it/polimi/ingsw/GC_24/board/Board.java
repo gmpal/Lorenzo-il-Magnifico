@@ -1,4 +1,4 @@
-package it.polimi.ingsw.GC_24.places;
+package it.polimi.ingsw.GC_24.board;
 
 public class Board {
 

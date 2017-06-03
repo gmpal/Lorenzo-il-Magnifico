@@ -29,6 +29,45 @@ public abstract class Place {
 	
 	//redefined in MarketPlace, Tower, CouncilPlace change parameter in FamilyMember	
 	public abstract void giveEffects(Player player); 
+	
+	
+	//hashCode() and equals() redefined
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (available ? 1231 : 1237);
+		result = prime * result + costDice;
+		result = prime * result + ((famMemberOnPlace == null) ? 0 : famMemberOnPlace.hashCode());
+		result = prime * result + ((value == null) ? 0 : value.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Place other = (Place) obj;
+		if (available != other.available)
+			return false;
+		if (costDice != other.costDice)
+			return false;
+		if (famMemberOnPlace == null) {
+			if (other.famMemberOnPlace != null)
+				return false;
+		} else if (!famMemberOnPlace.equals(other.famMemberOnPlace))
+			return false;
+		if (value == null) {
+			if (other.value != null)
+				return false;
+		} else if (!value.equals(other.value))
+			return false;
+		return true;
+	}
 
 	//getters and setters
 	public int getCostDice() {
