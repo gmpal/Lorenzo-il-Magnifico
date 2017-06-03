@@ -10,14 +10,14 @@ import it.polimi.ingsw.GC_24.view.ViewPlayer;
 //ClientOutHandler observes the ViewPLayer,
 //whenever the viewPLayer communicates something, ClientOutHandler is notified by ViewPLayer
 //and send the message to the server
-public class ClientOutHandler implements MyObserver {
+public class ClientOut implements MyObserver {
 
 	
 	private ObjectOutputStream objToServer;
 	private ViewPlayer view;
 	
 
-	public ClientOutHandler(ObjectOutputStream objToServer, ViewPlayer view) throws IOException {
+	public ClientOut(ObjectOutputStream objToServer, ViewPlayer view) throws IOException {
 		this.objToServer = objToServer;
 		this.view=view;
 		this.objToServer.flush();

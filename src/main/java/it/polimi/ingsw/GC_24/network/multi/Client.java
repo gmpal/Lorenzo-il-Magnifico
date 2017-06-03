@@ -63,12 +63,12 @@ public class Client {
 		//creates the handlers
 	
 		
-		ClientOutHandler clientOut = new ClientOutHandler(new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream())), viewPlayer);
+		ClientOut clientOut = new ClientOut(new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream())), viewPlayer);
 		System.out.println("Created the OutHandler");
 		
 		
 		
-		executor.submit(new ClientInHandler(new ObjectInputStream(new BufferedInputStream(socket.getInputStream())), viewPlayer));
+		executor.submit(new ClientIn(new ObjectInputStream(new BufferedInputStream(socket.getInputStream())), viewPlayer));
 		System.out.println("CLIENT: Created the InHandler --> in a separate thread");
 		executor.submit(viewPlayer);
 		System.out.println("CLIENT: Executed the ViewPlayer --> in a separate thread");

@@ -64,6 +64,7 @@ public class Server {
 				
 				game.registerMyObserver(serverOut);
 				serverIn.registerMyObserver(controller);
+				controller.registerMyObserver(serverOut);
 		//		this.addClient(serverOut); //now only adds the observer
 				System.out.println("SERVER: observers setted!");
 				

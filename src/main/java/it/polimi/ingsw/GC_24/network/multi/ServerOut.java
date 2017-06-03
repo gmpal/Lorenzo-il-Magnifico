@@ -33,11 +33,12 @@ public class ServerOut implements MyObserver {
 
 	@Override
 	public <O extends MyObservable, C> void update(O observed, C change) {
-		System.out.println("ServerOut: I have been notified!");
+		System.out.println("ServerOut: I have been notified by " +observed.getClass().getSimpleName());
 		
 		try {
 			objToClient.writeObject(change);
 			objToClient.flush();
+			System.out.println("ServerOut: I have sent the change");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
