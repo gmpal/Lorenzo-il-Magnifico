@@ -17,7 +17,8 @@ public class ViewCLI extends ViewPlayer {
 	public void start() {
 		name = setName();
 		colour = setColour();
-		notifyMyObservers(createMessage(name, colour));
+		// notifyMyObservers(name+" "+colour);
+		System.out.println(name + " " + colour);
 	}
 
 	@Override
@@ -45,7 +46,7 @@ public class ViewCLI extends ViewPlayer {
 		while (true) {
 			System.out.println("Scegli la mossa da fare:\n" + "a)Show board\n" + "b)Show personal board\n"
 					+ "c)Show leader cards\n" + "d)Place a familiar\n" + "e)Use a leader cards\n"
-					+ "f)Throw a leader cards\n" + "g)End turn" + "h)Exit");
+					+ "f)Throw a leader cards\n" + "g)End turn\n" + "h)Exit");
 			String command = scanner.nextLine();
 			String commandFamiliar;
 			String commandPlace;
@@ -63,6 +64,7 @@ public class ViewCLI extends ViewPlayer {
 					command = "place " + commandFamiliar + " " + commandPlace;
 				} else {
 					System.out.println("Action cancelled");
+					commandOk = false;
 				}
 			} else if (command.equals("e")) {
 				// choose leader card
@@ -77,46 +79,67 @@ public class ViewCLI extends ViewPlayer {
 				commandOk = false;
 			}
 			if (commandOk) {
-				notifyMyObservers(command);
+				// notifyMyObservers(command);
+				System.out.println(command);
 			}
 		}
 	}
 
 	private String choosePlace() {
-		System.out.println("Choose a zone:\n" + "a)Tower territories\n" + "b)Tower characters\n" + "c)Tower buildings\n"
-				+ "d)Tower ventures" + "e)Market\n" + "f)Production\n" + "g)Harvest\n" + "h)Council Palace"
-				+ "Any key to cancel");
-		String commandZone = scanner.nextLine();
-		String cf;
-		if (commandZone.equals("a") && !((cf = fourChoice("floor")).equals("cancel"))) {
-			return "territories " + cf;
-		} else if (commandZone.equals("b") && !((cf = fourChoice("floor")).equals("cancel"))) {
-			return "characters " + cf;
-		} else if (commandZone.equals("c") && !((cf = fourChoice("floor")).equals("cancel"))) {
-			return "buildings " + cf;
-		} else if (commandZone.equals("d") && !((cf = fourChoice("floor")).equals("cancel"))) {
-			return "ventures " + cf;
-		} else if (commandZone.equals("e") && !((cf = fourChoice("place")).equals("cancel"))) {
-			return "market " + cf;
-		} else if (commandZone.equals("f")) {
-			return "production";
-		} else if (commandZone.equals("g")) {
-			return "harvest";
-		} else if (commandZone.equals("h")) {
-			return "council";
-		} else {
-			return "cancel";
-		}
+		String commandZone;
+		do {
+			System.out.println("Choose a zone:\n" + "a)Tower territories\n" + "b)Tower characters\n"
+					+ "c)Tower buildings\n" + "d)Tower ventures\n" + "e)Market\n" + "f)Production\n" + "g)Harvest\n"
+					+ "h)Council Palace\n" + "i)Cancel");
+			commandZone = scanner.nextLine();
+			String cf=null;
+			if (commandZone.equals("a") && !((cf = fourChoice("floor")).equals("cancel"))) {
+				commandZone = "territories " + cf;
+			} else if (commandZone.equals("b") && !((cf = fourChoice("floor")).equals("cancel"))) {
+				commandZone = "characters " + cf;
+			} else if (commandZone.equals("c") && !((cf = fourChoice("floor")).equals("cancel"))) {
+				commandZone = "buildings " + cf;
+			} else if (commandZone.equals("d") && !((cf = fourChoice("floor")).equals("cancel"))) {
+				commandZone = "ventures " + cf;
+			} else if (commandZone.equals("e") && !((cf = fourChoice("place")).equals("cancel"))) {
+				commandZone = "market " + cf;
+			} else if (commandZone.equals("f")) {
+				commandZone = "production";
+			} else if (commandZone.equals("g")) {
+				commandZone = "harvest";
+			} else if (commandZone.equals("h")) {
+				commandZone = "council";
+			} else if (commandZone.equals("i")) {
+				commandZone = "cancel";
+			} else {
+				if (cf.equals("cancel")) {
+					commandZone = "cancel";
+				} else {
+					System.out.println("Wrong chacarter");
+					commandZone = null;
+				}
+			}
+		} while (commandZone == null);
+		return commandZone;
 	}
 
 	private String fourChoice(String s) {
 		String commandFloor;
-		int commandFloorInt;
+		int commandFloorInt = 0;
 		do {
-			System.out.println("Choose " + s + " (1,2,3,4)\n5)Cancel ");
+			System.out.println("Choose " + s + " (1,2,3,4) 5)Cancel ");
 			commandFloor = scanner.nextLine();
-			commandFloorInt = Integer.parseInt(commandFloor);
-		} while (commandFloorInt <= 5 && commandFloorInt >= 1);
+			try {
+				commandFloorInt = Integer.parseInt(commandFloor);
+			} catch (Exception e) {
+				System.out.println("Wrong character");
+				commandFloor = null;
+			}
+			if (commandFloor != null && (commandFloorInt > 5 || commandFloorInt < 1)) {
+				System.out.println("Wrong character");
+				commandFloor = null;
+			}
+		} while (commandFloor == null || (commandFloorInt > 5 || commandFloorInt < 1));
 		if (commandFloorInt == 5) {
 			commandFloor = "cancel";
 		}
