@@ -2,6 +2,8 @@ package it.polimi.ingsw.GC_24.network.multi;
 
 import java.io.EOFException;
 import java.io.ObjectInputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -55,6 +57,14 @@ public class ClientIn extends MyObservable implements Runnable {
 			System.out.println("ClientIn: preso oggetto test");
 			System.out.println("ClientIn: ecco cosa ho ricevuto!");
 			System.out.println(set.toString());
+			
+		if (command.contains("colori")) {
+			    List<String> playerColoursArray = (ArrayList<String>) request.get("colori");
+				System.out.println("ClientIn: preso playerColoursArray");
+				System.out.println("ClientIn: ecco cosa ho ricevuto!");
+				System.out.println(playerColoursArray.toString());
+				
+				notifyMyObservers(playerColoursArray);
 		}
 	}
 

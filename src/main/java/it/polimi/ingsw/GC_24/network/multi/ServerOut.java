@@ -6,14 +6,19 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.List;
 
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.MyObserver;
+import it.polimi.ingsw.GC_24.model.PlayerColour;
 
 public class ServerOut implements MyObserver {
 
 	private Socket socket;
 	private ObjectOutputStream objToClient;
+	List<String> playerColoursArray = PlayerColour.getValues();
+	
 
 	public ServerOut(Socket socket) throws IOException {
 
@@ -22,6 +27,17 @@ public class ServerOut implements MyObserver {
 		System.out.println("ServerOut: OutputStream created");
 		objToClient.flush();
 		System.out.println("ServerOut: FLUSHED");
+		
+		try {
+			HashMap<String, Object> colori = new HashMap<String, Object>();
+			colori.put("colours", playerColoursArray);
+			objToClient.writeObject(colori);
+			objToClient.flush();
+			System.out.println("ServerOut: ArrayListOfColours sent");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 
