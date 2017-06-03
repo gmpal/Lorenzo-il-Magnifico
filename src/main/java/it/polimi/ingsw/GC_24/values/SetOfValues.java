@@ -1,6 +1,8 @@
 package it.polimi.ingsw.GC_24.values;
 
-public class SetOfValues {
+import java.io.Serializable;
+
+public class SetOfValues implements Serializable {
 
 	private Wood woods;
 	private Stone stones;
