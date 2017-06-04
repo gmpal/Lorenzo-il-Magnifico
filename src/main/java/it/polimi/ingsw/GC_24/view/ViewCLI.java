@@ -175,7 +175,7 @@ public class ViewCLI extends ViewPlayer {
 		// Da sistemare, funziona solo con questa arraylist. bisogna gestire
 		//singolarmente tutti i casi quindi --> o riconoscere questa arraylist
 		//oppure fare arrivare fino a qui la hashmap e giocarci dopo
-		if (change.getClass().getSimpleName().equals("colours"))
+		
 
 	}
 }

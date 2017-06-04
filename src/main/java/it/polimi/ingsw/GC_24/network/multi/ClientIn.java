@@ -35,16 +35,14 @@ public class ClientIn extends MyObservable implements Runnable {
 				requestFromServer = (Map<String, Object>) objFromServer.readObject();
 				this.handleRequestFromServer(requestFromServer);
 			}
-		}catch (EOFException e) {
+		} catch (EOFException e) {
 			System.out.println("End Of File reached");
-		} 
-		catch (Exception e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
-
 
 	/**
 	 * Based on the key of the object received, this method handles the request
@@ -57,15 +55,17 @@ public class ClientIn extends MyObservable implements Runnable {
 			System.out.println("ClientIn: preso oggetto test");
 			System.out.println("ClientIn: ecco cosa ho ricevuto!");
 			System.out.println(set.toString());
-			
-		if (command.contains("colori")) {
-			    List<String> playerColoursArray = (ArrayList<String>) request.get("colori");
+
+			if (command.contains("colori")) {
+				List<String> playerColoursArray = (ArrayList<String>) request.get("colori");
 				System.out.println("ClientIn: preso playerColoursArray");
 				System.out.println("ClientIn: ecco cosa ho ricevuto!");
 				System.out.println(playerColoursArray.toString());
-				
+
 				notifyMyObservers(playerColoursArray);
+			}
 		}
+
 	}
 
 }
