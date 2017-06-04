@@ -23,8 +23,8 @@ public class TowerPlace extends Place {
 	public void giveEffects(Player player){
 		player.setMyValues(this.getValue().addValueToSet(player.getMyValues()));
 		correspondingCard.setCardOnPersonalBoard(player.getMyBoard());
-		correspondingCard.getValueEffect();
-		correspondingCard.getImmediateEffect();
+		correspondingCard.getValueEffect().giveImmediateEffect(player);
+		correspondingCard.getImmediateEffect().giveImmediateEffect(player);
 		this.correspondingCard = null;
 	}
 

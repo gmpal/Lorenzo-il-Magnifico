@@ -81,14 +81,12 @@ public class ServerIn extends MyObservable implements Runnable {
 	private String handleRequestFromClient(Map<String, Object> request) {
 		System.out.println("ServerIn: handling the request...");
 		Set<String> command = request.keySet();
-
 		if (command.contains("TEST")) {
 			SetOfValues setofvalues = (SetOfValues) request.get("TEST");
 			notifyMyObservers(setofvalues);
 			return "okay";
 		}
 		if (command.contains("player")) {
-			
 		}
 		return "bad command";
 
