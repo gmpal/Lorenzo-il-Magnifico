@@ -105,7 +105,7 @@ public class ViewCLI extends ViewPlayer {
 					+ "c)Tower buildings\n" + "d)Tower ventures\n" + "e)Market\n" + "f)Production\n" + "g)Harvest\n"
 					+ "h)Council Palace\n" + "i)Cancel");
 			commandZone = scanner.nextLine();
-			String cf = null;
+			String cf;
 			if (commandZone.equals("a")) {
 				cf = fourChoice(floor);
 				commandZone = "territories " + cf;
