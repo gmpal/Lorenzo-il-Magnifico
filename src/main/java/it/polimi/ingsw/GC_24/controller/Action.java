@@ -11,7 +11,7 @@ public abstract class Action {
 		//private final Model game;
 		private Player player;
 		private FamilyMember familyMember;
-		private Place place;*/
+		private Place place;
 		
 		//constructor
 		public Action(Player player, FamilyMember familyMember, Place place) {
