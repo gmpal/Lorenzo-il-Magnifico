@@ -69,10 +69,8 @@ public class ViewCLI extends ViewPlayer {
 				// player.getLeaderCards().toString();
 			} else if (command.equals("d")) {
 				// System.out.println(player.getFamily().toString());
-				if (!(commandFamiliar = fourChoice("familiar")).equals("cancel")
-						&& !((commandPlace = choosePlace()).equals("cancel"))) {
-					command = commandFamiliar + " " + commandPlace;
-				} else {
+				command = fourChoice("familiar") + " " + choosePlace();
+				if (command.contains("cancel")) {
 					System.out.println("Action cancelled");
 					commandOk = false;
 				}
