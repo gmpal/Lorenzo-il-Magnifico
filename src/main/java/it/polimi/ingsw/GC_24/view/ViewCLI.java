@@ -99,67 +99,53 @@ public class ViewCLI extends ViewPlayer {
 
 	private String choosePlace() {
 		String commandZone;
-		String increase;
-		int servant = 10;
-		// int servant=player.getMyValues().getServants().getQuantity();
+		String floor = "floor";
 		do {
 			System.out.println("Choose a zone:\n" + "a)Tower territories\n" + "b)Tower characters\n"
 					+ "c)Tower buildings\n" + "d)Tower ventures\n" + "e)Market\n" + "f)Production\n" + "g)Harvest\n"
 					+ "h)Council Palace\n" + "i)Cancel");
 			commandZone = scanner.nextLine();
 			String cf = null;
-			if (commandZone.equals("a") && !((cf = fourChoice("floor")).equals("cancel"))) {
+			if (commandZone.equals("a")) {
+				cf = fourChoice(floor);
 				commandZone = "territories " + cf;
-			} else if (commandZone.equals("b") && !((cf = fourChoice("floor")).equals("cancel"))) {
+			} else if (commandZone.equals("b")) {
+				cf = fourChoice(floor);
 				commandZone = "characters " + cf;
-			} else if (commandZone.equals("c") && !((cf = fourChoice("floor")).equals("cancel"))) {
+			} else if (commandZone.equals("c")) {
+				cf = fourChoice(floor);
 				commandZone = "buildings " + cf;
-			} else if (commandZone.equals("d") && !((cf = fourChoice("floor")).equals("cancel"))) {
+			} else if (commandZone.equals("d")) {
+				cf = fourChoice(floor);
 				commandZone = "ventures " + cf;
-			} else if (commandZone.equals("e") && !((cf = fourChoice("place")).equals("cancel"))) {
+			} else if (commandZone.equals("e")) {
+				cf = fourChoice("place");
 				commandZone = "market " + cf;
 			} else if (commandZone.equals("f")) {
-				System.out.println("How much do you want increase the die value?");
-				increase = scanner.nextLine();
-				if (increase == null) {
-					commandZone = null;
-				} else if (Integer.parseInt(increase) >= 0 && Integer.parseInt(increase) <= servant) {
-					commandZone = "production " + increase;
-				} else {
-					System.out.println("Wrong character");
-					commandZone = null;
-				}
+				commandZone = increaseDieValue("production ");
 			} else if (commandZone.equals("g")) {
-				System.out.println("How much do you want increase the die value?");
-				commandZone = "harvest";
+				commandZone = increaseDieValue("harvest ");
 			} else if (commandZone.equals("h")) {
 				commandZone = "council";
 			} else if (commandZone.equals("i")) {
 				commandZone = "cancel";
 			} else {
-				if (cf.equals("cancel")) {
-					commandZone = "cancel";
-				} else {
-					System.out.println("Wrong character");
-					commandZone = null;
-				}
+				System.out.println("Wrong character");
+				commandZone = null;
 			}
 		} while (commandZone == null);
+		if (commandZone.contains("cancel")) {
+			commandZone = "cancel";
+		}
 		return commandZone;
 	}
 
-	private String fourChoice(String s) {
+	public String fourChoice(String s) {
 		String commandFloor;
 		int commandFloorInt = 0;
 		do {
 			System.out.println("Choose " + s + " (1,2,3,4) 5)Cancel ");
-			commandFloor = scanner.nextLine();
-			try {
-				commandFloorInt = Integer.parseInt(commandFloor);
-			} catch (Exception e) {
-				System.out.println("Wrong character");
-				commandFloor = null;
-			}
+			commandFloor = isInt(scanner.nextLine());
 			if (commandFloor != null && (commandFloorInt > 5 || commandFloorInt < 1)) {
 				System.out.println("Wrong character");
 				commandFloor = null;
@@ -169,7 +155,33 @@ public class ViewCLI extends ViewPlayer {
 			commandFloor = "cancel";
 		}
 		return commandFloor;
+	}
 
+	public String increaseDieValue(String commandZone) {
+		String increase;
+		int servant = 10;
+		// int servant=player.getMyValues().getServants().getQuantity()
+		System.out.println("How much do you want increase the die's value?");
+		increase = isInt(scanner.nextLine());
+		if (increase == null) {
+			return null;
+		} else if (Integer.parseInt(increase) >= 0 && Integer.parseInt(increase) <= servant) {
+			return commandZone + increase;
+		} else {
+			System.out.println("You don't have too much servants");
+			return null;
+		}
+	}
+
+	public String isInt(String string) {
+		Integer stringToInt;
+		try {
+			stringToInt = Integer.parseInt(string);
+		} catch (Exception e) {
+			System.out.println("Wrong character");
+			return null;
+		}
+		return stringToInt.toString();
 	}
 
 	@Override
