@@ -7,16 +7,14 @@ import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 
 public class ViewCLI extends ViewPlayer {
-	private static Scanner scanner=new Scanner(System.in);
-	
-
+	private static Scanner scanner = new Scanner(System.in);
 
 	/*
 	 * public static void main(String args[]) { ViewPlayer vp = new ViewCLI();
 	 * ViewCLI viewCLI = (ViewCLI) vp; viewCLI.start();
 	 * viewCLI.showAndGetOption(); }
 	 */
-	
+
 	@Override
 	public void run() {
 		System.out.println("STARTING VIEW");
@@ -25,10 +23,10 @@ public class ViewCLI extends ViewPlayer {
 		HashMap<String, Object> obj = new HashMap<String, Object>();
 		obj.put("TEST", set);
 		System.out.println("Object created in VIEW");
-	/*	name = setName();
-		colour = setColour();
-		notifyMyObservers(createMessage(name, colour));
-	*/notifyMyObservers(obj);
+		/*
+		 * name = setName(); colour = setColour();
+		 * notifyMyObservers(createMessage(name, colour));
+		 */notifyMyObservers(obj);
 
 	}
 
@@ -40,7 +38,7 @@ public class ViewCLI extends ViewPlayer {
 
 	@Override
 	public String setColour() {
-		System.out.println("Colour:");
+		System.out.println("Select colour:\na)Red\nb)Yellow\nc)Green\nd)Blue");
 		return scanner.nextLine();
 	}
 
@@ -56,7 +54,7 @@ public class ViewCLI extends ViewPlayer {
 
 	public void showAndGetOption() {
 		while (true) {
-			System.out.println("Scegli la mossa da fare:\n" + "a)Show board\n" + "b)Show personal board\n"
+			System.out.println("Choose action:\n" + "a)Show board\n" + "b)Show personal board\n"
 					+ "c)Show leader cards\n" + "d)Place a familiar\n" + "e)Use a leader cards\n"
 					+ "f)Throw a leader cards\n" + "g)End turn\n" + "h)Exit");
 			String command = scanner.nextLine();
@@ -73,7 +71,7 @@ public class ViewCLI extends ViewPlayer {
 				// System.out.println(player.getFamily().toString());
 				if (!(commandFamiliar = fourChoice("familiar")).equals("cancel")
 						&& !((commandPlace = choosePlace()).equals("cancel"))) {
-					command = "place " + commandFamiliar + " " + commandPlace;
+					command = commandFamiliar + " " + commandPlace;
 				} else {
 					System.out.println("Action cancelled");
 					commandOk = false;
@@ -91,7 +89,9 @@ public class ViewCLI extends ViewPlayer {
 				commandOk = false;
 			}
 			if (commandOk) {
-				notifyMyObservers(command);
+				hm.clear();
+				hm.put("place", command);
+				notifyMyObservers(hm);
 				// System.out.println(command);
 			}
 		}
@@ -99,6 +99,9 @@ public class ViewCLI extends ViewPlayer {
 
 	private String choosePlace() {
 		String commandZone;
+		String increase;
+		int servant = 10;
+		// int servant=player.getMyValues().getServants().getQuantity();
 		do {
 			System.out.println("Choose a zone:\n" + "a)Tower territories\n" + "b)Tower characters\n"
 					+ "c)Tower buildings\n" + "d)Tower ventures\n" + "e)Market\n" + "f)Production\n" + "g)Harvest\n"
@@ -116,8 +119,18 @@ public class ViewCLI extends ViewPlayer {
 			} else if (commandZone.equals("e") && !((cf = fourChoice("place")).equals("cancel"))) {
 				commandZone = "market " + cf;
 			} else if (commandZone.equals("f")) {
-				commandZone = "production";
+				System.out.println("How much do you want increase the die value?");
+				increase = scanner.nextLine();
+				if (increase == null) {
+					commandZone = null;
+				} else if (Integer.parseInt(increase) >= 0 && Integer.parseInt(increase) <= servant) {
+					commandZone = "production " + increase;
+				} else {
+					System.out.println("Wrong character");
+					commandZone = null;
+				}
 			} else if (commandZone.equals("g")) {
+				System.out.println("How much do you want increase the die value?");
 				commandZone = "harvest";
 			} else if (commandZone.equals("h")) {
 				commandZone = "council";
@@ -127,7 +140,7 @@ public class ViewCLI extends ViewPlayer {
 				if (cf.equals("cancel")) {
 					commandZone = "cancel";
 				} else {
-					System.out.println("Wrong chacarter");
+					System.out.println("Wrong character");
 					commandZone = null;
 				}
 			}
@@ -157,18 +170,17 @@ public class ViewCLI extends ViewPlayer {
 		}
 		return commandFloor;
 
-}
+	}
 
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public <O extends MyObservable, C> void update(O observed, C change) {
 		// TODO Auto-generated method stub
-		
 
 	}
 }
