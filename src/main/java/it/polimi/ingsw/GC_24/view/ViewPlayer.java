@@ -1,4 +1,4 @@
-﻿package it.polimi.ingsw.GC_24.view;
+package it.polimi.ingsw.GC_24.view;
 
 
 import java.util.HashMap;

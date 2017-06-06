@@ -58,8 +58,6 @@ public class ViewCLI extends ViewPlayer {
 					+ "c)Show leader cards\n" + "d)Place a familiar\n" + "e)Use a leader cards\n"
 					+ "f)Throw a leader cards\n" + "g)End turn\n" + "h)Exit");
 			String command = scanner.nextLine();
-			String commandFamiliar;
-			String commandPlace;
 			boolean commandOk = true;
 			if (command.equals("a")) {
 				// model.getBoard().toString();
