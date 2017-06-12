@@ -72,6 +72,9 @@ public class Client {
 		System.out.println("CLIENT: Created the InHandler --> in a separate thread");
 		executor.submit(viewPlayer);
 		System.out.println("CLIENT: Executed the ViewPlayer --> in a separate thread");
+		
+		
+		
 //		Model localModel = new Model();
 //		System.out.println("CLIENT: Created the local model");
 			

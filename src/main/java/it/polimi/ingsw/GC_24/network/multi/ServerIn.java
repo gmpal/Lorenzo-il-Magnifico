@@ -87,7 +87,9 @@ public class ServerIn extends MyObservable implements Runnable {
 
 		if (command.contains("player")) {
 			Player player = tokenizeFromPLayer((String) request.get("player"));
+
 		}
+
 		return "bad command";
 
 	}

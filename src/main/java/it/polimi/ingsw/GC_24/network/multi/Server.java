@@ -4,12 +4,16 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.controller.Controller;
 import it.polimi.ingsw.GC_24.model.Model;
+
+import it.polimi.ingsw.GC_24.model.Player;
+import it.polimi.ingsw.GC_24.model.PlayerColour;
 
 
 public class Server {
@@ -51,10 +55,15 @@ public class Server {
 		controller = new Controller(game);
 		System.out.println("SERVER: Controller Created");
 		System.out.println("SERVER: ready");
+		
+	
+		
+		int clientNumber = 0;
 		while(true){
 			try {
 				Socket socket = serverSocket.accept();
-				System.out.println("SERVER: Connection established");
+				clientNumber++;
+				System.out.println("SERVER: client num. "+clientNumber+" connected");
 				ServerOut serverOut = new ServerOut(socket);
 				System.out.println("SERVER: ServerOut created");
 				ServerIn serverIn = new ServerIn(socket);

@@ -209,7 +209,17 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 
 	@Override
 	public <O extends MyObservable, C> void update(O observed, C change) {
-		// TODO Auto-generated method stub
+
+		
+		System.out.println("ViewCLI: I have been notified by " +observed.getClass().getSimpleName());
+		System.out.println("ViewCLI: i received this :"+change);
+		System.out.println("ViewCLI: i know  it is a " +change.getClass().getSimpleName());
+		
+		// Da sistemare, funziona solo con questa arraylist. bisogna gestire
+		//singolarmente tutti i casi quindi --> o riconoscere questa arraylist
+		//oppure fare arrivare fino a qui la hashmap e giocarci dopo
+		
+
 
 	}
 
