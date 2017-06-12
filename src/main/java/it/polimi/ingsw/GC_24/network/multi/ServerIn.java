@@ -8,7 +8,6 @@ import java.net.Socket;
 import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
-
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.PlayerColour;
@@ -80,7 +79,6 @@ public class ServerIn extends MyObservable implements Runnable {
 	private String handleRequestFromClient(Map<String, Object> request) {
 		System.out.println("ServerIn: handling the request...");
 		Set<String> command = request.keySet();
-
 		if (command.contains("TEST")) {
 			SetOfValues setofvalues = (SetOfValues) request.get("TEST");
 			notifyMyObservers(setofvalues);
@@ -89,7 +87,8 @@ public class ServerIn extends MyObservable implements Runnable {
 
 		if (command.contains("player")) {
 			Player player = tokenizeFromPLayer((String) request.get("player"));
-		} 
+
+		}
 
 		return "bad command";
 

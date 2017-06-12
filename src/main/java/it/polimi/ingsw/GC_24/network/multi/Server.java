@@ -8,11 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
+import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.controller.Controller;
 import it.polimi.ingsw.GC_24.model.Model;
+
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.PlayerColour;
+
 
 public class Server {
 
@@ -73,7 +75,6 @@ public class Server {
 				controller.registerMyObserver(serverOut);
 		//		this.addClient(serverOut); //now only adds the observer
 				System.out.println("SERVER: observers setted!");
-				
 			
 			} catch (IOException e) {
 				break;
