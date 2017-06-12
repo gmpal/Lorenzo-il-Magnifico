@@ -8,7 +8,6 @@ import java.net.Socket;
 import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
-
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.PlayerColour;
@@ -82,23 +81,13 @@ public class ServerIn extends MyObservable implements Runnable {
 	private String handleRequestFromClient(Map<String, Object> request) {
 		System.out.println("ServerIn: handling the request...");
 		Set<String> command = request.keySet();
-
 		if (command.contains("TEST")) {
 			SetOfValues setofvalues = (SetOfValues) request.get("TEST");
 			notifyMyObservers(setofvalues);
 			return "okay";
 		}
-		/*
-		 * if (command.contains("player")){ Player player =
-		 * tokenizeFromPLayer((String) request.get("player")); }else if
-		 * (command.contains("leave")){ User user = (User) request.get("leave");
-		 * try { this.leave(user); return user.getRepr() + " left the chat"; }
-		 * catch (RemoteException e) { e.printStackTrace(); } }else if
-		 * (command.contains("send")){ Message msg = (Message)
-		 * request.get("send"); try { this.send(msg); return msg.toString(); }
-		 * catch (RemoteException e) { e.printStackTrace(); } } else if
-		 * (command.contains("BYE")){ return "User left the chat"; }
-		 */
+		if (command.contains("player")) {
+		}
 		return "bad command";
 
 	}
