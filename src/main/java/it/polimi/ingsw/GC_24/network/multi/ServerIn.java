@@ -35,10 +35,10 @@ public class ServerIn extends MyObservable implements Runnable {
 	 */
 	@Override
 	public void run() {
-						
+
 		try {
 			objFromClient = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
-			
+
 			while (!end) {
 
 				Map<String, Object> request = (Map<String, Object>) objFromClient.readObject();
@@ -47,12 +47,12 @@ public class ServerIn extends MyObservable implements Runnable {
 
 				end = request.containsKey("EXIT");
 			}
-			
+
 		} catch (ClassNotFoundException ioe) {
 			end = true;
 		} catch (EOFException eof) {
 			System.out.println("SERVERIn: end of file reached");
-		} catch (IOException io){
+		} catch (IOException io) {
 			io.printStackTrace();
 			end = true;
 		}
@@ -67,8 +67,6 @@ public class ServerIn extends MyObservable implements Runnable {
 		}
 
 	}
-
-	
 
 	// IN CHE MODO LA questa VIEW GESTISCE CIO' CHE RICEVE?
 	// è davvero lei che gestisce o si limita ad inoltrare al controller?
@@ -86,7 +84,9 @@ public class ServerIn extends MyObservable implements Runnable {
 			notifyMyObservers(setofvalues);
 			return "okay";
 		}
+
 		if (command.contains("player")) {
+			Player player = tokenizeFromPLayer((String) request.get("player"));
 		}
 		return "bad command";
 
