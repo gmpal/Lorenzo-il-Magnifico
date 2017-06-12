@@ -1,13 +1,18 @@
 package it.polimi.ingsw.GC_24.view;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
-
 import it.polimi.ingsw.GC_24.MyObservable;
-import it.polimi.ingsw.GC_24.values.SetOfValues;
+import it.polimi.ingsw.GC_24.MyObserver;
 
-public class ViewCLI extends ViewPlayer {
+public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	private static Scanner scanner = new Scanner(System.in);
+	private String name;
+	private String colour;
+	private List<String> colours = new ArrayList<>();
+	private HashMap<String, Object> hm;
 
 	/*
 	 * public static void main(String args[]) { ViewPlayer vp = new ViewCLI();
@@ -17,32 +22,48 @@ public class ViewCLI extends ViewPlayer {
 
 	@Override
 	public void run() {
-		System.out.println("STARTING VIEW");
-		SetOfValues set = new SetOfValues();
-		set.getCoins().addQuantity(1);
-		HashMap<String, Object> obj = new HashMap<String, Object>();
-		obj.put("TEST", set);
-		System.out.println("Object created in VIEW");
-		/*
-		 * name = setName(); colour = setColour();
-		 * notifyMyObservers(createMessage(name, colour));
-		 */notifyMyObservers(obj);
+		name = setName();
+		// notifyMyObservers("name", name);
+		colour = setColour();
+		// notifyMyObservers("colour", colour);
 
 	}
 
-	@Override
 	public String setName() {
-		System.out.println("Name:");
-		return scanner.nextLine();
+		String sc;
+		do {
+			System.out.println("Name:");
+			sc = scanner.nextLine();
+		} while (sc == null);
+		return sc;
 	}
 
-	@Override
 	public String setColour() {
-		System.out.println("Select colour:\na)Red\nb)Yellow\nc)Green\nd)Blue");
-		return scanner.nextLine();
+		String colourList = colourToString(colours);
+		String readColour;
+		int intColour = 0;
+		do {
+			System.out.println(colourList);
+			readColour = isInt(scanner.nextLine());
+			if (readColour != null) {
+				intColour = Integer.parseInt(readColour);
+				if (intColour < 1 || intColour > colours.size()) {
+					readColour = null;
+				}
+			}
+		} while (readColour == null);
+		return colours.get(intColour - 1);
 	}
 
-	@Override
+	public String colourToString(List<String> colours) {
+		StringBuilder coloursToString = new StringBuilder();
+		coloursToString.append("Select colour:\n");
+		for (int i = 0; i < colours.size(); i++) {
+			coloursToString.append(Integer.toString(i + 1) + ")" + colours.get(i) + "\n");
+		}
+		return coloursToString.toString();
+	}
+
 	public String createMessage(String name, String colour) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(name);
