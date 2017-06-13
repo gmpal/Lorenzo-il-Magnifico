@@ -5,7 +5,13 @@ import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.values.Value;
 
 public class MarketPlace extends Place {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5096841999224669924L;
 
+	
 	private Value extraValue;
 	private Effect privilegeEffect;
 	

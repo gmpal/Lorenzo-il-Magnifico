@@ -4,8 +4,12 @@ import it.polimi.ingsw.GC_24.effects.*;
 import it.polimi.ingsw.GC_24.personalboard.PersonalBoard;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 
-public class Territories extends Development {
-
+public class Territories extends Development {		
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1023997492010425653L;
+	
 	private int costDie;
 
 	// constructor

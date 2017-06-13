@@ -3,8 +3,12 @@ package it.polimi.ingsw.GC_24.model;
 import it.polimi.ingsw.GC_24.dice.Die;
 import it.polimi.ingsw.GC_24.dice.DieColour;
 
-public class FamilyMember {
-
+public class FamilyMember implements java.io.Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5404448854952507918L;
+	
 	private int memberValue;
 	private boolean available;
 	private DieColour memberColour;

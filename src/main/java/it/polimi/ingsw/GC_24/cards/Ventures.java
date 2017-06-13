@@ -4,8 +4,12 @@ import it.polimi.ingsw.GC_24.effects.*;
 import it.polimi.ingsw.GC_24.personalboard.PersonalBoard;
 import it.polimi.ingsw.GC_24.values.*;
 
-public class Ventures extends Development {
-
+public class Ventures extends Development {	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6234182947488565457L;
+	
 	private MilitaryPoint requiredMilitaryPoints;
 
 	// constructor

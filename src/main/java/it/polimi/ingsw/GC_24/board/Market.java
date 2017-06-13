@@ -5,7 +5,11 @@ import java.util.*;
 import it.polimi.ingsw.GC_24.places.MarketPlace;
 import it.polimi.ingsw.GC_24.places.Place;
 
-public class Market extends Area {
+public class Market extends Area {	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2530623420397285959L;
 	
 	private boolean placesLocked;
 	private static final int MINPLACES=2;				//Place with 2 players

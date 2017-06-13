@@ -4,6 +4,10 @@ import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.values.*;
 
 public abstract class Moltiplication extends ImmediateEffect{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7186806258388556423L;
 	
 	protected Value value;
 	protected Player player;

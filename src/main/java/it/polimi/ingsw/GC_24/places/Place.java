@@ -4,7 +4,12 @@ import it.polimi.ingsw.GC_24.model.FamilyMember;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.values.Value;
 
-public abstract class Place { 
+public abstract class Place implements java.io.Serializable{ 
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2155289391346850824L;
 	
 	private int costDice; 
 	protected boolean available;

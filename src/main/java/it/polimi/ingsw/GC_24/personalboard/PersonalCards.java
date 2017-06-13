@@ -3,7 +3,11 @@ package it.polimi.ingsw.GC_24.personalboard;
 import java.util.*;
 import it.polimi.ingsw.GC_24.cards.*;
 
-public abstract class PersonalCards {
+public abstract class PersonalCards implements java.io.Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7889181412221643829L;
 	
 	private List<Development> cards;
 	

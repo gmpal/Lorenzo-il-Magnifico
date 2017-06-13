@@ -7,7 +7,11 @@ import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.values.Value;
 
 public class ProductionPlace extends ActivityPlace{
-	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3520071878963185433L;
+
 	//constructor
 	public ProductionPlace(int costDice, Value value, int additionalCostDice) {
 		super(costDice, value, additionalCostDice);

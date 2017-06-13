@@ -3,6 +3,10 @@ package it.polimi.ingsw.GC_24.values;
 import it.polimi.ingsw.GC_24.model.Player;
 
 public class FaithPoint extends Value {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4759264277455372908L;
 
 	//constructor
 	public FaithPoint(int value) {

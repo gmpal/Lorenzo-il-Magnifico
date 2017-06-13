@@ -1,6 +1,10 @@
 package it.polimi.ingsw.GC_24.effects;
 
-public abstract class Effect {
+public abstract class Effect implements java.io.Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7308486560393380862L;
 	
 	protected String name;
 	

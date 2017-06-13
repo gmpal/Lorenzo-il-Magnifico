@@ -1,9 +1,12 @@
 package it.polimi.ingsw.GC_24.board;
 
-public class Board {
+public class Board implements java.io.Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8198703665232673182L;
 
 	private static final int maxNumPlayerToLock=3; 
-
 	
 	private int numPlayers;
 	private Tower towerTerritories;

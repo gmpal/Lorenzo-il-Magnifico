@@ -4,6 +4,10 @@ import it.polimi.ingsw.GC_24.model.Player;
 
 
 public abstract class ImmediateEffect extends Effect {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9149662481180668247L;
 
 	// this class gives to the player the resource immediate effect and the
 	// immediate special effect
