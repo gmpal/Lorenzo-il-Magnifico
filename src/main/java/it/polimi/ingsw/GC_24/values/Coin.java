@@ -19,5 +19,10 @@ public class Coin extends Value {
 	public Value findValueInPlayer(Player player){
 		return player.getMyValues().getCoins();
 	}
+	
+	@Override
+	public String toString(){
+		return "coin: "+this.getQuantity();
+	}
 
 }

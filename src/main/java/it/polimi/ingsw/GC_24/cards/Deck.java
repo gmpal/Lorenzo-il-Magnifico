@@ -5,9 +5,13 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 import com.google.gson.Gson;
-import it.polimi.ingsw.GC_24.effects.*;
-import it.polimi.ingsw.GC_24.values.MilitaryPoint;
-import it.polimi.ingsw.GC_24.values.SetOfValues;
+import com.google.gson.GsonBuilder;
+
+import it.polimi.ingsw.GC_24.devCardJsonFile.RuntimeTypeAdapterFactory;
+import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
+import it.polimi.ingsw.GC_24.effects.MoltiplicationCards;
+import it.polimi.ingsw.GC_24.effects.MoltiplicationPoints;
+import it.polimi.ingsw.GC_24.values.*;
 
 public class Deck {
 	private List<Territories> deckTerritories = new ArrayList<>();
@@ -15,16 +19,36 @@ public class Deck {
 	private List<Buildings> deckBuildings = new ArrayList<>();
 	private List<Ventures> deckVentures = new ArrayList<>();
 	private List<Leader> deckLeaders = new ArrayList<>();
+	private static GsonBuilder builder = new GsonBuilder();
 
 	// constructor
 	public Deck() throws IOException {
 		createDeck();
 	}
 
+	public static RuntimeTypeAdapterFactory<Value> getValueTypeAdapter() {
+		return RuntimeTypeAdapterFactory.of(Value.class, "valueType").registerSubtype(Coin.class, "coin")
+				.registerSubtype(Servant.class, "servant").registerSubtype(Stone.class, "stone")
+				.registerSubtype(Wood.class, "wood").registerSubtype(MilitaryPoint.class, "militaryPoint")
+				.registerSubtype(FaithPoint.class, "faithPoint").registerSubtype(VictoryPoint.class, "victoryPoint");
+	}
+
+	public static RuntimeTypeAdapterFactory<ImmediateEffect> getImmediateEffectTypeAdapter() {
+		return RuntimeTypeAdapterFactory.of(ImmediateEffect.class, "immediateEffectType")
+				.registerSubtype(MoltiplicationPoints.class, "moltiplicationPoints")
+				.registerSubtype(MoltiplicationCards.class, "moltiplicationCards");
+	}
+
+	public static Gson getGsonWithTypeAdapters() {
+		builder.registerTypeAdapterFactory(getValueTypeAdapter());
+		builder.registerTypeAdapterFactory(getImmediateEffectTypeAdapter());
+		return builder.create();
+	}
+
 	// create 4 deck arrayList from 4 different file with Json
 	public void createDeck() throws IOException {
 		BufferedReader br;
-		Gson gson = new Gson();
+		Gson gson = getGsonWithTypeAdapters();
 		String line;
 
 		br = new BufferedReader(
@@ -97,12 +121,5 @@ public class Deck {
 
 	public void setDeckVentures(List<Ventures> deckVentures) {
 		this.deckVentures = deckVentures;
-	}
-
-	public static void main(String args[]) {
-		Development card = new Ventures("ciao", "territories", new SetOfValues(), new MilitaryPoint(3),
-				new PerformHarvest("harvest", 3), null, 1, new ValueEffect(null));
-		Gson gson = new Gson();
-		System.out.println(gson.toJson(card));
 	}
 }
