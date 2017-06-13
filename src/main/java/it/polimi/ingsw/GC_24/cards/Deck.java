@@ -8,9 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import it.polimi.ingsw.GC_24.devCardJsonFile.RuntimeTypeAdapterFactory;
-import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
-import it.polimi.ingsw.GC_24.effects.MoltiplicationCards;
-import it.polimi.ingsw.GC_24.effects.MoltiplicationPoints;
+import it.polimi.ingsw.GC_24.effects.*;
 import it.polimi.ingsw.GC_24.values.*;
 
 public class Deck {
