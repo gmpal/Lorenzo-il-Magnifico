@@ -23,7 +23,9 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	@Override
 	public void run() {
 		name = setName();
-		// notifyMyObservers("name", name);
+		hm.clear();
+		hm.put("name", name);
+		notifyMyObservers(hm);
 		colour = setColour();
 		// notifyMyObservers("colour", colour);
 
@@ -76,8 +78,8 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	public void showAndGetOption() {
 		while (true) {
 			System.out.println("Choose action:\n" + "a)Show board\n" + "b)Show personal board\n"
-					+ "c)Show leader cards\n" + "d)Place a familiar\n" + "e)Use a leader cards\n"
-					+ "f)Throw a leader cards\n" + "g)End turn\n" + "h)Exit");
+					+ "c)Show leader cards\n" + "d)Place a familiar\n" + "e)Use a leader card\n"
+					+ "f)Throw a leader card\n" + "g)End turn\n" + "h)Exit");
 			String command = scanner.nextLine();
 			boolean commandOk = true;
 			if (command.equals("a")) {
@@ -209,7 +211,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 
 	@Override
 	public <O extends MyObservable, C> void update(O observed, C change) {
-
+		//if(change.getClass().getSimpleName().equals(""))
 		
 		System.out.println("ViewCLI: I have been notified by " +observed.getClass().getSimpleName());
 		System.out.println("ViewCLI: i received this :"+change);
@@ -218,9 +220,6 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		// Da sistemare, funziona solo con questa arraylist. bisogna gestire
 		//singolarmente tutti i casi quindi --> o riconoscere questa arraylist
 		//oppure fare arrivare fino a qui la hashmap e giocarci dopo
-		
-
-
 	}
 
 	public String getName() {

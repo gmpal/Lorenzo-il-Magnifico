@@ -14,6 +14,7 @@ public class Deck {
 	private List<Characters> deckCharacters = new ArrayList<>();
 	private List<Buildings> deckBuildings = new ArrayList<>();
 	private List<Ventures> deckVentures = new ArrayList<>();
+	private List<Leader> deckLeaders = new ArrayList<>();
 
 	// constructor
 	public Deck() throws IOException {
@@ -45,6 +46,16 @@ public class Deck {
 				new FileReader("src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/venturesCards.json"));
 		while ((line = getLine(br)) != null) {
 			this.deckVentures.add(gson.fromJson(line, Ventures.class));
+		}
+		br = new BufferedReader(
+				new FileReader("src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/venturesCards.json"));
+		while ((line = getLine(br)) != null) {
+			this.deckVentures.add(gson.fromJson(line, Ventures.class));
+		}
+		br = new BufferedReader(
+				new FileReader("src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/leadersCards.json"));
+		while ((line = getLine(br)) != null) {
+			this.deckLeaders.add(gson.fromJson(line, Leader.class));
 		}
 	}
 
@@ -89,8 +100,8 @@ public class Deck {
 	}
 
 	public static void main(String args[]) {
-		Development card = new Ventures("ciao", "territories", new SetOfValues(),
-				new MilitaryPoint(3), new PerformHarvest("harvest", 3), null, 1, new ValueEffect(null));
+		Development card = new Ventures("ciao", "territories", new SetOfValues(), new MilitaryPoint(3),
+				new PerformHarvest("harvest", 3), null, 1, new ValueEffect(null));
 		Gson gson = new Gson();
 		System.out.println(gson.toJson(card));
 	}

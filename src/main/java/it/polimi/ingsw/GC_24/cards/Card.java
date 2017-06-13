@@ -2,7 +2,7 @@ package it.polimi.ingsw.GC_24.cards;
 
 public class Card {
 
-	private String name;
+	protected String name;
 
 	public Card(String name) {
 		this.name = name;
