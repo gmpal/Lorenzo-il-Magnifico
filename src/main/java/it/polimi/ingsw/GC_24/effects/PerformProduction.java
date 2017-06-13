@@ -6,8 +6,12 @@ import it.polimi.ingsw.GC_24.cards.Buildings;
 import it.polimi.ingsw.GC_24.model.Player;
 
 public class PerformProduction extends PerformActivity{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4975317837362387770L;
 
-	//constructor
+		//constructor
 		public PerformProduction(String name, int dieValue) {
 			super(name, dieValue);
 		}

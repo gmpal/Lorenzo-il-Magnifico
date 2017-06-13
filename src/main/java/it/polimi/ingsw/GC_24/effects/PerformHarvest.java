@@ -5,7 +5,11 @@ import it.polimi.ingsw.GC_24.cards.*;
 import it.polimi.ingsw.GC_24.model.Player;
 
 public class PerformHarvest extends PerformActivity{
-	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7757590984515720227L;
+
 	//constructor
 	public PerformHarvest(String name, int dieValue) {
 		super(name, dieValue);

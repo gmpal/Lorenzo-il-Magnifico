@@ -1,6 +1,10 @@
 package it.polimi.ingsw.GC_24.dice;
 
-public class Die {
+public class Die implements java.io.Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -846834084229792892L;
 	
 	private int value; 
 	private DieColour colour;

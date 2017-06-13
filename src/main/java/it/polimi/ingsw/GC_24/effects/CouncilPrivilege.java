@@ -6,6 +6,10 @@ import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 
 public class CouncilPrivilege extends ImmediateEffect {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3049611758848567938L;
 	
 	private List<SetOfValues> councilPrivileges;
 	private int numberOfPrivileges;

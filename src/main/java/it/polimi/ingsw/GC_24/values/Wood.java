@@ -3,7 +3,11 @@ package it.polimi.ingsw.GC_24.values;
 import it.polimi.ingsw.GC_24.model.Player;
 
 public class Wood extends Value  {
-	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -941493447402070076L;
+
 	//constructor
 	public Wood(int value){
 		super(value);

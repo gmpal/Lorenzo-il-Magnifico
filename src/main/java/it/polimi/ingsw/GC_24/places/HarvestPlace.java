@@ -7,6 +7,10 @@ import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.values.Value;
 
 public class HarvestPlace extends ActivityPlace{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5589820895011868990L;
 
 	// constructor
 	public HarvestPlace(int costDice, Value value, int additionalCostDice) {
