@@ -7,7 +7,7 @@ import it.polimi.ingsw.GC_24.MyObserver;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 
-//SOLO UN CONTROLLER LATO SERVER per ogni partita
+//Just one server's side controller for each game
 public class Controller extends MyObservable implements MyObserver {
 
 	private final Model game;
@@ -19,13 +19,9 @@ public class Controller extends MyObservable implements MyObserver {
 		this.game = game;
 		
 	}
-	
-	
 
 	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-		
+	public void update() {		
 	}
 
 	@Override
@@ -48,10 +44,6 @@ public class Controller extends MyObservable implements MyObserver {
 		
 	}
 
-
-	
-
-	
 }
 
 		
