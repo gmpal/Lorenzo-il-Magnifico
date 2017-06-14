@@ -5,7 +5,11 @@ import java.io.Serializable;
 import it.polimi.ingsw.GC_24.model.Player;
 
 public abstract class Value implements Serializable {
-
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2965545277592702641L;
+	
 	protected int quantity;
 
 	// constructor

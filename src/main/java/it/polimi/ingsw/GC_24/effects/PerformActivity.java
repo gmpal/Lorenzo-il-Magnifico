@@ -3,7 +3,11 @@ package it.polimi.ingsw.GC_24.effects;
 import it.polimi.ingsw.GC_24.model.Player;
 
 public abstract class PerformActivity  extends ImmediateEffect{
-
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2475182339045729171L;
+	
 	private int dieValue;
 
 	//constructor

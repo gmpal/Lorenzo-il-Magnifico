@@ -5,6 +5,11 @@ import it.polimi.ingsw.GC_24.personalboard.PersonalBoard;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 
 public class Characters extends Development {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 727209788794536624L;
+	
 
 	// constructor
 	public Characters(String name, String type, SetOfValues cost,

@@ -5,6 +5,10 @@ import it.polimi.ingsw.GC_24.personalboard.PersonalCards;
 import it.polimi.ingsw.GC_24.values.*;
 
 public class MoltiplicationCards extends Moltiplication{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4807445464341088218L;
 	
 	private PersonalCards personalCards;
 

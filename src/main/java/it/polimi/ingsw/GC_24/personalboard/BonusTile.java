@@ -2,7 +2,11 @@ package it.polimi.ingsw.GC_24.personalboard;
 
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 
-public class BonusTile {
+public class BonusTile implements java.io.Serializable{	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1103689384999543201L;
 	
 	private SetOfValues harvestValues;
 	private SetOfValues productionValues;

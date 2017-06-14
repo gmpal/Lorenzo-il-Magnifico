@@ -5,6 +5,10 @@ import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.values.Value;
 
 public class TowerPlace extends Place {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2679672850968909758L;
 	
 	private Development correspondingCard;
 	

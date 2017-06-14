@@ -5,6 +5,10 @@ import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.values.Value;
 
 public class CouncilPlace extends Place {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3762534738065469265L;
 	
 	private Effect privilegeEffect;
 

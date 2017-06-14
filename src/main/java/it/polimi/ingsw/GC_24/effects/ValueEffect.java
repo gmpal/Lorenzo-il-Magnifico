@@ -4,6 +4,10 @@ import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 
 public class ValueEffect extends ImmediateEffect {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1376411059993068191L;
 	
 	private SetOfValues setOfValue;
 

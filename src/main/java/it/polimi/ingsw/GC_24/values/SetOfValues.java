@@ -3,7 +3,11 @@ package it.polimi.ingsw.GC_24.values;
 import java.io.Serializable;
 
 public class SetOfValues implements Serializable {
-
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4825483013599718859L;
+	
 	private Wood woods;
 	private Stone stones;
 	private Coin coins;
