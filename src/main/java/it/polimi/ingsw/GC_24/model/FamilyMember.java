@@ -20,6 +20,7 @@ public class FamilyMember {
 		this.memberColour = die.getColour();
 		this.neutral = false;
 		this.playerColour = playerColour;
+
 	}
 	
 	//creates a neutral family member
@@ -29,6 +30,7 @@ public class FamilyMember {
 		this.memberColour = null;
 		this.neutral=true;
 		this.playerColour = playerColour;
+
 	}
 	
 	
@@ -79,11 +81,13 @@ public class FamilyMember {
 	public void setNeutral(boolean neutral) {
 		this.neutral = neutral;
 	}
+
 	public PlayerColour getPlayerColour() {
 		return playerColour;
 	}
 	public void setPlayerColour(PlayerColour playerColour) {
 		this.playerColour = playerColour;
+
 	}
 	
 }
