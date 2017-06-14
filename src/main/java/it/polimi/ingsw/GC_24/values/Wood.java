@@ -2,7 +2,7 @@ package it.polimi.ingsw.GC_24.values;
 
 import it.polimi.ingsw.GC_24.model.Player;
 
-public class Wood extends Value  {
+public class Wood extends Value {
 	
 	//constructor
 	public Wood(int value){

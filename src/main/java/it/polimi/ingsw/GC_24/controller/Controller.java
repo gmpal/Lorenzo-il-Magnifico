@@ -1,44 +1,30 @@
 package it.polimi.ingsw.GC_24.controller;
 
-import java.util.HashMap;
+import java.util.Observer;
 
-import it.polimi.ingsw.GC_24.MyObservable;
-import it.polimi.ingsw.GC_24.MyObserver;
 import it.polimi.ingsw.GC_24.model.Model;
-import it.polimi.ingsw.GC_24.values.SetOfValues;
+import it.polimi.ingsw.GC_24.view.View;
 
-//SOLO UN CONTROLLER LATO SERVER per ogni partita
-public class Controller extends MyObservable implements MyObserver {
+import java.util.Observable;
+
+
+public class Controller implements Observer {
 
 	private final Model game;
 	
 	//constructor
-
-	public Controller(Model game) {
-
+	public Controller(Model game, View view) {
 		this.game = game;
-		
+		view.addObserver(this);
 	}
 	
 	
-
 	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-		
+	public void update (Observable game, Object change){
+		System.out.println("Controller here. I've been notified by the view with an action");
+		/*Do something to the model by an action*/
+		//action.run();		
 	}
-
-	@Override
-	public <O extends MyObservable, C> void update(O observed, C change) {
-		
-		System.out.println("Controller: I have been notified by " +observed.getClass().getSimpleName());
-		System.out.println("Controller: i received this :"+change);
-		
-		
-		
-	}
-
-
 	
 
 	

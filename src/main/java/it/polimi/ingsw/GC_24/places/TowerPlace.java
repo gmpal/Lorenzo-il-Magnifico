@@ -21,16 +21,12 @@ public class TowerPlace extends Place {
 	
 	@Override
 	public void giveEffects(Player player){
-		player.setMyValues(this.getValue().addValueToSet(player.getMyValues()));
-		correspondingCard.setCardOnPersonalBoard(player.getMyBoard());
-		correspondingCard.getValueEffect().giveImmediateEffect(player);
-		correspondingCard.getImmediateEffect().giveImmediateEffect(player);
-		this.correspondingCard = null;
+		player.setMyValues(this.getValue().addValueToSet(player.getMyValues())); 
 	}
 
 	@Override
 	public String toString() {
 		return "TowerPlace Card=" + correspondingCard;
 	}
-
+	
 }

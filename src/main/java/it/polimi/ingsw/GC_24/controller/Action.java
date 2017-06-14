@@ -1,32 +1,24 @@
 package it.polimi.ingsw.GC_24.controller;
 
-import it.polimi.ingsw.GC_24.model.FamilyMember;
 import it.polimi.ingsw.GC_24.model.Model;
-import it.polimi.ingsw.GC_24.model.Player;
-import it.polimi.ingsw.GC_24.places.Place;
 
 public abstract class Action {
 	
 
-		//private final Model game;
-		private Player player;
-		private FamilyMember familyMember;
-		private Place place;
+		private final Model game;
 		
 		//constructor
-		public Action() {
-			this.player=null;
-			this.familyMember = null;
-			this.place = null;
+		public Action(Model game){
+			this.game=game;
 		}
 		
-		//getters and setters (setter included in constructor)		
-		public Player getPlayer(){
-			return this.player;
+		//getters and setters (setter included in constructor)
+		protected Model getGame(){
+			return this.game;
 		}
 		
 		
-		public abstract void run(Player player, FamilyMember familyMember, Place place);
+		public abstract void run();
 		
 
 }
