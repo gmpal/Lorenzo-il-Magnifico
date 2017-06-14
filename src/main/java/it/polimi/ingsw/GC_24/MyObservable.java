@@ -1,7 +1,9 @@
 package it.polimi.ingsw.GC_24;
 
 import java.util.ArrayList;
+
 import java.util.List;
+
 
 
 public abstract class MyObservable {
@@ -30,5 +32,10 @@ public abstract class MyObservable {
 		for (MyObserver o : this.MyObservers) {
 			o.update(this,change);
 		}
+	}
+	
+	public <C> void notifySingleObserver(MyObserver o, C change) {
+			o.update(this,change);
+		
 	}
 }

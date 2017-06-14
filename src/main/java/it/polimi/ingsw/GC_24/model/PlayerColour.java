@@ -26,15 +26,15 @@ public enum PlayerColour {
 	}
 	
 	public static synchronized void removeValue(String element) {
-		VALUES.remove(element);
+		VALUES.remove(element.toUpperCase());
 	}
 	
 	public static synchronized boolean checkValue(String element) {
-		return (VALUES.contains(element));
+		return (VALUES.contains(element.toUpperCase()));
 	}
 	
-	public static List<String> getValues() {
-		return Collections.unmodifiableList(VALUES);
+	public synchronized static List<String> getValues() {
+		return VALUES;
 	}
 
 }
