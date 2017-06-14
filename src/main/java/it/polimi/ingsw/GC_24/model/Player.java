@@ -55,14 +55,17 @@ public class Player implements java.io.Serializable {
 	//Prints name of a Player
 	@Override
 	public String toString() {
-		return myName;
-
+		return "Player [myName=" + myName + ", myFamily=" + myFamily + ", myBoard=" + myBoard + ", myValues=" + myValues
+				+ ", myColour=" + myColour + "]";
 	}
+	
 		
 	//getters and setters
 	public String getMyName() {
 		return myName;
 	}
+
+	
 
 	public void setMyName(String myName) {
 		this.myName = myName;
