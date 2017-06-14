@@ -25,12 +25,10 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 
 		
 		name = setName();
-		hm.clear();
-		hm.put("name", name);
-		notifyMyObservers(hm);
+		
 		colour = setColour();
 		// notifyMyObservers("colour", colour);
-
+		this.createMessage(name, colour);
 	}
 
 	private void setConnection() {
