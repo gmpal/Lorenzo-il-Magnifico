@@ -12,9 +12,6 @@ import java.util.concurrent.Executors;
 
 import javax.swing.JOptionPane;
 
-import it.polimi.ingsw.GC_24.MyObserver;
-import it.polimi.ingsw.GC_24.network.multi.Client;
-
 public class ClientSocket {
 
 	private ViewCLI viewCLI;
@@ -60,12 +57,13 @@ public class ClientSocket {
 
 	/* Shows an Option Dialog that lets the user choose between CLI and GUI */
 	public int createInterface() {
-
 		String[] array = { "GUI", "CLI" };
 
-		int choice = JOptionPane.showOptionDialog(null, "GUI or CLI?", "Choose an option", JOptionPane.YES_NO_OPTION,
+		int choice =
+				JOptionPane.showOptionDialog(null, "GUI or CLI?", "Choose an option", JOptionPane.YES_NO_OPTION,
 				JOptionPane.QUESTION_MESSAGE, null, array, null);
 
+		
 		if (choice == 0) {
 			viewGUI = new ViewGUI();
 			executor.submit(viewGUI);
@@ -75,7 +73,8 @@ public class ClientSocket {
 		}
 
 		return choice;
-	}
+	
+		}
 
 	public void createClientHandler(int i, Socket socket) throws IOException {
 

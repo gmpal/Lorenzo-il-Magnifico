@@ -51,8 +51,9 @@ public class ServerSocketView extends MyObservable implements Runnable, MyObserv
 			while (true) {
 
 				Map<String, Object> request = (Map<String, Object>) objFromClient.readObject();
-				System.out.println("ServerIn: object as MAP received from client");
+				System.out.println("ServerIn: received from client: "+request);
 				this.notifyMyObservers(request);
+				System.out.println("ServerIn: passed to the controller");
 
 				
 			}
@@ -68,52 +69,6 @@ public class ServerSocketView extends MyObservable implements Runnable, MyObserv
 
 	}
 
-
-	
-	// IN CHE MODO LA questa VIEW GESTISCE CIO' CHE RICEVE?
-	// è davvero lei che gestisce o si limita ad inoltrare al controller?
-	// oppure --> in base al tipo di richiesta decide se inoltrare oppure no
-
-	/**
-	 * This method analyzes the incoming HashMap. If it finds specific keywords
-	 * in the keySet, it does different things with different objects
-	 * @throws IOException 
-	 */
-	private String handleRequestFromClient(Map<String, Object> request) throws IOException {
-		System.out.println("ServerIn: handling the request...");
-		Set<String> command = request.keySet();
-		if (command.contains("TEST")) {
-			SetOfValues setofvalues = (SetOfValues) request.get("TEST");
-			notifyMyObservers(setofvalues);
-			return "okay";
-		}
-
-		if (command.contains("player")) {
-			Player player = tokenizeFromPLayer((String) request.get("player"));
-
-		}
-		
-		if (command.contains("colours")) {
-			List<String> playerColoursArray = PlayerColour.getValues();
-			HashMap<String, Object> colori = new HashMap<String, Object>();
-			colori.put("colours", playerColoursArray);
-			objToClient.writeObject(colori);
-			objToClient.flush();
-			System.out.println("ServerOut: ArrayListOfColours sent");
-			return " ArrayListOfColours sent";
-		}
-
-		return "bad command";
-
-	}
-
-	/** Creates a new Player from a string containing his name and his colour */
-	public Player tokenizeFromPLayer(String string) {
-		StringTokenizer tokenizer = new StringTokenizer(string);
-		Player player = new Player((String) tokenizer.nextToken(), PlayerColour.valueOf(tokenizer.nextToken()));
-		return player;
-	}
-	
 	@Override
 	public void update() {
 		System.out.println("ServerOut: I have been notified!");

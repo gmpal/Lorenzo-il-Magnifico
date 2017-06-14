@@ -1,6 +1,6 @@
 package it.polimi.ingsw.GC_24.model;
 
-import java.util.*;
+import java.util.List;
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.board.Board;
 import it.polimi.ingsw.GC_24.dice.SetOfDice;
