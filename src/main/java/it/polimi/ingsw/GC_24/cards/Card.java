@@ -7,7 +7,7 @@ public class Card implements java.io.Serializable{
 	 */
 	private static final long serialVersionUID = 3429619393274815938L;
 	
-	private String name;
+	protected String name;
 
 
 	public Card(String name) {
