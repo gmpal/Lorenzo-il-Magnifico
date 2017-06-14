@@ -11,6 +11,7 @@ public class Model extends MyObservable implements java.io.Serializable{
 	 */
 	private static final long serialVersionUID = -4715762523324083940L;
 	
+	
 	private List<Player> players;
 	private Board board;
 	private Player currentPlayer;
@@ -38,6 +39,7 @@ public class Model extends MyObservable implements java.io.Serializable{
 	public void setModel(List<Player> players) {
 		
 		this.players = players;
+
 		this.board = new Board(players.size());
 		this.currentPlayer = players.get(0);
 		this.gameState = State.RUNNING;

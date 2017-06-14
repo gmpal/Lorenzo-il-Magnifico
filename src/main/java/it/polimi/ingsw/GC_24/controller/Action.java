@@ -14,10 +14,10 @@ public abstract class Action {
 		private Place place;
 		
 		//constructor
-		public Action(Player player, FamilyMember familyMember, Place place) {
-			this.player=player;
-			this.familyMember = familyMember;
-			this.place = place;
+		public Action() {
+			this.player=null;
+			this.familyMember = null;
+			this.place = null;
 		}
 		
 		//getters and setters (setter included in constructor)		
