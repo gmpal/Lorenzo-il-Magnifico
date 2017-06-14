@@ -5,7 +5,11 @@ import it.polimi.ingsw.GC_24.places.Place;
 import it.polimi.ingsw.GC_24.values.*;
 
 
-public class Player {
+public class Player implements java.io.Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6848723894380632778L;
 	
 	private String myName;
 	private Family myFamily;
@@ -13,7 +17,7 @@ public class Player {
 	private SetOfValues myValues;
 	private PlayerColour myColour;
 	
-	//Constructor number1 --> NEED to create a setOfValues
+	//Constructor 
 	public Player(String myName, PlayerColour myColour) {
 		this.myColour = myColour;
 		this.myName = myName;
@@ -48,7 +52,7 @@ public class Player {
 			return false;
 	}
 	
-	//Prints name and number of a Player
+	//Prints name of a Player
 	@Override
 	public String toString() {
 		return myName;

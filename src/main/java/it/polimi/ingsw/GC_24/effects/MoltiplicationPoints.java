@@ -3,8 +3,13 @@ package it.polimi.ingsw.GC_24.effects;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.values.*;
 
-public class MoltiplicationPoints extends Moltiplication {
 
+public class MoltiplicationPoints extends Moltiplication{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4677049539299405233L;
+	
 	private Value value2;
 
 	public MoltiplicationPoints(String name, Value value, Value value2) {

@@ -1,9 +1,12 @@
-package it.polimi.ingsw.GC_24;
+package it.polimi.ingsw.GC_24.model;
 
-import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.values.*;
 
-public class Rankings {
+public class Ranking implements java.io.Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 851431576708074088L;
 	
 	private Player player;
 	private FaithPoint faithPoints;
@@ -11,7 +14,7 @@ public class Rankings {
 	private VictoryPoint victoryPoints;
 	
 	//constructor
-	public Rankings(Player player) {
+	public Ranking(Player player) {
 		this.player = player;
 		this.militaryPoints = player.getMyValues().getMilitaryPoints();
 		this.faithPoints = player.getMyValues().getFaithPoints();
@@ -20,7 +23,7 @@ public class Rankings {
 	
 	@Override
 	public String toString() {
-		return player + "'s rankings ( player " + player.getMyColour() +" ):" +
+		return player + "'s ranking ( player " + player.getMyColour() +" ):" +
 				"\nfaithPoints=" + faithPoints.getQuantity() + 
 				", militaryPoints=" + militaryPoints.getQuantity()
 				+ ", victoryPoints=" + victoryPoints.getQuantity() + "]";

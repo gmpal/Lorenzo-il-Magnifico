@@ -1,6 +1,11 @@
 package it.polimi.ingsw.GC_24.personalboard;
 
-public class PersonalBoard {
+public class PersonalBoard implements java.io.Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3714661515499864596L;
 	
 	private PersonalBuildings personalBuildings;
 	private PersonalVentures personalVentures;

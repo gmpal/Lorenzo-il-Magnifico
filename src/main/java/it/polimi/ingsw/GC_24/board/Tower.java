@@ -6,9 +6,13 @@ import it.polimi.ingsw.GC_24.places.TowerPlace;
 
 
 public class Tower extends Area {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4478838679204067326L;
 	
 	private static final int NUMTOWERPLACE=4;
-	
+
 	//constructor
 	public Tower() {
 		this.placesArray = createTower();

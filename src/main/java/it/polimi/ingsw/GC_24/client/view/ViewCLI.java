@@ -1,4 +1,4 @@
-package it.polimi.ingsw.GC_24.view;
+package it.polimi.ingsw.GC_24.client.view;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,6 +22,8 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 
 	@Override
 	public void run() {
+
+		
 		name = setName();
 		hm.clear();
 		hm.put("name", name);
@@ -29,6 +31,11 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		colour = setColour();
 		// notifyMyObservers("colour", colour);
 
+	}
+
+	private void setConnection() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	public String setName() {

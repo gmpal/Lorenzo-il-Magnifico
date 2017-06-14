@@ -1,17 +1,16 @@
 package it.polimi.ingsw.GC_24.model;
 
-
-
-import java.util.ArrayList;
 import java.util.*;
-import java.util.Observable;
-import java.util.Set;
-import it.polimi.ingsw.GC_24.MyObserver;
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.board.Board;
 import it.polimi.ingsw.GC_24.dice.SetOfDice;
 
-public class Model extends MyObservable {
+public class Model extends MyObservable implements java.io.Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4715762523324083940L;
+	
 	
 	private List<Player> players;
 	private Board board;
@@ -20,6 +19,7 @@ public class Model extends MyObservable {
 	private SetOfDice dice;
 	private Round currentRound;
 	private Period currentPeriod;
+	private List<Ranking> rankings;
 	
 	/*Constructor --> ONLY PLAYERS NEEDS TO BE PASSED
 	 * other fields are created or set */
@@ -36,35 +36,27 @@ public class Model extends MyObservable {
 	
 	/*After a Model is created and the players are get, this
 	 * method sets the model so the game could start */
-	public void setModel(ArrayList<Player> players) {
+	public void setModel(List<Player> players) {
 		
 		this.players = players;
+
 		this.board = new Board(players.size());
 		this.currentPlayer = players.get(0);
 		this.gameState = State.RUNNING;
 		this.dice = new SetOfDice();
 		this.currentRound = Round.ONE;
 		this.currentPeriod = Period.ONE;
-		
-		
 		this.dice.reset();
 		
 		for(Player p:players){
 			p.getMyValues().setInitialValues(players.indexOf(p));
 			p.getMyFamily().setFamily(this.dice);
+			rankings.add(new Ranking(p));
 		}
-			
-	//	this.notifyMyObservers(this);
+		notifyMyObservers(this);
 	}
 
-
-
-	
-	
-	
-	
 	// getters and setters
-	
 	public List<Player> getPlayers() {
 		return players;
 	}

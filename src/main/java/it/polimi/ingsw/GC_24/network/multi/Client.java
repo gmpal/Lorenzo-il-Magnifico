@@ -8,84 +8,74 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 import javax.swing.JOptionPane;
 
-import it.polimi.ingsw.GC_24.model.Model;
-import it.polimi.ingsw.GC_24.view.ViewCLI;
-import it.polimi.ingsw.GC_24.view.ViewGUI;
-import it.polimi.ingsw.GC_24.view.ViewPlayer;
+import it.polimi.ingsw.GC_24.client.rmi.ClientRMI;
+import it.polimi.ingsw.GC_24.client.view.ClientSocket;
+import it.polimi.ingsw.GC_24.client.view.ClientSocketViewCLI;
+import it.polimi.ingsw.GC_24.client.view.ClientSocketViewGUI;
+import it.polimi.ingsw.GC_24.client.view.ClientSocketViewInterface;
+import it.polimi.ingsw.GC_24.client.view.ViewCLI;
+import it.polimi.ingsw.GC_24.client.view.ViewGUI;
 
 public class Client {
 
+
 	private ViewCLI viewCLI;
 	private ViewGUI viewGUI;
-	private ObjectOutputStream objToServer;
-	private ObjectInputStream objFromServer;
 
-	public static void main(String[] args) {
+	public void main(String[] args) throws IOException {
+		
 		Client client = new Client();
-
-		try {
-			client.startClient();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	private final static int PORT = 28469;
-	private final static String IP = "127.0.0.1";
-
-	// Crea un socket e un FixedThreadPool, poi lancia un nuovo ClientInHandler
-	// e un nuovo ClientOutHandler in parallelo
-	public void startClient() throws IOException {
-
-		Socket socket = new Socket(IP, PORT);
-		System.out.println("CLIENT: Connection established");
-
-		/* THIS BLOCK OF CODE CREATES THE ViewPlayer! */
-		/* n=0 --> GUI ; n=1 --> CLI */
-		int n = Client.selectInterface();
-		if (n == 0) {
-			viewGUI = new ViewGUI();
-		} else {
-			viewCLI = new ViewCLI();
-		}
-		System.out.println("Created the view");
-
-		/*
-		 * Creating an Executor Service in order to run the ClientIN and
-		 * ClientOut simoultaneously
-		 */
-		ExecutorService executor = Executors.newFixedThreadPool(2);
-		System.out.println("Created the executor service");
-		// creates the handlers
-
-		ClientOut clientOut = new ClientOut(new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream())),
-				viewPlayer);
-		System.out.println("Created the OutHandler");
-
-		executor.submit(
-				new ClientIn(new ObjectInputStream(new BufferedInputStream(socket.getInputStream())), viewPlayer));
-		System.out.println("CLIENT: Created the InHandler --> in a separate thread");
-		executor.submit(viewPlayer);
-		System.out.println("CLIENT: Executed the ViewPlayer --> in a separate thread");
-
-		// Model localModel = new Model();
-		// System.out.println("CLIENT: Created the local model");
+//		client.chooseInterface();
+			
 
 	}
+
 
 	/* Shows an Option Dialog that lets the user choose between CLI and GUI */
-	public static int selectInterface() {
+/*	public String chooseInterface() {
 
 		String[] array = { "GUI", "CLI" };
+
 
 		int choice = JOptionPane.showOptionDialog(null, "GUI or CLI?", "Choose an option", JOptionPane.YES_NO_OPTION,
 				JOptionPane.QUESTION_MESSAGE, null, array, null);
 
+		if (choice == 0) {
+			viewGUI = new ViewGUI();
+			viewGUI.start();
+			
+		} else {
+			viewCLI = new ViewCLI();
+			viewCLI.();
+			
+		}
+		
+		return array[choice];
+		
+	}
+
+	public int chooseNetwork() {
+
+		String[] array = { "RMI", "SOCKET" };
+
+		int choice = JOptionPane.showOptionDialog(null, "RMI or SOCKET", "Choose an option", JOptionPane.YES_NO_OPTION,
+				JOptionPane.QUESTION_MESSAGE, null, array, null);
+
+		if (choice == 0) {
+			clientSocket = new ClientSocket();
+			clientSocket.startClient();
+		} else {
+			clientRMI = new ClientRMI();
+			clientRMI.startClient();
+		}
+
 		return choice;
 	}
 
+*/
+	
 }
+

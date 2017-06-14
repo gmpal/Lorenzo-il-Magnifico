@@ -5,8 +5,12 @@ import it.polimi.ingsw.GC_24.model.FamilyMember;
 import it.polimi.ingsw.GC_24.model.PlayerColour;
 import it.polimi.ingsw.GC_24.places.Place;
 
-public abstract class Area {
-	
+public abstract class Area implements java.io.Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1186597780187256338L;
+
 	protected List<Place> placesArray = new ArrayList<>();
 	
 	// returns true if in the same Tower there already is a family member of the

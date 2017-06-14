@@ -9,6 +9,10 @@ import it.polimi.ingsw.GC_24.places.Place;
 import it.polimi.ingsw.GC_24.values.*;
 
 public class CouncilPalace extends Area {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5640161736645228571L;
 	
 	private int numPlayers;
 	private static final int COSTDICE=1;
