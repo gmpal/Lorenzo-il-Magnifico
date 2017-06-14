@@ -32,19 +32,9 @@ public class Controller extends MyObservable implements MyObserver {
 	public <O extends MyObservable, C> void update(O observed, C change) {
 		
 		System.out.println("Controller: I have been notified by " +observed.getClass().getSimpleName());
-		
 		System.out.println("Controller: i received this :"+change);
-		System.out.println("Controller: i know  it is a " +change.getClass().getSimpleName());
-		System.out.println("So I cast it");
-		SetOfValues set = (SetOfValues) change;
-		System.out.println("Casted! Now I change something");
-		set.getCoins().addQuantity(5);
-		System.out.println("Added 5 coins");
-		HashMap<String, Object> obj = new HashMap<String, Object>();
-		obj.put("TEST", set);
-		System.out.println("Created a HashMap with TEST key assigned to the set");
-		System.out.println("Only this time i notify my temporary observer ServerOut with the set");
-		this.notifyMyObservers(obj);
+		
+		
 		
 	}
 

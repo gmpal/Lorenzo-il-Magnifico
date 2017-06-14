@@ -13,6 +13,7 @@ import it.polimi.ingsw.GC_24.dice.SetOfDice;
 
 public class Model extends MyObservable {
 	
+	
 	private List<Player> players;
 	private Board board;
 	private Player currentPlayer;
@@ -39,6 +40,7 @@ public class Model extends MyObservable {
 	public void setModel(ArrayList<Player> players) {
 		
 		this.players = players;
+
 		this.board = new Board(players.size());
 		this.currentPlayer = players.get(0);
 		this.gameState = State.RUNNING;
