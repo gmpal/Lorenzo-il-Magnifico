@@ -11,8 +11,9 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	private static Scanner scanner = new Scanner(System.in);
 	private String name;
 	private String colour;
-	private List<String> colours = new ArrayList<>();
+	private List<String> colours;
 	private HashMap<String, Object> hm;
+	private int colourAvailable;
 
 	/*
 	 * public static void main(String args[]) { ViewPlayer vp = new ViewCLI();
@@ -23,17 +24,28 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	@Override
 	public void run() {
 
-		
 		name = setName();
-		// notifyMyObservers("name", name);
-		colour = setColour();
-		// notifyMyObservers("colour", colour);
 
+		colour = setColour();
+
+		System.out.println("Molto bene: tu sei " + name + " con questo colore: " + colour);
+		
+		this.sendPlayerString(name, colour);
+		
+		
+
+	}
+
+	private void getColoursfromServer() {
+		hm = new HashMap<>();
+		hm.put("colours", null);
+
+		this.notifyMyObservers(hm);
 	}
 
 	private void setConnection() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public String setName() {
@@ -46,20 +58,56 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	}
 
 	public String setColour() {
-		String colourList = colourToString(colours);
-		String readColour;
-		int intColour = 0;
-		do {
-			System.out.println(colourList);
-			readColour = isInt(scanner.nextLine());
-			if (readColour != null) {
-				intColour = Integer.parseInt(readColour);
-				if (intColour < 1 || intColour > colours.size()) {
-					readColour = null;
+
+		boolean correct = false;
+
+		String chosenColour = null;
+		System.out.println("Choose your colour: ");
+
+		while (!correct) {
+			getColoursfromServer();
+			if (scanner.hasNextLine()) {
+				chosenColour = scanner.nextLine();
+				if (chosenColour.equalsIgnoreCase("yellow") || chosenColour.equalsIgnoreCase("blue")
+						|| chosenColour.equalsIgnoreCase("green") || chosenColour.equalsIgnoreCase("red")) {
+
+					if (isTheColourAvailable(chosenColour) == 1) {
+						correct = true;
+						System.out.println("Colore valido");
+
+					} else {
+						System.out.println("Colour already chosen, choose again: ");
+					}
+
+				} else {
+					System.out.println("Wrong colour, choose again: ");
+
 				}
 			}
-		} while (readColour == null);
-		return colours.get(intColour - 1);
+		}
+		return chosenColour;
+
+		/*
+		 * String colourList = colourToString(colours); String readColour; int
+		 * intColour = 0; do { System.out.println(colourList); readColour =
+		 * isInt(scanner.nextLine()); if (readColour != null) { intColour =
+		 * Integer.parseInt(readColour); if (intColour < 1 || intColour >
+		 * colours.size()) { readColour = null; } } } while (readColour ==
+		 * null); return colours.get(intColour - 1);
+		 */
+	}
+
+	private int isTheColourAvailable(String chosenColour) {
+		colourAvailable = -1;
+		hm = new HashMap<>();
+		hm.put("checkColour", chosenColour);
+		this.notifyMyObservers(hm);
+
+		while (colourAvailable == -1) {
+			System.out.printf("");
+		}
+
+		return (this.colourAvailable);
 	}
 
 	public String colourToString(List<String> colours) {
@@ -71,20 +119,18 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		return coloursToString.toString();
 	}
 
-	public String createMessage(String name, String colour) {
-		StringBuilder sb = new StringBuilder();
-		sb.append(name);
-		sb.append(" ");
-		sb.append(colour);
-		return sb.toString();
-
+	public void sendPlayerString(String name, String colour) {
+		String player = (name+" "+colour);
+		hm = new HashMap<>();
+		hm.put("PLAYERNAME", player);
+		this.notifyMyObservers(hm);
 	}
 
 	public void showAndGetOption() {
 		while (true) {
 			System.out.println("Choose action:\n" + "a)Show board\n" + "b)Show personal board\n"
-					+ "c)Show leader cards\n" + "d)Place a familiar\n" + "e)Use a leader cards\n"
-					+ "f)Throw a leader cards\n" + "g)End turn\n" + "h)Exit");
+					+ "c)Show leader cards\n" + "d)Place a familiar\n" + "e)Use a leader card\n"
+					+ "f)Throw a leader card\n" + "g)End turn\n" + "h)Exit");
 			String command = scanner.nextLine();
 			boolean commandOk = true;
 			if (command.equals("a")) {
@@ -115,6 +161,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 			if (commandOk) {
 				hm.clear();
 				hm.put("place", command);
+
 				notifyMyObservers(hm);
 				// System.out.println(command);
 			}
@@ -217,16 +264,17 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	@Override
 	public <O extends MyObservable, C> void update(O observed, C change) {
 
-		
-		System.out.println("ViewCLI: I have been notified by " +observed.getClass().getSimpleName());
-		System.out.println("ViewCLI: i received this :"+change);
-		System.out.println("ViewCLI: i know  it is a " +change.getClass().getSimpleName());
-		
-		// Da sistemare, funziona solo con questa arraylist. bisogna gestire
-		//singolarmente tutti i casi quindi --> o riconoscere questa arraylist
-		//oppure fare arrivare fino a qui la hashmap e giocarci dopo
-		
+		if (change.equals("Colour Available")) {
 
+			this.colourAvailable = 1;
+		} else if (change.equals("Colour Not Available")) {
+
+			this.colourAvailable = 0;
+			System.out.println("Entrato in not available");
+		} else {
+			System.out.println("Risposta " + change);
+
+		}
 
 	}
 

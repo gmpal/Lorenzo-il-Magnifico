@@ -1,8 +1,16 @@
-package it.polimi.ingsw.GC_24.controller;
+﻿package it.polimi.ingsw.GC_24.controller;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.StringTokenizer;
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.MyObserver;
 import it.polimi.ingsw.GC_24.model.Model;
+import it.polimi.ingsw.GC_24.model.Player;
+import it.polimi.ingsw.GC_24.model.PlayerColour;
 
 //Just one server's side controller for each game
 public class Controller extends MyObservable implements MyObserver {
@@ -26,11 +34,80 @@ public class Controller extends MyObservable implements MyObserver {
 		
 		System.out.println("Controller: I have been notified by " +observed.getClass().getSimpleName());
 		System.out.println("Controller: i received this :"+change);
-		
+		try {
+			String answer = handleRequestFromClient((Map<String, Object>) change);
+			System.out.println("--------------"+answer);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 	}
 
+
+
+	
+	// IN CHE MODO LA questa VIEW GESTISCE CIO' CHE RICEVE?
+	// è davvero lei che gestisce o si limita ad inoltrare al controller?
+	// oppure --> in base al tipo di richiesta decide se inoltrare oppure no
+
+	/**
+	 * This method analyzes the incoming HashMap. If it finds specific keywords
+	 * in the keySet, it does different things with different objects
+	 * @throws IOException 
+	 */
+	private String handleRequestFromClient(Map<String, Object> request) throws IOException {
+		System.out.println("Controller: handling the request...");
+		Set<String> command = request.keySet();
+		
+		if (command.contains("PLAYERNAME")) {
+			StringTokenizer tokenizer = new StringTokenizer((String) request.get("PLAYERNAME"));
+			String name = tokenizer.nextToken();
+			String colour = tokenizer.nextToken();
+				
+			Player player = new Player(name, PlayerColour.valueOf(colour.toUpperCase()));
+			
+			return player.toString();
+		}
+		
+		else if (command.contains("colours")) {
+			List<String> playerColoursArray = PlayerColour.getValues();
+			HashMap<String, Object> coloursMap = new HashMap<String, Object>();
+			coloursMap.put("colours", playerColoursArray);
+			this.notifyMyObservers(coloursMap);
+			
+			System.out.println("ServerOut: ArrayListOfColours sent");
+			return " ArrayListOfColours sent";
+		}
+		
+		else if (command.contains("checkColour")) {
+			String colour = (String) request.get("checkColour");
+			String availability;
+			if (PlayerColour.checkValue(colour)){
+				System.out.println("Sono entrato nel controllo del colore");
+				availability = "Colour Available";
+				PlayerColour.removeValue(colour);
+			} else {
+				System.out.println("Sono uscito nel controllo del colore"); 
+				availability = "Colour Not Available";
+				
+			}
+			
+			HashMap<String, Object> coloursAnswerMap = new HashMap<String, Object>();
+			coloursAnswerMap.put("coloursAnswer", availability);
+		//	this.notifySingleObserver((MyObserver)observed, coloursAnswerMap );
+			this.notifyMyObservers(coloursAnswerMap);
+			return "Colour checked";
+			}
+		
+
+		else {
+			return "bad command";
+		}
+
+	}
+	
 }
 
 		
