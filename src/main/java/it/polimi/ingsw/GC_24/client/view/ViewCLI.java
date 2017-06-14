@@ -129,8 +129,8 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	public void showAndGetOption() {
 		while (true) {
 			System.out.println("Choose action:\n" + "a)Show board\n" + "b)Show personal board\n"
-					+ "c)Show leader cards\n" + "d)Place a familiar\n" + "e)Use a leader cards\n"
-					+ "f)Throw a leader cards\n" + "g)End turn\n" + "h)Exit");
+					+ "c)Show leader cards\n" + "d)Place a familiar\n" + "e)Use a leader card\n"
+					+ "f)Throw a leader card\n" + "g)End turn\n" + "h)Exit");
 			String command = scanner.nextLine();
 			boolean commandOk = true;
 			if (command.equals("a")) {
@@ -263,6 +263,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 
 	@Override
 	public <O extends MyObservable, C> void update(O observed, C change) {
+
 		if (change.equals("Colour Available")) {
 
 			this.colourAvailable = 1;
@@ -274,6 +275,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 			System.out.println("Risposta " + change);
 
 		}
+
 	}
 
 	public String getName() {

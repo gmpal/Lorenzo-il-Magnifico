@@ -39,6 +39,7 @@ public class Client {
 
 		String[] array = { "GUI", "CLI" };
 
+
 		int choice = JOptionPane.showOptionDialog(null, "GUI or CLI?", "Choose an option", JOptionPane.YES_NO_OPTION,
 				JOptionPane.QUESTION_MESSAGE, null, array, null);
 
@@ -77,3 +78,4 @@ public class Client {
 */
 	
 }
+
