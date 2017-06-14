@@ -1,11 +1,8 @@
 package it.polimi.ingsw.GC_24.controller;
 
-import java.util.HashMap;
-
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.MyObserver;
 import it.polimi.ingsw.GC_24.model.Model;
-import it.polimi.ingsw.GC_24.values.SetOfValues;
 
 //Just one server's side controller for each game
 public class Controller extends MyObservable implements MyObserver {
