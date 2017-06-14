@@ -1,10 +1,8 @@
 package it.polimi.ingsw.GC_24.values;
 
-import java.io.Serializable;
-
 import it.polimi.ingsw.GC_24.model.Player;
 
-public class VictoryPoint extends Value{
+public class VictoryPoint extends Value {
 
 	//constructor
 	public VictoryPoint(int value) {
