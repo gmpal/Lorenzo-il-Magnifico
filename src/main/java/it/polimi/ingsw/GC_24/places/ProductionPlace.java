@@ -25,7 +25,7 @@ public class ProductionPlace extends ActivityPlace{
 		for (Development card : productionCards) {
 			Buildings buildings = (Buildings) card;
 			if (buildings.getCostDie() <= (getFamMemberOnPlace().getMemberValue() + getAdditionalCostDice())) {
-				buildings.getValueEffect().giveImmediateEffect(player);
+				buildings.getImmediateEffect1().giveImmediateEffect(player);
 				buildings.getImmediateEffect().giveImmediateEffect(player);
 			}
 		}

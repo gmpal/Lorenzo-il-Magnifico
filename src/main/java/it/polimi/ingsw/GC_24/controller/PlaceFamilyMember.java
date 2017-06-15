@@ -7,7 +7,7 @@ import it.polimi.ingsw.GC_24.places.Place;
 public class PlaceFamilyMember extends Action {
 
 	public PlaceFamilyMember(Player player, FamilyMember familyMember, Place place) {
-		
+
 	}
 
 	@Override

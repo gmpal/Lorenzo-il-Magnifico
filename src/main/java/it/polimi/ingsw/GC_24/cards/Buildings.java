@@ -14,8 +14,8 @@ public class Buildings extends Development {
 
 	// constructor
 	public Buildings(String name, int costDie, String type, SetOfValues cost, ImmediateEffect immediateEffects,
-			PermanentEffect permanentEffects, int round, ValueEffect valueEffects) {
-		super(name, type, cost, immediateEffects, permanentEffects, round, valueEffects);
+			PermanentEffect permanentEffects, int round, ImmediateEffect immediateEffects1) {
+		super(name, type, cost, immediateEffects, permanentEffects, round, immediateEffects1);
 		this.costDie = costDie;
 	}
 
