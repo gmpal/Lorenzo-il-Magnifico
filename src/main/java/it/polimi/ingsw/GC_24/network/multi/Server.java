@@ -98,7 +98,7 @@ public class Server {
 						|| game.getGameState().equals(State.WAITINGFORPLAYERFOUR)) {
 					clientConnected=false;
 					System.out.println("Starting Timer");
-					Timer.startTimer(30, clientConnected);
+					Timer.startTimer(30);
 				}
 				
 				if (game.getGameState().equals(State.RUNNING)) {
