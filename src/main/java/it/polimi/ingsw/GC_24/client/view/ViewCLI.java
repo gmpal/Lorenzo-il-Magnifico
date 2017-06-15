@@ -26,14 +26,11 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 
 		name = setName();
 
-
 		colour = setColour();
 
 		System.out.println("Molto bene: tu sei " + name + " con questo colore: " + colour);
-		
+
 		this.sendPlayerString(name, colour);
-		
-		
 
 	}
 
@@ -44,10 +41,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		this.notifyMyObservers(hm);
 	}
 
-	private void setConnection() {
-		// TODO Auto-generated method stub
 
-	}
 
 	public String setName() {
 		String sc;
@@ -66,7 +60,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		System.out.println("Choose your colour: ");
 
 		while (!correct) {
-			getColoursfromServer();
+			this.getColoursfromServer();
 			if (scanner.hasNextLine()) {
 				chosenColour = scanner.nextLine();
 				if (chosenColour.equalsIgnoreCase("yellow") || chosenColour.equalsIgnoreCase("blue")
@@ -74,7 +68,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 
 					if (isTheColourAvailable(chosenColour) == 1) {
 						correct = true;
-						System.out.println("Colore valido");
+						System.out.println("Valid colour!");
 
 					} else {
 						System.out.println("Colour already chosen, choose again: ");
@@ -121,7 +115,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	}
 
 	public void sendPlayerString(String name, String colour) {
-		String player = (name+" "+colour);
+		String player = (name + " " + colour);
 		hm = new HashMap<>();
 		hm.put("PLAYERNAME", player);
 		this.notifyMyObservers(hm);
@@ -263,7 +257,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	}
 
 	@Override
-	public <O extends MyObservable, C> void update(O observed, C change) {
+	public <C> void update(MyObservable o, C change) {
 
 		if (change.equals("Colour Available")) {
 
@@ -271,7 +265,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		} else if (change.equals("Colour Not Available")) {
 
 			this.colourAvailable = 0;
-			System.out.println("Entrato in not available");
+
 		} else {
 			System.out.println("Risposta " + change);
 

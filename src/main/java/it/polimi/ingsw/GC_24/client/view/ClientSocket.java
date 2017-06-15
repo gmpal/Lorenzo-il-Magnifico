@@ -79,6 +79,7 @@ public class ClientSocket {
 	public void createClientHandler(int i, Socket socket) throws IOException {
 
 		objToServer = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+		objToServer.flush();
 		objFromServer = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
 
 		if (i == 0) {
