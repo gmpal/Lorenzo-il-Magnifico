@@ -7,16 +7,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.StringTokenizer;
+import java.util.concurrent.ExecutorService;
+
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.MyObserver;
-import it.polimi.ingsw.GC_24.model.Player;
-import it.polimi.ingsw.GC_24.model.PlayerColour;
-import it.polimi.ingsw.GC_24.values.SetOfValues;
 
 //There's a ServerSocketView for each Client --> SERVER SIDE
 //It's this class that controls the communication from SERVER to CLIENT 
@@ -29,11 +24,10 @@ public class ServerSocketView extends MyObservable implements Runnable, MyObserv
 
 	// constructor --> Receive a socket and creates Scanner and PrintWriter
 	public ServerSocketView(Socket socket) throws IOException {
-
+		this.socket = socket;
 		this.objToClient = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
 		objToClient.flush();
 		this.objFromClient = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
-		this.socket = socket;
 		
 	}
 
@@ -46,16 +40,14 @@ public class ServerSocketView extends MyObservable implements Runnable, MyObserv
 	public void run() {
 
 		try {
-			
 
 			while (true) {
 
 				Map<String, Object> request = (Map<String, Object>) objFromClient.readObject();
-				System.out.println("ServerIn: received from client: "+request);
+				System.out.println("ServerIn: received from client: " + request);
 				this.notifyMyObservers(request);
 				System.out.println("ServerIn: passed to the controller");
 
-				
 			}
 
 		} catch (ClassNotFoundException ioe) {
@@ -64,7 +56,7 @@ public class ServerSocketView extends MyObservable implements Runnable, MyObserv
 			System.out.println("SERVERIn: end of file reached");
 		} catch (IOException io) {
 			io.printStackTrace();
-			
+
 		}
 
 	}
@@ -76,9 +68,9 @@ public class ServerSocketView extends MyObservable implements Runnable, MyObserv
 	}
 
 	@Override
-	public <O extends MyObservable, C> void update(O observed, C change) {
-		System.out.println("ServerOut: I have been notified by " +observed.getClass().getSimpleName());
-		
+	public <C> void update(MyObservable o, C change) {
+		System.out.println("ServerOut: I have been notified by " + o.getClass().getSimpleName());
+
 		try {
 			objToClient.writeObject(change);
 			objToClient.flush();
@@ -87,7 +79,7 @@ public class ServerSocketView extends MyObservable implements Runnable, MyObserv
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 
 }

@@ -16,38 +16,34 @@ import it.polimi.ingsw.GC_24.model.PlayerColour;
 public class Controller extends MyObservable implements MyObserver {
 
 	private final Model game;
-	
-	//constructor
+
+	// constructor
 
 	public Controller(Model game) {
 
 		this.game = game;
-		
+
 	}
 
 	@Override
-	public void update() {		
+	public void update() {
 	}
 
 	@Override
-	public <O extends MyObservable, C> void update(O observed, C change) {
-		
-		System.out.println("Controller: I have been notified by " +observed.getClass().getSimpleName());
-		System.out.println("Controller: i received this :"+change);
+	public <C> void update(MyObservable o, C change) {
+
+		System.out.println("Controller: I have been notified by " + o.getClass().getSimpleName());
+		System.out.println("Controller: i received this :" + change);
+
 		try {
-			String answer = handleRequestFromClient((Map<String, Object>) change);
-			System.out.println("--------------"+answer);
+			String answer = handleRequestFromClient(o, (Map<String, Object>) change);
+			System.out.println("--------------" + answer);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
 	}
 
-
-
-	
 	// IN CHE MODO LA questa VIEW GESTISCE CIO' CHE RICEVE?
 	// è davvero lei che gestisce o si limita ad inoltrare al controller?
 	// oppure --> in base al tipo di richiesta decide se inoltrare oppure no
@@ -55,59 +51,58 @@ public class Controller extends MyObservable implements MyObserver {
 	/**
 	 * This method analyzes the incoming HashMap. If it finds specific keywords
 	 * in the keySet, it does different things with different objects
-	 * @throws IOException 
+	 * 
+	 * @throws IOException
 	 */
-	private String handleRequestFromClient(Map<String, Object> request) throws IOException {
+	private String handleRequestFromClient(MyObservable o, Map<String, Object> request) throws IOException {
 		System.out.println("Controller: handling the request...");
 		Set<String> command = request.keySet();
-		
+
 		if (command.contains("PLAYERNAME")) {
 			StringTokenizer tokenizer = new StringTokenizer((String) request.get("PLAYERNAME"));
 			String name = tokenizer.nextToken();
 			String colour = tokenizer.nextToken();
-				
+
 			Player player = new Player(name, PlayerColour.valueOf(colour.toUpperCase()));
-			
+
 			return player.toString();
 		}
-		
+
 		else if (command.contains("colours")) {
 			List<String> playerColoursArray = PlayerColour.getValues();
 			HashMap<String, Object> coloursMap = new HashMap<String, Object>();
 			coloursMap.put("colours", playerColoursArray);
-			this.notifyMyObservers(coloursMap);
-			
+			this.notifySingleObserver((MyObserver) o, coloursMap);
+
 			System.out.println("ServerOut: ArrayListOfColours sent");
 			return " ArrayListOfColours sent";
 		}
-		
+
 		else if (command.contains("checkColour")) {
 			String colour = (String) request.get("checkColour");
 			String availability;
-			if (PlayerColour.checkValue(colour)){
+			if (PlayerColour.checkValue(colour)) {
 				System.out.println("Sono entrato nel controllo del colore");
 				availability = "Colour Available";
 				PlayerColour.removeValue(colour);
 			} else {
-				System.out.println("Sono uscito nel controllo del colore"); 
+				System.out.println("Sono uscito nel controllo del colore");
 				availability = "Colour Not Available";
-				
+
 			}
-			
+
 			HashMap<String, Object> coloursAnswerMap = new HashMap<String, Object>();
 			coloursAnswerMap.put("coloursAnswer", availability);
-		//	this.notifySingleObserver((MyObserver)observed, coloursAnswerMap );
-			this.notifyMyObservers(coloursAnswerMap);
+			// this.notifySingleObserver((MyObserver)observed, coloursAnswerMap
+			// );
+			this.notifySingleObserver((MyObserver) o, coloursAnswerMap);
 			return "Colour checked";
-			}
-		
+		}
 
 		else {
 			return "bad command";
 		}
 
 	}
-	
-}
 
-		
+}

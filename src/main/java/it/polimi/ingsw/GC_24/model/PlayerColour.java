@@ -33,7 +33,7 @@ public enum PlayerColour {
 		return (VALUES.contains(element.toUpperCase()));
 	}
 	
-	public synchronized static List<String> getValues() {
+	public static synchronized  List<String> getValues() {
 		return VALUES;
 	}
 

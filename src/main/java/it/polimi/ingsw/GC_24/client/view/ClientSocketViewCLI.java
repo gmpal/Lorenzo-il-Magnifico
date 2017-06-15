@@ -51,20 +51,18 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 		}
 
 	}
-
-	@Override
-	public <O extends MyObservable, C> void update(O observed, C change) {
+@Override
+public <C> void update(MyObservable o, C change) {
+	try {
+		objToServer.writeObject(change);
+		objToServer.flush();
 		
-		try {
-			objToServer.writeObject(change);
-			objToServer.flush();
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
 	}
+	
+}
 
 	@Override
 	public void update() {

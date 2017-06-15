@@ -30,8 +30,15 @@ public class RMIView extends MyObservable implements RMIViewRemote, MyObserver {
 		
 	}
 
+
 	@Override
-	public <O extends MyObservable, C> void update(O observed, C change) {
+	public void getHashMap(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public <C> void update(MyObservable o, C change) {
 		System.out.println("SENDING THE CHANGE TO THE CLIENT");
 		try {
 			for (ClientViewRemote clientstub : this.clients) {
@@ -42,12 +49,6 @@ public class RMIView extends MyObservable implements RMIViewRemote, MyObserver {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-	}
-
-	@Override
-	public void getHashMap(HashMap<String, Object> map) {
-		// TODO Auto-generated method stub
 		
 	}
 

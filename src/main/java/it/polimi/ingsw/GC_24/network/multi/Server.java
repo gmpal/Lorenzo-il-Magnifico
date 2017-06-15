@@ -14,17 +14,16 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.client.rmi.RMIView;
 import it.polimi.ingsw.GC_24.client.rmi.RMIViewRemote;
 import it.polimi.ingsw.GC_24.client.view.ServerSocketView;
 import it.polimi.ingsw.GC_24.controller.Controller;
 import it.polimi.ingsw.GC_24.model.Model;
+import it.polimi.ingsw.GC_24.Timer;
 
-import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.PlayerColour;
-
+import it.polimi.ingsw.GC_24.model.State;
 
 public class Server {
 
@@ -34,16 +33,15 @@ public class Server {
 	private List<Player> players;
 	private Model game;
 	private Controller controller;
-	
+	private boolean clientConnected = false;
+	private ExecutorService threadPool = Executors.newCachedThreadPool();
+
 	// Crea un server e fa partire il suo metodo startServer()
-	public static void main(String[] args) throws IOException, AlreadyBoundException {
+	public static void main(String[] args) throws IOException, AlreadyBoundException, InterruptedException {
 		Server server = new Server();
 		server.startSocketServer();
 		server.startRMI();
 
-		
-			
-		
 	}
 
 	// constructor
@@ -54,86 +52,91 @@ public class Server {
 		System.out.println("SERVER: Controller Created");
 	}
 
-	
-private void startRMI() throws RemoteException, AlreadyBoundException{
+	private void startRMI() throws RemoteException, AlreadyBoundException {
 
-		//create the registry to publish remote objects
+		// create the registry to publish remote objects
 		Registry registry = LocateRegistry.createRegistry(RMI_PORT);
 		System.out.println("Constructing the RMI registry");
 
 		// Create the RMI View, that will be shared with the client
-		RMIView rmiView=new RMIView();
+		RMIView rmiView = new RMIView();
 
-		//controller observes this view
+		// controller observes this view
 		rmiView.registerMyObserver(this.controller);
 
-		//this view observes the model
+		// this view observes the model
 		this.game.registerMyObserver(rmiView);
 
 		// publish the view in the registry as a remote object
-		RMIViewRemote viewRemote=(RMIViewRemote) UnicastRemoteObject.
-				exportObject(rmiView, 0);
-		
+		RMIViewRemote viewRemote = (RMIViewRemote) UnicastRemoteObject.exportObject(rmiView, 0);
+
 		System.out.println("Binding the server implementation to the registry");
 		registry.bind(NAME, rmiView);
 
-		
-	}	
-	
+	}
+
 	// Crea un Cached Thread Pool e un serverSocket , poi si mette in attesa dei
 	// socket
 	// Quando un client si connette crea un ClientHandler e lo fa partire
-	public void startSocketServer() throws IOException {
-		
-		ExecutorService threadPool = Executors.newCachedThreadPool();
-		System.out.println("SERVER: ThreadPool Created");
+	public void startSocketServer() throws IOException, InterruptedException {
+
 		ServerSocket serverSocket = new ServerSocket(PORT);
-		System.out.println("SERVER: ServerSocket created");	
-		
-		System.out.println("SERVER: ready");
-		
-	
-		
-		int clientNumber = 0;
-		while(true){
+		System.out.println("SERVER: ServerSocket created");
+		game.setGameState(State.WAITINGFORPLAYERONE);
+		System.out.println(game.getGameState());
+
+		while (true) {
 			try {
+
 				Socket socket = serverSocket.accept();
-				clientNumber++;
-				System.out.println("SERVER: client num. "+clientNumber+" connected");
-		
-				ServerSocketView serverSocketView = new ServerSocketView(socket);
-				threadPool.submit(serverSocketView);
+				this.addClient(socket);
+				System.out.println("Client connesso a "+game);
+				game.setGameState(game.getGameState().nextState());
+				clientConnected=true;
+				System.out.println(game.getGameState());
+				if (game.getGameState().equals(State.WAITINGFORPLAYERTHREE)
+						|| game.getGameState().equals(State.WAITINGFORPLAYERFOUR)) {
+					clientConnected=false;
+					System.out.println("Starting Timer");
+					Timer.startTimer(30, clientConnected);
+				}
 				
-				System.out.println("SERVER: ServerIn created");
+				if (game.getGameState().equals(State.RUNNING)) {
+					System.out.println("Creando una nuova partita");
+					this.newGame();
+				}
 				
-				game.registerMyObserver(serverSocketView);
-				serverSocketView.registerMyObserver(controller);
-				controller.registerMyObserver(serverSocketView);
-		//		this.addClient(serverOut); //now only adds the observer
-				System.out.println("SERVER: observers setted!");
-			
+
 			} catch (IOException e) {
 				break;
 			}
 		}
-		
+
 		threadPool.shutdown();
 		serverSocket.close();
 	}
 
-	//TODO:gestire questo metodo! 
-	/*public void addClient(ServerOut serverOut) {
-		game.registerMyObserver(serverOut);
-		// Submits a Runnable task for execution
-		game.setGameState(game.getGameState().nextState());
-		if (game.getGameState().equals(State.RUNNING)) {
-			System.out.println("creo una nuova game");
-		//TODO:	game = new Model();
-			System.out.println(game.getGameState());
-			controller = new Controller(game);
-		}*/
+	private void newGame() {
+		this.game = new Model();
+		this.controller = new Controller(game);
+		System.out.println("NUOVA PARTITA CREATA");
+	}
+
+	public void addClient(Socket socket) throws IOException {
+
+		ServerSocketView serverSocketView = new ServerSocketView(socket);
+		threadPool.submit(serverSocketView);
+//TODO: finché non inserisco il nome non super questa istruzione
+		System.out.println("SERVER: ServerSocketView created");
+
+		game.registerMyObserver(serverSocketView);
+		serverSocketView.registerMyObserver(controller);
+		controller.registerMyObserver(serverSocketView);
+
+		System.out.println("SERVER: observers setted!");
+
+		
+
+	}
+
 }
-	
-	
-
-

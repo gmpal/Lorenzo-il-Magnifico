@@ -31,9 +31,11 @@ public class ClientSocketViewGUI implements ClientSocketViewInterface {
 	}
 
 	@Override
-	public <O extends MyObservable, C> void update(O observed, C change) {
+	public <C> void update(MyObservable o, C change) {
 		// TODO Auto-generated method stub
 		
 	}
+
+
 
 }
