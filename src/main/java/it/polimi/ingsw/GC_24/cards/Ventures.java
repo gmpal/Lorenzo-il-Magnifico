@@ -15,8 +15,8 @@ public class Ventures extends Development {
 	// constructor
 	public Ventures(String name, String type, SetOfValues cost,
 			MilitaryPoint requiredMilitaryPoints, ImmediateEffect immediateEffects, PermanentEffect permanentEffects,
-			int round, ValueEffect valueEffects) {
-		super(name, type, cost, immediateEffects, permanentEffects, round, valueEffects);
+			int round, ImmediateEffect immediateEffects1) {
+		super(name, type, cost, immediateEffects, permanentEffects, round, immediateEffects1);
 		this.requiredMilitaryPoints = requiredMilitaryPoints;
 	}
 

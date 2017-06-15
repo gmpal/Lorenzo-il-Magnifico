@@ -23,7 +23,7 @@ public class PerformProduction extends PerformActivity{
 		for (Development  card:productionCards){
 			Buildings building = (Buildings) card;
 			if (building.getCostDie() <= getDieValue()){
-				building.getValueEffect().giveImmediateEffect(player);
+				building.getImmediateEffect1().giveImmediateEffect(player);
 				building.getImmediateEffect().giveImmediateEffect(player);
 				} 
 			}

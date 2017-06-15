@@ -1,8 +1,7 @@
 package it.polimi.ingsw.GC_24.cards;
 
-import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
-import it.polimi.ingsw.GC_24.effects.PermanentEffect;
-import it.polimi.ingsw.GC_24.effects.ValueEffect;
+import it.polimi.ingsw.GC_24.effects.*;
+
 
 public class Leader extends Card{
 	/**
