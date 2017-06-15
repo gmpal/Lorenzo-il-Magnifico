@@ -1,5 +1,7 @@
 package it.polimi.ingsw.GC_24.model;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.board.Board;
@@ -20,29 +22,29 @@ public class Model extends MyObservable implements java.io.Serializable{
 	private Round currentRound;
 	private Period currentPeriod;
 	private List<Ranking> rankings;
+	private HashMap<String, Object> hm;
 	
 	/*Constructor --> ONLY PLAYERS NEEDS TO BE PASSED
 	 * other fields are created or set */
 	public Model() {
 		
-		this.players = null;
+		this.players = new ArrayList<Player>();
 		this.board = null;
 		this.currentPlayer = null;
 		this.gameState = State.WAITINGFORPLAYERONE;
 		this.dice = null;
 		this.currentRound = null;
 		this.currentPeriod = null;
+		this.rankings = new ArrayList<Ranking>();
 	}
 	
 	/*After a Model is created and the players are get, this
 	 * method sets the model so the game could start */
-	public void setModel(List<Player> players) {
+	public void setModel() {
 		
-		this.players = players;
-
 		this.board = new Board(players.size());
 		this.currentPlayer = players.get(0);
-		this.gameState = State.RUNNING;
+		this.setGameState(State.RUNNING);
 		this.dice = new SetOfDice();
 		this.currentRound = Round.ONE;
 		this.currentPeriod = Period.ONE;
@@ -53,7 +55,9 @@ public class Model extends MyObservable implements java.io.Serializable{
 			p.getMyFamily().setFamily(this.dice);
 			rankings.add(new Ranking(p));
 		}
-		notifyMyObservers(this);
+		hm = new HashMap<>();
+		hm.put("Model", this);
+		notifyMyObservers(hm);
 	}
 
 	// getters and setters
@@ -109,6 +113,11 @@ public class Model extends MyObservable implements java.io.Serializable{
 
 	public void setGameState(State gameState) {
 		this.gameState = gameState;
+		if (gameState == State.RUNNING) {
+			hm = new HashMap<>();
+			hm.put("gameStarted", gameState.toString());
+			this.notifyMyObservers(hm);
+		}
 	}
 
 
@@ -124,6 +133,11 @@ public class Model extends MyObservable implements java.io.Serializable{
 
 	public void setCurrentPeriod(Period currentPeriod) {
 		this.currentPeriod = currentPeriod;
+	}
+
+	@Override
+	public String toString() {
+		return "model ok";
 	}
 
 

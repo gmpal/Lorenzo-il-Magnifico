@@ -1,7 +1,6 @@
 package it.polimi.ingsw.GC_24.network.multi;
 
 import java.io.IOException;
-
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.rmi.AlreadyBoundException;
@@ -9,20 +8,14 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.client.rmi.RMIView;
 import it.polimi.ingsw.GC_24.client.rmi.RMIViewRemote;
 import it.polimi.ingsw.GC_24.client.view.ServerSocketView;
 import it.polimi.ingsw.GC_24.controller.Controller;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.Timer;
-
-import it.polimi.ingsw.GC_24.model.PlayerColour;
 import it.polimi.ingsw.GC_24.model.State;
 
 public class Server {
@@ -30,10 +23,8 @@ public class Server {
 	private static final int PORT = 28469;
 	private final static int RMI_PORT = 29999;
 	private final String NAME = "rmiView";
-	private List<Player> players;
 	private Model game;
 	private Controller controller;
-	private boolean clientConnected = false;
 	private ExecutorService threadPool = Executors.newCachedThreadPool();
 
 	// Crea un server e fa partire il suo metodo startServer()
@@ -41,7 +32,6 @@ public class Server {
 		Server server = new Server();
 		server.startSocketServer();
 		server.startRMI();
-
 	}
 
 	// constructor
@@ -87,22 +77,22 @@ public class Server {
 
 		while (true) {
 			try {
-
 				Socket socket = serverSocket.accept();
 				this.addClient(socket);
-				System.out.println("Client connesso a "+game);
+				System.out.println("Client connected to "+game);
 				game.setGameState(game.getGameState().nextState());
-				clientConnected=true;
 				System.out.println(game.getGameState());
-				if (game.getGameState().equals(State.WAITINGFORPLAYERTHREE)
-						|| game.getGameState().equals(State.WAITINGFORPLAYERFOUR)) {
-					clientConnected=false;
+				if (game.getGameState().equals(State.WAITINGFORPLAYERTHREE)) {
 					System.out.println("Starting Timer");
-					Timer.startTimer(30);
+					Timer.startTimer(10);
+					game.setModel();
+					System.out.println(game);
+					this.newGame();
 				}
 				
 				if (game.getGameState().equals(State.RUNNING)) {
-					System.out.println("Creando una nuova partita");
+					System.out.println("Creating a new game");
+					game.setModel();
 					this.newGame();
 				}
 				
@@ -119,7 +109,7 @@ public class Server {
 	private void newGame() {
 		this.game = new Model();
 		this.controller = new Controller(game);
-		System.out.println("NUOVA PARTITA CREATA");
+		System.out.println("NEW GAME CREATED");
 	}
 
 	public void addClient(Socket socket) throws IOException {

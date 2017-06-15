@@ -39,7 +39,6 @@ public class Controller extends MyObservable implements MyObserver {
 			String answer = handleRequestFromClient(o, (Map<String, Object>) change);
 			System.out.println("--------------" + answer);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -58,22 +57,11 @@ public class Controller extends MyObservable implements MyObserver {
 		System.out.println("Controller: handling the request...");
 		Set<String> command = request.keySet();
 
-		if (command.contains("PLAYERNAME")) {
-			StringTokenizer tokenizer = new StringTokenizer((String) request.get("PLAYERNAME"));
-			String name = tokenizer.nextToken();
-			String colour = tokenizer.nextToken();
-
-			Player player = new Player(name, PlayerColour.valueOf(colour.toUpperCase()));
-
-			return player.toString();
-		}
-
-		else if (command.contains("colours")) {
+		if (command.contains("colours")) {
 			List<String> playerColoursArray = PlayerColour.getValues();
 			HashMap<String, Object> coloursMap = new HashMap<String, Object>();
 			coloursMap.put("colours", playerColoursArray);
 			this.notifySingleObserver((MyObserver) o, coloursMap);
-
 			System.out.println("ServerOut: ArrayListOfColours sent");
 			return " ArrayListOfColours sent";
 		}
@@ -82,11 +70,11 @@ public class Controller extends MyObservable implements MyObserver {
 			String colour = (String) request.get("checkColour");
 			String availability;
 			if (PlayerColour.checkValue(colour)) {
-				System.out.println("Sono entrato nel controllo del colore");
+			//	System.out.println("Sono entrato nel controllo del colore");
 				availability = "Colour Available";
 				PlayerColour.removeValue(colour);
 			} else {
-				System.out.println("Sono uscito nel controllo del colore");
+			//	System.out.println("Sono uscito nel controllo del colore");
 				availability = "Colour Not Available";
 
 			}
@@ -97,6 +85,14 @@ public class Controller extends MyObservable implements MyObserver {
 			// );
 			this.notifySingleObserver((MyObserver) o, coloursAnswerMap);
 			return "Colour checked";
+		}
+		else if (command.contains("player")) {
+			StringTokenizer tokenizer = new StringTokenizer((String) request.get("player"));
+			String name = tokenizer.nextToken();
+			String colour = tokenizer.nextToken();
+			Player player = new Player(name, PlayerColour.valueOf(colour.toUpperCase()));
+			game.getPlayers().add(player);
+			return colour.toUpperCase()+" player created";
 		}
 
 		else {

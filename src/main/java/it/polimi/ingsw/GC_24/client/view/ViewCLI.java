@@ -1,11 +1,13 @@
 package it.polimi.ingsw.GC_24.client.view;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
+
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.MyObserver;
+import it.polimi.ingsw.GC_24.model.Model;
+import it.polimi.ingsw.GC_24.model.State;
 
 public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	private static Scanner scanner = new Scanner(System.in);
@@ -14,6 +16,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	private List<String> colours;
 	private HashMap<String, Object> hm;
 	private int colourAvailable;
+	private boolean gameStarted = false;
 
 	/*
 	 * public static void main(String args[]) { ViewPlayer vp = new ViewCLI();
@@ -25,13 +28,15 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	public void run() {
 
 		name = setName();
-
 		colour = setColour();
-
-		System.out.println("Molto bene: tu sei " + name + " con questo colore: " + colour);
-
+		System.out.println("*****Welcome "+name.toUpperCase()+"!\nYou are the " +colour.toUpperCase()+" player\n");
 		this.sendPlayerString(name, colour);
-
+		System.out.println("Waiting for other players...\n");
+		while (gameStarted == false) {
+			System.out.printf("");
+		}
+		System.out.println("THE GAME STARTS NOW");
+		showAndGetOption();
 	}
 
 	private void getColoursfromServer() {
@@ -117,7 +122,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	public void sendPlayerString(String name, String colour) {
 		String player = (name + " " + colour);
 		hm = new HashMap<>();
-		hm.put("PLAYERNAME", player);
+		hm.put("player", player);
 		this.notifyMyObservers(hm);
 	}
 
@@ -167,7 +172,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		String commandZone;
 		String floor = "floor";
 		do {
-			System.out.println("Choose a zone:\n" + "a)Tower territories\n" + "b)Tower characters\n"
+			System.out.println("Choose an area:\n" + "a)Tower territories\n" + "b)Tower characters\n"
 					+ "c)Tower buildings\n" + "d)Tower ventures\n" + "e)Market\n" + "f)Production\n" + "g)Harvest\n"
 					+ "h)Council Palace\n" + "i)Cancel");
 			commandZone = scanner.nextLine();
@@ -252,25 +257,27 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public <C> void update(MyObservable o, C change) {
-
+	
 		if (change.equals("Colour Available")) {
-
 			this.colourAvailable = 1;
-		} else if (change.equals("Colour Not Available")) {
-
-			this.colourAvailable = 0;
-
-		} else {
-			System.out.println("Risposta " + change);
-
 		}
-
+		else if (change.equals("Colour Not Available")) {
+			this.colourAvailable = 0;
+		}
+		else if (change.equals("RUNNING")) {
+			this.gameStarted = true;			
+		}
+		else if (change instanceof Model) {
+			System.out.println("HO RICEVUTO IL MODELLO TOP");
+			
+		}
+		else
+			System.out.println("Answer " + change);
 	}
 
 	public String getName() {
