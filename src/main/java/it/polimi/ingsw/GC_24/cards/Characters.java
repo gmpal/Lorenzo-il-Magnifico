@@ -13,8 +13,8 @@ public class Characters extends Development {
 
 	// constructor
 	public Characters(String name, String type, SetOfValues cost,
-			ImmediateEffect immediateEffects, PermanentEffect permanentEffects, int round, ValueEffect valueEffects) {
-		super(name, type, cost, immediateEffects, permanentEffects, round, valueEffects);
+			ImmediateEffect immediateEffects, PermanentEffect permanentEffects, int round, ImmediateEffect immediateEffects1) {
+		super(name, type, cost, immediateEffects, permanentEffects, round, immediateEffects1);
 	}
 
 	@Override

@@ -13,21 +13,21 @@ public abstract class Development extends Card {
 	
 	private SetOfValues cost;
 	private String type;
-	private ValueEffect valueEffects;
+	private ImmediateEffect immediateEffects1;
 	private ImmediateEffect immediateEffects;
 	private PermanentEffect permanentEffects;
 	private int round;
 
 	// constructor
 	public Development(String name, String type, SetOfValues cost, ImmediateEffect immediateEffects,
-			PermanentEffect permanentEffects, int round, ValueEffect valueEffects) {
+			PermanentEffect permanentEffects, int round, ImmediateEffect immediateEffects1) {
 		super(name);
 		this.type = type;
 		this.cost = cost;
 		this.immediateEffects = immediateEffects;
 		this.permanentEffects = permanentEffects;
 		this.round = round;
-		this.valueEffects = valueEffects;
+		this.setImmediateEffect1(immediateEffects1);
 	}
 
 	// add the card to the right ArrayList on the personal board
@@ -74,11 +74,11 @@ public abstract class Development extends Card {
 		this.permanentEffects = permanentEffect;
 	}
 
-	public ValueEffect getValueEffect() {
-		return valueEffects;
+	public ImmediateEffect getImmediateEffect1() {
+		return immediateEffects1;
 	}
 
-	public void setValueEffect(ValueEffect valueEffects) {
-		this.valueEffects = valueEffects;
+	public void setImmediateEffect1(ImmediateEffect immediateEffects1) {
+		this.immediateEffects1 = immediateEffects1;
 	}
 }
