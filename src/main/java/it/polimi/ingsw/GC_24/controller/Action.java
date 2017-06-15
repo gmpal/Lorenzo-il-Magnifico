@@ -1,5 +1,8 @@
 package it.polimi.ingsw.GC_24.controller;
 
+import java.util.List;
+
+import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
 import it.polimi.ingsw.GC_24.model.FamilyMember;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
@@ -43,7 +46,7 @@ public abstract class Action {
 			this.player = player;
 		}
 
-		public abstract void run(Player player, FamilyMember familyMember, Place place);
+		public abstract List<ImmediateEffect> run(Player player, FamilyMember familyMember, Place place);
 		
 
 }
