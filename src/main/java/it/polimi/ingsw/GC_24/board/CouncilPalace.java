@@ -35,6 +35,7 @@ public class CouncilPalace extends Area {
 		return placesArray;
 	} 
 	
+
 	//returns the updated list of players' turn
 	public List<Player> updateTurn(Player player) {
 		if(!temporaryTurn.contains(player))

@@ -211,12 +211,15 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		int commandFloorInt = 0;
 		do {
 			System.out.println("Choose " + s + " (1,2,3,4) 5)Cancel ");
+			commandFloorInt = scanner.nextInt();
+			System.out.println("Choose " + s + " (1,2,3,4) 5)Cancel ");
 			commandFloor = isInt(scanner.nextLine());
 			if (commandFloor != null && (commandFloorInt > 5 || commandFloorInt < 1)) {
 				System.out.println("Wrong character");
 				commandFloor = null;
 			}
 		} while (commandFloor == null || (commandFloorInt > 5 || commandFloorInt < 1));
+		
 		if (commandFloorInt == 5) {
 			commandFloor = "cancel";
 		}

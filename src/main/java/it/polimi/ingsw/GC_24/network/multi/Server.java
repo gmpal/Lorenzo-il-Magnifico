@@ -94,15 +94,13 @@ public class Server {
 				game.setGameState(game.getGameState().nextState());
 				clientConnected=true;
 				System.out.println(game.getGameState());
-				if (game.getGameState().equals(State.WAITINGFORPLAYERTHREE)
-						|| game.getGameState().equals(State.WAITINGFORPLAYERFOUR)) {
-					clientConnected=false;
+				if (game.getGameState().equals(State.WAITINGFORPLAYERTHREE)) {
 					System.out.println("Starting Timer");
-					Timer.startTimer(30);
+					Timer.startTimer(10);
+					this.newGame();
 				}
 				
 				if (game.getGameState().equals(State.RUNNING)) {
-					System.out.println("Creando una nuova partita");
 					this.newGame();
 				}
 				
