@@ -5,13 +5,12 @@ import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.board.Board;
 import it.polimi.ingsw.GC_24.dice.SetOfDice;
 
-public class Model extends MyObservable implements java.io.Serializable{
+public class Model extends MyObservable implements java.io.Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -4715762523324083940L;
-	
-	
+
 	private List<Player> players;
 	private Board board;
 	private Player currentPlayer;
@@ -20,11 +19,13 @@ public class Model extends MyObservable implements java.io.Serializable{
 	private Round currentRound;
 	private Period currentPeriod;
 	private List<Ranking> rankings;
-	
-	/*Constructor --> ONLY PLAYERS NEEDS TO BE PASSED
-	 * other fields are created or set */
+
+	/*
+	 * Constructor --> ONLY PLAYERS NEEDS TO BE PASSED other fields are created
+	 * or set
+	 */
 	public Model() {
-		
+
 		this.players = null;
 		this.board = null;
 		this.currentPlayer = null;
@@ -33,11 +34,13 @@ public class Model extends MyObservable implements java.io.Serializable{
 		this.currentRound = null;
 		this.currentPeriod = null;
 	}
-	
-	/*After a Model is created and the players are get, this
-	 * method sets the model so the game could start */
+
+	/*
+	 * After a Model is created and the players are get, this method sets the
+	 * model so the game could start
+	 */
 	public void setModel(List<Player> players) {
-		
+
 		this.players = players;
 
 		this.board = new Board(players.size());
@@ -47,8 +50,8 @@ public class Model extends MyObservable implements java.io.Serializable{
 		this.currentRound = Round.ONE;
 		this.currentPeriod = Period.ONE;
 		this.dice.reset();
-		
-		for(Player p:players){
+
+		for (Player p : players) {
 			p.getMyValues().setInitialValues(players.indexOf(p));
 			p.getMyFamily().setFamily(this.dice);
 			rankings.add(new Ranking(p));
@@ -61,72 +64,56 @@ public class Model extends MyObservable implements java.io.Serializable{
 		return players;
 	}
 
-
 	public Board getBoard() {
 		return board;
 	}
-
 
 	public Player getCurrentPlayer() {
 		return currentPlayer;
 	}
 
-
 	public State getGameState() {
 		return gameState;
 	}
-
 
 	public SetOfDice getDice() {
 		return dice;
 	}
 
-
 	public Round getCurrentRound() {
 		return currentRound;
 	}
-
 
 	public Period getCurrentPeriod() {
 		return currentPeriod;
 	}
 
-
 	public void setPlayers(List<Player> players) {
 		this.players = players;
 	}
-
 
 	public void setBoard(Board board) {
 		this.board = board;
 	}
 
-
 	public void setCurrentPlayer(Player currentPlayer) {
 		this.currentPlayer = currentPlayer;
 	}
-
 
 	public void setGameState(State gameState) {
 		this.gameState = gameState;
 	}
 
-
 	public void setDice(SetOfDice dice) {
 		this.dice = dice;
 	}
-
 
 	public void setCurrentRound(Round currentRound) {
 		this.currentRound = currentRound;
 	}
 
-
 	public void setCurrentPeriod(Period currentPeriod) {
 		this.currentPeriod = currentPeriod;
 	}
 
-
-	
-}	
-
+}
