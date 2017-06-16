@@ -18,18 +18,14 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 	private ObjectInputStream objFromServer;
 	private ObjectOutputStream objToServer;
 	private ViewCLI view;
-	private MiniModel miniModel;
-
 	private boolean end = false;
 	private boolean colourReceived;
 
-	public ClientSocketViewCLI(ObjectInputStream objFromServer, ObjectOutputStream objToServer, ViewCLI view, MiniModel miniModel) {
+	public ClientSocketViewCLI(ObjectInputStream objFromServer, ObjectOutputStream objToServer, ViewCLI view) {
 		this.objToServer = objToServer;
 		this.objFromServer = objFromServer;
 		this.view = view;
-		this.miniModel = miniModel;
 		this.registerMyObserver(view);
-		this.registerMyObserver(miniModel);
 		view.registerMyObserver(this);
 	}
 
@@ -79,22 +75,16 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 
 		if (command.contains("colours")) {
 			List<String> playerColoursArray = (List<String>) request.get("colours");
-
+			System.out.println("******"+playerColoursArray);
 			notifyMyObservers(playerColoursArray);
 		}
-
 		if (command.contains("coloursAnswer")) {
 			String colourAnswer = (String) request.get("coloursAnswer");
 			notifyMyObservers(colourAnswer);
 		}
-		
-		if (command.contains("gameStarted")) {
-			String gameStarted = (String) request.get("gameStarted");
-			notifyMyObservers(gameStarted);
-		}
 		if (command.contains("Model")) {
 			Model modelReceived = (Model) request.get("Model");
-			notifySingleObserver(miniModel, modelReceived);
+			notifyMyObservers(modelReceived);
 		}
 	}
 

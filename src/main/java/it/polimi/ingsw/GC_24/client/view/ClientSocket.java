@@ -14,7 +14,6 @@ import javax.swing.JOptionPane;
 
 public class ClientSocket {
 
-	private MiniModel miniModel = new MiniModel(); //TODO da spostare su Client
 	private ViewCLI viewCLI;
 	private ViewGUI viewGUI;
 	private ClientSocketViewInterface clientSocketView;
@@ -46,14 +45,7 @@ public class ClientSocket {
 
 		int viewCode = this.createInterface();
 		this.createClientHandler(viewCode, socket);
-		
-
-		// Model localModel = new Model();
-		// System.out.println("CLIENT: Created the local model");
-
 	}
-
-	
 
 	/* Shows an Option Dialog that lets the user choose between CLI and GUI */
 	public int createInterface() {
@@ -87,7 +79,7 @@ public class ClientSocket {
 			clientSocketView = new ClientSocketViewGUI(objFromServer, objToServer, viewGUI);
 
 		} else {
-			clientSocketView = new ClientSocketViewCLI(objFromServer, objToServer, viewCLI, miniModel);
+			clientSocketView = new ClientSocketViewCLI(objFromServer, objToServer, viewCLI);
 
 		}
 		executor.submit(clientSocketView);

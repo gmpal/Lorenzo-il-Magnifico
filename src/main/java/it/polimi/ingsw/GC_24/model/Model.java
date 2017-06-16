@@ -55,7 +55,7 @@ public class Model extends MyObservable implements java.io.Serializable{
 			p.getMyValues().setInitialValues(players.indexOf(p));
 			p.getMyFamily().setFamily(this.dice);
 			rankings.add(new Ranking(p));
-		}
+		}		
 		hm = new HashMap<>();
 		hm.put("Model", this);
 		notifyMyObservers(hm);
@@ -114,11 +114,6 @@ public class Model extends MyObservable implements java.io.Serializable{
 
 	public void setGameState(State gameState) {
 		this.gameState = gameState;
-		if (gameState == State.RUNNING) {
-			hm = new HashMap<>();
-			hm.put("gameStarted", gameState.toString());
-			this.notifyMyObservers(hm);
-		}
 	}
 
 

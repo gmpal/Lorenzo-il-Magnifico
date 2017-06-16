@@ -56,8 +56,10 @@ public class Controller extends MyObservable implements MyObserver {
 	private String handleRequestFromClient(MyObservable o, Map<String, Object> request) throws IOException {
 		System.out.println("Controller: handling the request...");
 		Set<String> command = request.keySet();
+		System.out.println(command);
 
 		if (command.contains("colours")) {
+			System.out.println("bo");
 			List<String> playerColoursArray = PlayerColour.getValues();
 			HashMap<String, Object> coloursMap = new HashMap<String, Object>();
 			coloursMap.put("colours", playerColoursArray);
@@ -91,6 +93,8 @@ public class Controller extends MyObservable implements MyObserver {
 			String colour = tokenizer.nextToken();
 			Player player = new Player(name, PlayerColour.valueOf(colour.toUpperCase()));
 			game.getPlayers().add(player);
+			game.setGameState(game.getGameState().nextState());
+			System.out.println(game.getGameState());
 			return colour.toUpperCase() + " player created";
 		}
 

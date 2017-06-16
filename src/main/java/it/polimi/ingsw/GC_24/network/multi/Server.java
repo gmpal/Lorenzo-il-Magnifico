@@ -8,14 +8,14 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.*;
 import it.polimi.ingsw.GC_24.client.rmi.RMIView;
 import it.polimi.ingsw.GC_24.client.rmi.RMIViewRemote;
 import it.polimi.ingsw.GC_24.client.view.ServerSocketView;
 import it.polimi.ingsw.GC_24.controller.Controller;
 import it.polimi.ingsw.GC_24.model.Model;
-import it.polimi.ingsw.GC_24.Timer;
+import it.polimi.ingsw.GC_24.model.PlayerColour;
+//import it.polimi.ingsw.GC_24.Timer;
 import it.polimi.ingsw.GC_24.model.State;
 
 public class Server {
@@ -79,20 +79,21 @@ public class Server {
 			try {
 				Socket socket = serverSocket.accept();
 				this.addClient(socket);
-				System.out.println("Client connected to "+game);
-				game.setGameState(game.getGameState().nextState());
-				System.out.println(game.getGameState());
-				if (game.getGameState().equals(State.WAITINGFORPLAYERTHREE)) {
+				System.out.println("Client connected to " + game);
+				if (controller.getGame().getGameState().equals(State.WAITINGFORPLAYERTHREE)) {
 					System.out.println("Starting Timer");
-					Timer.startTimer(10);
+					//Timer.startTimer(20);
+					if (controller.getGame().getGameState().equals(State.WAITINGFORPLAYERFOUR)) {
+						this.addClient(socket);
+						System.out.println("Client connected to " + game);
+					}
 					game.setModel(controller.getGame().getPlayers());
 					this.newGame();
 				}
 				
-				if (game.getGameState().equals(State.RUNNING)) {
+				if (controller.getGame().getGameState().equals(State.RUNNING)) {
 					System.out.println("Creating a new game");
 					game.setModel(controller.getGame().getPlayers());
-					
 					this.newGame();
 				}
 				
@@ -107,6 +108,7 @@ public class Server {
 	}
 
 	private void newGame() {
+		PlayerColour.resetValues();
 		this.game = new Model();
 		this.controller = new Controller(game);
 		System.out.println("NEW GAME CREATED");
@@ -124,8 +126,6 @@ public class Server {
 		controller.registerMyObserver(serverSocketView);
 
 		System.out.println("SERVER: observers setted!");
-
-		
 
 	}
 

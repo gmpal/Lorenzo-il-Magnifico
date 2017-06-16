@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Scanner;
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.MyObserver;
+import it.polimi.ingsw.GC_24.model.Model;
+import it.polimi.ingsw.GC_24.model.State;
 
 public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	private static Scanner scanner = new Scanner(System.in);
@@ -13,15 +15,14 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	private List<String> colours;
 	private HashMap<String, Object> hm;
 	private int colourAvailable;
-	private MiniModel miniModel;
-	private boolean gameStarted = false;
+	private Model miniModel = new Model();
 
 	/*
 	 * public static void main(String args[]) { ViewPlayer vp = new ViewCLI();
 	 * ViewCLI viewCLI = (ViewCLI) vp; viewCLI.start();
 	 * viewCLI.showAndGetOption(); }
 	 */
-
+	
 	@Override
 	public void run() {
 
@@ -29,21 +30,26 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		colour = setColour();
 		System.out.println("*****Welcome "+name.toUpperCase()+"!\nYou are the " +colour.toUpperCase()+" player\n");
 		this.sendPlayerString(name, colour);
-		System.out.println("Waiting for other players...\n");
-		while (gameStarted == false) {
+		System.out.println("Waiting for other players...");		
+		while (miniModel.getGameState()!= State.RUNNING) {
 			System.out.printf("");
 		}
-		System.out.println("THE GAME STARTS NOW");
-		System.out.println(" The players' turn for thr first round is:\n"
-				+ "1) ");
+	/*	while (gameStarted == false) {
+			System.out.printf("");
+		}*/
+		System.out.println("THE GAME STARTS NOW\n");
 		
+		System.out.println("The players' turn for the first round is:");
+		for(int i=0, j=1; i<miniModel.getPlayers().size(); i++, j++){
+			System.out.println(j+") "+miniModel.getPlayers().get(i).getMyName()+" is the "+miniModel.getPlayers().get(i).getMyColour()+" player");
+		}
+		System.out.println("\n");
 		showAndGetOption();
 	}
 
 	private void getColoursfromServer() {
 		hm = new HashMap<>();
-		hm.put("colours", null);
-
+		hm.put("colours", null);		
 		this.notifyMyObservers(hm);
 	}
 
@@ -64,10 +70,11 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 
 		String chosenColour = null;
 		System.out.println("Choose your colour: ");
-
 		while (!correct) {
 			this.getColoursfromServer();
+			System.out.println("qua");
 			if (scanner.hasNextLine()) {
+				System.out.println("dentro");
 				chosenColour = scanner.nextLine();
 				if (chosenColour.equalsIgnoreCase("yellow") || chosenColour.equalsIgnoreCase("blue")
 						|| chosenColour.equalsIgnoreCase("green") || chosenColour.equalsIgnoreCase("red")) {
@@ -233,14 +240,14 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		String increase;
 		int servant = 10;
 		// int servant=player.getMyValues().getServants().getQuantity()
-		System.out.println("How much do you want increase the die's value?");
+		System.out.println("How much do you want to increase the die's value?");
 		increase = isInt(scanner.nextLine());
 		if (increase == null) {
 			return null;
 		} else if (Integer.parseInt(increase) >= 0 && Integer.parseInt(increase) <= servant) {
 			return commandZone + increase;
 		} else {
-			System.out.println("You don't have too much servants");
+			System.out.println("You don't have enough servants");
 			return null;
 		}
 	}
@@ -270,8 +277,8 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		else if (change.equals("Colour Not Available")) {
 			this.colourAvailable = 0;
 		}
-		else if (change.equals("RUNNING")) {
-			this.gameStarted = true;			
+		else if (change instanceof Model) {
+			this.miniModel = (Model) change;
 		}
 		else
 			System.out.println("Answer " + change);
@@ -291,6 +298,10 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 
 	public void setColour(String colour) {
 		this.colour = colour;
+	}
+	
+	public Model getMiniModel() {
+		return miniModel;
 	}
 
 	public List<String> getColours() {

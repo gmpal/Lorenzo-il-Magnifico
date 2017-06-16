@@ -1,10 +1,19 @@
 package it.polimi.ingsw.GC_24.model;
 
+import java.io.Serializable;
+
 public enum State {
+	
+	STARTING {
+		@Override
+		public State nextState() {
+			return WAITINGFORPLAYERONE;																
+		}
+	},	
 	WAITINGFORPLAYERONE {
 		@Override
 		public State nextState() {
-			return WAITINGFORPLAYERTWO;
+			return WAITINGFORPLAYERTWO;																
 		}
 	},
 	WAITINGFORPLAYERTWO {
