@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 
 public class ClientSocket {
 
+	private MiniModel miniModel = new MiniModel(); //TODO da spostare su Client
 	private ViewCLI viewCLI;
 	private ViewGUI viewGUI;
 	private ClientSocketViewInterface clientSocketView;
@@ -86,7 +87,7 @@ public class ClientSocket {
 			clientSocketView = new ClientSocketViewGUI(objFromServer, objToServer, viewGUI);
 
 		} else {
-			clientSocketView = new ClientSocketViewCLI(objFromServer, objToServer, viewCLI);
+			clientSocketView = new ClientSocketViewCLI(objFromServer, objToServer, viewCLI, miniModel);
 
 		}
 		executor.submit(clientSocketView);

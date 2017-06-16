@@ -3,11 +3,8 @@ package it.polimi.ingsw.GC_24.client.view;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
-
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.MyObserver;
-import it.polimi.ingsw.GC_24.model.Model;
-import it.polimi.ingsw.GC_24.model.State;
 
 public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	private static Scanner scanner = new Scanner(System.in);
@@ -16,6 +13,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	private List<String> colours;
 	private HashMap<String, Object> hm;
 	private int colourAvailable;
+	private MiniModel miniModel;
 	private boolean gameStarted = false;
 
 	/*
@@ -36,6 +34,9 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 			System.out.printf("");
 		}
 		System.out.println("THE GAME STARTS NOW");
+		System.out.println(" The players' turn for thr first round is:\n"
+				+ "1) ");
+		
 		showAndGetOption();
 	}
 
@@ -271,10 +272,6 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		}
 		else if (change.equals("RUNNING")) {
 			this.gameStarted = true;			
-		}
-		else if (change instanceof Model) {
-			System.out.println("HO RICEVUTO IL MODELLO TOP");
-			
 		}
 		else
 			System.out.println("Answer " + change);

@@ -85,14 +85,14 @@ public class Server {
 				if (game.getGameState().equals(State.WAITINGFORPLAYERTHREE)) {
 					System.out.println("Starting Timer");
 					Timer.startTimer(10);
-					game.setModel();
-					System.out.println(game);
+					game.setModel(controller.getGame().getPlayers());
 					this.newGame();
 				}
 				
 				if (game.getGameState().equals(State.RUNNING)) {
 					System.out.println("Creating a new game");
-					game.setModel();
+					game.setModel(controller.getGame().getPlayers());
+					
 					this.newGame();
 				}
 				

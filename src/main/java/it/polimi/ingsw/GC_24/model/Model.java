@@ -28,7 +28,7 @@ public class Model extends MyObservable implements java.io.Serializable{
 	 * other fields are created or set */
 	public Model() {
 		
-		this.players = new ArrayList<Player>();
+		this.players = new ArrayList<>();
 		this.board = null;
 		this.currentPlayer = null;
 		this.gameState = State.WAITINGFORPLAYERONE;
@@ -40,8 +40,9 @@ public class Model extends MyObservable implements java.io.Serializable{
 	
 	/*After a Model is created and the players are get, this
 	 * method sets the model so the game could start */
-	public void setModel() {
+	public void setModel(List<Player> players) {
 		
+		this.players = players;
 		this.board = new Board(players.size());
 		this.currentPlayer = players.get(0);
 		this.setGameState(State.RUNNING);
