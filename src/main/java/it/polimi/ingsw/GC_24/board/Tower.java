@@ -20,8 +20,11 @@ public class Tower extends Area {
 	
 	//inserts empty TowerPlaces in Tower
 	public List<Place> createTower(){
+		int value = 1;
 		for(int num=0;num<NUMTOWERPLACE;num++){
-			this.placesArray.add(new TowerPlace(0, null));
+			//TODO: caricare i valori da file 
+			this.placesArray.add(new TowerPlace(value, null));
+			value+=2;
 		}
 		return placesArray;
 	}

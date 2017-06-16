@@ -6,27 +6,27 @@ import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.places.Place;
 
 public abstract class Action {
-	
-
-		//private final Model game;
-		private Player player;
+		
 		private FamilyMember familyMember;
 		private Place place;
+		private int servants;
 		
 		//constructor
-		public Action() {
-			this.player=null;
-			this.familyMember = null;
-			this.place = null;
+		public Action(Model partita, String familiar, String zone, String floor, String servants) {
+			this.familyMember = partita.getCurrentPlayer().getMyFamily().getMemberfromString(familiar);
+			this.place = partita.getBoard().getZoneFromString(zone).getPlaceFromString(floor);
+			this.servants = Integer.parseInt(servants);
 		}
 		
-		//getters and setters (setter included in constructor)		
-		public Player getPlayer(){
-			return this.player;
-		}
+				
+
 		
+		/**The verify() methods checks if the current action is logically correct, 
+		 * and if it returns true, the run method is called */
+		public abstract boolean verify(Model game);
 		
-		public abstract void run(Player player, FamilyMember familyMember, Place place);
+		/**The run() method executes the action*/
+		public abstract void run(Model game);
 		
 
 }

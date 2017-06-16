@@ -36,6 +36,23 @@ public abstract class Area implements java.io.Serializable {
 		}
 	}
 
+	public Place getPlaceFromString(String place){
+		if (!place.equals("0")){
+			int i = Integer.parseInt(place);
+			return placesArray.get(i);
+		}else 
+			return this.getFirstEmptyPlace();
+		
+		
+	}
+	
+	public Place getFirstEmptyPlace(){
+		for (Place p: this.placesArray){
+			if(p.isAvailable()) return p;
+		}
+		return null;
+	}
+	
 	//hashCode() and equals() redefined
 	@Override
 	public int hashCode() {
