@@ -174,25 +174,32 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 			String cf;
 			if (commandZone.equals("a")) {
 				cf = fourChoice(floor);
-				commandZone = "territories " + cf;
+				commandZone = "territories " + cf+" ";
+				commandZone = increaseDieValue(commandZone);
 			} else if (commandZone.equals("b")) {
 				cf = fourChoice(floor);
-				commandZone = "characters " + cf;
+				commandZone = "characters " + cf+ " ";
+				commandZone = increaseDieValue(commandZone);
 			} else if (commandZone.equals("c")) {
 				cf = fourChoice(floor);
-				commandZone = "buildings " + cf;
+				commandZone = "buildings " + cf+ " ";
+				commandZone = increaseDieValue(commandZone);
 			} else if (commandZone.equals("d")) {
 				cf = fourChoice(floor);
-				commandZone = "ventures " + cf;
+				commandZone = "ventures " + cf+ " ";
+				commandZone = increaseDieValue(commandZone);
 			} else if (commandZone.equals("e")) {
 				cf = fourChoice("place");
-				commandZone = "market " + cf;
+				commandZone = "market " + cf+ " ";
+				commandZone = increaseDieValue(commandZone);
 			} else if (commandZone.equals("f")) {
-				commandZone = increaseDieValue("production ");
+				commandZone = "production 0 ";
+				commandZone = increaseDieValue(commandZone);
 			} else if (commandZone.equals("g")) {
-				commandZone = increaseDieValue("harvest ");
+				commandZone = "harvest 0 ";
+				commandZone = increaseDieValue(commandZone);
 			} else if (commandZone.equals("h")) {
-				commandZone = "council";
+				commandZone = "council 0 0";
 			} else if (commandZone.equals("i")) {
 				commandZone = "cancel";
 			} else {
@@ -234,7 +241,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		} else if (Integer.parseInt(increase) >= 0 && Integer.parseInt(increase) <= servant) {
 			return commandZone + increase;
 		} else {
-			System.out.println("You don't have too much servants");
+			System.out.println("You don't have enough servants");
 			return null;
 		}
 	}

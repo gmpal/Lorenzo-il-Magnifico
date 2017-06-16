@@ -4,15 +4,14 @@ import java.util.List;
 
 import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
 import it.polimi.ingsw.GC_24.model.FamilyMember;
-import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.places.Place;
 
 public abstract class Action {
 	
-		private Player player;
-		private Place place;
-		private FamilyMember familyMember;
+		protected Player player;
+		protected Place place;
+		protected FamilyMember familyMember;
 		
 		public Action(Player player, FamilyMember familyMember, Place place) {
 			this.player = player;
@@ -46,7 +45,7 @@ public abstract class Action {
 			this.player = player;
 		}
 
-		public abstract List<ImmediateEffect> run(Player player, FamilyMember familyMember, Place place);
+		public abstract List<ImmediateEffect> run();
 		
 
 }
