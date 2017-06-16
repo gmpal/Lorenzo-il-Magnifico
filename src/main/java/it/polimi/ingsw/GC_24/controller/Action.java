@@ -7,14 +7,16 @@ import it.polimi.ingsw.GC_24.places.Place;
 
 public abstract class Action {
 		
-		private FamilyMember familyMember;
-		private Place place;
-		private int servants;
+		protected FamilyMember familyMember;
+		protected Player player;
+		protected Place place;
+		protected int servants;
 		
 		//constructor
-		public Action(Model partita, String familiar, String zone, String floor, String servants) {
-			this.familyMember = partita.getCurrentPlayer().getMyFamily().getMemberfromString(familiar);
-			this.place = partita.getBoard().getZoneFromString(zone).getPlaceFromString(floor);
+	public Action(Model game, String familiar, String zone, String floor, String servants) {
+			this.player = game.getCurrentPlayer();
+			this.familyMember = player.getMyFamily().getMemberfromString(familiar);
+			this.place = game.getBoard().getZoneFromString(zone).getPlaceFromString(floor);
 			this.servants = Integer.parseInt(servants);
 		}
 		
@@ -23,10 +25,10 @@ public abstract class Action {
 		
 		/**The verify() methods checks if the current action is logically correct, 
 		 * and if it returns true, the run method is called */
-		public abstract boolean verify(Model game);
+		public abstract boolean verify();
 		
 		/**The run() method executes the action*/
-		public abstract void run(Model game);
+		public abstract void run();
 		
 
 }
