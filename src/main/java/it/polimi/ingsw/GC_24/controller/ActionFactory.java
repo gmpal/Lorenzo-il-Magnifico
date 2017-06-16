@@ -17,7 +17,7 @@ public class ActionFactory {
 			
 			if (newActionType.equals("Tower")){
 				
-				newAction = new ActionTower(null, null, newActionType, newActionType, newActionType, newActionType);
+				newAction = new ActionTower();
 			
 			} 
 			

@@ -4,6 +4,7 @@ import java.util.List;
 
 import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
 import it.polimi.ingsw.GC_24.model.FamilyMember;
+import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.places.Place;
 
@@ -28,8 +29,12 @@ public abstract class Action {
 		/**The verify() methods checks if the current action is logically correct, 
 		 * and if it returns true, the run method is called */
 		public abstract boolean verify();
+		/**The run() method executes the action*/
+		public abstract List<ImmediateEffect> run();
 		
-
+		
+		
+		//getters and setters
 		public Place getPlace() {
 			return place;
 		}
@@ -50,10 +55,10 @@ public abstract class Action {
 			this.player = player;
 		}
 
-		public abstract List<ImmediateEffect> run();
+	
 
-		/**The run() method executes the action*/
-		public abstract void run();
+	
+		
 		
 
 }

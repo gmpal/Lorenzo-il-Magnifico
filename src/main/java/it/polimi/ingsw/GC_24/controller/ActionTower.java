@@ -5,6 +5,7 @@ import java.util.List;
 
 import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
 import it.polimi.ingsw.GC_24.model.FamilyMember;
+import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.places.Place;
 import it.polimi.ingsw.GC_24.places.TowerPlace;
@@ -41,10 +42,16 @@ public class ActionTower extends Action {
 		for (ImmediateEffect im : immediateEffects) {
 			nameEffect = im.getName();
 			if (nameEffect.equals("value")) {
-				im.giveImmediateEffect(getPlayer());
+				im.giveImmediateEffect(player);
 				immediateEffects.remove(im);
 			}
 		}
+	}
+
+	@Override
+	public boolean verify() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

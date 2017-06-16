@@ -87,12 +87,13 @@ public class Controller extends MyObservable implements MyObserver {
 			String tempServants = tokenizer.nextToken();
 			
 			Action action = actionFactory.makeAction(game, tempFamiliar,tempZone, tempFloor, tempServants );
-			HashMap<String, Object> coloursMap = new HashMap<String, Object>();
-			coloursMap.put("colours", playerColoursArray);
-			this.notifySingleObserver((MyObserver) o, coloursMap);
+			
+		//	HashMap<String, Object> coloursMap = new HashMap<String, Object>();
+		//	coloursMap.put("colours", playerColoursArray);
+		//	this.notifySingleObserver((MyObserver) o, coloursMap);
 
-			System.out.println("ServerOut: ArrayListOfColours sent");
-			return " ArrayListOfColours sent";
+			
+			return " sent";
 		}
 		else if (command.contains("checkColour")) {
 			String colour = (String) request.get("checkColour");
