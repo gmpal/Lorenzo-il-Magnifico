@@ -12,8 +12,9 @@ import it.polimi.ingsw.GC_24.places.TowerPlace;
 public class ActionTower extends Action {
 	private List<ImmediateEffect> immediateEffects = new ArrayList<>();
 
-	public ActionTower(Player player, FamilyMember familyMember, Place place) {
-		super(player, familyMember, place);
+		public ActionTower(Model partita, String familiar, String zone, String floor, String servants) {
+		super(partita, familiar, zone, floor, servants);
+		// TODO Auto-generated constructor stub
 	}
 	
 	@Override
@@ -45,4 +46,5 @@ public class ActionTower extends Action {
 			}
 		}
 	}
+
 }

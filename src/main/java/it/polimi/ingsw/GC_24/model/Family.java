@@ -42,11 +42,27 @@ public class Family implements java.io.Serializable{
 				"\n member4 --> " + member4 + ".\n";
 	}
 	
+	//TODO:test
+	public FamilyMember getMemberfromString(String number) {
+		if(number.equals("1") ){
+			return member1;
+		}
+		if(number.equals("2") ){
+			return member2;
+		}
+		if(number.equals("3") ){
+			return member3;
+		}
+		if(number.equals("4") ){
+			return member4;
+		}
+		else return null;
+	}
+	
 	//getters and setters
 	public FamilyMember getMember1() {
 		return member1;
 	}
-	
 	public void setMember1(FamilyMember member1) {
 		this.member1 = member1;
 	}

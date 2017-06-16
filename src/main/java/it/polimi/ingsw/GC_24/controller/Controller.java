@@ -16,7 +16,7 @@ import it.polimi.ingsw.GC_24.model.PlayerColour;
 public class Controller extends MyObservable implements MyObserver {
 
 	private final Model game;
-
+	private ActionFactory actionFactory;
 	// constructor
 
 	public Controller(Model game) {
@@ -62,7 +62,7 @@ public class Controller extends MyObservable implements MyObserver {
 			StringTokenizer tokenizer = new StringTokenizer((String) request.get("PLAYERNAME"));
 			String name = tokenizer.nextToken();
 			String colour = tokenizer.nextToken();
-
+			
 			Player player = new Player(name, PlayerColour.valueOf(colour.toUpperCase()));
 
 			return player.toString();
@@ -77,7 +77,23 @@ public class Controller extends MyObservable implements MyObserver {
 			System.out.println("ServerOut: ArrayListOfColours sent");
 			return " ArrayListOfColours sent";
 		}
+		
+		else if (command.contains("place")) {
+			StringTokenizer tokenizer = new StringTokenizer((String) request.get("action"));
+			
+			String tempFamiliar = tokenizer.nextToken();
+			String tempZone = tokenizer.nextToken();
+			String tempFloor = tokenizer.nextToken();
+			String tempServants = tokenizer.nextToken();
+			
+			Action action = actionFactory.makeAction(game, tempFamiliar,tempZone, tempFloor, tempServants );
+			HashMap<String, Object> coloursMap = new HashMap<String, Object>();
+			coloursMap.put("colours", playerColoursArray);
+			this.notifySingleObserver((MyObserver) o, coloursMap);
 
+			System.out.println("ServerOut: ArrayListOfColours sent");
+			return " ArrayListOfColours sent";
+		}
 		else if (command.contains("checkColour")) {
 			String colour = (String) request.get("checkColour");
 			String availability;
