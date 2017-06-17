@@ -8,25 +8,25 @@ public class Coin extends Value {
 	 */
 	private static final long serialVersionUID = 5476502152547873802L;
 
-	//constructor
+	// constructor
 	public Coin(int value) {
 		super(value);
 	}
-	
+
 	@Override
-	public SetOfValues addValueToSet(SetOfValues values){
-		values.setCoins(new Coin(values.getCoins().getQuantity()+this.getQuantity()));
+	public SetOfValues addValueToSet(SetOfValues values) {
+		values.setCoins(new Coin(values.getCoins().getQuantity() + this.getQuantity()));
 		return values;
 	}
-	
+
 	@Override
-	public Value findValueInPlayer(Player player){
+	public Value findValueInPlayer(Player player) {
 		return player.getMyValues().getCoins();
 	}
-	
+
 	@Override
-	public String toString(){
-		return "coin: "+this.getQuantity();
+	public String toString() {
+		return "coin: " + this.getQuantity();
 	}
 
 }

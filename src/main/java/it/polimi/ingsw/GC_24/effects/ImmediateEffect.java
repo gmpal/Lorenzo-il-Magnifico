@@ -2,7 +2,6 @@ package it.polimi.ingsw.GC_24.effects;
 
 import it.polimi.ingsw.GC_24.model.Player;
 
-
 public abstract class ImmediateEffect extends Effect {
 	/**
 	 * 
@@ -19,6 +18,5 @@ public abstract class ImmediateEffect extends Effect {
 	// this method gives the immediate effect of the card to the player when
 	// called
 	public abstract void giveImmediateEffect(Player player);
-	
-	
+
 }

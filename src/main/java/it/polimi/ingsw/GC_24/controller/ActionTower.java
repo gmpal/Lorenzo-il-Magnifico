@@ -4,10 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
-import it.polimi.ingsw.GC_24.model.FamilyMember;
 import it.polimi.ingsw.GC_24.model.Model;
-import it.polimi.ingsw.GC_24.model.Player;
-import it.polimi.ingsw.GC_24.places.Place;
 import it.polimi.ingsw.GC_24.places.TowerPlace;
 
 public class ActionTower extends Action {
@@ -15,7 +12,6 @@ public class ActionTower extends Action {
 
 	public ActionTower(Model partita, String familiar, String zone, String floor, String servants) {
 		super(partita, familiar, zone, floor, servants);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -27,7 +23,14 @@ public class ActionTower extends Action {
 		}
 		TowerPlace towerPlace = (TowerPlace) place;
 		towerPlace.getCorrespondingCard().setCardOnPersonalBoard(player.getMyBoard());
-		immediateEffects.add(towerPlace.getCorrespondingCard().getImmediateEffect());
+		ImmediateEffect im = towerPlace.getCorrespondingCard().getImmediateEffect();
+		ImmediateEffect im1 = towerPlace.getCorrespondingCard().getImmediateEffect1();
+		if (im != null) {
+			immediateEffects.add(im);
+		}
+		if (im1 != null) {
+			immediateEffects.add(im1);
+		}
 		immediateEffects.add(towerPlace.getCorrespondingCard().getImmediateEffect1());
 		giveEffect(immediateEffects);
 		return immediateEffects;
@@ -50,8 +53,10 @@ public class ActionTower extends Action {
 
 	@Override
 	public boolean verify() {
+
 		/*Devo controllare se :
 		 * 1) Il metodo Action di quel posto è funzionante */
+
 		return false;
 	}
 
