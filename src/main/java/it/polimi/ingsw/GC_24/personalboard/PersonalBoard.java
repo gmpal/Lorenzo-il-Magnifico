@@ -22,6 +22,18 @@ public class PersonalBoard implements java.io.Serializable{
 		this.mybonusTile = new BonusTile(null, null);
 	}
 	
+	
+	
+	@Override
+	public String toString() {
+		return "PersonalBoard \n"
+				+ "CARDS: personalBuildings=" + personalBuildings + "\n personalVentures=" + personalVentures
+				+ "\n personalTerritories=" + personalTerritories + "\n personalCharacters=" + personalCharacters
+				+ "\n BONUS TILE: " + mybonusTile+"\n";
+	}
+
+
+
 	//getters and setters
 	public PersonalBuildings getPersonalBuildings() {
 		return personalBuildings;

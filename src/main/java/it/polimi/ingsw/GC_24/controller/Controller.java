@@ -59,7 +59,6 @@ public class Controller extends MyObservable implements MyObserver {
 		System.out.println(command);
 
 		if (command.contains("colours")) {
-			System.out.println("bo");
 			List<String> playerColoursArray = PlayerColour.getValues();
 			HashMap<String, Object> coloursMap = new HashMap<String, Object>();
 			coloursMap.put("colours", playerColoursArray);

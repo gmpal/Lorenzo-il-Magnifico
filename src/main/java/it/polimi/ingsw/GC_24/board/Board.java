@@ -53,6 +53,13 @@ public class Board implements java.io.Serializable {
 	
 	
 	
+	@Override
+	public String toString() {
+		return "Board [towerTerritories=" + towerTerritories + ", towerCharacters=" + towerCharacters
+				+ ", towerBuildings=" + towerBuildings + ", towerVentures=" + towerVentures + ", harvest=" + harvest
+				+ ", production=" + production + ", market=" + market + ", councilPalace=" + councilPalace + "]";
+	}
+
 	//getters and setters
 	public int getNumPlayers() {
 		return numPlayers;

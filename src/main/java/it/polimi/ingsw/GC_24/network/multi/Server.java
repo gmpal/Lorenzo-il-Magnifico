@@ -8,14 +8,15 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import it.polimi.ingsw.GC_24.client.rmi.RMIView;
 import it.polimi.ingsw.GC_24.client.rmi.RMIViewRemote;
 import it.polimi.ingsw.GC_24.client.view.ServerSocketView;
 import it.polimi.ingsw.GC_24.controller.Controller;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.PlayerColour;
-//import it.polimi.ingsw.GC_24.Timer;
+import it.polimi.ingsw.GC_24.Timer;
 import it.polimi.ingsw.GC_24.model.State;
 
 public class Server {
@@ -82,11 +83,7 @@ public class Server {
 				System.out.println("Client connected to " + game);
 				if (controller.getGame().getGameState().equals(State.WAITINGFORPLAYERTHREE)) {
 					System.out.println("Starting Timer");
-					//Timer.startTimer(20);
-					if (controller.getGame().getGameState().equals(State.WAITINGFORPLAYERFOUR)) {
-						this.addClient(socket);
-						System.out.println("Client connected to " + game);
-					}
+					Timer.startTimer(5);
 					game.setModel(controller.getGame().getPlayers());
 					this.newGame();
 				}

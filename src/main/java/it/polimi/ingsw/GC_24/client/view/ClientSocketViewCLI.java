@@ -75,7 +75,6 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 
 		if (command.contains("colours")) {
 			List<String> playerColoursArray = (List<String>) request.get("colours");
-			System.out.println("******"+playerColoursArray);
 			notifyMyObservers(playerColoursArray);
 		}
 		if (command.contains("coloursAnswer")) {

@@ -26,9 +26,10 @@ public class Territories extends Development {
 
 	@Override
 	public String toString() {
-		return "Territory [name=" + getName() + ", immediateEffect=" + getImmediateEffect() + ", costDie=" + costDie
-				+ "]";
+		return "Territory: Name = " + name + " Cost = " + getCost() + " Immediate Effects = " + getImmediateEffect()+" "+getImmediateEffect1()+
+				"\nPermanent Effects = " + getPermanentEffect();
 	}
+
 
 	// getter and setter
 	public int getCostDie() {

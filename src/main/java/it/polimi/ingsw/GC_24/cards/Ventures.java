@@ -27,9 +27,11 @@ public class Ventures extends Development {
 
 	@Override
 	public String toString() {
-		return "Buildings [name=" + getName() + ", permanentEffect=" + getPermanentEffect()
-				+ ", requiredMilitaryPoints=" + requiredMilitaryPoints + "]";
+		return "Venture: Name = " + name + " Cost = " + getCost() + " Required Military Points = " +requiredMilitaryPoints+
+				"\n Immediate Effects = " + getImmediateEffect()+" "+getImmediateEffect1()+
+				"\nPermanent Effects = " + getPermanentEffect();
 	}
+
 
 	// getters and setters
 	public MilitaryPoint getRequiredMilitaryPoints() {

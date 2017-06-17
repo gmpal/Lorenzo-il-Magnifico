@@ -6,6 +6,7 @@ import java.util.Scanner;
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.MyObserver;
 import it.polimi.ingsw.GC_24.model.Model;
+import it.polimi.ingsw.GC_24.model.PlayerColour;
 import it.polimi.ingsw.GC_24.model.State;
 
 public class ViewCLI extends MyObservable implements MyObserver, Runnable {
@@ -72,9 +73,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		System.out.println("Choose your colour: ");
 		while (!correct) {
 			this.getColoursfromServer();
-			System.out.println("qua");
 			if (scanner.hasNextLine()) {
-				System.out.println("dentro");
 				chosenColour = scanner.nextLine();
 				if (chosenColour.equalsIgnoreCase("yellow") || chosenColour.equalsIgnoreCase("blue")
 						|| chosenColour.equalsIgnoreCase("green") || chosenColour.equalsIgnoreCase("red")) {
@@ -137,27 +136,33 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	public void showAndGetOption() {
 		while (true) {
 			System.out.println("Choose action:\n" + "a)Show board\n" + "b)Show personal board\n"
-					+ "c)Show leader cards\n" + "d)Place a familiar\n" + "e)Use a leader card\n"
+					+ "c)Show leader cards\n" + "d)Place family member\n" + "e)Use a leader card\n"
 					+ "f)Throw a leader card\n" + "g)End turn\n" + "h)Exit");
 			String command = scanner.nextLine();
 			boolean commandOk = true;
 			if (command.equals("a")) {
-				// model.getBoard().toString();
+				String board;
+				board = miniModel.getBoard().toString();
+				System.out.println(board);
 			} else if (command.equals("b")) {
-				// player.getMyBoard().toString();
+				String personalBoard;
+				personalBoard = miniModel.getPlayerfromColour(PlayerColour.valueOf(colour.toUpperCase())).getMyBoard().toString();
+				System.out.println(personalBoard);
 			} else if (command.equals("c")) {
-				// player.getLeaderCards().toString();
+				String leaderCards;
+				//miniModel.getPlayerfromColour(PlayerColour.valueOf(colour.toUpperCase())).getLeaderCards().toString();
+				//System.out.println(leaderCards);
 			} else if (command.equals("d")) {
-				// System.out.println(player.getFamily().toString());
-				command = fourChoice("familiar") + " " + choosePlace();
+				System.out.println(miniModel.getPlayerfromColour(PlayerColour.valueOf(colour.toUpperCase())).getMyFamily().toString());
+				command = fourChoice("family member") + " " + choosePlace();
 				if (command.contains("cancel")) {
 					System.out.println("Action cancelled");
 					commandOk = false;
 				}
 			} else if (command.equals("e")) {
-				// choose leader card
+				//miniModel.getPlayerfromColour(PlayerColour.valueOf(colour.toUpperCase())).getLeaderCards().chooseLeaderCard();
 			} else if (command.equals("f")) {
-				// throw leader card
+				//miniModel.getPlayerfromColour(PlayerColour.valueOf(colour.toUpperCase())).getLeaderCards().throwLeaderCard();
 			} else if (command.equals("g")) {
 				command = "end";
 			} else if (command.equals("h")) {
@@ -226,25 +231,24 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 			System.out.println("Choose " + s + " (1,2,3,4) 5)Cancel ");
 			commandFloor = isInt(scanner.nextLine());
 			if (commandFloor != null && (commandFloorInt > 5 || commandFloorInt < 1)) {
-				System.out.println("Wrong character");
+				System.out.println("Wrong number!");
 				commandFloor = null;
 			}
 		} while (commandFloor == null || (commandFloorInt > 5 || commandFloorInt < 1));
 		if (commandFloorInt == 5) {
-			commandFloor = "cancel";
+			commandFloor = "Cancel";
 		}
 		return commandFloor;
 	}
 
 	public String increaseDieValue(String commandZone) {
 		String increase;
-		int servant = 10;
-		// int servant=player.getMyValues().getServants().getQuantity()
+		int servants = miniModel.getPlayerfromColour(PlayerColour.valueOf(colour.toUpperCase())).getMyValues().getServants().getQuantity();
 		System.out.println("How much do you want to increase the die's value?");
 		increase = isInt(scanner.nextLine());
 		if (increase == null) {
 			return null;
-		} else if (Integer.parseInt(increase) >= 0 && Integer.parseInt(increase) <= servant) {
+		} else if (Integer.parseInt(increase) >= 0 && Integer.parseInt(increase) <= servants) {
 			return commandZone + increase;
 		} else {
 			System.out.println("You don't have enough servants");
@@ -257,7 +261,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		try {
 			stringToInt = Integer.parseInt(string);
 		} catch (Exception e) {
-			System.out.println("Wrong character");
+			System.out.println("Typing error");
 			return null;
 		}
 		return stringToInt.toString();

@@ -60,6 +60,14 @@ public class Model extends MyObservable implements java.io.Serializable{
 		hm.put("Model", this);
 		notifyMyObservers(hm);
 	}
+	
+	public Player getPlayerfromColour(PlayerColour colour){
+		for (Player player:players){
+			if(player.getMyColour().equals(colour))
+				return player;
+		}
+		return null;
+	}
 
 	// getters and setters
 	public List<Player> getPlayers() {
