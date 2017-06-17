@@ -4,18 +4,20 @@ import it.polimi.ingsw.GC_24.effects.*;
 import it.polimi.ingsw.GC_24.personalboard.PersonalBoard;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 
-public class Territories extends Development {		
+public class Territories extends Development {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1023997492010425653L;
-	
+
 	private int costDie;
+	private ImmediateEffect effectForHarvest;
 
 	// constructor
 	public Territories(String name, int costDie, String type, SetOfValues cost, ImmediateEffect immediateEffects,
-			PermanentEffect permanentEffects, int round, ImmediateEffect immediateEffects1) {
-		super(name, type, cost, immediateEffects, permanentEffects, round, immediateEffects1);
+			ImmediateEffect immediateEffects1, ImmediateEffect effectForHarvest, int round) {
+		super(name, type, cost, immediateEffects, immediateEffects1, round);
+		this.effectForHarvest = effectForHarvest;
 		this.costDie = costDie;
 	}
 
@@ -26,7 +28,8 @@ public class Territories extends Development {
 
 	@Override
 	public String toString() {
-		return "Territory [name=" + getName() + ", immediateEffect=" + getImmediateEffect() + ", costDie=" + costDie
+		return "Territory [Name: " + getName() + "\nImmediate effects: 1." + getImmediateEffect() + " 2."
+				+ getImmediateEffect1() + "\nHarvest effect: " + getEffectForHarvest() + "\nCost die value: " + costDie
 				+ "]";
 	}
 
@@ -37,6 +40,14 @@ public class Territories extends Development {
 
 	public void setCostDie(int costDie) {
 		this.costDie = costDie;
+	}
+
+	public ImmediateEffect getEffectForHarvest() {
+		return effectForHarvest;
+	}
+
+	public void setEffectForHarvest(ImmediateEffect effectForHarvest) {
+		this.effectForHarvest = effectForHarvest;
 	}
 
 }

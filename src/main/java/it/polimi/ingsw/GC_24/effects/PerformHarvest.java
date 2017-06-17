@@ -4,27 +4,37 @@ import java.util.*;
 import it.polimi.ingsw.GC_24.cards.*;
 import it.polimi.ingsw.GC_24.model.Player;
 
-public class PerformHarvest extends PerformActivity{
+public class PerformHarvest extends PerformActivity {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 7757590984515720227L;
+	private List<ImmediateEffect> immediateEffectsHarvest;
 
-	//constructor
+	// constructor
 	public PerformHarvest(String name, int dieValue) {
 		super(name, dieValue);
 	}
 
 	@Override
-	public void giveImmediateEffect(Player player){
-	player.getMyBoard().getBonusTile().giveHarvestValues(player.getMyValues());
-	List<Development> harvestCards = player.getMyBoard().getPersonalTerritories().getCards();
-	for (Development  card:harvestCards){
-		Territories territory = (Territories) card;
-		if (territory.getCostDie() <= getDieValue()){
-			territory.getImmediateEffect1().giveImmediateEffect(player);
-			territory.getImmediateEffect().giveImmediateEffect(player);
-			} 
+	public void giveImmediateEffect(Player player) {
+		List<Development> cards = player.getMyBoard().getPersonalTerritories().getCards();
+		ImmediateEffect im;
+		for (Development card : cards) {
+			Territories t = (Territories) card;
+			im = t.getEffectForHarvest();
+			if (im != null && t.getCostDie() <= dieValue) {
+				immediateEffectsHarvest.add(im);
+			}
 		}
 	}
+
+	public List<ImmediateEffect> getImmediateEffectsHarvest() {
+		return immediateEffectsHarvest;
+	}
+
+	public void setImmediateEffectsHarvest(List<ImmediateEffect> immediateEffectsHarvest) {
+		this.immediateEffectsHarvest = immediateEffectsHarvest;
+	}
+
 }

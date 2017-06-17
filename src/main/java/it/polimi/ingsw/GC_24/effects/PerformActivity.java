@@ -8,7 +8,7 @@ public abstract class PerformActivity  extends ImmediateEffect{
 	 */
 	private static final long serialVersionUID = 2475182339045729171L;
 	
-	private int dieValue;
+	protected int dieValue;
 
 	//constructor
 	public PerformActivity(String name, int dieValue) {
