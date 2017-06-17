@@ -37,6 +37,10 @@ public class ActionTower extends Action {
 
 	@Override
 	public boolean verify() {
+
+		/*Devo controllare se :
+		 * 1) Il metodo Action di quel posto è funzionante */
+
 		return false;
 	}
 
