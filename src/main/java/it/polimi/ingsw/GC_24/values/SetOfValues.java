@@ -51,6 +51,17 @@ public class SetOfValues implements Serializable {
 		v.setVictoryPoints(new VictoryPoint(this.victoryPoints.getQuantity() + v.getVictoryPoints().getQuantity()));
 		return v;
 	}
+	
+	public SetOfValues subTwoSetsOfValues(SetOfValues v) {
+		v.setCoins(new Coin(v.getCoins().getQuantity()-this.coins.getQuantity()));
+		v.setWoods(new Wood(v.getWoods().getQuantity()-this.woods.getQuantity()));
+		v.setStones(new Stone(v.getStones().getQuantity()-this.stones.getQuantity()));
+		v.setServants(new Servant(v.getServants().getQuantity()-this.servants.getQuantity()));
+		v.setFaithPoints(new FaithPoint(v.getFaithPoints().getQuantity()-this.faithPoints.getQuantity()));
+		v.setMilitaryPoints(new MilitaryPoint(v.getMilitaryPoints().getQuantity()-this.militaryPoints.getQuantity()));
+		v.setVictoryPoints(new VictoryPoint(v.getVictoryPoints().getQuantity()-this.victoryPoints.getQuantity()));
+		return v;
+	}
 
 	//hashCode() redefined
 	@Override

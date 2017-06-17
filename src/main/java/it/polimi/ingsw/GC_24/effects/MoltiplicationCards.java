@@ -34,4 +34,13 @@ public class MoltiplicationCards extends Moltiplication {
 		moltiplicationEffect(player);
 	}
 
+	public PersonalCards getPersonalCards() {
+		return personalCards;
+	}
+
+	public void setPersonalCards(PersonalCards personalCards) {
+		this.personalCards = personalCards;
+	}
+
+	
 }
