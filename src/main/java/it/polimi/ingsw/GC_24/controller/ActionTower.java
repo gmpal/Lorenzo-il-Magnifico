@@ -59,7 +59,7 @@ public class ActionTower extends Action {
 			answerToPlayer = verifyIfEnoughServants();
 			answerToPlayer = verifyFamilyMemberAvailability();
 			answerToPlayer = verifyPlaceAvailability();
-			answerToPlayer = verifyTowerOccupiedByMe();
+			answerToPlayer = verifyZoneOccupiedByMe();
 			answerToPlayer = verifyMoneyForTowerOccupied();
 			answerToPlayer = verifyCardResources();
 			answerToPlayer = verifyTerritorySpaceAvailability();
@@ -69,14 +69,17 @@ public class ActionTower extends Action {
 	
 	}
 	
-	public String verifyTowerOccupiedByMe(){
-		return null;
-	}
 	
+	/*This method checks if you have enough money to put the familyMember in a tower occupied (3 coins)*/
 	public String verifyMoneyForTowerOccupied(){
-		return null;
+		if (this.player.getMyValues().getCoins().getQuantity()<3){
+			return "You don't have enough coins to place your familiar in an already occupied tower";
+		}
+		else return "ok";
 	}
 	
+	/*It checks if you have the resources for taking the card in the place
+	 * you're trying to put your Family Member in*/
 	public String verifyCardResources(){
 		return null;
 
@@ -87,7 +90,7 @@ public class ActionTower extends Action {
 	}
 	
 	public String verifyBoardSpaceAvailability(){
-		return null;
+		if (this.zone.);
 	}
 
 

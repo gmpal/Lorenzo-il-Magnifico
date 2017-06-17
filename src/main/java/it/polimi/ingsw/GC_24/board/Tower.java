@@ -1,6 +1,8 @@
 package it.polimi.ingsw.GC_24.board;
 
-import java.util.*;
+import java.util.List;
+
+import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.places.Place;
 import it.polimi.ingsw.GC_24.places.TowerPlace;
 
@@ -29,7 +31,8 @@ public class Tower extends Area {
 		return placesArray;
 	}
 
-	// return true if a family member is already on a place in the Tower
+	// returns true if a family member is already on a place in the Tower
+	// I have to pay 3 coins to place a familiar
 	public boolean isTowerOccupied() {
 		for (Place towerPlace : this.placesArray) {
 			if (!towerPlace.isAvailable()) {
@@ -38,5 +41,19 @@ public class Tower extends Area {
 		}
 		return false;
 	}
+	
+	// returns true if one of my family members is already on a place in the Tower, not neutral
+	// I cannot place the familiar except if it's the neutral familiar
+	public boolean isTowerOccupiedByMe(Player player) {
+		for (Place towerPlace : this.placesArray) {
+			if (towerPlace.getFamMemberOnPlace().getPlayerColour().equals(player.getMyColour())
+					&& !towerPlace.getFamMemberOnPlace().isNeutral()) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
 
 }

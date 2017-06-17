@@ -2,6 +2,7 @@ package it.polimi.ingsw.GC_24.controller;
 
 import java.util.List;
 
+import it.polimi.ingsw.GC_24.board.Area;
 import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
 import it.polimi.ingsw.GC_24.model.FamilyMember;
 import it.polimi.ingsw.GC_24.model.Model;
@@ -11,6 +12,7 @@ import it.polimi.ingsw.GC_24.places.Place;
 public abstract class Action {
 
 	protected FamilyMember familyMember;
+	protected Area zone;
 	protected Player player;
 	protected Place place;
 	protected int servants;
@@ -19,6 +21,7 @@ public abstract class Action {
 	public Action(Model game, String familiar, String zone, String floor, String servants) {
 		this.player = game.getCurrentPlayer();
 		this.familyMember = player.getMyFamily().getMemberfromString(familiar);
+		this.zone = game.getBoard().getZoneFromString(zone);
 		this.place = game.getBoard().getZoneFromString(zone).getPlaceFromString(floor);
 		this.servants = Integer.parseInt(servants);
 	}
@@ -29,22 +32,34 @@ public abstract class Action {
 	 */
 	public abstract String verify();
 
-	/** The run() method executes the action */
+	/** The run() method executes the action and gets the List of ImmediateEffects that needs
+	 * interaction with users. The Controller will use this list,  */
 	public abstract List<ImmediateEffect> run();
 
 	//verify methods
 	public String verifyIfEnoughServants(){
 		if (player.getMyValues().getServants().getQuantity() < this.servants){
-			return "You don't have enough servants to use";
+			return "You don't have enough servants to use!";
 		} else return "ok";
 	}
 	
 	public String verifyPlaceAvailability(){
-		return null;
+		if (!this.place.isAvailable()){
+			return "Sorry, place not available!";
+		}else return "ok";
 	}
 	
 	public String verifyFamilyMemberAvailability(){
-		return null;
+		if (!this.familyMember.isAvailable()){
+			return "Sorry, this familiar is not available!";
+		}else return "ok";
+	}
+	
+	public String verifyZoneOccupiedByMe(){
+		if (this.zone.isThereSameColour(this.familyMember)){
+			return "This zone is already occupied by one of your familiar. Choose another zone.";
+		}
+		else return "ok";
 	}
 	
 	
