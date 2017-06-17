@@ -18,16 +18,16 @@ public class ChooseNewCard extends ImmediateEffect {
 	private int dieValue;
 	private String type;
 	private SetOfValues setOfValue;
+	private TowerPlace towerPlace;
 
-	
 	public ChooseNewCard(String name, String type, int dieValue, SetOfValues setOfValue) {
 		super(name);
-		this.type=type;
+		this.type = type;
 		this.dieValue = dieValue;
 		this.setSetOfValue(setOfValue);
 	}
 
-	//getters and setters
+	// getters and setters
 	public int getDieValue() {
 		return dieValue;
 	}
@@ -51,13 +51,13 @@ public class ChooseNewCard extends ImmediateEffect {
 	public void setSetOfValue(SetOfValues setOfValue) {
 		this.setOfValue = setOfValue;
 	}
-	
+
+	public void assignParameters(TowerPlace towerPlace) {
+		this.towerPlace = towerPlace;
+	}
+
 	@Override
 	public void giveImmediateEffect(Player player) {
-		
-	}
-	
-	public void chooseCard(Player player, TowerPlace towerPlace){
 		towerPlace.takeWithoutPlacing(player);
 	}
 }
