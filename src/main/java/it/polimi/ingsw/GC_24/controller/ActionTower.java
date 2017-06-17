@@ -49,10 +49,41 @@ public class ActionTower extends Action {
 	}
 
 	@Override
-	public boolean verify() {
-		/*Devo controllare se :
-		 * 1) Il metodo Action di quel posto è funzionante */
-		return false;
+	public String verify() {
+		String answerToPlayer="ok";
+		while(answerToPlayer.equals("ok")){
+			answerToPlayer = verifyIfEnoughServants();
+			answerToPlayer = verifyFamilyMemberAvailability();
+			answerToPlayer = verifyPlaceAvailability();
+			answerToPlayer = verifyTowerOccupiedByMe();
+			answerToPlayer = verifyMoneyForTowerOccupied();
+			answerToPlayer = verifyCardResources();
+			answerToPlayer = verifyTerritorySpaceAvailability();
+			answerToPlayer = verifyBoardSpaceAvailability();
+		}
+		return answerToPlayer;
+	
 	}
+	
+	public String verifyTowerOccupiedByMe(){
+		return null;
+	}
+	
+	public String verifyMoneyForTowerOccupied(){
+		return null;
+	}
+	
+	public String verifyCardResources(){
+		return null;
+	}
+	
+	public String verifyTerritorySpaceAvailability(){
+		return null;
+	}
+	
+	public String verifyBoardSpaceAvailability(){
+		return null;
+	}
+
 
 }

@@ -25,13 +25,29 @@ public abstract class Action {
 
 	/**
 	 * The verify() methods checks if the current action is logically correct,
-	 * and if it returns true, the run method is called
+	 * it returns "ok" if the action is correct, otherwise it returns the answer for the player
 	 */
-	public abstract boolean verify();
+	public abstract String verify();
 
 	/** The run() method executes the action */
 	public abstract List<ImmediateEffect> run();
 
+	//verify methods
+	public String verifyIfEnoughServants(){
+		if (player.getMyValues().getServants().getQuantity() < this.servants){
+			return "You don't have enough servants to use";
+		} else return "ok";
+	}
+	
+	public String verifyPlaceAvailability(){
+		return null;
+	}
+	
+	public String verifyFamilyMemberAvailability(){
+		return null;
+	}
+	
+	
 	// getters and setters
 	public Place getPlace() {
 		return place;
