@@ -1,8 +1,9 @@
-package it.polimi.ingsw.GC_24.controller;
+﻿package it.polimi.ingsw.GC_24.controller;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import it.polimi.ingsw.GC_24.cards.Development;
 import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.places.TowerPlace;
@@ -36,12 +37,52 @@ public class ActionTower extends Action {
 	}
 
 	@Override
-	public boolean verify() {
 
-		/*Devo controllare se :
-		 * 1) Il metodo Action di quel posto è funzionante */
 
-		return false;
+	public String verify() {
+		String answerToPlayer="ok";
+		while(answerToPlayer.equals("ok")){
+			answerToPlayer = verifyIfEnoughServants();
+			answerToPlayer = verifyFamilyMemberAvailability();
+			answerToPlayer = verifyPlaceAvailability();
+			answerToPlayer = verifyZoneOccupiedByMe();
+			answerToPlayer = verifyMoneyForTowerOccupied();
+			answerToPlayer = verifyCardResources();
+			answerToPlayer = verifyTerritorySpaceAvailability();
+			answerToPlayer = verifyBoardSpaceAvailability();
+		}
+		return answerToPlayer;
+	
 	}
+	
+	
+	/*This method checks if you have enough money to put the familyMember in a tower occupied (3 coins)*/
+	public String verifyMoneyForTowerOccupied(){
+		if (this.player.getMyValues().getCoins().getQuantity()<3){
+			return "You don't have enough coins to place your familiar in an already occupied tower";
+		}
+		else return "ok";
+	}
+	
+	/*It checks if you have the resources for taking the card in the place
+	 * you're trying to put your Family Member in*/
+	public String verifyCardResources(){
+		return null;
+
+	}
+	
+	public String verifyTerritorySpaceAvailability(){
+		return null;
+
+	}
+	
+	public String verifyBoardSpaceAvailability(){
+		TowerPlace tempTowerPlace = (TowerPlace) this.place;
+		String typeOfCard = tempTowerPlace.getCorrespondingCard().getType();
+		if (typeOfCard.equals("Territory")){
+			
+		}
+	}
+
 
 }
