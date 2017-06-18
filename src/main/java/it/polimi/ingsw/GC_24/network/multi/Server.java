@@ -81,25 +81,23 @@ public class Server {
 				Socket socket = serverSocket.accept();
 				this.addClient(socket);
 				System.out.println("Client connected to " + game);
+				game.setGameState(game.getGameState().nextState());
+				System.out.println(game.getGameState());
 				if (controller.getGame().getGameState().equals(State.WAITINGFORPLAYERTHREE)) {
 					System.out.println("Starting Timer");
-					Timer.startTimer(5);
+					Timer.startTimer(20);
 					game.setModel(controller.getGame().getPlayers());
 					this.newGame();
 				}
-				
 				if (controller.getGame().getGameState().equals(State.RUNNING)) {
 					System.out.println("Creating a new game");
 					game.setModel(controller.getGame().getPlayers());
 					this.newGame();
 				}
-				
-
 			} catch (IOException e) {
 				break;
 			}
 		}
-
 		threadPool.shutdown();
 		serverSocket.close();
 	}

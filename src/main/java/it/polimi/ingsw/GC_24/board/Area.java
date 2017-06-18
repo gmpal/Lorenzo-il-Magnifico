@@ -61,6 +61,11 @@ public abstract class Area implements java.io.Serializable {
 			return false;
 		return true;
 	}
+	
+	@Override
+	public String toString() {
+		return "" + placesArray;
+	} 
 
 	//getter and setter
 	public List<Place> getPlacesArray() {

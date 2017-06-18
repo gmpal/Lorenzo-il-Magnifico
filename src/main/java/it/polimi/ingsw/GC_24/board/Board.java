@@ -55,9 +55,9 @@ public class Board implements java.io.Serializable {
 	
 	@Override
 	public String toString() {
-		return "Board [towerTerritories=" + towerTerritories + ", towerCharacters=" + towerCharacters
-				+ ", towerBuildings=" + towerBuildings + ", towerVentures=" + towerVentures + ", harvest=" + harvest
-				+ ", production=" + production + ", market=" + market + ", councilPalace=" + councilPalace + "]";
+		return "BOARD\nTerritories = " + towerTerritories + "\nCharacters = " + towerCharacters
+				+ "\nBuildings = " + towerBuildings + "\nVentures  =" + towerVentures + "\nHarvest = " + harvest
+				+ "\nProduction = " + production + "\nMarket = " + market + "\nCouncilPalace = " + councilPalace + "\n";
 	}
 
 	//getters and setters

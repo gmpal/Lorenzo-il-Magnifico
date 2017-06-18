@@ -33,9 +33,9 @@ public class MarketPlace extends Place {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append( "MarketPlace free: " + isAvailable());
+		builder.append( "Free? " + isAvailable());
 		if (isAvailable()){
-			builder.append("You can get: ");
+			builder.append(" - You can get: ");
 			if (getValue() != null)
 				builder.append(getValue());
 			if (extraValue != null)

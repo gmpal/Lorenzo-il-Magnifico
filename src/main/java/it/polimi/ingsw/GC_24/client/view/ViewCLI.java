@@ -31,13 +31,11 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		colour = setColour();
 		System.out.println("*****Welcome "+name.toUpperCase()+"!\nYou are the " +colour.toUpperCase()+" player\n");
 		this.sendPlayerString(name, colour);
-		System.out.println("Waiting for other players...");		
+		System.out.println("Waiting for other players...\n");		
 		while (miniModel.getGameState()!= State.RUNNING) {
 			System.out.printf("");
 		}
-	/*	while (gameStarted == false) {
-			System.out.printf("");
-		}*/
+		
 		System.out.println("THE GAME STARTS NOW\n");
 		
 		System.out.println("The players' turn for the first round is:");
@@ -45,7 +43,10 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 			System.out.println(j+") "+miniModel.getPlayers().get(i).getMyName()+" is the "+miniModel.getPlayers().get(i).getMyColour()+" player");
 		}
 		System.out.println("\n");
-		showAndGetOption();
+		if (miniModel.getCurrentPlayer().equals(miniModel.getPlayerfromColour(PlayerColour.valueOf(colour.toUpperCase())))){
+			showAndGetOption();
+		}else
+			showOption();
 	}
 
 	private void getColoursfromServer() {
@@ -53,8 +54,6 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		hm.put("colours", null);		
 		this.notifyMyObservers(hm);
 	}
-
-
 
 	public String setName() {
 		String sc;
@@ -133,6 +132,42 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		this.notifyMyObservers(hm);
 	}
 
+	public void showOption() {
+		while (true) {
+			System.out.println("What do you want to see?\na)Show board\nb)Show personal board\nc)Show leader cards\n"
+					+ "d)Show family members\ne)Exit");
+			String command = scanner.nextLine();
+			boolean commandOk = true;
+			if (command.equals("a")) {
+				String board;
+				board = miniModel.getBoard().toString();
+				System.out.println(board);
+			} else if (command.equals("b")) {
+				String personalBoard;
+				personalBoard = miniModel.getPlayerfromColour(PlayerColour.valueOf(colour.toUpperCase())).getMyBoard().toString();
+				System.out.println(personalBoard);
+			} else if (command.equals("c")) {
+				//String leaderCards;
+				//miniModel.getPlayerfromColour(PlayerColour.valueOf(colour.toUpperCase())).getLeaderCards().toString();
+				//System.out.println(leaderCards);
+			} else if (command.equals("d")){
+				System.out.println(miniModel.getPlayerfromColour(PlayerColour.valueOf(colour.toUpperCase())).getMyFamily().toString());
+			}else if (command.equals("e")) {
+				break;
+			} else {
+				System.out.println("Wrong character");
+				commandOk = false;
+			}
+			if (commandOk) {
+				hm.clear();
+				hm.put("place", command);
+
+				notifyMyObservers(hm);
+				// System.out.println(command);
+			}
+		}
+	}
+	
 	public void showAndGetOption() {
 		while (true) {
 			System.out.println("Choose action:\n" + "a)Show board\n" + "b)Show personal board\n"

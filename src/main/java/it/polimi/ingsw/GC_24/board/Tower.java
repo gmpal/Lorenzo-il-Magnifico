@@ -35,5 +35,4 @@ public class Tower extends Area {
 		}
 		return false;
 	}
-
 }

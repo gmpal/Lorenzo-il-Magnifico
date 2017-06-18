@@ -26,10 +26,10 @@ public class PersonalBoard implements java.io.Serializable{
 	
 	@Override
 	public String toString() {
-		return "PersonalBoard \n"
-				+ "CARDS: personalBuildings=" + personalBuildings + "\n personalVentures=" + personalVentures
-				+ "\n personalTerritories=" + personalTerritories + "\n personalCharacters=" + personalCharacters
-				+ "\n BONUS TILE: " + mybonusTile+"\n";
+		return "PersonalBoard\n"
+				+ "CARDS: personalBuildings = " + personalBuildings + "\n personalVentures = " + personalVentures
+				+ "\n personalTerritories = " + personalTerritories + "\n personalCharacters = " + personalCharacters
+				+ "\nBONUS TILE: " + mybonusTile+"\n";
 	}
 
 
