@@ -10,15 +10,16 @@ public class Territories extends Development {
 	 */
 	private static final long serialVersionUID = 1023997492010425653L;
 
-	private int costDie;
+	private int dieValueHarvest;
 	private ImmediateEffect effectForHarvest;
 
 	// constructor
-	public Territories(String name, int costDie, String type, SetOfValues cost, ImmediateEffect immediateEffects,
-			ImmediateEffect immediateEffects1, ImmediateEffect effectForHarvest, int round) {
+	public Territories(String name, int dieValueHarvest, String type, SetOfValues cost,
+			ImmediateEffect immediateEffects, ImmediateEffect immediateEffects1, ImmediateEffect effectForHarvest,
+			int round) {
 		super(name, type, cost, immediateEffects, immediateEffects1, round);
 		this.effectForHarvest = effectForHarvest;
-		this.costDie = costDie;
+		this.dieValueHarvest = dieValueHarvest;
 	}
 
 	@Override
@@ -29,17 +30,17 @@ public class Territories extends Development {
 	@Override
 	public String toString() {
 		return "Territory [Name: " + getName() + "\nImmediate effects: 1." + getImmediateEffect() + " 2."
-				+ getImmediateEffect1() + "\nHarvest effect: " + getEffectForHarvest() + "\nCost die value: " + costDie
-				+ "]";
+				+ getImmediateEffect1() + "\nHarvest effect: " + getEffectForHarvest() + "\nDie value to do harvest: "
+				+ dieValueHarvest + "]";
 	}
 
 	// getter and setter
-	public int getCostDie() {
-		return costDie;
+	public int getDieValueHarvest() {
+		return dieValueHarvest;
 	}
 
-	public void setCostDie(int costDie) {
-		this.costDie = costDie;
+	public void setDieValueHarvest(int dieValueHarvest) {
+		this.dieValueHarvest = dieValueHarvest;
 	}
 
 	public ImmediateEffect getEffectForHarvest() {

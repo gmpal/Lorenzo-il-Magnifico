@@ -10,17 +10,17 @@ public class Buildings extends Development {
 	 */
 	private static final long serialVersionUID = 944266538603562720L;
 
-	private int costDie;
+	private int dieValueProduction;
 	private ImmediateEffect productionEffect, productionEffect1;
 
 	// constructor
-	public Buildings(String name, int costDie, String type, SetOfValues cost, ImmediateEffect immediateEffects,
-			ImmediateEffect immediateEffects1, ImmediateEffect productionEffect, ImmediateEffect productionEffect1,
-			int round) {
+	public Buildings(String name, int dieValueProduction, String type, SetOfValues cost,
+			ImmediateEffect immediateEffects, ImmediateEffect immediateEffects1, ImmediateEffect productionEffect,
+			ImmediateEffect productionEffect1, int round) {
 		super(name, type, cost, immediateEffects, immediateEffects1, round);
 		this.productionEffect = productionEffect;
 		this.productionEffect1 = productionEffect1;
-		this.costDie = costDie;
+		this.dieValueProduction = dieValueProduction;
 	}
 
 	@Override
@@ -32,20 +32,21 @@ public class Buildings extends Development {
 	public String toString() {
 		return "Building [Name: " + getName() + "\nCost: " + getCost() + "\nImmediate effects: 1."
 				+ getImmediateEffect() + " 2." + getImmediateEffect1() + "\nProduction effects: 1."
-				+ getProductionEffect() + ", 2." + getProductionEffect() + "\nCost die value: " + costDie + "]";
+				+ getProductionEffect() + ", 2." + getProductionEffect() + "\nDie value to do production: "
+				+ dieValueProduction + "]";
 	}
 
 	// getter and setter
-	public int getCostDie() {
-		return costDie;
-	}
-
-	public void setCostDie(int costDie) {
-		this.costDie = costDie;
-	}
-
 	public ImmediateEffect getProductionEffect() {
 		return productionEffect;
+	}
+
+	public int getDieValueProduction() {
+		return dieValueProduction;
+	}
+
+	public void setDieValueProduction(int dieValueProduction) {
+		this.dieValueProduction = dieValueProduction;
 	}
 
 	public void setProductionEffect(ImmediateEffect productionEffect) {
