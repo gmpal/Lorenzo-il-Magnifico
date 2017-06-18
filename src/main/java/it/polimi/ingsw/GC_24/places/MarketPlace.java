@@ -1,35 +1,35 @@
 package it.polimi.ingsw.GC_24.places;
 
 import it.polimi.ingsw.GC_24.effects.Effect;
+import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.values.Value;
 
 public class MarketPlace extends Place {
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 5096841999224669924L;
 
-	
 	private Value extraValue;
-	private Effect privilegeEffect;
-	
-	//constructor
-	public MarketPlace(Value extraValue, Value value, Effect privilegeEffect, int costDice){
+	private ImmediateEffect privilegeEffect;
+
+	// constructor
+	public MarketPlace(Value extraValue, Value value, ImmediateEffect privilegeEffect, int costDice) {
 		super(costDice, value);
-		this.extraValue=extraValue;
-		this.privilegeEffect=privilegeEffect;
-		this.available=true;
-		this.famMemberOnPlace=null;
+		this.extraValue = extraValue;
+		this.privilegeEffect = privilegeEffect;
+		this.available = true;
+		this.famMemberOnPlace = null;
 	}
-	
+
 	@Override
-	public void giveEffects(Player player){
+	public void giveEffects(Player player) {
 		player.setMyValues(this.getValue().addValueToSet(player.getMyValues()));
 		player.setMyValues(this.extraValue.addValueToSet(player.getMyValues()));
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -46,7 +46,7 @@ public class MarketPlace extends Place {
 		return builder.toString();
 	}
 
-	//getters and setters
+	// getters and setters
 	public Value getExtraValue() {
 		return extraValue;
 	}
@@ -55,13 +55,12 @@ public class MarketPlace extends Place {
 		this.extraValue = extraValue;
 	}
 
-	public Effect getPrivilegeEffect() {
+	public ImmediateEffect getPrivilegeEffect() {
 		return privilegeEffect;
 	}
 
-	public void setPrivilegeEffect(Effect privilegeEffect) {
+	public void setPrivilegeEffect(ImmediateEffect privilegeEffect) {
 		this.privilegeEffect = privilegeEffect;
 	}
-	
-	
+
 }

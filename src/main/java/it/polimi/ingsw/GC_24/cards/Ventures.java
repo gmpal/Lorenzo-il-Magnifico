@@ -4,19 +4,23 @@ import it.polimi.ingsw.GC_24.effects.*;
 import it.polimi.ingsw.GC_24.personalboard.PersonalBoard;
 import it.polimi.ingsw.GC_24.values.*;
 
-public class Ventures extends Development {	
+public class Ventures extends Development {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -6234182947488565457L;
-	
+
 	private MilitaryPoint requiredMilitaryPoints;
+	private SetOfValues alternativeCost;
+	private Value pointsAtTheEnd;
 
 	// constructor
-	public Ventures(String name, String type, SetOfValues cost,
-			MilitaryPoint requiredMilitaryPoints, ImmediateEffect immediateEffects, PermanentEffect permanentEffects,
-			int round, ImmediateEffect immediateEffects1) {
-		super(name, type, cost, immediateEffects, permanentEffects, round, immediateEffects1);
+	public Ventures(String name, String type, SetOfValues cost, SetOfValues alternativeCost, Value pointsAtTheEnd,
+			MilitaryPoint requiredMilitaryPoints, ImmediateEffect immediateEffects, ImmediateEffect immediateEffects1,
+			int round) {
+		super(name, type, cost, immediateEffects, immediateEffects1, round);
+		this.alternativeCost = alternativeCost;
+		this.pointsAtTheEnd = pointsAtTheEnd;
 		this.requiredMilitaryPoints = requiredMilitaryPoints;
 	}
 
@@ -31,8 +35,7 @@ public class Ventures extends Development {
 				"\n Immediate Effects = " + getImmediateEffect()+" "+getImmediateEffect1()+
 				"\nPermanent Effects = " + getPermanentEffect();
 	}
-
-
+  
 	// getters and setters
 	public MilitaryPoint getRequiredMilitaryPoints() {
 		return requiredMilitaryPoints;
@@ -40,6 +43,22 @@ public class Ventures extends Development {
 
 	public void setRequiredMilitaryPoints(MilitaryPoint requiredMilitaryPoints) {
 		this.requiredMilitaryPoints = requiredMilitaryPoints;
+	}
+
+	public SetOfValues getAlternativeCost() {
+		return alternativeCost;
+	}
+
+	public void setAlternativeCost(SetOfValues alternativeCost) {
+		this.alternativeCost = alternativeCost;
+	}
+
+	public Value getPointsAtTheEnd() {
+		return pointsAtTheEnd;
+	}
+
+	public void setPointsAtTheEnd(Value pointsAtTheEnd) {
+		this.pointsAtTheEnd = pointsAtTheEnd;
 	}
 
 }

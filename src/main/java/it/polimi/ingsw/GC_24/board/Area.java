@@ -13,8 +13,9 @@ public abstract class Area implements java.io.Serializable {
 
 	protected List<Place> placesArray = new ArrayList<>();
 	
-	// returns true if in the same Tower there already is a family member of the
-	// same colour as the parameter
+	/*This method returns true if in the zone you're trying to put your familymember in
+	 * there's already a familymember of the same Player. If you're trying to put a neutral
+	 * family member, it directly returns false*/
 	public boolean isThereSameColour(FamilyMember familyMember) {
 		PlayerColour colour = familyMember.getPlayerColour();
 		if (familyMember.isNeutral()) {
@@ -36,6 +37,23 @@ public abstract class Area implements java.io.Serializable {
 		}
 	}
 
+	public Place getPlaceFromString(String place){
+		if (!place.equals("0")){
+			int i = Integer.parseInt(place);
+			return placesArray.get(i);
+		}else 
+			return this.getFirstEmptyPlace();
+		
+		
+	}
+	
+	public Place getFirstEmptyPlace(){
+		for (Place p: this.placesArray){
+			if(p.isAvailable()) return p;
+		}
+		return null;
+	}
+	
 	//hashCode() and equals() redefined
 	@Override
 	public int hashCode() {

@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.StringTokenizer;
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.MyObserver;
+import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.PlayerColour;
@@ -16,7 +17,7 @@ import it.polimi.ingsw.GC_24.model.PlayerColour;
 public class Controller extends MyObservable implements MyObserver {
 
 	private final Model game;
-
+	private ActionFactory actionFactory;
 	// constructor
 
 	public Controller(Model game) {
@@ -58,7 +59,17 @@ public class Controller extends MyObservable implements MyObserver {
 		Set<String> command = request.keySet();
 		System.out.println(command);
 
-		if (command.contains("colours")) {
+		if (command.contains("PLAYERNAME")) {
+			StringTokenizer tokenizer = new StringTokenizer((String) request.get("PLAYERNAME"));
+			String name = tokenizer.nextToken();
+			String colour = tokenizer.nextToken();
+			
+			Player player = new Player(name, PlayerColour.valueOf(colour.toUpperCase()));
+
+			return player.toString();
+		}
+
+		else if (command.contains("colours")) {
 			List<String> playerColoursArray = PlayerColour.getValues();
 			HashMap<String, Object> coloursMap = new HashMap<String, Object>();
 			coloursMap.put("colours", playerColoursArray);
@@ -66,7 +77,36 @@ public class Controller extends MyObservable implements MyObserver {
 			System.out.println("ServerOut: ArrayListOfColours sent");
 			return " ArrayListOfColours sent";
 		}
+		
+		else if (command.contains("place")) {
+			StringTokenizer tokenizer = new StringTokenizer((String) request.get("action"));
+			
+			String tempFamiliar = tokenizer.nextToken();
+			String tempZone = tokenizer.nextToken();
+			String tempFloor = tokenizer.nextToken();
+			String tempServants = tokenizer.nextToken();
+			
+			Action action = actionFactory.makeAction(game, tempFamiliar, tempZone, tempFloor, tempServants );
+			
+			if (action.verify()){
+				
+				List <ImmediateEffect> interactiveEffects = action.run();
+				if (!interactiveEffects.isEmpty()){
+					//TODO: interagisci con l'utente per prenderti i parametri che ti servono
+				}
+			
+			}else
+				{
+				//TODO: azione non valida
+			}
+			
+		//	HashMap<String, Object> coloursMap = new HashMap<String, Object>();
+		//	coloursMap.put("colours", playerColoursArray);
+		//	this.notifySingleObserver((MyObserver) o, coloursMap);
 
+			
+			return " sent";
+		}
 		else if (command.contains("checkColour")) {
 			String colour = (String) request.get("checkColour");
 			String availability;

@@ -4,7 +4,7 @@ import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.places.TowerPlace;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 
-/*This effects lets the player choose another card of ONE or MULTI colours, with a specific minimum value.
+/**This effects lets the player choose another card of ONE or MULTI colours, with a specific minimum value.
  * It's exactly like putting a familyMember: the player has to pay 3 coins if the tower is occupied,
  * receives the immediateEffect if the place has it, can increase the value with servants */
 public class ChooseNewCard extends ImmediateEffect {
@@ -16,16 +16,16 @@ public class ChooseNewCard extends ImmediateEffect {
 	private int dieValue;
 	private String type;
 	private SetOfValues setOfValue;
+	private TowerPlace towerPlace;
 
-	
 	public ChooseNewCard(String name, String type, int dieValue, SetOfValues setOfValue) {
 		super(name);
-		this.type=type;
+		this.type = type;
 		this.dieValue = dieValue;
 		this.setSetOfValue(setOfValue);
 	}
 
-	//getters and setters
+	// getters and setters
 	public int getDieValue() {
 		return dieValue;
 	}
@@ -49,13 +49,13 @@ public class ChooseNewCard extends ImmediateEffect {
 	public void setSetOfValue(SetOfValues setOfValue) {
 		this.setOfValue = setOfValue;
 	}
-	
+
+	public void assignParameters(TowerPlace towerPlace) {
+		this.towerPlace = towerPlace;
+	}
+
 	@Override
 	public void giveImmediateEffect(Player player) {
-		
-	}
-	
-	public void chooseCard(Player player, TowerPlace towerPlace){
 		towerPlace.takeWithoutPlacing(player);
 	}
 }

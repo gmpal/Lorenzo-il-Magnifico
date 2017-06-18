@@ -26,10 +26,9 @@ public class TowerPlace extends Place {
 	
 	@Override
 	public void giveEffects(Player player){
-		player.setMyValues(this.getValue().addValueToSet(player.getMyValues()));
 		correspondingCard.setCardOnPersonalBoard(player.getMyBoard());
-		correspondingCard.getImmediateEffect1().giveImmediateEffect(player);
-		correspondingCard.getImmediateEffect().giveImmediateEffect(player);
+		correspondingCard.getImmediateEffect();
+		correspondingCard.getImmediateEffect1();
 		this.correspondingCard = null;
 	}
 
@@ -37,5 +36,15 @@ public class TowerPlace extends Place {
 	public String toString() {
 		return "Card = " + correspondingCard;
 	}
+
+	public Development getCorrespondingCard() {
+		return correspondingCard;
+	}
+
+	public void setCorrespondingCard(Development correspondingCard) {
+		this.correspondingCard = correspondingCard;
+	}
+	
+	
 
 }

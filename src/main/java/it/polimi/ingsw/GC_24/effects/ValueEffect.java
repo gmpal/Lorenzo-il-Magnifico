@@ -9,7 +9,7 @@ public class ValueEffect extends ImmediateEffect {
 	 * 
 	 */
 	private static final long serialVersionUID = -1376411059993068191L;
-	
+
 	private SetOfValues setOfValue;
 
 	// constructor

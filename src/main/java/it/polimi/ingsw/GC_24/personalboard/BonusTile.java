@@ -23,7 +23,7 @@ public class BonusTile implements java.io.Serializable{
 	}
 		
 	//adds the productionValues to the parameter
-	public void giveProductiontValues(SetOfValues v){
+	public void giveProductionValues(SetOfValues v){
 		productionValues.addTwoSetsOfValues(v);
 	}
 	

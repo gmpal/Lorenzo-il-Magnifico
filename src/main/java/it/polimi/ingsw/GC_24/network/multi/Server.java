@@ -83,15 +83,13 @@ public class Server {
 				System.out.println("Client connected to " + game);
 				game.setGameState(game.getGameState().nextState());
 				System.out.println(game.getGameState());
-				if (controller.getGame().getGameState().equals(State.WAITINGFORPLAYERTHREE)) {
+				if (game.getGameState().equals(State.WAITINGFORPLAYERTHREE)) {
 					System.out.println("Starting Timer");
-					Timer.startTimer(20);
-					game.setModel(controller.getGame().getPlayers());
+
+					Timer.startTimer(10);
 					this.newGame();
 				}
-				if (controller.getGame().getGameState().equals(State.RUNNING)) {
-					System.out.println("Creating a new game");
-					game.setModel(controller.getGame().getPlayers());
+				if (game.getGameState().equals(State.RUNNING)) {
 					this.newGame();
 				}
 			} catch (IOException e) {

@@ -4,19 +4,22 @@ import it.polimi.ingsw.GC_24.effects.*;
 import it.polimi.ingsw.GC_24.personalboard.PersonalBoard;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 
-public class Territories extends Development {		
+public class Territories extends Development {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1023997492010425653L;
-	
-	private int costDie;
+
+	private int dieValueHarvest;
+	private ImmediateEffect effectForHarvest;
 
 	// constructor
-	public Territories(String name, int costDie, String type, SetOfValues cost, ImmediateEffect immediateEffects,
-			PermanentEffect permanentEffects, int round, ImmediateEffect immediateEffects1) {
-		super(name, type, cost, immediateEffects, permanentEffects, round, immediateEffects1);
-		this.costDie = costDie;
+	public Territories(String name, int dieValueHarvest, String type, SetOfValues cost,
+			ImmediateEffect immediateEffects, ImmediateEffect immediateEffects1, ImmediateEffect effectForHarvest,
+			int round) {
+		super(name, type, cost, immediateEffects, immediateEffects1, round);
+		this.effectForHarvest = effectForHarvest;
+		this.dieValueHarvest = dieValueHarvest;
 	}
 
 	@Override
@@ -29,15 +32,22 @@ public class Territories extends Development {
 		return "Territory: Name = " + name + " Cost = " + getCost() + " Immediate Effects = " + getImmediateEffect()+" "+getImmediateEffect1()+
 				"\nPermanent Effects = " + getPermanentEffect();
 	}
-
-
+  
 	// getter and setter
-	public int getCostDie() {
-		return costDie;
+	public int getDieValueHarvest() {
+		return dieValueHarvest;
 	}
 
-	public void setCostDie(int costDie) {
-		this.costDie = costDie;
+	public void setDieValueHarvest(int dieValueHarvest) {
+		this.dieValueHarvest = dieValueHarvest;
+	}
+
+	public ImmediateEffect getEffectForHarvest() {
+		return effectForHarvest;
+	}
+
+	public void setEffectForHarvest(ImmediateEffect effectForHarvest) {
+		this.effectForHarvest = effectForHarvest;
 	}
 
 }
