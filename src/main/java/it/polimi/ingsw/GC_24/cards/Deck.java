@@ -154,9 +154,9 @@ public class Deck {
 				ve, 3);
 		String string = gson.toJson(t);
 		String string1 = gson.toJson(t1);
-		System.out.println(string);
-		System.out.println(string1);
 		Deck d = new Deck();
-		System.out.println(d.deckTerritories.get(0).getImmediateEffect());
+		for (int i = 0; i < d.deckTerritories.size(); i++) {
+			System.out.println(d.deckTerritories.get(i));
+		}
 	}
 }
