@@ -16,5 +16,8 @@ public class PersonalTerritories extends PersonalCards {
 		return playersBoard.getPersonalTerritories();
 	}
 
-	
+	@Override
+	public String toString() {
+		return "Territories " + getCards();
+	}
 }

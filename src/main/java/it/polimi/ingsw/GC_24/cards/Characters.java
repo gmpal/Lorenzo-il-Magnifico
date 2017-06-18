@@ -24,6 +24,12 @@ public class Characters extends Development {
 		personalBoard.getPersonalCharacters().setCards(this);
 	}
 
+	@Override
+	public String toString() {
+		return "Character: Name = " + name + " Cost = " + getCost() + " Immediate Effects = " + getImmediateEffect()+" "+getImmediateEffect1()+
+				"\nPermanent Effects = " + getPermanentEffect();
+  }
+
 	public PermanentEffect getPermanentEffects() {
 		return permanentEffects;
 	}

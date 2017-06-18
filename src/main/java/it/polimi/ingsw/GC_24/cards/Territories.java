@@ -29,11 +29,10 @@ public class Territories extends Development {
 
 	@Override
 	public String toString() {
-		return "Territory [Name: " + getName() + "\nImmediate effects: 1." + getImmediateEffect() + " 2."
-				+ getImmediateEffect1() + "\nHarvest effect: " + getEffectForHarvest() + "\nDie value to do harvest: "
-				+ dieValueHarvest + "]";
+		return "Territory: Name = " + name + " Cost = " + getCost() + " Immediate Effects = " + getImmediateEffect()+" "+getImmediateEffect1()+
+				"\nPermanent Effects = " + getPermanentEffect();
 	}
-
+  
 	// getter and setter
 	public int getDieValueHarvest() {
 		return dieValueHarvest;

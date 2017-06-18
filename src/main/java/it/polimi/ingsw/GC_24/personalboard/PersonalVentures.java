@@ -16,4 +16,8 @@ public class PersonalVentures extends PersonalCards{
 		return playersBoard.getPersonalVentures();
 	}
 
+	@Override
+	public String toString() {
+		return "Ventures " + getCards();
+	}
 }

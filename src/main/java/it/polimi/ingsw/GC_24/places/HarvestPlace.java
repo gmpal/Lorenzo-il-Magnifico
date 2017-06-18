@@ -29,14 +29,4 @@ public class HarvestPlace extends ActivityPlace{
 			} 
 		}
 	}
-	
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append( "HarvestPlace free: " + isAvailable());
-		if (!isAvailable()){
-			builder.append("extra die's cost: " + getAdditionalCostDice());
-		}
-		return builder.toString();
-  }
 }

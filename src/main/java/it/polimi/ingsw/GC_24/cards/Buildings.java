@@ -30,10 +30,8 @@ public class Buildings extends Development {
 
 	@Override
 	public String toString() {
-		return "Building [Name: " + getName() + "\nCost: " + getCost() + "\nImmediate effects: 1."
-				+ getImmediateEffect() + " 2." + getImmediateEffect1() + "\nProduction effects: 1."
-				+ getProductionEffect() + ", 2." + getProductionEffect() + "\nDie value to do production: "
-				+ dieValueProduction + "]";
+		return "Building: Name = " + name + " Cost = " + getCost() + " Immediate Effects = " + getImmediateEffect()+" "+getImmediateEffect1()+
+				"\nPermanent Effects = " + getPermanentEffect();
 	}
 
 	// getter and setter

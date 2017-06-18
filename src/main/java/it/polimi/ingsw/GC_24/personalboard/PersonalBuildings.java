@@ -15,6 +15,13 @@ public class PersonalBuildings extends PersonalCards {
 	public PersonalCards findCardsInPersonalBoard(PersonalBoard playersBoard){
 		return playersBoard.getPersonalBuildings();
 	}
+
+	@Override
+	public String toString() {
+		return "Buildings " + getCards();
+	}
+	
+	
 }
 
 

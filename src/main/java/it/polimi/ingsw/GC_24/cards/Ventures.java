@@ -31,12 +31,11 @@ public class Ventures extends Development {
 
 	@Override
 	public String toString() {
-		return "Buildings [Name: " + getName() + "\nCost: " + getCost() + "\nAlternative cost: " + getAlternativeCost()
-				+ ", requiredMilitaryPoints=" + requiredMilitaryPoints + "\nImmediate Effects: 1."
-				+ getImmediateEffect() + " 2." + getImmediateEffect1() + "\nPoints at the end: " + getPointsAtTheEnd()
-				+ "]";
+		return "Venture: Name = " + name + " Cost = " + getCost() + " Required Military Points = " +requiredMilitaryPoints+
+				"\n Immediate Effects = " + getImmediateEffect()+" "+getImmediateEffect1()+
+				"\nPermanent Effects = " + getPermanentEffect();
 	}
-
+  
 	// getters and setters
 	public MilitaryPoint getRequiredMilitaryPoints() {
 		return requiredMilitaryPoints;

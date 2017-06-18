@@ -1,5 +1,7 @@
 package it.polimi.ingsw.GC_24.model;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.board.Board;
@@ -19,20 +21,20 @@ public class Model extends MyObservable implements java.io.Serializable {
 	private Round currentRound;
 	private Period currentPeriod;
 	private List<Ranking> rankings;
-
-	/*
-	 * Constructor --> ONLY PLAYERS NEEDS TO BE PASSED other fields are created
-	 * or set
-	 */
+	private HashMap<String, Object> hm;
+	
+	/*Constructor --> ONLY PLAYERS NEEDS TO BE PASSED
+	 * other fields are created or set */
 	public Model() {
-
-		this.players = null;
+		
+		this.players = new ArrayList<>();
 		this.board = null;
 		this.currentPlayer = null;
 		this.gameState = State.WAITINGFORPLAYERONE;
 		this.dice = null;
 		this.currentRound = null;
 		this.currentPeriod = null;
+		this.rankings = new ArrayList<Ranking>();
 	}
 
 	/*
@@ -42,10 +44,9 @@ public class Model extends MyObservable implements java.io.Serializable {
 	public void setModel(List<Player> players) {
 
 		this.players = players;
-
 		this.board = new Board(players.size());
 		this.currentPlayer = players.get(0);
-		this.gameState = State.RUNNING;
+		this.setGameState(State.RUNNING);
 		this.dice = new SetOfDice();
 		this.currentRound = Round.ONE;
 		this.currentPeriod = Period.ONE;
@@ -55,8 +56,18 @@ public class Model extends MyObservable implements java.io.Serializable {
 			p.getMyValues().setInitialValues(players.indexOf(p));
 			p.getMyFamily().setFamily(this.dice);
 			rankings.add(new Ranking(p));
+		}		
+		hm = new HashMap<>();
+		hm.put("Model", this);
+		notifyMyObservers(hm);
+	}
+	
+	public Player getPlayerfromColour(PlayerColour colour){
+		for (Player player:players){
+			if(player.getMyColour().equals(colour))
+				return player;
 		}
-		notifyMyObservers(this);
+		return null;
 	}
 
 	// getters and setters
@@ -116,4 +127,9 @@ public class Model extends MyObservable implements java.io.Serializable {
 		this.currentPeriod = currentPeriod;
 	}
 
-}
+	@Override
+	public String toString() {
+		return "model ok";
+	}
+	
+}	
