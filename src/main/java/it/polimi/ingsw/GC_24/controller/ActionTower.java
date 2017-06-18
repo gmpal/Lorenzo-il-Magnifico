@@ -1,9 +1,7 @@
-﻿package it.polimi.ingsw.GC_24.controller;
+package it.polimi.ingsw.GC_24.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import it.polimi.ingsw.GC_24.cards.Development;
 import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.places.TowerPlace;
@@ -49,7 +47,7 @@ public class ActionTower extends Action {
 			answerToPlayer = verifyMoneyForTowerOccupied();
 			answerToPlayer = verifyCardResources();
 			answerToPlayer = verifyTerritorySpaceAvailability();
-			answerToPlayer = verifyBoardSpaceAvailability();
+		//	answerToPlayer = verifyBoardSpaceAvailability();
 		}
 		return answerToPlayer;
 	
@@ -76,13 +74,13 @@ public class ActionTower extends Action {
 
 	}
 	
-	public String verifyBoardSpaceAvailability(){
+/*	public String verifyBoardSpaceAvailability(){
 		TowerPlace tempTowerPlace = (TowerPlace) this.place;
 		String typeOfCard = tempTowerPlace.getCorrespondingCard().getType();
 		if (typeOfCard.equals("Territory")){
 			
 		}
-	}
+	}*/
 
 
 }
