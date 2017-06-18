@@ -26,7 +26,7 @@ public class PerformProduction extends PerformActivity {
 			Buildings b = (Buildings) card;
 			im = b.getProductionEffect();
 			im1 = b.getProductionEffect();
-			if (b.getCostDie() <= dieValue) {
+			if (b.getDieValueProduction() <= dieValue) {
 				if (im != null) {
 					immediateEffectsProduction.add(im);
 				}

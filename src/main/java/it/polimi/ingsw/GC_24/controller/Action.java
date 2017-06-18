@@ -16,7 +16,7 @@ public abstract class Action {
 	protected Player player;
 	protected Place place;
 	protected int servants;
-	protected String zone;
+	protected String zoneString;
 
 	// constructor
 	public Action(Model game, String familiar, String zone, String floor, String servants) {
@@ -25,7 +25,7 @@ public abstract class Action {
 		this.zone = game.getBoard().getZoneFromString(zone);
 		this.place = game.getBoard().getZoneFromString(zone).getPlaceFromString(floor);
 		this.servants = Integer.parseInt(servants);
-		this.zone=zone;
+		this.zoneString=zone;
 	}
 	
 	/**

@@ -23,7 +23,7 @@ public class PerformHarvest extends PerformActivity {
 		for (Development card : cards) {
 			Territories t = (Territories) card;
 			im = t.getEffectForHarvest();
-			if (im != null && t.getCostDie() <= dieValue) {
+			if (im != null && t.getDieValueHarvest() <= dieValue) {
 				immediateEffectsHarvest.add(im);
 			}
 		}

@@ -36,7 +36,10 @@ public class Deck {
 		return RuntimeTypeAdapterFactory.of(ImmediateEffect.class, "immediateEffectType")
 				.registerSubtype(MoltiplicationPoints.class, "moltiplicationPoints")
 				.registerSubtype(MoltiplicationCards.class, "moltiplicationCards")
-				.registerSubtype(ValueEffect.class, "value").registerSubtype(CouncilPrivilege.class, "coucilPrivilege");
+				.registerSubtype(ValueEffect.class, "value").registerSubtype(CouncilPrivilege.class, "coucilPrivilege")
+				.registerSubtype(ChooseNewCard.class, "chooseNewCard").registerSubtype(Exchange.class, "exchange")
+				.registerSubtype(PerformHarvest.class, "performHarvest")
+				.registerSubtype(PerformProduction.class, "performProduction");
 	}
 
 	public static RuntimeTypeAdapterFactory<PersonalCards> getPersonalCardTypeAdapter() {
@@ -51,6 +54,7 @@ public class Deck {
 		builder.registerTypeAdapterFactory(getValueTypeAdapter());
 		builder.registerTypeAdapterFactory(getImmediateEffectTypeAdapter());
 		builder.registerTypeAdapterFactory(getPersonalCardTypeAdapter());
+		builder.serializeNulls();
 		return builder.create();
 	}
 
@@ -132,9 +136,8 @@ public class Deck {
 		this.deckVentures = deckVentures;
 	}
 
-	public static void main(String args[]) {
+	public static void main(String args[]) throws IOException {
 		Gson gson = getGsonWithTypeAdapters();
-
 		ValueEffect ve = new ValueEffect("value");
 		SetOfValues set = new SetOfValues();
 		set.setStones(new Stone(1));
@@ -153,5 +156,7 @@ public class Deck {
 		String string1 = gson.toJson(t1);
 		System.out.println(string);
 		System.out.println(string1);
+		Deck d = new Deck();
+		System.out.println(d.deckTerritories.get(0).getImmediateEffect());
 	}
 }
