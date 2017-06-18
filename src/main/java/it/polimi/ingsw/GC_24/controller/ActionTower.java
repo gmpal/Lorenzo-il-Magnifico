@@ -4,20 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
-import it.polimi.ingsw.GC_24.model.FamilyMember;
 import it.polimi.ingsw.GC_24.model.Model;
-import it.polimi.ingsw.GC_24.model.Player;
-import it.polimi.ingsw.GC_24.places.Place;
 import it.polimi.ingsw.GC_24.places.TowerPlace;
 
 public class ActionTower extends Action {
 	private List<ImmediateEffect> immediateEffects = new ArrayList<>();
 
-		public ActionTower(Model partita, String familiar, String zone, String floor, String servants) {
+	public ActionTower(Model partita, String familiar, String zone, String floor, String servants) {
 		super(partita, familiar, zone, floor, servants);
-		// TODO Auto-generated constructor stub
 	}
-	
+
 	@Override
 	public List<ImmediateEffect> run() {
 		place.setFamMemberOnPlace(familyMember);
@@ -27,30 +23,24 @@ public class ActionTower extends Action {
 		}
 		TowerPlace towerPlace = (TowerPlace) place;
 		towerPlace.getCorrespondingCard().setCardOnPersonalBoard(player.getMyBoard());
-		immediateEffects.add(towerPlace.getCorrespondingCard().getImmediateEffect());
-		immediateEffects.add(towerPlace.getCorrespondingCard().getImmediateEffect1());
-		giveEffect(immediateEffects);
-		return immediateEffects;
-	}
-
-	/**
-	 * This method gives to player the cards' value effects and it removes them from
-	 * the list of immediate effects that needs interaction with client
-	 */
-	public void giveEffect(List<ImmediateEffect> immediateEffects) {
-		String nameEffect;
-		for (ImmediateEffect im : immediateEffects) {
-			nameEffect = im.getName();
-			if (nameEffect.equals("value")) {
-				im.giveImmediateEffect(player);
-				immediateEffects.remove(im);
-			}
+		ImmediateEffect im = towerPlace.getCorrespondingCard().getImmediateEffect();
+		ImmediateEffect im1 = towerPlace.getCorrespondingCard().getImmediateEffect1();
+		if (im != null) {
+			immediateEffects.add(im);
 		}
+		if (im1 != null) {
+			immediateEffects.add(im1);
+		}
+		giveValueEffect(immediateEffects);
+		return immediateEffects;
 	}
 
 	@Override
 	public boolean verify() {
-		// TODO Auto-generated method stub
+
+		/*Devo controllare se :
+		 * 1) Il metodo Action di quel posto è funzionante */
+
 		return false;
 	}
 

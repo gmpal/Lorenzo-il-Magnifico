@@ -44,7 +44,7 @@ public class TestBonusTile {
 		valuesExpected.setInitialValues(1);
 		valuesExpected.getStones().addQuantity(3);
 		valuesExpected.getWoods().addQuantity(6);
-		bonusTile.giveProductiontValues(values);
+		bonusTile.giveProductionValues(values);
 		assertEquals(valuesExpected, values);
 	}
 

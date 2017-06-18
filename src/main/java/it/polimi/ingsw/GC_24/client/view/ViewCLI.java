@@ -41,8 +41,6 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		this.notifyMyObservers(hm);
 	}
 
-
-
 	public String setName() {
 		String sc;
 		do {
@@ -174,23 +172,23 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 			String cf;
 			if (commandZone.equals("a")) {
 				cf = fourChoice(floor);
-				commandZone = "territories " + cf+" ";
+				commandZone = "territories " + cf + " ";
 				commandZone = increaseDieValue(commandZone);
 			} else if (commandZone.equals("b")) {
 				cf = fourChoice(floor);
-				commandZone = "characters " + cf+ " ";
+				commandZone = "characters " + cf + " ";
 				commandZone = increaseDieValue(commandZone);
 			} else if (commandZone.equals("c")) {
 				cf = fourChoice(floor);
-				commandZone = "buildings " + cf+ " ";
+				commandZone = "buildings " + cf + " ";
 				commandZone = increaseDieValue(commandZone);
 			} else if (commandZone.equals("d")) {
 				cf = fourChoice(floor);
-				commandZone = "ventures " + cf+ " ";
+				commandZone = "ventures " + cf + " ";
 				commandZone = increaseDieValue(commandZone);
 			} else if (commandZone.equals("e")) {
 				cf = fourChoice("place");
-				commandZone = "market " + cf+ " ";
+				commandZone = "market " + cf + " ";
 				commandZone = increaseDieValue(commandZone);
 			} else if (commandZone.equals("f")) {
 				commandZone = "production 0 ";
@@ -226,7 +224,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 				commandFloor = null;
 			}
 		} while (commandFloor == null || (commandFloorInt > 5 || commandFloorInt < 1));
-		
+
 		if (commandFloorInt == 5) {
 			commandFloor = "cancel";
 		}
