@@ -19,6 +19,8 @@ public abstract class Development extends Card {
 	private int round;
 
 	// constructor
+	/*TODO: i type DEVONO coincidere con i nomi degli array della Board
+	 * 1)Territory 2)Characters 3)Buildings 4)Ventures*/
 	public Development(String name, String type, SetOfValues cost, ImmediateEffect immediateEffects,
 			PermanentEffect permanentEffects, int round, ImmediateEffect immediateEffects1) {
 		super(name);

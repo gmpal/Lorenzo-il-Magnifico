@@ -3,6 +3,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
+import it.polimi.ingsw.GC_24.cards.Development;
 import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.places.TowerPlace;
@@ -90,7 +91,11 @@ public class ActionTower extends Action {
 	}
 	
 	public String verifyBoardSpaceAvailability(){
-		if (this.zone.);
+		TowerPlace tempTowerPlace = (TowerPlace) this.place;
+		String typeOfCard = tempTowerPlace.getCorrespondingCard().getType();
+		if (typeOfCard.equals("Territory")){
+			
+		}
 	}
 
 
