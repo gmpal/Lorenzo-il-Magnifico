@@ -16,6 +16,7 @@ public abstract class Action {
 	protected Player player;
 	protected Place place;
 	protected int servants;
+	protected String zone;
 
 	// constructor
 	public Action(Model game, String familiar, String zone, String floor, String servants) {
@@ -24,6 +25,22 @@ public abstract class Action {
 		this.zone = game.getBoard().getZoneFromString(zone);
 		this.place = game.getBoard().getZoneFromString(zone).getPlaceFromString(floor);
 		this.servants = Integer.parseInt(servants);
+		this.zone=zone;
+	}
+	
+	/**
+	 * This method gives to player the cards' value effects and it removes them
+	 * from the list of immediate effects that needs interaction with client
+	 */
+	public void giveValueEffect(List<ImmediateEffect> immediateEffects) {
+		String nameEffect;
+		for (ImmediateEffect im : immediateEffects) {
+			nameEffect = im.getName();
+			if (nameEffect.equals("value")) {
+				im.giveImmediateEffect(player);
+				immediateEffects.remove(im);
+			}
+		}
 	}
 
 	/**

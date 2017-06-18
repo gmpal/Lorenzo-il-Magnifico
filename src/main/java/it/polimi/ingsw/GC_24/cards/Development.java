@@ -5,35 +5,36 @@ import it.polimi.ingsw.GC_24.personalboard.PersonalBoard;
 
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 
-public abstract class Development extends Card {	
+public abstract class Development extends Card {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 9083471155940958683L;
-	
+
 	private SetOfValues cost;
 	private String type;
 	private ImmediateEffect immediateEffects1;
 	private ImmediateEffect immediateEffects;
-	private PermanentEffect permanentEffects;
 	private int round;
 
 	// constructor
 	/*TODO: i type DEVONO coincidere con i nomi degli array della Board
 	 * 1)Territory 2)Characters 3)Buildings 4)Ventures*/
 	public Development(String name, String type, SetOfValues cost, ImmediateEffect immediateEffects,
-			PermanentEffect permanentEffects, int round, ImmediateEffect immediateEffects1) {
+			ImmediateEffect immediateEffects1, int round) {
 		super(name);
 		this.type = type;
 		this.cost = cost;
 		this.immediateEffects = immediateEffects;
-		this.permanentEffects = permanentEffects;
 		this.round = round;
 		this.setImmediateEffect1(immediateEffects1);
 	}
 
 	// add the card to the right ArrayList on the personal board
-	public abstract void setCardOnPersonalBoard(PersonalBoard personalBoard); // redefined in every subclass
+	public abstract void setCardOnPersonalBoard(PersonalBoard personalBoard); // redefined
+																				// in
+																				// every
+																				// subclass
 
 	// getter and setters
 	public SetOfValues getCost() {
@@ -66,14 +67,6 @@ public abstract class Development extends Card {
 
 	public void setImmediateEffect(ImmediateEffect immediateEffect) {
 		this.immediateEffects = immediateEffect;
-	}
-
-	public PermanentEffect getPermanentEffect() {
-		return permanentEffects;
-	}
-
-	public void setPermanentEffect(PermanentEffect permanentEffect) {
-		this.permanentEffects = permanentEffect;
 	}
 
 	public ImmediateEffect getImmediateEffect1() {

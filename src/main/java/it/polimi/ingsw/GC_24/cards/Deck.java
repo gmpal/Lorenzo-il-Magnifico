@@ -9,6 +9,7 @@ import com.google.gson.GsonBuilder;
 
 import it.polimi.ingsw.GC_24.devCardJsonFile.RuntimeTypeAdapterFactory;
 import it.polimi.ingsw.GC_24.effects.*;
+import it.polimi.ingsw.GC_24.personalboard.*;
 import it.polimi.ingsw.GC_24.values.*;
 
 public class Deck {
@@ -34,12 +35,22 @@ public class Deck {
 	public static RuntimeTypeAdapterFactory<ImmediateEffect> getImmediateEffectTypeAdapter() {
 		return RuntimeTypeAdapterFactory.of(ImmediateEffect.class, "immediateEffectType")
 				.registerSubtype(MoltiplicationPoints.class, "moltiplicationPoints")
-				.registerSubtype(MoltiplicationCards.class, "moltiplicationCards");
+				.registerSubtype(MoltiplicationCards.class, "moltiplicationCards")
+				.registerSubtype(ValueEffect.class, "value").registerSubtype(CouncilPrivilege.class, "coucilPrivilege");
+	}
+
+	public static RuntimeTypeAdapterFactory<PersonalCards> getPersonalCardTypeAdapter() {
+		return RuntimeTypeAdapterFactory.of(PersonalCards.class, "personalCardsType")
+				.registerSubtype(PersonalTerritories.class, "personalTerritories")
+				.registerSubtype(PersonalBuildings.class, "personalBuildings")
+				.registerSubtype(PersonalCharacters.class, "personalCharacters")
+				.registerSubtype(PersonalVentures.class, "personalVentures");
 	}
 
 	public static Gson getGsonWithTypeAdapters() {
 		builder.registerTypeAdapterFactory(getValueTypeAdapter());
 		builder.registerTypeAdapterFactory(getImmediateEffectTypeAdapter());
+		builder.registerTypeAdapterFactory(getPersonalCardTypeAdapter());
 		return builder.create();
 	}
 
@@ -119,5 +130,28 @@ public class Deck {
 
 	public void setDeckVentures(List<Ventures> deckVentures) {
 		this.deckVentures = deckVentures;
+	}
+
+	public static void main(String args[]) {
+		Gson gson = getGsonWithTypeAdapters();
+
+		ValueEffect ve = new ValueEffect("value");
+		SetOfValues set = new SetOfValues();
+		set.setStones(new Stone(1));
+		set.setVictoryPoints(new VictoryPoint(4));
+		ve.setEffectValues(set);
+
+		ValueEffect ve1 = new ValueEffect("value");
+		SetOfValues set1 = new SetOfValues();
+		set1.setStones(new Stone(1));
+		ve1.setEffectValues(set1);
+
+		Territories t = new Territories("Commercial Hub", 1, "territories", null, null, null, ve, 1);
+		Territories t1 = new Territories("Province", 6, "territories", null, new CouncilPrivilege("council", 1), ve1,
+				ve, 3);
+		String string = gson.toJson(t);
+		String string1 = gson.toJson(t1);
+		System.out.println(string);
+		System.out.println(string1);
 	}
 }

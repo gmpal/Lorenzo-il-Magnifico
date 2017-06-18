@@ -32,27 +32,12 @@ public class ActionTower extends Action {
 		if (im1 != null) {
 			immediateEffects.add(im1);
 		}
-		immediateEffects.add(towerPlace.getCorrespondingCard().getImmediateEffect1());
-		giveEffect(immediateEffects);
+		giveValueEffect(immediateEffects);
 		return immediateEffects;
 	}
 
-	/**
-	 * This method gives to player the cards' value effects and it removes them
-	 * from the list of immediate effects that needs interaction with client
-	 */
-	public void giveEffect(List<ImmediateEffect> immediateEffects) {
-		String nameEffect;
-		for (ImmediateEffect im : immediateEffects) {
-			nameEffect = im.getName();
-			if (nameEffect.equals("value")) {
-				im.giveImmediateEffect(player);
-				immediateEffects.remove(im);
-			}
-		}
-	}
-
 	@Override
+
 
 	public String verify() {
 		String answerToPlayer="ok";
@@ -88,6 +73,7 @@ public class ActionTower extends Action {
 	
 	public String verifyTerritorySpaceAvailability(){
 		return null;
+
 	}
 	
 	public String verifyBoardSpaceAvailability(){
