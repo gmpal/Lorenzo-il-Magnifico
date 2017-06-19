@@ -23,6 +23,8 @@ public class Model extends MyObservable implements java.io.Serializable {
 	private List<Ranking> rankings;
 	private HashMap<String, Object> hm;
 	
+	private int modelNumber = 0;
+	
 	/*Constructor --> ONLY PLAYERS NEEDS TO BE PASSED
 	 * other fields are created or set */
 	public Model() {
@@ -35,6 +37,15 @@ public class Model extends MyObservable implements java.io.Serializable {
 		this.currentRound = null;
 		this.currentPeriod = null;
 		this.rankings = new ArrayList<Ranking>();
+		modelNumber++;
+	}
+
+	public int getModelNumber() {
+		return modelNumber;
+	}
+
+	public void setModelNumber(int modelNumber) {
+		this.modelNumber = modelNumber;
 	}
 
 	/*

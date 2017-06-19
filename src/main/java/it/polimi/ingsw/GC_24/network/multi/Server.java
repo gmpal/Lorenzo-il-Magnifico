@@ -97,19 +97,15 @@ public class Server {
 	}
 
 	public static void tryToCreateANewGame() throws InterruptedException {
-		if (controller.getGame().getGameState().equals(State.WAITINGFORPLAYERTHREE)) {
+		 
 			System.out.println("Starting Timer because of second player created");
 			Timer.startTimer(15);
-			game.setModel(controller.getGame().getPlayers());
-			newGame();
-		}
-		if (controller.getGame().getGameState().equals(State.RUNNING)) {
-			System.out.println("Creating a new game because of four players created");
-			game.setModel(controller.getGame().getPlayers());
-			newGame();
-		}		
+			createANewGame();
 	}
-
+	public static void createANewGame(){
+		game.setModel(controller.getGame().getPlayers());
+		newGame();
+	}
 	private static void newGame() {
 		PlayerColour.resetValues();
 		game = new Model();

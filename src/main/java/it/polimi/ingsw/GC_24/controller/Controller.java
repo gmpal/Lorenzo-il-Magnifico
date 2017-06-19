@@ -14,6 +14,7 @@ import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.PlayerColour;
+import it.polimi.ingsw.GC_24.model.State;
 import it.polimi.ingsw.GC_24.places.TowerPlace;
 import it.polimi.ingsw.GC_24.values.MilitaryPoint;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
@@ -26,13 +27,15 @@ public class Controller extends MyObservable implements MyObserver {
 	private ActionFactory actionFactory;
 	private SetOfValues tempCost = null;
 	private Action action;
-	HashMap<String, Object> hashMap;
+	private HashMap<String, Object> hashMap;
+	private int controllerNumber = 0;
+	
 	// constructor
 
 	public Controller(Model game) {
 
 		this.game = game;
-
+		controllerNumber++;
 	}
 
 	@Override
@@ -142,8 +145,25 @@ public class Controller extends MyObservable implements MyObserver {
 		System.out.println("Controller: state changed: new state");
 		System.out.println(game.getGameState());
 		System.out.println("Trying to create a new game");
-		Server.tryToCreateANewGame();
-		return "Controller: Created player " + player.getMyName().toString();
+		
+		if (this.game.getGameState().equals(State.RUNNING)) {
+			Server.createANewGame();
+		}
+		
+		if (this.game.getGameState().equals(State.WAITINGFORPLAYERTHREE)) {
+			Server.tryToCreateANewGame();
+		}
+		return "Controller: Created player " + player.getMyName().toString() 
+				+ "\n --> CONNECTED TO GAME N" +game.getModelNumber()
+				+ "\n --> CONNECTED TO CONTROLLER N" +this.getControllerNumber();
+	}
+
+	public int getControllerNumber() {
+		return controllerNumber;
+	}
+
+	public void setControllerNumber(int controllerNumber) {
+		this.controllerNumber = controllerNumber;
 	}
 
 	private String handleAction(MyObservable o, Map<String, Object> request) {
