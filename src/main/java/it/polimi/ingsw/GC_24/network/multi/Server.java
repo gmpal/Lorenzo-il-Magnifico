@@ -79,9 +79,9 @@ public class Server {
 		while (true) {
 			try {
 				Socket socket = serverSocket.accept();
-				System.out.println("**************");
+				System.out.println("************** NEW CLIENT CONNECTED");
 				this.addClient(socket);
-				System.out.println("Client connected to " + game);
+				System.out.println("************** NEW CLIENT ADDED TO GAME");
 				/*game.setGameState(game.getGameState().nextState());
 				System.out.println(game.getGameState());*/
 				if (controller.getGame().getGameState().equals(State.WAITINGFORPLAYERTHREE)) {

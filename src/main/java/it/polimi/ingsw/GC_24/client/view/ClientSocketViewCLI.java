@@ -82,6 +82,7 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 		/*Contains the array of colours updated at the moment when requested*/
 
 		if (command.contains("colours")) {
+		
 			List<String> playerColoursArray = (List<String>) request.get("colours");
 			notifyMyObservers(playerColoursArray);
 		}
