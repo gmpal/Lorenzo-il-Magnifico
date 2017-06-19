@@ -88,7 +88,6 @@ public class Controller extends MyObservable implements MyObserver {
 
 		/* Checks if the colour has already been chosen */
 		else if (command.contains("checkColour")) {
-
 			return checkColour(o, request);
 		}
 
@@ -127,6 +126,7 @@ public class Controller extends MyObservable implements MyObserver {
 		String name = tokenizer.nextToken();
 		String colour = tokenizer.nextToken();
 		Player player = new Player(name, PlayerColour.valueOf(colour.toUpperCase()));
+		game.g
 		game.setGameState(game.getGameState().nextState());
 		System.out.println(game.getGameState());
 		return "Controller: Created player " + player.toString();
