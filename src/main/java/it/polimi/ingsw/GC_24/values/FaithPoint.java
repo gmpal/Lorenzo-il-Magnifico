@@ -24,4 +24,13 @@ public class FaithPoint extends Value {
 		return player.getMyValues().getFaithPoints();
 	}
 
+	@Override
+	public String whatValueAmI() {
+		return "FaithPoint";
+	}
+	
+	@Override
+	public Boolean amIpresentInThisSet(SetOfValues setOfValues) {
+		return (setOfValues.getFaithPoints().getQuantity() >= this.quantity);
+	}
 }

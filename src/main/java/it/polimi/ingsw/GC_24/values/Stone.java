@@ -23,4 +23,14 @@ public class Stone extends Value {
 	public Value findValueInPlayer(Player player){
 		return player.getMyValues().getStones();
 	}
+
+	@Override
+	public String whatValueAmI() {
+		return "Stone";
+	}
+	
+	@Override
+	public Boolean amIpresentInThisSet(SetOfValues setOfValues) {
+		return (setOfValues.getStones().getQuantity() >= this.quantity);
+	}
 }

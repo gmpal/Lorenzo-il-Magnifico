@@ -8,31 +8,32 @@ import it.polimi.ingsw.GC_24.MyObservable;
 
 public class ClientSocketViewGUI implements ClientSocketViewInterface {
 
+	// TODO Gui da fare
 	public ClientSocketViewGUI(ObjectInputStream objFromServer, ObjectOutputStream objToServer, ViewGUI viewGUI) {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	@Override
 	public void handleRequestFromServer(Map<String, Object> request) {
-		// TODO Auto-generated method stub
+		
 
 	}
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
 	@Override
 	public <C> void update(MyObservable o, C change) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 

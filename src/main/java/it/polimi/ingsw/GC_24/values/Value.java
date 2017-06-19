@@ -60,7 +60,8 @@ public abstract class Value implements Serializable {
 		Value other = (Value) obj;
 		return quantity == other.quantity;			
 	}
-
+	
+	
 	// toString method to print a Value
 	@Override
 	public String toString() {
@@ -76,5 +77,9 @@ public abstract class Value implements Serializable {
 		if (quantity >= 0)
 			this.quantity = quantity;
 	}
+	
+	public abstract String whatValueAmI();
+	
+	public abstract Boolean amIpresentInThisSet(SetOfValues setOfValues);
 
 }

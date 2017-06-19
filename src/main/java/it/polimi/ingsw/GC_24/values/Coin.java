@@ -29,4 +29,14 @@ public class Coin extends Value {
 		return "coin: " + this.getQuantity();
 	}
 
+	@Override
+	public String whatValueAmI() {
+		return "Coin";
+	}
+
+	@Override
+	public Boolean amIpresentInThisSet(SetOfValues setOfValues) {
+		return (setOfValues.getCoins().getQuantity() >= this.quantity);
+	}
+
 }

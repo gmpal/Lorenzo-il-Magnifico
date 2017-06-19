@@ -5,9 +5,14 @@ import java.util.List;
 import java.util.Scanner;
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.MyObserver;
+
+import it.polimi.ingsw.GC_24.values.MilitaryPoint;
+import it.polimi.ingsw.GC_24.values.SetOfValues;
+
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.PlayerColour;
 import it.polimi.ingsw.GC_24.model.State;
+
 
 public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	private static Scanner scanner = new Scanner(System.in);
@@ -23,7 +28,17 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	 * ViewCLI viewCLI = (ViewCLI) vp; viewCLI.start();
 	 * viewCLI.showAndGetOption(); }
 	 */
-	
+
+
+	public int getColourAvailable() {
+		return colourAvailable;
+	}
+
+	public void setColourAvailable(int colourAvailable) {
+		this.colourAvailable = colourAvailable;
+	}
+
+
 	@Override
 	public void run() {
 
@@ -208,7 +223,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 			}
 			if (commandOk) {
 				hm.clear();
-				hm.put("place", command);
+				hm.put("action", command);
 
 				notifyMyObservers(hm);
 				// System.out.println(command);
@@ -252,7 +267,8 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 				commandZone = "harvest 0 ";
 				commandZone = increaseDieValue(commandZone);
 			} else if (commandZone.equals("h")) {
-				commandZone = "council 0 0";
+				commandZone = "council 0 ";
+				commandZone = increaseDieValue(commandZone);
 			} else if (commandZone.equals("i")) {
 				commandZone = "cancel";
 			} else {
@@ -312,13 +328,49 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		return stringToInt.toString();
 	}
 
+	/*
+	 * this method lets the user choose between two alternative costs. It
+	 * contains a Military Point value because the alternative values are always
+	 * associated with militaryPoints
+	 */
+	// TODO: rendere scalabile il MilitaryPoint
+
+	public void chooseAlternativeCost(SetOfValues cost1, SetOfValues cost2, MilitaryPoint militaryPoints) {
+		System.out.println("The card you have chosen has two different costs:");
+		System.out.println("The first one is " + cost1);
+		System.out.println(
+				"but it requires that you have " + militaryPoints.getQuantity() + " military points to be used");
+		System.out.println("The second one is " + cost2);
+		System.out.println("Make your choice (1/2):");
+		int choice = scanner.nextInt();
+		while (!(choice == 1 || choice == 2)) {
+			System.out.println("Wrong choice, try again");
+			choice = scanner.nextInt();
+		}
+
+		hm = new HashMap<>();
+		if (choice == 1) {
+			hm.put("chosenCost", cost1);
+		} else {
+			hm.put("chosenCost", cost2);
+
+		}
+		this.notifyMyObservers(hm);
+	}
+
+	// updates
 	@Override
 	public void update() {
+
+		System.out.println("View: I have been updated!");
 
 	}
 
 	@Override
 	public <C> void update(MyObservable o, C change) {
+
+		System.out.println("Risposta " + change);
+
 	
 		if (change.equals("Colour Available")) {
 			this.colourAvailable = 1;
@@ -331,8 +383,10 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		}
 		else
 			System.out.println("Answer " + change);
+
 	}
 
+	// getters and setters
 	public String getName() {
 		return name;
 	}

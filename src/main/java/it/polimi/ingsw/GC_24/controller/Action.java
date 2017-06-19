@@ -8,6 +8,7 @@ import it.polimi.ingsw.GC_24.model.FamilyMember;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.places.Place;
+import it.polimi.ingsw.GC_24.values.SetOfValues;
 
 public abstract class Action {
 
@@ -16,16 +17,17 @@ public abstract class Action {
 	protected Player player;
 	protected Place place;
 	protected int servants;
-	protected String zone;
+	protected SetOfValues temporaryCardCost; 
 
 	// constructor
 	public Action(Model game, String familiar, String zone, String floor, String servants) {
 		this.player = game.getCurrentPlayer();
 		this.familyMember = player.getMyFamily().getMemberfromString(familiar);
 		this.zone = game.getBoard().getZoneFromString(zone);
-		this.place = game.getBoard().getZoneFromString(zone).getPlaceFromString(floor);
+		this.place = game.getBoard().getZoneFromString(zone).getPlaceFromStringOrFirstIfZero(floor);
 		this.servants = Integer.parseInt(servants);
-		this.zone=zone;
+		
+	
 	}
 	
 	/**
@@ -54,31 +56,59 @@ public abstract class Action {
 	public abstract List<ImmediateEffect> run();
 
 	//verify methods
-	public String verifyIfEnoughServants(){
+	protected String verifyIfEnoughServants(String answerToPlayer){
 		if (player.getMyValues().getServants().getQuantity() < this.servants){
-			return "You don't have enough servants to use!";
-		} else return "ok";
-	}
-	
-	public String verifyPlaceAvailability(){
-		if (!this.place.isAvailable()){
-			return "Sorry, place not available!";
-		}else return "ok";
-	}
-	
-	public String verifyFamilyMemberAvailability(){
-		if (!this.familyMember.isAvailable()){
-			return "Sorry, this familiar is not available!";
-		}else return "ok";
-	}
-	
-	public String verifyZoneOccupiedByMe(){
-		if (this.zone.isThereSameColour(this.familyMember)){
-			return "This zone is already occupied by one of your familiar. Choose another zone.";
+			
+			return answerToPlayer+ "You don't have enough servants to use! \n";
+			
 		}
-		else return "ok";
+		return answerToPlayer; 
 	}
 	
+	protected String verifyPlaceAvailability(String answerToPlayer){
+		
+		if (!this.place.isAvailable() || this.place==null){
+			return answerToPlayer+ "Sorry, place not available!";
+		}else return answerToPlayer;
+	}
+	
+	protected String verifyFamilyMemberAvailability(String answerToPlayer){
+		if (!this.familyMember.isAvailable()){
+			return answerToPlayer+ "Sorry, this familiar is not available! \n";
+		}else return answerToPlayer;
+	}
+	
+	protected String verifyZoneOccupiedByMe(String answerToPlayer){
+		if (this.zone.isThereSameColour(this.familyMember)){
+			return answerToPlayer+"This zone is already occupied by one of your familiar. Choose another zone. \n";
+		}
+		else return answerToPlayer;
+	}
+	
+	protected String verifyIfEnoughServantsForThisPlace(String answerToPlayer) {
+		int placeCostRequired = this.place.getCostDice();
+		if (placeCostRequired > (this.familyMember.getMemberValue() + this.servants)){
+			return answerToPlayer+"You have not used enough servants for this place. Please choose another place. \n";
+		}
+		return answerToPlayer;
+	}
+	
+	
+	//shared run methods
+	protected void placeFamiliar(){
+		place.setFamMemberOnPlace(familyMember);
+		familyMember.setAvailable(false);
+	}
+	
+	protected void payServants(){
+		this.player.getMyValues().getServants().subQuantity(servants);
+	}
+	
+	protected void takeValueFromPlace(){
+		if (place.getValue() != null) {
+			place.getValue().addValueToSet(player.getMyValues());
+		}
+	}
 	
 	// getters and setters
 	public Place getPlace() {

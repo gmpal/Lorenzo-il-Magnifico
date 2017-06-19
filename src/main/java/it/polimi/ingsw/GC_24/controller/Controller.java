@@ -6,18 +6,26 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
+
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.MyObserver;
+import it.polimi.ingsw.GC_24.cards.Ventures;
 import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.PlayerColour;
+import it.polimi.ingsw.GC_24.places.TowerPlace;
+import it.polimi.ingsw.GC_24.values.MilitaryPoint;
+import it.polimi.ingsw.GC_24.values.SetOfValues;
 
 //Just one server's side controller for each game
 public class Controller extends MyObservable implements MyObserver {
 
 	private final Model game;
 	private ActionFactory actionFactory;
+	private SetOfValues tempCost = null;
+	private Action action;
+	HashMap<String, Object> hashMap;
 	// constructor
 
 	public Controller(Model game) {
@@ -60,83 +68,122 @@ public class Controller extends MyObservable implements MyObserver {
 		System.out.println(command);
 
 		if (command.contains("PLAYERNAME")) {
-			StringTokenizer tokenizer = new StringTokenizer((String) request.get("PLAYERNAME"));
-			String name = tokenizer.nextToken();
-			String colour = tokenizer.nextToken();
-			
-			Player player = new Player(name, PlayerColour.valueOf(colour.toUpperCase()));
-
-			return player.toString();
+			return handlePlayer(request);
 		}
 
 		else if (command.contains("colours")) {
-			List<String> playerColoursArray = PlayerColour.getValues();
-			HashMap<String, Object> coloursMap = new HashMap<String, Object>();
-			coloursMap.put("colours", playerColoursArray);
-			this.notifySingleObserver((MyObserver) o, coloursMap);
-			System.out.println("ServerOut: ArrayListOfColours sent");
-			return " ArrayListOfColours sent";
-		}
-		
-		else if (command.contains("place")) {
-			StringTokenizer tokenizer = new StringTokenizer((String) request.get("action"));
-			
-			String tempFamiliar = tokenizer.nextToken();
-			String tempZone = tokenizer.nextToken();
-			String tempFloor = tokenizer.nextToken();
-			String tempServants = tokenizer.nextToken();
-			
-			Action action = actionFactory.makeAction(game, tempFamiliar, tempZone, tempFloor, tempServants );
-			
-			if (action.verify()){
-				
-				List <ImmediateEffect> interactiveEffects = action.run();
-				if (!interactiveEffects.isEmpty()){
-					//TODO: interagisci con l'utente per prenderti i parametri che ti servono
-				}
-			
-			}else
-				{
-				//TODO: azione non valida
-			}
-			
-		//	HashMap<String, Object> coloursMap = new HashMap<String, Object>();
-		//	coloursMap.put("colours", playerColoursArray);
-		//	this.notifySingleObserver((MyObserver) o, coloursMap);
 
-			
-			return " sent";
+			return handleColours(request);
 		}
+
+		else if (command.contains("chosenCost")) {
+			this.tempCost = (SetOfValues) request.get("chosenCost");
+			return "Controller: chosen cost updated";
+
+		}
+
+		else if (command.contains("action")) {
+
+			return handleAction(o, request);
+		}
+
+		/* Checks if the colour has already been chosen */
 		else if (command.contains("checkColour")) {
-			String colour = (String) request.get("checkColour");
-			String availability;
-			if (PlayerColour.checkValue(colour)) {
-				// System.out.println("Sono entrato nel controllo del colore");
-				availability = "Colour Available";
-				PlayerColour.removeValue(colour);
-			} else {
-				// System.out.println("Sono uscito nel controllo del colore");
-				availability = "Colour Not Available";
 
-			}
-
-			HashMap<String, Object> coloursAnswerMap = new HashMap<String, Object>();
-			coloursAnswerMap.put("coloursAnswer", availability);
-			// this.notifySingleObserver((MyObserver)observed, coloursAnswerMap
-			// );
-			this.notifySingleObserver((MyObserver) o, coloursAnswerMap);
-			return "Colour checked";
-		} else if (command.contains("player")) {
-			StringTokenizer tokenizer = new StringTokenizer((String) request.get("player"));
-			String name = tokenizer.nextToken();
-			String colour = tokenizer.nextToken();
-			Player player = new Player(name, PlayerColour.valueOf(colour.toUpperCase()));
-			game.getPlayers().add(player);
-			return colour.toUpperCase() + " player created";
+			return checkColour(o, request);
 		}
 
 		else {
 			return "bad command";
+		}
+
+	}
+
+	private String checkColour(MyObservable o, Map<String, Object> request) {
+		String colour = (String) request.get("checkColour");
+		String availability;
+		if (PlayerColour.checkValue(colour)) {
+			availability = "Colour Available";
+			PlayerColour.removeValue(colour);
+		} else {
+			availability = "Colour Not Available";
+		}
+		hashMap = new HashMap<>();
+		hashMap.put("coloursAnswer", availability);
+		this.notifySingleObserver((MyObserver) o, hashMap);
+		return "Controller: Colour checked";
+	}
+
+	private String handleColours(Map<String, Object> request) {
+		StringTokenizer tokenizer = new StringTokenizer((String) request.get("PLAYERNAME"));
+		String name = tokenizer.nextToken();
+		String colour = tokenizer.nextToken();
+
+		Player player = new Player(name, PlayerColour.valueOf(colour.toUpperCase()));
+
+
+		return "Controller: Created player " + player.toString();
+	}
+
+	private String handlePlayer(Map<String, Object> request) {
+		StringTokenizer tokenizer = new StringTokenizer((String) request.get("PLAYERNAME"));
+		String name = tokenizer.nextToken();
+		String colour = tokenizer.nextToken();
+
+		Player player = new Player(name, PlayerColour.valueOf(colour.toUpperCase()));
+
+		return "Controller: Created player " + player.toString();
+	}
+
+	private String handleAction(MyObservable o, Map<String, Object> request) {
+		StringTokenizer tokenizer = new StringTokenizer((String) request.get("action"));
+
+		String tempFamiliar = tokenizer.nextToken();
+		String tempZone = tokenizer.nextToken();
+		String tempFloor = tokenizer.nextToken();
+		String tempServants = tokenizer.nextToken();
+
+		if (tempZone.equalsIgnoreCase("ventures")) {
+
+			handleVentures(o, request, tempZone, tempFloor);
+		}
+
+		this.action = actionFactory.makeAction(game, tempFamiliar, tempZone, tempFloor, tempServants, tempCost);
+
+		if (action.verify().equals("ok")) {
+
+			List<ImmediateEffect> interactiveEffects = action.run();
+			if (!interactiveEffects.isEmpty()) {
+				// TODO: interagisci con l'utente per prenderti i parametri
+				// che ti servono
+			}
+
+
+		} else {
+			// TODO: azione non valida
+
+		}
+
+		return " sent";
+	}
+	
+	/**If the player wants to take a ventures card, this method let him choose which 
+	 * one of the double costs to take (if a double cost exists)*/
+	private void handleVentures(MyObservable o, Map<String, Object> request, String tempZone, String tempFloor) {
+		TowerPlace placeRequested = (TowerPlace) this.game.getBoard().getZoneFromString(tempZone)
+				.getPlaceFromStringOrFirstIfZero(tempFloor);
+		Ventures cardRequested = (Ventures) placeRequested.getCorrespondingCard();
+		SetOfValues cost1 = cardRequested.getCost();
+		SetOfValues cost2 = cardRequested.getAlternativeCost();
+		if (cost2 != null) {
+			MilitaryPoint requirements = cardRequested.getRequiredMilitaryPoints();
+			hashMap = new HashMap<>();
+			hashMap.put("Cost1", cost1);
+			hashMap.put("Cost2", cost1);
+			hashMap.put("Requirements", requirements);
+			this.notifySingleObserver((MyObserver) o, hashMap);
+			while (this.tempCost == null) {
+			}
 		}
 
 	}
