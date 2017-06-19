@@ -24,8 +24,8 @@ public class Server {
 	private static final int PORT = 28469;
 	private final static int RMI_PORT = 29999;
 	private final String NAME = "rmiView";
-	private Model game;
-	private Controller controller;
+	private static Model game;
+	private static Controller controller;
 	private ExecutorService threadPool = Executors.newCachedThreadPool();
 
 	// Crea un server e fa partire il suo metodo startServer()
@@ -75,25 +75,19 @@ public class Server {
 		System.out.println("SERVER: ServerSocket created");
 		game.setGameState(State.WAITINGFORPLAYERONE);
 		System.out.println(game.getGameState());
-
+		int i=0;
 		while (true) {
 			try {
+				i++;
+				System.out.println("GIRO NUMERO" +i);
 				Socket socket = serverSocket.accept();
 				System.out.println("************** NEW CLIENT CONNECTED");
 				this.addClient(socket);
 				System.out.println("************** NEW CLIENT ADDED TO GAME");
+				System.out.println("************** THE ACTUAL STATE IS "+ game.getGameState());
 				/*game.setGameState(game.getGameState().nextState());
 				System.out.println(game.getGameState());*/
-				if (controller.getGame().getGameState().equals(State.WAITINGFORPLAYERTHREE)) {
-					System.out.println("Starting Timer");
-					Timer.startTimer(10);
-					game.setModel(controller.getGame().getPlayers());
-					this.newGame();
-				}
-				if (controller.getGame().getGameState().equals(State.RUNNING)) {
-					game.setModel(controller.getGame().getPlayers());
-					this.newGame();
-				}
+				
 			} catch (IOException e) {
 				break;
 			}
@@ -102,10 +96,24 @@ public class Server {
 		serverSocket.close();
 	}
 
-	private void newGame() {
+	public static void tryToCreateANewGame() throws InterruptedException {
+		if (controller.getGame().getGameState().equals(State.WAITINGFORPLAYERTHREE)) {
+			System.out.println("Starting Timer because of second player created");
+			Timer.startTimer(15);
+			game.setModel(controller.getGame().getPlayers());
+			newGame();
+		}
+		if (controller.getGame().getGameState().equals(State.RUNNING)) {
+			System.out.println("Creating a new game because of four players created");
+			game.setModel(controller.getGame().getPlayers());
+			newGame();
+		}		
+	}
+
+	private static void newGame() {
 		PlayerColour.resetValues();
-		this.game = new Model();
-		this.controller = new Controller(game);
+		game = new Model();
+		controller = new Controller(game);
 		System.out.println("NEW GAME CREATED");
 	}
 
