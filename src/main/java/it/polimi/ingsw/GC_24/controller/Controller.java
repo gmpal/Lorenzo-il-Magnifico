@@ -126,7 +126,7 @@ public class Controller extends MyObservable implements MyObserver {
 		String name = tokenizer.nextToken();
 		String colour = tokenizer.nextToken();
 		Player player = new Player(name, PlayerColour.valueOf(colour.toUpperCase()));
-		game.g
+		game.getPlayers().add(player);
 		game.setGameState(game.getGameState().nextState());
 		System.out.println(game.getGameState());
 		return "Controller: Created player " + player.toString();

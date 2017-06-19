@@ -73,7 +73,7 @@ public class Server {
 
 		ServerSocket serverSocket = new ServerSocket(PORT);
 		System.out.println("SERVER: ServerSocket created");
-		game.setGameState(State.STARTING);
+		game.setGameState(State.WAITINGFORPLAYERONE);
 		System.out.println(game.getGameState());
 
 		while (true) {
@@ -86,7 +86,7 @@ public class Server {
 				System.out.println(game.getGameState());*/
 				if (controller.getGame().getGameState().equals(State.WAITINGFORPLAYERTHREE)) {
 					System.out.println("Starting Timer");
-					Timer.startTimer(10);
+					Timer.startTimer(15);
 					game.setModel(controller.getGame().getPlayers());
 					this.newGame();
 				}
