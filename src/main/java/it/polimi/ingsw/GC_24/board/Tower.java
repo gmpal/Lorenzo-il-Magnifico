@@ -1,7 +1,12 @@
 package it.polimi.ingsw.GC_24.board;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.List;
 
+import com.google.gson.Gson;
+
+import it.polimi.ingsw.GC_24.cards.Deck;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.places.Place;
 import it.polimi.ingsw.GC_24.places.TowerPlace;
@@ -23,12 +28,17 @@ public class Tower extends Area {
 	//inserts empty TowerPlaces in Tower
 	public List<Place> createTower(){
 		int value = 1;
-		for(int num=0;num<NUMTOWERPLACE;num++){
-			//TODO: caricare i valori da file 
+		BufferedReader br;
+		for(int num=0;num<NUMTOWERPLACE;num++){			
 			this.placesArray.add(new TowerPlace(value, null));
 			value+=2;
 		}
 		return placesArray;
+	}
+
+	private Gson getGsonWithTypeAdapters() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	// returns true if a family member is already on a place in the Tower
