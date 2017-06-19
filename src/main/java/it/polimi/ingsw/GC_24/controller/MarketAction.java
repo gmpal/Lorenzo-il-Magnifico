@@ -20,17 +20,16 @@ public class MarketAction extends Action {
 
 	@Override
 	public String verify() {
-		//TODO:finish
-		String answerToPlayer = "ok";
-		while (answerToPlayer.equals("ok")) {
-			answerToPlayer = verifyIfEnoughServants();
-			answerToPlayer = verifyIfEnoughServantsForThisPlace();
-			answerToPlayer = verifyFamilyMemberAvailability();
-			answerToPlayer = verifyPlaceAvailability();
-		//	answerToPlayer = verifyZoneOccupiedByMe();
-
+		String answerToPlayer = "Answer: \n";
+		while (answerToPlayer.equals("Answer: \n")) {
+			answerToPlayer = verifyIfEnoughServants(answerToPlayer);
+			answerToPlayer = verifyIfEnoughServantsForThisPlace(answerToPlayer);
+			answerToPlayer = verifyFamilyMemberAvailability(answerToPlayer);
+			answerToPlayer = verifyPlaceAvailability(answerToPlayer);
+			answerToPlayer = verifyZoneOccupiedByMe(answerToPlayer);
 		}
-		return answerToPlayer;
+		if (answerToPlayer.equals("Answer: \n")) return "ok";
+		else return answerToPlayer;
 	}
 
 	@Override

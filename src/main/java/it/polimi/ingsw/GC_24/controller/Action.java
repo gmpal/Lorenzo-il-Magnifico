@@ -56,37 +56,41 @@ public abstract class Action {
 	public abstract List<ImmediateEffect> run();
 
 	//verify methods
-	protected String verifyIfEnoughServants(){
+	protected String verifyIfEnoughServants(String answerToPlayer){
 		if (player.getMyValues().getServants().getQuantity() < this.servants){
-			return "You don't have enough servants to use!";
-		} else return "ok";
-	}
-	
-	protected String verifyPlaceAvailability(){
-		if (!this.place.isAvailable()){
-			return "Sorry, place not available!";
-		}else return "ok";
-	}
-	
-	protected String verifyFamilyMemberAvailability(){
-		if (!this.familyMember.isAvailable()){
-			return "Sorry, this familiar is not available!";
-		}else return "ok";
-	}
-	
-	protected String verifyZoneOccupiedByMe(){
-		if (this.zone.isThereSameColour(this.familyMember)){
-			return "This zone is already occupied by one of your familiar. Choose another zone.";
+			
+			return answerToPlayer+ "You don't have enough servants to use! \n";
+			
 		}
-		else return "ok";
+		return answerToPlayer; 
 	}
 	
-	protected String verifyIfEnoughServantsForThisPlace() {
+	protected String verifyPlaceAvailability(String answerToPlayer){
+		
+		if (!this.place.isAvailable() || this.place==null){
+			return answerToPlayer+ "Sorry, place not available!";
+		}else return answerToPlayer;
+	}
+	
+	protected String verifyFamilyMemberAvailability(String answerToPlayer){
+		if (!this.familyMember.isAvailable()){
+			return answerToPlayer+ "Sorry, this familiar is not available! \n";
+		}else return answerToPlayer;
+	}
+	
+	protected String verifyZoneOccupiedByMe(String answerToPlayer){
+		if (this.zone.isThereSameColour(this.familyMember)){
+			return answerToPlayer+"This zone is already occupied by one of your familiar. Choose another zone. \n";
+		}
+		else return answerToPlayer;
+	}
+	
+	protected String verifyIfEnoughServantsForThisPlace(String answerToPlayer) {
 		int placeCostRequired = this.place.getCostDice();
 		if (placeCostRequired > (this.familyMember.getMemberValue() + this.servants)){
-			return "You have not used enough servants for this place. Please choose another place.";
+			return answerToPlayer+"You have not used enough servants for this place. Please choose another place. \n";
 		}
-		return "ok";
+		return answerToPlayer;
 	}
 	
 	

@@ -11,6 +11,7 @@ import it.polimi.ingsw.GC_24.places.HarvestPlace;
 public class HarvestAction extends Action {
 	private List<ImmediateEffect> immediateEffects = new ArrayList<>();
 	private HarvestPlace harvestPlace;
+	private int finalActionValue;
 
 	public HarvestAction(Model game, String familiar, String zone, String floor, String servants) {
 		super(game, familiar, zone, floor, servants);
@@ -19,17 +20,16 @@ public class HarvestAction extends Action {
 
 	@Override
 	public String verify() {
-		//TODO:finish
-				String answerToPlayer = "ok";
-				while (answerToPlayer.equals("ok")) {
-					answerToPlayer = verifyIfEnoughServants();
-					answerToPlayer = verifyIfEnoughServantsForThisPlace();
-					answerToPlayer = verifyFamilyMemberAvailability();
-					answerToPlayer = verifyPlaceAvailability();
-					answerToPlayer = verifyZoneOccupiedByMe(); //?
-
-				}
-				return answerToPlayer;
+		String answerToPlayer = "Answer: \n";
+		while (answerToPlayer.equals("Answer: \n")) {
+			answerToPlayer = verifyIfEnoughServants(answerToPlayer);
+			answerToPlayer = verifyIfEnoughServantsForThisPlace(answerToPlayer);
+			answerToPlayer = verifyFamilyMemberAvailability(answerToPlayer);
+			answerToPlayer = verifyPlaceAvailability(answerToPlayer);
+			answerToPlayer = verifyZoneOccupiedByMe(answerToPlayer);
+		}
+		if (answerToPlayer.equals("Answer: \n")) return "ok";
+		else return answerToPlayer;
 	}
 
 	@Override
@@ -37,13 +37,18 @@ public class HarvestAction extends Action {
 		this.placeFamiliar();
 		this.payServants();
 		this.getHarvestTileValues();
+		this.getFinalActionValue();
 		this.createHarvestEffect();
 		return immediateEffects;
 	}
 
-	private void createHarvestEffect() {
+	private void getFinalActionValue() {
 		//TODO: fix with permanent effect
-		int finalActionValue = familyMember.getMemberValue() - harvestPlace.getAdditionalCostDice()+servants;
+		this.finalActionValue = familyMember.getMemberValue() - harvestPlace.getAdditionalCostDice()+servants;
+		
+	}
+
+	private void createHarvestEffect() {
 		immediateEffects.add(new PerformHarvest("performHarvest", finalActionValue));		
 	}
 

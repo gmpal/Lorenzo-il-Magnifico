@@ -30,6 +30,17 @@ public abstract class Area implements java.io.Serializable {
 		return false;
 	}
 	
+	
+	public boolean isOccupied () {
+		
+		for (Place place : this.placesArray) {
+			if (!place.isAvailable()){
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	// empties all the places
 	public void clearPlaces() {
 		for (Place place : this.placesArray) {
@@ -41,8 +52,8 @@ public abstract class Area implements java.io.Serializable {
 	public Place getPlaceFromStringOrFirstIfZero(String place){
 		if (!place.equals("0")){
 			int i = Integer.parseInt(place);
-			return placesArray.get(i-1);
-			//TODO: Gestione dei posti con meno di 3 giocatori 
+			if (placesArray.size() < i) return null;
+			else return placesArray.get(i-1);
 		}else 
 			return this.getFirstEmptyPlace();
 		

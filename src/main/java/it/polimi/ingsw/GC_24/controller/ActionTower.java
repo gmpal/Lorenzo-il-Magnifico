@@ -29,19 +29,20 @@ public class ActionTower extends Action {
 
 	@Override
 	public String verify() {
-		String answerToPlayer = "ok";
-		while (answerToPlayer.equals("ok")) {
-			answerToPlayer = verifyIfEnoughServants();
-			answerToPlayer = verifyIfEnoughServantsForThisPlace();
-			answerToPlayer = verifyFamilyMemberAvailability();
-			answerToPlayer = verifyPlaceAvailability();
-			answerToPlayer = verifyZoneOccupiedByMe();
-			answerToPlayer = verifyMoneyForTowerOccupied();
-			answerToPlayer = verifyTerritorySpaceAvailability();
-			answerToPlayer = verifyBoardSpaceAvailability();
-			answerToPlayer = verifyCardResources();
+		String answerToPlayer = "Answer: \n";
+		while (answerToPlayer.equals("Answer: \n")) {
+			answerToPlayer = verifyIfEnoughServants(answerToPlayer);
+			answerToPlayer = verifyIfEnoughServantsForThisPlace(answerToPlayer);
+			answerToPlayer = verifyFamilyMemberAvailability(answerToPlayer);
+			answerToPlayer = verifyPlaceAvailability(answerToPlayer);
+			answerToPlayer = verifyZoneOccupiedByMe(answerToPlayer);
+			answerToPlayer = verifyMoneyForTowerOccupied(answerToPlayer);
+			answerToPlayer = verifyTerritorySpaceAvailability(answerToPlayer);
+			answerToPlayer = verifyBoardSpaceAvailability(answerToPlayer);
+			answerToPlayer = verifyCardResources(answerToPlayer);
 		}
-		return answerToPlayer;
+		if (answerToPlayer.equals("Answer: \n")) return "ok";
+		else return answerToPlayer;
 
 	}
 
@@ -92,9 +93,10 @@ public class ActionTower extends Action {
 	 * This method checks if you have enough money to put the familyMember in a
 	 * tower occupied (3 coins)
 	 */
-	public String verifyMoneyForTowerOccupied() {
-		if (this.player.getMyValues().getCoins().getQuantity() < 3) {
-			return "You don't have enough coins to place your familiar in an already occupied tower";
+	public String verifyMoneyForTowerOccupied(String answerToPlayer) {
+		
+		if (this.zone.isOccupied() && this.player.getMyValues().getCoins().getQuantity() < 3) {
+			return answerToPlayer+ "You don't have enough coins to place your familiar in an already occupied tower\n";
 		} else
 			return "ok";
 	}
@@ -105,23 +107,23 @@ public class ActionTower extends Action {
 	 * Venture cards because of the extra requirements needed. If you satisfy the requirement,
 	 * this methods checks if you have the resources for this card
 	 */
-	public String verifyCardResources() {
+	public String verifyCardResources(String answerToPlayer) {
 
 		String typeOfCard = towerPlace.getCorrespondingCard().getType();
 		if (typeOfCard.equals("Venture")) {
 			Ventures specificCard = (Ventures) towerPlace.getCorrespondingCard();
 			Value requirement = specificCard.getRequiredMilitaryPoints();
 			if (!this.player.getMyValues().doIHaveEnoughOfThis(requirement)) {
-				return "You don't have the required value for this card! Choose another card";
+				return answerToPlayer+ "You don't have the required value for this card! Choose another card \n";
 			}
 		}
 		if (!player.getMyValues().doIHaveThisSet(temporaryCardCost)) {
-			return "You don't have enough resources to take this card! Choose another card";
+			return answerToPlayer+ "You don't have enough resources to take this card! Choose another card \n";
 		} else
-			return "ok";
+			return answerToPlayer;
 	}
 
-	public String verifyTerritorySpaceAvailability() {
+	public String verifyTerritorySpaceAvailability(String answerToPlayer) {
 		TowerPlace tempTowerPlace = (TowerPlace) this.place;
 		String typeOfCard = tempTowerPlace.getCorrespondingCard().getType();
 
@@ -130,36 +132,36 @@ public class ActionTower extends Action {
 
 		if (typeOfCard.equals("Territory")) {
 			if (territorySize == 2 && militaryPoints < 3) {
-				return "Sorry, you need 3 Military Points to unlock the next Territory Space";
+				return answerToPlayer + "Sorry, you need 3 Military Points to unlock the next Territory Space\n";
 			}
 			if (territorySize == 3 && militaryPoints < 7) {
-				return "Sorry, you need 7 Military Points to unlock the next Territory Space";
+				return answerToPlayer + "Sorry, you need 7 Military Points to unlock the next Territory Space\n";
 			}
 			if (territorySize == 4 && militaryPoints < 12) {
-				return "Sorry, you need 12 Military Points to unlock the next Territory Space";
+				return answerToPlayer + "Sorry, you need 12 Military Points to unlock the next Territory Space\n";
 			}
 			if (territorySize == 5 && militaryPoints < 18) {
-				return "Sorry, you need 18 Military Points to unlock the next Territory Space";
+				return answerToPlayer +"Sorry, you need 18 Military Points to unlock the next Territory Space\n";
 			}
 		}
-		return "ok";
+		return answerToPlayer;
 
 	}
 
-	public String verifyBoardSpaceAvailability() {
+	public String verifyBoardSpaceAvailability(String answerToPlayer) {
 		TowerPlace tempTowerPlace = (TowerPlace) this.place;
 		String typeOfCard = tempTowerPlace.getCorrespondingCard().getType();
 		if (typeOfCard.equals("Territory")) {
 			if (this.player.getMyBoard().getPersonalTerritories().getCards().size() >= 6) {
-				return "You have already 6 Territory Cards, no more empty spaces " + "--> choose another type of card";
+				return answerToPlayer+ "You have already 6 Territory Cards, no more empty spaces \n ";
 			}
 		}
 		if (typeOfCard.equals("Building")) {
 			if (this.player.getMyBoard().getPersonalBuildings().getCards().size() >= 6) {
-				return "You have already 6 Buildings Cards, no more empty spaces " + "--> choose another type of card";
+				return answerToPlayer+ "You have already 6 Buildings Cards, no more empty spaces \n"; 
 			}
 		}
-		return "ok";
+		return answerToPlayer;
 	}
 
 }

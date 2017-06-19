@@ -207,7 +207,8 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 				commandZone = "harvest 0 ";
 				commandZone = increaseDieValue(commandZone);
 			} else if (commandZone.equals("h")) {
-				commandZone = "council 0 0";
+				commandZone = "council 0 ";
+				commandZone = increaseDieValue(commandZone);
 			} else if (commandZone.equals("i")) {
 				commandZone = "cancel";
 			} else {

@@ -161,7 +161,7 @@ public class Controller extends MyObservable implements MyObserver {
 		return " sent";
 	}
 	
-	/*If the player wants to take a ventures card, this method let him choose which 
+	/**If the player wants to take a ventures card, this method let him choose which 
 	 * one of the double costs to take (if a double cost exists)*/
 	private void handleVentures(MyObservable o, Map<String, Object> request, String tempZone, String tempFloor) {
 		TowerPlace placeRequested = (TowerPlace) this.game.getBoard().getZoneFromString(tempZone)
