@@ -23,4 +23,14 @@ public class VictoryPoint extends Value{
 	public Value findValueInPlayer(Player player){
 		return player.getMyValues().getVictoryPoints();
 	}
+
+	@Override
+	public String whatValueAmI() {
+		return "VictoryPoint";
+	}
+	
+	@Override
+	public Boolean amIpresentInThisSet(SetOfValues setOfValues) {
+		return (setOfValues.getVictoryPoints().getQuantity() >= this.quantity);
+	}
 }

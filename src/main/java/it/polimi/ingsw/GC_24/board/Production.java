@@ -43,6 +43,5 @@ public class Production extends Area {
 		}
 		return placesArray;
 	} 
-
 }
 

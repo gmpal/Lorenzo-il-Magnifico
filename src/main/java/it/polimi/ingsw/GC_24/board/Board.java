@@ -51,7 +51,13 @@ public class Board implements java.io.Serializable {
 		this.councilPalace.clearPlaces();
 	}
 	
-	
+	@Override
+	public String toString() {
+		return "BOARD\nTerritories = " + towerTerritories + "\nCharacters = " + towerCharacters
+				+ "\nBuildings = " + towerBuildings + "\nVentures  =" + towerVentures + "\nHarvest = " + harvest
+				+ "\nProduction = " + production + "\nMarket = " + market + "\nCouncilPalace = " + councilPalace + "\n";
+	}
+
 	public Area getZoneFromString(String zone){
 		if (zone.equals("Territories")){
 			return this.towerTerritories;
@@ -77,6 +83,7 @@ public class Board implements java.io.Serializable {
 		else return null;
 		
 	}
+
 	//getters and setters
 	public int getNumPlayers() {
 		return numPlayers;

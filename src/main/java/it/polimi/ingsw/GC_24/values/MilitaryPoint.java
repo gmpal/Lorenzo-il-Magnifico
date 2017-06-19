@@ -23,4 +23,14 @@ public class MilitaryPoint extends Value {
 	public Value findValueInPlayer(Player player){
 		return player.getMyValues().getMilitaryPoints();
 	}
+
+	@Override
+	public String whatValueAmI() {
+		return "MilitaryPoint";
+	}
+	
+	@Override
+	public Boolean amIpresentInThisSet(SetOfValues setOfValues) {
+		return (setOfValues.getMilitaryPoints().getQuantity() >= this.quantity);
+	}
 }

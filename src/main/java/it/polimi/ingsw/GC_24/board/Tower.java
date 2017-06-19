@@ -51,7 +51,7 @@ public class Tower extends Area {
 		}
 		return false;
 	}
-	
+
 	// returns true if one of my family members is already on a place in the Tower, not neutral
 	// I cannot place the familiar except if it's the neutral familiar
 	public boolean isTowerOccupiedByMe(Player player) {
@@ -63,7 +63,4 @@ public class Tower extends Area {
 		}
 		return false;
 	}
-	
-	
-
 }

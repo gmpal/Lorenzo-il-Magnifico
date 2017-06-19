@@ -34,5 +34,15 @@ public abstract class ActivityPlace extends Place{
 	public void setAdditionalCostDice(int additionalCostDice) {
 		this.additionalCostDice = additionalCostDice;
 	}	
+	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append( "Free? " + isAvailable());
+		if (!isAvailable()){
+			builder.append("extra die's cost: " + getAdditionalCostDice());
+		}
+		return builder.toString();
+	}
 		
 }

@@ -23,4 +23,14 @@ public class Servant extends Value {
 	public Value findValueInPlayer(Player player){
 		return player.getMyValues().getServants();
 	}
+
+	@Override
+	public String whatValueAmI() {
+		return "Servant";
+	}
+	
+	@Override
+	public Boolean amIpresentInThisSet(SetOfValues setOfValues) {
+		return (setOfValues.getServants().getQuantity() >= this.quantity);
+	}
 }
