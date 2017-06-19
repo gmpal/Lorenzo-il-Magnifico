@@ -67,7 +67,7 @@ public class Controller extends MyObservable implements MyObserver {
 		Set<String> command = request.keySet();
 		System.out.println(command);
 
-		if (command.contains("PLAYERNAME")) {
+		if (command.contains("player")) {
 			return handlePlayer(request);
 		}
 
@@ -88,7 +88,6 @@ public class Controller extends MyObservable implements MyObserver {
 
 		/* Checks if the colour has already been chosen */
 		else if (command.contains("checkColour")) {
-
 			return checkColour(o, request);
 		}
 
@@ -123,10 +122,11 @@ public class Controller extends MyObservable implements MyObserver {
 	}
 
 	private String handlePlayer(Map<String, Object> request) {
-		StringTokenizer tokenizer = new StringTokenizer((String) request.get("PLAYERNAME"));
+		StringTokenizer tokenizer = new StringTokenizer((String) request.get("player"));
 		String name = tokenizer.nextToken();
 		String colour = tokenizer.nextToken();
 		Player player = new Player(name, PlayerColour.valueOf(colour.toUpperCase()));
+		game.g
 		game.setGameState(game.getGameState().nextState());
 		System.out.println(game.getGameState());
 		return "Controller: Created player " + player.toString();
