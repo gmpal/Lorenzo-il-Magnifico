@@ -15,7 +15,13 @@ public class Coin extends Value {
 
 	@Override
 	public SetOfValues addValueToSet(SetOfValues values) {
-		values.setCoins(new Coin(values.getCoins().getQuantity() + this.getQuantity()));
+		values.getCoins().setQuantity(values.getCoins().getQuantity() + this.getQuantity());
+		return values;
+	}
+
+	@Override
+	public SetOfValues subValuefromSet(SetOfValues values) {
+		values.getCoins().setQuantity(values.getCoins().getQuantity() - this.getQuantity());
 		return values;
 	}
 

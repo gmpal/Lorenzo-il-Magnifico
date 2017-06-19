@@ -21,6 +21,9 @@ public abstract class Value implements Serializable {
 
 	// adds a single value to a set
 	public abstract SetOfValues addValueToSet(SetOfValues values);
+	
+	// subtracts a single value to a set
+	public abstract SetOfValues subValuefromSet(SetOfValues values);
 
 	// adds a quantity to a single value
 	public void addQuantity(int quantity) {

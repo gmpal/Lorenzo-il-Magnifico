@@ -15,10 +15,16 @@ public class Servant extends Value {
 	
 	@Override
 	public SetOfValues addValueToSet(SetOfValues values){
-		values.setServants(new Servant(values.getServants().getQuantity()+this.getQuantity()));
+		values.getServants().setQuantity(values.getServants().getQuantity() + this.getQuantity());
 		return values;
 	} 
 
+	@Override
+	public SetOfValues subValuefromSet(SetOfValues values){
+		values.getServants().setQuantity(values.getServants().getQuantity() - this.getQuantity());
+		return values;
+	} 
+	
 	@Override
 	public Value findValueInPlayer(Player player){
 		return player.getMyValues().getServants();

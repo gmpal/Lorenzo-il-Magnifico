@@ -7,6 +7,7 @@ import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.places.MarketPlace;
 import it.polimi.ingsw.GC_24.places.TowerPlace;
+import it.polimi.ingsw.GC_24.values.Servant;
 import it.polimi.ingsw.GC_24.values.Value;
 
 public class MarketAction extends Action {
@@ -35,7 +36,7 @@ public class MarketAction extends Action {
 	@Override
 	public List<ImmediateEffect> run() {
 		this.placeFamiliar();
-		this.payServants();
+		this.payValue(new Servant(this.servants));
 		this.takeValueFromPlace();
 		this.takeExtraValueFromMarketPlace();
 		this.takeImmediateEffectFromMarketPlace();

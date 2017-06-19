@@ -15,7 +15,13 @@ public class Stone extends Value {
 	
 	@Override
 	public SetOfValues addValueToSet(SetOfValues values){
-		values.setStones(new Stone(values.getStones().getQuantity()+this.getQuantity()));
+		values.getStones().setQuantity(values.getStones().getQuantity() + this.getQuantity());
+		return values;
+	}
+	
+	@Override
+	public SetOfValues subValuefromSet(SetOfValues values){
+		values.getStones().setQuantity(values.getStones().getQuantity() - this.getQuantity());
 		return values;
 	}
 	

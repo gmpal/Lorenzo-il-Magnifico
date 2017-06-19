@@ -15,7 +15,13 @@ public class FaithPoint extends Value {
 	
 	@Override
 	public SetOfValues addValueToSet(SetOfValues values){
-		values.setFaithPoints(new FaithPoint(values.getFaithPoints().getQuantity()+this.getQuantity()));
+		values.getFaithPoints().setQuantity(values.getFaithPoints().getQuantity() + this.getQuantity());
+		return values;
+	}
+	
+	@Override
+	public SetOfValues subValuefromSet(SetOfValues values) {
+		values.getFaithPoints().setQuantity(values.getFaithPoints().getQuantity() - this.getQuantity());
 		return values;
 	}
 	
