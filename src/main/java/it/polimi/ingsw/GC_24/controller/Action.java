@@ -26,8 +26,6 @@ public abstract class Action {
 		this.zone = game.getBoard().getZoneFromString(zone);
 		this.place = game.getBoard().getZoneFromString(zone).getPlaceFromStringOrFirstIfZero(floor);
 		this.servants = Integer.parseInt(servants);
-		
-	
 	}
 	
 	/**
