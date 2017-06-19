@@ -71,11 +71,11 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	}
 
 	public String setName() {
-		String sc;
-		do {
-			System.out.println("Name:");
+		String sc = null;
+		System.out.println("Name:");
+		if (scanner.hasNextLine()){
 			sc = scanner.nextLine();
-		} while (sc == null);
+		}
 		return sc;
 	}
 
@@ -369,19 +369,6 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	@Override
 	public <C> void update(MyObservable o, C change) {
 
-		System.out.println("Risposta " + change);
-
-	
-		if (change.equals("Colour Available")) {
-			this.colourAvailable = 1;
-		}
-		else if (change.equals("Colour Not Available")) {
-			this.colourAvailable = 0;
-		}
-		else if (change instanceof Model) {
-			this.miniModel = (Model) change;
-		}
-		else
 			System.out.println("Answer " + change);
 
 	}
@@ -405,6 +392,10 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	
 	public Model getMiniModel() {
 		return miniModel;
+	}
+	
+	public void setMiniModel(Model model) {
+		this.miniModel = model;
 	}
 
 	public List<String> getColours() {

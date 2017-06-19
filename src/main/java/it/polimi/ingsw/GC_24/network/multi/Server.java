@@ -85,7 +85,6 @@ public class Server {
 				System.out.println(game.getGameState());
 				if (game.getGameState().equals(State.WAITINGFORPLAYERTHREE)) {
 					System.out.println("Starting Timer");
-
 					Timer.startTimer(10);
 					this.newGame();
 				}
