@@ -23,4 +23,14 @@ public class Wood extends Value  {
 	public Value findValueInPlayer(Player player){
 		return player.getMyValues().getWoods();
 	}
+
+	@Override
+	public String whatValueAmI() {
+		return "Wood";
+	}
+	
+	@Override
+	public Boolean amIpresentInThisSet(SetOfValues setOfValues) {
+		return (setOfValues.getWoods().getQuantity() >= this.quantity);
+	}
 }

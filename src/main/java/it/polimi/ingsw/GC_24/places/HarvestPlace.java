@@ -23,7 +23,7 @@ public class HarvestPlace extends ActivityPlace{
 	List<Development> harvestCards = player.getMyBoard().getPersonalTerritories().getCards();
 	for (Development  card:harvestCards){
 		Territories territory = (Territories) card;
-		if (territory.getCostDie() <= (getFamMemberOnPlace().getMemberValue() + getAdditionalCostDice())){
+		if (territory.getDieValueHarvest() <= (getFamMemberOnPlace().getMemberValue() + getAdditionalCostDice())){
 			territory.getImmediateEffect1().giveImmediateEffect(player);
 			territory.getImmediateEffect().giveImmediateEffect(player);
 			} 

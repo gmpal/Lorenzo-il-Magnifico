@@ -7,7 +7,7 @@ public class SetOfValues implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -4825483013599718859L;
-	
+
 	private Wood woods;
 	private Stone stones;
 	private Coin coins;
@@ -51,19 +51,48 @@ public class SetOfValues implements Serializable {
 		v.setVictoryPoints(new VictoryPoint(this.victoryPoints.getQuantity() + v.getVictoryPoints().getQuantity()));
 		return v;
 	}
-	
+
+	// method to subtract two sets of values [v- this]
 	public SetOfValues subTwoSetsOfValues(SetOfValues v) {
-		v.setCoins(new Coin(v.getCoins().getQuantity()-this.coins.getQuantity()));
-		v.setWoods(new Wood(v.getWoods().getQuantity()-this.woods.getQuantity()));
-		v.setStones(new Stone(v.getStones().getQuantity()-this.stones.getQuantity()));
-		v.setServants(new Servant(v.getServants().getQuantity()-this.servants.getQuantity()));
-		v.setFaithPoints(new FaithPoint(v.getFaithPoints().getQuantity()-this.faithPoints.getQuantity()));
-		v.setMilitaryPoints(new MilitaryPoint(v.getMilitaryPoints().getQuantity()-this.militaryPoints.getQuantity()));
-		v.setVictoryPoints(new VictoryPoint(v.getVictoryPoints().getQuantity()-this.victoryPoints.getQuantity()));
+		v.setCoins(new Coin(v.getCoins().getQuantity() - this.coins.getQuantity()));
+		v.setWoods(new Wood(v.getWoods().getQuantity() - this.woods.getQuantity()));
+		v.setStones(new Stone(v.getStones().getQuantity() - this.stones.getQuantity()));
+		v.setServants(new Servant(v.getServants().getQuantity() - this.servants.getQuantity()));
+		v.setFaithPoints(new FaithPoint(v.getFaithPoints().getQuantity() - this.faithPoints.getQuantity()));
+		v.setMilitaryPoints(new MilitaryPoint(v.getMilitaryPoints().getQuantity() - this.militaryPoints.getQuantity()));
+		v.setVictoryPoints(new VictoryPoint(v.getVictoryPoints().getQuantity() - this.victoryPoints.getQuantity()));
 		return v;
 	}
 
-	//hashCode() redefined
+	/* This methods returns true if you have...enough of that Value */
+	// ---> probably my favorite method (gm)
+	public boolean doIHaveEnoughOfThis(Value value) {
+		return value.amIpresentInThisSet(this);
+	}
+	
+	
+	
+	/*Returns true if my SetOfValues contains the cost Set*/
+	public boolean doIHaveThisSet(SetOfValues cost){
+		return cost.subTwoSetsOfValues(this).isAcceptable();
+		//this-cost >=0;
+	}
+	
+	
+	
+	/*Returns true if the Set does not contains negative quantity*/
+	public boolean isAcceptable() {
+
+		return (this.woods.getQuantity() >= 0 && 
+				this.stones.getQuantity() >= 0 && 
+				this.servants.getQuantity() >= 0 && 
+				this.coins.getQuantity() >= 0 && 
+				this.faithPoints.getQuantity() >= 0	&& 
+				this.militaryPoints.getQuantity() >= 0 && 
+				this.victoryPoints.getQuantity() >= 0);
+	}
+
+	// hashCode() redefined
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -77,8 +106,8 @@ public class SetOfValues implements Serializable {
 		result = prime * result + ((woods == null) ? 0 : woods.hashCode());
 		return result;
 	}
-	
-	//equals() redefined
+
+	// equals() redefined
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

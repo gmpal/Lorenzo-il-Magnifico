@@ -3,32 +3,53 @@ package it.polimi.ingsw.GC_24.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.polimi.ingsw.GC_24.effects.CouncilPrivilege;
+import it.polimi.ingsw.GC_24.board.CouncilPalace;
 import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.places.CouncilPlace;
-import it.polimi.ingsw.GC_24.places.TowerPlace;
 
 public class CouncilPalaceAction extends Action {
 	private List<ImmediateEffect> immediateEffects = new ArrayList<>();
+	private CouncilPlace councilPlace;
 
 	public CouncilPalaceAction(Model game, String familiar, String zone, String floor, String servants) {
 		super(game, familiar, zone, floor, servants);
+		this.councilPlace = (CouncilPlace) place;
 	}
 
 	@Override
-	public boolean verify() {
-		return false;
+	public String verify() {
+		//TODO:finish
+		String answerToPlayer = "ok";
+		while (answerToPlayer.equals("ok")) {
+			answerToPlayer = verifyIfEnoughServants();
+			answerToPlayer = verifyIfEnoughServantsForThisPlace();
+			answerToPlayer = verifyFamilyMemberAvailability();
+		//	answerToPlayer = verifyPlaceAvailability();
+		//	answerToPlayer = verifyZoneOccupiedByMe();
+
+		}
+		return answerToPlayer;
 	}
 
 	@Override
 	public List<ImmediateEffect> run() {
-		place.setFamMemberOnPlace(familyMember);
-		familyMember.setAvailable(false);
-		CouncilPlace councilPlace = (CouncilPlace) place;
-		place.getValue().addValueToSet(player.getMyValues());
-		immediateEffects.add(councilPlace.getPrivilegeEffect());
+		this.placeFamiliar();
+		this.takeValueFromPlace();
+		this.takeEffectFromCouncil();
+		this.updateTurn();
 		return immediateEffects;
+	}
+
+	private void updateTurn() {
+		CouncilPalace palace = (CouncilPalace) this.zone; 		
+		palace.updateTurn(this.player);
+		//TODO: gestione del Turno nella logica di gioco
+	}
+
+	private void takeEffectFromCouncil() {
+		immediateEffects.add(councilPlace.getPrivilegeEffect());
+		
 	}
 
 }

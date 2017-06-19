@@ -4,13 +4,12 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import it.polimi.ingsw.GC_24.MyObservable;
-import it.polimi.ingsw.GC_24.MyObserver;
+import it.polimi.ingsw.GC_24.values.MilitaryPoint;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 
 //ClientInHandler is observed by the ViewPLayer,
@@ -20,6 +19,7 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 	private ObjectInputStream objFromServer;
 	private ObjectOutputStream objToServer;
 	private ViewCLI view;
+	
 
 	private boolean end = false;
 	private boolean colourReceived;
@@ -77,18 +77,27 @@ public <C> void update(MyObservable o, C change) {
 	public void handleRequestFromServer(Map<String, Object> request) {
 		Set<String> command = request.keySet();
 
-
+		/*Contains the array of colours updated at the moment when requested*/
 		if (command.contains("colours")) {
 			List<String> playerColoursArray = (List<String>) request.get("colours");
-			
-		
-
 			notifyMyObservers(playerColoursArray);
 		}
-		
+		/*Contains the answer if the colour has already been chosen or not*/
 		if (command.contains("coloursAnswer")) {
 			String colourAnswer = (String) request.get("coloursAnswer");
-			notifyMyObservers(colourAnswer);
+			if (colourAnswer.equals("Colour Available")) {
+				view.setColourAvailable(1);
+			} else if (colourAnswer.equals("Colour Not Available")) {
+				view.setColourAvailable(0);
+			}
+		}
+		
+		/*IN THIS CASE the request is handled by the viewCLI*/
+		if (command.contains("cost1")) {
+			SetOfValues cost1 = (SetOfValues) request.get("Cost1");
+			SetOfValues cost2 = (SetOfValues) request.get("Cost2");
+			MilitaryPoint militaryPoints = (MilitaryPoint) request.get("Requirements");
+			view.chooseAlternativeCost(cost1, cost2, militaryPoints);
 		}
 		
 		

@@ -10,24 +10,44 @@ import it.polimi.ingsw.GC_24.places.HarvestPlace;
 
 public class HarvestAction extends Action {
 	private List<ImmediateEffect> immediateEffects = new ArrayList<>();
+	private HarvestPlace harvestPlace;
 
 	public HarvestAction(Model game, String familiar, String zone, String floor, String servants) {
 		super(game, familiar, zone, floor, servants);
+		this.harvestPlace = (HarvestPlace) place;
 	}
 
 	@Override
-	public boolean verify() {
-		return false;
+	public String verify() {
+		//TODO:finish
+				String answerToPlayer = "ok";
+				while (answerToPlayer.equals("ok")) {
+					answerToPlayer = verifyIfEnoughServants();
+					answerToPlayer = verifyIfEnoughServantsForThisPlace();
+					answerToPlayer = verifyFamilyMemberAvailability();
+					answerToPlayer = verifyPlaceAvailability();
+					answerToPlayer = verifyZoneOccupiedByMe(); //?
+
+				}
+				return answerToPlayer;
 	}
 
 	@Override
 	public List<ImmediateEffect> run() {
-		place.setFamMemberOnPlace(familyMember);
-		familyMember.setAvailable(false);
-		player.getMyBoard().getBonusTile().giveHarvestValues(player.getMyValues());
-		HarvestPlace harvestPlace = (HarvestPlace) place;
-		int finalActionValue = familyMember.getMemberValue() - harvestPlace.getAdditionalCostDice()+servants;	//to fix when there are permanent effect
-		immediateEffects.add(new PerformHarvest("performHarvest", finalActionValue));
+		this.placeFamiliar();
+		this.payServants();
+		this.getHarvestTileValues();
+		this.createHarvestEffect();
 		return immediateEffects;
+	}
+
+	private void createHarvestEffect() {
+		//TODO: fix with permanent effect
+		int finalActionValue = familyMember.getMemberValue() - harvestPlace.getAdditionalCostDice()+servants;
+		immediateEffects.add(new PerformHarvest("performHarvest", finalActionValue));		
+	}
+
+	private void getHarvestTileValues() {
+		player.getMyBoard().getBonusTile().giveHarvestValues(player.getMyValues());		
 	}
 }

@@ -13,8 +13,8 @@ public abstract class Area implements java.io.Serializable {
 
 	protected List<Place> placesArray = new ArrayList<>();
 	
-	/*This method returns true if in the zone you're trying to put your familymember in
-	 * there's already a familymember of the same Player. If you're trying to put a neutral
+	/*This method returns true if in the zone you're trying to put your family member in
+	 * there's already a family member of the same Player. If you're trying to put a neutral
 	 * family member, it directly returns false*/
 	public boolean isThereSameColour(FamilyMember familyMember) {
 		PlayerColour colour = familyMember.getPlayerColour();
@@ -36,11 +36,13 @@ public abstract class Area implements java.io.Serializable {
 			place.clearPlace();
 		}
 	}
-
-	public Place getPlaceFromString(String place){
+	/*This methods returns the corresponding space if the value is different than zero,
+	 * else it returns the first empty space available*/
+	public Place getPlaceFromStringOrFirstIfZero(String place){
 		if (!place.equals("0")){
 			int i = Integer.parseInt(place);
-			return placesArray.get(i);
+			return placesArray.get(i-1);
+			//TODO: Gestione dei posti con meno di 3 giocatori 
 		}else 
 			return this.getFirstEmptyPlace();
 		
