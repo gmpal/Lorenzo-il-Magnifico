@@ -27,7 +27,7 @@ public class Characters extends Development {
 	@Override
 	public String toString() {
 		return "Character: Name = " + name + " Cost = " + getCost() + " Immediate Effects = " + getImmediateEffect()+" "+getImmediateEffect1()+
-				"\nPermanent Effects = " + getPermanentEffect();
+				"\nPermanent Effect = " + permanentEffects;
   }
 
 	public PermanentEffect getPermanentEffects() {

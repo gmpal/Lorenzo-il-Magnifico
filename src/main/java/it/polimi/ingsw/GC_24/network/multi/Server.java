@@ -84,23 +84,7 @@ public class Server {
 				System.out.println("************** NEW CLIENT CONNECTED");
 				this.addClient(socket);
 				System.out.println("************** NEW CLIENT ADDED TO GAME");
-				System.out.println("************** THE ACTUAL STATE IS "+ game.getGameState());
-				/*game.setGameState(game.getGameState().nextState());
-				System.out.println(game.getGameState());*/
-<<<<<<< HEAD
-				if (controller.getGame().getGameState().equals(State.WAITINGFORPLAYERTHREE)) {
-					System.out.println("Starting Timer");
-					Timer.startTimer(15);
-					game.setModel(controller.getGame().getPlayers());
-					this.newGame();
-				}
-				if (controller.getGame().getGameState().equals(State.RUNNING)) {
-					game.setModel(controller.getGame().getPlayers());
-					this.newGame();
-				}
-=======
-				
->>>>>>> fba305aa02f2af7995eda9a262207d7f3f2df11e
+				System.out.println("************** THE ACTUAL STATE IS "+ game.getGameState()); 
 			} catch (IOException e) {
 				break;
 			}
@@ -110,15 +94,24 @@ public class Server {
 	}
 
 	public static void tryToCreateANewGame() throws InterruptedException {
-		 
+		if (controller.getGame().getGameState().equals(State.WAITINGFORPLAYERTHREE)) {
 			System.out.println("Starting Timer because of second player created");
 			Timer.startTimer(15);
-			createANewGame();
+			game.setModel(controller.getGame().getPlayers());
+			newGame();
+		}
+		if (controller.getGame().getGameState().equals(State.RUNNING)) {
+			System.out.println("Creating a new game because of four players created");
+			game.setModel(controller.getGame().getPlayers());
+			newGame();
+		}		
 	}
-	public static void createANewGame(){
-		game.setModel(controller.getGame().getPlayers());
+
+	public static void createANewGame() {
 		newGame();
+		
 	}
+
 	private static void newGame() {
 		PlayerColour.resetValues();
 		game = new Model();

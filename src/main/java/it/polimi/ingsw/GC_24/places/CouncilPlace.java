@@ -29,7 +29,7 @@ public class CouncilPlace extends Place {
 		StringBuilder builder = new StringBuilder();
 		builder.append( "Free? " + isAvailable());
 		if (isAvailable()){
-			builder.append(" - You get: " + getValue() + " and a Council Privilege" + privilegeEffect);
+			builder.append(" - You get: " + getValue() + " and a Council Privilege");
 		}
 		return builder.toString();
 	}

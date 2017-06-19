@@ -18,9 +18,9 @@ public class TestBuildings {
 	@Before
 	public void setUp() throws Exception {
 		player = new Player("Giorgia", PlayerColour.RED);
-		building = new Buildings("Building", 0, "Building", null, null, null, 1, null);
+		building = new Buildings("Building", 0, "Building", null, null, null, null, null, 1);
 		buildings = new PersonalBuildings();
-		building2 = new Buildings("Building2", 0, "Building", null, null, null, 3, null);
+		building2 = new Buildings("Building2", 0, "Building", null, null, null, null, null, 3);
 	}
 	
 	@Test

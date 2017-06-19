@@ -19,8 +19,8 @@ public class TestPersonalVentures {
 	@Before
 	public void setUp() throws Exception {
 		player = new Player("Giorgia", PlayerColour.RED);
-		building1 = new Ventures("Venture1", "Venture", null, null, null, null, 1, null);
-		building2 = new Ventures("Venture2", "Venture", null, null, null, null, 1, null);
+		building1 = new Ventures("Venture", "Venture", null, null, null, null, null, null, 3);
+		building2 = new Ventures("Venture2", "Venture", null, null, null, null, null, null, 3);
 		buildings = new PersonalVentures();
 		buildingsexpected = new PersonalVentures();
 	}
