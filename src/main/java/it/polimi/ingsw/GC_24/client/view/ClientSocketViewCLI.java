@@ -106,7 +106,7 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 		}
 		if (command.contains("Model")) {
 			Model modelReceived = (Model) request.get("Model");
-			notifyMyObservers(modelReceived);
+			view.setMiniModel(modelReceived);
 		}
 	}
 
