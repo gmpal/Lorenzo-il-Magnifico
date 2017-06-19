@@ -31,14 +31,4 @@ public class ProductionPlace extends ActivityPlace{
 		}
 
 	}
-	
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append( "ProductionPlace free: " + isAvailable());
-		if (!isAvailable()){
-			builder.append("extra die's cost: " + getAdditionalCostDice());
-		}
-		return builder.toString();
-	}
 }

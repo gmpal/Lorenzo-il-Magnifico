@@ -41,6 +41,6 @@ public class Harvest extends Area {
 			else this.placesArray.add(new HarvestPlace(COSTDICE, null, ADDITIONALCOST2));
 		}
 		return placesArray;
-	} 
-	
+	}
+
 }

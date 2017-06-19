@@ -34,7 +34,7 @@ public class TowerPlace extends Place {
 
 	@Override
 	public String toString() {
-		return "TowerPlace Card=" + correspondingCard;
+		return "Card = " + correspondingCard;
 	}
 
 	public Development getCorrespondingCard() {

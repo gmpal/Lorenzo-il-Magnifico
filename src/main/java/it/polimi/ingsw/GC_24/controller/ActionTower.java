@@ -1,9 +1,10 @@
-﻿package it.polimi.ingsw.GC_24.controller;
+package it.polimi.ingsw.GC_24.controller;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import it.polimi.ingsw.GC_24.cards.Ventures;
+
 import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.places.TowerPlace;
@@ -79,12 +80,26 @@ public class ActionTower extends Action {
 
 
 
+
 	private void takeRealCost() {
 		{
 			if (temporaryCardCost == null) {
 				TowerPlace towerPlace = (TowerPlace) this.place;
 				this.temporaryCardCost = towerPlace.getCorrespondingCard().getCost();
 			}
+
+	public String verify() {
+		String answerToPlayer="ok";
+		while(answerToPlayer.equals("ok")){
+			answerToPlayer = verifyIfEnoughServants();
+			answerToPlayer = verifyFamilyMemberAvailability();
+			answerToPlayer = verifyPlaceAvailability();
+			answerToPlayer = verifyZoneOccupiedByMe();
+			answerToPlayer = verifyMoneyForTowerOccupied();
+			answerToPlayer = verifyCardResources();
+			answerToPlayer = verifyTerritorySpaceAvailability();
+		//	answerToPlayer = verifyBoardSpaceAvailability();
+
 		}
 	}
 
@@ -123,7 +138,9 @@ public class ActionTower extends Action {
 			return answerToPlayer;
 	}
 
+
 	public String verifyTerritorySpaceAvailability(String answerToPlayer) {
+
 		TowerPlace tempTowerPlace = (TowerPlace) this.place;
 		String typeOfCard = tempTowerPlace.getCorrespondingCard().getType();
 
@@ -144,9 +161,11 @@ public class ActionTower extends Action {
 				return answerToPlayer +"Sorry, you need 18 Military Points to unlock the next Territory Space\n";
 			}
 		}
+
 		return answerToPlayer;
 
 	}
+
 
 	public String verifyBoardSpaceAvailability(String answerToPlayer) {
 		TowerPlace tempTowerPlace = (TowerPlace) this.place;

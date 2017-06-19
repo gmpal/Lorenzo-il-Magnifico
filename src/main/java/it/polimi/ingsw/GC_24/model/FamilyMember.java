@@ -47,11 +47,8 @@ public class FamilyMember implements java.io.Serializable {
 	//Prints a family member
 	@Override
 	public String toString() {
-		return "Value=" + memberValue + 
-				"\tColour=" + memberColour+
-				 "\t Status= "+isAvailableString();
+		return  "Status = "+isAvailableString()+ ", Value = " + memberValue + ", Colour = " + memberColour;
 	}
-
 	
 	public String isAvailableString(){
 		if(this.isAvailable()){return "available";}

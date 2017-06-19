@@ -2,13 +2,12 @@ package it.polimi.ingsw.GC_24.cards;
 
 import it.polimi.ingsw.GC_24.effects.*;
 
-
 public class Leader extends Card{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 829299330212816065L;
-
+	private static final long serialVersionUID = -5056159733029761893L;
+	
 	private Requirements requirements;
 	private ValueEffect valueEffectLeader;
 	private ImmediateEffect immediateEffectLeader;

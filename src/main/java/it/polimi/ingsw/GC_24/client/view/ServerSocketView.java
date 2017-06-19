@@ -76,7 +76,6 @@ public class ServerSocketView extends MyObservable implements Runnable, MyObserv
 			objToClient.flush();
 			System.out.println("ServerOut: I have sent the change");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

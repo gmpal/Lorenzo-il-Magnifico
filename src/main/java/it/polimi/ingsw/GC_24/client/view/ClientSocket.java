@@ -20,15 +20,14 @@ public class ClientSocket {
 	private ObjectOutputStream objToServer;
 	private ObjectInputStream objFromServer;
 
+	
 	private final static int PORT = 28469;
 	private final static String IP = "127.0.0.1";
 
 	ExecutorService executor = Executors.newFixedThreadPool(2);
 
 	
-	public ClientSocket (){
-	
-		
+	public ClientSocket (){	
 	}
 	
 	
@@ -46,14 +45,7 @@ public class ClientSocket {
 
 		int viewCode = this.createInterface();
 		this.createClientHandler(viewCode, socket);
-		
-
-		// Model localModel = new Model();
-		// System.out.println("CLIENT: Created the local model");
-
 	}
-
-	
 
 	/* Shows an Option Dialog that lets the user choose between CLI and GUI */
 	public int createInterface() {

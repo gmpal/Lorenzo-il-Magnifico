@@ -36,10 +36,10 @@ public class Family implements java.io.Serializable{
 	@Override
 	public String toString() {
 		return  
-				":\n member1 --> " + member1 + 
-				"\n member2 --> " + member2 + 
-				"\n member3 --> " + member3 +
-				"\n member4 --> " + member4 + ".\n";
+				"member1 --> " + member1 + 
+				"\nmember2 --> " + member2 + 
+				"\nmember3 --> " + member3 +
+				"\nmember4 --> " + member4 + "\n";
 	}
 	
 	//TODO:test

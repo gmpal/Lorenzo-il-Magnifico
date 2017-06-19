@@ -26,6 +26,11 @@ public class BonusTile implements java.io.Serializable{
 	public void giveProductionValues(SetOfValues v){
 		productionValues.addTwoSetsOfValues(v);
 	}
+	
+	@Override
+	public String toString() {
+		return "HarvestValues=" + harvestValues + ", ProductionValues=" + productionValues;
+	}
 
 	//getters e setters
 	public SetOfValues getHarvestValues() {

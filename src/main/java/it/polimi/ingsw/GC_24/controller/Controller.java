@@ -48,7 +48,6 @@ public class Controller extends MyObservable implements MyObserver {
 			String answer = handleRequestFromClient(o, (Map<String, Object>) change);
 			System.out.println("--------------" + answer);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -66,18 +65,21 @@ public class Controller extends MyObservable implements MyObserver {
 	private String handleRequestFromClient(MyObservable o, Map<String, Object> request) throws IOException {
 		System.out.println("Controller: handling the request...");
 		Set<String> command = request.keySet();
+		System.out.println(command);
 
 		if (command.contains("PLAYERNAME")) {
 			return handlePlayer(request);
 		}
 
 		else if (command.contains("colours")) {
+
 			return handleColours(request);
 		}
 
 		else if (command.contains("chosenCost")) {
 			this.tempCost = (SetOfValues) request.get("chosenCost");
 			return "Controller: chosen cost updated";
+
 		}
 
 		else if (command.contains("action")) {
@@ -87,6 +89,7 @@ public class Controller extends MyObservable implements MyObserver {
 
 		/* Checks if the colour has already been chosen */
 		else if (command.contains("checkColour")) {
+
 			return checkColour(o, request);
 		}
 
@@ -117,6 +120,7 @@ public class Controller extends MyObservable implements MyObserver {
 		String colour = tokenizer.nextToken();
 
 		Player player = new Player(name, PlayerColour.valueOf(colour.toUpperCase()));
+
 
 		return "Controller: Created player " + player.toString();
 	}
@@ -154,8 +158,10 @@ public class Controller extends MyObservable implements MyObserver {
 				// che ti servono
 			}
 
+
 		} else {
 			// TODO: azione non valida
+
 		}
 
 		return " sent";
@@ -182,4 +188,8 @@ public class Controller extends MyObservable implements MyObserver {
 
 	}
 
+	// game's getter
+	public Model getGame() {
+		return game;
+	}
 }
