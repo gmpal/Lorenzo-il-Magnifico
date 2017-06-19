@@ -47,7 +47,7 @@ public class ServerSocketView extends MyObservable implements Runnable, MyObserv
 				Map<String, Object> request = (Map<String, Object>) objFromClient.readObject();
 				System.out.println("ServerIn: received from client: " + request);
 				this.notifyMyObservers(request);
-				System.out.println("ServerIn: passed to the controller this:" +request);
+				
 			}
 
 		} catch (ClassNotFoundException ioe) {

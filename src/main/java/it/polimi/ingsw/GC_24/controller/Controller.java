@@ -17,6 +17,7 @@ import it.polimi.ingsw.GC_24.model.PlayerColour;
 import it.polimi.ingsw.GC_24.places.TowerPlace;
 import it.polimi.ingsw.GC_24.values.MilitaryPoint;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
+import it.polimi.ingsw.GC_24.network.multi.Server;
 
 //Just one server's side controller for each game
 public class Controller extends MyObservable implements MyObserver {
@@ -68,7 +69,13 @@ public class Controller extends MyObservable implements MyObserver {
 		System.out.println(command);
 
 		if (command.contains("player")) {
-			return handlePlayer(request);
+			try {
+				return handlePlayer(request);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return "Brutta eccezione!";
+			}
 		}
 
 		else if (command.contains("colours")) {
@@ -123,7 +130,7 @@ public class Controller extends MyObservable implements MyObserver {
 		return " ArrayListOfColours sent";
 	}
 
-	private String handlePlayer(Map<String, Object> request) {
+	private String handlePlayer(Map<String, Object> request) throws InterruptedException {
 		System.out.println("Controller: started handling player!");
 		StringTokenizer tokenizer = new StringTokenizer((String) request.get("player"));
 		String name = tokenizer.nextToken();
@@ -134,6 +141,8 @@ public class Controller extends MyObservable implements MyObserver {
 		game.setGameState(game.getGameState().nextState());
 		System.out.println("Controller: state changed: new state");
 		System.out.println(game.getGameState());
+		System.out.println("Trying to create a new game");
+		Server.tryToCreateANewGame();
 		return "Controller: Created player " + player.getMyName().toString();
 	}
 
