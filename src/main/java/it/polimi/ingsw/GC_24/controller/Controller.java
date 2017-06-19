@@ -63,7 +63,7 @@ public class Controller extends MyObservable implements MyObserver {
 	 * @throws IOException
 	 */
 	private String handleRequestFromClient(MyObservable o, Map<String, Object> request) throws IOException {
-		System.out.println("Controller: handling the request...");
+		System.out.println("Controller: started handling a request from client...");
 		Set<String> command = request.keySet();
 		System.out.println(command);
 
@@ -98,6 +98,7 @@ public class Controller extends MyObservable implements MyObserver {
 	}
 
 	private String checkColour(MyObservable o, Map<String, Object> request) {
+		System.out.println("Controller: started checking colour!");
 		String colour = (String) request.get("checkColour");
 		String availability;
 		if (PlayerColour.checkValue(colour)) {
@@ -113,6 +114,7 @@ public class Controller extends MyObservable implements MyObserver {
 	}
 
 	private String handleColours(MyObservable o, Map<String, Object> request) {
+		System.out.println("Controller: started handling colours");
 		List<String> playerColoursArray = PlayerColour.getValues();
 		HashMap<String, Object> coloursMap = new HashMap<String, Object>();
 		coloursMap.put("colours", playerColoursArray);
@@ -122,17 +124,21 @@ public class Controller extends MyObservable implements MyObserver {
 	}
 
 	private String handlePlayer(Map<String, Object> request) {
+		System.out.println("Controller: started handling player!");
 		StringTokenizer tokenizer = new StringTokenizer((String) request.get("player"));
 		String name = tokenizer.nextToken();
 		String colour = tokenizer.nextToken();
 		Player player = new Player(name, PlayerColour.valueOf(colour.toUpperCase()));
-		game.g
+		System.out.println("Controller: player Created");
+		game.getPlayers().add(player);
 		game.setGameState(game.getGameState().nextState());
+		System.out.println("Controller: state changed: new state");
 		System.out.println(game.getGameState());
-		return "Controller: Created player " + player.toString();
+		return "Controller: Created player " + player.getMyName().toString();
 	}
 
 	private String handleAction(MyObservable o, Map<String, Object> request) {
+		System.out.println("Controller: started handling action");
 		StringTokenizer tokenizer = new StringTokenizer((String) request.get("action"));
 
 		String tempFamiliar = tokenizer.nextToken();
