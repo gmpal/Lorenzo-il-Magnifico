@@ -8,6 +8,7 @@ import it.polimi.ingsw.GC_24.effects.PerformHarvest;
 import it.polimi.ingsw.GC_24.effects.PerformProduction;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.places.ProductionPlace;
+import it.polimi.ingsw.GC_24.values.Servant;
 
 public class ProductionAction extends Action {
 	private List<ImmediateEffect> immediateEffects = new ArrayList<>();
@@ -36,7 +37,7 @@ public class ProductionAction extends Action {
 	@Override
 	public List<ImmediateEffect> run() {
 		this.placeFamiliar();
-		this.payServants();
+		this.payValue(new Servant(this.servants));
 		this.getProductionTileValues();
 		this.getFinalActionValue();
 		this.createProductionEffect();

@@ -9,6 +9,7 @@ import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.places.Place;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
+import it.polimi.ingsw.GC_24.values.Value;
 
 public abstract class Action {
 
@@ -98,8 +99,8 @@ public abstract class Action {
 		familyMember.setAvailable(false);
 	}
 	
-	protected void payServants(){
-		this.player.getMyValues().getServants().subQuantity(servants);
+	protected void payValue(Value value){
+		value.subValuefromSet(player.getMyValues());
 	}
 	
 	protected void takeValueFromPlace(){

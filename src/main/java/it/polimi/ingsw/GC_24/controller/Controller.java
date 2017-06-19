@@ -72,8 +72,7 @@ public class Controller extends MyObservable implements MyObserver {
 		}
 
 		else if (command.contains("colours")) {
-
-			return handleColours(request);
+			return handleColours(o, request);
 		}
 
 		else if (command.contains("chosenCost")) {
@@ -114,24 +113,22 @@ public class Controller extends MyObservable implements MyObserver {
 		return "Controller: Colour checked";
 	}
 
-	private String handleColours(Map<String, Object> request) {
-		StringTokenizer tokenizer = new StringTokenizer((String) request.get("PLAYERNAME"));
-		String name = tokenizer.nextToken();
-		String colour = tokenizer.nextToken();
-
-		Player player = new Player(name, PlayerColour.valueOf(colour.toUpperCase()));
-
-
-		return "Controller: Created player " + player.toString();
+	private String handleColours(MyObservable o, Map<String, Object> request) {
+		List<String> playerColoursArray = PlayerColour.getValues();
+		HashMap<String, Object> coloursMap = new HashMap<String, Object>();
+		coloursMap.put("colours", playerColoursArray);
+		this.notifySingleObserver((MyObserver) o, coloursMap);
+		System.out.println("ServerOut: ArrayListOfColours sent");
+		return " ArrayListOfColours sent";
 	}
 
 	private String handlePlayer(Map<String, Object> request) {
 		StringTokenizer tokenizer = new StringTokenizer((String) request.get("PLAYERNAME"));
 		String name = tokenizer.nextToken();
 		String colour = tokenizer.nextToken();
-
 		Player player = new Player(name, PlayerColour.valueOf(colour.toUpperCase()));
-
+		game.setGameState(game.getGameState().nextState());
+		System.out.println(game.getGameState());
 		return "Controller: Created player " + player.toString();
 	}
 

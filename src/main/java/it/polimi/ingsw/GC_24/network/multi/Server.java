@@ -73,23 +73,25 @@ public class Server {
 
 		ServerSocket serverSocket = new ServerSocket(PORT);
 		System.out.println("SERVER: ServerSocket created");
-		game.setGameState(State.WAITINGFORPLAYERONE);
+		game.setGameState(State.STARTING);
 		System.out.println(game.getGameState());
 
 		while (true) {
 			try {
 				Socket socket = serverSocket.accept();
+				System.out.println("**************");
 				this.addClient(socket);
 				System.out.println("Client connected to " + game);
-				game.setGameState(game.getGameState().nextState());
-				System.out.println(game.getGameState());
-				if (game.getGameState().equals(State.WAITINGFORPLAYERTHREE)) {
+				/*game.setGameState(game.getGameState().nextState());
+				System.out.println(game.getGameState());*/
+				if (controller.getGame().getGameState().equals(State.WAITINGFORPLAYERTHREE)) {
 					System.out.println("Starting Timer");
-
 					Timer.startTimer(10);
+					game.setModel(controller.getGame().getPlayers());
 					this.newGame();
 				}
-				if (game.getGameState().equals(State.RUNNING)) {
+				if (controller.getGame().getGameState().equals(State.RUNNING)) {
+					game.setModel(controller.getGame().getPlayers());
 					this.newGame();
 				}
 			} catch (IOException e) {

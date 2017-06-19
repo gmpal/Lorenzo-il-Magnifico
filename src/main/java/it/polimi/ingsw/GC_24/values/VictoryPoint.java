@@ -15,7 +15,13 @@ public class VictoryPoint extends Value{
 	
 	@Override
 	public SetOfValues addValueToSet(SetOfValues values){
-		values.setVictoryPoints(new VictoryPoint(values.getVictoryPoints().getQuantity()+this.getQuantity()));
+		values.getVictoryPoints().setQuantity(values.getVictoryPoints().getQuantity() + this.getQuantity());
+		return values;
+	}
+	
+	@Override
+	public SetOfValues subValuefromSet(SetOfValues values){
+		values.getVictoryPoints().setQuantity(values.getVictoryPoints().getQuantity() - this.getQuantity());
 		return values;
 	}
 	
