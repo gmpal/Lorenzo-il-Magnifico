@@ -7,6 +7,7 @@ import java.util.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import it.polimi.ingsw.GC_24.devCardJsonFile.GsonBuilders;
 import it.polimi.ingsw.GC_24.devCardJsonFile.RuntimeTypeAdapterFactory;
 import it.polimi.ingsw.GC_24.effects.*;
 import it.polimi.ingsw.GC_24.personalboard.*;
@@ -18,50 +19,16 @@ public class Deck {
 	private List<Buildings> deckBuildings = new ArrayList<>();
 	private List<Ventures> deckVentures = new ArrayList<>();
 	private List<Leader> deckLeaders = new ArrayList<>();
-	private static GsonBuilder builder = new GsonBuilder();
 
 	// constructor
 	public Deck() throws IOException {
 		createDeck();
 	}
 
-	public static RuntimeTypeAdapterFactory<Value> getValueTypeAdapter() {
-		return RuntimeTypeAdapterFactory.of(Value.class, "valueType").registerSubtype(Coin.class, "coin")
-				.registerSubtype(Servant.class, "servant").registerSubtype(Stone.class, "stone")
-				.registerSubtype(Wood.class, "wood").registerSubtype(MilitaryPoint.class, "militaryPoint")
-				.registerSubtype(FaithPoint.class, "faithPoint").registerSubtype(VictoryPoint.class, "victoryPoint");
-	}
-
-	public static RuntimeTypeAdapterFactory<ImmediateEffect> getImmediateEffectTypeAdapter() {
-		return RuntimeTypeAdapterFactory.of(ImmediateEffect.class, "immediateEffectType")
-				.registerSubtype(MoltiplicationPoints.class, "moltiplicationPoints")
-				.registerSubtype(MoltiplicationCards.class, "moltiplicationCards")
-				.registerSubtype(ValueEffect.class, "value").registerSubtype(CouncilPrivilege.class, "coucilPrivilege")
-				.registerSubtype(ChooseNewCard.class, "chooseNewCard").registerSubtype(Exchange.class, "exchange")
-				.registerSubtype(PerformHarvest.class, "performHarvest")
-				.registerSubtype(PerformProduction.class, "performProduction");
-	}
-
-	public static RuntimeTypeAdapterFactory<PersonalCards> getPersonalCardTypeAdapter() {
-		return RuntimeTypeAdapterFactory.of(PersonalCards.class, "personalCardsType")
-				.registerSubtype(PersonalTerritories.class, "personalTerritories")
-				.registerSubtype(PersonalBuildings.class, "personalBuildings")
-				.registerSubtype(PersonalCharacters.class, "personalCharacters")
-				.registerSubtype(PersonalVentures.class, "personalVentures");
-	}
-
-	public static Gson getGsonWithTypeAdapters() {
-		builder.registerTypeAdapterFactory(getValueTypeAdapter());
-		builder.registerTypeAdapterFactory(getImmediateEffectTypeAdapter());
-		builder.registerTypeAdapterFactory(getPersonalCardTypeAdapter());
-		builder.serializeNulls();
-		return builder.create();
-	}
-
 	// create 4 deck arrayList from 4 different file with Json
 	public void createDeck() throws IOException {
 		BufferedReader br;
-		Gson gson = getGsonWithTypeAdapters();
+		Gson gson = GsonBuilders.getGsonWithTypeAdapters();
 		String line;
 
 		br = new BufferedReader(
@@ -137,8 +104,8 @@ public class Deck {
 	}
 
 	public static void main(String args[]) throws IOException {
-		Gson gson = getGsonWithTypeAdapters();
-		ValueEffect ve = new ValueEffect("value");
+		Gson gson = GsonBuilders.getGsonWithTypeAdapters();
+		/*ValueEffect ve = new ValueEffect("value");
 		SetOfValues set = new SetOfValues();
 		set.setStones(new Stone(1));
 		set.setVictoryPoints(new VictoryPoint(4));
@@ -157,6 +124,9 @@ public class Deck {
 		Deck d = new Deck();
 		for (int i = 0; i < d.deckTerritories.size(); i++) {
 			System.out.println(d.deckTerritories.get(i));
-		}
+		}*/
+		CouncilPrivilege cp=new CouncilPrivilege("Council", 2);
+		String cpString = gson.toJson(cp, CouncilPrivilege.class);
+		System.out.println(cpString);
 	}
 }

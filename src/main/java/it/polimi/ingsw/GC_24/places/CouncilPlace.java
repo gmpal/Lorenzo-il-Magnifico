@@ -1,9 +1,8 @@
 package it.polimi.ingsw.GC_24.places;
 
-import it.polimi.ingsw.GC_24.effects.Effect;
 import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
+import it.polimi.ingsw.GC_24.effects.ValueEffect;
 import it.polimi.ingsw.GC_24.model.Player;
-import it.polimi.ingsw.GC_24.values.Value;
 
 public class CouncilPlace extends Place {
 	/**
@@ -12,16 +11,18 @@ public class CouncilPlace extends Place {
 	private static final long serialVersionUID = 3762534738065469265L;
 
 	private ImmediateEffect privilegeEffect;
+	private ValueEffect value;
 
 	// constructor
-	public CouncilPlace(int costDice, Value value, ImmediateEffect privilegeEffect) {
-		super(costDice, value);
+	public CouncilPlace(int costDice, ValueEffect value, ImmediateEffect privilegeEffect) {
+		super(costDice);
+		this.value=value;
 		this.privilegeEffect = privilegeEffect;
 	}
 
 	@Override
 	public void giveEffects(Player player) {
-		player.setMyValues(this.getValue().addValueToSet(player.getMyValues()));
+		player.setMyValues(this.value.getEffectValues().addTwoSetsOfValues(player.getMyValues()));
 	}
 
 	@Override
@@ -42,5 +43,15 @@ public class CouncilPlace extends Place {
 	public void setPrivilegeEffect(ImmediateEffect privilegeEffect) {
 		this.privilegeEffect = privilegeEffect;
 	}
+
+	@Override
+	public ValueEffect getValue() {
+		return value;
+	}
+
+	public void setValue(ValueEffect value) {
+		this.value = value;
+	}
+	
 
 }

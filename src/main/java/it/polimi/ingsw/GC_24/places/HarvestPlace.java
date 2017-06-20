@@ -3,6 +3,7 @@ package it.polimi.ingsw.GC_24.places;
 import java.util.*;
 import it.polimi.ingsw.GC_24.cards.Development;
 import it.polimi.ingsw.GC_24.cards.Territories;
+import it.polimi.ingsw.GC_24.effects.ValueEffect;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.values.Value;
 
@@ -13,8 +14,8 @@ public class HarvestPlace extends ActivityPlace{
 	private static final long serialVersionUID = -5589820895011868990L;
 
 	// constructor
-	public HarvestPlace(int costDice, Value value, int additionalCostDice) {
-		super(costDice, value, additionalCostDice);
+	public HarvestPlace(int costDice, int additionalCostDice) {
+		super(costDice, additionalCostDice);
 	}
 
 	@Override
@@ -28,5 +29,10 @@ public class HarvestPlace extends ActivityPlace{
 			territory.getImmediateEffect().giveImmediateEffect(player);
 			} 
 		}
+	}
+
+	@Override
+	public ValueEffect getValue() {
+		return null;
 	}
 }

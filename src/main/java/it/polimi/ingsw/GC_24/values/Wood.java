@@ -33,4 +33,10 @@ public class Wood extends Value  {
 	public Boolean amIpresentInThisSet(SetOfValues setOfValues) {
 		return (setOfValues.getWoods().getQuantity() >= this.quantity);
 	}
+	
+	@Override
+	public String toString(){
+			return "Wood: " + this.getQuantity();
+		
+	}
 }

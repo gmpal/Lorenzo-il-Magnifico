@@ -1,5 +1,6 @@
 package it.polimi.ingsw.GC_24.model;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,7 +42,7 @@ public class Model extends MyObservable implements java.io.Serializable {
 	 * After a Model is created and the players are get, this method sets the
 	 * model so the game could start
 	 */
-	public void setModel(List<Player> players) {
+	public void setModel(List<Player> players) throws IOException {
 
 		this.players = players;
 		this.board = new Board(players.size());

@@ -82,26 +82,11 @@ public class ActionTower extends Action {
 
 
 	private void takeRealCost() {
-		{
 			if (temporaryCardCost == null) {
 				TowerPlace towerPlace = (TowerPlace) this.place;
 				this.temporaryCardCost = towerPlace.getCorrespondingCard().getCost();
 			}
-
-	public String verify() {
-		String answerToPlayer="ok";
-		while(answerToPlayer.equals("ok")){
-			answerToPlayer = verifyIfEnoughServants();
-			answerToPlayer = verifyFamilyMemberAvailability();
-			answerToPlayer = verifyPlaceAvailability();
-			answerToPlayer = verifyZoneOccupiedByMe();
-			answerToPlayer = verifyMoneyForTowerOccupied();
-			answerToPlayer = verifyCardResources();
-			answerToPlayer = verifyTerritorySpaceAvailability();
-		//	answerToPlayer = verifyBoardSpaceAvailability();
-
 		}
-	}
 
 	
 	/*

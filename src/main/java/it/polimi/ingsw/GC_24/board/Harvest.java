@@ -36,9 +36,9 @@ public class Harvest extends Area {
 				
 		for(int num=0;num<numProducionPlaces;num++){
 			if(num==0){
-				this.placesArray.add(new HarvestPlace(COSTDICE, null, ADDITIONALCOST));
+				this.placesArray.add(new HarvestPlace(COSTDICE, ADDITIONALCOST));
 			}
-			else this.placesArray.add(new HarvestPlace(COSTDICE, null, ADDITIONALCOST2));
+			else this.placesArray.add(new HarvestPlace(COSTDICE, ADDITIONALCOST2));
 		}
 		return placesArray;
 	}

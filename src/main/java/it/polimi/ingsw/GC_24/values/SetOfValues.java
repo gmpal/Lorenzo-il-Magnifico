@@ -69,27 +69,36 @@ public class SetOfValues implements Serializable {
 	public boolean doIHaveEnoughOfThis(Value value) {
 		return value.amIpresentInThisSet(this);
 	}
-	
-	
-	
-	/*Returns true if my SetOfValues contains the cost Set*/
-	public boolean doIHaveThisSet(SetOfValues cost){
+
+	/* Returns true if my SetOfValues contains the cost Set */
+	public boolean doIHaveThisSet(SetOfValues cost) {
 		return cost.subTwoSetsOfValues(this).isAcceptable();
-		//this-cost >=0;
+		// this-cost >=0;
 	}
-	
-	
-	
-	/*Returns true if the Set does not contains negative quantity*/
+
+	public Value valueNotNullFromSet() {
+		if (this.coins.quantity != 0) {
+			return coins;
+		} else if (this.faithPoints.quantity != 0) {
+			return faithPoints;
+		} else if (this.militaryPoints.quantity != 0) {
+			return militaryPoints;
+		} else if (this.stones.quantity != 0) {
+			return stones;
+		} else if (this.victoryPoints.quantity != 0) {
+			return victoryPoints;
+		} else if (this.woods.quantity != 0) {
+			return woods;
+		} else
+			return null;
+	}
+
+	/* Returns true if the Set does not contains negative quantity */
 	public boolean isAcceptable() {
 
-		return (this.woods.getQuantity() >= 0 && 
-				this.stones.getQuantity() >= 0 && 
-				this.servants.getQuantity() >= 0 && 
-				this.coins.getQuantity() >= 0 && 
-				this.faithPoints.getQuantity() >= 0	&& 
-				this.militaryPoints.getQuantity() >= 0 && 
-				this.victoryPoints.getQuantity() >= 0);
+		return (this.woods.getQuantity() >= 0 && this.stones.getQuantity() >= 0 && this.servants.getQuantity() >= 0
+				&& this.coins.getQuantity() >= 0 && this.faithPoints.getQuantity() >= 0
+				&& this.militaryPoints.getQuantity() >= 0 && this.victoryPoints.getQuantity() >= 0);
 	}
 
 	// hashCode() redefined

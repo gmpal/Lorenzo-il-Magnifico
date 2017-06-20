@@ -12,8 +12,8 @@ public abstract class ActivityPlace extends Place{
 	private int additionalCostDice;
 	
 	//constructor
-	public ActivityPlace(int costDice, Value value, int additionalCostDice) {
-		super(costDice, value);			
+	public ActivityPlace(int costDice, int additionalCostDice) {
+		super(costDice);			
 		this.additionalCostDice = additionalCostDice;
 	}
 	

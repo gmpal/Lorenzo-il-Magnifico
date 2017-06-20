@@ -33,7 +33,7 @@ public class Ventures extends Development {
 	public String toString() {
 		return "Venture: Name = " + name + " Cost = " + getCost() + " Required Military Points = " +requiredMilitaryPoints+
 				"\n Immediate Effects = " + getImmediateEffect()+" "+getImmediateEffect1()+
-				"\nPermanent Effects = " + getPermanentEffect();
+				"\nPoints at the end = " + getPointsAtTheEnd();
 	}
   
 	// getters and setters

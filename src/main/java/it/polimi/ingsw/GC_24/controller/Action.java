@@ -103,8 +103,8 @@ public abstract class Action {
 	}
 	
 	protected void takeValueFromPlace(){
-		if (place.getValue() != null) {
-			place.getValue().addValueToSet(player.getMyValues());
+		if (place.getValue().getEffectValues() != null) {
+			place.getValue().getEffectValues().addTwoSetsOfValues(player.getMyValues());
 		}
 	}
 	
