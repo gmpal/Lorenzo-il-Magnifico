@@ -24,8 +24,7 @@ public class Exchange extends ImmediateEffect {
 		this.set1 = set1;
 		this.imEff = imEff;
 		this.imEff1 = imEff1;
-		exchangeEffects.put(set, imEff);
-		exchangeEffects.put(set1, imEff1);
+		setExchange();
 	}
 
 	@Override
@@ -89,6 +88,11 @@ public class Exchange extends ImmediateEffect {
 
 	public void setExchangeEffects(HashMap<SetOfValues, ImmediateEffect> exchangeEffects) {
 		this.exchangeEffects = exchangeEffects;
+	}
+	
+	public void setExchange(){
+		this.exchangeEffects.put(set, imEff);
+		this.exchangeEffects.put(set1, imEff1);
 	}
 
 }
