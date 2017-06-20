@@ -15,7 +15,10 @@ import it.polimi.ingsw.GC_24.client.rmi.RMIViewRemote;
 import it.polimi.ingsw.GC_24.client.view.ServerSocketView;
 import it.polimi.ingsw.GC_24.controller.Controller;
 import it.polimi.ingsw.GC_24.model.Model;
+import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.PlayerColour;
+import it.polimi.ingsw.GC_24.MyObservable;
+import it.polimi.ingsw.GC_24.MyObserver;
 import it.polimi.ingsw.GC_24.Timer;
 import it.polimi.ingsw.GC_24.model.State;
 
@@ -27,6 +30,7 @@ public class Server {
 	private static Model game;
 	private static Controller controller;
 	private ExecutorService threadPool = Executors.newCachedThreadPool();
+	private static ServerSocketView serverSocketView;
 
 	// Crea un server e fa partire il suo metodo startServer()
 	public static void main(String[] args) throws IOException, AlreadyBoundException, InterruptedException {
@@ -53,7 +57,7 @@ public class Server {
 		RMIView rmiView = new RMIView();
 
 		// controller observes this view
-		rmiView.registerMyObserver(this.controller);
+		rmiView.registerMyObserver(controller);
 
 		// this view observes the model
 		this.game.registerMyObserver(rmiView);
@@ -73,8 +77,8 @@ public class Server {
 
 		ServerSocket serverSocket = new ServerSocket(PORT);
 		System.out.println("SERVER: ServerSocket created");
-		game.setGameState(State.WAITINGFORPLAYERONE);
-		System.out.println(game.getGameState());
+		
+		
 		int i=0;
 		while (true) {
 			try {
@@ -93,45 +97,81 @@ public class Server {
 		serverSocket.close();
 	}
 
-	public static void tryToCreateANewGame() throws InterruptedException {
-		if (controller.getGame().getGameState().equals(State.WAITINGFORPLAYERTHREE)) {
+	public synchronized static void tryToCreateANewGame() throws InterruptedException {
+		
 			System.out.println("Starting Timer because of second player created");
 			Timer.startTimer(15);
-			game.setModel(controller.getGame().getPlayers());
+			
+			game.setModel(game.getPlayers());
 			newGame();
-		}
-		if (controller.getGame().getGameState().equals(State.RUNNING)) {
-			System.out.println("Creating a new game because of four players created");
-			game.setModel(controller.getGame().getPlayers());
-			newGame();
-		}		
+		
 	}
 
-	public static void createANewGame() {
+	public synchronized static void createANewGame() {
+		System.out.println("Creating a new game because of four players created");
+		game.setModel(game.getPlayers());
 		newGame();
 		
 	}
 
-	private static void newGame() {
+	private synchronized static void newGame() {
 		PlayerColour.resetValues();
 		game = new Model();
 		controller = new Controller(game);
 		System.out.println("NEW GAME CREATED");
 	}
 
-	public void addClient(Socket socket) throws IOException {
+	public synchronized void addClient(Socket socket) throws IOException {
 
-		ServerSocketView serverSocketView = new ServerSocketView(socket);
+		serverSocketView = new ServerSocketView(socket);
 		threadPool.submit(serverSocketView);
-//TODO: finché non inserisco il nome non super questa istruzione
 		System.out.println("SERVER: ServerSocketView created");
-
+		registerObserver();
+	}
+	
+	public synchronized static void registerObserver(){
 		game.registerMyObserver(serverSocketView);
 		serverSocketView.registerMyObserver(controller);
 		controller.registerMyObserver(serverSocketView);
+	}
+	
+	public synchronized static void removeObserverFromThis(MyObservable o){
+		game.unregisterMyObserver((MyObserver)o);
+		o.unregisterMyObserver(controller);
+		controller.unregisterMyObserver((MyObserver)o);
+	}
+	
+	public synchronized static void registerObserverToThis(MyObservable o){
+		game.registerMyObserver((MyObserver)o);
+		o.registerMyObserver(controller);
+		controller.registerMyObserver((MyObserver)o);
+		
+	}
 
-		System.out.println("SERVER: observers setted!");
-
+	public synchronized static void handlePlayer(MyObservable o, Player player) throws InterruptedException {
+		if (game.getGameState().equals(State.RUNNING)) {
+			int actualGame = game.getModelNumber();
+			System.out.println("Actual state is ");
+			System.out.println(game.getGameState());
+			System.out.println("---> Trying to create a new game");
+			removeObserverFromThis(o);
+			while (game.getModelNumber()==actualGame){
+				System.out.printf("");	
+			}
+			registerObserverToThis(o);
+			game.getPlayers().add(player);
+			game.setGameState(game.getGameState().nextState());
+		}
+		else if (game.getGameState().equals(State.WAITINGFORPLAYERTWO)) {
+			game.getPlayers().add(player);
+			game.setGameState(game.getGameState().nextState());
+			tryToCreateANewGame();
+			
+		} else {
+			game.getPlayers().add(player);
+			game.setGameState(game.getGameState().nextState());
+		}
+		
 	}
 
 }

@@ -21,15 +21,14 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	private List<String> colours;
 	private HashMap<String, Object> hm;
 	private int colourAvailable;
-	private Model miniModel = new Model();
+	private Model miniModel;
 
 	/*
 	 * public static void main(String args[]) { ViewPlayer vp = new ViewCLI();
 	 * ViewCLI viewCLI = (ViewCLI) vp; viewCLI.start();
 	 * viewCLI.showAndGetOption(); }
 	 */
-
-
+	
 	public int getColourAvailable() {
 		return colourAvailable;
 	}
@@ -41,7 +40,8 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 
 	@Override
 	public void run() {
-
+		System.out.println("Creating a local mini model");
+		this.miniModel = new Model();
 		name = setName();
 		colour = setColour();
 		System.out.println("*****Welcome "+name.toUpperCase()+"!\nYou are the " +colour.toUpperCase()+" player\n");

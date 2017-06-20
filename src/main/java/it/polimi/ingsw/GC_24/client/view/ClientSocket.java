@@ -43,12 +43,15 @@ public class ClientSocket {
 		Socket socket = new Socket(IP, PORT);
 		System.out.println("CLIENT: Connection established");
 
-		int viewCode = this.createInterface();
-		this.createClientHandler(viewCode, socket);
+		int viewCode = this.createAndStartsInterface();
+		
+		this.createClientSocketView(viewCode, socket);
+		
+		//minimodel is created inside the view
 	}
 
 	/* Shows an Option Dialog that lets the user choose between CLI and GUI */
-	public int createInterface() {
+	public int createAndStartsInterface() {
 		String[] array = { "GUI", "CLI" };
 
 		int choice =
@@ -68,7 +71,7 @@ public class ClientSocket {
 	
 		}
 
-	public void createClientHandler(int i, Socket socket) throws IOException {
+	public void createClientSocketView(int i, Socket socket) throws IOException {
 
 		objToServer = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
 		objToServer.flush();
