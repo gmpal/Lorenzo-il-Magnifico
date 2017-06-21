@@ -1,42 +1,43 @@
 package it.polimi.ingsw.GC_24.places;
 
+import it.polimi.ingsw.GC_24.effects.CouncilPrivilege;
+import it.polimi.ingsw.GC_24.effects.ValueEffect;
 import it.polimi.ingsw.GC_24.model.FamilyMember;
 import it.polimi.ingsw.GC_24.model.Player;
+import it.polimi.ingsw.GC_24.values.SetOfValues;
 import it.polimi.ingsw.GC_24.values.Value;
 
-public abstract class Place implements java.io.Serializable{ 
-	
+public abstract class Place implements java.io.Serializable {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -2155289391346850824L;
-	
-	private int costDice; 
+
+	private int costDice;
 	protected boolean available;
 	protected FamilyMember famMemberOnPlace;
-	private Value value;
-	
-	//constructor
-	public Place(int costDice, Value value){
+
+	// constructor
+	public Place(int costDice) {
 		this.costDice = costDice;
 		this.available = true;
 		this.famMemberOnPlace = null;
-		this.value = value;
 	}
-	
-	//Useful methods
-	
-	//clears the place from the Family Member
-	public void clearPlace(){
+
+	// Useful methods
+
+	// clears the place from the Family Member
+	public void clearPlace() {
 		this.famMemberOnPlace = null;
 		this.setAvailable(true);
 	}
-	
-	//redefined in MarketPlace, Tower, CouncilPlace change parameter in FamilyMember	
-	public abstract void giveEffects(Player player); 
-	
-	
-	//hashCode() and equals() redefined
+
+	// redefined in MarketPlace, Tower, CouncilPlace change parameter in
+	// FamilyMember
+	public abstract void giveEffects(Player player);
+
+	// hashCode() and equals() redefined
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -44,7 +45,6 @@ public abstract class Place implements java.io.Serializable{
 		result = prime * result + (available ? 1231 : 1237);
 		result = prime * result + costDice;
 		result = prime * result + ((famMemberOnPlace == null) ? 0 : famMemberOnPlace.hashCode());
-		result = prime * result + ((value == null) ? 0 : value.hashCode());
 		return result;
 	}
 
@@ -66,39 +66,35 @@ public abstract class Place implements java.io.Serializable{
 				return false;
 		} else if (!famMemberOnPlace.equals(other.famMemberOnPlace))
 			return false;
-		if (value == null) {
-			if (other.value != null)
-				return false;
-		} else if (!value.equals(other.value))
-			return false;
 		return true;
 	}
 
-	//getters and setters
+	// getters and setters
 	public int getCostDice() {
 		return costDice;
 	}
+
 	public void setCostDice(int costDice) {
 		this.costDice = costDice;
 	}
+
 	public boolean isAvailable() {
 		return available;
 	}
+
 	public void setAvailable(boolean available) {
 		this.available = available;
 	}
+
 	public FamilyMember getFamMemberOnPlace() {
 		return famMemberOnPlace;
 	}
+
 	public void setFamMemberOnPlace(FamilyMember famMemberOnPlace) {
 		this.famMemberOnPlace = famMemberOnPlace;
 		this.setAvailable(false);
 	}
-	public Value getValue() {
-		return value;
-	}
-	public void setValue(Value value) {
-		this.value = value;
-	}	
 	
+	public abstract ValueEffect getValue();
+
 }

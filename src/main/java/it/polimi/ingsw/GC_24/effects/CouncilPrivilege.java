@@ -95,12 +95,16 @@ public class CouncilPrivilege extends ImmediateEffect {
 	// Prints the composition of the Council
 	@Override
 	public String toString() {
-		List<SetOfValues> array = this.getCouncilPrivileges();
-		StringBuilder builder = new StringBuilder();
-		for (int i = 0; i < array.size(); i++) {
-			builder.append("(" + (i + 1) + ") " + array.get(i) + "\n");
+		if (this.councilPrivileges != null) {
+			List<SetOfValues> array = this.getCouncilPrivileges();
+			StringBuilder builder = new StringBuilder();
+			for (int i = 0; i < array.size(); i++) {
+				builder.append("(" + (i + 1) + ") " + array.get(i) + "\n");
+			}
+			return builder.toString();
+		} else {
+			return "noEffect";
 		}
-		return builder.toString();
 
 	}
 

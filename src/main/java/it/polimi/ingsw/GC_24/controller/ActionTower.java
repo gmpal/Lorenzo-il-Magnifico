@@ -83,9 +83,10 @@ public class ActionTower extends Action {
 
 
 	private void takeRealCost() {
-		if (temporaryCardCost == null) {
-			TowerPlace towerPlace = (TowerPlace) this.place;
-			this.temporaryCardCost = towerPlace.getCorrespondingCard().getCost();
+			if (temporaryCardCost == null) {
+				TowerPlace towerPlace = (TowerPlace) this.place;
+				this.temporaryCardCost = towerPlace.getCorrespondingCard().getCost();
+			}
 		}
 	
 	}

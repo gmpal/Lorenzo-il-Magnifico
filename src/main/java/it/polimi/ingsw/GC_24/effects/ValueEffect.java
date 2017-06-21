@@ -29,7 +29,7 @@ public class ValueEffect extends ImmediateEffect {
 
 	@Override
 	public String toString() {
-		return this.setOfValue.toString();
+			return this.setOfValue.toString();
 	}
 
 	// getters and setters

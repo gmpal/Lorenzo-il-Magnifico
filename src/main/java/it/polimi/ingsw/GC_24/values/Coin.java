@@ -32,7 +32,7 @@ public class Coin extends Value {
 
 	@Override
 	public String toString() {
-		return "coin: " + this.getQuantity();
+		return "Coin: " + this.getQuantity();
 	}
 
 	@Override

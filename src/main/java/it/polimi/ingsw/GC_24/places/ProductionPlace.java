@@ -2,8 +2,10 @@ package it.polimi.ingsw.GC_24.places;
 
 import java.util.*;
 import it.polimi.ingsw.GC_24.cards.Development;
+import it.polimi.ingsw.GC_24.effects.ValueEffect;
 import it.polimi.ingsw.GC_24.cards.Buildings;
 import it.polimi.ingsw.GC_24.model.Player;
+import it.polimi.ingsw.GC_24.values.SetOfValues;
 import it.polimi.ingsw.GC_24.values.Value;
 
 public class ProductionPlace extends ActivityPlace{
@@ -13,8 +15,8 @@ public class ProductionPlace extends ActivityPlace{
 	private static final long serialVersionUID = -3520071878963185433L;
 
 	//constructor
-	public ProductionPlace(int costDice, Value value, int additionalCostDice) {
-		super(costDice, value, additionalCostDice);
+	public ProductionPlace(int costDice, int additionalCostDice) {
+		super(costDice, additionalCostDice);
 	}
 	
 	//gives the production value of the bonus tile and the effects of the activated cards to the player 
@@ -30,5 +32,10 @@ public class ProductionPlace extends ActivityPlace{
 			}
 		}
 
+	}
+
+	@Override
+	public ValueEffect getValue() {
+		return null;
 	}
 }

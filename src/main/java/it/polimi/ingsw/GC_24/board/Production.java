@@ -37,9 +37,9 @@ public class Production extends Area {
 			
 		for(int num=0;num<numProducionPlaces;num++){
 			if(num==0){
-				this.placesArray.add(new ProductionPlace(COSTDICE, null, ADDITIONALCOST));
+				this.placesArray.add(new ProductionPlace(COSTDICE, ADDITIONALCOST));
 			}
-			else this.placesArray.add(new ProductionPlace(COSTDICE, null, ADDITIONALCOST2));
+			else this.placesArray.add(new ProductionPlace(COSTDICE, ADDITIONALCOST2));
 		}
 		return placesArray;
 	} 
