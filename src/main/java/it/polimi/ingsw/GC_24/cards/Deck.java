@@ -104,7 +104,7 @@ public class Deck {
 	}
 
 	public static void main(String args[]) throws IOException {
-		Gson gson = GsonBuilders.getGsonWithTypeAdapters();
+		/*Gson gson = GsonBuilders.getGsonWithTypeAdapters();
 		ValueEffect ve = new ValueEffect("value");
 		SetOfValues set = new SetOfValues();
 		set.getCoins().setQuantity(1);
@@ -131,7 +131,7 @@ public class Deck {
 		Ventures v = new Ventures("Province","Venture", set, set1, val, mp, ve, null, 1);
 		String string = gson.toJson(v);
 		System.out.println(string);
-	/*	b = gson.fromJson(string, Buildings.class);
+		b = gson.fromJson(string, Buildings.class);
 		System.out.println(b);
 		String string1 = gson.toJson(t1);*/
 

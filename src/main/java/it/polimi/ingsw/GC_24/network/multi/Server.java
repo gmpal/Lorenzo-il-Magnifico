@@ -29,7 +29,7 @@ public class Server {
 
 	private static final int PORT = 28469;
 	private final static int RMI_PORT = 29999;
-	private final static int PLAYER_NUMBER = 4 ;
+	private final static int PLAYER_NUMBER = 4;
 	private final String NAME = "rmiView";
 	private static Model game;
 	private static Controller controller;
@@ -39,8 +39,8 @@ public class Server {
 	private static Timer timer;
 	private int i = 0;
 	private int modelIndex = 1;
-	private	int secondsToPrint = 15;
-	
+	private int secondsToPrint = 15;
+
 	// Crea un server e fa partire il suo metodo startServer()
 	public static void main(String[] args) throws IOException, AlreadyBoundException, InterruptedException {
 		Server server = new Server();
@@ -84,7 +84,7 @@ public class Server {
 	// Quando un client si connette crea un ClientHandler e lo fa partire
 	public void startSocketServer() throws IOException, InterruptedException {
 		timer = new Timer();
-	
+
 		ServerSocket serverSocket = new ServerSocket(PORT);
 		System.out.println("SERVER: ServerSocket created");
 
@@ -101,12 +101,12 @@ public class Server {
 				sendNumberToClient();
 				player = new Player();
 				game.getPlayers().add(player);
-				System.out.println("PLAYER "+player);
+				System.out.println("PLAYER " + player);
 				System.out.println("Player #" + i + "added to Game #" + game.getModelNumber());
 				game.incrementState();
 				System.out.println("Sto già inviando qualcosa");
 				game.sendModel();
-				
+
 				if (game.getGameState().equals(State.WAITINGFORPLAYERTHREE)) {
 					System.out.println("Timer Starting");
 					timer.schedule(new TimerTask() {
@@ -119,26 +119,25 @@ public class Server {
 						}
 					}, 15000);
 				}
-			
-					if (game.getGameState().equals(State.RUNNING)) {
-						while(game.getPlayers().get(PLAYER_NUMBER-1).getMyName().equals("TempName")){
-							System.out.printf("");
-							//just waits untils the last player is automatically/manually created
-						}
-						System.out.println("TIMER CANCELED");
-						timer.cancel();
-					
-						controller.autoCompletePlayers();
-						launchAndCreateNewGame();
 
+				if (game.getGameState().equals(State.RUNNING)) {
+					while (game.getPlayers().get(PLAYER_NUMBER - 1).getMyName().equals("TempName")) {
+						System.out.printf("");
+						// just waits untils the last player is
+						// automatically/manually created
 					}
-				
-		
+					System.out.println("TIMER CANCELED");
+					timer.cancel();
+
+					controller.autoCompletePlayers();
+					launchAndCreateNewGame();
+
+				}
 
 				System.out.println("SERVER: THE ACTUAL GAME IS " + game.getModelNumber());
 				System.out.println("SERVER: THE ACTUAL STATE IS " + game.getGameState());
 				System.out.println("SERVER: THE ACTUAL PLAYERS ARE " + game.getPlayers());
-			
+
 			} catch (IOException e) {
 				e.printStackTrace();
 				break;
@@ -155,19 +154,20 @@ public class Server {
 
 	}
 
-
-	
-	
-
 	private void launchAndCreateNewGame() {
 		modelIndex++;
 		threadPool.submit(this.controller);
-		this.game.setModel(game.getPlayers());
+		try {
+			this.game.setModel(game.getPlayers());
+		} catch (IOException e) {
+			System.out.println("model not setted");
+			e.printStackTrace();
+		}
 		controller.sendModelToClients();
 		this.game = new Model(modelIndex);
 		this.controller = new Controller(game);
 		PlayerColour.resetValues();
-		System.out.println("Game #"+modelIndex+" created");
+		System.out.println("Game #" + modelIndex + " created");
 
 	}
 

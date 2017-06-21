@@ -87,7 +87,7 @@ public class ActionTower extends Action {
 				TowerPlace towerPlace = (TowerPlace) this.place;
 				this.temporaryCardCost = towerPlace.getCorrespondingCard().getCost();
 			}
-		}
+		
 	
 	}
 	/*
