@@ -143,7 +143,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		this.notifyMyObservers(hm);
 
 		while (colourAvailable == -1) {
-			System.out.printf("");
+			//System.out.printf("");
 		}
 
 		return (this.colourAvailable);
@@ -166,7 +166,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		System.out.println("--------------->PLAYER INVIATO");
 
 		while (!miniModel.getPlayers().get((clientNumber) - 1).getMyName().equalsIgnoreCase(name)) {
-			System.out.printf("");
+			//System.out.printf("");
 
 		}
 		System.out.println("hO RICEVUTO LA MODIFICA");
