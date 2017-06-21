@@ -140,23 +140,32 @@ public class Deck {
 		Gson gson = getGsonWithTypeAdapters();
 		ValueEffect ve = new ValueEffect("value");
 		SetOfValues set = new SetOfValues();
-		set.setStones(new Stone(1));
-		set.setVictoryPoints(new VictoryPoint(4));
-		ve.setEffectValues(set);
-
+		set.getCoins().setQuantity(1);
+		set.getWoods().setQuantity(1);
+		SetOfValues value = new SetOfValues();
+		value.getCoins().setQuantity(3);
+		ve.setEffectValues(value);
+		PersonalBuildings pb = new PersonalBuildings();
+		CouncilPrivilege privilege = new CouncilPrivilege("privilege", 1);
+		
+		MoltiplicationCards meffect = new MoltiplicationCards("MoltiplicationCards", new Coin(1), pb);
 		ValueEffect ve1 = new ValueEffect("value");
 		SetOfValues set1 = new SetOfValues();
-		set1.setStones(new Stone(1));
-		ve1.setEffectValues(set1);
+		set1.getWoods().setQuantity(2);
+		SetOfValues value1 = new SetOfValues();
+		value1.getCoins().setQuantity(5);
+		ve1.setEffectValues(value1);
+		Value val = new VictoryPoint(1);
+		MilitaryPoint mp = new MilitaryPoint(3);
+		Exchange eeffect = new Exchange("Exchange", set, null, privilege, null);
 
-		Territories t = new Territories("Commercial Hub", 1, "territories", null, null, null, ve, 1);
-		Territories t1 = new Territories("Province", 6, "territories", null, new CouncilPrivilege("council", 1), ve1,
-				ve, 3);
-		String string = gson.toJson(t);
-		String string1 = gson.toJson(t1);
-		Deck d = new Deck();
-		for (int i = 0; i < d.deckTerritories.size(); i++) {
-			System.out.println(d.deckTerritories.get(i));
-		}
+		Buildings b = new Buildings("Commercial", 1, "Building", set, ve1, null, ve, privilege, 1);
+		Ventures v = new Ventures("Province","Venture", set, set1, val, mp, ve, null, 1);
+		String string = gson.toJson(v);
+		System.out.println(string);
+	/*	b = gson.fromJson(string, Buildings.class);
+		System.out.println(b);
+		String string1 = gson.toJson(t1);*/
+		
 	}
 }
