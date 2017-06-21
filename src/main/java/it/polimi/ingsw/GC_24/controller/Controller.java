@@ -21,7 +21,7 @@ import it.polimi.ingsw.GC_24.values.SetOfValues;
 import it.polimi.ingsw.GC_24.network.multi.Server;
 
 //Just one server's side controller for each game
-public class Controller extends MyObservable implements MyObserver {
+public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	private final Model game;
 	private ActionFactory actionFactory;
@@ -38,6 +38,30 @@ public class Controller extends MyObservable implements MyObserver {
 		controllerNumber++;
 	}
 
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		//CONTIENE I METODI DI GESTIONE DELLA PARTITA STESSA, TURNI, INTERAZIONI
+	}
+	
+	public void autoCompletePlayers() {
+	//	System.out.println(game.getPlayers());
+		for (Player p : game.getPlayers()) {
+			int index = game.getPlayers().indexOf(p);
+		
+			if (p.getMyName().equals("TempName")) {
+				System.out.println("ECCO I COLORI RIMASTI");
+				System.out.println(PlayerColour.getValues());
+				p.setPlayer("Player_" + index, PlayerColour.valueOf(PlayerColour.getValues().get(0)));
+				PlayerColour.getValues().remove(0);
+				sendModelToClients();
+			}
+			
+			
+		}
+
+	}
+	
 	@Override
 	public void update() {
 	}
@@ -72,14 +96,22 @@ public class Controller extends MyObservable implements MyObserver {
 		System.out.println(command);
 
 		if (command.contains("player")) {
-			try {
-				return sendPlayerToServer(o, request);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return "Brutta eccezione!";
-			}
-		}
+			System.out.println("-------------------------------->RECEIVED A FREAKING PLAYER");
+			String playerString = (String) request.get("player");
+			System.out.println(playerString);
+			StringTokenizer tokenizer = new StringTokenizer(playerString);
+			String clientNumber = tokenizer.nextToken();
+			String name = tokenizer.nextToken();
+			String colour = tokenizer.nextToken();
+			int indexOfPlayer = Integer.parseInt(clientNumber)-1;	
+			System.out.println("Lookin' for player n "+indexOfPlayer);
+			game.getPlayers().get(indexOfPlayer).setPlayer(name, PlayerColour.valueOf(colour.toUpperCase()));
+			System.out.println("CONTROLLER GAME: "+game.getPlayers());
+			sendModelToClients();
+			return "player "+clientNumber+" updated";
+	
+		}	
+		
 
 		else if (command.contains("colours")) {
 			return handleColours(o, request);
@@ -133,36 +165,24 @@ public class Controller extends MyObservable implements MyObserver {
 		return " ArrayListOfColours sent";
 	}
 
-	private synchronized String sendPlayerToServer(MyObservable o, Map<String, Object> request) throws InterruptedException {
-		System.out.println("Controller #" + this.getControllerNumber() + ": started handling player!");
-		System.out.println("Your player will end in game #" + game.getModelNumber());
-		String playerString = (String) request.get("player");
-		Player player = createPlayerFromString(playerString);
-		System.out.println("Controller: player Created");
 
-		Server.handlePlayer(o, player);
-
-		System.out.println("Controller: state changed: new state");
-		System.out.println(game.getGameState());
-
-		return "Controller: Created player " + player.getMyName().toString() + "\n --> CONNECTED TO GAME N"
-				+ game.getModelNumber() + "\n --> CONNECTED TO CONTROLLER N" + this.getControllerNumber();
-	}
 
 	private Player createPlayerFromString(String playerString) {
 		StringTokenizer tokenizer = new StringTokenizer(playerString);
 		String name = tokenizer.nextToken();
 		String colour = tokenizer.nextToken();
-		Player player = new Player(name, PlayerColour.valueOf(colour.toUpperCase()));
+		Player player = new Player();
+		player.setPlayer(name, PlayerColour.valueOf(colour.toUpperCase()));
 		return player;
 
 	}
 
-	private void sendModelToClients() {
+	public void sendModelToClients() {
 		System.out.println("Sono il controller numero" + this.getControllerNumber());
-		System.out.println("Sto inviando il model numero" + game.getModelNumber());
+		System.out.println("Sto inviando il game numero" + game.getModelNumber());
+		Object game2 = game;
 		hashMap = new HashMap<>();
-		hashMap.put("model", game);
+		hashMap.put("model", game2);
 		notifyMyObservers(hashMap);
 	}
 
@@ -233,4 +253,6 @@ public class Controller extends MyObservable implements MyObserver {
 	public Model getGame() {
 		return game;
 	}
+
+	
 }

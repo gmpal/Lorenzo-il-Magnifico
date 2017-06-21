@@ -67,9 +67,16 @@ public class ServerSocketView extends MyObservable implements Runnable, MyObserv
 
 	}
 
+	
+	public void sendToClient(Object c) throws IOException{
+		objToClient.writeObject(c);
+		objToClient.flush();
+	//	System.out.println("ServerOut: I have sent"+c);
+		
+	}
 	@Override
 	public <C> void update(MyObservable o, C change) {
-		System.out.println("ServerOut: I have been notified by " + o.getClass().getSimpleName());
+	//	System.out.println("ServerOut: I have been notified by " + o.getClass().getSimpleName());
 
 		try {
 			objToClient.writeObject(change);

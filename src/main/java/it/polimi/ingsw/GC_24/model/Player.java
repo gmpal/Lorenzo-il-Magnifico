@@ -1,11 +1,13 @@
 package it.polimi.ingsw.GC_24.model;
 
+import java.io.Serializable;
+
 import it.polimi.ingsw.GC_24.personalboard.PersonalBoard;
 import it.polimi.ingsw.GC_24.places.Place;
 import it.polimi.ingsw.GC_24.values.*;
 
 
-public class Player implements java.io.Serializable {
+public class Player implements Serializable {
 	/**
 	 * 
 	 */
@@ -18,15 +20,30 @@ public class Player implements java.io.Serializable {
 	private PlayerColour myColour;
 	
 	//Constructor 
+	public Player() {
+		this.myColour = PlayerColour.valueOf(PlayerColour.getRandomColour());
+		this.myName ="TempName";
+		this.myFamily = new Family(myColour);
+		this.myBoard = new PersonalBoard();
+		this.myValues = new SetOfValues();
+	}
+	
 	public Player(String myName, PlayerColour myColour) {
+		this.myColour = myColour;
+		this.myName =myName;
+		this.myFamily = new Family(myColour);
+		this.myBoard = new PersonalBoard();
+		this.myValues = new SetOfValues();
+	}
+	
+	//useful methods
+	public void setPlayer(String myName, PlayerColour myColour){
 		this.myColour = myColour;
 		this.myName = myName;
 		this.myFamily =  new Family(myColour);
 		this.myBoard = new PersonalBoard();
 		this.myValues = new SetOfValues();
 	}
-	
-	//useful methods
 	
 	//useful to find the value of the player if you only know his colour
 	public SetOfValues getMyValuesFromColour(PlayerColour playerColour) {
@@ -55,8 +72,7 @@ public class Player implements java.io.Serializable {
 	//Prints name of a Player
 	@Override
 	public String toString() {
-		return "Player [myName=" + myName + ", myFamily=" + myFamily + ", myBoard=" + myBoard + ", myValues=" + myValues
-				+ ", myColour=" + myColour + "]";
+		return "Player [myName=" + myName + ", myColour=" + myColour + "]";
 	}
 	
 		

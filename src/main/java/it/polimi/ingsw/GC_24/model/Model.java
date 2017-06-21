@@ -1,5 +1,7 @@
 package it.polimi.ingsw.GC_24.model;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,7 +9,7 @@ import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.board.Board;
 import it.polimi.ingsw.GC_24.dice.SetOfDice;
 
-public class Model extends MyObservable implements java.io.Serializable {
+public class Model extends MyObservable implements Serializable {
 	/**
 	 * 
 	 */
@@ -22,12 +24,15 @@ public class Model extends MyObservable implements java.io.Serializable {
 	private Period currentPeriod;
 	private List<Ranking> rankings;
 	private HashMap<String, Object> hm;
-	
-	private int modelNumber = 0;
-	
-	/*Constructor --> ONLY PLAYERS NEEDS TO BE PASSED
-	 * other fields are created or set */
-	public Model() {
+
+	private int modelNumber;
+
+	/*
+	 * Constructor --> ONLY PLAYERS NEEDS TO BE PASSED other fields are created
+	 * or set
+	 */
+	public Model(int index) {
+		this.modelNumber= index;
 		
 		this.players = new ArrayList<>();
 		this.board = null;
@@ -37,7 +42,20 @@ public class Model extends MyObservable implements java.io.Serializable {
 		this.currentRound = null;
 		this.currentPeriod = null;
 		this.rankings = new ArrayList<Ranking>();
-		modelNumber++;
+		
+	}
+	
+	public Model() {
+				
+		this.players = new ArrayList<>();
+		this.board = null;
+		this.currentPlayer = null;
+		this.gameState = State.WAITINGFORPLAYERONE;
+		this.dice = null;
+		this.currentRound = null;
+		this.currentPeriod = null;
+		this.rankings = new ArrayList<Ranking>();
+		
 	}
 
 	public int getModelNumber() {
@@ -67,15 +85,23 @@ public class Model extends MyObservable implements java.io.Serializable {
 			p.getMyValues().setInitialValues(players.indexOf(p));
 			p.getMyFamily().setFamily(this.dice);
 			rankings.add(new Ranking(p));
-		}		
+		}
+
+	}
+
+	public void incrementState() {
+		this.setGameState(this.getGameState().nextState());
+	}
+
+	public void sendModel() {
 		hm = new HashMap<>();
-		hm.put("Model", this);
+		hm.put("model", this);
 		notifyMyObservers(hm);
 	}
-	
-	public Player getPlayerfromColour(PlayerColour colour){
-		for (Player player:players){
-			if(player.getMyColour().equals(colour))
+
+	public Player getPlayerfromColour(PlayerColour colour) {
+		for (Player player : players) {
+			if (player.getMyColour().equals(colour))
 				return player;
 		}
 		return null;
@@ -140,7 +166,9 @@ public class Model extends MyObservable implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "model ok";
+		return "Model [players=" + players + ", gameState=" + gameState + ", modelNumber=" + modelNumber + "]";
 	}
-	
-}	
+
+
+
+}

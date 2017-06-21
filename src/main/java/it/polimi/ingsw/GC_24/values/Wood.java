@@ -1,5 +1,7 @@
 package it.polimi.ingsw.GC_24.values;
 
+import java.io.Serializable;
+
 import it.polimi.ingsw.GC_24.model.Player;
 
 public class Wood extends Value  {
