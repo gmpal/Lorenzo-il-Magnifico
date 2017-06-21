@@ -15,7 +15,7 @@ public class Model extends MyObservable implements Serializable {
 	 */
 	private static final long serialVersionUID = -4715762523324083940L;
 
-	private List<Player> players;
+	private ArrayList<Player> players;
 	private Board board;
 	private Player currentPlayer;
 	private State gameState;
@@ -70,7 +70,7 @@ public class Model extends MyObservable implements Serializable {
 	 * After a Model is created and the players are get, this method sets the
 	 * model so the game could start
 	 */
-	public void setModel(List<Player> players) {
+	public void setModel(ArrayList<Player> players) {
 
 		this.players = players;
 		this.board = new Board(players.size());
@@ -96,6 +96,7 @@ public class Model extends MyObservable implements Serializable {
 	public void sendModel() {
 		hm = new HashMap<>();
 		hm.put("model", this);
+		System.out.println("FROM MODEL SENDING THIS "+this);
 		notifyMyObservers(hm);
 	}
 
@@ -108,7 +109,7 @@ public class Model extends MyObservable implements Serializable {
 	}
 
 	// getters and setters
-	public List<Player> getPlayers() {
+	public ArrayList<Player> getPlayers() {
 		return players;
 	}
 
@@ -136,7 +137,7 @@ public class Model extends MyObservable implements Serializable {
 		return currentPeriod;
 	}
 
-	public void setPlayers(List<Player> players) {
+	public void setPlayers(ArrayList<Player> players) {
 		this.players = players;
 	}
 

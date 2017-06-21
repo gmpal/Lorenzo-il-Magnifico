@@ -1,12 +1,11 @@
 package it.polimi.ingsw.GC_24.board;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.util.List;
 
 import com.google.gson.Gson;
 
-import it.polimi.ingsw.GC_24.cards.Deck;
+import it.polimi.ingsw.GC_24.cards.Development;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.places.Place;
 import it.polimi.ingsw.GC_24.places.TowerPlace;
@@ -62,5 +61,13 @@ public class Tower extends Area {
 			}
 		}
 		return false;
+	}
+
+	public void putCardInFirstEmptyPlace(Development card){
+		for (Place p:this.getPlacesArray()){
+			TowerPlace tempPlace = (TowerPlace) p;
+			if (tempPlace.getCorrespondingCard()==null)
+			tempPlace.setCorrespondingCard(card);
+			}
 	}
 }

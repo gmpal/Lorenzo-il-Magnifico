@@ -39,7 +39,7 @@ public class Server {
 	private static Timer timer;
 	private int i = 0;
 	private int modelIndex = 1;
-	private	int secondsToPrint = 15;
+	
 	
 	// Crea un server e fa partire il suo metodo startServer()
 	public static void main(String[] args) throws IOException, AlreadyBoundException, InterruptedException {
@@ -104,7 +104,7 @@ public class Server {
 				System.out.println("PLAYER "+player);
 				System.out.println("Player #" + i + "added to Game #" + game.getModelNumber());
 				game.incrementState();
-				System.out.println("Sto già inviando qualcosa");
+			
 				game.sendModel();
 				
 				if (game.getGameState().equals(State.WAITINGFORPLAYERTHREE)) {
@@ -114,20 +114,15 @@ public class Server {
 						public void run() {
 							System.out.println("************************TIME UP*****************************");
 							controller.autoCompletePlayers();
-							System.out.println(game.getPlayers());
 							launchAndCreateNewGame();
 						}
 					}, 15000);
 				}
 			
 					if (game.getGameState().equals(State.RUNNING)) {
-						while(game.getPlayers().get(PLAYER_NUMBER-1).getMyName().equals("TempName")){
-							System.out.printf("");
-							//just waits untils the last player is automatically/manually created
-						}
-						System.out.println("TIMER CANCELED");
 						timer.cancel();
-					
+						//TODO: il quarto giocatore non ha tempo di inserire il nome 
+						System.out.println("TIMER CANCELED");
 						controller.autoCompletePlayers();
 						launchAndCreateNewGame();
 
@@ -162,8 +157,6 @@ public class Server {
 	private void launchAndCreateNewGame() {
 		modelIndex++;
 		threadPool.submit(this.controller);
-		this.game.setModel(game.getPlayers());
-		controller.sendModelToClients();
 		this.game = new Model(modelIndex);
 		this.controller = new Controller(game);
 		PlayerColour.resetValues();

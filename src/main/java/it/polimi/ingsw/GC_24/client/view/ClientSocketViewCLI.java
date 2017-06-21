@@ -59,6 +59,7 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 	public <C> void update(MyObservable o, C change) {
 		try {
 			objToServer.writeObject(change);
+			objToServer.reset();
 			objToServer.flush();
 
 		} catch (IOException e) {
@@ -108,10 +109,8 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 		}
 		if (command.contains("model")) {
 			
-		//	modelReceived = ;
-			System.out.println("@@@@@@@@@@@@@@@@@@@ Ho ricevuto"+ request.get("model"));		
-		view.setMiniModel((Model) request.get("model") );
-					System.out.println(view.getMiniModel().getPlayers());
+			view.setMiniModel((Model) request.get("model") );
+			notifyAll();
 		}
 		
 		if (command.contains("clientNumber")) {

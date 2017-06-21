@@ -39,35 +39,25 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 
 	@Override
 	public void run() {
-		System.out.println("Creating a local mini model");
+		
 		this.miniModel = new Model(0);
-		System.out.println(miniModel);
+		
 		name = setName();
 		colour = setColour();
 
-		// if my name is not already been automatically changed
-		System.out.println("miniModel before sending");
-		List<Player> tempPlayers = miniModel.getPlayers();
-		System.out.println(tempPlayers);
-		Player tempPlayer = tempPlayers.get(clientNumber - 1);
-		String tempName = tempPlayer.getMyName();
-		if (tempName.equals("TempName")) {
+		if (miniModel.getPlayers().get(clientNumber - 1).getMyName().equals("TempName")) {
 			System.out.println("NAME SENT");
 			this.sendPlayerString(name, colour);
 		} else {
 			System.out.println("You have exceeded the time limit to choose your name and colour");
 			System.out.println("They have been auto-completed, you are: " + miniModel.getPlayers().get(clientNumber));
 		}
-		System.out.println("Players after sending my name");
-		System.out.println(miniModel.getPlayers());
-		System.out.println("Waiting for other players...\n");
+		
 
-		while (miniModel.getGameState() != State.RUNNING) {
-			System.out.printf("");
-		}
+		
 
-		System.out.println("THE GAME STARTS NOW\n");
-
+		System.out.println("Waiting for other players");
+/*
 		System.out.println("The players' turn for the first round is:");
 		for (int i = 0, j = 1; i < miniModel.getPlayers().size(); i++, j++) {
 			System.out.println(j + ") " + miniModel.getPlayers().get(i).getMyName() + " is the "
@@ -79,6 +69,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 			showAndGetOption();
 		} else
 			showOption();
+	*/
 	}
 
 	private void getColoursfromServer() {
@@ -369,9 +360,10 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	public void chooseAlternativeCost(SetOfValues cost1, SetOfValues cost2, MilitaryPoint militaryPoints) {
 		System.out.println("The card you have chosen has two different costs:");
 		System.out.println("The first one is " + cost1);
+	
+		System.out.println("The second one is " +  cost2);
 		System.out.println(
 				"but it requires that you have " + militaryPoints.getQuantity() + " military points to be used");
-		System.out.println("The second one is " + cost2);
 		System.out.println("Make your choice (1/2):");
 		int choice = scanner.nextInt();
 		while (!(choice == 1 || choice == 2)) {

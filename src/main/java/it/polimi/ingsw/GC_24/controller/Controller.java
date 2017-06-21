@@ -40,18 +40,20 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-		//CONTIENE I METODI DI GESTIONE DELLA PARTITA STESSA, TURNI, INTERAZIONI
+		game.setModel(game.getPlayers());
+		sendModelToClients();
+		
 	}
 	
+	
+	/**This method automatically completes the players name and colours, notifying the clients */
 	public void autoCompletePlayers() {
-	//	System.out.println(game.getPlayers());
+	
 		for (Player p : game.getPlayers()) {
 			int index = game.getPlayers().indexOf(p);
 		
 			if (p.getMyName().equals("TempName")) {
-				System.out.println("ECCO I COLORI RIMASTI");
-				System.out.println(PlayerColour.getValues());
+				
 				p.setPlayer("Player_" + index, PlayerColour.valueOf(PlayerColour.getValues().get(0)));
 				PlayerColour.getValues().remove(0);
 				sendModelToClients();
@@ -91,6 +93,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	 * @throws IOException
 	 */
 	private String handleRequestFromClient(MyObservable o, Map<String, Object> request) throws IOException {
+	
 		System.out.println("Controller: started handling a request from client...");
 		Set<String> command = request.keySet();
 		System.out.println(command);
@@ -176,6 +179,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		String colour = tokenizer.nextToken();
 		Player player = new Player();
 		player.setPlayer(name, PlayerColour.valueOf(colour.toUpperCase()));
+		notifyAll();
 		return player;
 
 	}
@@ -243,7 +247,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			MilitaryPoint requirements = cardRequested.getRequiredMilitaryPoints();
 			hashMap = new HashMap<>();
 			hashMap.put("Cost1", cost1);
-			hashMap.put("Cost2", cost1);
+			hashMap.put("Cost2", cost2);
 			hashMap.put("Requirements", requirements);
 			this.notifySingleObserver((MyObserver) o, hashMap);
 			while (this.tempCost == null) {
