@@ -11,21 +11,13 @@ public class Exchange extends ImmediateEffect {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private SetOfValues set;
-	private SetOfValues set1;
-	private ImmediateEffect imEff;
-	private ImmediateEffect imEff1;
 	private List<ImmediateEffect> immediateEffectsFromExchange;
 	private ExchangePackage exchangePackage;
 	private ExchangePackage exchangePackage1;
+	private ExchangePackage finalExchange;
 
-	public Exchange(String name, SetOfValues set, SetOfValues set1, ImmediateEffect imEff, ImmediateEffect imEff1,
-			ExchangePackage exchangePackage, ExchangePackage exchangePackage1) {
+	public Exchange(String name, ExchangePackage exchangePackage, ExchangePackage exchangePackage1) {
 		super(name);
-		this.set = set;
-		this.set1 = set1;
-		this.imEff = imEff;
-		this.imEff1 = imEff1;
 		this.exchangePackage = exchangePackage;
 		this.exchangePackage1 = exchangePackage1;
 	}
@@ -33,7 +25,7 @@ public class Exchange extends ImmediateEffect {
 	@Override
 	public void giveImmediateEffect(Player player) {
 		ImmediateEffect im = exchangePackage.getImmediateEffect();
-		set.subTwoSetsOfValues(player.getMyValues());
+		finalExchange.getSet().subTwoSetsOfValues(player.getMyValues());
 		if (im.getName().equals("value")) {
 			im.giveImmediateEffect(player);
 		} else {
@@ -42,39 +34,7 @@ public class Exchange extends ImmediateEffect {
 	}
 
 	public void assignParameter(ExchangePackage finalExchange) {
-		set = finalExchange.getSet();
-	}
-
-	public SetOfValues getSet() {
-		return set;
-	}
-
-	public void setSet(SetOfValues set) {
-		this.set = set;
-	}
-
-	public SetOfValues getSet1() {
-		return set1;
-	}
-
-	public void setSet1(SetOfValues set1) {
-		this.set1 = set1;
-	}
-
-	public ImmediateEffect getImEff() {
-		return imEff;
-	}
-
-	public void setImEff(ImmediateEffect imEff) {
-		this.imEff = imEff;
-	}
-
-	public ImmediateEffect getImEff1() {
-		return imEff1;
-	}
-
-	public void setImEff1(ImmediateEffect imEff1) {
-		this.imEff1 = imEff1;
+		this.finalExchange = finalExchange;
 	}
 
 	public List<ImmediateEffect> getImmediateEffectsFromExchange() {
@@ -101,4 +61,8 @@ public class Exchange extends ImmediateEffect {
 		this.exchangePackage1 = exchangePackage1;
 	}
 
+	@Override
+	public String toString() {
+		return "Exchange [exchangePackage=" + exchangePackage + ", exchangePackage1=" + exchangePackage1 + "]";
+	}
 }

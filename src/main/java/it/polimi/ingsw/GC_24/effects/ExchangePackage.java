@@ -12,6 +12,7 @@ public class ExchangePackage {
 		this.immediateEffect = immediateEffect;
 	}
 
+	// getters anda setters
 	public SetOfValues getSet() {
 		return set;
 	}
@@ -26,5 +27,10 @@ public class ExchangePackage {
 
 	public void setImmediateEffect(ImmediateEffect immediateEffect) {
 		this.immediateEffect = immediateEffect;
+	}
+
+	@Override
+	public String toString() {
+		return "ExchangePackage [set=" + set + ", immediateEffect=" + immediateEffect + "]";
 	}
 }
