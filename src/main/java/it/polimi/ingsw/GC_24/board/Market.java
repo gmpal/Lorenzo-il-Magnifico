@@ -1,39 +1,72 @@
 package it.polimi.ingsw.GC_24.board;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 
+import com.google.gson.Gson;
+
+import it.polimi.ingsw.GC_24.devCardJsonFile.GsonBuilders;
+import it.polimi.ingsw.GC_24.effects.CouncilPrivilege;
+import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
+import it.polimi.ingsw.GC_24.effects.ValueEffect;
 import it.polimi.ingsw.GC_24.places.MarketPlace;
 import it.polimi.ingsw.GC_24.places.Place;
 
-public class Market extends Area {	
+public class Market extends Area {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2530623420397285959L;
-	
+
 	private boolean placesLocked;
-	private static final int MINPLACES=2;				//Place with 2 players
-	private static final int MAXPLACES=4;				//Place from 3 players
-	private static final int COSTDICE=1;				
-	
-	//constructor
-	public Market(boolean placesLocked) {
+	private static final int MINPLACES = 2; // Place with 2 players
+	private static final int MAXPLACES = 4; // Place from 3 players
+	private static final int COSTDICE = 1;
+	private List<ImmediateEffect> valueListMarket = new ArrayList<>();
+
+	// constructor
+	public Market(boolean placesLocked) throws IOException {
 		this.placesLocked = placesLocked;
 		this.placesArray = createMarket();
 	}
-	
-	public List<Place> createMarket(){
+
+	public List<Place> createMarket() throws IOException {
 		int numPlaces;
-		
-		if(this.placesLocked){
-			numPlaces = MINPLACES;
+		BufferedReader br;
+		int indexEffectMarket = 0; // Is an index to take two effect per place
+
+		Gson gson = GsonBuilders.getGsonWithTypeAdapters();
+		String line;
+		br = new BufferedReader(
+				new FileReader("src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/actionValueMarket.json"));
+		int i = 0;
+		while ((line = GsonBuilders.getLine(br)) != null) {
+			if (line.equals("noEffect")) {
+				valueListMarket.add(null);
+				i--;
+			} else {
+				if (i == 0) {
+					valueListMarket.add(gson.fromJson(line, ValueEffect.class));
+					i++;
+				} else {
+					valueListMarket.add(gson.fromJson(line, CouncilPrivilege.class));
+					i--;
+				}
+			}
 		}
-		else numPlaces = MAXPLACES;
-		
-		for(int num=0;num<numPlaces;num++){
-			placesArray.add(new MarketPlace(null, null, null, COSTDICE));
+		if (this.placesLocked) {
+			numPlaces = MINPLACES;
+		} else
+			numPlaces = MAXPLACES;
+
+		for (int num = 0; num < numPlaces; num++) {
+			placesArray.add(new MarketPlace((ValueEffect) valueListMarket.get(indexEffectMarket++),
+					valueListMarket.get(indexEffectMarket++), COSTDICE));
 		}
 		return placesArray;
 	}
-	
+
 }

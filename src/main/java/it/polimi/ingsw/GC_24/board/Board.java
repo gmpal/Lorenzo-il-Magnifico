@@ -1,13 +1,15 @@
 package it.polimi.ingsw.GC_24.board;
 
+import java.io.IOException;
+
 public class Board implements java.io.Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -8198703665232673182L;
 
-	private static final int maxNumPlayerToLock=3; 
-	
+	private static final int maxNumPlayerToLock = 3;
+
 	private int numPlayers;
 	private Tower towerTerritories;
 	private Tower towerCharacters;
@@ -17,30 +19,31 @@ public class Board implements java.io.Serializable {
 	private Production production;
 	private Market market;
 	private CouncilPalace councilPalace;
-	
-	
-	//constructor
-	public Board(int numPlayers) {
 
+	// constructor
+	public Board(int numPlayers) throws IOException {
 		this.numPlayers = numPlayers;
-		this.towerTerritories = new Tower();
-		this.towerCharacters = new Tower();
-		this.towerBuildings = new Tower();
-		this.towerVentures = new Tower();
+		this.towerTerritories = new Tower(
+				"src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/actionValueTowerTerritories.json");
+		this.towerCharacters = new Tower(
+				"src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/actionValueTowerCharacters.json");
+		this.towerBuildings = new Tower(
+				"src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/actionValueTowerBuildings.json");
+		this.towerVentures = new Tower(
+				"src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/actionValueTowerVentures.json");
 		this.harvest = new Harvest(lockPlaces(this.numPlayers), this.numPlayers);
 		this.production = new Production(lockPlaces(this.numPlayers), this.numPlayers);
 		this.market = new Market(lockPlaces(this.numPlayers));
 		this.councilPalace = new CouncilPalace(this.numPlayers);
 	}
-	
-	//tells if the places needs to be locked
-	public boolean lockPlaces(int numPlayers){
-		return numPlayers< maxNumPlayerToLock;
+
+	// tells if the places needs to be locked
+	public boolean lockPlaces(int numPlayers) {
+		return numPlayers < maxNumPlayerToLock;
 	}
-		
-	
-	//clears the board
-	public void clear(){
+
+	// clears the board
+	public void clear() {
 		this.towerTerritories.clearPlaces();
 		this.towerCharacters.clearPlaces();
 		this.towerBuildings.clearPlaces();
@@ -50,41 +53,41 @@ public class Board implements java.io.Serializable {
 		this.market.clearPlaces();
 		this.councilPalace.clearPlaces();
 	}
-	
+
 	@Override
 	public String toString() {
-		return "BOARD\nTerritories = " + towerTerritories + "\nCharacters = " + towerCharacters
-				+ "\nBuildings = " + towerBuildings + "\nVentures  =" + towerVentures + "\nHarvest = " + harvest
-				+ "\nProduction = " + production + "\nMarket = " + market + "\nCouncilPalace = " + councilPalace + "\n";
+		return "BOARD\nTerritories = " + towerTerritories + "\nCharacters = " + towerCharacters + "\nBuildings = "
+				+ towerBuildings + "\nVentures  =" + towerVentures + "\nHarvest = " + harvest + "\nProduction = "
+				+ production + "\nMarket = " + market + "\nCouncilPalace = " + councilPalace + "\n";
 	}
 
-	public Area getZoneFromString(String zone){
-		if (zone.equals("Territories")){
+	public Area getZoneFromString(String zone) {
+		if (zone.equals("Territories")) {
 			return this.towerTerritories;
 		}
-		if (zone.equals("Characters")){
+		if (zone.equals("Characters")) {
 			return this.towerCharacters;
 		}
-		if (zone.equals("Buildings")){
+		if (zone.equals("Buildings")) {
 			return this.towerBuildings;
 		}
-		if (zone.equals("Ventures")){
+		if (zone.equals("Ventures")) {
 			return this.towerVentures;
 		}
-		if (zone.equals("Harvest")){
+		if (zone.equals("Harvest")) {
 			return this.harvest;
 		}
-		if (zone.equals("Production")){
+		if (zone.equals("Production")) {
 			return this.production;
 		}
-		if (zone.equals("Council")){
+		if (zone.equals("Council")) {
 			return this.councilPalace;
-		}
-		else return null;
-		
+		} else
+			return null;
+
 	}
 
-	//getters and setters
+	// getters and setters
 	public int getNumPlayers() {
 		return numPlayers;
 	}
@@ -162,4 +165,3 @@ public class Board implements java.io.Serializable {
 	}
 
 }
-

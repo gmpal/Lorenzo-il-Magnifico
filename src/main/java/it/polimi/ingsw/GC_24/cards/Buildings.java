@@ -32,7 +32,7 @@ public class Buildings extends Development {
 	public String toString() {
 		return "Building: Name = " + name + " Cost = " + getCost() + " Immediate Effects = " + getImmediateEffect()+" "+getImmediateEffect1()+
 				"\nDie Value For Production = "+dieValueProduction +"Production Effects = "+productionEffect+" "+productionEffect1;
-	}
+  }
 
 	// getter and setter
 	public ImmediateEffect getProductionEffect() {

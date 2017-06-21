@@ -8,6 +8,7 @@ import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.places.MarketPlace;
 import it.polimi.ingsw.GC_24.places.TowerPlace;
 import it.polimi.ingsw.GC_24.values.Servant;
+import it.polimi.ingsw.GC_24.values.SetOfValues;
 import it.polimi.ingsw.GC_24.values.Value;
 
 public class MarketAction extends Action {
@@ -53,10 +54,9 @@ public class MarketAction extends Action {
 	}
 
 	private void takeExtraValueFromMarketPlace() {
-		Value extraValue = marketPlace.getValue();
-
+		SetOfValues extraValue = marketPlace.getValue().getEffectValues();
 		if (extraValue != null) {
-			extraValue.addValueToSet(player.getMyValues());
+			extraValue.addTwoSetsOfValues(player.getMyValues());
 		}
 
 	}

@@ -54,8 +54,8 @@ public class Player implements Serializable {
 	}
 	
 	public void takeValuesFromPlace(Place place){
-		Value value = place.getValue();
-		this.myValues = value.addValueToSet(this.myValues);
+		SetOfValues value = place.getValue().getEffectValues();
+		this.myValues = value.addTwoSetsOfValues(this.myValues);
 	}
 	
 	//returns false if the increment is a negative number(not allowed) or if it is grater 
