@@ -2,8 +2,12 @@ package it.polimi.ingsw.GC_24.effects;
 
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 
-public class ExchangePackage {
+public class ExchangePackage implements java.io.Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -91945156982810819L;
 	private SetOfValues set;
 	private ImmediateEffect immediateEffect;
 

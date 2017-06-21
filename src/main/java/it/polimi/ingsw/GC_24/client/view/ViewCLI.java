@@ -63,7 +63,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		System.out.println("Waiting for other players...\n");
 
 		while (miniModel.getGameState() != State.RUNNING) {
-			System.out.printf("");
+			//System.out.printf("");
 		}
 
 		System.out.println("THE GAME STARTS NOW\n");
@@ -314,7 +314,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 
 	public String fourChoice(String s) {
 		String commandFloor;
-		int commandFloorInt = 0;
+		int commandFloorInt;
 		do {
 			System.out.println("Choose " + s + " (1,2,3,4) 5)Cancel ");
 			commandFloorInt = scanner.nextInt();
