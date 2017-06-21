@@ -29,6 +29,7 @@ public class Server {
 
 	private static final int PORT = 28469;
 	private final static int RMI_PORT = 29999;
+	private final static int PLAYER_NUMBER = 4 ;
 	private final String NAME = "rmiView";
 	private static Model game;
 	private static Controller controller;
@@ -103,6 +104,7 @@ public class Server {
 				System.out.println("PLAYER "+player);
 				System.out.println("Player #" + i + "added to Game #" + game.getModelNumber());
 				game.incrementState();
+				System.out.println("Sto già inviando qualcosa");
 				game.sendModel();
 				
 				if (game.getGameState().equals(State.WAITINGFORPLAYERTHREE)) {
@@ -119,7 +121,7 @@ public class Server {
 				}
 			
 					if (game.getGameState().equals(State.RUNNING)) {
-						while(game.getPlayers().get(3).getMyName().equals("TempName")){
+						while(game.getPlayers().get(PLAYER_NUMBER-1).getMyName().equals("TempName")){
 							System.out.printf("");
 							//just waits untils the last player is automatically/manually created
 						}

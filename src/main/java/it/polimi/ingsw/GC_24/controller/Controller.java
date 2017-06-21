@@ -105,9 +105,12 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			String colour = tokenizer.nextToken();
 			int indexOfPlayer = Integer.parseInt(clientNumber)-1;	
 			System.out.println("Lookin' for player n "+indexOfPlayer);
-			game.getPlayers().get(indexOfPlayer).setPlayer(name, PlayerColour.valueOf(colour.toUpperCase()));
+			Player tempPlayer = game.getPlayers().get(indexOfPlayer);
+			System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+tempPlayer);
+					tempPlayer.setPlayer(name, PlayerColour.valueOf(colour.toUpperCase()));
+					System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+tempPlayer);
 			System.out.println("CONTROLLER GAME: "+game.getPlayers());
-			sendModelToClients();
+			game.sendModel();
 			return "player "+clientNumber+" updated";
 	
 		}	
@@ -180,9 +183,9 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	public void sendModelToClients() {
 		System.out.println("Sono il controller numero" + this.getControllerNumber());
 		System.out.println("Sto inviando il game numero" + game.getModelNumber());
-		Object game2 = game;
+		game.setGameState(State.ENDED);
 		hashMap = new HashMap<>();
-		hashMap.put("model", game2);
+		hashMap.put("model", game);
 		notifyMyObservers(hashMap);
 	}
 

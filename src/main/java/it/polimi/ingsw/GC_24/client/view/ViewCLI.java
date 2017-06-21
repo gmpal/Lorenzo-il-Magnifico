@@ -1,5 +1,6 @@
 package it.polimi.ingsw.GC_24.client.view;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import java.util.List;
@@ -11,7 +12,6 @@ import it.polimi.ingsw.GC_24.values.MilitaryPoint;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 
 import it.polimi.ingsw.GC_24.model.*;
-
 
 public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	private static Scanner scanner = new Scanner(System.in);
@@ -41,23 +41,27 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	public void run() {
 		System.out.println("Creating a local mini model");
 		this.miniModel = new Model(0);
-
+		System.out.println(miniModel);
 		name = setName();
 		colour = setColour();
-System.out.println("CIAO");
-		//if my name is not already been automatically changed
-		System.out.println("Players before sending my name");
-		System.out.println(miniModel.getPlayers());
-		if (miniModel.getPlayers().get(clientNumber-1).getMyName().equals("TempName")) {
+
+		// if my name is not already been automatically changed
+		System.out.println("miniModel before sending");
+		List<Player> tempPlayers = miniModel.getPlayers();
+		System.out.println(tempPlayers);
+		Player tempPlayer = tempPlayers.get(clientNumber - 1);
+		String tempName = tempPlayer.getMyName();
+		if (tempName.equals("TempName")) {
+			System.out.println("NAME SENT");
 			this.sendPlayerString(name, colour);
-		} else{
+		} else {
 			System.out.println("You have exceeded the time limit to choose your name and colour");
-			System.out.println("They have been auto-completed, you are: "+ miniModel.getPlayers().get(clientNumber));
+			System.out.println("They have been auto-completed, you are: " + miniModel.getPlayers().get(clientNumber));
 		}
 		System.out.println("Players after sending my name");
 		System.out.println(miniModel.getPlayers());
 		System.out.println("Waiting for other players...\n");
-		
+
 		while (miniModel.getGameState() != State.RUNNING) {
 			System.out.printf("");
 		}
@@ -119,7 +123,7 @@ System.out.println("CIAO");
 				}
 			}
 		}
-	
+
 		return chosenColour;
 
 		/*
@@ -161,12 +165,12 @@ System.out.println("CIAO");
 		this.notifyMyObservers(hm);
 		System.out.println("--------------->PLAYER INVIATO");
 
-		while(!miniModel.getPlayers().get((clientNumber)-1).getMyName().equalsIgnoreCase(name)){
+		while (!miniModel.getPlayers().get((clientNumber) - 1).getMyName().equalsIgnoreCase(name)) {
 			System.out.printf("");
-			
+
 		}
 		System.out.println("hO RICEVUTO LA MODIFICA");
-		
+
 	}
 
 	public void showOption() {

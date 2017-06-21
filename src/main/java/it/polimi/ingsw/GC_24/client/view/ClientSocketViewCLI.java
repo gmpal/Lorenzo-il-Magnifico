@@ -33,6 +33,7 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 		this.view = view;
 		this.registerMyObserver(view);
 		view.registerMyObserver(this);
+		this.modelReceived = new Model();
 	}
 
 	@Override
@@ -106,11 +107,11 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 			view.chooseAlternativeCost(cost1, cost2, militaryPoints);
 		}
 		if (command.contains("model")) {
-			System.out.println("HO RICEVUTO UN FUCKING2 MODEL");
-			modelReceived = (Model) request.get("model");
-			System.out.println("@@@@@@@@@@@@@@@@@@@Ho ricevuto"+ modelReceived);		
-			view.setMiniModel(modelReceived);
-					System.out.println(modelReceived.getPlayers());
+			
+		//	modelReceived = ;
+			System.out.println("@@@@@@@@@@@@@@@@@@@ Ho ricevuto"+ request.get("model"));		
+		view.setMiniModel((Model) request.get("model") );
+					System.out.println(view.getMiniModel().getPlayers());
 		}
 		
 		if (command.contains("clientNumber")) {
