@@ -112,7 +112,7 @@ public class Server {
 					timer.schedule(new TimerTask() {
 						@Override
 						public void run() {
-							System.out.println("************************TIME UP*****************************");
+							System.out.println("************************TIME'S UP*****************************");
 							controller.autoCompletePlayers();
 							launchAndCreateNewGame();
 						}
