@@ -16,21 +16,23 @@ public class Exchange extends ImmediateEffect {
 	private ImmediateEffect imEff;
 	private ImmediateEffect imEff1;
 	private List<ImmediateEffect> immediateEffectsFromExchange;
-	private HashMap<SetOfValues, ImmediateEffect> exchangeEffects = new HashMap<>();
+	private ExchangePackage exchangePackage;
+	private ExchangePackage exchangePackage1;
 
-	public Exchange(String name, SetOfValues set, SetOfValues set1, ImmediateEffect imEff, ImmediateEffect imEff1) {
+	public Exchange(String name, SetOfValues set, SetOfValues set1, ImmediateEffect imEff, ImmediateEffect imEff1,
+			ExchangePackage exchangePackage, ExchangePackage exchangePackage1) {
 		super(name);
 		this.set = set;
 		this.set1 = set1;
 		this.imEff = imEff;
 		this.imEff1 = imEff1;
-		exchangeEffects.put(set, imEff);
-		exchangeEffects.put(set1, imEff1);
+		this.exchangePackage = exchangePackage;
+		this.exchangePackage1 = exchangePackage1;
 	}
 
 	@Override
 	public void giveImmediateEffect(Player player) {
-		ImmediateEffect im = exchangeEffects.get(set);
+		ImmediateEffect im = exchangePackage.getImmediateEffect();
 		set.subTwoSetsOfValues(player.getMyValues());
 		if (im.getName().equals("value")) {
 			im.giveImmediateEffect(player);
@@ -39,8 +41,8 @@ public class Exchange extends ImmediateEffect {
 		}
 	}
 
-	public void assignParameter(SetOfValues finalSet) {
-		set = finalSet;
+	public void assignParameter(ExchangePackage finalExchange) {
+		set = finalExchange.getSet();
 	}
 
 	public SetOfValues getSet() {
@@ -83,12 +85,20 @@ public class Exchange extends ImmediateEffect {
 		this.immediateEffectsFromExchange = immediateEffectsFromExchange;
 	}
 
-	public HashMap<SetOfValues, ImmediateEffect> getExchangeEffects() {
-		return exchangeEffects;
+	public ExchangePackage getExchangePackage() {
+		return exchangePackage;
 	}
 
-	public void setExchangeEffects(HashMap<SetOfValues, ImmediateEffect> exchangeEffects) {
-		this.exchangeEffects = exchangeEffects;
+	public void setExchangePackage(ExchangePackage exchangePackage) {
+		this.exchangePackage = exchangePackage;
+	}
+
+	public ExchangePackage getExchangePackage1() {
+		return exchangePackage1;
+	}
+
+	public void setExchangePackage1(ExchangePackage exchangePackage1) {
+		this.exchangePackage1 = exchangePackage1;
 	}
 
 }
