@@ -107,6 +107,7 @@ public class Tower extends Area {
 			if (tempPlace.getCorrespondingCard()==null)
 			tempPlace.setCorrespondingCard(card);
 			}
+	}
 
 	@Override
 	public String toString() {

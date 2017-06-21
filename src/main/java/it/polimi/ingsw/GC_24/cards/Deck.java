@@ -6,37 +6,22 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-
 import it.polimi.ingsw.GC_24.board.Board;
 import it.polimi.ingsw.GC_24.devCardJsonFile.GsonBuilders;
-import it.polimi.ingsw.GC_24.devCardJsonFile.RuntimeTypeAdapterFactory;
-import it.polimi.ingsw.GC_24.effects.ChooseNewCard;
 import it.polimi.ingsw.GC_24.effects.CouncilPrivilege;
 import it.polimi.ingsw.GC_24.effects.Exchange;
-import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
+import it.polimi.ingsw.GC_24.effects.ExchangePackage;
 import it.polimi.ingsw.GC_24.effects.MoltiplicationCards;
-import it.polimi.ingsw.GC_24.effects.MoltiplicationPoints;
 import it.polimi.ingsw.GC_24.effects.PerformHarvest;
 import it.polimi.ingsw.GC_24.effects.PerformProduction;
 import it.polimi.ingsw.GC_24.effects.ValueEffect;
 import it.polimi.ingsw.GC_24.personalboard.PersonalBuildings;
-import it.polimi.ingsw.GC_24.personalboard.PersonalCards;
-import it.polimi.ingsw.GC_24.personalboard.PersonalCharacters;
-import it.polimi.ingsw.GC_24.personalboard.PersonalTerritories;
-import it.polimi.ingsw.GC_24.personalboard.PersonalVentures;
 import it.polimi.ingsw.GC_24.values.Coin;
-import it.polimi.ingsw.GC_24.values.FaithPoint;
 import it.polimi.ingsw.GC_24.values.MilitaryPoint;
-import it.polimi.ingsw.GC_24.values.Servant;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
-import it.polimi.ingsw.GC_24.values.Stone;
 import it.polimi.ingsw.GC_24.values.Value;
 import it.polimi.ingsw.GC_24.values.VictoryPoint;
-import it.polimi.ingsw.GC_24.values.Wood;
 
 public class Deck {
 	private List<Territories> deckTerritories = new ArrayList<>();

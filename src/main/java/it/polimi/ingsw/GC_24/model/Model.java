@@ -15,7 +15,7 @@ public class Model extends MyObservable implements Serializable {
 	 */
 	private static final long serialVersionUID = -4715762523324083940L;
 
-	private ArrayList<Player> players;
+	private List<Player> players;
 	private Board board;
 	private Player currentPlayer;
 	private State gameState;
@@ -33,7 +33,6 @@ public class Model extends MyObservable implements Serializable {
 	 */
 	public Model(int index) {
 		this.modelNumber= index;
-		
 		this.players = new ArrayList<>();
 		this.board = null;
 		this.currentPlayer = null;
@@ -73,8 +72,7 @@ public class Model extends MyObservable implements Serializable {
 
 
 	public void setModel(List<Player> players) throws IOException {
-
-
+		
 		this.players = players;
 		this.board = new Board(players.size());
 		this.currentPlayer = players.get(0);
@@ -112,7 +110,7 @@ public class Model extends MyObservable implements Serializable {
 	}
 
 	// getters and setters
-	public ArrayList<Player> getPlayers() {
+	public List<Player> getPlayers() {
 		return players;
 	}
 

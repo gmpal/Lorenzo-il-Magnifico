@@ -40,7 +40,12 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	@Override
 	public void run() {
-		game.setModel(game.getPlayers());
+		try {
+			game.setModel(game.getPlayers());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block ---------> da rivedere
+			e.printStackTrace();
+		}
 		sendModelToClients();
 		
 	}
