@@ -7,6 +7,7 @@ import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.places.MarketPlace;
 import it.polimi.ingsw.GC_24.places.TowerPlace;
+import it.polimi.ingsw.GC_24.values.Servant;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 import it.polimi.ingsw.GC_24.values.Value;
 

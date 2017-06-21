@@ -83,13 +83,12 @@ public class ActionTower extends Action {
 
 
 	private void takeRealCost() {
-			if (temporaryCardCost == null) {
-				TowerPlace towerPlace = (TowerPlace) this.place;
-				this.temporaryCardCost = towerPlace.getCorrespondingCard().getCost();
-			}
+		if (temporaryCardCost == null) {
+			TowerPlace towerPlace = (TowerPlace) this.place;
+			this.temporaryCardCost = towerPlace.getCorrespondingCard().getCost();
 		}
-	
 	}
+
 	/*
 	 * This method checks if you have enough money to put the familyMember in a
 	 * tower occupied (3 coins)

@@ -159,7 +159,7 @@ public class Server {
 	
 	
 
-	private void launchAndCreateNewGame() {
+	private void launchAndCreateNewGame() throws IOException {
 		modelIndex++;
 		threadPool.submit(this.controller);
 		this.game.setModel(game.getPlayers());

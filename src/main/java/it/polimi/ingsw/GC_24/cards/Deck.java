@@ -113,8 +113,11 @@ public class Deck {
 		value.getCoins().setQuantity(3);
 		ve.setEffectValues(value);
 		PersonalBuildings pb = new PersonalBuildings();
-		CouncilPrivilege privilege = new CouncilPrivilege("privilege", 1);
-		
+		CouncilPrivilege privilege = new CouncilPrivilege("privilege", 2);
+		PerformHarvest pharv = new PerformHarvest("PerformHarvest", 4);
+		//ChooseNewCard cnc = new ChooseNewCard("ChooseNewCard", type, dieValue, setOfValue);
+		PerformProduction pprod = new PerformProduction("PerformProduction", 3);
+
 		MoltiplicationCards meffect = new MoltiplicationCards("MoltiplicationCards", new Coin(1), pb);
 		ValueEffect ve1 = new ValueEffect("value");
 		SetOfValues set1 = new SetOfValues();
@@ -125,10 +128,12 @@ public class Deck {
 		ve1.setEffectValues(value1);
 		Value val = new VictoryPoint(1);
 		MilitaryPoint mp = new MilitaryPoint(3);
-		Exchange eeffect = new Exchange("Exchange", set, null, privilege, null);
+		ExchangePackage ep = new ExchangePackage(set, privilege);
+		ExchangePackage ep1 = new ExchangePackage(set1, ve1);
+		Exchange eeffect = new Exchange("Exchange", ep, null);
 
-		Buildings b = new Buildings("Commercial", 1, "Building", set, ve1, null, ve, privilege, 1);
-		Ventures v = new Ventures("Province","Venture", set, set1, val, mp, ve, null, 1);
+		Buildings b = new Buildings("Commercial", 1, "Building", set, ve1, null, eeffect, null, 1);
+		Ventures v = new Ventures("Province","Venture", set, null, val, null, pprod, null, 2);
 		String string = gson.toJson(v);
 		System.out.println(string);
 	/*	b = gson.fromJson(string, Buildings.class);
