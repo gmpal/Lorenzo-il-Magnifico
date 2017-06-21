@@ -14,26 +14,54 @@ import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.PlayerColour;
+import it.polimi.ingsw.GC_24.model.State;
 import it.polimi.ingsw.GC_24.places.TowerPlace;
 import it.polimi.ingsw.GC_24.values.MilitaryPoint;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
+import it.polimi.ingsw.GC_24.network.multi.Server;
 
 //Just one server's side controller for each game
-public class Controller extends MyObservable implements MyObserver {
+public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	private final Model game;
 	private ActionFactory actionFactory;
 	private SetOfValues tempCost = null;
 	private Action action;
-	HashMap<String, Object> hashMap;
+	private HashMap<String, Object> hashMap;
+	private int controllerNumber = 0;
+
 	// constructor
 
 	public Controller(Model game) {
 
 		this.game = game;
-
+		controllerNumber++;
 	}
 
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		//CONTIENE I METODI DI GESTIONE DELLA PARTITA STESSA, TURNI, INTERAZIONI
+	}
+	
+	public void autoCompletePlayers() {
+	//	System.out.println(game.getPlayers());
+		for (Player p : game.getPlayers()) {
+			int index = game.getPlayers().indexOf(p);
+		
+			if (p.getMyName().equals("TempName")) {
+				System.out.println("ECCO I COLORI RIMASTI");
+				System.out.println(PlayerColour.getValues());
+				p.setPlayer("Player_" + index, PlayerColour.valueOf(PlayerColour.getValues().get(0)));
+				PlayerColour.getValues().remove(0);
+				sendModelToClients();
+			}
+			
+			
+		}
+
+	}
+	
 	@Override
 	public void update() {
 	}
@@ -63,17 +91,33 @@ public class Controller extends MyObservable implements MyObserver {
 	 * @throws IOException
 	 */
 	private String handleRequestFromClient(MyObservable o, Map<String, Object> request) throws IOException {
-		System.out.println("Controller: handling the request...");
+		System.out.println("Controller: started handling a request from client...");
 		Set<String> command = request.keySet();
 		System.out.println(command);
 
-		if (command.contains("PLAYERNAME")) {
-			return handlePlayer(request);
-		}
+		if (command.contains("player")) {
+			System.out.println("-------------------------------->RECEIVED A FREAKING PLAYER");
+			String playerString = (String) request.get("player");
+			System.out.println(playerString);
+			StringTokenizer tokenizer = new StringTokenizer(playerString);
+			String clientNumber = tokenizer.nextToken();
+			String name = tokenizer.nextToken();
+			String colour = tokenizer.nextToken();
+			int indexOfPlayer = Integer.parseInt(clientNumber)-1;	
+			System.out.println("Lookin' for player n "+indexOfPlayer);
+			Player tempPlayer = game.getPlayers().get(indexOfPlayer);
+			System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+tempPlayer);
+					tempPlayer.setPlayer(name, PlayerColour.valueOf(colour.toUpperCase()));
+					System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+tempPlayer);
+			System.out.println("CONTROLLER GAME: "+game.getPlayers());
+			game.sendModel();
+			return "player "+clientNumber+" updated";
+	
+		}	
+		
 
 		else if (command.contains("colours")) {
-
-			return handleColours(request);
+			return handleColours(o, request);
 		}
 
 		else if (command.contains("chosenCost")) {
@@ -89,7 +133,6 @@ public class Controller extends MyObservable implements MyObserver {
 
 		/* Checks if the colour has already been chosen */
 		else if (command.contains("checkColour")) {
-
 			return checkColour(o, request);
 		}
 
@@ -100,6 +143,7 @@ public class Controller extends MyObservable implements MyObserver {
 	}
 
 	private String checkColour(MyObservable o, Map<String, Object> request) {
+		System.out.println("Controller: started checking colour!");
 		String colour = (String) request.get("checkColour");
 		String availability;
 		if (PlayerColour.checkValue(colour)) {
@@ -114,28 +158,47 @@ public class Controller extends MyObservable implements MyObserver {
 		return "Controller: Colour checked";
 	}
 
-	private String handleColours(Map<String, Object> request) {
-		StringTokenizer tokenizer = new StringTokenizer((String) request.get("PLAYERNAME"));
-		String name = tokenizer.nextToken();
-		String colour = tokenizer.nextToken();
-
-		Player player = new Player(name, PlayerColour.valueOf(colour.toUpperCase()));
-
-
-		return "Controller: Created player " + player.toString();
+	private String handleColours(MyObservable o, Map<String, Object> request) {
+		System.out.println("Controller: started handling colours");
+		List<String> playerColoursArray = PlayerColour.getValues();
+		HashMap<String, Object> coloursMap = new HashMap<String, Object>();
+		coloursMap.put("colours", playerColoursArray);
+		this.notifySingleObserver((MyObserver) o, coloursMap);
+		System.out.println("ServerOut: ArrayListOfColours sent");
+		return " ArrayListOfColours sent";
 	}
 
-	private String handlePlayer(Map<String, Object> request) {
-		StringTokenizer tokenizer = new StringTokenizer((String) request.get("PLAYERNAME"));
+
+
+	private Player createPlayerFromString(String playerString) {
+		StringTokenizer tokenizer = new StringTokenizer(playerString);
 		String name = tokenizer.nextToken();
 		String colour = tokenizer.nextToken();
+		Player player = new Player();
+		player.setPlayer(name, PlayerColour.valueOf(colour.toUpperCase()));
+		return player;
 
-		Player player = new Player(name, PlayerColour.valueOf(colour.toUpperCase()));
+	}
 
-		return "Controller: Created player " + player.toString();
+	public void sendModelToClients() {
+		System.out.println("Sono il controller numero" + this.getControllerNumber());
+		System.out.println("Sto inviando il game numero" + game.getModelNumber());
+		game.setGameState(State.ENDED);
+		hashMap = new HashMap<>();
+		hashMap.put("model", game);
+		notifyMyObservers(hashMap);
+	}
+
+	public int getControllerNumber() {
+		return controllerNumber;
+	}
+
+	public void setControllerNumber(int controllerNumber) {
+		this.controllerNumber = controllerNumber;
 	}
 
 	private String handleAction(MyObservable o, Map<String, Object> request) {
+		System.out.println("Controller: started handling action");
 		StringTokenizer tokenizer = new StringTokenizer((String) request.get("action"));
 
 		String tempFamiliar = tokenizer.nextToken();
@@ -158,7 +221,6 @@ public class Controller extends MyObservable implements MyObserver {
 				// che ti servono
 			}
 
-
 		} else {
 			// TODO: azione non valida
 
@@ -166,9 +228,11 @@ public class Controller extends MyObservable implements MyObserver {
 
 		return " sent";
 	}
-	
-	/**If the player wants to take a ventures card, this method let him choose which 
-	 * one of the double costs to take (if a double cost exists)*/
+
+	/**
+	 * If the player wants to take a ventures card, this method let him choose
+	 * which one of the double costs to take (if a double cost exists)
+	 */
 	private void handleVentures(MyObservable o, Map<String, Object> request, String tempZone, String tempFloor) {
 		TowerPlace placeRequested = (TowerPlace) this.game.getBoard().getZoneFromString(tempZone)
 				.getPlaceFromStringOrFirstIfZero(tempFloor);
@@ -192,4 +256,6 @@ public class Controller extends MyObservable implements MyObserver {
 	public Model getGame() {
 		return game;
 	}
+
+	
 }

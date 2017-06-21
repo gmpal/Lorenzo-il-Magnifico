@@ -15,7 +15,13 @@ public class MilitaryPoint extends Value {
 	
 	@Override
 	public SetOfValues addValueToSet(SetOfValues values){
-		values.setMilitaryPoints(new MilitaryPoint(values.getMilitaryPoints().getQuantity()+this.getQuantity()));
+		values.getMilitaryPoints().setQuantity(values.getMilitaryPoints().getQuantity() + this.getQuantity());
+		return values;
+	} 
+	
+	@Override
+	public SetOfValues subValuefromSet(SetOfValues values){
+		values.getMilitaryPoints().setQuantity(values.getMilitaryPoints().getQuantity() - this.getQuantity());
 		return values;
 	} 
 	

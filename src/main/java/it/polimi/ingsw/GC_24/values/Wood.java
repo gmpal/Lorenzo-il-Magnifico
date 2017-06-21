@@ -1,5 +1,7 @@
 package it.polimi.ingsw.GC_24.values;
 
+import java.io.Serializable;
+
 import it.polimi.ingsw.GC_24.model.Player;
 
 public class Wood extends Value  {
@@ -15,7 +17,13 @@ public class Wood extends Value  {
 	
 	@Override
 	public SetOfValues addValueToSet(SetOfValues values){
-		values.setWoods(new Wood(values.getWoods().getQuantity()+this.getQuantity()));
+		values.getWoods().setQuantity(values.getWoods().getQuantity() + this.getQuantity());
+		return values;
+	}
+	
+	@Override
+	public SetOfValues subValuefromSet(SetOfValues values){
+		values.getWoods().setQuantity(values.getWoods().getQuantity() - this.getQuantity());
 		return values;
 	}
 	

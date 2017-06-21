@@ -23,7 +23,7 @@ public class Harvest extends Area {
 	public Harvest(boolean placesLocked, int numPlayers) {
 		this.placesLocked=placesLocked;
 		this.numPlayers=numPlayers;
-		this.placesArray = createHarvest();
+		placesArray = createHarvest();
 	}
 	
 	//inserts empty ProductionPlaces in Production

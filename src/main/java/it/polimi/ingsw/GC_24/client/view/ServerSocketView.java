@@ -42,12 +42,12 @@ public class ServerSocketView extends MyObservable implements Runnable, MyObserv
 		try {
 
 			while (true) {
+				
 
 				Map<String, Object> request = (Map<String, Object>) objFromClient.readObject();
 				System.out.println("ServerIn: received from client: " + request);
 				this.notifyMyObservers(request);
-				System.out.println("ServerIn: passed to the controller");
-
+				
 			}
 
 		} catch (ClassNotFoundException ioe) {
@@ -67,14 +67,22 @@ public class ServerSocketView extends MyObservable implements Runnable, MyObserv
 
 	}
 
+	
+	public void sendToClient(Object c) throws IOException{
+		objToClient.writeObject(c);
+		objToClient.flush();
+	//	System.out.println("ServerOut: I have sent"+c);
+		
+	}
 	@Override
 	public <C> void update(MyObservable o, C change) {
-		System.out.println("ServerOut: I have been notified by " + o.getClass().getSimpleName());
+	//	System.out.println("ServerOut: I have been notified by " + o.getClass().getSimpleName());
 
 		try {
 			objToClient.writeObject(change);
 			objToClient.flush();
-			System.out.println("ServerOut: I have sent the change");
+			System.out.println("ServerOut: I have sent"+change);
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

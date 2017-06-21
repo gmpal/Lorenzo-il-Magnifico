@@ -1,6 +1,8 @@
 package it.polimi.ingsw.GC_24.client.view;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+
 import java.util.List;
 import java.util.Scanner;
 import it.polimi.ingsw.GC_24.MyObservable;
@@ -9,26 +11,23 @@ import it.polimi.ingsw.GC_24.MyObserver;
 import it.polimi.ingsw.GC_24.values.MilitaryPoint;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 
-import it.polimi.ingsw.GC_24.model.Model;
-import it.polimi.ingsw.GC_24.model.PlayerColour;
-import it.polimi.ingsw.GC_24.model.State;
-
+import it.polimi.ingsw.GC_24.model.*;
 
 public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	private static Scanner scanner = new Scanner(System.in);
+	private int clientNumber;
 	private String name;
 	private String colour;
 	private List<String> colours;
 	private HashMap<String, Object> hm;
 	private int colourAvailable;
-	private Model miniModel = new Model();
+	private Model miniModel;
 
 	/*
 	 * public static void main(String args[]) { ViewPlayer vp = new ViewCLI();
 	 * ViewCLI viewCLI = (ViewCLI) vp; viewCLI.start();
 	 * viewCLI.showAndGetOption(); }
 	 */
-
 
 	public int getColourAvailable() {
 		return colourAvailable;
@@ -38,44 +37,62 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		this.colourAvailable = colourAvailable;
 	}
 
-
 	@Override
 	public void run() {
-
+		System.out.println("Creating a local mini model");
+		this.miniModel = new Model(0);
+		System.out.println(miniModel);
 		name = setName();
 		colour = setColour();
-		System.out.println("*****Welcome "+name.toUpperCase()+"!\nYou are the " +colour.toUpperCase()+" player\n");
-		this.sendPlayerString(name, colour);
-		System.out.println("Waiting for other players...\n");		
-		while (miniModel.getGameState()!= State.RUNNING) {
+
+		// if my name is not already been automatically changed
+		System.out.println("miniModel before sending");
+		List<Player> tempPlayers = miniModel.getPlayers();
+		System.out.println(tempPlayers);
+		Player tempPlayer = tempPlayers.get(clientNumber - 1);
+		String tempName = tempPlayer.getMyName();
+		if (tempName.equals("TempName")) {
+			System.out.println("NAME SENT");
+			this.sendPlayerString(name, colour);
+		} else {
+			System.out.println("You have exceeded the time limit to choose your name and colour");
+			System.out.println("They have been auto-completed, you are: " + miniModel.getPlayers().get(clientNumber));
+		}
+		System.out.println("Players after sending my name");
+		System.out.println(miniModel.getPlayers());
+		System.out.println("Waiting for other players...\n");
+
+		while (miniModel.getGameState() != State.RUNNING) {
 			System.out.printf("");
 		}
-		
+
 		System.out.println("THE GAME STARTS NOW\n");
-		
+
 		System.out.println("The players' turn for the first round is:");
-		for(int i=0, j=1; i<miniModel.getPlayers().size(); i++, j++){
-			System.out.println(j+") "+miniModel.getPlayers().get(i).getMyName()+" is the "+miniModel.getPlayers().get(i).getMyColour()+" player");
+		for (int i = 0, j = 1; i < miniModel.getPlayers().size(); i++, j++) {
+			System.out.println(j + ") " + miniModel.getPlayers().get(i).getMyName() + " is the "
+					+ miniModel.getPlayers().get(i).getMyColour() + " player");
 		}
 		System.out.println("\n");
-		if (miniModel.getCurrentPlayer().equals(miniModel.getPlayerfromColour(PlayerColour.valueOf(colour.toUpperCase())))){
+		if (miniModel.getCurrentPlayer()
+				.equals(miniModel.getPlayerfromColour(PlayerColour.valueOf(colour.toUpperCase())))) {
 			showAndGetOption();
-		}else
+		} else
 			showOption();
 	}
 
 	private void getColoursfromServer() {
 		hm = new HashMap<>();
-		hm.put("colours", null);		
+		hm.put("colours", null);
 		this.notifyMyObservers(hm);
 	}
 
 	public String setName() {
-		String sc;
-		do {
-			System.out.println("Name:");
+		String sc = null;
+		System.out.println("Name:");
+		if (scanner.hasNextLine()) {
 			sc = scanner.nextLine();
-		} while (sc == null);
+		}
 		return sc;
 	}
 
@@ -106,6 +123,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 				}
 			}
 		}
+
 		return chosenColour;
 
 		/*
@@ -141,10 +159,18 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	}
 
 	public void sendPlayerString(String name, String colour) {
-		String player = (name + " " + colour);
+		String player = (clientNumber + " " + name + " " + colour);
 		hm = new HashMap<>();
 		hm.put("player", player);
 		this.notifyMyObservers(hm);
+		System.out.println("--------------->PLAYER INVIATO");
+
+		while (!miniModel.getPlayers().get((clientNumber) - 1).getMyName().equalsIgnoreCase(name)) {
+			System.out.printf("");
+
+		}
+		System.out.println("hO RICEVUTO LA MODIFICA");
+
 	}
 
 	public void showOption() {
@@ -159,15 +185,17 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 				System.out.println(board);
 			} else if (command.equals("b")) {
 				String personalBoard;
-				personalBoard = miniModel.getPlayerfromColour(PlayerColour.valueOf(colour.toUpperCase())).getMyBoard().toString();
+				personalBoard = miniModel.getPlayerfromColour(PlayerColour.valueOf(colour.toUpperCase())).getMyBoard()
+						.toString();
 				System.out.println(personalBoard);
 			} else if (command.equals("c")) {
-				//String leaderCards;
-				//miniModel.getPlayerfromColour(PlayerColour.valueOf(colour.toUpperCase())).getLeaderCards().toString();
-				//System.out.println(leaderCards);
-			} else if (command.equals("d")){
-				System.out.println(miniModel.getPlayerfromColour(PlayerColour.valueOf(colour.toUpperCase())).getMyFamily().toString());
-			}else if (command.equals("e")) {
+				// String leaderCards;
+				// miniModel.getPlayerfromColour(PlayerColour.valueOf(colour.toUpperCase())).getLeaderCards().toString();
+				// System.out.println(leaderCards);
+			} else if (command.equals("d")) {
+				System.out.println(miniModel.getPlayerfromColour(PlayerColour.valueOf(colour.toUpperCase()))
+						.getMyFamily().toString());
+			} else if (command.equals("e")) {
 				break;
 			} else {
 				System.out.println("Wrong character");
@@ -182,7 +210,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 			}
 		}
 	}
-	
+
 	public void showAndGetOption() {
 		while (true) {
 			System.out.println("Choose action:\n" + "a)Show board\n" + "b)Show personal board\n"
@@ -196,23 +224,25 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 				System.out.println(board);
 			} else if (command.equals("b")) {
 				String personalBoard;
-				personalBoard = miniModel.getPlayerfromColour(PlayerColour.valueOf(colour.toUpperCase())).getMyBoard().toString();
+				personalBoard = miniModel.getPlayerfromColour(PlayerColour.valueOf(colour.toUpperCase())).getMyBoard()
+						.toString();
 				System.out.println(personalBoard);
 			} else if (command.equals("c")) {
 				String leaderCards;
-				//miniModel.getPlayerfromColour(PlayerColour.valueOf(colour.toUpperCase())).getLeaderCards().toString();
-				//System.out.println(leaderCards);
+				// miniModel.getPlayerfromColour(PlayerColour.valueOf(colour.toUpperCase())).getLeaderCards().toString();
+				// System.out.println(leaderCards);
 			} else if (command.equals("d")) {
-				System.out.println(miniModel.getPlayerfromColour(PlayerColour.valueOf(colour.toUpperCase())).getMyFamily().toString());
+				System.out.println(miniModel.getPlayerfromColour(PlayerColour.valueOf(colour.toUpperCase()))
+						.getMyFamily().toString());
 				command = fourChoice("family member") + " " + choosePlace();
 				if (command.contains("cancel")) {
 					System.out.println("Action cancelled");
 					commandOk = false;
 				}
 			} else if (command.equals("e")) {
-				//miniModel.getPlayerfromColour(PlayerColour.valueOf(colour.toUpperCase())).getLeaderCards().chooseLeaderCard();
+				// miniModel.getPlayerfromColour(PlayerColour.valueOf(colour.toUpperCase())).getLeaderCards().chooseLeaderCard();
 			} else if (command.equals("f")) {
-				//miniModel.getPlayerfromColour(PlayerColour.valueOf(colour.toUpperCase())).getLeaderCards().throwLeaderCard();
+				// miniModel.getPlayerfromColour(PlayerColour.valueOf(colour.toUpperCase())).getLeaderCards().throwLeaderCard();
 			} else if (command.equals("g")) {
 				command = "end";
 			} else if (command.equals("h")) {
@@ -304,7 +334,8 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 
 	public String increaseDieValue(String commandZone) {
 		String increase;
-		int servants = miniModel.getPlayerfromColour(PlayerColour.valueOf(colour.toUpperCase())).getMyValues().getServants().getQuantity();
+		int servants = miniModel.getPlayerfromColour(PlayerColour.valueOf(colour.toUpperCase())).getMyValues()
+				.getServants().getQuantity();
 		System.out.println("How much do you want to increase the die's value?");
 		increase = isInt(scanner.nextLine());
 		if (increase == null) {
@@ -369,20 +400,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	@Override
 	public <C> void update(MyObservable o, C change) {
 
-		System.out.println("Risposta " + change);
-
-	
-		if (change.equals("Colour Available")) {
-			this.colourAvailable = 1;
-		}
-		else if (change.equals("Colour Not Available")) {
-			this.colourAvailable = 0;
-		}
-		else if (change instanceof Model) {
-			this.miniModel = (Model) change;
-		}
-		else
-			System.out.println("Answer " + change);
+		System.out.println("Answer " + change);
 
 	}
 
@@ -402,9 +420,13 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	public void setColour(String colour) {
 		this.colour = colour;
 	}
-	
+
 	public Model getMiniModel() {
 		return miniModel;
+	}
+
+	public void setMiniModel(Model model) {
+		this.miniModel = model;
 	}
 
 	public List<String> getColours() {
@@ -415,4 +437,11 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		this.colours = colours;
 	}
 
+	public int getClientNumber() {
+		return clientNumber;
+	}
+
+	public void setClientNumber(int clientNumber) {
+		this.clientNumber = clientNumber;
+	}
 }

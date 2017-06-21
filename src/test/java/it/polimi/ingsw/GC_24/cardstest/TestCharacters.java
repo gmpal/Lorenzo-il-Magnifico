@@ -18,9 +18,9 @@ public class TestCharacters {
 	@Before
 	public void setUp() throws Exception {
 		player = new Player("Giorgia", PlayerColour.RED);
-		character = new Characters("Character", "Character", null, null, null, 1, null);
+		character = new Characters("Character", "Character", null, null, null, null, 1);
 		characters = new PersonalCharacters();
-		characters2 = new Characters("Character2", "Character", null, null, null, 2, null);
+		characters2 = new Characters("Character2", "Character", null, null, null, null, 2);
 	}
 	
 	@Test

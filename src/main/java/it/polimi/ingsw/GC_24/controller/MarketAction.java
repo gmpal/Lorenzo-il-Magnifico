@@ -36,7 +36,7 @@ public class MarketAction extends Action {
 	@Override
 	public List<ImmediateEffect> run() {
 		this.placeFamiliar();
-		this.payServants();
+		this.payValue(new Servant(this.servants));
 		this.takeValueFromPlace();
 		this.takeExtraValueFromMarketPlace();
 		this.takeImmediateEffectFromMarketPlace();

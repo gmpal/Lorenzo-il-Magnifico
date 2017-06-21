@@ -20,6 +20,10 @@ public abstract class MyObservable {
 	public void unregisterMyObserver(MyObserver o) {
 		this.MyObservers.remove(o);
 	}
+	
+	public void unregisterAllMyObserver() {
+		this.MyObservers.clear();
+	}
 
 	public void notifyMyObservers() {
 		for (MyObserver o : this.MyObservers) {

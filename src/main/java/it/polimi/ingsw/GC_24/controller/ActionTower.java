@@ -2,14 +2,11 @@ package it.polimi.ingsw.GC_24.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import it.polimi.ingsw.GC_24.cards.Ventures;
-
 import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.places.TowerPlace;
-import it.polimi.ingsw.GC_24.values.SetOfValues;
-import it.polimi.ingsw.GC_24.values.Value;
+import it.polimi.ingsw.GC_24.values.*;
 
 public class ActionTower extends Action {
 	private List<ImmediateEffect> immediateEffects = new ArrayList<>();
@@ -51,7 +48,8 @@ public class ActionTower extends Action {
 	@Override
 	public List<ImmediateEffect> run() {
 		this.takeRealCost();
-		this.payServants();
+		this.payCoinsforOccupiedTower();
+		this.payValue(new Servant(this.servants));
 		this.placeFamiliar();
 		this.takeValueFromPlace();
 		this.takeCardAndPay();
@@ -61,6 +59,11 @@ public class ActionTower extends Action {
 		return immediateEffects;
 	}
 
+	private void payCoinsforOccupiedTower(){
+		if(zone.isOccupied())
+			this.payValue(new Coin(3));
+	}
+	
 	private void takeEffects() {
 		ImmediateEffect im = towerPlace.getCorrespondingCard().getImmediateEffect();
 		ImmediateEffect im1 = towerPlace.getCorrespondingCard().getImmediateEffect1();
@@ -79,16 +82,14 @@ public class ActionTower extends Action {
 	}
 
 
-
-
 	private void takeRealCost() {
 			if (temporaryCardCost == null) {
 				TowerPlace towerPlace = (TowerPlace) this.place;
 				this.temporaryCardCost = towerPlace.getCorrespondingCard().getCost();
 			}
 		}
-
 	
+	}
 	/*
 	 * This method checks if you have enough money to put the familyMember in a
 	 * tower occupied (3 coins)

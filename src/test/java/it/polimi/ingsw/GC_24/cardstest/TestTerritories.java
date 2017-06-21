@@ -18,9 +18,9 @@ public class TestTerritories {
 	@Before
 	public void setUp() throws Exception {
 		player = new Player("Giorgia", PlayerColour.RED);
-		territory = new Territories("Territory", 0, "Territory", null, null, null, 2, null);
+		territory = new Territories("Territory", 0, "Territory", null, null, null, null, 2);
 		territories = new PersonalTerritories();
-		territory2 = new Territories("Territory2", 0, "Territory", null, null, null, 1, null);
+		territory2 = new Territories("Territory2", 0, "Territory", null, null, null, null, 1);
 	}
 	
 	@Test
