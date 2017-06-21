@@ -104,36 +104,25 @@ public class Deck {
 	}
 
 	public static void main(String args[]) throws IOException {
-		/*Gson gson = GsonBuilders.getGsonWithTypeAdapters();
-		ValueEffect ve = new ValueEffect("value");
+		BufferedReader br;
+		Gson gson = GsonBuilders.getGsonWithTypeAdapters();
+		String line;
+		// br = new BufferedReader(new
+		// FileReader("src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/provaC.json"));
+
+		PermanentEffect pe = new IncreaseDieValueActivity("production", 3);
 		SetOfValues set = new SetOfValues();
-		set.getCoins().setQuantity(1);
-		set.getWoods().setQuantity(1);
-		SetOfValues value = new SetOfValues();
-		value.getCoins().setQuantity(3);
-		ve.setEffectValues(value);
-		PersonalBuildings pb = new PersonalBuildings();
-		CouncilPrivilege privilege = new CouncilPrivilege("privilege", 1);
-		
-		MoltiplicationCards meffect = new MoltiplicationCards("MoltiplicationCards", new Coin(1), pb);
-		ValueEffect ve1 = new ValueEffect("value");
+		set.setCoins(new Coin(3));
 		SetOfValues set1 = new SetOfValues();
+		set1 = set;
+		set1.setFaithPoints(new FaithPoint(3));
 
-		set1.getWoods().setQuantity(2);
-		SetOfValues value1 = new SetOfValues();
-		value1.getCoins().setQuantity(5);
-		ve1.setEffectValues(value1);
-		Value val = new VictoryPoint(1);
-		MilitaryPoint mp = new MilitaryPoint(3);
-		Exchange eeffect = new Exchange("Exchange", set, null, privilege, null);
+		PermanentEffect pe1 = new IncreaseDieValueCard("card", new PersonalTerritories(), 3, set, set1);
+		Characters c = new Characters(null, null, set1, null, pe, null, 0);
+		System.out.println(gson.toJson(c));
+		String string;
+		// string = br.readLine();
 
-		Buildings b = new Buildings("Commercial", 1, "Building", set, ve1, null, ve, privilege, 1);
-		Ventures v = new Ventures("Province","Venture", set, set1, val, mp, ve, null, 1);
-		String string = gson.toJson(v);
-		System.out.println(string);
-		b = gson.fromJson(string, Buildings.class);
-		System.out.println(b);
-		String string1 = gson.toJson(t1);*/
-
+		// System.out.println(gson.fromJson(string, Characters.class));
 	}
 }

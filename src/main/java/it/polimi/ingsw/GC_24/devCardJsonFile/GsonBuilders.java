@@ -12,10 +12,10 @@ import it.polimi.ingsw.GC_24.personalboard.*;
 import it.polimi.ingsw.GC_24.values.*;
 
 public class GsonBuilders {
-	public GsonBuilders(){
+	public GsonBuilders() {
 		getGsonWithTypeAdapters();
 	}
-	
+
 	private static GsonBuilder builder = new GsonBuilder();
 
 	public static RuntimeTypeAdapterFactory<Value> getValueTypeAdapter() {
@@ -35,6 +35,13 @@ public class GsonBuilders {
 				.registerSubtype(PerformProduction.class, "performProduction");
 	}
 
+	public static RuntimeTypeAdapterFactory<PermanentEffect> getPermanentEffectTypeAdapter() {
+		return RuntimeTypeAdapterFactory.of(PermanentEffect.class, "permanentEffectType")
+				.registerSubtype(IncreaseDieValueActivity.class, "increaseDieValueActivity")
+				.registerSubtype(IncreaseDieValueCard.class, "increaseDieValueCard")
+				.registerSubtype(NoValueEffectFromTowerPlace.class, "noValueEffectFromTowerPlace");
+	}
+
 	public static RuntimeTypeAdapterFactory<PersonalCards> getPersonalCardTypeAdapter() {
 		return RuntimeTypeAdapterFactory.of(PersonalCards.class, "personalCardsType")
 				.registerSubtype(PersonalTerritories.class, "personalTerritories")
@@ -47,10 +54,11 @@ public class GsonBuilders {
 		builder.registerTypeAdapterFactory(getValueTypeAdapter());
 		builder.registerTypeAdapterFactory(getImmediateEffectTypeAdapter());
 		builder.registerTypeAdapterFactory(getPersonalCardTypeAdapter());
+		builder.registerTypeAdapterFactory(getPermanentEffectTypeAdapter());
 		builder.serializeNulls();
 		return builder.create();
 	}
-	
+
 	public static String getLine(BufferedReader br) throws IOException {
 		String line;
 		line = br.readLine();
