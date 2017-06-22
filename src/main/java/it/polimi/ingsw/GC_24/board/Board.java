@@ -21,20 +21,26 @@ public class Board implements java.io.Serializable {
 	private CouncilPalace councilPalace;
 
 	// constructor
-	public Board(int numPlayers) throws IOException {
-		this.numPlayers = numPlayers;
-		this.towerTerritories = new Tower(
-				"src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/actionValueTowerTerritories.json");
-		this.towerCharacters = new Tower(
-				"src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/actionValueTowerCharacters.json");
-		this.towerBuildings = new Tower(
-				"src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/actionValueTowerBuildings.json");
-		this.towerVentures = new Tower(
-				"src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/actionValueTowerVentures.json");
-		this.harvest = new Harvest(lockPlaces(this.numPlayers), this.numPlayers);
-		this.production = new Production(lockPlaces(this.numPlayers), this.numPlayers);
-		this.market = new Market(lockPlaces(this.numPlayers));
-		this.councilPalace = new CouncilPalace(this.numPlayers);
+	public Board(int numPlayers) {
+		try {
+
+			this.numPlayers = numPlayers;
+			this.towerTerritories = new Tower(
+					"src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/actionValueTowerTerritories.json");
+			this.towerCharacters = new Tower(
+					"src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/actionValueTowerCharacters.json");
+			this.towerBuildings = new Tower(
+					"src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/actionValueTowerBuildings.json");
+			this.towerVentures = new Tower(
+					"src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/actionValueTowerVentures.json");
+			this.harvest = new Harvest(lockPlaces(this.numPlayers), this.numPlayers);
+			this.production = new Production(lockPlaces(this.numPlayers), this.numPlayers);
+			this.market = new Market(lockPlaces(this.numPlayers));
+			this.councilPalace = new CouncilPalace(this.numPlayers);
+		} catch (IOException e) {
+			// TODO: Exception
+			e.printStackTrace();
+		}
 	}
 
 	// tells if the places needs to be locked

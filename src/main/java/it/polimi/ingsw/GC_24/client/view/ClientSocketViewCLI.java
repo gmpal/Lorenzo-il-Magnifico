@@ -23,9 +23,6 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 	private ObjectInputStream objFromServer;
 	private ObjectOutputStream objToServer;
 	private ViewCLI view;
-	private boolean end = false;
-	private boolean colourReceived;
-	private Model modelReceived;
 
 	public ClientSocketViewCLI(ObjectInputStream objFromServer, ObjectOutputStream objToServer, ViewCLI view) {
 		this.objToServer = objToServer;
@@ -33,16 +30,15 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 		this.view = view;
 		this.registerMyObserver(view);
 		view.registerMyObserver(this);
-		this.modelReceived = new Model();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void run() {
 		try {
-			while (!end) {
+			while (true) {
 
 				Map<String, Object> requestFromServer;
-
 				requestFromServer = (Map<String, Object>) objFromServer.readObject();
 				this.handleRequestFromServer(requestFromServer);
 
@@ -77,6 +73,7 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 	/**
 	 * Based on the key of the object received, this method handles the request
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void handleRequestFromServer(Map<String, Object> request) {
 		Set<String> command = request.keySet();
@@ -92,6 +89,7 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 		/* Contains the answer if the colour has already been chosen or not */
 
 		if (command.contains("coloursAnswer")) {
+
 			String colourAnswer = (String) request.get("coloursAnswer");
 			if (colourAnswer.equals("Colour Available")) {
 				view.setColourAvailable(1);
@@ -107,18 +105,34 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 			MilitaryPoint militaryPoints = (MilitaryPoint) request.get("Requirements");
 			view.chooseAlternativeCost(cost1, cost2, militaryPoints);
 		}
+
 		if (command.contains("model")) {
-			
-			view.setMiniModel((Model) request.get("model") );
-			notifyAll();
+
+			view.setMiniModel((Model) request.get("model"));
+
 		}
-		
+
+		if (command.contains("Play!")) {
+			view.play();
+
+		}
+		if (command.contains("Turns")) {
+			List<Player> playerTurn = (List<Player>) request.get("Turns");
+			view.setPlayerTurn(playerTurn);
+
+		}
+		if (command.contains("CurrentPlayer")) {
+			Player currentPlayer = (Player) request.get("Turns");
+			if (currentPlayer.getMyColour().equals(view.getColour())) {
+				view.setMyTurn(true);
+			}else view.setMyTurn(false);
+		}
+
 		if (command.contains("clientNumber")) {
 			int number = (int) request.get("clientNumber");
 			view.setClientNumber(number);
-			System.out.println("This is the player number " +number);
+			System.out.println("This is the player number " + number);
 		}
-		
 
 	}
 }

@@ -29,7 +29,12 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	private Action action;
 	private HashMap<String, Object> hashMap;
 	private int controllerNumber = 0;
-
+	private HashMap<String,Object> hm;
+	private List<Player> councilTurnArray;
+	private List<Player> playerTurn;
+	private Player currentPlayer;
+	private int currentIndex = 0;
+	
 	// constructor
 
 	public Controller(Model game) {
@@ -47,28 +52,49 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			e.printStackTrace();
 		}
 		sendModelToClients();
+		this.currentPlayer = game.getCurrentPlayer();
+		while (this.currentPlayer.equals(game.getCurrentPlayer())){ wait();}
+			
+		playerTurn = game.getPlayers();
+			for(int i=0; i<playerTurn.size(); i++){
+			
+		
+		councilTurnArray = game.getBoard().getCouncilPalace().getTemporaryTurn();
+		playerTurn = game.getPlayers();
+		
+		game.setCurrentPlayer(playerTurn.get(i));
+		sendTurnArray(playerTurn);
+		letThemPlay();
 		
 	}
-	
-	
-	/**This method automatically completes the players name and colours, notifying the clients */
-	public void autoCompletePlayers() {
-	
-		for (Player p : game.getPlayers()) {
-			int index = game.getPlayers().indexOf(p);
 		
-			if (p.getMyName().equals("TempName")) {
-				
-				p.setPlayer("Player_" + index, PlayerColour.valueOf(PlayerColour.getValues().get(0)));
-				PlayerColour.getValues().remove(0);
-				sendModelToClients();
+	
+	
+	//update the turn list from the councilPalace
+	public void updateListOfPlayerTurn(List<Player> temporaryTurn){
+		int i;
+		for (Player player:temporaryTurn){
+			if (playerTurn.contains(player)){
+				playerTurn.remove(player);
 			}
-			
-			
+			i = temporaryTurn.indexOf(player);
+			playerTurn.add(i, player);
 		}
-
 	}
 	
+	private void letThemPlay() {
+		hm = new HashMap<>();
+		hm.put("Play!",null);
+		notifyMyObservers(hm);
+		
+	}
+
+	private void sendTurnArray(List<Player> turnArray) {
+		hm = new HashMap<>();
+		hm.put("Turns",turnArray);
+		notifyMyObservers(hm);
+	}
+
 	@Override
 	public void update() {
 	}
@@ -87,10 +113,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		}
 	}
 
-	// IN CHE MODO LA questa VIEW GESTISCE CIO' CHE RICEVE?
-	// è davvero lei che gestisce o si limita ad inoltrare al controller?
-	// oppure --> in base al tipo di richiesta decide se inoltrare oppure no
-
+	
+	
 	/**
 	 * This method analyzes the incoming HashMap. If it finds specific keywords
 	 * in the keySet, it does different things with different objects
@@ -234,8 +258,13 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			// TODO: azione non valida
 
 		}
+		
+		turnManager();
+	}
 
-		return " sent";
+	private void turnManager() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	/**
