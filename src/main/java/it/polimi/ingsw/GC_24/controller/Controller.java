@@ -29,12 +29,16 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	private Action action;
 	private HashMap<String, Object> hashMap;
 	private int controllerNumber = 0;
-	private HashMap<String,Object> hm;
+	private HashMap<String, Object> hm;
 	private List<Player> councilTurnArray;
 	private List<Player> playerTurn;
 	private Player currentPlayer;
 	private int currentIndex = 0;
 	
+	//locks
+	private Object tempCostWaiting = new Object();
+	private Object actionWaiting = new Object();
+
 	// constructor
 
 	public Controller(Model game) {
@@ -45,53 +49,58 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	@Override
 	public void run() {
-		try {
-			game.setModel(game.getPlayers());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block ---------> da rivedere
-			e.printStackTrace();
-		}
+		game.setModel(game.getPlayers());
 		sendModelToClients();
 		this.currentPlayer = game.getCurrentPlayer();
-		while (this.currentPlayer.equals(game.getCurrentPlayer())){ wait();}
-			
+		
+		
+		/**/
+		synchronized (this.actionWaiting) {
+
+			while (this.currentPlayer.equals(game.getCurrentPlayer())) {
+				try {
+					actionWaiting.wait();
+				} catch (InterruptedException e) {
+					
+				}
+			}
+			//reset the current player
+			this.currentPlayer = game.getCurrentPlayer();
+		}
 		playerTurn = game.getPlayers();
-			for(int i=0; i<playerTurn.size(); i++){
-			
-		
-		councilTurnArray = game.getBoard().getCouncilPalace().getTemporaryTurn();
-		playerTurn = game.getPlayers();
-		
-		game.setCurrentPlayer(playerTurn.get(i));
-		sendTurnArray(playerTurn);
-		letThemPlay();
-		
+		for (int i = 0; i < playerTurn.size(); i++) {
+
+			councilTurnArray = game.getBoard().getCouncilPalace().getTemporaryTurn();
+			playerTurn = game.getPlayers();
+
+			game.setCurrentPlayer(playerTurn.get(i));
+			sendTurnArray(playerTurn);
+			letThemPlay();
+		}
 	}
-		
-	
-	
-	//update the turn list from the councilPalace
-	public void updateListOfPlayerTurn(List<Player> temporaryTurn){
+
+	// update the turn list from the councilPalace
+	public void updateListOfPlayerTurn(List<Player> temporaryTurn) {
 		int i;
-		for (Player player:temporaryTurn){
-			if (playerTurn.contains(player)){
+		for (Player player : temporaryTurn) {
+			if (playerTurn.contains(player)) {
 				playerTurn.remove(player);
 			}
 			i = temporaryTurn.indexOf(player);
 			playerTurn.add(i, player);
 		}
 	}
-	
+
 	private void letThemPlay() {
 		hm = new HashMap<>();
-		hm.put("Play!",null);
+		hm.put("Play!", null);
 		notifyMyObservers(hm);
-		
+
 	}
 
 	private void sendTurnArray(List<Player> turnArray) {
 		hm = new HashMap<>();
-		hm.put("Turns",turnArray);
+		hm.put("Turns", turnArray);
 		notifyMyObservers(hm);
 	}
 
@@ -99,8 +108,9 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	public void update() {
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public <C> void update(MyObservable o, C change) {
+	public synchronized <C> void update(MyObservable o, C change) {
 
 		System.out.println("Controller: I have been notified by " + o.getClass().getSimpleName());
 		System.out.println("Controller: i received this :" + change);
@@ -113,8 +123,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		}
 	}
 
-	
-	
 	/**
 	 * This method analyzes the incoming HashMap. If it finds specific keywords
 	 * in the keySet, it does different things with different objects
@@ -122,38 +130,26 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	 * @throws IOException
 	 */
 	private String handleRequestFromClient(MyObservable o, Map<String, Object> request) throws IOException {
-	
+
 		System.out.println("Controller: started handling a request from client...");
 		Set<String> command = request.keySet();
 		System.out.println(command);
 
 		if (command.contains("player")) {
-			System.out.println("-------------------------------->RECEIVED A FREAKING PLAYER");
-			String playerString = (String) request.get("player");
-			System.out.println(playerString);
-			StringTokenizer tokenizer = new StringTokenizer(playerString);
-			String clientNumber = tokenizer.nextToken();
-			String name = tokenizer.nextToken();
-			String colour = tokenizer.nextToken();
-			int indexOfPlayer = Integer.parseInt(clientNumber)-1;	
-			System.out.println("Lookin' for player n "+indexOfPlayer);
-			Player tempPlayer = game.getPlayers().get(indexOfPlayer);
-			System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+tempPlayer);
-					tempPlayer.setPlayer(name, PlayerColour.valueOf(colour.toUpperCase()));
-					System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+tempPlayer);
-			System.out.println("CONTROLLER GAME: "+game.getPlayers());
-			game.sendModel();
-			return "player "+clientNumber+" updated";
-	
-		}	
-		
+			
+			return handlePlayer(request);
+
+		}
 
 		else if (command.contains("colours")) {
 			return handleColours(o, request);
 		}
 
 		else if (command.contains("chosenCost")) {
+			synchronized(tempCostWaiting){
 			this.tempCost = (SetOfValues) request.get("chosenCost");
+			tempCostWaiting.notify();
+			}
 			return "Controller: chosen cost updated";
 
 		}
@@ -172,6 +168,24 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			return "bad command";
 		}
 
+	}
+
+	private String handlePlayer(Map<String, Object> request) {
+		String playerString = (String) request.get("player");
+		System.out.println(playerString);
+		StringTokenizer tokenizer = new StringTokenizer(playerString);
+		String clientNumber = tokenizer.nextToken();
+		String name = tokenizer.nextToken();
+		String colour = tokenizer.nextToken();
+		int indexOfPlayer = Integer.parseInt(clientNumber) - 1;
+		
+		Player tempPlayer = game.getPlayers().get(indexOfPlayer);
+		
+		tempPlayer.setPlayer(name, PlayerColour.valueOf(colour.toUpperCase()));
+		
+		game.sendModel();
+		return "player " + clientNumber + " updated";
+		
 	}
 
 	private String checkColour(MyObservable o, Map<String, Object> request) {
@@ -200,8 +214,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		return " ArrayListOfColours sent";
 	}
 
-
-
 	private Player createPlayerFromString(String playerString) {
 		StringTokenizer tokenizer = new StringTokenizer(playerString);
 		String name = tokenizer.nextToken();
@@ -216,7 +228,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	public void sendModelToClients() {
 		System.out.println("Sono il controller numero" + this.getControllerNumber());
 		System.out.println("Sto inviando il game numero" + game.getModelNumber());
-		game.setGameState(State.ENDED);
 		hashMap = new HashMap<>();
 		hashMap.put("model", game);
 		notifyMyObservers(hashMap);
@@ -258,18 +269,20 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			// TODO: azione non valida
 
 		}
-		
+
 		turnManager();
+		return " ";// TODO: risposta;
 	}
 
 	private void turnManager() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	/**
 	 * If the player wants to take a ventures card, this method let him choose
-	 * which one of the double costs to take (if a double cost exists)
+	 * which one of the double costs to take (if a double cost exists).
+	 * The thread 
 	 */
 	private void handleVentures(MyObservable o, Map<String, Object> request, String tempZone, String tempFloor) {
 		TowerPlace placeRequested = (TowerPlace) this.game.getBoard().getZoneFromString(tempZone)
@@ -284,8 +297,20 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			hashMap.put("Cost2", cost2);
 			hashMap.put("Requirements", requirements);
 			this.notifySingleObserver((MyObserver) o, hashMap);
-			while (this.tempCost == null) {
+			
+			synchronized(tempCostWaiting){
+				while (this.tempCost == null) {
+					try {
+						tempCostWaiting.wait();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 			}
+			
+			}
+			
+			System.out.println("The user has chosen the double cost he wants");
 		}
 
 	}
@@ -295,5 +320,4 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		return game;
 	}
 
-	
 }

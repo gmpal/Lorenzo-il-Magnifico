@@ -254,7 +254,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 			} else if (command.equals("g")) {
 				command = "end";
 			} else if (command.equals("h")) {
-				break;
+				//break;
 			} else {
 				System.out.println("Wrong character");
 				commandOk = false;
