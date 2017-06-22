@@ -29,7 +29,7 @@ public class GsonBuilders {
 		return RuntimeTypeAdapterFactory.of(ImmediateEffect.class, "immediateEffectType")
 				.registerSubtype(MoltiplicationPoints.class, "moltiplicationPoints")
 				.registerSubtype(MoltiplicationCards.class, "moltiplicationCards")
-				.registerSubtype(ValueEffect.class, "value").registerSubtype(CouncilPrivilege.class, "coucilPrivilege")
+				.registerSubtype(ValueEffect.class, "value").registerSubtype(CouncilPrivilege.class, "councilPrivilege")
 				.registerSubtype(ChooseNewCard.class, "chooseNewCard").registerSubtype(Exchange.class, "exchange")
 				.registerSubtype(PerformHarvest.class, "performHarvest")
 				.registerSubtype(PerformProduction.class, "performProduction");

@@ -30,7 +30,6 @@ public class Deck {
 		BufferedReader br;
 		Gson gson = GsonBuilders.getGsonWithTypeAdapters();
 		String line;
-
 		br = new BufferedReader(
 				new FileReader("src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/territoriesCards.json"));
 		while ((line = getLine(br)) != null) {
@@ -107,12 +106,31 @@ public class Deck {
 		BufferedReader br;
 		Gson gson = GsonBuilders.getGsonWithTypeAdapters();
 		String line;
-		// br = new BufferedReader(new
-		// FileReader("src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/provaC.json"));
+		Deck d=new Deck();
+		System.out.println(d);
+		/*SetOfValues set = new SetOfValues();
+		SetOfValues set1 = new SetOfValues();
+		ValueEffect ve=new ValueEffect("value");
+		ve.setEffectValues(set);
+		set.setStones(new Stone(3));
+		set.setWoods(new Wood(1));
+		ValueEffect ve1=new ValueEffect("value");
+		ve1.setEffectValues(set);
+		set1.setVictoryPoints(new VictoryPoint(5));
+		Buildings t=new Buildings("Mint", 5, "Building", set, ve1, null, new MoltiplicationCards("moltiplicationCard", new Coin(1), new PersonalBuildings()), null, 1);
+		System.out.println(gson.toJson(t));
+		
+		br = new BufferedReader(new
+		FileReader("src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/provaC.json"));
+		String string;
+		string = br.readLine();
+		Buildings t1=gson.fromJson(string, Buildings.class);
+		ArrayList<Buildings> tx=new ArrayList<>();
+		tx.add(t1);
+		System.out.println(tx);
 
-		PermanentEffect pe = new IncreaseDieValueActivity("production", 3);
-		SetOfValues set = new SetOfValues();
-		set.setCoins(new Coin(3));
+		/*PermanentEffect pe = new IncreaseDieValueActivity("production", 3);
+		
 		SetOfValues set1 = new SetOfValues();
 		set1 = set;
 		set1.setFaithPoints(new FaithPoint(3));
@@ -123,6 +141,6 @@ public class Deck {
 		String string;
 		// string = br.readLine();
 
-		// System.out.println(gson.fromJson(string, Characters.class));
+		// System.out.println(gson.fromJson(string, Characters.class));*/
 	}
 }
