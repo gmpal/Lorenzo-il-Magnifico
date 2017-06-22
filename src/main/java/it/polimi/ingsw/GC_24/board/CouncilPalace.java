@@ -1,20 +1,17 @@
 package it.polimi.ingsw.GC_24.board;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 
 import it.polimi.ingsw.GC_24.devCardJsonFile.GsonBuilders;
 import it.polimi.ingsw.GC_24.effects.*;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.places.CouncilPlace;
 import it.polimi.ingsw.GC_24.places.Place;
-import it.polimi.ingsw.GC_24.values.*;
 
 public class CouncilPalace extends Area {
 	/**
@@ -25,8 +22,6 @@ public class CouncilPalace extends Area {
 	private int numPlayers;
 	private static final int COSTDICE = 1;
 	private static final int MAXFAM = 4; // max familyMember per player
-	private static ValueEffect value;
-	private static final ImmediateEffect EFFECTPRIVILEGE = new CouncilPrivilege("CouncilPrivilege", 1);
 	private List<Player> temporaryTurn = new ArrayList<>();
 	private List<ImmediateEffect> valueListCouncil = new ArrayList<>();
 

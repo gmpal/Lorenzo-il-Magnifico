@@ -1,6 +1,8 @@
 package it.polimi.ingsw.GC_24.effects;
 
-public class PermanentEffect extends Effect{
+import it.polimi.ingsw.GC_24.model.Player;
+
+public abstract class PermanentEffect extends Effect{
 	/**
 	 * 
 	 */
@@ -10,5 +12,4 @@ public class PermanentEffect extends Effect{
 	public PermanentEffect(String name) {
 		super(name);
 	}
-
 }

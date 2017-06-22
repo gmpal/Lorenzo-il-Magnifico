@@ -2,8 +2,12 @@ package it.polimi.ingsw.GC_24.cards;
 
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 
-public class Requirements {
+public class Requirements implements java.io.Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4312086090033837532L;
 	private SetOfValues requirementSetOfVaue;
 	private int requirementTerritories;
 	private int requirementCharacters;

@@ -52,9 +52,6 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 			System.out.println("You have exceeded the time limit to choose your name and colour");
 			System.out.println("They have been auto-completed, you are: " + miniModel.getPlayers().get(clientNumber));
 		}
-		
-
-		
 
 		System.out.println("Waiting for other players");
 /*
@@ -134,7 +131,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		this.notifyMyObservers(hm);
 
 		while (colourAvailable == -1) {
-			System.out.printf("");
+			//System.out.printf("");
 		}
 
 		return (this.colourAvailable);
@@ -157,7 +154,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		System.out.println("--------------->PLAYER INVIATO");
 
 		while (!miniModel.getPlayers().get((clientNumber) - 1).getMyName().equalsIgnoreCase(name)) {
-			System.out.printf("");
+			//System.out.printf("");
 
 		}
 		System.out.println("hO RICEVUTO LA MODIFICA");
@@ -305,7 +302,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 
 	public String fourChoice(String s) {
 		String commandFloor;
-		int commandFloorInt = 0;
+		int commandFloorInt;
 		do {
 			System.out.println("Choose " + s + " (1,2,3,4) 5)Cancel ");
 			commandFloorInt = scanner.nextInt();
