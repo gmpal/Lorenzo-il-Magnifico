@@ -170,7 +170,10 @@ public class Deck {
 		Gson gson = GsonBuilders.getGsonWithTypeAdapters();
 		String line;
 		Deck d=new Deck();
-		System.out.println(d);
+		System.out.println(d.getDeckBuildings());
+		System.out.println(d.getDeckCharacters());
+		System.out.println(d.getDeckTerritories());
+		System.out.println(d.getDeckVentures());
 		/*SetOfValues set = new SetOfValues();
 		SetOfValues set1 = new SetOfValues();
 		ValueEffect ve=new ValueEffect("value");
@@ -192,6 +195,6 @@ public class Deck {
 		tx.add(t1);
 		System.out.println(tx);
 
-		/*PermanentEffect pe = new IncreaseDieValueActivity("production", 3);
+		/*PermanentEffect pe = new IncreaseDieValueActivity("production", 3);*/
 	}
 }
