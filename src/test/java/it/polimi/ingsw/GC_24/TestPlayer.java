@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import it.polimi.ingsw.GC_24.effects.ValueEffect;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.PlayerColour;
 import it.polimi.ingsw.GC_24.places.*;
@@ -13,15 +14,16 @@ public class TestPlayer {
 	
 	Player player;
 	SetOfValues values;
-	Coin coin;
+	ValueEffect value;
 	Place place;
 	
 	@Before
 	public void setUp() throws Exception {
-		coin = new Coin(2);
+		value = new ValueEffect("value");
+		value.getEffectValues().getCoins().setQuantity(2);
 		values = new SetOfValues();
 		player = new Player("Giorgia", PlayerColour.RED);
-		place = new CouncilPlace(3, coin, null);
+		place = new CouncilPlace(3, value, null);
 	}
 
 	@Test

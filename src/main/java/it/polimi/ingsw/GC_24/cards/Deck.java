@@ -3,15 +3,25 @@ package it.polimi.ingsw.GC_24.cards;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
+import it.polimi.ingsw.GC_24.board.Board;
 import it.polimi.ingsw.GC_24.devCardJsonFile.GsonBuilders;
-import it.polimi.ingsw.GC_24.devCardJsonFile.RuntimeTypeAdapterFactory;
-import it.polimi.ingsw.GC_24.effects.*;
-import it.polimi.ingsw.GC_24.personalboard.*;
-import it.polimi.ingsw.GC_24.values.*;
+import it.polimi.ingsw.GC_24.effects.CouncilPrivilege;
+import it.polimi.ingsw.GC_24.effects.Exchange;
+import it.polimi.ingsw.GC_24.effects.ExchangePackage;
+import it.polimi.ingsw.GC_24.effects.MoltiplicationCards;
+import it.polimi.ingsw.GC_24.effects.PerformHarvest;
+import it.polimi.ingsw.GC_24.effects.PerformProduction;
+import it.polimi.ingsw.GC_24.effects.ValueEffect;
+import it.polimi.ingsw.GC_24.personalboard.PersonalBuildings;
+import it.polimi.ingsw.GC_24.values.Coin;
+import it.polimi.ingsw.GC_24.values.MilitaryPoint;
+import it.polimi.ingsw.GC_24.values.SetOfValues;
+import it.polimi.ingsw.GC_24.values.Value;
+import it.polimi.ingsw.GC_24.values.VictoryPoint;
 
 public class Deck {
 	private List<Territories> deckTerritories = new ArrayList<>();
@@ -69,6 +79,33 @@ public class Deck {
 		return line;
 	}
 
+	
+	public void dealCards(Board board) {
+		Random random = new Random();
+		int size = deckTerritories.size();
+		if (size == 24 || size == 16 || size == 8) {
+			for (int i = 7; i >= 4; i--) {
+				int index = random.nextInt(i);
+				dealSingleCards(board, index);
+			}
+			if (size == 20 || size == 12 || size == 4) {
+				for (int i = 3; i >= 0; i--) {
+					int index = random.nextInt(i);
+					dealSingleCards(board, index);
+				}
+			}
+
+		}
+	}
+
+	private void dealSingleCards(Board board, int index) {
+		dealTerritories(board, index);
+		dealCharacters(board, index);
+		dealBuildings(board, index);
+		dealVentures(board, index);
+	}
+	
+	
 	// getters and setters
 	public List<Territories> getDeckTerritories() {
 		return deckTerritories;
@@ -102,6 +139,32 @@ public class Deck {
 		this.deckVentures = deckVentures;
 	}
 
+	
+
+	private void dealTerritories(Board board, int index) {
+		Development tempCard = deckTerritories.get(index);
+		board.getTowerTerritories().putCardInFirstEmptyPlace(tempCard);
+		deckTerritories.remove(index);
+	}
+
+	private void dealBuildings(Board board, int index) {
+		Development tempCard = deckBuildings.get(index);
+		board.getTowerBuildings().putCardInFirstEmptyPlace(tempCard);
+		deckBuildings.remove(index);
+	}
+
+	private void dealCharacters(Board board, int index) {
+		Development tempCard = deckCharacters.get(index);
+		board.getTowerCharacters().putCardInFirstEmptyPlace(tempCard);
+		deckCharacters.remove(index);
+	}
+
+	private void dealVentures(Board board, int index) {
+		Development tempCard = deckVentures.get(index);
+		board.getTowerVentures().putCardInFirstEmptyPlace(tempCard);
+		deckVentures.remove(index);
+	}
+
 	public static void main(String args[]) throws IOException {
 		BufferedReader br;
 		Gson gson = GsonBuilders.getGsonWithTypeAdapters();
@@ -130,17 +193,5 @@ public class Deck {
 		System.out.println(tx);
 
 		/*PermanentEffect pe = new IncreaseDieValueActivity("production", 3);
-		
-		SetOfValues set1 = new SetOfValues();
-		set1 = set;
-		set1.setFaithPoints(new FaithPoint(3));
-
-		PermanentEffect pe1 = new IncreaseDieValueCard("card", new PersonalTerritories(), 3, set, set1);
-		Characters c = new Characters(null, null, set1, null, pe, null, 0);
-		System.out.println(gson.toJson(c));
-		String string;
-		// string = br.readLine();
-
-		// System.out.println(gson.fromJson(string, Characters.class));*/
 	}
 }

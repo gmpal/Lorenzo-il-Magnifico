@@ -80,6 +80,7 @@ public class ServerSocketView extends MyObservable implements Runnable, MyObserv
 
 		try {
 			objToClient.writeObject(change);
+			objToClient.reset();
 			objToClient.flush();
 			System.out.println("ServerOut: I have sent"+change);
 			
