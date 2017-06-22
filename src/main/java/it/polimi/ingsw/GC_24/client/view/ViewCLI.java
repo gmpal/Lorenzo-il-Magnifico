@@ -1,17 +1,17 @@
 package it.polimi.ingsw.GC_24.client.view;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-
 import java.util.List;
 import java.util.Scanner;
+import java.util.Timer;
+
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.MyObserver;
-
+import it.polimi.ingsw.GC_24.model.Model;
+import it.polimi.ingsw.GC_24.model.Player;
+import it.polimi.ingsw.GC_24.model.PlayerColour;
 import it.polimi.ingsw.GC_24.values.MilitaryPoint;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
-
-import it.polimi.ingsw.GC_24.model.*;
 
 public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	private static Scanner scanner = new Scanner(System.in);
@@ -22,6 +22,17 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	private HashMap<String, Object> hm;
 	private int colourAvailable;
 	private Model miniModel;
+	private boolean myTurn = false;
+	private List<Player> playerTurn;
+	public List<Player> getPlayerTurn() {
+		return playerTurn;
+	}
+
+	public void setPlayerTurn(List<Player> playerTurn) {
+		this.playerTurn = playerTurn;
+	}
+
+	private Timer timer;
 
 	/*
 	 * public static void main(String args[]) { ViewPlayer vp = new ViewCLI();
@@ -29,14 +40,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	 * viewCLI.showAndGetOption(); }
 	 */
 
-	public int getColourAvailable() {
-		return colourAvailable;
-	}
-
-	public void setColourAvailable(int colourAvailable) {
-		this.colourAvailable = colourAvailable;
-	}
-
+	
 	@Override
 	public void run() {
 		
@@ -164,8 +168,22 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 
 	}
 
+	public void play(){
+		while(true) {
+			
+			while(myTurn){
+				showAndGetOption();
+			}
+			
+			while (!myTurn){
+				showOption();
+			}
+		}
+	}
+	
+	
 	public void showOption() {
-		while (true) {
+		
 			System.out.println("What do you want to see?\na)Show board\nb)Show personal board\nc)Show leader cards\n"
 					+ "d)Show family members\ne)Exit");
 			String command = scanner.nextLine();
@@ -187,7 +205,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 				System.out.println(miniModel.getPlayerfromColour(PlayerColour.valueOf(colour.toUpperCase()))
 						.getMyFamily().toString());
 			} else if (command.equals("e")) {
-				break;
+				
 			} else {
 				System.out.println("Wrong character");
 				commandOk = false;
@@ -200,10 +218,9 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 				// System.out.println(command);
 			}
 		}
-	}
 
 	public void showAndGetOption() {
-		while (true) {
+		
 			System.out.println("Choose action:\n" + "a)Show board\n" + "b)Show personal board\n"
 					+ "c)Show leader cards\n" + "d)Place family member\n" + "e)Use a leader card\n"
 					+ "f)Throw a leader card\n" + "g)End turn\n" + "h)Exit");
@@ -249,7 +266,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 				notifyMyObservers(hm);
 				// System.out.println(command);
 			}
-		}
+		
 	}
 
 	private String choosePlace() {
@@ -436,4 +453,20 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	public void setClientNumber(int clientNumber) {
 		this.clientNumber = clientNumber;
 	}
+	public boolean isMyTurn() {
+		return myTurn;
+	}
+
+	public void setMyTurn(boolean myTurn) {
+		this.myTurn = myTurn;
+	}
+
+	public int getColourAvailable() {
+		return colourAvailable;
+	}
+
+	public void setColourAvailable(int colourAvailable) {
+		this.colourAvailable = colourAvailable;
+	}
+
 }

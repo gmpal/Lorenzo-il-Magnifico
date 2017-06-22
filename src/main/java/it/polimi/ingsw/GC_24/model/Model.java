@@ -2,11 +2,18 @@ package it.polimi.ingsw.GC_24.model;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.board.Board;
+import it.polimi.ingsw.GC_24.client.view.ServerSocketView;
 import it.polimi.ingsw.GC_24.dice.SetOfDice;
 
 public class Model extends MyObservable implements Serializable {
@@ -15,7 +22,7 @@ public class Model extends MyObservable implements Serializable {
 	 */
 	private static final long serialVersionUID = -4715762523324083940L;
 
-	private ArrayList<Player> players;
+	private List<Player> players;
 	private Board board;
 	private Player currentPlayer;
 	private State gameState;
@@ -24,28 +31,17 @@ public class Model extends MyObservable implements Serializable {
 	private Period currentPeriod;
 	private List<Ranking> rankings;
 	private HashMap<String, Object> hm;
-
+		
 	private int modelNumber;
 
-	/*
-	 * Constructor --> ONLY PLAYERS NEEDS TO BE PASSED other fields are created
-	 * or set
-	 */
-	public Model(int index) {
-		this.modelNumber= index;
-		
-		this.players = new ArrayList<>();
-		this.board = null;
-		this.currentPlayer = null;
-		this.gameState = State.WAITINGFORPLAYERONE;
-		this.dice = null;
-		this.currentRound = null;
-		this.currentPeriod = null;
-		this.rankings = new ArrayList<Ranking>();
-		
-	}
+	private boolean isAcceptingPlayers;
+
+	private int counter;
 	
-	public Model() {
+	private static Timer timer;
+
+
+	public Model(int modelNumber) {
 				
 		this.players = new ArrayList<>();
 		this.board = null;
@@ -55,24 +51,50 @@ public class Model extends MyObservable implements Serializable {
 		this.currentRound = null;
 		this.currentPeriod = null;
 		this.rankings = new ArrayList<Ranking>();
-		
-	}
-
-	public int getModelNumber() {
-		return modelNumber;
-	}
-
-	public void setModelNumber(int modelNumber) {
+		this.counter++;
 		this.modelNumber = modelNumber;
 	}
 
+	
+	public void addPlayer(){
+		timer = new Timer();
+		counter++;
+		sendNumberToClient();
+		Player player = new Player();
+		this.getPlayers().add(player);
+		System.out.println("PLAYER "+player);
+		System.out.println("Player #" + counter + "added to Game #" + getModelNumber());
+		
+		incrementState();
+		sendModel();
+		
+		if (getGameState().equals(State.WAITINGFORPLAYERTHREE)) {
+			System.out.println("Timer Starting");
+			timer.schedule(new TimerTask() {
+				@Override
+				public void run() {
+					System.out.println("*TIME UP*");
+					autoCompletePlayers();
+					setAcceptingPlayers(false);
+				}
+			}, 15000);
+		}
+	
+			if (getGameState().equals(State.RUNNING)) {
+				
+				setAcceptingPlayers(false);
+			}
+				
+		
+	}
+	
+	
+	
 	/*
 	 * After a Model is created and the players are get, this method sets the
 	 * model so the game could start
 	 */
-
-
-	public void setModel(List<Player> players) throws IOException {
+	public void setModel(List<Player> players) {
 
 
 		this.players = players;
@@ -91,6 +113,24 @@ public class Model extends MyObservable implements Serializable {
 		}
 
 	}
+	
+	/**This method automatically completes the players name and colours, notifying the clients */
+	public void autoCompletePlayers() {
+	
+		for (Player p : getPlayers()) {
+			int index = getPlayers().indexOf(p);
+		
+			if (p.getMyName().equals("TempName")) {
+				
+				p.setPlayer("Player_" + index, PlayerColour.valueOf(PlayerColour.getValues().get(0)));
+				PlayerColour.getValues().remove(0);
+				sendModel();
+			}
+			
+			
+		}
+
+	}
 
 	public void incrementState() {
 		this.setGameState(this.getGameState().nextState());
@@ -102,6 +142,13 @@ public class Model extends MyObservable implements Serializable {
 		System.out.println("FROM MODEL SENDING THIS "+this);
 		notifyMyObservers(hm);
 	}
+	
+	private void sendNumberToClient() {
+		hm = new HashMap<>();
+		hm.put("clientNumber", counter);
+		notifyMyObservers(hm);
+
+	}
 
 	public Player getPlayerfromColour(PlayerColour colour) {
 		for (Player player : players) {
@@ -112,7 +159,15 @@ public class Model extends MyObservable implements Serializable {
 	}
 
 	// getters and setters
-	public ArrayList<Player> getPlayers() {
+	
+	public int getModelNumber() {
+		return modelNumber;
+	}
+
+	public void setModelNumber(int modelNumber) {
+		this.modelNumber = modelNumber;
+	}
+	public List<Player> getPlayers() {
 		return players;
 	}
 
@@ -167,7 +222,14 @@ public class Model extends MyObservable implements Serializable {
 	public void setCurrentPeriod(Period currentPeriod) {
 		this.currentPeriod = currentPeriod;
 	}
+	
+	public boolean isAcceptingPlayers() {
+		return isAcceptingPlayers;
+	}
 
+	public void setAcceptingPlayers(boolean isAcceptingPlayers) {
+		this.isAcceptingPlayers = isAcceptingPlayers;
+	}
 	@Override
 	public String toString() {
 		return "Model [players=" + players + ", gameState=" + gameState + ", modelNumber=" + modelNumber + "]";
