@@ -13,12 +13,17 @@ import it.polimi.ingsw.GC_24.effects.ChooseNewCard;
 import it.polimi.ingsw.GC_24.effects.CouncilPrivilege;
 import it.polimi.ingsw.GC_24.effects.Exchange;
 import it.polimi.ingsw.GC_24.effects.ExchangePackage;
+import it.polimi.ingsw.GC_24.effects.IncreaseDieValueActivity;
+import it.polimi.ingsw.GC_24.effects.IncreaseDieValueCard;
 import it.polimi.ingsw.GC_24.effects.MoltiplicationCards;
+import it.polimi.ingsw.GC_24.effects.MoltiplicationPoints;
+import it.polimi.ingsw.GC_24.effects.NoValueEffectFromTowerPlace;
 import it.polimi.ingsw.GC_24.effects.PerformHarvest;
 import it.polimi.ingsw.GC_24.effects.PerformProduction;
 import it.polimi.ingsw.GC_24.effects.ValueEffect;
 import it.polimi.ingsw.GC_24.personalboard.BonusTile;
 import it.polimi.ingsw.GC_24.personalboard.PersonalBuildings;
+import it.polimi.ingsw.GC_24.personalboard.PersonalTerritories;
 import it.polimi.ingsw.GC_24.values.Coin;
 import it.polimi.ingsw.GC_24.values.FaithPoint;
 import it.polimi.ingsw.GC_24.values.MilitaryPoint;
@@ -35,13 +40,20 @@ public class Deck {
 	private List<Ventures> deckVentures = new ArrayList<>();
 	private List<Leader> deckLeaders = new ArrayList<>();
 
+	private List<Territories> tempListTerritory = new ArrayList<>();
+	private List<Characters> tempListCharacters = new ArrayList<>();
+	private List<Buildings> tempListBuildings = new ArrayList<>();
+	private List<Ventures> tempListVentures = new ArrayList<>();
+	
+	private Random random = new Random();
+
 	// constructor
 	public Deck() throws IOException {
-		createDeck();
+		//createDeck();
 	}
 
 	// create 4 deck arrayList from 4 different file with Json
-	public void createDeck() throws IOException {
+/*	public void createDeck() throws IOException {
 		BufferedReader br;
 		Gson gson = GsonBuilders.getGsonWithTypeAdapters();
 		String line;
@@ -76,13 +88,14 @@ public class Deck {
 			this.deckLeaders.add(gson.fromJson(line, Leader.class));
 		}
 	}
-
+*/
 	// return a line of the file in buffer
 	public String getLine(BufferedReader br) throws IOException {
 		String line;
 		line = br.readLine();
 		return line;
 	}
+<<<<<<< carlo
 
 	public void dealCards(Board board) {
 		Random random = new Random();
@@ -137,39 +150,97 @@ public class Deck {
 	public List<Ventures> getDeckVentures() {
 		return deckVentures;
 	}
-
-	public void setDeckVentures(List<Ventures> deckVentures) {
-		this.deckVentures = deckVentures;
+=======
+	/** This method deals the cards isolating the current period cards
+	 * and randomly choosing between them */
+	//TODO: valutare se è possibile usare meglio il polimorfismo 
+	public void dealCards(Board board, int cardsIndex) {
+		dealTerritories(board, cardsIndex);
+		dealCharacters(board, cardsIndex);
+		dealBuildings(board, cardsIndex);
+		dealVentures(board, cardsIndex);
 	}
 
+	
+	private void dealTerritories(Board board, int index) {
+>>>>>>> socketRMI
+
+		for (Territories card : deckTerritories) {
+			if (card.getRound() == index) {
+				tempListTerritory.add(card);
+				deckTerritories.remove(card);
+			}
+		}
+
+<<<<<<< carlo
 	private void dealTerritories(Board board, int index) {
 		Development tempCard = deckTerritories.get(index);
 		board.getTowerTerritories().putCardInFirstEmptyPlace(tempCard);
 		deckTerritories.remove(index);
+=======
+		for (int i = 0; i < 4; i++) {
+			int position = random.nextInt(tempListTerritory.size());
+			Development chosenCard = tempListTerritory.get(position);
+			tempListTerritory.remove(position);
+			board.getTowerTerritories().putCardInFirstEmptyPlace(chosenCard);
+		}
+
+>>>>>>> socketRMI
 	}
 
 	private void dealBuildings(Board board, int index) {
-		Development tempCard = deckBuildings.get(index);
-		board.getTowerBuildings().putCardInFirstEmptyPlace(tempCard);
-		deckBuildings.remove(index);
+		for (Buildings card : deckBuildings) {
+			if (card.getRound() == index) {
+				tempListBuildings.add(card);
+				deckBuildings.remove(card);
+			}
+		}
+
+		for (int i = 0; i < 4; i++) {
+			int position = random.nextInt(tempListBuildings.size());
+			Development chosenCard = tempListBuildings.get(position);
+			tempListBuildings.remove(position);
+			board.getTowerBuildings().putCardInFirstEmptyPlace(chosenCard);
+		}
 	}
 
 	private void dealCharacters(Board board, int index) {
-		Development tempCard = deckCharacters.get(index);
-		board.getTowerCharacters().putCardInFirstEmptyPlace(tempCard);
-		deckCharacters.remove(index);
+		for (Characters card : deckCharacters) {
+			if (card.getRound() == index) {
+				tempListCharacters.add(card);
+				deckCharacters.remove(card);
+			}
+		}
+
+		for (int i = 0; i < 4; i++) {
+			int position = random.nextInt(tempListCharacters.size());
+			Development chosenCard = tempListCharacters.get(position);
+			tempListCharacters.remove(position);
+			board.getTowerCharacters().putCardInFirstEmptyPlace(chosenCard);
+		}
 	}
 
 	private void dealVentures(Board board, int index) {
-		Development tempCard = deckVentures.get(index);
-		board.getTowerVentures().putCardInFirstEmptyPlace(tempCard);
-		deckVentures.remove(index);
+		for (Ventures card : deckVentures) {
+			if (card.getRound() == index) {
+				tempListVentures.add(card);
+				deckVentures.remove(card);
+			}
+		}
+
+		for (int i = 0; i < 4; i++) {
+			int position = random.nextInt(tempListVentures.size());
+			Development chosenCard = tempListVentures.get(position);
+			tempListVentures.remove(position);
+			board.getTowerVentures().putCardInFirstEmptyPlace(chosenCard);
+		}
 	}
 
 	public static void main(String args[]) throws IOException {
 		BufferedReader br;
 		Gson gson = GsonBuilders.getGsonWithTypeAdapters();
 		String line;
+<<<<<<< carlo
 		/*Deck d = new Deck();
 		System.out.println(d.getDeckBuildings());
 		System.out.println(d.getDeckCharacters());
@@ -212,5 +283,44 @@ public class Deck {
 		 * 
 		 * PermanentEffect pe = new IncreaseDieValueActivity("production", 3);
 		 */
+=======
+		//Deck d=new Deck();
+		//System.out.println(d);
+		SetOfValues set = new SetOfValues();
+		SetOfValues set1 = new SetOfValues();
+		ValueEffect ve=new ValueEffect("value");
+		ve.setEffectValues(set);
+		set.setCoins(new Coin(6));
+		ValueEffect ve1=new ValueEffect("value");
+		ve1.setEffectValues(set);
+		set1.setVictoryPoints(new VictoryPoint(5));
+		NoValueEffectFromTowerPlace nvet = new NoValueEffectFromTowerPlace("NoValueEffectFromTowerPlace");
+		CouncilPrivilege privilege = new CouncilPrivilege("CouncilPrivilege", 1);
+		ChooseNewCard cnc = new ChooseNewCard("ChooseNewCard", null, 7, null);
+		IncreaseDieValueActivity increase = new IncreaseDieValueActivity("IncreaseDieValueHarvest", 2);
+		Buildings t=new Buildings("Mint", 5, "Building", set, ve1, null, new MoltiplicationCards("moltiplicationCard", new Coin(1), new PersonalBuildings()), null, 1);
+		PerformHarvest ph = new PerformHarvest("Perform Harvest", 1);
+		PerformProduction pp = new PerformProduction("Perform Production", 0);
+		PersonalTerritories pt = new PersonalTerritories();
+		MoltiplicationCards mc = new MoltiplicationCards("MoltiplicationCards", new VictoryPoint(2), pt);
+		MoltiplicationPoints mp = new MoltiplicationPoints("MoltiplicationPoints", new VictoryPoint(1), new MilitaryPoint(2));
+		IncreaseDieValueCard pe = new IncreaseDieValueCard("IncreaseDieValueCard", pt, 2, null, null);
+		Ventures v = new Ventures("Reparing the Cathedral", "Venture", set, null, new VictoryPoint(5), null, ve, cnc, 3);
+		Characters c = new Characters("preacher", "Character", set, ve, nvet, null, 1);
+		Requirements requirements = new Requirements(null, 2, 4, 0, 0);
+		Leader l = new Leader("Girolamo Savonarola", requirements, null, pp, null, true);
+		System.out.println(gson.toJson(l));
+	/*	br = new BufferedReader(new
+		FileReader("src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/provaC.json"));
+		String string;
+		string = br.readLine();
+		Buildings t1=gson.fromJson(string, Buildings.class);
+		ArrayList<Buildings> tx=new ArrayList<>();
+		tx.add(t1);
+		System.out.println(tx);*/
+
+		//PermanentEffect pe = new IncreaseDieValueActivity("production", 3);
+>>>>>>> socketRMI
 	}
 }
+

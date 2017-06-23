@@ -1,6 +1,7 @@
 package it.polimi.ingsw.GC_24.board;
 
 import java.io.BufferedReader;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
@@ -23,6 +24,7 @@ public class CouncilPalace extends Area {
 	private static final int COSTDICE = 1;
 	private static final int MAXFAM = 4; // max familyMember per player
 	private List<Player> temporaryTurn = new ArrayList<>();
+
 	private List<ImmediateEffect> valueListCouncil = new ArrayList<>();
 
 	// constructor
@@ -61,8 +63,16 @@ public class CouncilPalace extends Area {
 	// returns the updated list of players' turn
 	public List<Player> updateTurn(Player player) {
 		if (!temporaryTurn.contains(player))
+
 			temporaryTurn.add(player);
 		return temporaryTurn;
 	}
 
+	public List<Player> getTemporaryTurn() {
+		return temporaryTurn;
+	}
+
+	public void setTemporaryTurn(List<Player> temporaryTurn) {
+		this.temporaryTurn = temporaryTurn;
+	}
 }

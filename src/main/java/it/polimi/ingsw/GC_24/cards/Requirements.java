@@ -11,17 +11,17 @@ public class Requirements implements java.io.Serializable{
 	private SetOfValues requirementSetOfVaue;
 	private int requirementTerritories;
 	private int requirementCharacters;
-	private int requirementBuildigns;
+	private int requirementBuildings;
 	private int requirementVentures;
 
 	// constructor
 	public Requirements(SetOfValues requirementSetOfVaue, int requirmentTerritories, int requirmentCharacters,
-			int requirmentBuildigns, int requirmentVentures) {
+			int requirmentBuildings, int requirmentVentures) {
 		super();
 		this.requirementSetOfVaue = requirementSetOfVaue;
 		this.requirementTerritories = requirmentTerritories;
 		this.requirementCharacters = requirmentCharacters;
-		this.requirementBuildigns = requirmentBuildigns;
+		this.requirementBuildings = requirmentBuildings;
 		this.requirementVentures = requirmentVentures;
 	}
 
@@ -38,8 +38,8 @@ public class Requirements implements java.io.Serializable{
 		if (requirementCharacters != 0) {
 			sb.append("\nCharacter cards required: " + requirementCharacters);
 		}
-		if (requirementBuildigns != 0) {
-			sb.append("\nBuildings cards required: " + requirementBuildigns);
+		if (requirementBuildings != 0) {
+			sb.append("\nBuildings cards required: " + requirementBuildings);
 		}
 		if (requirementVentures != 0) {
 			sb.append("\nVentures cards required: " + requirementVentures);
@@ -73,11 +73,11 @@ public class Requirements implements java.io.Serializable{
 	}
 
 	public int getRequirmentBuildigns() {
-		return requirementBuildigns;
+		return requirementBuildings;
 	}
 
 	public void setRequirmentBuildigns(int requirmentBuildigns) {
-		this.requirementBuildigns = requirmentBuildigns;
+		this.requirementBuildings = requirmentBuildigns;
 	}
 
 	public int getRequirmentVentures() {

@@ -19,18 +19,28 @@ public class Player implements Serializable {
 	private SetOfValues myValues;
 	private PlayerColour myColour;
 	private int playerNumber;
-
-	// Constructor
-	public Player(int playerNumber) throws IOException {
-		this.myColour = PlayerColour.valueOf(PlayerColour.getRandomColour());
-		this.myName = "TempName";
-		this.myFamily = new Family(myColour);
+	
+	//Constructor 
+	public Player(int playerNumber) {
+		this.myColour = null;
+		this.myName ="TempName";
+		this.myFamily = null;
 		this.myBoard = new PersonalBoard(playerNumber);
 		this.myValues = new SetOfValues();
 		this.playerNumber = playerNumber;
 	}
+	
+	//constructor for tests
+	public Player(String string, PlayerColour colour) {
+		this.myColour = colour;
+		this.myName ="TempName";
+		this.myFamily = new Family(colour);
+		this.myBoard = new PersonalBoard(1);
+		this.myValues = new SetOfValues();
+		this.playerNumber = 1;	
+		}
 
-	// useful to find the value of the player if you only know his colour
+	//useful to find the value of the player if you only know his colour
 	public SetOfValues getMyValuesFromColour(PlayerColour playerColour) {
 		if (this.myColour.equals(playerColour))
 			return myValues;

@@ -21,7 +21,7 @@ public class TestBonusTile {
 		valuesExpected = new SetOfValues();
 		harvestValues = new SetOfValues();
 		productionValues = new SetOfValues();
-		bonusTile = new BonusTile(harvestValues, productionValues);
+		bonusTile = new BonusTile(true, 1);
 	}
 
 	@Test
