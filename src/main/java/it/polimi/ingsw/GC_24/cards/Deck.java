@@ -17,6 +17,7 @@ import it.polimi.ingsw.GC_24.effects.MoltiplicationCards;
 import it.polimi.ingsw.GC_24.effects.PerformHarvest;
 import it.polimi.ingsw.GC_24.effects.PerformProduction;
 import it.polimi.ingsw.GC_24.effects.ValueEffect;
+import it.polimi.ingsw.GC_24.personalboard.BonusTile;
 import it.polimi.ingsw.GC_24.personalboard.PersonalBuildings;
 import it.polimi.ingsw.GC_24.values.Coin;
 import it.polimi.ingsw.GC_24.values.FaithPoint;
@@ -169,11 +170,15 @@ public class Deck {
 		BufferedReader br;
 		Gson gson = GsonBuilders.getGsonWithTypeAdapters();
 		String line;
-		Deck d = new Deck();
+		/*Deck d = new Deck();
 		System.out.println(d.getDeckBuildings());
 		System.out.println(d.getDeckCharacters());
 		System.out.println(d.getDeckTerritories());
-		System.out.println(d.getDeckVentures());
+		System.out.println(d.getDeckVentures());*/
+
+		BonusTile bt=new BonusTile(true, 4);
+		System.out.println(bt.getHarvestValues());
+		System.out.println(bt.getProductionValues());
 
 		/*
 		 * br = new BufferedReader(new FileReader(
