@@ -103,7 +103,7 @@ public class Server {
 				System.out.println("PLAYER " + player);
 				System.out.println("Player #" + i + "added to Game #" + game.getModelNumber());
 				game.incrementState();
-			
+
 				game.sendModel();
 
 				if (game.getGameState().equals(State.WAITINGFORPLAYERTHREE)) {
@@ -117,32 +117,34 @@ public class Server {
 						}
 					}, 15000);
 				}
-			
-					if (game.getGameState().equals(State.RUNNING)) {
-						timer.cancel();
-						//TODO: il quarto giocatore non ha tempo di inserire il nome 
-						System.out.println("TIMER CANCELED");
-						controller.autoCompletePlayers();
-						launchAndCreateNewGame();
 
 				if (game.getGameState().equals(State.RUNNING)) {
-					while (game.getPlayers().get(PLAYER_NUMBER - 1).getMyName().equals("TempName")) {
-						System.out.printf("");
-						// just waits untils the last player is
-						// automatically/manually created
-					}
-					System.out.println("TIMER CANCELED");
 					timer.cancel();
-
+					// TODO: il quarto giocatore non ha tempo di inserire il
+					// nome
+					System.out.println("TIMER CANCELED");
 					controller.autoCompletePlayers();
 					launchAndCreateNewGame();
 
+					if (game.getGameState().equals(State.RUNNING)) {
+						while (game.getPlayers().get(PLAYER_NUMBER - 1).getMyName().equals("TempName")) {
+							System.out.printf("");
+							// just waits untils the last player is
+							// automatically/manually created
+						}
+						System.out.println("TIMER CANCELED");
+						timer.cancel();
+
+						controller.autoCompletePlayers();
+						launchAndCreateNewGame();
+
+					}
+
+					System.out.println("SERVER: THE ACTUAL GAME IS " + game.getModelNumber());
+					System.out.println("SERVER: THE ACTUAL STATE IS " + game.getGameState());
+					System.out.println("SERVER: THE ACTUAL PLAYERS ARE " + game.getPlayers());
+
 				}
-
-				System.out.println("SERVER: THE ACTUAL GAME IS " + game.getModelNumber());
-				System.out.println("SERVER: THE ACTUAL STATE IS " + game.getGameState());
-				System.out.println("SERVER: THE ACTUAL PLAYERS ARE " + game.getPlayers());
-
 			} catch (IOException e) {
 				e.printStackTrace();
 				break;
