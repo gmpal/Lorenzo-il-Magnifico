@@ -21,9 +21,11 @@ import it.polimi.ingsw.GC_24.effects.NoValueEffectFromTowerPlace;
 import it.polimi.ingsw.GC_24.effects.PerformHarvest;
 import it.polimi.ingsw.GC_24.effects.PerformProduction;
 import it.polimi.ingsw.GC_24.effects.ValueEffect;
+import it.polimi.ingsw.GC_24.personalboard.BonusTile;
 import it.polimi.ingsw.GC_24.personalboard.PersonalBuildings;
 import it.polimi.ingsw.GC_24.personalboard.PersonalTerritories;
 import it.polimi.ingsw.GC_24.values.Coin;
+import it.polimi.ingsw.GC_24.values.FaithPoint;
 import it.polimi.ingsw.GC_24.values.MilitaryPoint;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 import it.polimi.ingsw.GC_24.values.Stone;
@@ -93,6 +95,62 @@ public class Deck {
 		line = br.readLine();
 		return line;
 	}
+<<<<<<< carlo
+
+	public void dealCards(Board board) {
+		Random random = new Random();
+		int size = deckTerritories.size();
+		if (size == 24 || size == 16 || size == 8) {
+			for (int i = 7; i >= 4; i--) {
+				int index = random.nextInt(i);
+				dealSingleCards(board, index);
+			}
+			if (size == 20 || size == 12 || size == 4) {
+				for (int i = 3; i >= 0; i--) {
+					int index = random.nextInt(i);
+					dealSingleCards(board, index);
+				}
+			}
+
+		}
+	}
+
+	private void dealSingleCards(Board board, int index) {
+		dealTerritories(board, index);
+		dealCharacters(board, index);
+		dealBuildings(board, index);
+		dealVentures(board, index);
+	}
+
+	// getters and setters
+	public List<Territories> getDeckTerritories() {
+		return deckTerritories;
+	}
+
+	public void setDeckTerritories(List<Territories> deckTerritories) {
+		this.deckTerritories = deckTerritories;
+	}
+
+	public List<Characters> getDeckCharacters() {
+		return deckCharacters;
+	}
+
+	public void setDeckCharacters(List<Characters> deckCharacters) {
+		this.deckCharacters = deckCharacters;
+	}
+
+	public List<Buildings> getDeckBuildings() {
+		return deckBuildings;
+	}
+
+	public void setDeckBuildings(List<Buildings> deckBuildings) {
+		this.deckBuildings = deckBuildings;
+	}
+
+	public List<Ventures> getDeckVentures() {
+		return deckVentures;
+	}
+=======
 	/** This method deals the cards isolating the current period cards
 	 * and randomly choosing between them */
 	//TODO: valutare se è possibile usare meglio il polimorfismo 
@@ -105,6 +163,7 @@ public class Deck {
 
 	
 	private void dealTerritories(Board board, int index) {
+>>>>>>> socketRMI
 
 		for (Territories card : deckTerritories) {
 			if (card.getRound() == index) {
@@ -113,6 +172,12 @@ public class Deck {
 			}
 		}
 
+<<<<<<< carlo
+	private void dealTerritories(Board board, int index) {
+		Development tempCard = deckTerritories.get(index);
+		board.getTowerTerritories().putCardInFirstEmptyPlace(tempCard);
+		deckTerritories.remove(index);
+=======
 		for (int i = 0; i < 4; i++) {
 			int position = random.nextInt(tempListTerritory.size());
 			Development chosenCard = tempListTerritory.get(position);
@@ -120,6 +185,7 @@ public class Deck {
 			board.getTowerTerritories().putCardInFirstEmptyPlace(chosenCard);
 		}
 
+>>>>>>> socketRMI
 	}
 
 	private void dealBuildings(Board board, int index) {
@@ -174,6 +240,50 @@ public class Deck {
 		BufferedReader br;
 		Gson gson = GsonBuilders.getGsonWithTypeAdapters();
 		String line;
+<<<<<<< carlo
+		/*Deck d = new Deck();
+		System.out.println(d.getDeckBuildings());
+		System.out.println(d.getDeckCharacters());
+		System.out.println(d.getDeckTerritories());
+		System.out.println(d.getDeckVentures());*/
+
+		BonusTile bt=new BonusTile(true, 4);
+		System.out.println(bt.getHarvestValues());
+		System.out.println(bt.getProductionValues());
+
+		/*
+		 * br = new BufferedReader(new FileReader(
+		 * "src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/timerToStart.json"
+		 * )); String string; string = br.readLine(); int
+		 * i=Integer.parseInt(string); System.out.println(i); /*SetOfValues setv
+		 * = new SetOfValues(); SetOfValues setv1 = new SetOfValues();
+		 * setv1.setFaithPoints(new FaithPoint(1)); setv.setCoins(new Coin(3));
+		 * setv.setStones(new Stone(3)); setv.setWoods(new Wood(3)); ValueEffect
+		 * veffe = new ValueEffect("value");
+		 * 
+		 * veffe.setEffectValues(setv1); Ventures venture = new
+		 * Ventures("Repairing the Cathedral", "Venture", setv, null, new
+		 * VictoryPoint(5), null, new ChooseNewCard("chooseNewCard", null, 7,
+		 * null), veffe, 3); System.out.println(gson.toJson(venture));
+		 * 
+		 * 
+		 * SetOfValues set = new SetOfValues(); SetOfValues set1 = new
+		 * SetOfValues(); ValueEffect ve=new ValueEffect("value");
+		 * ve.setEffectValues(set); set.setStones(new Stone(3));
+		 * set.setWoods(new Wood(1)); ValueEffect ve1=new ValueEffect("value");
+		 * ve1.setEffectValues(set); set1.setVictoryPoints(new VictoryPoint(5));
+		 * Buildings t=new Buildings("Mint", 5, "Building", set, ve1, null, new
+		 * MoltiplicationCards("moltiplicationCard", new Coin(1), new
+		 * PersonalBuildings()), null, 1); System.out.println(gson.toJson(t));
+		 * 
+		 * 
+		 * Buildings t1=gson.fromJson(string, Buildings.class);
+		 * ArrayList<Buildings> tx=new ArrayList<>(); tx.add(t1);
+		 * System.out.println(tx);
+		 * 
+		 * PermanentEffect pe = new IncreaseDieValueActivity("production", 3);
+		 */
+=======
 		//Deck d=new Deck();
 		//System.out.println(d);
 		SetOfValues set = new SetOfValues();
@@ -210,6 +320,7 @@ public class Deck {
 		System.out.println(tx);*/
 
 		//PermanentEffect pe = new IncreaseDieValueActivity("production", 3);
+>>>>>>> socketRMI
 	}
 }
 

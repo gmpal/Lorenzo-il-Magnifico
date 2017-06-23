@@ -29,7 +29,6 @@ public class Server {
 	private static Model game;
 	private static Controller controller;
 	private static ServerSocketView serverSocketView;
-
 	private static int i = 0;
 	private static int modelIndex = 1;
 	private static ExecutorService threadPool = Executors.newCachedThreadPool();
@@ -65,6 +64,7 @@ public class Server {
 				i++;
 				System.out.println("SERVER: Waiting connection number" + i);
 
+
 				
 				
 					Socket socket = serverSocket.accept();
@@ -74,8 +74,7 @@ public class Server {
 								
 					game.addPlayer();
 				
-
-			} catch (IOException e) {
+      } catch (IOException e) {
 				e.printStackTrace();
 				break;
 			}

@@ -1,5 +1,7 @@
 package it.polimi.ingsw.GC_24.personalboard;
 
+import java.io.IOException;
+
 public class PersonalBoard implements java.io.Serializable{
 
 	/**
@@ -20,7 +22,6 @@ public class PersonalBoard implements java.io.Serializable{
 		this.personalTerritories = new PersonalTerritories();
 		this.personalCharacters = new PersonalCharacters();
 		this.mybonusTile = new BonusTile(true, playerNumber);
-		
 	}
 	
 	
