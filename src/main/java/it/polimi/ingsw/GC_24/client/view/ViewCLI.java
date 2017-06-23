@@ -66,6 +66,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		return sc;
 	}
 
+
 	
 		
 	public void sendPlayerString(String name) throws InterruptedException {
@@ -73,6 +74,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		hm = new HashMap<>();
 		hm.put("player", player);
 		this.notifyMyObservers(hm);
+
 
 		synchronized (waitingForAnswer) {
 			while (!miniModel.getPlayers().get((playerNumber) - 1).getMyName().equalsIgnoreCase(name)) {
@@ -206,7 +208,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 
 	public String fourChoice(String s) {
 		String commandFloor;
-		int commandFloorInt = 0;
+		int commandFloorInt;
 		do {
 			System.out.println("Choose " + s + " (1,2,3,4) 5)Cancel ");
 			commandFloorInt = scanner.nextInt();

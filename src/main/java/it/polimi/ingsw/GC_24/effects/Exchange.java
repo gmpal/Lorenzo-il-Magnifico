@@ -1,16 +1,15 @@
 package it.polimi.ingsw.GC_24.effects;
 
-import java.util.HashMap;
 import java.util.List;
 
 import it.polimi.ingsw.GC_24.model.Player;
-import it.polimi.ingsw.GC_24.values.SetOfValues;
 
 public class Exchange extends ImmediateEffect {
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 5137569904363140061L;
 	private List<ImmediateEffect> immediateEffectsFromExchange;
 	private ExchangePackage exchangePackage;
 	private ExchangePackage exchangePackage1;

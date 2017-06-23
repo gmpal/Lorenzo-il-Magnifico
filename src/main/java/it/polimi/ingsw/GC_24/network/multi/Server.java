@@ -25,17 +25,15 @@ public class Server {
 
 	private static final int PORT = 28469;
 	private final static int RMI_PORT = 29999;
-	
+
 	private static Model game;
 	private static Controller controller;
 	private static ServerSocketView serverSocketView;
-	
 
 	private static int i = 0;
 	private static int modelIndex = 1;
 	private static ExecutorService threadPool = Executors.newCachedThreadPool();
-	
-	
+
 	// Crea un server e fa partire il suo metodo startServer()
 	public static void main(String[] args) throws IOException, AlreadyBoundException, InterruptedException {
 		Server server = new Server();
@@ -51,14 +49,14 @@ public class Server {
 		System.out.println("SERVER: Controller Created");
 	}
 
+
 	/**Handle the clients connection adding them to the model, if it is not already full*/
 	public static void startSocketServer() throws IOException, InterruptedException {
-		
-	
+
 		ServerSocket serverSocket = new ServerSocket(PORT);
 		System.out.println("SERVER: ServerSocket created");
 
-		////Quick new Thread for running the addPlayer method separately
+		
 		
 		
 		
@@ -66,6 +64,7 @@ public class Server {
 			try {
 				i++;
 				System.out.println("SERVER: Waiting connection number" + i);
+
 				
 				
 					Socket socket = serverSocket.accept();
@@ -75,8 +74,7 @@ public class Server {
 								
 					game.addPlayer();
 				
-				
-				
+
 			} catch (IOException e) {
 				e.printStackTrace();
 				break;
@@ -91,6 +89,7 @@ public class Server {
 		serverSocketView.registerMyObserver(controller);
 		controller.registerMyObserver(serverSocketView);
 	}
+
 	
 
 	private static void createServerSocketView(Socket socket) {
@@ -106,12 +105,15 @@ public class Server {
 
 	public static void launchAndCreateNewGame() {
 
+
 		modelIndex++;
 		threadPool.submit(controller);
 		game = new Model(modelIndex);
 		controller = new Controller(game);
 		PlayerColour.resetValues();
+
 		System.out.println("SERVER: ----> Game #"+modelIndex+" created");
+
 
 	}
 
