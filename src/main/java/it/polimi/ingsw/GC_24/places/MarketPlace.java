@@ -38,8 +38,6 @@ public class MarketPlace extends Place {
 		builder.append( "Free? " + isAvailable());
 		if (isAvailable()){
 			builder.append(" - You can get: ");
-			if (getValue() != null)
-				builder.append(getValue());
 			if (value != null)
 				builder.append(value);
 			if (privilegeEffect != null)

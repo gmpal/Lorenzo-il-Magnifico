@@ -12,9 +12,10 @@ public class BonusTile implements java.io.Serializable{
 	private SetOfValues productionValues;
 	
 	//constructor
-	public BonusTile(SetOfValues harvestValues, SetOfValues productionValues){
-		this.harvestValues = harvestValues;
+	public BonusTile(boolean harvestValues, int productionValues){
+	/*	this.harvestValues = harvestValues;
 		this.productionValues = productionValues;
+	*/
 	}
 	
 	//adds the harvestValues to the parameter

@@ -43,7 +43,12 @@ public abstract class Area implements java.io.Serializable {
 	
 	// empties all the places
 	public void clearPlaces() {
+		System.out.println("CLEAR PLACES ENTERED");
+		System.out.println("Sto per pulire "+placesArray);
 		for (Place place : this.placesArray) {
+			System.out.println("********************ENTRATO NEL CICLO");
+			System.out.println("LUNGHEZZA PLACEC ARRAY "+ placesArray.size());
+			System.out.println(place.getClass().getSimpleName());
 			place.clearPlace();
 		}
 	}

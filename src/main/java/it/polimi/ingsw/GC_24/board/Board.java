@@ -21,20 +21,26 @@ public class Board implements java.io.Serializable {
 	private CouncilPalace councilPalace;
 
 	// constructor
-	public Board(int numPlayers) throws IOException {
-		this.numPlayers = numPlayers;
-		this.towerTerritories = new Tower(
-				"src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/actionValueTowerTerritories.json");
-		this.towerCharacters = new Tower(
-				"src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/actionValueTowerCharacters.json");
-		this.towerBuildings = new Tower(
-				"src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/actionValueTowerBuildings.json");
-		this.towerVentures = new Tower(
-				"src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/actionValueTowerVentures.json");
-		this.harvest = new Harvest(lockPlaces(this.numPlayers), this.numPlayers);
-		this.production = new Production(lockPlaces(this.numPlayers), this.numPlayers);
-		this.market = new Market(lockPlaces(this.numPlayers));
-		this.councilPalace = new CouncilPalace(this.numPlayers);
+	public Board(int numPlayers) {
+		try {
+
+			this.numPlayers = numPlayers;
+			this.towerTerritories = new Tower(
+					"src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/actionValueTowerTerritories.json");
+			this.towerCharacters = new Tower(
+					"src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/actionValueTowerCharacters.json");
+			this.towerBuildings = new Tower(
+					"src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/actionValueTowerBuildings.json");
+			this.towerVentures = new Tower(
+					"src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/actionValueTowerVentures.json");
+			this.harvest = new Harvest(lockPlaces(this.numPlayers), this.numPlayers);
+			this.production = new Production(lockPlaces(this.numPlayers), this.numPlayers);
+			this.market = new Market(lockPlaces(this.numPlayers));
+			this.councilPalace = new CouncilPalace(this.numPlayers);
+		} catch (IOException e) {
+			// TODO: Exception
+			e.printStackTrace();
+		}
 	}
 
 	// tells if the places needs to be locked
@@ -44,14 +50,23 @@ public class Board implements java.io.Serializable {
 
 	// clears the board
 	public void clear() {
+		System.out.println("in clear");
 		this.towerTerritories.clearPlaces();
+		System.out.println("clear territori");
 		this.towerCharacters.clearPlaces();
+		System.out.println("clear towerCharacters");
 		this.towerBuildings.clearPlaces();
+		System.out.println("clear towerBuildings");
 		this.towerVentures.clearPlaces();
+		System.out.println("clear towerVentures");
 		this.harvest.clearPlaces();
+		System.out.println("clear harvest");
 		this.production.clearPlaces();
+		System.out.println("clear production");
 		this.market.clearPlaces();
+		System.out.println("clear market");
 		this.councilPalace.clearPlaces();
+		System.out.println("clear councilPalace");
 	}
 
 	@Override

@@ -38,6 +38,13 @@ public class Deck {
 	private List<Ventures> deckVentures = new ArrayList<>();
 	private List<Leader> deckLeaders = new ArrayList<>();
 
+	private List<Territories> tempListTerritory = new ArrayList<>();
+	private List<Characters> tempListCharacters = new ArrayList<>();
+	private List<Buildings> tempListBuildings = new ArrayList<>();
+	private List<Ventures> tempListVentures = new ArrayList<>();
+	
+	private Random random = new Random();
+
 	// constructor
 	public Deck() throws IOException {
 		//createDeck();
@@ -86,91 +93,81 @@ public class Deck {
 		line = br.readLine();
 		return line;
 	}
-
-	
-	public void dealCards(Board board) {
-		Random random = new Random();
-		int size = deckTerritories.size();
-		if (size == 24 || size == 16 || size == 8) {
-			for (int i = 7; i >= 4; i--) {
-				int index = random.nextInt(i);
-				dealSingleCards(board, index);
-			}
-			if (size == 20 || size == 12 || size == 4) {
-				for (int i = 3; i >= 0; i--) {
-					int index = random.nextInt(i);
-					dealSingleCards(board, index);
-				}
-			}
-
-		}
-	}
-
-	private void dealSingleCards(Board board, int index) {
-		dealTerritories(board, index);
-		dealCharacters(board, index);
-		dealBuildings(board, index);
-		dealVentures(board, index);
-	}
-	
-	
-	// getters and setters
-	public List<Territories> getDeckTerritories() {
-		return deckTerritories;
-	}
-
-	public void setDeckTerritories(List<Territories> deckTerritories) {
-		this.deckTerritories = deckTerritories;
-	}
-
-	public List<Characters> getDeckCharacters() {
-		return deckCharacters;
-	}
-
-	public void setDeckCharacters(List<Characters> deckCharacters) {
-		this.deckCharacters = deckCharacters;
-	}
-
-	public List<Buildings> getDeckBuildings() {
-		return deckBuildings;
-	}
-
-	public void setDeckBuildings(List<Buildings> deckBuildings) {
-		this.deckBuildings = deckBuildings;
-	}
-
-	public List<Ventures> getDeckVentures() {
-		return deckVentures;
-	}
-
-	public void setDeckVentures(List<Ventures> deckVentures) {
-		this.deckVentures = deckVentures;
+	/** This method deals the cards isolating the current period cards
+	 * and randomly choosing between them */
+	//TODO: valutare se è possibile usare meglio il polimorfismo 
+	public void dealCards(Board board, int cardsIndex) {
+		dealTerritories(board, cardsIndex);
+		dealCharacters(board, cardsIndex);
+		dealBuildings(board, cardsIndex);
+		dealVentures(board, cardsIndex);
 	}
 
 	
-
 	private void dealTerritories(Board board, int index) {
-		Development tempCard = deckTerritories.get(index);
-		board.getTowerTerritories().putCardInFirstEmptyPlace(tempCard);
-		deckTerritories.remove(index);
+
+		for (Territories card : deckTerritories) {
+			if (card.getRound() == index) {
+				tempListTerritory.add(card);
+				deckTerritories.remove(card);
+			}
+		}
+
+		for (int i = 0; i < 4; i++) {
+			int position = random.nextInt(tempListTerritory.size());
+			Development chosenCard = tempListTerritory.get(position);
+			tempListTerritory.remove(position);
+			board.getTowerTerritories().putCardInFirstEmptyPlace(chosenCard);
+		}
+
 	}
 
 	private void dealBuildings(Board board, int index) {
-		Development tempCard = deckBuildings.get(index);
-		board.getTowerBuildings().putCardInFirstEmptyPlace(tempCard);
-		deckBuildings.remove(index);
+		for (Buildings card : deckBuildings) {
+			if (card.getRound() == index) {
+				tempListBuildings.add(card);
+				deckBuildings.remove(card);
+			}
+		}
+
+		for (int i = 0; i < 4; i++) {
+			int position = random.nextInt(tempListBuildings.size());
+			Development chosenCard = tempListBuildings.get(position);
+			tempListBuildings.remove(position);
+			board.getTowerBuildings().putCardInFirstEmptyPlace(chosenCard);
+		}
 	}
 
 	private void dealCharacters(Board board, int index) {
-		Development tempCard = deckCharacters.get(index);
-		board.getTowerCharacters().putCardInFirstEmptyPlace(tempCard);
-		deckCharacters.remove(index);
+		for (Characters card : deckCharacters) {
+			if (card.getRound() == index) {
+				tempListCharacters.add(card);
+				deckCharacters.remove(card);
+			}
+		}
+
+		for (int i = 0; i < 4; i++) {
+			int position = random.nextInt(tempListCharacters.size());
+			Development chosenCard = tempListCharacters.get(position);
+			tempListCharacters.remove(position);
+			board.getTowerCharacters().putCardInFirstEmptyPlace(chosenCard);
+		}
 	}
 
 	private void dealVentures(Board board, int index) {
-		Development tempCard = deckVentures.get(index);
-		board.getTowerVentures().putCardInFirstEmptyPlace(tempCard);
-		deckVentures.remove(index);
+		for (Ventures card : deckVentures) {
+			if (card.getRound() == index) {
+				tempListVentures.add(card);
+				deckVentures.remove(card);
+			}
+		}
+
+		for (int i = 0; i < 4; i++) {
+			int position = random.nextInt(tempListVentures.size());
+			Development chosenCard = tempListVentures.get(position);
+			tempListVentures.remove(position);
+			board.getTowerVentures().putCardInFirstEmptyPlace(chosenCard);
+		}
 	}
 
 	public static void main(String args[]) throws IOException {
@@ -215,3 +212,4 @@ public class Deck {
 		//PermanentEffect pe = new IncreaseDieValueActivity("production", 3);
 	}
 }
+
