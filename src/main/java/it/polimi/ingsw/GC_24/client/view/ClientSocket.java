@@ -43,9 +43,15 @@ public class ClientSocket {
 		Socket socket = new Socket(IP, PORT);
 		System.out.println("CLIENT: Connection established");
 
-		int viewCode = this.createAndStartsInterface();
+		/*In another thread so the method can go on and the socketView created
+		 * TODO: sistemare quando si implementa la GUI, non si decide quale socketView creare*/
+		new Thread(new Runnable(){
+			public void run(){
+				createAndStartsInterface();
+			}
+		}).start();
 		
-		this.createClientSocketView(viewCode, socket);
+		createClientSocketView(socket);
 		
 		//minimodel is created inside the view
 	}
@@ -71,20 +77,14 @@ public class ClientSocket {
 	
 		}
 
-	public void createClientSocketView(int i, Socket socket) throws IOException {
+	public void createClientSocketView(Socket socket) throws IOException {
 
 		objToServer = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
 		objToServer.flush();
 		objFromServer = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
 
-		if (i == 0) {
+		clientSocketView = new ClientSocketViewCLI(objFromServer, objToServer, viewCLI);
 
-			clientSocketView = new ClientSocketViewGUI(objFromServer, objToServer, viewGUI);
-
-		} else {
-			clientSocketView = new ClientSocketViewCLI(objFromServer, objToServer, viewCLI);
-
-		}
 		executor.submit(clientSocketView);
 		
 	}

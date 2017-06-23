@@ -80,24 +80,6 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 
 		/* Contains the array of colours updated at the moment when requested */
 
-		if (command.contains("colours")) {
-
-			List<String> playerColoursArray = (List<String>) request.get("colours");
-			notifyMyObservers(playerColoursArray);
-		}
-
-		/* Contains the answer if the colour has already been chosen or not */
-
-		if (command.contains("coloursAnswer")) {
-
-			String colourAnswer = (String) request.get("coloursAnswer");
-			if (colourAnswer.equals("Colour Available")) {
-				view.setColourAvailable(1);
-			} else if (colourAnswer.equals("Colour Not Available")) {
-				view.setColourAvailable(0);
-			}
-		}
-
 		/* IN THIS CASE the request is handled by the viewCLI */
 		if (command.contains("cost1")) {
 			SetOfValues cost1 = (SetOfValues) request.get("Cost1");
@@ -125,13 +107,17 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 			Player currentPlayer = (Player) request.get("Turns");
 			if (currentPlayer.getMyColour().equals(view.getColour())) {
 				view.setMyTurn(true);
-			}else view.setMyTurn(false);
+			} else
+				view.setMyTurn(false);
 		}
 
 		if (command.contains("clientNumber")) {
-			int number = (int) request.get("clientNumber");
-			view.setClientNumber(number);
-			System.out.println("This is the player number " + number);
+			int clientNumber = (int) request.get("clientNumber");
+			int modelNumber = (int) request.get("modelNumber");
+			if (view.getClientNumber() == 0) {
+				view.setClientNumber(clientNumber);
+				notifyMyObservers("You are is the player #" + clientNumber+", connected to game #"+modelNumber);
+			}
 		}
 
 	}

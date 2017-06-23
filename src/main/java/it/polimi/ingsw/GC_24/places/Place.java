@@ -30,6 +30,7 @@ public abstract class Place implements java.io.Serializable {
 	// clears the place from the Family Member
 	public void clearPlace() {
 		this.famMemberOnPlace = null;
+		this.famMemberOnPlace.setAvailable(true);
 		this.setAvailable(true);
 	}
 

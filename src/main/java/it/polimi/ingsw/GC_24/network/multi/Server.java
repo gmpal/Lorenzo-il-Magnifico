@@ -58,17 +58,28 @@ public class Server {
 		ServerSocket serverSocket = new ServerSocket(PORT);
 		System.out.println("SERVER: ServerSocket created");
 
+		////Quick new Thread for running the addPlayer method separately
+		
+		
+		
 		while (true) {
 			try {
 				i++;
 				System.out.println("SERVER: Waiting connection number" + i);
 				Socket socket = serverSocket.accept();
 				createServerSocketView(socket);
-				registerObservers();
+				registerObservers();	
 				
 				if (game.isAcceptingPlayers()) {
-					game.addPlayer();
-					}
+				//	Thread t1 = new Thread (new Runnable() {
+				//		
+				//		public void run(){
+						game.addPlayer();
+				//		}
+				//	});
+				//	t1.start();
+				}		
+					
 				else launchAndCreateNewGame();
 				
 			} catch (IOException e) {
@@ -85,6 +96,7 @@ public class Server {
 		serverSocketView.registerMyObserver(controller);
 		controller.registerMyObserver(serverSocketView);
 	}
+	
 
 	private void createServerSocketView(Socket socket) {
 		try {
@@ -104,7 +116,7 @@ public class Server {
 		this.game = new Model(modelIndex);
 		this.controller = new Controller(game);
 		PlayerColour.resetValues();
-		System.out.println("Game #"+modelIndex+" created");
+		System.out.println("SERVER: ----> Game #"+modelIndex+" created");
 
 	}
 

@@ -30,6 +30,13 @@ public class Deck {
 	private List<Ventures> deckVentures = new ArrayList<>();
 	private List<Leader> deckLeaders = new ArrayList<>();
 
+	private List<Territories> tempListTerritory = new ArrayList<>();
+	private List<Characters> tempListCharacters = new ArrayList<>();
+	private List<Buildings> tempListBuildings = new ArrayList<>();
+	private List<Ventures> tempListVentures = new ArrayList<>();
+	
+	private Random random = new Random();
+
 	// constructor
 	public Deck() throws IOException {
 		createDeck();
@@ -79,34 +86,125 @@ public class Deck {
 		line = br.readLine();
 		return line;
 	}
+	/** This method deals the cards isolating the current period cards
+	 * and randomly choosing between them */
+	//TODO: valutare se è possibile usare meglio il polimorfismo 
+	public void dealCards(Board board, int cardsIndex) {
+		dealTerritories(board, cardsIndex);
+		dealCharacters(board, cardsIndex);
+		dealBuildings(board, cardsIndex);
+		dealVentures(board, cardsIndex);
+	}
 
 	
-	public void dealCards(Board board) {
-		Random random = new Random();
-		int size = deckTerritories.size();
-		if (size == 24 || size == 16 || size == 8) {
-			for (int i = 7; i >= 4; i--) {
-				int index = random.nextInt(i);
-				dealSingleCards(board, index);
-			}
-			if (size == 20 || size == 12 || size == 4) {
-				for (int i = 3; i >= 0; i--) {
-					int index = random.nextInt(i);
-					dealSingleCards(board, index);
-				}
-			}
+	private void dealTerritories(Board board, int index) {
 
+		for (Territories card : deckTerritories) {
+			if (card.getRound() == index) {
+				tempListTerritory.add(card);
+				deckTerritories.remove(card);
+			}
+		}
+
+		for (int i = 0; i < 4; i++) {
+			int position = random.nextInt(tempListTerritory.size());
+			Development chosenCard = tempListTerritory.get(position);
+			tempListTerritory.remove(position);
+			board.getTowerTerritories().putCardInFirstEmptyPlace(chosenCard);
+		}
+
+	}
+
+	private void dealBuildings(Board board, int index) {
+		for (Buildings card : deckBuildings) {
+			if (card.getRound() == index) {
+				tempListBuildings.add(card);
+				deckBuildings.remove(card);
+			}
+		}
+
+		for (int i = 0; i < 4; i++) {
+			int position = random.nextInt(tempListBuildings.size());
+			Development chosenCard = tempListBuildings.get(position);
+			tempListBuildings.remove(position);
+			board.getTowerBuildings().putCardInFirstEmptyPlace(chosenCard);
 		}
 	}
 
-	private void dealSingleCards(Board board, int index) {
-		dealTerritories(board, index);
-		dealCharacters(board, index);
-		dealBuildings(board, index);
-		dealVentures(board, index);
+	private void dealCharacters(Board board, int index) {
+		for (Characters card : deckCharacters) {
+			if (card.getRound() == index) {
+				tempListCharacters.add(card);
+				deckCharacters.remove(card);
+			}
+		}
+
+		for (int i = 0; i < 4; i++) {
+			int position = random.nextInt(tempListCharacters.size());
+			Development chosenCard = tempListCharacters.get(position);
+			tempListCharacters.remove(position);
+			board.getTowerCharacters().putCardInFirstEmptyPlace(chosenCard);
+		}
 	}
-	
-	
+
+	private void dealVentures(Board board, int index) {
+		for (Ventures card : deckVentures) {
+			if (card.getRound() == index) {
+				tempListVentures.add(card);
+				deckVentures.remove(card);
+			}
+		}
+
+		for (int i = 0; i < 4; i++) {
+			int position = random.nextInt(tempListVentures.size());
+			Development chosenCard = tempListVentures.get(position);
+			tempListVentures.remove(position);
+			board.getTowerVentures().putCardInFirstEmptyPlace(chosenCard);
+		}
+	}
+
+	public static void main(String args[]) throws IOException {
+		Gson gson = GsonBuilders.getGsonWithTypeAdapters();
+		ValueEffect ve = new ValueEffect("value");
+		SetOfValues set = new SetOfValues();
+		set.getCoins().setQuantity(1);
+		set.getWoods().setQuantity(1);
+		SetOfValues value = new SetOfValues();
+		value.getCoins().setQuantity(3);
+		ve.setEffectValues(value);
+		PersonalBuildings pb = new PersonalBuildings();
+
+		CouncilPrivilege privilege = new CouncilPrivilege("privilege", 2);
+		PerformHarvest pharv = new PerformHarvest("PerformHarvest", 4);
+		// ChooseNewCard cnc = new ChooseNewCard("ChooseNewCard", type,
+		// dieValue, setOfValue);
+		PerformProduction pprod = new PerformProduction("PerformProduction", 3);
+
+		MoltiplicationCards meffect = new MoltiplicationCards("MoltiplicationCards", new Coin(1), pb);
+		ValueEffect ve1 = new ValueEffect("value");
+		SetOfValues set1 = new SetOfValues();
+
+		set1.getWoods().setQuantity(2);
+		SetOfValues value1 = new SetOfValues();
+		value1.getCoins().setQuantity(5);
+		ve1.setEffectValues(value1);
+		Value val = new VictoryPoint(1);
+		MilitaryPoint mp = new MilitaryPoint(3);
+		ExchangePackage ep = new ExchangePackage(set, privilege);
+		ExchangePackage ep1 = new ExchangePackage(set1, ve1);
+		Exchange eeffect = new Exchange("Exchange", ep, null);
+
+		Buildings b = new Buildings("Commercial", 1, "Building", set, ve1, null, eeffect, null, 1);
+		Ventures v = new Ventures("Province", "Venture", set, null, val, null, pprod, null, 2);
+		String string = gson.toJson(v);
+		System.out.println(string);
+		/*
+		 * b = gson.fromJson(string, Buildings.class); System.out.println(b);
+		 * String string1 = gson.toJson(t1);
+		 */
+
+	}
+
 	// getters and setters
 	public List<Territories> getDeckTerritories() {
 		return deckTerritories;
@@ -138,74 +236,6 @@ public class Deck {
 
 	public void setDeckVentures(List<Ventures> deckVentures) {
 		this.deckVentures = deckVentures;
-	}
-
-	
-
-	private void dealTerritories(Board board, int index) {
-		Development tempCard = deckTerritories.get(index);
-		board.getTowerTerritories().putCardInFirstEmptyPlace(tempCard);
-		deckTerritories.remove(index);
-	}
-
-	private void dealBuildings(Board board, int index) {
-		Development tempCard = deckBuildings.get(index);
-		board.getTowerBuildings().putCardInFirstEmptyPlace(tempCard);
-		deckBuildings.remove(index);
-	}
-
-	private void dealCharacters(Board board, int index) {
-		Development tempCard = deckCharacters.get(index);
-		board.getTowerCharacters().putCardInFirstEmptyPlace(tempCard);
-		deckCharacters.remove(index);
-	}
-
-	private void dealVentures(Board board, int index) {
-		Development tempCard = deckVentures.get(index);
-		board.getTowerVentures().putCardInFirstEmptyPlace(tempCard);
-		deckVentures.remove(index);
-	}
-
-	public static void main(String args[]) throws IOException {
-		Gson gson = GsonBuilders.getGsonWithTypeAdapters();
-		ValueEffect ve = new ValueEffect("value");
-		SetOfValues set = new SetOfValues();
-		set.getCoins().setQuantity(1);
-		set.getWoods().setQuantity(1);
-		SetOfValues value = new SetOfValues();
-		value.getCoins().setQuantity(3);
-		ve.setEffectValues(value);
-		PersonalBuildings pb = new PersonalBuildings();
-
-		CouncilPrivilege privilege = new CouncilPrivilege("privilege", 2);
-		PerformHarvest pharv = new PerformHarvest("PerformHarvest", 4);
-		//ChooseNewCard cnc = new ChooseNewCard("ChooseNewCard", type, dieValue, setOfValue);
-		PerformProduction pprod = new PerformProduction("PerformProduction", 3);
-
-
-		MoltiplicationCards meffect = new MoltiplicationCards("MoltiplicationCards", new Coin(1), pb);
-		ValueEffect ve1 = new ValueEffect("value");
-		SetOfValues set1 = new SetOfValues();
-
-		set1.getWoods().setQuantity(2);
-		SetOfValues value1 = new SetOfValues();
-		value1.getCoins().setQuantity(5);
-		ve1.setEffectValues(value1);
-		Value val = new VictoryPoint(1);
-		MilitaryPoint mp = new MilitaryPoint(3);
-		ExchangePackage ep = new ExchangePackage(set, privilege);
-		ExchangePackage ep1 = new ExchangePackage(set1, ve1);
-		Exchange eeffect = new Exchange("Exchange", ep, null);
-
-		Buildings b = new Buildings("Commercial", 1, "Building", set, ve1, null, eeffect, null, 1);
-		Ventures v = new Ventures("Province","Venture", set, null, val, null, pprod, null, 2);
-		String string = gson.toJson(v);
-		System.out.println(string);
-	/*	b = gson.fromJson(string, Buildings.class);
-		System.out.println(b);
-		String string1 = gson.toJson(t1);*/
-
-
 	}
 
 }
