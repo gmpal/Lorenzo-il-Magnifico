@@ -9,6 +9,7 @@ import java.util.Random;
 import com.google.gson.Gson;
 import it.polimi.ingsw.GC_24.board.Board;
 import it.polimi.ingsw.GC_24.devCardJsonFile.GsonBuilders;
+import it.polimi.ingsw.GC_24.effects.ChooseNewCard;
 import it.polimi.ingsw.GC_24.effects.CouncilPrivilege;
 import it.polimi.ingsw.GC_24.effects.Exchange;
 import it.polimi.ingsw.GC_24.effects.ExchangePackage;
@@ -18,10 +19,13 @@ import it.polimi.ingsw.GC_24.effects.PerformProduction;
 import it.polimi.ingsw.GC_24.effects.ValueEffect;
 import it.polimi.ingsw.GC_24.personalboard.PersonalBuildings;
 import it.polimi.ingsw.GC_24.values.Coin;
+import it.polimi.ingsw.GC_24.values.FaithPoint;
 import it.polimi.ingsw.GC_24.values.MilitaryPoint;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
+import it.polimi.ingsw.GC_24.values.Stone;
 import it.polimi.ingsw.GC_24.values.Value;
 import it.polimi.ingsw.GC_24.values.VictoryPoint;
+import it.polimi.ingsw.GC_24.values.Wood;
 
 public class Deck {
 	private List<Territories> deckTerritories = new ArrayList<>();
@@ -79,7 +83,6 @@ public class Deck {
 		return line;
 	}
 
-	
 	public void dealCards(Board board) {
 		Random random = new Random();
 		int size = deckTerritories.size();
@@ -104,8 +107,7 @@ public class Deck {
 		dealBuildings(board, index);
 		dealVentures(board, index);
 	}
-	
-	
+
 	// getters and setters
 	public List<Territories> getDeckTerritories() {
 		return deckTerritories;
@@ -139,8 +141,6 @@ public class Deck {
 		this.deckVentures = deckVentures;
 	}
 
-	
-
 	private void dealTerritories(Board board, int index) {
 		Development tempCard = deckTerritories.get(index);
 		board.getTowerTerritories().putCardInFirstEmptyPlace(tempCard);
@@ -169,32 +169,43 @@ public class Deck {
 		BufferedReader br;
 		Gson gson = GsonBuilders.getGsonWithTypeAdapters();
 		String line;
-		Deck d=new Deck();
+		Deck d = new Deck();
 		System.out.println(d.getDeckBuildings());
 		System.out.println(d.getDeckCharacters());
 		System.out.println(d.getDeckTerritories());
 		System.out.println(d.getDeckVentures());
-		/*SetOfValues set = new SetOfValues();
-		SetOfValues set1 = new SetOfValues();
-		ValueEffect ve=new ValueEffect("value");
-		ve.setEffectValues(set);
-		set.setStones(new Stone(3));
-		set.setWoods(new Wood(1));
-		ValueEffect ve1=new ValueEffect("value");
-		ve1.setEffectValues(set);
-		set1.setVictoryPoints(new VictoryPoint(5));
-		Buildings t=new Buildings("Mint", 5, "Building", set, ve1, null, new MoltiplicationCards("moltiplicationCard", new Coin(1), new PersonalBuildings()), null, 1);
-		System.out.println(gson.toJson(t));
-		
-		br = new BufferedReader(new
-		FileReader("src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/provaC.json"));
-		String string;
-		string = br.readLine();
-		Buildings t1=gson.fromJson(string, Buildings.class);
-		ArrayList<Buildings> tx=new ArrayList<>();
-		tx.add(t1);
-		System.out.println(tx);
 
-		/*PermanentEffect pe = new IncreaseDieValueActivity("production", 3);*/
+		/*
+		 * br = new BufferedReader(new FileReader(
+		 * "src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/timerToStart.json"
+		 * )); String string; string = br.readLine(); int
+		 * i=Integer.parseInt(string); System.out.println(i); /*SetOfValues setv
+		 * = new SetOfValues(); SetOfValues setv1 = new SetOfValues();
+		 * setv1.setFaithPoints(new FaithPoint(1)); setv.setCoins(new Coin(3));
+		 * setv.setStones(new Stone(3)); setv.setWoods(new Wood(3)); ValueEffect
+		 * veffe = new ValueEffect("value");
+		 * 
+		 * veffe.setEffectValues(setv1); Ventures venture = new
+		 * Ventures("Repairing the Cathedral", "Venture", setv, null, new
+		 * VictoryPoint(5), null, new ChooseNewCard("chooseNewCard", null, 7,
+		 * null), veffe, 3); System.out.println(gson.toJson(venture));
+		 * 
+		 * 
+		 * SetOfValues set = new SetOfValues(); SetOfValues set1 = new
+		 * SetOfValues(); ValueEffect ve=new ValueEffect("value");
+		 * ve.setEffectValues(set); set.setStones(new Stone(3));
+		 * set.setWoods(new Wood(1)); ValueEffect ve1=new ValueEffect("value");
+		 * ve1.setEffectValues(set); set1.setVictoryPoints(new VictoryPoint(5));
+		 * Buildings t=new Buildings("Mint", 5, "Building", set, ve1, null, new
+		 * MoltiplicationCards("moltiplicationCard", new Coin(1), new
+		 * PersonalBuildings()), null, 1); System.out.println(gson.toJson(t));
+		 * 
+		 * 
+		 * Buildings t1=gson.fromJson(string, Buildings.class);
+		 * ArrayList<Buildings> tx=new ArrayList<>(); tx.add(t1);
+		 * System.out.println(tx);
+		 * 
+		 * PermanentEffect pe = new IncreaseDieValueActivity("production", 3);
+		 */
 	}
 }
