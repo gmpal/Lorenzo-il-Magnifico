@@ -45,11 +45,11 @@ public class ClientSocket {
 
 		/*In another thread so the method can go on and the socketView created
 		 * TODO: sistemare quando si implementa la GUI, non si decide quale socketView creare*/
-		new Thread(new Runnable(){
-			public void run(){
+	//	new Thread(new Runnable(){
+	//		public void run(){
 				createAndStartsInterface();
-			}
-		}).start();
+	//		}
+	//	}).start();
 		
 		createClientSocketView(socket);
 		

@@ -18,33 +18,28 @@ public class Player implements Serializable {
 	private PersonalBoard myBoard; 
 	private SetOfValues myValues;
 	private PlayerColour myColour;
+	private int playerNumber;
 	
 	//Constructor 
-	public Player() {
-		this.myColour = PlayerColour.valueOf(PlayerColour.getRandomColour());
+	public Player(int playerNumber) {
+		this.myColour = null;
 		this.myName ="TempName";
-		this.myFamily = new Family(myColour);
-		this.myBoard = new PersonalBoard();
+		this.myFamily = null;
+		this.myBoard = new PersonalBoard(playerNumber);
 		this.myValues = new SetOfValues();
+		this.playerNumber = playerNumber;
 	}
 	
-	public Player(String myName, PlayerColour myColour) {
-		this.myColour = myColour;
-		this.myName =myName;
-		this.myFamily = new Family(myColour);
-		this.myBoard = new PersonalBoard();
+	//constructor for tests
+	public Player(String string, PlayerColour colour) {
+		this.myColour = colour;
+		this.myName ="TempName";
+		this.myFamily = new Family(colour);
+		this.myBoard = new PersonalBoard(1);
 		this.myValues = new SetOfValues();
-	}
-	
-	//useful methods
-	public void setPlayer(String myName, PlayerColour myColour){
-		this.myColour = myColour;
-		this.myName = myName;
-		this.myFamily =  new Family(myColour);
-		this.myBoard = new PersonalBoard();
-		this.myValues = new SetOfValues();
-	}
-	
+		this.playerNumber = 1;	
+		}
+
 	//useful to find the value of the player if you only know his colour
 	public SetOfValues getMyValuesFromColour(PlayerColour playerColour) {
 		if(this.myColour.equals(playerColour))

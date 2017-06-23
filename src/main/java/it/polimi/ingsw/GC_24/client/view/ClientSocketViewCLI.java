@@ -89,8 +89,19 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 		}
 
 		if (command.contains("model")) {
+			synchronized(view.getWaitingForAnswer()){
+				view.setMiniModel((Model) request.get("model"));
+				if (view.getMyself() == null || view.getMyself().getMyName().equals("TempName")){
+					  view.setMyself(view.getMiniModel().getPlayers().get(view.getPlayerNumber()-1));
+					  System.out.println("IO DOVREI ESSERE: "+view.getMyself());
+				}
+				view.getWaitingForAnswer().notify();
+			}
+		
 
-			view.setMiniModel((Model) request.get("model"));
+		}
+		if (command.contains("info")) {
+			notifyMyObservers(request.get("info"));
 
 		}
 
@@ -105,18 +116,18 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 		}
 		if (command.contains("CurrentPlayer")) {
 			Player currentPlayer = (Player) request.get("Turns");
-			if (currentPlayer.getMyColour().equals(view.getColour())) {
+			if (currentPlayer.equals(view.getMyself())) {
 				view.setMyTurn(true);
 			} else
 				view.setMyTurn(false);
 		}
 
 		if (command.contains("clientNumber")) {
-			int clientNumber = (int) request.get("clientNumber");
+			int playerNumber = (int) request.get("clientNumber");
 			int modelNumber = (int) request.get("modelNumber");
-			if (view.getClientNumber() == 0) {
-				view.setClientNumber(clientNumber);
-				notifyMyObservers("You are is the player #" + clientNumber+", connected to game #"+modelNumber);
+			if (view.getPlayerNumber() == 0) {
+				view.setPlayerNumber(playerNumber);
+				notifyMyObservers("You are the player #" + playerNumber+", connected to game #"+modelNumber);
 			}
 		}
 

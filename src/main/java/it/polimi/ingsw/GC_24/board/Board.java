@@ -50,14 +50,23 @@ public class Board implements java.io.Serializable {
 
 	// clears the board
 	public void clear() {
+		System.out.println("in clear");
 		this.towerTerritories.clearPlaces();
+		System.out.println("clear territori");
 		this.towerCharacters.clearPlaces();
+		System.out.println("clear towerCharacters");
 		this.towerBuildings.clearPlaces();
+		System.out.println("clear towerBuildings");
 		this.towerVentures.clearPlaces();
+		System.out.println("clear towerVentures");
 		this.harvest.clearPlaces();
+		System.out.println("clear harvest");
 		this.production.clearPlaces();
+		System.out.println("clear production");
 		this.market.clearPlaces();
+		System.out.println("clear market");
 		this.councilPalace.clearPlaces();
+		System.out.println("clear councilPalace");
 	}
 
 	@Override

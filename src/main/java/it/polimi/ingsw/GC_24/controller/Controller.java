@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.MyObserver;
@@ -13,12 +15,11 @@ import it.polimi.ingsw.GC_24.cards.Ventures;
 import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
-import it.polimi.ingsw.GC_24.model.PlayerColour;
 import it.polimi.ingsw.GC_24.model.State;
+import it.polimi.ingsw.GC_24.network.multi.Server;
 import it.polimi.ingsw.GC_24.places.TowerPlace;
 import it.polimi.ingsw.GC_24.values.MilitaryPoint;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
-import it.polimi.ingsw.GC_24.network.multi.Server;
 
 //Just one server's side controller for each game
 public class Controller extends MyObservable implements MyObserver, Runnable {
@@ -56,28 +57,39 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	@Override
 	public void run() {
-
+		waitAndAutocomplete();
+		
+		
 		game.setModel(game.getPlayers());
-		sendModelToClients();
+		
+		game.sendModel();
 		this.currentPlayer = game.getCurrentPlayer();
 
 		playerTurn = game.getPlayers();
 		game.setGameState(State.PERIOD1_ROUND1);
 
-		while (game.getGameState().equals(State.ENDED)) {
+		while (!game.getGameState().equals(State.ENDED)) {
+			System.out.println("GAME STATE: " + game.getGameState());
 			//END OF ROUND (OR FIRST) --> We need to clear the board
+			System.out.println(game.getBoard());
 			game.getBoard().clear();
-			game.getCards().dealCards(game.getBoard(), cardsIndex/2+1);
-			sendModelToClients();
+			System.out.println("BoardClear");
+	//		game.getCards().dealCards(game.getBoard(), cardsIndex/2+1);
+			System.out.println("DealCards");
+			game.sendModel();
 			
+			System.out.println("Controller: everything clear and model sent");
 			for (int j = 0; j < 4; j++) {
 				// one Family gone for each player --> End of round
 				for (int i = 0; i < playerTurn.size(); i++) {
 					// one familar gone for each player
 
 					game.setCurrentPlayer(playerTurn.get(i));
+					System.out.println("Controller:current Player setted");
 					sendTurnArray(playerTurn);
+					System.out.println("Controller:Turn array sent");
 					if (!alreadyPlaying)
+						System.out.println("Before LetTHemPlay");
 						letThemPlay();
 
 					/*
@@ -115,6 +127,40 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	
+	
+
+
+	private void waitAndAutocomplete() {
+		Timer timer = new Timer();
+		timer.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				System.out.println("no more time to insert name");
+				autoCompletePlayers();
+			}
+		}, 10000);
+		
+	}
+	
+
+	/**This method automatically completes the players name and colours, notifying the clients */
+	public void autoCompletePlayers() {
+	
+		for (Player p : game.getPlayers()) {
+			int index = game.getPlayers().indexOf(p);
+		
+			if (p.getMyName().equals("TempName")) {
+				
+				p.setMyName("Player_" + index);
+				System.out.println("Player autocompleted");
+				game.sendModel();
+			}
+			
+			
+		}
+
+	}
+
 	
 	/**
 	 * This method handles the end of the game. 1)Conquered Territories:
@@ -197,9 +243,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 		}
 
-		else if (command.contains("colours")) {
-			return handleColours(o, request);
-		}
+
 
 		else if (command.contains("chosenCost")) {
 			synchronized (tempCostWaiting) {
@@ -215,10 +259,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			return handleAction(o, request);
 		}
 
-		/* Checks if the colour has already been chosen */
-		else if (command.contains("checkColour")) {
-			return checkColour(o, request);
-		}
 
 		else {
 			return "bad command";
@@ -232,70 +272,18 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		StringTokenizer tokenizer = new StringTokenizer(playerString);
 		String clientNumber = tokenizer.nextToken();
 		String name = tokenizer.nextToken();
-		String colour = tokenizer.nextToken();
 		int indexOfPlayer = Integer.parseInt(clientNumber) - 1;
 
 		Player tempPlayer = game.getPlayers().get(indexOfPlayer);
 
-		tempPlayer.setPlayer(name, PlayerColour.valueOf(colour.toUpperCase()));
+		tempPlayer.setMyName(name);
 
 		game.sendModel();
 		return "player " + clientNumber + " updated";
 
 	}
 
-	private String checkColour(MyObservable o, Map<String, Object> request) {
-		System.out.println("Controller: started checking colour!");
-		String colour = (String) request.get("checkColour");
-		String availability;
-		if (PlayerColour.checkValue(colour)) {
-			availability = "Colour Available";
-			PlayerColour.removeValue(colour);
-		} else {
-			availability = "Colour Not Available";
-		}
-		hashMap = new HashMap<>();
-		hashMap.put("coloursAnswer", availability);
-		this.notifySingleObserver((MyObserver) o, hashMap);
-		return "Controller: Colour checked";
-	}
 
-	private String handleColours(MyObservable o, Map<String, Object> request) {
-		System.out.println("Controller: started handling colours");
-		List<String> playerColoursArray = PlayerColour.getValues();
-		HashMap<String, Object> coloursMap = new HashMap<String, Object>();
-		coloursMap.put("colours", playerColoursArray);
-		this.notifySingleObserver((MyObserver) o, coloursMap);
-		System.out.println("ServerOut: ArrayListOfColours sent");
-		return " ArrayListOfColours sent";
-	}
-
-	private Player createPlayerFromString(String playerString) {
-		StringTokenizer tokenizer = new StringTokenizer(playerString);
-		String name = tokenizer.nextToken();
-		String colour = tokenizer.nextToken();
-		Player player = new Player();
-		player.setPlayer(name, PlayerColour.valueOf(colour.toUpperCase()));
-		notifyAll();
-		return player;
-
-	}
-
-	public void sendModelToClients() {
-		System.out.println("Sono il controller numero" + this.getControllerNumber());
-		System.out.println("Sto inviando il game numero" + game.getModelNumber());
-		hashMap = new HashMap<>();
-		hashMap.put("model", game);
-		notifyMyObservers(hashMap);
-	}
-
-	public int getControllerNumber() {
-		return controllerNumber;
-	}
-
-	public void setControllerNumber(int controllerNumber) {
-		this.controllerNumber = controllerNumber;
-	}
 
 	private String handleAction(MyObservable o, Map<String, Object> request) {
 		System.out.println("Controller: started handling action");
@@ -334,7 +322,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			actionWaiting.notify();
 		}
 		//Ho modificato il model. Lo invio! 
-		sendModelToClients();
+		game.sendModel();
 	
 		return "Azione effettuata";
 	}
@@ -385,6 +373,14 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	// game's getter
 	public Model getGame() {
 		return game;
+	}
+	
+	public int getControllerNumber() {
+		return controllerNumber;
+	}
+
+	public void setControllerNumber(int controllerNumber) {
+		this.controllerNumber = controllerNumber;
 	}
 
 }

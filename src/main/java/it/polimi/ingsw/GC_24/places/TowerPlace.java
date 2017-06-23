@@ -42,9 +42,13 @@ public class TowerPlace extends Place {
 
 	@Override
 	public void clearPlace() {
+		if (this.famMemberOnPlace != null){
+		this.famMemberOnPlace.setAvailable(true);
+		}
 		this.famMemberOnPlace = null;
 		this.setAvailable(true);
-		this.famMemberOnPlace.setAvailable(true);
+		
+	
 		this.correspondingCard = null;
 	}
 	

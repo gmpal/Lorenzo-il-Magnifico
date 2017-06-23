@@ -13,6 +13,7 @@ import it.polimi.ingsw.GC_24.board.Board;
 import it.polimi.ingsw.GC_24.cards.Deck;
 import it.polimi.ingsw.GC_24.client.view.ServerSocketView;
 import it.polimi.ingsw.GC_24.dice.SetOfDice;
+import it.polimi.ingsw.GC_24.network.multi.Server;
 
 public class Model extends MyObservable implements Serializable {
 	/**
@@ -67,7 +68,7 @@ public class Model extends MyObservable implements Serializable {
 		timer = new Timer();
 		counter++;
 		sendNumberToClient();
-		Player player = new Player();
+		Player player = new Player(counter);
 		this.getPlayers().add(player);
 		System.out.println("Model: PLAYER "+player);
 		System.out.println("Model: Player #" + counter + "added to Game #" + getModelNumber());
@@ -82,7 +83,9 @@ public class Model extends MyObservable implements Serializable {
 				public void run() {
 					System.out.println("Model: *TIME UP*");
 					isAcceptingPlayers=false;
-					autoCompletePlayers();
+					
+					Server.launchAndCreateNewGame();
+					
 					
 				}
 			}, 15000);
@@ -90,7 +93,9 @@ public class Model extends MyObservable implements Serializable {
 	
 			if (getGameState().equals(State.RUNNING)) {
 				
-				isAcceptingPlayers=false;
+				timer.cancel();
+				Server.launchAndCreateNewGame();
+				
 			}
 				
 		
@@ -118,35 +123,19 @@ public class Model extends MyObservable implements Serializable {
 		
 		
 		
-		
-		
+		//Setting the players
 		for (Player p : players) {
 			p.getMyValues().setInitialValues(players.indexOf(p));
+			p.setMyColour(PlayerColour.valueOf(PlayerColour.getValues().get(players.indexOf(p))));
+			p.setMyFamily(new Family (p.getMyColour()));
 			p.getMyFamily().setFamily(this.dice);
+		
 			rankings.add(new Ranking(p));
 		}
 
 	}
 	
-	/**This method automatically completes the players name and colours, notifying the clients */
-	public void autoCompletePlayers() {
 	
-		for (Player p : getPlayers()) {
-			int index = getPlayers().indexOf(p);
-		
-			if (p.getMyName().equals("TempName")) {
-				
-				p.setPlayer("Player_" + index, PlayerColour.valueOf(PlayerColour.getValues().get(0)));
-				PlayerColour.getValues().remove(0);
-				System.out.println("Player autocompleted");
-				sendModel();
-			}
-			
-			
-		}
-
-	}
-
 	public void incrementState() {
 		this.setGameState(this.getGameState().nextState());
 	}

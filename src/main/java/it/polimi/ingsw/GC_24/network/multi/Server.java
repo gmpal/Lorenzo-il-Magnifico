@@ -26,14 +26,14 @@ public class Server {
 	private static final int PORT = 28469;
 	private final static int RMI_PORT = 29999;
 	
-	private Model game;
-	private Controller controller;
-	private ServerSocketView serverSocketView;
+	private static Model game;
+	private static Controller controller;
+	private static ServerSocketView serverSocketView;
 	
 
-	private int i = 0;
-	private int modelIndex = 1;
-	ExecutorService threadPool = Executors.newCachedThreadPool();
+	private static int i = 0;
+	private static int modelIndex = 1;
+	private static ExecutorService threadPool = Executors.newCachedThreadPool();
 	
 	
 	// Crea un server e fa partire il suo metodo startServer()
@@ -52,7 +52,7 @@ public class Server {
 	}
 
 	/**Handle the clients connection adding them to the model, if it is not already full*/
-	public void startSocketServer() throws IOException, InterruptedException {
+	public static void startSocketServer() throws IOException, InterruptedException {
 		
 	
 		ServerSocket serverSocket = new ServerSocket(PORT);
@@ -66,21 +66,16 @@ public class Server {
 			try {
 				i++;
 				System.out.println("SERVER: Waiting connection number" + i);
-				Socket socket = serverSocket.accept();
-				createServerSocketView(socket);
-				registerObservers();	
 				
-				if (game.isAcceptingPlayers()) {
-				//	Thread t1 = new Thread (new Runnable() {
-				//		
-				//		public void run(){
-						game.addPlayer();
-				//		}
-				//	});
-				//	t1.start();
-				}		
-					
-				else launchAndCreateNewGame();
+				
+					Socket socket = serverSocket.accept();
+					System.out.println("Connection #" +i + " done");
+					createServerSocketView(socket);
+					registerObservers();
+								
+					game.addPlayer();
+				
+				
 				
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -91,14 +86,14 @@ public class Server {
 		serverSocket.close();
 	}
 	
-	private void registerObservers() {
+	private static void registerObservers() {
 		game.registerMyObserver(serverSocketView);
 		serverSocketView.registerMyObserver(controller);
 		controller.registerMyObserver(serverSocketView);
 	}
 	
 
-	private void createServerSocketView(Socket socket) {
+	private static void createServerSocketView(Socket socket) {
 		try {
 			serverSocketView = new ServerSocketView(socket);
 			threadPool.submit(serverSocketView);
@@ -109,12 +104,12 @@ public class Server {
 	}
 	
 
-	private void launchAndCreateNewGame() {
+	public static void launchAndCreateNewGame() {
 
 		modelIndex++;
-		threadPool.submit(this.controller);
-		this.game = new Model(modelIndex);
-		this.controller = new Controller(game);
+		threadPool.submit(controller);
+		game = new Model(modelIndex);
+		controller = new Controller(game);
 		PlayerColour.resetValues();
 		System.out.println("SERVER: ----> Game #"+modelIndex+" created");
 

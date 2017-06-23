@@ -29,9 +29,15 @@ public abstract class Place implements java.io.Serializable {
 
 	// clears the place from the Family Member
 	public void clearPlace() {
+		System.out.println("Entrato in clearPlace()");
+		if (this.famMemberOnPlace != null) {
+			this.famMemberOnPlace.setAvailable(true);
+		}
+System.out.println("Prima istruzione superata");
 		this.famMemberOnPlace = null;
-		this.famMemberOnPlace.setAvailable(true);
+		System.out.println("Seconda istruzione superata");
 		this.setAvailable(true);
+		System.out.println("Terza istruzione superata");
 	}
 
 	// redefined in MarketPlace, Tower, CouncilPlace change parameter in
@@ -95,7 +101,7 @@ public abstract class Place implements java.io.Serializable {
 		this.famMemberOnPlace = famMemberOnPlace;
 		this.setAvailable(false);
 	}
-	
+
 	public abstract ValueEffect getValue();
 
 }
