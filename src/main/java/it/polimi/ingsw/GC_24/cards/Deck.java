@@ -188,18 +188,21 @@ public class Deck {
 		ve1.setEffectValues(set);
 		set1.setVictoryPoints(new VictoryPoint(5));
 		NoValueEffectFromTowerPlace nvet = new NoValueEffectFromTowerPlace("NoValueEffectFromTowerPlace");
-		CouncilPrivilege privilege = new CouncilPrivilege("CouncilPrivilege", 3);
+		CouncilPrivilege privilege = new CouncilPrivilege("CouncilPrivilege", 1);
 		ChooseNewCard cnc = new ChooseNewCard("ChooseNewCard", null, 7, null);
 		IncreaseDieValueActivity increase = new IncreaseDieValueActivity("IncreaseDieValueHarvest", 2);
 		Buildings t=new Buildings("Mint", 5, "Building", set, ve1, null, new MoltiplicationCards("moltiplicationCard", new Coin(1), new PersonalBuildings()), null, 1);
-		PerformHarvest ph = new PerformHarvest("Perform Harvest", 4);
+		PerformHarvest ph = new PerformHarvest("Perform Harvest", 1);
+		PerformProduction pp = new PerformProduction("Perform Production", 0);
 		PersonalTerritories pt = new PersonalTerritories();
 		MoltiplicationCards mc = new MoltiplicationCards("MoltiplicationCards", new VictoryPoint(2), pt);
 		MoltiplicationPoints mp = new MoltiplicationPoints("MoltiplicationPoints", new VictoryPoint(1), new MilitaryPoint(2));
 		IncreaseDieValueCard pe = new IncreaseDieValueCard("IncreaseDieValueCard", pt, 2, null, null);
 		Ventures v = new Ventures("Reparing the Cathedral", "Venture", set, null, new VictoryPoint(5), null, ve, cnc, 3);
 		Characters c = new Characters("preacher", "Character", set, ve, nvet, null, 1);
-		System.out.println(gson.toJson(v));
+		Requirements requirements = new Requirements(null, 2, 4, 0, 0);
+		Leader l = new Leader("Girolamo Savonarola", requirements, null, pp, null, true);
+		System.out.println(gson.toJson(l));
 	/*	br = new BufferedReader(new
 		FileReader("src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/provaC.json"));
 		String string;
