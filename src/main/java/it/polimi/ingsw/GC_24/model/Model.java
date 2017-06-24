@@ -31,11 +31,6 @@ public class Model extends MyObservable implements Serializable {
 	private List<Ranking> rankings;
 	private HashMap<String, Object> hm;
 	private Deck cards;
-		
-	
-	
-
-
 
 	private int modelNumber;
 
@@ -43,19 +38,17 @@ public class Model extends MyObservable implements Serializable {
 
 	private int counter;
 
-	
 	private static Timer timer;
 
-
 	public Model(int modelNumber) {
-				
+
 		this.players = new ArrayList<>();
 		this.board = null;
 		this.currentPlayer = null;
 		this.gameState = State.WAITINGFORPLAYERONE;
 		this.dice = null;
 		this.rankings = new ArrayList<Ranking>();
-		this.counter=0;
+		this.counter = 0;
 		this.modelNumber = modelNumber;
 		this.cards = new Deck();
 	}
@@ -64,16 +57,17 @@ public class Model extends MyObservable implements Serializable {
 	public synchronized void addPlayer(){
 		
 		
+
 		counter++;
 		sendNumberToClient();
 		Player player = new Player(counter);
 		this.getPlayers().add(player);
-		System.out.println("Model: PLAYER "+player);
+		System.out.println("Model: PLAYER " + player);
 		System.out.println("Model: Player #" + counter + "added to Game #" + getModelNumber());
-		
+
 		incrementState();
 		sendModel();
-		
+
 		if (getGameState().equals(State.WAITINGFORPLAYERTHREE)) {
 			System.out.println("Model: Timer Starting");
 			timer = new Timer();
@@ -81,25 +75,22 @@ public class Model extends MyObservable implements Serializable {
 				@Override
 				public void run() {
 					System.out.println("Model: *TIME UP*");
+
 					Server.launchAndCreateNewGame();
 					}
+
 			}, 15000);
 		}
-	
-			if (getGameState().equals(State.RUNNING)) {
-				
-				timer.cancel();
-				Server.launchAndCreateNewGame();
-				
-			}
-				
-		
+
+		if (getGameState().equals(State.RUNNING)) {
+
+			timer.cancel();
+			Server.launchAndCreateNewGame();
+
+		}
+
 	}
-	
-	
-	
-	
-	
+
 	/*
 	 * After a Model is created and the players are get, this method sets the
 	 * model so the game could start
@@ -107,31 +98,26 @@ public class Model extends MyObservable implements Serializable {
 
 	public void setModel(List<Player> players) {
 
-
 		this.players = players;
 		this.board = new Board(players.size());
 		this.currentPlayer = players.get(0);
 		this.setGameState(State.RUNNING);
-	
 		this.cards = new Deck();
 		this.dice = new SetOfDice();
 		this.dice.reset();
-		
-		
-		
-		//Setting the players
+
+		// Setting the players
 		for (Player p : players) {
 			p.getMyValues().setInitialValues(players.indexOf(p));
 			p.setMyColour(PlayerColour.valueOf(PlayerColour.getValues().get(players.indexOf(p))));
-			p.setMyFamily(new Family (p.getMyColour()));
+			p.setMyFamily(new Family(p.getMyColour()));
 			p.getMyFamily().setFamily(this.dice);
-		
+
 			rankings.add(new Ranking(p));
 		}
 
 	}
-	
-	
+
 	public void incrementState() {
 		this.setGameState(this.getGameState().nextState());
 	}
@@ -139,10 +125,10 @@ public class Model extends MyObservable implements Serializable {
 	public void sendModel() {
 		hm = new HashMap<>();
 		hm.put("model", this);
-	//	System.out.println("FROM MODEL SENDING THIS "+this);
+		// System.out.println("FROM MODEL SENDING THIS "+this);
 		notifyMyObservers(hm);
 	}
-	
+
 	private void sendNumberToClient() {
 		hm = new HashMap<>();
 		hm.put("clientNumber", counter);
@@ -159,9 +145,8 @@ public class Model extends MyObservable implements Serializable {
 		return null;
 	}
 
-	// getters and setters
+// getters and setters
 
-	
 	public int getModelNumber() {
 		return modelNumber;
 	}
@@ -190,7 +175,6 @@ public class Model extends MyObservable implements Serializable {
 		return dice;
 	}
 
-	
 	public void setPlayers(ArrayList<Player> players) {
 		this.players = players;
 	}
@@ -211,7 +195,6 @@ public class Model extends MyObservable implements Serializable {
 		this.dice = dice;
 	}
 
-		
 	public boolean isAcceptingPlayers() {
 		return isAcceptingPlayers;
 	}
@@ -219,11 +202,10 @@ public class Model extends MyObservable implements Serializable {
 	public void setAcceptingPlayers(boolean isAcceptingPlayers) {
 		this.isAcceptingPlayers = isAcceptingPlayers;
 	}
-	
+
 	public Deck getCards() {
 		return cards;
 	}
-
 
 	public void setCards(Deck cards) {
 		this.cards = cards;
@@ -233,8 +215,6 @@ public class Model extends MyObservable implements Serializable {
 	public String toString() {
 		return "Model [players=" + players + ", gameState=" + gameState + ", modelNumber=" + modelNumber + "]";
 	}
-
-
 
 
 }

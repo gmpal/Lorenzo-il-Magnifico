@@ -2,6 +2,7 @@ package it.polimi.ingsw.GC_24.personalboard;
 
 import java.util.*;
 import it.polimi.ingsw.GC_24.cards.*;
+import it.polimi.ingsw.GC_24.values.VictoryPoint;
 
 public abstract class PersonalCards implements java.io.Serializable{
 
@@ -22,6 +23,7 @@ public abstract class PersonalCards implements java.io.Serializable{
 	the corresponding subClass of PersonalCards in a specific Personal board */
 	public abstract PersonalCards findCardsInPersonalBoard(PersonalBoard playersBoard);
 	
+	public abstract  VictoryPoint convertCardToVictoryPoints();
 	
 	//getters and setters
 	public void setCards(Development card){

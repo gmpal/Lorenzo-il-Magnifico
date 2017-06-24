@@ -1,4 +1,4 @@
-package it.polimi.ingsw.GC_24.cards;
+﻿package it.polimi.ingsw.GC_24.cards;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -34,10 +34,8 @@ import it.polimi.ingsw.GC_24.values.Value;
 import it.polimi.ingsw.GC_24.values.VictoryPoint;
 import it.polimi.ingsw.GC_24.values.Wood;
 
-public class Deck implements Serializable {
-	
 
-	
+public class Deck implements Serializable {
 
 	/**
 	 * 
@@ -66,7 +64,9 @@ public class Deck implements Serializable {
 		}
 	}
 
+
 	// create 4 deck arrayList from 4 different file with Json
+
 	public void createDeck() throws IOException {
 		BufferedReader br;
 		Gson gson = GsonBuilders.getGsonWithTypeAdapters();
@@ -122,7 +122,6 @@ public class Deck implements Serializable {
 
 	
 	private void dealTerritories(Board board, int index) {
-	
 
 		for (Territories card : deckTerritories) {
 			
@@ -144,8 +143,6 @@ public class Deck implements Serializable {
 			
 			board.getTowerTerritories().putCardInFirstEmptyPlace(chosenCard);
 			
-		}
-
 		
 	}
 
@@ -198,7 +195,9 @@ public class Deck implements Serializable {
 	}
 
 	public static void main(String args[]) throws IOException {
+
 	/*	SetOfValues set = new SetOfValues();
+
 		SetOfValues set1 = new SetOfValues();
 		ValueEffect ve=new ValueEffect("value");
 		ve.setEffectValues(set);
@@ -232,6 +231,7 @@ public class Deck implements Serializable {
 		System.out.println(tx);*/
 
 		//PermanentEffect pe = new IncreaseDieValueActivity("production", 3);
+
 
 	}
 }

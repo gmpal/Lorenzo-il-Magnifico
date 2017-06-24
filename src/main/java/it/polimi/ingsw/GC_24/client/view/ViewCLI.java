@@ -16,6 +16,7 @@ import it.polimi.ingsw.GC_24.values.SetOfValues;
 
 public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	private static Scanner scanner = new Scanner(System.in);
+
 	private volatile Model miniModel;
 	private  String name = null;
 	
@@ -29,8 +30,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	
 	private volatile Player myself = null;
 
-	
-	
+
 	@Override
 	public synchronized void run() {
 
@@ -50,6 +50,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		
 		if (myself.getMyName()==null) {
 			System.out.println("ENTRATO NELL IF");
+
 			try {
 				this.sendPlayerString(name);
 				System.out.println("NAME SENT");
@@ -63,9 +64,8 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		}
 
 		System.out.println("Waiting for other players");
-		
-	}
 
+	}
 
 	public String setName() {
 		String sc = null;
@@ -76,16 +76,15 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		return sc;
 	}
 
-
-	
-		
 	public void sendPlayerString(String name) throws InterruptedException {
 		System.out.println("ENTRATO NELL SEND");
 		String player = (playerNumber + " " + name);
 		hm = new HashMap<>();
 		hm.put("player", player);
 		this.notifyMyObservers(hm);
+
 		System.out.println("STO PER INVIARE AL SERVER "+hm);
+
 
 		synchronized (waitingForAnswer) {
 			while (!miniModel.getPlayers().get((playerNumber) - 1).getMyName().equalsIgnoreCase(name)) {
@@ -94,6 +93,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		}
 		System.out.println("il server ha ricevuto la tua modifica e ha aggiornato il nome");
 	}
+
 
 	public synchronized void play() {
 		
@@ -104,69 +104,62 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		  
 		
 	
+
 		while (!miniModel.getGameState().equals(State.ENDED)) {
-					showAndGetOption();
+			showAndGetOption();
 		}
-		
-		//TODO: view a partita terminata
+
+		// TODO: view a partita terminata
 	}
 
-	
 	public void showAndGetOption() {
 
 		System.out.println("Choose action:\n" + "a)Show board\n" + "b)Show personal board\n" + "c)Show leader cards\n"
 				+ "d)Place family member\n" + "e)Use a leader card\n" + "f)Throw a leader card\n" + "g)End turn\n"
 				+ "h)Exit");
 		String command = scanner.nextLine();
-		
+
 		if (command.equals("a")) {
 			System.out.println(miniModel.getBoard());
-		} 
-		else if (command.equals("b")) {
+		} else if (command.equals("b")) {
 			System.out.println(myself.getMyBoard());
-		} 
-		else if (command.equals("c")) {
-			//TODO: aggiungere leadercards alla personalBoard
-		//	System.out.println(myself.getMyBoard().);
+		} else if (command.equals("c")) {
+			// TODO: aggiungere leadercards alla personalBoard
+			// System.out.println(myself.getMyBoard().);
 			System.out.println("This function is not been implemented yet");
-		} 
-		else if (command.equals("d")) {
+		} else if (command.equals("d")) {
 			System.out.println(myself.getMyFamily());
 			command = fourChoice("family member") + " " + choosePlace();
-			if (command.contains("cancel"))	System.out.println("Action cancelled");
-			else sendAction(command);
-		} 
-		else if (command.equals("e")) {
+			if (command.contains("cancel"))
+				System.out.println("Action cancelled");
+			else
+				sendAction(command);
+		} else if (command.equals("e")) {
 			// miniModel.getPlayerfromColour(PlayerColour.valueOf(colour.toUpperCase())).getLeaderCards().chooseLeaderCard();
 			System.out.println("This function is not been implemented yet");
-		} 
-		else if (command.equals("f")) {
+		} else if (command.equals("f")) {
 			// miniModel.getPlayerfromColour(PlayerColour.valueOf(colour.toUpperCase())).getLeaderCards().throwLeaderCard();
 			System.out.println("This function is not been implemented yet");
-		} 
-		else	if (command.equals("g")) {
+		} else if (command.equals("g")) {
 			command = "end";
 			System.out.println("This function is not been implemented yet");
-			//TODO: gestione della fine del turno
-		} 
-		else if (command.equals("h")) {
+			// TODO: gestione della fine del turno
+		} else if (command.equals("h")) {
 			System.out.println("This function is not been implemented yet");
 			// break;
-			//TODO:gestire la disconnessione;
-		} 
-		else{
+			// TODO:gestire la disconnessione;
+		} else {
 			System.out.println("Wrong character");
 		}
-		
 
 	}
 
-	private void sendAction(String command){
+	private void sendAction(String command) {
 		hm = new HashMap<>();
 		hm.put("action", command);
 		notifyMyObservers(hm);
 	}
-	
+
 	private String choosePlace() {
 		String commandZone;
 		String floor = "floor";
@@ -220,13 +213,14 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 
 	public String fourChoice(String s) {
 		String commandFloor;
-		int commandFloorInt;
+		int commandFloorInt = 0;
 		do {
 			System.out.println("Choose " + s + " (1,2,3,4) 5)Cancel ");
-			commandFloorInt = scanner.nextInt();
-			System.out.println("Choose " + s + " (1,2,3,4) 5)Cancel ");
 			commandFloor = isInt(scanner.nextLine());
-			if (commandFloor != null && (commandFloorInt > 5 || commandFloorInt < 1)) {
+			if (commandFloor != null) {
+				commandFloorInt = Integer.parseInt(commandFloor);
+			}
+			if (commandFloor == null && (commandFloorInt > 5 || commandFloorInt < 1)) {
 				System.out.println("Wrong number!");
 				commandFloor = null;
 			}
@@ -240,8 +234,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 
 	public String increaseDieValue(String commandZone) {
 		String increase;
-		int servants = myself.getMyValues()
-				.getServants().getQuantity();
+		int servants = myself.getMyValues().getServants().getQuantity();
 		System.out.println("How much do you want to increase the die's value?");
 		increase = isInt(scanner.nextLine());
 		if (increase == null) {
@@ -328,7 +321,6 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		this.miniModel = model;
 	}
 
-	
 	public boolean isMyTurn() {
 		return myTurn;
 	}
@@ -344,30 +336,25 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	public void setPlayerTurn(List<Player> playerTurn) {
 		this.playerTurn = playerTurn;
 	}
-	
 
 	public Player getMyself() {
 		return myself;
 	}
 
-
 	public void setMyself(Player myself) {
 		this.myself = myself;
 	}
-	
+
 	public int getPlayerNumber() {
 		return playerNumber;
 	}
 
-
 	public void setPlayerNumber(int playerNumber) {
 		this.playerNumber = playerNumber;
 	}
-	
 
 	public Object getWaitingForAnswer() {
 		return waitingForAnswer;
 	}
-
 
 }
