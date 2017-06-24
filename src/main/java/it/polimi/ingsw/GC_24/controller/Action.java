@@ -35,11 +35,11 @@ public abstract class Action {
 	 */
 	public void giveValueEffect(List<ImmediateEffect> immediateEffects) {
 		String nameEffect;
-		for (ImmediateEffect im : immediateEffects) {
-			nameEffect = im.getName();
+		for (int i=0;i<immediateEffects.size();i++) {
+			nameEffect = immediateEffects.get(i).getName();
 			if (nameEffect.equals("value")) {
-				im.giveImmediateEffect(player);
-				immediateEffects.remove(im);
+				immediateEffects.get(i).giveImmediateEffect(player);
+				immediateEffects.remove(immediateEffects.get(i--));
 			}
 		}
 	}
