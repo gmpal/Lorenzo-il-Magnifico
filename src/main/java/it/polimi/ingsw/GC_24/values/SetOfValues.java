@@ -101,6 +101,10 @@ public class SetOfValues implements Serializable {
 				&& this.militaryPoints.getQuantity() >= 0 && this.victoryPoints.getQuantity() >= 0);
 	}
 
+	public VictoryPoint convertSetToVictoryPoints() {
+		return new VictoryPoint((int)((this.coins.quantity+this.servants.quantity+this.stones.quantity+this.woods.quantity)/5));
+	}
+
 	// hashCode() redefined
 	@Override
 	public int hashCode() {

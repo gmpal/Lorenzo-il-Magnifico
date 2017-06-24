@@ -4,6 +4,7 @@ import it.polimi.ingsw.GC_24.effects.*;
 import it.polimi.ingsw.GC_24.personalboard.PersonalBoard;
 
 import it.polimi.ingsw.GC_24.values.SetOfValues;
+import it.polimi.ingsw.GC_24.values.VictoryPoint;
 
 public abstract class Development extends Card {
 	/**
@@ -35,6 +36,7 @@ public abstract class Development extends Card {
 																				// in
 																				// every
 																				// subclass
+
 
 	// getter and setters
 	public SetOfValues getCost() {
