@@ -5,12 +5,13 @@ import it.polimi.ingsw.GC_24.places.HarvestPlace;
 import it.polimi.ingsw.GC_24.places.Place;
 
 public class Harvest extends Area {
-	/**
+
+	
+/**
 	 * 
 	 */
 	private static final long serialVersionUID = -7173055480132725602L;
-	
-//	private List<HarvestPlace> harvestArray = new ArrayList<>();
+	//	private List<HarvestPlace> harvestArray = new ArrayList<>();
 	private boolean placesLocked;
 	private int numPlayers;
 	private static final int FACTOR=2; 						//Max number of player's familyMember in Production

@@ -16,11 +16,11 @@ import it.polimi.ingsw.GC_24.places.MarketPlace;
 import it.polimi.ingsw.GC_24.places.Place;
 
 public class Market extends Area {
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 2530623420397285959L;
-
+	private static final long serialVersionUID = 2905959753632826514L;
 	private boolean placesLocked;
 	private static final int MINPLACES = 2; // Place with 2 players
 	private static final int MAXPLACES = 4; // Place from 3 players

@@ -16,33 +16,43 @@ import it.polimi.ingsw.GC_24.values.SetOfValues;
 
 public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	private static Scanner scanner = new Scanner(System.in);
-	private Model miniModel;
-	private String name;
+	private volatile Model miniModel;
+	private  String name = null;
 	
 	private HashMap<String, Object> hm;
 	private Timer timer;
 	private Object waitingForAnswer = new Object();
 	
-	private boolean myTurn = false;
+	private  boolean myTurn = false;
 	private List<Player> playerTurn;
-	private int playerNumber;
+	private  int playerNumber;
 	
-	private Player myself = null;
+	private volatile Player myself = null;
 
 	
 	
 	@Override
-	public void run() {
+	public synchronized void run() {
 
 		this.miniModel = new Model(0);
-
+		
+		//SLEEP FOR TWO SECONDS
+		try {
+			Thread.sleep(400);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
 		name = setName();
 
 		
-		if (myself.getMyName().equals("TempName")) {
-			System.out.println("NAME SENT");
+		if (myself.getMyName()==null) {
+			System.out.println("ENTRATO NELL IF");
 			try {
 				this.sendPlayerString(name);
+				System.out.println("NAME SENT");
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -70,20 +80,22 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	
 		
 	public void sendPlayerString(String name) throws InterruptedException {
+		System.out.println("ENTRATO NELL SEND");
 		String player = (playerNumber + " " + name);
 		hm = new HashMap<>();
 		hm.put("player", player);
 		this.notifyMyObservers(hm);
-
+		System.out.println("STO PER INVIARE AL SERVER "+hm);
 
 		synchronized (waitingForAnswer) {
 			while (!miniModel.getPlayers().get((playerNumber) - 1).getMyName().equalsIgnoreCase(name)) {
 				waitingForAnswer.wait();
 			}
 		}
+		System.out.println("il server ha ricevuto la tua modifica e ha aggiornato il nome");
 	}
 
-	public void play() {
+	public synchronized void play() {
 		
 		  System.out.println("The players' turn for the first round is:"); 
 		  for(int i = 0, j = 1; i < miniModel.getPlayers().size(); i++, j++) {
@@ -295,7 +307,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	@Override
 	public <C> void update(MyObservable o, C change) {
 
-		System.out.println("Answer " + change);
+		System.out.println(change);
 
 	}
 

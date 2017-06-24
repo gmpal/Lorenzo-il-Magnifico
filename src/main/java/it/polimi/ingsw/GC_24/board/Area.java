@@ -6,11 +6,12 @@ import it.polimi.ingsw.GC_24.model.PlayerColour;
 import it.polimi.ingsw.GC_24.places.Place;
 
 public abstract class Area implements java.io.Serializable {
+	
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -1186597780187256338L;
-
+	private static final long serialVersionUID = 2756356223377195910L;
 	protected List<Place> placesArray = new ArrayList<>();
 	
 	/**This method returns true if in the zone you're trying to put your family member in
@@ -43,12 +44,8 @@ public abstract class Area implements java.io.Serializable {
 	
 	// empties all the places
 	public void clearPlaces() {
-		System.out.println("CLEAR PLACES ENTERED");
-		System.out.println("Sto per pulire "+placesArray);
+
 		for (Place place : this.placesArray) {
-			System.out.println("********************ENTRATO NEL CICLO");
-			System.out.println("LUNGHEZZA PLACEC ARRAY "+ placesArray.size());
-			System.out.println(place.getClass().getSimpleName());
 			place.clearPlace();
 		}
 	}

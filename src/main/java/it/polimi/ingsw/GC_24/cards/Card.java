@@ -2,11 +2,12 @@ package it.polimi.ingsw.GC_24.cards;
 
 
 public class Card implements java.io.Serializable{	
+	
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 3429619393274815938L;
-	
+	private static final long serialVersionUID = 3554603775414321683L;
 	protected String name;
 
 

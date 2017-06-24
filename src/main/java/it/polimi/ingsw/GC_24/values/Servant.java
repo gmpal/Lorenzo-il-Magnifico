@@ -3,10 +3,12 @@ package it.polimi.ingsw.GC_24.values;
 import it.polimi.ingsw.GC_24.model.Player;
 
 public class Servant extends Value {
+	
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 3877764112115951326L;
+	private static final long serialVersionUID = 5014119871839792430L;
 
 	//constructor
 	public Servant(int value) {

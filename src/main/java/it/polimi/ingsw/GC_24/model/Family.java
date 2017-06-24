@@ -3,11 +3,12 @@ package it.polimi.ingsw.GC_24.model;
 import it.polimi.ingsw.GC_24.dice.SetOfDice;
 
 public class Family implements java.io.Serializable{
+	
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 5804293454395183049L;
-	
+	private static final long serialVersionUID = -8845801385694798977L;
 	private FamilyMember member1;
 	private FamilyMember member2;
 	private FamilyMember member3;

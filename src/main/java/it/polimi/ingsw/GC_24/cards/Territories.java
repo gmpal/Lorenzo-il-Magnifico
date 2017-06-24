@@ -5,11 +5,12 @@ import it.polimi.ingsw.GC_24.personalboard.PersonalBoard;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 
 public class Territories extends Development {
+
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1023997492010425653L;
-
+	private static final long serialVersionUID = 3085569800080233356L;
 	private int dieValueHarvest;
 	private ImmediateEffect effectForHarvest;
 

@@ -3,10 +3,11 @@ package it.polimi.ingsw.GC_24.values;
 import it.polimi.ingsw.GC_24.model.Player;
 
 public class VictoryPoint extends Value{
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -1874093446151388845L;
+	private static final long serialVersionUID = -2268345424205673910L;
 
 	//constructor
 	public VictoryPoint(int value) {

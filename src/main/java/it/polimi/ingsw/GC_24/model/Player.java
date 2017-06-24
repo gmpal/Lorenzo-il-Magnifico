@@ -8,39 +8,41 @@ import it.polimi.ingsw.GC_24.places.Place;
 import it.polimi.ingsw.GC_24.values.*;
 
 public class Player implements Serializable {
+	
+
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -6848723894380632778L;
-
+	private static final long serialVersionUID = 2255445460112622580L;
 	private String myName;
 	private Family myFamily;
 	private PersonalBoard myBoard;
 	private SetOfValues myValues;
 	private PlayerColour myColour;
 	private int playerNumber;
-	
-	//Constructor 
-	public Player(int playerNumber) {
+
+	// Constructor
+	public Player(int playerNumber){
 		this.myColour = null;
-		this.myName ="TempName";
+		this.myName = null;
 		this.myFamily = null;
 		this.myBoard = new PersonalBoard(playerNumber);
 		this.myValues = new SetOfValues();
 		this.playerNumber = playerNumber;
 	}
-	
-	//constructor for tests
-	public Player(String string, PlayerColour colour) {
+
+	// constructor for tests
+	public Player(String name, PlayerColour colour) {
 		this.myColour = colour;
-		this.myName ="TempName";
+		this.myName = name;
 		this.myFamily = new Family(colour);
 		this.myBoard = new PersonalBoard(1);
 		this.myValues = new SetOfValues();
-		this.playerNumber = 1;	
-		}
+		this.playerNumber = 1;
+	}
 
-	//useful to find the value of the player if you only know his colour
+	// useful to find the value of the player if you only know his colour
 	public SetOfValues getMyValuesFromColour(PlayerColour playerColour) {
 		if (this.myColour.equals(playerColour))
 			return myValues;

@@ -11,6 +11,7 @@ import java.util.TimerTask;
 
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.MyObserver;
+import it.polimi.ingsw.GC_24.cards.Deck;
 import it.polimi.ingsw.GC_24.cards.Ventures;
 import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
 import it.polimi.ingsw.GC_24.model.Model;
@@ -35,12 +36,17 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	private List<Player> playerTurn;
 	private Player currentPlayer;
 	private int cardsIndex = 0;
+	
 
+	
 	private boolean alreadyPlaying = false;
+	private boolean autocompleted;
 
 	// locks
 	private Object tempCostWaiting = new Object();
 	private Object actionWaiting = new Object();
+	private Object waitingForAutocompleting = new Object();;
+
 
 	// constructor
 
@@ -57,8 +63,23 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	@Override
 	public void run() {
+		
 		waitAndAutocomplete();
 		
+		
+		//WAITING FOR AUTOCOMPLETING
+		synchronized (waitingForAutocompleting){
+		while(!autocompleted){
+			try {
+				waitingForAutocompleting.wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		}
+		
+
 		
 		game.setModel(game.getPlayers());
 		
@@ -70,12 +91,12 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 		while (!game.getGameState().equals(State.ENDED)) {
 			System.out.println("GAME STATE: " + game.getGameState());
-			//END OF ROUND (OR FIRST) --> We need to clear the board
-			System.out.println(game.getBoard());
+			
+			
 			game.getBoard().clear();
-			System.out.println("BoardClear");
-	//		game.getCards().dealCards(game.getBoard(), cardsIndex/2+1);
-			System.out.println("DealCards");
+			
+			game.getCards().dealCards(game.getBoard(), cardsIndex/2+1);
+			
 			game.sendModel();
 			
 			System.out.println("Controller: everything clear and model sent");
@@ -85,11 +106,11 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					// one familar gone for each player
 
 					game.setCurrentPlayer(playerTurn.get(i));
-					System.out.println("Controller:current Player setted");
+				
 					sendTurnArray(playerTurn);
-					System.out.println("Controller:Turn array sent");
+					
 					if (!alreadyPlaying)
-						System.out.println("Before LetTHemPlay");
+						
 						letThemPlay();
 
 					/*
@@ -132,32 +153,40 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	private void waitAndAutocomplete() {
 		Timer timer = new Timer();
-		timer.schedule(new TimerTask() {
-			@Override
-			public void run() {
-				System.out.println("no more time to insert name");
+		timer.schedule(new TimerTask(){
+				public void run(){
+				System.out.println("*****PLAYER NAME INSERTION TIME UP*****");
 				autoCompletePlayers();
 			}
-		}, 10000);
+		}, 5000);
 		
 	}
+
+	
 	
 
 	/**This method automatically completes the players name and colours, notifying the clients */
 	public void autoCompletePlayers() {
 	
 		for (Player p : game.getPlayers()) {
-			int index = game.getPlayers().indexOf(p);
 		
-			if (p.getMyName().equals("TempName")) {
-				
+			if (p.getMyName()==null) {
+				int index = game.getPlayers().indexOf(p) +1;
 				p.setMyName("Player_" + index);
-				System.out.println("Player autocompleted");
+				System.out.println("Player"+index+"autocompleted with name: "+p.getMyName());
+			
+				System.out.println("STO INVIANDO: "+game);
 				game.sendModel();
+				
 			}
 			
 			
 		}
+		synchronized (waitingForAutocompleting){
+			autocompleted = true;
+			waitingForAutocompleting.notify();
+		}
+		
 
 	}
 
@@ -267,6 +296,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	private String handlePlayer(Map<String, Object> request) {
+		System.out.println("IO CONTROLLER HO RICEVUTO: "+ request);
 		String playerString = (String) request.get("player");
 		System.out.println(playerString);
 		StringTokenizer tokenizer = new StringTokenizer(playerString);
@@ -279,6 +309,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		tempPlayer.setMyName(name);
 
 		game.sendModel();
+		System.out.println("player " + clientNumber + " updated");
 		return "player " + clientNumber + " updated";
 
 	}
@@ -382,5 +413,14 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	public void setControllerNumber(int controllerNumber) {
 		this.controllerNumber = controllerNumber;
 	}
+/*	
+	public Deck getCards() {
+		return cards;
+	}
 
+	public void setCards(Deck cards) {
+		this.cards = cards;
+	}
+
+*/
 }

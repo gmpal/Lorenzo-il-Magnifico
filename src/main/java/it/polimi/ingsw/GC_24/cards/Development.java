@@ -6,11 +6,12 @@ import it.polimi.ingsw.GC_24.personalboard.PersonalBoard;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 
 public abstract class Development extends Card {
+
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 9083471155940958683L;
-
+	private static final long serialVersionUID = -3515605227556133665L;
 	private SetOfValues cost;
 	private String type;
 	private ImmediateEffect immediateEffects1;

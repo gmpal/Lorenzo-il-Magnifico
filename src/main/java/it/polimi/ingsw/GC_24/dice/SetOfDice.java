@@ -3,14 +3,13 @@ package it.polimi.ingsw.GC_24.dice;
 import java.util.Random;
 
 public class SetOfDice implements java.io.Serializable{
+	
+	
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -1903765412020655499L;
-	/*EVERY TIME A NEW SET IS CREATED, IT IS RANDOM!
-	No need to create a SetRandom or ThrowDice methods
-	just a Reset() for next turns without destroying our existing set */
-	
+	private static final long serialVersionUID = -7301515708684254512L;
 	private Die die1;
 	private Die die2;
 	private Die die3;

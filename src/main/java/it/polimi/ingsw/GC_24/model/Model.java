@@ -16,20 +16,27 @@ import it.polimi.ingsw.GC_24.dice.SetOfDice;
 import it.polimi.ingsw.GC_24.network.multi.Server;
 
 public class Model extends MyObservable implements Serializable {
+
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -4715762523324083940L;
-
+	private static final long serialVersionUID = -6361938651563234916L;
 	private List<Player> players;
 	private Board board;
 	private Player currentPlayer;
 	private State gameState;
+	
 	private SetOfDice dice;
 	private List<Ranking> rankings;
 	private HashMap<String, Object> hm;
 	private Deck cards;
 		
+	
+	
+
+
+
 	private int modelNumber;
 
 	private boolean isAcceptingPlayers = true;
@@ -50,22 +57,13 @@ public class Model extends MyObservable implements Serializable {
 		this.rankings = new ArrayList<Ranking>();
 		this.counter=0;
 		this.modelNumber = modelNumber;
-		
-		
-	/*	try {
 		this.cards = new Deck();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
 	}
 
 	
 	public synchronized void addPlayer(){
-		//THIS PROCESS SHOULD GO TO A SPECIFIC THREAD 
-		//IN ORDER TO NOT BLOCKING THE SERVER
 		
-		timer = new Timer();
+		
 		counter++;
 		sendNumberToClient();
 		Player player = new Player(counter);
@@ -78,16 +76,13 @@ public class Model extends MyObservable implements Serializable {
 		
 		if (getGameState().equals(State.WAITINGFORPLAYERTHREE)) {
 			System.out.println("Model: Timer Starting");
+			timer = new Timer();
 			timer.schedule(new TimerTask() {
 				@Override
 				public void run() {
 					System.out.println("Model: *TIME UP*");
-					isAcceptingPlayers=false;
-					
 					Server.launchAndCreateNewGame();
-					
-					
-				}
+					}
 			}, 15000);
 		}
 	
@@ -117,7 +112,8 @@ public class Model extends MyObservable implements Serializable {
 		this.board = new Board(players.size());
 		this.currentPlayer = players.get(0);
 		this.setGameState(State.RUNNING);
-		
+	
+		this.cards = new Deck();
 		this.dice = new SetOfDice();
 		this.dice.reset();
 		
@@ -223,12 +219,7 @@ public class Model extends MyObservable implements Serializable {
 	public void setAcceptingPlayers(boolean isAcceptingPlayers) {
 		this.isAcceptingPlayers = isAcceptingPlayers;
 	}
-	@Override
-	public String toString() {
-		return "Model [players=" + players + ", gameState=" + gameState + ", modelNumber=" + modelNumber + "]";
-	}
-
-
+	
 	public Deck getCards() {
 		return cards;
 	}
@@ -237,6 +228,12 @@ public class Model extends MyObservable implements Serializable {
 	public void setCards(Deck cards) {
 		this.cards = cards;
 	}
+	
+	@Override
+	public String toString() {
+		return "Model [players=" + players + ", gameState=" + gameState + ", modelNumber=" + modelNumber + "]";
+	}
+
 
 
 

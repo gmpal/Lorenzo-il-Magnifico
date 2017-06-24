@@ -3,10 +3,11 @@ package it.polimi.ingsw.GC_24.values;
 import it.polimi.ingsw.GC_24.model.Player;
 
 public class Coin extends Value {
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 5476502152547873802L;
+	private static final long serialVersionUID = 6532928366092412694L;
 
 	// constructor
 	public Coin(int value) {

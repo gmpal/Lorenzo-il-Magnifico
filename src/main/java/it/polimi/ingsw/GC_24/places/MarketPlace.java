@@ -11,8 +11,7 @@ public class MarketPlace extends Place {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 5096841999224669924L;
-
+	private static final long serialVersionUID = 6828018041713667284L;
 	private ValueEffect value;
 	private ImmediateEffect privilegeEffect;
 

@@ -9,10 +9,12 @@ import it.polimi.ingsw.GC_24.values.SetOfValues;
 import it.polimi.ingsw.GC_24.values.Value;
 
 public class ProductionPlace extends ActivityPlace{
+
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -3520071878963185433L;
+	private static final long serialVersionUID = -1488467430023982193L;
 
 	//constructor
 	public ProductionPlace(int costDice, int additionalCostDice) {

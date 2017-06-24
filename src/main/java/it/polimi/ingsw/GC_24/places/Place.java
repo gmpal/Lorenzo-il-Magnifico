@@ -9,11 +9,11 @@ import it.polimi.ingsw.GC_24.values.Value;
 
 public abstract class Place implements java.io.Serializable {
 
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -2155289391346850824L;
-
+	private static final long serialVersionUID = -6111921142196116931L;
 	private int costDice;
 	protected boolean available;
 	protected FamilyMember famMemberOnPlace;
@@ -29,15 +29,15 @@ public abstract class Place implements java.io.Serializable {
 
 	// clears the place from the Family Member
 	public void clearPlace() {
-		System.out.println("Entrato in clearPlace()");
+	
 		if (this.famMemberOnPlace != null) {
 			this.famMemberOnPlace.setAvailable(true);
 		}
-System.out.println("Prima istruzione superata");
+
 		this.famMemberOnPlace = null;
-		System.out.println("Seconda istruzione superata");
+		
 		this.setAvailable(true);
-		System.out.println("Terza istruzione superata");
+		
 	}
 
 	// redefined in MarketPlace, Tower, CouncilPlace change parameter in

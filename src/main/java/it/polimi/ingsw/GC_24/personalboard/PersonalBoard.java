@@ -4,11 +4,11 @@ import java.io.IOException;
 
 public class PersonalBoard implements java.io.Serializable{
 
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 3714661515499864596L;
-	
+	private static final long serialVersionUID = -1010492492112081930L;
 	private PersonalBuildings personalBuildings;
 	private PersonalVentures personalVentures;
 	private PersonalTerritories personalTerritories;

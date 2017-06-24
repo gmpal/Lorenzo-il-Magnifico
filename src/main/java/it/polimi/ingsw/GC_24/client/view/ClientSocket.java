@@ -14,14 +14,14 @@ import javax.swing.JOptionPane;
 
 public class ClientSocket {
 
-	private ViewCLI viewCLI;
+	private ViewCLI viewCLI = new ViewCLI();
 	private ViewGUI viewGUI;
 	private ClientSocketViewInterface clientSocketView;
 	private ObjectOutputStream objToServer;
 	private ObjectInputStream objFromServer;
 
 	
-	private final static int PORT = 28469;
+	private final static int PORT = 19999;
 	private final static String IP = "127.0.0.1";
 
 	ExecutorService executor = Executors.newFixedThreadPool(2);
@@ -43,16 +43,11 @@ public class ClientSocket {
 		Socket socket = new Socket(IP, PORT);
 		System.out.println("CLIENT: Connection established");
 
-		/*In another thread so the method can go on and the socketView created
-		 * TODO: sistemare quando si implementa la GUI, non si decide quale socketView creare*/
-	//	new Thread(new Runnable(){
-	//		public void run(){
-				createAndStartsInterface();
-	//		}
-	//	}).start();
-		
+	//			createAndStartsInterface();
+
 		createClientSocketView(socket);
-		
+		executor.submit(viewCLI);
+		//TODO:sistemare quando creiamo la GUI
 		//minimodel is created inside the view
 	}
 
@@ -79,9 +74,9 @@ public class ClientSocket {
 
 	public void createClientSocketView(Socket socket) throws IOException {
 
-		objToServer = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+		objToServer = new ObjectOutputStream(socket.getOutputStream());
 		objToServer.flush();
-		objFromServer = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
+		objFromServer = new ObjectInputStream(socket.getInputStream());
 
 		clientSocketView = new ClientSocketViewCLI(objFromServer, objToServer, viewCLI);
 

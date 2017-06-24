@@ -5,11 +5,12 @@ import it.polimi.ingsw.GC_24.personalboard.PersonalBoard;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 
 public class Buildings extends Development {
+	
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 944266538603562720L;
-
+	private static final long serialVersionUID = -2263424574013433330L;
 	private int dieValueProduction;
 	private ImmediateEffect productionEffect, productionEffect1;
 

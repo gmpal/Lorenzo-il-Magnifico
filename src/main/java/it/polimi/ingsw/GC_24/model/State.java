@@ -1,7 +1,5 @@
 package it.polimi.ingsw.GC_24.model;
 
-import java.io.Serializable;
-
 public enum State {
 
 	STARTING {

@@ -1,10 +1,11 @@
 package it.polimi.ingsw.GC_24.personalboard;
 
 public class PersonalBuildings extends PersonalCards {
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5472867055452183246L;
+	private static final long serialVersionUID = 5691660182911164428L;
 
 	//constructor
 	public PersonalBuildings() {

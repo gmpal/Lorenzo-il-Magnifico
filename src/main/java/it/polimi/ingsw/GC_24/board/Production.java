@@ -6,11 +6,12 @@ import it.polimi.ingsw.GC_24.places.Place;
 import it.polimi.ingsw.GC_24.places.ProductionPlace;
 
 public class Production extends Area {	
+	
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -137644096001563710L;
-	
+	private static final long serialVersionUID = 3362638299010232983L;
 	private boolean placesLocked;
 	private int numPlayers;
 	private static final int FACTOR=2; 						//Max number of player's familyMember in Production

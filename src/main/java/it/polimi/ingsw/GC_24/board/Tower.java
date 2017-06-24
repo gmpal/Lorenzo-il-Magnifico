@@ -23,11 +23,12 @@ import it.polimi.ingsw.GC_24.places.Place;
 import it.polimi.ingsw.GC_24.places.TowerPlace;
 
 public class Tower extends Area {
+	
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -4478838679204067326L;
-
+	private static final long serialVersionUID = -845687222256530834L;
 	private static final int NUMTOWERPLACE = 4;
 	private List<ImmediateEffect> valueListTower = new ArrayList<>();
 

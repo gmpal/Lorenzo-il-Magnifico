@@ -1,6 +1,7 @@
 package it.polimi.ingsw.GC_24.personalboard;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -10,17 +11,23 @@ import it.polimi.ingsw.GC_24.devCardJsonFile.GsonBuilders;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 
 public class BonusTile implements java.io.Serializable {
+	
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -1103689384999543201L;
-
+	private static final long serialVersionUID = 7330731129325631314L;
 	private SetOfValues harvestValues;
 	private SetOfValues productionValues;
 
 	// constructor
-	public BonusTile(boolean advanceRules, int index) throws IOException {
-		createBonusTile(advanceRules, index);
+	public BonusTile(boolean advanceRules, int index) {
+		try {
+			createBonusTile(advanceRules, index);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -33,8 +40,9 @@ public class BonusTile implements java.io.Serializable {
 	 * for the setOfValues given when you do production, the first couple is
 	 * used when you play with the simple rules, the other couples when you play
 	 * with the advanced rules
+	 * @throws IOException 
 	 */
-	private void createBonusTile(boolean advanceRules, int index) throws IOException {
+	private void createBonusTile(boolean advanceRules, int index) throws IOException{
 		BufferedReader br;
 		Gson gson = GsonBuilders.getGsonWithTypeAdapters();
 		String line;

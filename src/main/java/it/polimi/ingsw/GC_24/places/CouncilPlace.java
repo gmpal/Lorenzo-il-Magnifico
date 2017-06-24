@@ -5,11 +5,12 @@ import it.polimi.ingsw.GC_24.effects.ValueEffect;
 import it.polimi.ingsw.GC_24.model.Player;
 
 public class CouncilPlace extends Place {
+	
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 3762534738065469265L;
-
+	private static final long serialVersionUID = 6096762163130360101L;
 	private ImmediateEffect privilegeEffect;
 	private ValueEffect value;
 

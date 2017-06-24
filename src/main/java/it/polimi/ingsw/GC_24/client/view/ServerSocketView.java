@@ -25,9 +25,9 @@ public class ServerSocketView extends MyObservable implements Runnable, MyObserv
 	// constructor --> Receive a socket and creates Scanner and PrintWriter
 	public ServerSocketView(Socket socket) throws IOException {
 		this.socket = socket;
-		this.objToClient = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+		this.objToClient = new ObjectOutputStream(socket.getOutputStream());
 		objToClient.flush();
-		this.objFromClient = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
+		this.objFromClient = new ObjectInputStream(socket.getInputStream());
 		
 	}
 
@@ -68,21 +68,17 @@ public class ServerSocketView extends MyObservable implements Runnable, MyObserv
 	}
 
 	
-	public void sendToClient(Object c) throws IOException{
-		objToClient.writeObject(c);
-		objToClient.flush();
-	//	System.out.println("ServerOut: I have sent"+c);
-		
-	}
+	
 	@Override
 	public <C> void update(MyObservable o, C change) {
 	//	System.out.println("ServerOut: I have been notified by " + o.getClass().getSimpleName());
 
 		try {
+			
 			objToClient.writeObject(change);
-			objToClient.reset();
 			objToClient.flush();
-		//	System.out.println("ServerOut: I have sent"+change);
+			objToClient.reset();
+			System.out.println("ServerOut: I have sent"+change);
 			
 		} catch (IOException e) {
 			e.printStackTrace();

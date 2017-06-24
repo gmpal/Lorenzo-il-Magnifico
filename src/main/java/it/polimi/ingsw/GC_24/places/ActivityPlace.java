@@ -4,11 +4,12 @@ import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.values.Value;
 
 public abstract class ActivityPlace extends Place{
+	
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -6187260072256801458L;
-	
+	private static final long serialVersionUID = -2421131792594876986L;
 	private int additionalCostDice;
 	
 	//constructor

@@ -5,11 +5,11 @@ import it.polimi.ingsw.GC_24.personalboard.PersonalBoard;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 
 public class Characters extends Development {
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 727209788794536624L;
-
+	private static final long serialVersionUID = -6525349620957061540L;
 	private PermanentEffect permanentEffects;
 
 	// constructor

@@ -4,11 +4,12 @@ import java.util.*;
 import it.polimi.ingsw.GC_24.cards.*;
 
 public abstract class PersonalCards implements java.io.Serializable{
+
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -7889181412221643829L;
-	
+	private static final long serialVersionUID = 2709524868772549247L;
 	private List<Development> cards;
 	
 	//constructor

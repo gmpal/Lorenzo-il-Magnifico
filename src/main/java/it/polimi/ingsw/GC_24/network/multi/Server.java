@@ -23,7 +23,7 @@ import it.polimi.ingsw.GC_24.model.PlayerColour;
 
 public class Server {
 
-	private static final int PORT = 28469;
+	private static final int PORT = 19999;
 	private final static int RMI_PORT = 29999;
 
 	private static Model game;
@@ -54,24 +54,17 @@ public class Server {
 
 		ServerSocket serverSocket = new ServerSocket(PORT);
 		System.out.println("SERVER: ServerSocket created");
-
-		
-		
+	
 		
 		
 		while (true) {
 			try {
 				i++;
-				System.out.println("SERVER: Waiting connection number" + i);
-
-
-				
-				
+					System.out.println("SERVER: Waiting connection number" + i);
 					Socket socket = serverSocket.accept();
 					System.out.println("Connection #" +i + " done");
 					createServerSocketView(socket);
 					registerObservers();
-								
 					game.addPlayer();
 				
       } catch (IOException e) {

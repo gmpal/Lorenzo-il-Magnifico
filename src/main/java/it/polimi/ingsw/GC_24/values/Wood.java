@@ -5,10 +5,12 @@ import java.io.Serializable;
 import it.polimi.ingsw.GC_24.model.Player;
 
 public class Wood extends Value  {
+	
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -941493447402070076L;
+	private static final long serialVersionUID = -2271433451577531200L;
 
 	//constructor
 	public Wood(int value){

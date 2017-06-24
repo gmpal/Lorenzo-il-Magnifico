@@ -3,11 +3,12 @@ package it.polimi.ingsw.GC_24.model;
 import it.polimi.ingsw.GC_24.values.*;
 
 public class Ranking implements java.io.Serializable {
+	
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 851431576708074088L;
-	
+	private static final long serialVersionUID = -2248100702854353172L;
 	private Player player;
 	private FaithPoint faithPoints;
 	private MilitaryPoint militaryPoints;

@@ -54,9 +54,11 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 	@Override
 	public <C> void update(MyObservable o, C change) {
 		try {
+			
+			
 			objToServer.writeObject(change);
-			objToServer.reset();
 			objToServer.flush();
+			objToServer.reset();
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -78,7 +80,7 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 	public void handleRequestFromServer(Map<String, Object> request) {
 		Set<String> command = request.keySet();
 
-		/* Contains the array of colours updated at the moment when requested */
+		
 
 		/* IN THIS CASE the request is handled by the viewCLI */
 		if (command.contains("cost1")) {
@@ -90,10 +92,18 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 
 		if (command.contains("model")) {
 			synchronized(view.getWaitingForAnswer()){
-				view.setMiniModel((Model) request.get("model"));
-				if (view.getMyself() == null || view.getMyself().getMyName().equals("TempName")){
+				
+				Model receivedModel = (Model) request.get("model");
+				
+				System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n"+receivedModel+"\n@@@@@@@@@@@@@@@@@@@@@@@@@");
+				view.setMiniModel(receivedModel);
+								
+				
+				System.out.println("GIOCATORI FINO ADESSO" + view.getMiniModel().getPlayers());
+			
+				if (view.getMyself() == null || view.getMyself().getMyName()==null){
 					  view.setMyself(view.getMiniModel().getPlayers().get(view.getPlayerNumber()-1));
-					  System.out.println("IO DOVREI ESSERE: "+view.getMyself());
+						System.out.println("MYSELF ADESSO" + view.getMyself().getMyName());
 				}
 				view.getWaitingForAnswer().notify();
 			}
