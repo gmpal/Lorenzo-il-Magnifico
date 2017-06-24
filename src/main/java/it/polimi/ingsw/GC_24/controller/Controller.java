@@ -177,12 +177,12 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	 */
 	private void gameEndHandler() {
 		giveVictoryPoints();
-		Player winner = uSpacchiusu();
+		Player winner = winnerOfTheGame();
 
 		// notify(winner);
 	}
 
-	public Player uSpacchiusu() {
+	public Player winnerOfTheGame() {
 		List<Integer> finalVictoryPoints = new ArrayList<>();
 		List<Player> winners = new ArrayList<>();
 		Player winner = null;
