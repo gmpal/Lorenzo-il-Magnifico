@@ -8,12 +8,9 @@ public class PersonalBoard implements java.io.Serializable {
 	/**
 	 * 
 	 */
-<<<<<<< HEAD
-	private static final long serialVersionUID = -1010492492112081930L;
-=======
-	private static final long serialVersionUID = 3714661515499864596L;
 
->>>>>>> e4ae7f8dd021dfbbcb32adb5617424cb3796e01f
+	private static final long serialVersionUID = -1010492492112081930L;
+
 	private PersonalBuildings personalBuildings;
 	private PersonalVentures personalVentures;
 	private PersonalTerritories personalTerritories;

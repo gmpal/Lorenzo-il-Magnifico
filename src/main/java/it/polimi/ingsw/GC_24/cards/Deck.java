@@ -142,7 +142,7 @@ public class Deck implements Serializable {
 			tempListTerritory.remove(position);
 			
 			board.getTowerTerritories().putCardInFirstEmptyPlace(chosenCard);
-			
+		}
 		
 	}
 
