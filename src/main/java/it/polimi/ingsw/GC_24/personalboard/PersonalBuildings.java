@@ -1,5 +1,7 @@
 package it.polimi.ingsw.GC_24.personalboard;
 
+import it.polimi.ingsw.GC_24.values.VictoryPoint;
+
 public class PersonalBuildings extends PersonalCards {
 	/**
 	 * 
@@ -19,6 +21,11 @@ public class PersonalBuildings extends PersonalCards {
 	@Override
 	public String toString() {
 		return "Buildings " + getCards();
+	}
+
+	@Override
+	public VictoryPoint convertCardToVictoryPoints() {
+		return new VictoryPoint(0);
 	}
 	
 	

@@ -1,6 +1,9 @@
 package it.polimi.ingsw.GC_24.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +23,8 @@ import it.polimi.ingsw.GC_24.network.multi.Server;
 import it.polimi.ingsw.GC_24.places.TowerPlace;
 import it.polimi.ingsw.GC_24.values.MilitaryPoint;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
+import it.polimi.ingsw.GC_24.values.Value;
+import it.polimi.ingsw.GC_24.values.VictoryPoint;
 
 //Just one server's side controller for each game
 public class Controller extends MyObservable implements MyObserver, Runnable {
@@ -58,10 +63,9 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	@Override
 	public void run() {
 		waitAndAutocomplete();
-		
-		
+
 		game.setModel(game.getPlayers());
-		
+
 		game.sendModel();
 		this.currentPlayer = game.getCurrentPlayer();
 
@@ -70,14 +74,14 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 		while (!game.getGameState().equals(State.ENDED)) {
 			System.out.println("GAME STATE: " + game.getGameState());
-			//END OF ROUND (OR FIRST) --> We need to clear the board
+			// END OF ROUND (OR FIRST) --> We need to clear the board
 			System.out.println(game.getBoard());
 			game.getBoard().clear();
 			System.out.println("BoardClear");
-	//		game.getCards().dealCards(game.getBoard(), cardsIndex/2+1);
+			// game.getCards().dealCards(game.getBoard(), cardsIndex/2+1);
 			System.out.println("DealCards");
 			game.sendModel();
-			
+
 			System.out.println("Controller: everything clear and model sent");
 			for (int j = 0; j < 4; j++) {
 				// one Family gone for each player --> End of round
@@ -90,7 +94,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					System.out.println("Controller:Turn array sent");
 					if (!alreadyPlaying)
 						System.out.println("Before LetTHemPlay");
-						letThemPlay();
+					letThemPlay();
 
 					/*
 					 * This block waits for a player doing an action, because
@@ -123,12 +127,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			// and repeat everything til state "ENDED"
 		}
 		gameEndHandler();
-	
+
 	}
-
-	
-	
-
 
 	private void waitAndAutocomplete() {
 		Timer timer = new Timer();
@@ -139,29 +139,29 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				autoCompletePlayers();
 			}
 		}, 10000);
-		
-	}
-	
 
-	/**This method automatically completes the players name and colours, notifying the clients */
+	}
+
+	/**
+	 * This method automatically completes the players name and colours,
+	 * notifying the clients
+	 */
 	public void autoCompletePlayers() {
-	
+
 		for (Player p : game.getPlayers()) {
 			int index = game.getPlayers().indexOf(p);
-		
+
 			if (p.getMyName().equals("TempName")) {
-				
+
 				p.setMyName("Player_" + index);
 				System.out.println("Player autocompleted");
 				game.sendModel();
 			}
-			
-			
+
 		}
 
 	}
 
-	
 	/**
 	 * This method handles the end of the game. 1)Conquered Territories:
 	 * 1/4/10/20 Victory Points for 3/4/5/6 Territory Cards on your Personal
@@ -175,9 +175,60 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	 * all types. ---> The player with most Victory Points is the winner. In
 	 * case of a tie, the player more advanced on the Turn Order is the winner.
 	 */
-
 	private void gameEndHandler() {
-		// TODO:riempire questo metodo
+		Player player;
+		List<Integer> finalVictoryPoints = new ArrayList<>();
+		List<Integer> finalMilitaryPoints = new ArrayList<>();
+		List<Player> winners = new ArrayList<>();
+
+		for (int i = 0; i < game.getPlayers().size(); i++) {
+			player = game.getPlayers().get(i);
+			player.getMyValues().addTwoSetsOfValues(player.getMyValues().getFaithPoints().convertToValue());
+			player.getMyValues().getVictoryPoints()
+					.addQuantity(player.getMyBoard().convertToVictoryPoints().getQuantity());
+			player.getMyValues().getVictoryPoints()
+					.addQuantity(player.getMyValues().convertSetToVictoryPoints().getQuantity());
+			finalMilitaryPoints.add(player.getMyValues().getMilitaryPoints().getQuantity());
+		}
+		for (int i = 0; i < finalMilitaryPoints.size() - 1; i++) {
+			for (int j = i + 1; j < finalMilitaryPoints.size(); j++) {
+				if (finalMilitaryPoints.get(i) == finalMilitaryPoints.get(j)) {
+					finalMilitaryPoints.remove(j--);
+				}
+			}
+		}
+		Collections.sort(finalMilitaryPoints);
+		Collections.reverse(finalMilitaryPoints);
+		convertMilitaryPointsToVictoryPoints(finalMilitaryPoints);
+		for (int i = 0; i < game.getPlayers().size(); i++) {
+			finalVictoryPoints.add(game.getPlayers().get(i).getMyValues().getVictoryPoints().getQuantity());
+		}
+		Collections.sort(finalVictoryPoints);
+		Collections.reverse(finalVictoryPoints);
+		for (int i = 0; i < game.getPlayers().size(); i++) {
+			if (game.getPlayers().get(i).getMyValues().getVictoryPoints().getQuantity() == finalVictoryPoints.get(0)) {
+				winners.add(game.getPlayers().get(i));
+			}
+		}
+		if (winners.size() > 1) {
+			// TODO:implements the check in case of tie
+		} else {
+			// notify(winners.get(0);
+		}
+	}
+
+	public void convertMilitaryPointsToVictoryPoints(List<Integer> finalMilitaryPoints) {
+		VictoryPoint v1 = new VictoryPoint(5);
+		VictoryPoint v2 = new VictoryPoint(2);
+		for (int i = 0; i < game.getPlayers().size(); i++) {
+			if (game.getPlayers().get(i).getMyValues().getMilitaryPoints().getQuantity() == finalMilitaryPoints
+					.get(0)) {
+				v1.addValueToSet(game.getPlayers().get(i).getMyValues());
+			} else if (game.getPlayers().get(i).getMyValues().getMilitaryPoints().getQuantity() == finalMilitaryPoints
+					.get(1)) {
+				v2.addValueToSet(game.getPlayers().get(i).getMyValues());
+			}
+		}
 	}
 
 	// update the turn list from the councilPalace
@@ -243,8 +294,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 		}
 
-
-
 		else if (command.contains("chosenCost")) {
 			synchronized (tempCostWaiting) {
 				this.tempCost = (SetOfValues) request.get("chosenCost");
@@ -258,7 +307,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 			return handleAction(o, request);
 		}
-
 
 		else {
 			return "bad command";
@@ -282,8 +330,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		return "player " + clientNumber + " updated";
 
 	}
-
-
 
 	private String handleAction(MyObservable o, Map<String, Object> request) {
 		System.out.println("Controller: started handling action");
@@ -313,24 +359,27 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			sendProblems(o, responseToActionVerify);
 
 		}
-		/*Hai compiuto un'azione, al giocatore resta la possibilità di giocare una carta leader 
-		--> TODO: gestione delle carte leader e conseguente scelta del giocatore di ultimare il turno*/
-		
-		//per adesso finisco il turno --> Aggiorno il currentPlayer e sveglio il run();
-		synchronized (actionWaiting){
-			game.setCurrentPlayer(playerTurn.get(playerTurn.indexOf(game.getCurrentPlayer())+1));
+		/*
+		 * Hai compiuto un'azione, al giocatore resta la possibilità di giocare
+		 * una carta leader --> TODO: gestione delle carte leader e conseguente
+		 * scelta del giocatore di ultimare il turno
+		 */
+
+		// per adesso finisco il turno --> Aggiorno il currentPlayer e sveglio
+		// il run();
+		synchronized (actionWaiting) {
+			game.setCurrentPlayer(playerTurn.get(playerTurn.indexOf(game.getCurrentPlayer()) + 1));
 			actionWaiting.notify();
 		}
-		//Ho modificato il model. Lo invio! 
+		// Ho modificato il model. Lo invio!
 		game.sendModel();
-	
+
 		return "Azione effettuata";
 	}
 
-	
 	private void sendProblems(MyObservable o, String responseToActionVerify) {
 		hm = new HashMap<>();
-		hm.put("problems",responseToActionVerify);
+		hm.put("problems", responseToActionVerify);
 		notifySingleObserver((MyObserver) o, hm);
 	}
 
@@ -374,7 +423,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	public Model getGame() {
 		return game;
 	}
-	
+
 	public int getControllerNumber() {
 		return controllerNumber;
 	}

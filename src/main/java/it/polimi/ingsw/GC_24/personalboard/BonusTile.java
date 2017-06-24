@@ -19,8 +19,13 @@ public class BonusTile implements java.io.Serializable {
 	private SetOfValues productionValues;
 
 	// constructor
-	public BonusTile(boolean advanceRules, int index) throws IOException {
-		createBonusTile(advanceRules, index);
+	public BonusTile(boolean advanceRules, int index) {
+		try {
+			createBonusTile(advanceRules, index);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
