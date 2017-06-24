@@ -204,10 +204,43 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	 * case of a tie, the player more advanced on the Turn Order is the winner.
 	 */
 	private void gameEndHandler() {
-		Player player;
+		giveVictoryPoints();
+		Player winner = winnerOfTheGame();
+
+		// notify(winner);
+	}
+
+	public Player winnerOfTheGame() {
 		List<Integer> finalVictoryPoints = new ArrayList<>();
-		List<Integer> finalMilitaryPoints = new ArrayList<>();
 		List<Player> winners = new ArrayList<>();
+		Player winner = null;
+		for (int i = 0; i < game.getPlayers().size(); i++) {
+			finalVictoryPoints.add(game.getPlayers().get(i).getMyValues().getVictoryPoints().getQuantity());
+		}
+		Collections.sort(finalVictoryPoints);
+		Collections.reverse(finalVictoryPoints);
+		for (int i = 0; i < game.getPlayers().size(); i++) {
+			if (game.getPlayers().get(i).getMyValues().getVictoryPoints().getQuantity() == finalVictoryPoints.get(0)) {
+				winners.add(game.getPlayers().get(i));
+			}
+		}
+		if (winners.size() > 1) {
+			for (Player playert : playerTurn) {
+				for (Player p : winners) {
+					if (playert.equals(p)) {
+						winner = p;
+					}
+				}
+			}
+		} else {
+			winner = winners.get(0);
+		}
+		return winner;
+	}
+
+	public void giveVictoryPoints() {
+		Player player;
+		List<Integer> finalMilitaryPoints = new ArrayList<>();
 
 		for (int i = 0; i < game.getPlayers().size(); i++) {
 			player = game.getPlayers().get(i);
@@ -228,21 +261,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		Collections.sort(finalMilitaryPoints);
 		Collections.reverse(finalMilitaryPoints);
 		convertMilitaryPointsToVictoryPoints(finalMilitaryPoints);
-		for (int i = 0; i < game.getPlayers().size(); i++) {
-			finalVictoryPoints.add(game.getPlayers().get(i).getMyValues().getVictoryPoints().getQuantity());
-		}
-		Collections.sort(finalVictoryPoints);
-		Collections.reverse(finalVictoryPoints);
-		for (int i = 0; i < game.getPlayers().size(); i++) {
-			if (game.getPlayers().get(i).getMyValues().getVictoryPoints().getQuantity() == finalVictoryPoints.get(0)) {
-				winners.add(game.getPlayers().get(i));
-			}
-		}
-		if (winners.size() > 1) {
-			// TODO:implements the check in case of tie
-		} else {
-			// notify(winners.get(0);
-		}
 	}
 
 	public void convertMilitaryPointsToVictoryPoints(List<Integer> finalMilitaryPoints) {
