@@ -15,11 +15,6 @@ public class Card implements java.io.Serializable{
 		this.name = name;
 	}
 
-	@Override
-	public String toString() {
-		return "Card [name=" + name + "]";
-	}
-
 	// getters and setters
 	public String getName() {
 		return name;
@@ -27,5 +22,10 @@ public class Card implements java.io.Serializable{
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@Override
+	public String toString() {
+		return "\n";
 	}
 }

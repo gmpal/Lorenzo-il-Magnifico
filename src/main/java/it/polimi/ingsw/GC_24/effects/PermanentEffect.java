@@ -1,7 +1,5 @@
 package it.polimi.ingsw.GC_24.effects;
 
-import it.polimi.ingsw.GC_24.model.Player;
-
 public abstract class PermanentEffect extends Effect{
 	/**
 	 * 

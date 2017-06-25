@@ -1,4 +1,4 @@
-﻿package it.polimi.ingsw.GC_24.cards;
+package it.polimi.ingsw.GC_24.cards;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -10,29 +10,6 @@ import java.util.Random;
 import com.google.gson.Gson;
 import it.polimi.ingsw.GC_24.board.Board;
 import it.polimi.ingsw.GC_24.devCardJsonFile.GsonBuilders;
-import it.polimi.ingsw.GC_24.effects.ChooseNewCard;
-import it.polimi.ingsw.GC_24.effects.CouncilPrivilege;
-import it.polimi.ingsw.GC_24.effects.Exchange;
-import it.polimi.ingsw.GC_24.effects.ExchangePackage;
-import it.polimi.ingsw.GC_24.effects.IncreaseDieValueActivity;
-import it.polimi.ingsw.GC_24.effects.IncreaseDieValueCard;
-import it.polimi.ingsw.GC_24.effects.MoltiplicationCards;
-import it.polimi.ingsw.GC_24.effects.MoltiplicationPoints;
-import it.polimi.ingsw.GC_24.effects.NoValueEffectFromTowerPlace;
-import it.polimi.ingsw.GC_24.effects.PerformHarvest;
-import it.polimi.ingsw.GC_24.effects.PerformProduction;
-import it.polimi.ingsw.GC_24.effects.ValueEffect;
-import it.polimi.ingsw.GC_24.personalboard.BonusTile;
-import it.polimi.ingsw.GC_24.personalboard.PersonalBuildings;
-import it.polimi.ingsw.GC_24.personalboard.PersonalTerritories;
-import it.polimi.ingsw.GC_24.values.Coin;
-import it.polimi.ingsw.GC_24.values.FaithPoint;
-import it.polimi.ingsw.GC_24.values.MilitaryPoint;
-import it.polimi.ingsw.GC_24.values.SetOfValues;
-import it.polimi.ingsw.GC_24.values.Stone;
-import it.polimi.ingsw.GC_24.values.Value;
-import it.polimi.ingsw.GC_24.values.VictoryPoint;
-import it.polimi.ingsw.GC_24.values.Wood;
 
 
 public class Deck implements Serializable {
@@ -65,8 +42,7 @@ public class Deck implements Serializable {
 	}
 
 
-	// create 4 deck arrayList from 4 different file with Json
-
+	/** creates 4 deck arrayList from 4 different file with Json*/
 	public void createDeck() throws IOException {
 		BufferedReader br;
 		Gson gson = GsonBuilders.getGsonWithTypeAdapters();

@@ -18,7 +18,7 @@ public class FamilyMember implements java.io.Serializable {
 	
 	//constructors
 
-	//creates a family member with a value
+	/**creates a family member with a value*/
 	public FamilyMember(PlayerColour playerColour, Die die) {
 		this.memberValue = die.getValue();
 		this.available = true;
@@ -28,7 +28,7 @@ public class FamilyMember implements java.io.Serializable {
 
 	}
 	
-	//creates a neutral family member
+	/**creates a neutral family member*/
 	public FamilyMember(PlayerColour playerColour) {
 		this.memberValue = 0;
 		this.available = true;
@@ -39,7 +39,7 @@ public class FamilyMember implements java.io.Serializable {
 	}
 	
 	
-	//sets a family member value and colour from a SetOfDice
+	/**sets a family member value and colour from a SetOfDice*/
 	public void setMember(Die die) {
 		this.setMemberColour(die.getColour());
 		this.setMemberValue(die.getValue());

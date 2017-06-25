@@ -2,9 +2,7 @@ package it.polimi.ingsw.GC_24.cards;
 
 import it.polimi.ingsw.GC_24.effects.*;
 import it.polimi.ingsw.GC_24.personalboard.PersonalBoard;
-
 import it.polimi.ingsw.GC_24.values.SetOfValues;
-import it.polimi.ingsw.GC_24.values.VictoryPoint;
 
 public abstract class Development extends Card {
 
@@ -20,8 +18,6 @@ public abstract class Development extends Card {
 	private int round;
 
 	// constructor
-	/*TODO: i type DEVONO coincidere con i nomi degli array della Board
-	 * 1)Territory 2)Characters 3)Buildings 4)Ventures*/
 	public Development(String name, String type, SetOfValues cost, ImmediateEffect immediateEffects,
 			ImmediateEffect immediateEffects1, int round) {
 		super(name);
@@ -32,13 +28,12 @@ public abstract class Development extends Card {
 		this.setImmediateEffect1(immediateEffects1);
 	}
 
-	// add the card to the right ArrayList on the personal board
+	/** add the card to the right ArrayList on the personal board*/
 	public abstract void setCardOnPersonalBoard(PersonalBoard personalBoard); // redefined
 																				// in
 																				// every
 																				// subclass
-
-
+	
 	// getter and setters
 	public SetOfValues getCost() {
 		return cost;

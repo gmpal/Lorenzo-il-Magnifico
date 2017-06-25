@@ -1,17 +1,14 @@
 package it.polimi.ingsw.GC_24.model;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.board.Board;
 import it.polimi.ingsw.GC_24.cards.Deck;
-import it.polimi.ingsw.GC_24.client.view.ServerSocketView;
 import it.polimi.ingsw.GC_24.dice.SetOfDice;
 import it.polimi.ingsw.GC_24.network.multi.Server;
 
@@ -55,9 +52,6 @@ public class Model extends MyObservable implements Serializable {
 
 	
 	public synchronized void addPlayer(){
-		
-		
-
 		counter++;
 		sendNumberToClient();
 		Player player = new Player(counter);
@@ -91,11 +85,10 @@ public class Model extends MyObservable implements Serializable {
 
 	}
 
-	/*
+	/**
 	 * After a Model is created and the players are get, this method sets the
 	 * model so the game could start
 	 */
-
 	public void setModel(List<Player> players) {
 
 		this.players = players;

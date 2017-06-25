@@ -1,12 +1,9 @@
 package it.polimi.ingsw.GC_24.values;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-
 import com.google.gson.Gson;
-
 import it.polimi.ingsw.GC_24.devCardJsonFile.GsonBuilders;
 import it.polimi.ingsw.GC_24.model.Player;
 

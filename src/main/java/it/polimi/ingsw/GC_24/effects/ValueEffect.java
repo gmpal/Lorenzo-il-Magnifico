@@ -18,8 +18,9 @@ public class ValueEffect extends ImmediateEffect {
 		this.setOfValue = new SetOfValues();
 	}
 
-	// adds the immediate effect related set of values to the player's set
-	// (given as parameter)
+	/** adds the immediate effect related set of values to the player's set
+	* (given as parameter)
+	*/
 	@Override
 	public void giveImmediateEffect(Player player) {
 		if (this.setOfValue != null) {
@@ -29,7 +30,7 @@ public class ValueEffect extends ImmediateEffect {
 
 	@Override
 	public String toString() {
-			return this.setOfValue.toString();
+			return setOfValue.toString();
 	}
 
 	// getters and setters

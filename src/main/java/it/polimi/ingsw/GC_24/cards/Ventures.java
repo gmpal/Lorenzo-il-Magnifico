@@ -32,9 +32,18 @@ public class Ventures extends Development {
 
 	@Override
 	public String toString() {
-		return "Venture: Name = " + name + " Cost = " + getCost() + " Required Military Points = " +requiredMilitaryPoints+
-				"\n Immediate Effects = " + getImmediateEffect()+" "+getImmediateEffect1()+
-				"\nPoints at the end = " + getPointsAtTheEnd();
+		StringBuilder builder = new StringBuilder();
+		builder.append( "\nName = " + name );
+		if (requiredMilitaryPoints!=null){
+			builder.append("Cost Military Points = "+alternativeCost+" (Required Military Points = " +requiredMilitaryPoints+")");
+			if (getCost()!=null){
+				builder.append(", Cost Values = " + getCost());
+			}
+		}else {
+			builder.append(", Cost = " + getCost());
+		}
+		builder.append(", Victory Points at the End = "+getPointsAtTheEnd());
+		return builder.toString();
 	}
   
 	// getters and setters

@@ -46,7 +46,7 @@ public class Board implements java.io.Serializable {
 		}
 	}
 
-	// tells if the places needs to be locked
+	/** tells if the places needs to be locked*/
 	public boolean lockPlaces(int numPlayers) {
 		return numPlayers < maxNumPlayerToLock;
 	}
@@ -74,9 +74,9 @@ public class Board implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "BOARD\nTerritories = " + towerTerritories + "\nCharacters = " + towerCharacters + "\nBuildings = "
-				+ towerBuildings + "\nVentures  =" + towerVentures + "\nHarvest = " + harvest + "\nProduction = "
-				+ production + "\nMarket = " + market + "\nCouncilPalace = " + councilPalace + "\n";
+		return "BOARD\nTERRITORIES\n" + towerTerritories + "\nCHARACTERS\n" + towerCharacters + "\nBUILDINGS\n"
+				+ towerBuildings + "\nVENTURES\n" + towerVentures + "\nHARVEST\n" + harvest + "\nPRODUCTION\n"
+				+ production + "\nMARKET\n" + market + "\nCOUNCIL PALACE\n" + councilPalace + "\n";
 	}
 
 	public Area getZoneFromString(String zone) {

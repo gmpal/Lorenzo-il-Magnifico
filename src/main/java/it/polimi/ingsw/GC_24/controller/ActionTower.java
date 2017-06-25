@@ -13,7 +13,7 @@ public class ActionTower extends Action {
 	protected SetOfValues temporaryCardCost;
 	private TowerPlace towerPlace;
 
-	/*
+	/**
 	 * This constructor saves and uses a temporaryCost: in a single-cost card it
 	 * stores that cost, in a multi-cost card it saves the cost passed by the
 	 * controller creating the action. If the parameter is null it uses the card
@@ -101,7 +101,7 @@ public class ActionTower extends Action {
 			return "ok";
 	}
 
-	/*
+	/**
 	 * It checks if you have the resources for taking the card in the place
 	 * you're trying to put your Family Member in. It's necessary to distinguish
 	 * Venture cards because of the extra requirements needed. If you satisfy the requirement,

@@ -1,9 +1,8 @@
-﻿package it.polimi.ingsw.GC_24.controller;
+package it.polimi.ingsw.GC_24.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,20 +10,16 @@ import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.MyObserver;
-import it.polimi.ingsw.GC_24.cards.Deck;
 import it.polimi.ingsw.GC_24.cards.Ventures;
 import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.State;
-import it.polimi.ingsw.GC_24.network.multi.Server;
 import it.polimi.ingsw.GC_24.places.TowerPlace;
 import it.polimi.ingsw.GC_24.values.MilitaryPoint;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
-import it.polimi.ingsw.GC_24.values.Value;
 import it.polimi.ingsw.GC_24.values.VictoryPoint;
 
 //Just one server's side controller for each game

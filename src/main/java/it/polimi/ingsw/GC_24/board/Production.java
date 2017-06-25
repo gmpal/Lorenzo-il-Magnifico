@@ -14,11 +14,16 @@ public class Production extends Area {
 	private static final long serialVersionUID = 3362638299010232983L;
 	private boolean placesLocked;
 	private int numPlayers;
-	private static final int FACTOR=2; 						//Max number of player's familyMember in Production
-	private static final int MINPLACES=1;					//Number of ProductionPlaces with 2 players
-	private static final int COSTDICE=1;					//Cost of first place
-	private static final int ADDITIONALCOST=0;				//Additional Cost dice on the first place
-	private static final int ADDITIONALCOST2=3;				//Additional Cost dice from the second place
+	/**Max number of player's familyMember in Production*/
+	private static final int FACTOR=2; 			
+	/**Number of ProductionPlaces with 2 players*/
+	private static final int MINPLACES=1;		
+	/**Cost of first place*/
+	private static final int COSTDICE=1;		
+	/**Additional Cost dice on the first place*/
+	private static final int ADDITIONALCOST=0;	
+	/**Additional Cost dice from the second place*/
+	private static final int ADDITIONALCOST2=3;				
 	
 	//constructor
 	public Production(boolean placesLocked, int numPlayers) {
@@ -27,7 +32,7 @@ public class Production extends Area {
 		this.placesArray = createProduction();
 	}
 	
-	//inserts empty ProductionPlaces in Production
+	/**inserts empty ProductionPlaces in Production*/
 	public List<Place> createProduction(){
 		int numProducionPlaces;	
 		

@@ -1,11 +1,9 @@
 package it.polimi.ingsw.GC_24.places;
 
 import it.polimi.ingsw.GC_24.cards.Development;
-import it.polimi.ingsw.GC_24.effects.CouncilPrivilege;
 import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
 import it.polimi.ingsw.GC_24.effects.ValueEffect;
 import it.polimi.ingsw.GC_24.model.Player;
-import it.polimi.ingsw.GC_24.values.Value;
 
 public class TowerPlace extends Place {
 	
@@ -26,7 +24,7 @@ public class TowerPlace extends Place {
 		this.correspondingCard=null;
 	}
 	
-	//method to take a card without placing a family member
+	/**method to take a card without placing a family member*/
 	public void takeWithoutPlacing(Player player){
 		this.correspondingCard.setCardOnPersonalBoard(player.getMyBoard());
 		this.correspondingCard.getImmediateEffect().giveImmediateEffect(player);
@@ -54,7 +52,7 @@ public class TowerPlace extends Place {
 	
 	@Override
 	public String toString() {
-		return "Card = " + correspondingCard;
+		return correspondingCard.toString();
 	}
 
 	public Development getCorrespondingCard() {
@@ -81,9 +79,5 @@ public class TowerPlace extends Place {
 	public void setValue(ValueEffect value) {
 		this.value = value;
 	}
-	
-	
-	
-	
 
 }
