@@ -2,7 +2,12 @@ package it.polimi.ingsw.GC_24.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import it.polimi.ingsw.GC_24.cards.Characters;
 import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
+import it.polimi.ingsw.GC_24.effects.IncreaseDieValueActivity;
+import it.polimi.ingsw.GC_24.effects.PerformHarvest;
+
 import it.polimi.ingsw.GC_24.effects.PerformProduction;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.places.ProductionPlace;
@@ -43,8 +48,14 @@ public class ProductionAction extends Action {
 	}
 
 	private void getFinalActionValue() {
-		//TODO: fix with permanent effect
-		this.finalActionValue = familyMember.getMemberValue() - productionPlace.getAdditionalCostDice()+servants;
+		for(int i=0;i<player.getMyBoard().getPersonalCharacters().getCards().size();i++){
+			Characters c=(Characters)player.getMyBoard().getPersonalCharacters().getCards().get(i);
+			if(c.getPermanentEffects().getName().equals("increaseDieValueProduction")){
+				IncreaseDieValueActivity pe=(IncreaseDieValueActivity)c.getPermanentEffects();
+				this.finalActionValue+=pe.getIncreaseDieValue();
+			}
+		}
+		this.finalActionValue += familyMember.getMemberValue() - productionPlace.getAdditionalCostDice()+servants;
 	}
 
 	private void createProductionEffect() {

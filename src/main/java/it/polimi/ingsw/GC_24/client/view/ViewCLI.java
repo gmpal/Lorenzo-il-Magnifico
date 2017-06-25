@@ -6,6 +6,7 @@ import java.util.Scanner;
 import java.util.Timer;
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.MyObserver;
+import it.polimi.ingsw.GC_24.effects.IncreaseDieValueCard;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.State;
@@ -16,37 +17,34 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	private static Scanner scanner = new Scanner(System.in);
 
 	private volatile Model miniModel;
-	private  String name = null;
-	
+	private String name = null;
+
 	private HashMap<String, Object> hm;
 	private Timer timer;
 	private Object waitingForAnswer = new Object();
-	
-	private  boolean myTurn = false;
-	private List<Player> playerTurn;
-	private  int playerNumber;
-	
-	private volatile Player myself = null;
 
+	private boolean myTurn = false;
+	private List<Player> playerTurn;
+	private int playerNumber;
+
+	private volatile Player myself = null;
 
 	@Override
 	public synchronized void run() {
 
 		this.miniModel = new Model(0);
-		
-		//SLEEP FOR TWO SECONDS
+
+		// SLEEP FOR TWO SECONDS
 		try {
 			Thread.sleep(400);
 		} catch (InterruptedException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
-		
+
 		name = setName();
 
-		
-		if (myself.getMyName()==null) {
+		if (myself.getMyName() == null) {
 			System.out.println("ENTRATO NELL IF");
 
 			try {
@@ -81,8 +79,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		hm.put("player", player);
 		this.notifyMyObservers(hm);
 
-		System.out.println("STO PER INVIARE AL SERVER "+hm);
-
+		System.out.println("STO PER INVIARE AL SERVER " + hm);
 
 		synchronized (waitingForAnswer) {
 			while (!miniModel.getPlayers().get((playerNumber) - 1).getMyName().equalsIgnoreCase(name)) {
@@ -92,16 +89,13 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		System.out.println("il server ha ricevuto la tua modifica e ha aggiornato il nome");
 	}
 
-
 	public synchronized void play() {
-		
-		  System.out.println("The players' turn for the first round is:"); 
-		  for(int i = 0, j = 1; i < miniModel.getPlayers().size(); i++, j++) {
-		  System.out.println(j + ") " +  miniModel.getPlayers().get(i).getMyName() + " is the " +	miniModel.getPlayers().get(i).getMyColour() + " player \n"); 
-		  }
-		  
-		
-	
+
+		System.out.println("The players' turn for the first round is:");
+		for (int i = 0, j = 1; i < miniModel.getPlayers().size(); i++, j++) {
+			System.out.println(j + ") " + miniModel.getPlayers().get(i).getMyName() + " is the "
+					+ miniModel.getPlayers().get(i).getMyColour() + " player \n");
+		}
 
 		while (!miniModel.getGameState().equals(State.ENDED)) {
 			showAndGetOption();
@@ -285,6 +279,29 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 
 		}
 		this.notifyMyObservers(hm);
+	}
+
+	public SetOfValues chooseSale(IncreaseDieValueCard increase) {
+		SetOfValues finalIncrease;
+		do {
+			System.out.println("Choose sale: (1,2)");
+			int answer = 0;
+			try {
+				answer = scanner.nextInt();
+			} catch (Exception e) {
+				finalIncrease = null;
+				answer=0;
+			}
+			if (answer == 1) {
+				finalIncrease = increase.getSale();
+			} else if (answer == 2) {
+				finalIncrease = increase.getAlternativeSale();
+			} else {
+				System.out.println("Wrong number");
+				finalIncrease = null;
+			}
+		} while (finalIncrease == null);
+		return finalIncrease;
 	}
 
 	// updates

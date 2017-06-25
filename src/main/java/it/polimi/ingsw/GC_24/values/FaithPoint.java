@@ -3,12 +3,14 @@ package it.polimi.ingsw.GC_24.values;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.gson.Gson;
 import it.polimi.ingsw.GC_24.devCardJsonFile.GsonBuilders;
 import it.polimi.ingsw.GC_24.model.Player;
 
 public class FaithPoint extends Value {
-
 
 	/**
 	 * 
@@ -47,20 +49,12 @@ public class FaithPoint extends Value {
 		return (setOfValues.getFaithPoints().getQuantity() >= this.quantity);
 	}
 
-	public SetOfValues convertToValue() {
-		BufferedReader br;
-		Gson gson = GsonBuilders.getGsonWithTypeAdapters();
-		String line = null;
-		try {
-			br = new BufferedReader(
-					new FileReader("src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/convertFaithPoints.json"));
-
-			for (int i = 0; i < this.quantity; i++) {
-				line = GsonBuilders.getLine(br);
-			}
-		} catch (IOException e) {
-			System.out.println("There is a problem with the configuration file");
-		}
-		return gson.fromJson(line, SetOfValues.class);
+	/**
+	 * This method return the corresponding Values of Faith Points
+	 * 
+	 * @return SetOfValues
+	 */
+	public SetOfValues convertToValue(List<SetOfValues> correspondingValue) {
+		return correspondingValue.get(this.quantity - 1);
 	}
 }
