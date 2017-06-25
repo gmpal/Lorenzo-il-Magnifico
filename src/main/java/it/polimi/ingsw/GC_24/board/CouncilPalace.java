@@ -23,7 +23,8 @@ public class CouncilPalace extends Area {
 	private static final long serialVersionUID = -4971262420188796920L;
 	private int numPlayers;
 	private static final int COSTDICE = 1;
-	private static final int MAXFAM = 4; // max familyMember per player
+	/** max familyMember per player*/
+	private static final int MAXFAM = 4; 
 	private List<Player> temporaryTurn = new ArrayList<>();
 
 	private List<ImmediateEffect> valueListCouncil = new ArrayList<>();
@@ -61,7 +62,7 @@ public class CouncilPalace extends Area {
 		return placesArray;
 	}
 
-	// returns the updated list of players' turn
+	/** returns the updated list of players' turn*/
 	public List<Player> updateTurn(Player player) {
 		if (!temporaryTurn.contains(player))
 

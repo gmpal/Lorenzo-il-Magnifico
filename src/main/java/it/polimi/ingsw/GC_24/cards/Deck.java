@@ -10,30 +10,10 @@ import java.util.Random;
 import com.google.gson.Gson;
 import it.polimi.ingsw.GC_24.board.Board;
 import it.polimi.ingsw.GC_24.devCardJsonFile.GsonBuilders;
-import it.polimi.ingsw.GC_24.effects.ChooseNewCard;
-import it.polimi.ingsw.GC_24.effects.CouncilPrivilege;
-import it.polimi.ingsw.GC_24.effects.Exchange;
-import it.polimi.ingsw.GC_24.effects.ExchangePackage;
-import it.polimi.ingsw.GC_24.effects.IncreaseDieValueActivity;
-import it.polimi.ingsw.GC_24.effects.IncreaseDieValueCard;
-import it.polimi.ingsw.GC_24.effects.MoltiplicationCards;
-import it.polimi.ingsw.GC_24.effects.MoltiplicationPoints;
-import it.polimi.ingsw.GC_24.effects.NoValueEffectFromTowerPlace;
-import it.polimi.ingsw.GC_24.effects.PerformHarvest;
-import it.polimi.ingsw.GC_24.effects.PerformProduction;
-import it.polimi.ingsw.GC_24.effects.ValueEffect;
-import it.polimi.ingsw.GC_24.personalboard.BonusTile;
-import it.polimi.ingsw.GC_24.personalboard.PersonalBuildings;
-import it.polimi.ingsw.GC_24.personalboard.PersonalTerritories;
-import it.polimi.ingsw.GC_24.values.Coin;
-import it.polimi.ingsw.GC_24.values.FaithPoint;
-import it.polimi.ingsw.GC_24.values.MilitaryPoint;
-import it.polimi.ingsw.GC_24.values.SetOfValues;
-import it.polimi.ingsw.GC_24.values.Stone;
-import it.polimi.ingsw.GC_24.values.Value;
-import it.polimi.ingsw.GC_24.values.VictoryPoint;
-import it.polimi.ingsw.GC_24.values.Wood;
-
+import it.polimi.ingsw.GC_24.model.Model;
+import it.polimi.ingsw.GC_24.model.Player;
+import it.polimi.ingsw.GC_24.places.Place;
+import it.polimi.ingsw.GC_24.places.TowerPlace;
 
 public class Deck implements Serializable {
 
@@ -49,6 +29,7 @@ public class Deck implements Serializable {
 
 	private List<Territories> tempListTerritory = new ArrayList<>();
 	private List<Characters> tempListCharacters = new ArrayList<>();
+	
 	private List<Buildings> tempListBuildings = new ArrayList<>();
 	private List<Ventures> tempListVentures = new ArrayList<>();
 	
@@ -65,8 +46,7 @@ public class Deck implements Serializable {
 	}
 
 
-	// create 4 deck arrayList from 4 different file with Json
-
+	/** creates 4 deck arrayList from 4 different file with Json*/
 	public void createDeck() throws IOException {
 		BufferedReader br;
 		Gson gson = GsonBuilders.getGsonWithTypeAdapters();
@@ -131,8 +111,7 @@ public class Deck implements Serializable {
 										
 			}
 		}
-		System.out.println("FLAG 2");
-
+	
 		for (int i = 0; i < 4; i++) {
 			
 			int position = random.nextInt(tempListTerritory.size());
@@ -141,7 +120,10 @@ public class Deck implements Serializable {
 		
 			tempListTerritory.remove(position);
 			
-			board.getTowerTerritories().putCardInFirstEmptyPlace(chosenCard);
+			Place place = board.getTowerTerritories().getPlacesArray().get(i);
+			TowerPlace towerPlace = (TowerPlace) place; 
+			towerPlace.setCorrespondingCard(chosenCard);
+			
 		}
 		
 	}
@@ -158,7 +140,10 @@ public class Deck implements Serializable {
 			int position = random.nextInt(tempListBuildings.size());
 			Development chosenCard = tempListBuildings.get(position);
 			tempListBuildings.remove(position);
-			board.getTowerBuildings().putCardInFirstEmptyPlace(chosenCard);
+			
+			Place place = board.getTowerBuildings().getPlacesArray().get(i);
+			TowerPlace towerPlace = (TowerPlace) place; 
+			towerPlace.setCorrespondingCard(chosenCard);
 		}
 	}
 
@@ -174,7 +159,10 @@ public class Deck implements Serializable {
 			int position = random.nextInt(tempListCharacters.size());
 			Development chosenCard = tempListCharacters.get(position);
 			tempListCharacters.remove(position);
-			board.getTowerCharacters().putCardInFirstEmptyPlace(chosenCard);
+			
+			Place place = board.getTowerCharacters().getPlacesArray().get(i);
+			TowerPlace towerPlace = (TowerPlace) place; 
+			towerPlace.setCorrespondingCard(chosenCard);
 		}
 	}
 
@@ -190,7 +178,10 @@ public class Deck implements Serializable {
 			int position = random.nextInt(tempListVentures.size());
 			Development chosenCard = tempListVentures.get(position);
 			tempListVentures.remove(position);
-			board.getTowerVentures().putCardInFirstEmptyPlace(chosenCard);
+			
+			Place place = board.getTowerVentures().getPlacesArray().get(i);
+			TowerPlace towerPlace = (TowerPlace) place; 
+			towerPlace.setCorrespondingCard(chosenCard);
 		}
 	}
 	
@@ -248,10 +239,101 @@ public class Deck implements Serializable {
 
 	public static void main(String args[]) throws IOException {
 
-	Deck d=new Deck();
-	System.out.println(d.deckBuildings);
+		Player player1 = new Player(1);
+		Player player2 = new Player(2);
+		List<Player> lista = new ArrayList<>();
+		lista.add(player1);
+		lista.add(player2);
+		Model game = new Model(1);
+		game.setModel(lista);
+		
+		game.getCards().dealCards(game.getBoard(), 2);
+	
+	//	System.out.println(game.getCards().getTempListBuildings());
+		
+	//	System.out.println("CARTE DAL GAME\n");
+		
+		
+	//	System.out.println(game.getBoard().getTowerTerritories());
+	
+		
+	
+	/*	SetOfValues set = new SetOfValues();
 
+		SetOfValues set1 = new SetOfValues();
+		ValueEffect ve=new ValueEffect("value");
+		ve.setEffectValues(set);
+		set.setCoins(new Coin(6));
+		ValueEffect ve1=new ValueEffect("value");
+		ve1.setEffectValues(set);
+		set1.setVictoryPoints(new VictoryPoint(5));
+		NoValueEffectFromTowerPlace nvet = new NoValueEffectFromTowerPlace("NoValueEffectFromTowerPlace");
+		CouncilPrivilege privilege = new CouncilPrivilege("CouncilPrivilege", 1);
+		ChooseNewCard cnc = new ChooseNewCard("ChooseNewCard", null, 7, null);
+		IncreaseDieValueActivity increase = new IncreaseDieValueActivity("IncreaseDieValueHarvest", 2);
+		Buildings t=new Buildings("Mint", 5, "Building", set, ve1, null, new MoltiplicationCards("moltiplicationCard", new Coin(1), new PersonalBuildings()), null, 1);
+		PerformHarvest ph = new PerformHarvest("Perform Harvest", 1);
+		PerformProduction pp = new PerformProduction("Perform Production", 0);
+		PersonalTerritories pt = new PersonalTerritories();
+		MoltiplicationCards mc = new MoltiplicationCards("MoltiplicationCards", new VictoryPoint(2), pt);
+		MoltiplicationPoints mp = new MoltiplicationPoints("MoltiplicationPoints", new VictoryPoint(1), new MilitaryPoint(2));
+		IncreaseDieValueCard pe = new IncreaseDieValueCard("IncreaseDieValueCard", pt, 2, null, null);
+		Ventures v = new Ventures("Reparing the Cathedral", "Venture", set, null, new VictoryPoint(5), null, ve, cnc, 3);
+		Characters c = new Characters("preacher", "Character", set, ve, nvet, null, 1);
+		Requirements requirements = new Requirements(null, 2, 4, 0, 0);
+		Leader l = new Leader("Girolamo Savonarola", requirements, null, pp, null, true);
+		System.out.println(gson.toJson(l));
+	br = new BufferedReader(new
+		FileReader("src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/provaC.json"));
+		String string;
+		string = br.readLine();
+		Buildings t1=gson.fromJson(string, Buildings.class);
+		ArrayList<Buildings> tx=new ArrayList<>();
+		tx.add(t1);
+		System.out.println(tx);*/
+
+		//PermanentEffect pe = new IncreaseDieValueActivity("production", 3);
 
 	}
+
+
+public List<Territories> getTempListTerritory() {
+	return tempListTerritory;
 }
 
+
+public void setTempListTerritory(List<Territories> tempListTerritory) {
+	this.tempListTerritory = tempListTerritory;
+}
+
+
+public List<Characters> getTempListCharacters() {
+	return tempListCharacters;
+}
+
+
+public void setTempListCharacters(List<Characters> tempListCharacters) {
+	this.tempListCharacters = tempListCharacters;
+}
+
+
+public List<Buildings> getTempListBuildings() {
+	return tempListBuildings;
+}
+
+
+public void setTempListBuildings(List<Buildings> tempListBuildings) {
+	this.tempListBuildings = tempListBuildings;
+}
+
+
+public List<Ventures> getTempListVentures() {
+	return tempListVentures;
+}
+
+
+public void setTempListVentures(List<Ventures> tempListVentures) {
+	this.tempListVentures = tempListVentures;
+}
+
+}

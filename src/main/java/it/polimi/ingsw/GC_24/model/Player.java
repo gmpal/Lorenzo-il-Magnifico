@@ -1,8 +1,6 @@
 package it.polimi.ingsw.GC_24.model;
 
-import java.io.IOException;
 import java.io.Serializable;
-
 import it.polimi.ingsw.GC_24.personalboard.PersonalBoard;
 import it.polimi.ingsw.GC_24.places.Place;
 import it.polimi.ingsw.GC_24.values.*;
@@ -42,7 +40,7 @@ public class Player implements Serializable {
 		this.playerNumber = 1;
 	}
 
-	// useful to find the value of the player if you only know his colour
+	/** useful to find the value of the player if you only know his colour*/
 	public SetOfValues getMyValuesFromColour(PlayerColour playerColour) {
 		if (this.myColour.equals(playerColour))
 			return myValues;
@@ -55,11 +53,12 @@ public class Player implements Serializable {
 		this.myValues = value.addTwoSetsOfValues(this.myValues);
 	}
 
-	// returns false if the increment is a negative number(not allowed) or if it
-	// is grater
-	// than the number of servants of the player, hence it is not possible to
-	// raise the die's
-	// value of the required increment
+	/** returns false if the increment is a negative number(not allowed) or if it
+	 *  is grater
+	 * than the number of servants of the player, hence it is not possible to
+	 * raise the die's
+	 * value of the required increment
+	 */
 	public boolean isPossibleIncreaseDieValue(int increment) {
 		int myservants = this.getMyValues().getServants().getQuantity();
 		if (increment >= 0)

@@ -24,6 +24,21 @@ public class ChooseNewCard extends ImmediateEffect {
 		this.dieValue = dieValue;
 		this.setSetOfValue(setOfValue);
 	}
+	
+	//useful methods
+	
+	public void assignParameters(TowerPlace towerPlace) {
+		this.towerPlace = towerPlace;
+	}
+
+	@Override
+	public void giveImmediateEffect(Player player) {
+		towerPlace.takeWithoutPlacing(player);
+		//TODO: controllare il costo della torre, lo sconto della carta che sto prendendo, e la gestione della creazione della azione
+	}
+
+
+
 
 	// getters and setters
 	public int getDieValue() {
@@ -50,12 +65,11 @@ public class ChooseNewCard extends ImmediateEffect {
 		this.setOfValue = setOfValue;
 	}
 
-	public void assignParameters(TowerPlace towerPlace) {
-		this.towerPlace = towerPlace;
+	@Override
+	public void assignParameters(String string) {
+		// TODO Auto-generated method stub
+		
 	}
 
-	@Override
-	public void giveImmediateEffect(Player player) {
-		towerPlace.takeWithoutPlacing(player);
-	}
+	
 }

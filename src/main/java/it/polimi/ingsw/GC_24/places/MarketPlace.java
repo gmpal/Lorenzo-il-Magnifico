@@ -1,10 +1,8 @@
 package it.polimi.ingsw.GC_24.places;
 
-import it.polimi.ingsw.GC_24.effects.Effect;
 import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
 import it.polimi.ingsw.GC_24.effects.ValueEffect;
 import it.polimi.ingsw.GC_24.model.Player;
-import it.polimi.ingsw.GC_24.values.Value;
 
 public class MarketPlace extends Place {
 
@@ -34,7 +32,7 @@ public class MarketPlace extends Place {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append( "Free? " + isAvailable());
+		builder.append( "\nFree? " + isAvailable());
 		if (isAvailable()){
 			builder.append(" - You can get: ");
 			if (value != null)

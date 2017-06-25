@@ -27,11 +27,20 @@ public class Territories extends Development {
 	public void setCardOnPersonalBoard(PersonalBoard personalBoard) {
 		personalBoard.getPersonalTerritories().setCards(this);
 	}
-
+	
 	@Override
 	public String toString() {
-		return "Territory: Name = " + name + " Cost = " + getCost() + " Immediate Effects = " + getImmediateEffect()+" "+getImmediateEffect1()+
-				"\nDie Value For Harvest = "+dieValueHarvest +"Harvest Effect = " + effectForHarvest;
+		StringBuilder builder = new StringBuilder();
+		builder.append( "\nName = " + name );
+		if (getImmediateEffect()!=null){
+			builder.append(", Immediate Effects = " + getImmediateEffect());
+			if (getImmediateEffect1()!=null)
+				builder.append(" and " + getImmediateEffect1());
+		}
+		if (effectForHarvest!=null){
+			builder.append("\nDie Value For Harvest = "+dieValueHarvest +", Harvest Effects = "+effectForHarvest);
+		}
+		return builder.toString();
 	}
   
 	// getter and setter

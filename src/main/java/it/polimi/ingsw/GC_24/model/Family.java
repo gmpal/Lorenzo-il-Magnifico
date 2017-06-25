@@ -4,7 +4,6 @@ import it.polimi.ingsw.GC_24.dice.SetOfDice;
 
 public class Family implements java.io.Serializable{
 	
-	
 	/**
 	 * 
 	 */
@@ -16,7 +15,8 @@ public class Family implements java.io.Serializable{
 		
 	//constructor
 	
-	//when creating a family, it creates a family of neutral members. Then this family is set from a SetOfDice.
+	/**when creating a family, it creates a family of neutral members. Then this family is set from a SetOfDice
+	 */
 	public Family(PlayerColour playerColour){
 		this.member1 = new FamilyMember(playerColour);
 		this.member2 = new FamilyMember(playerColour);
@@ -25,7 +25,7 @@ public class Family implements java.io.Serializable{
 	
 	}
 		
-	//sets the family with a SetOfDice after it has been created
+	/**sets the family with a SetOfDice after it has been created*/
 	public void setFamily(SetOfDice dice) {
 		this.member1.setMember(dice.getDie1());
 		this.member2.setMember(dice.getDie2());

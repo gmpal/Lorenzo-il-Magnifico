@@ -1,9 +1,7 @@
 package it.polimi.ingsw.GC_24.effects;
 
 import java.util.*;
-import java.util.Scanner;
 import it.polimi.ingsw.GC_24.model.Player;
-import it.polimi.ingsw.GC_24.places.TowerPlace;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 
 public class CouncilPrivilege extends ImmediateEffect {
@@ -82,9 +80,6 @@ public class CouncilPrivilege extends ImmediateEffect {
 	 * }
 	 */
 
-	public void assignParameter(SetOfValues set) {
-		this.set = set;
-	}
 
 	@Override
 	public void giveImmediateEffect(Player player) {
@@ -99,8 +94,9 @@ public class CouncilPrivilege extends ImmediateEffect {
 			List<SetOfValues> array = this.getCouncilPrivileges();
 			StringBuilder builder = new StringBuilder();
 			for (int i = 0; i < array.size(); i++) {
-				builder.append("(" + (i + 1) + ") " + array.get(i) + "\n");
+				builder.append(", " + (i + 1) + ") " + array.get(i));
 			}
+			builder.append("\n");
 			return builder.toString();
 		} else {
 			return "noEffect";
@@ -123,6 +119,17 @@ public class CouncilPrivilege extends ImmediateEffect {
 
 	public void setNumberOfPrivileges(int numberOfPrivileges) {
 		this.numberOfPrivileges = numberOfPrivileges;
+	}
+
+	
+	/**This method receivesa a String that contains a number from 1 to 5,
+	 * it represents the position on the councilPrivilege the user wants to take*/
+	@Override
+	public void assignParameters(String string) {
+		StringTokenizer reader = new StringTokenizer(string);
+		int value = Integer.parseInt(string);
+		this.set = councilPrivileges.get(value-1);
+		
 	}
 
 }

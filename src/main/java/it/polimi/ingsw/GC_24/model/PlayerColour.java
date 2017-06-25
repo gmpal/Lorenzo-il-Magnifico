@@ -1,7 +1,6 @@
 package it.polimi.ingsw.GC_24.model;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 

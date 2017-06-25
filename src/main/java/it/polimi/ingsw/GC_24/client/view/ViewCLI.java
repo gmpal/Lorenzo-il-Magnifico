@@ -4,13 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Timer;
-
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.MyObserver;
 import it.polimi.ingsw.GC_24.effects.IncreaseDieValueCard;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
-import it.polimi.ingsw.GC_24.model.PlayerColour;
 import it.polimi.ingsw.GC_24.model.State;
 import it.polimi.ingsw.GC_24.values.MilitaryPoint;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
@@ -119,7 +117,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 			System.out.println(myself.getMyBoard());
 		} else if (command.equals("c")) {
 			// TODO: aggiungere leadercards alla personalBoard
-			// System.out.println(myself.getMyBoard().);
+			// System.out.println(myself.getMyBoard());
 			System.out.println("This function is not been implemented yet");
 		} else if (command.equals("d")) {
 			System.out.println(myself.getMyFamily());
