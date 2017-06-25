@@ -41,9 +41,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	private List<Player> playerTurn;
 	private Player currentPlayer;
 	private int cardsIndex = 0;
-	
 
-	
 	private boolean alreadyPlaying = false;
 	private boolean autocompleted;
 
@@ -51,7 +49,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	private Object tempCostWaiting = new Object();
 	private Object actionWaiting = new Object();
 	private Object waitingForAutocompleting = new Object();;
-
 
 	// constructor
 
@@ -68,23 +65,20 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	@Override
 	public void run() {
-		
+
 		waitAndAutocomplete();
-		
-		
-		//WAITING FOR AUTOCOMPLETING
-		synchronized (waitingForAutocompleting){
-		while(!autocompleted){
-			try {
-				waitingForAutocompleting.wait();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+
+		// WAITING FOR AUTOCOMPLETING
+		synchronized (waitingForAutocompleting) {
+			while (!autocompleted) {
+				try {
+					waitingForAutocompleting.wait();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
-		}
-		
-
 
 		game.setModel(game.getPlayers());
 
@@ -95,10 +89,10 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		game.setGameState(State.PERIOD1_ROUND1);
 
 		while (!game.getGameState().equals(State.ENDED)) {
-			System.out.println("GAME STATE: " + game.getGameState());		
-			
+			System.out.println("GAME STATE: " + game.getGameState());
+
 			game.getBoard().clear();
-			game.getCards().dealCards(game.getBoard(), cardsIndex/2+1);
+			game.getCards().dealCards(game.getBoard(), cardsIndex / 2 + 1);
 			game.sendModel();
 
 			System.out.println("Controller: everything clear and model sent");
@@ -108,11 +102,11 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					// one familar gone for each player
 
 					game.setCurrentPlayer(playerTurn.get(i));
-				
+
 					sendTurnArray(playerTurn);
-					
+
 					if (!alreadyPlaying)
-				
+
 						letThemPlay();
 
 					/*
@@ -151,16 +145,15 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	private void waitAndAutocomplete() {
 		Timer timer = new Timer();
-		timer.schedule(new TimerTask(){
-				public void run(){
+		timer.schedule(new TimerTask() {
+			public void run() {
 				System.out.println("*****PLAYER NAME INSERTION TIME UP*****");
 				autoCompletePlayers();
 			}
 
 		}, 5000);
-		
-	}
 
+	}
 
 	/**
 	 * This method automatically completes the players name and colours,
@@ -170,23 +163,22 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 		for (Player p : game.getPlayers()) {
 
-			if (p.getMyName()==null) {
-				int index = game.getPlayers().indexOf(p) +1;
+			if (p.getMyName() == null) {
+				int index = game.getPlayers().indexOf(p) + 1;
 
 				p.setMyName("Player_" + index);
-				System.out.println("Player"+index+"autocompleted with name: "+p.getMyName());
-			
-				System.out.println("STO INVIANDO: "+game);
+				System.out.println("Player" + index + "autocompleted with name: " + p.getMyName());
+
+				System.out.println("STO INVIANDO: " + game);
 				game.sendModel();
-				
+
 			}
 
 		}
-		synchronized (waitingForAutocompleting){
+		synchronized (waitingForAutocompleting) {
 			autocompleted = true;
 			waitingForAutocompleting.notify();
 		}
-		
 
 	}
 
@@ -210,6 +202,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		// notify(winner);
 	}
 
+	/** This method returns the winner of the game */
 	public Player winnerOfTheGame() {
 		List<Integer> finalVictoryPoints = new ArrayList<>();
 		List<Player> winners = new ArrayList<>();
@@ -238,6 +231,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		return winner;
 	}
 
+	/** This method gives to players Victory Points at the end of game */
 	public void giveVictoryPoints() {
 		Player player;
 		List<Integer> finalMilitaryPoints = new ArrayList<>();
@@ -263,6 +257,11 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		convertMilitaryPointsToVictoryPoints(finalMilitaryPoints);
 	}
 
+	/**
+	 * This method convert Military Points to Victory Points though a List of
+	 * Integer, this list contains the players' quantity of Military Points
+	 * sorted.
+	 */
 	public void convertMilitaryPointsToVictoryPoints(List<Integer> finalMilitaryPoints) {
 		VictoryPoint v1 = new VictoryPoint(5);
 		VictoryPoint v2 = new VictoryPoint(2);
@@ -361,7 +360,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	private String handlePlayer(Map<String, Object> request) {
-		System.out.println("IO CONTROLLER HO RICEVUTO: "+ request);
+		System.out.println("IO CONTROLLER HO RICEVUTO: " + request);
 		String playerString = (String) request.get("player");
 		System.out.println(playerString);
 		StringTokenizer tokenizer = new StringTokenizer(playerString);
@@ -479,14 +478,10 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	public void setControllerNumber(int controllerNumber) {
 		this.controllerNumber = controllerNumber;
 	}
-/*	
-	public Deck getCards() {
-		return cards;
-	}
-
-	public void setCards(Deck cards) {
-		this.cards = cards;
-	}
-
-*/
+	/*
+	 * public Deck getCards() { return cards; }
+	 * 
+	 * public void setCards(Deck cards) { this.cards = cards; }
+	 * 
+	 */
 }
