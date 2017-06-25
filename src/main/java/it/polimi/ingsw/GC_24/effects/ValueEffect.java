@@ -42,4 +42,9 @@ public class ValueEffect extends ImmediateEffect {
 		this.setOfValue = effectValues;
 	}
 
+	@Override
+	public String getRequestedParametersName() {
+		return null;
+	}
+
 }

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.GC_24.cards;
+﻿package it.polimi.ingsw.GC_24.cards;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -10,7 +10,6 @@ import java.util.Random;
 import com.google.gson.Gson;
 import it.polimi.ingsw.GC_24.board.Board;
 import it.polimi.ingsw.GC_24.devCardJsonFile.GsonBuilders;
-
 
 public class Deck implements Serializable {
 
@@ -26,6 +25,7 @@ public class Deck implements Serializable {
 
 	private List<Territories> tempListTerritory = new ArrayList<>();
 	private List<Characters> tempListCharacters = new ArrayList<>();
+	
 	private List<Buildings> tempListBuildings = new ArrayList<>();
 	private List<Ventures> tempListVentures = new ArrayList<>();
 	
@@ -107,8 +107,7 @@ public class Deck implements Serializable {
 										
 			}
 		}
-		System.out.println("FLAG 2");
-
+	
 		for (int i = 0; i < 4; i++) {
 			
 			int position = random.nextInt(tempListTerritory.size());
@@ -117,7 +116,10 @@ public class Deck implements Serializable {
 		
 			tempListTerritory.remove(position);
 			
-			board.getTowerTerritories().putCardInFirstEmptyPlace(chosenCard);
+			Place place = board.getTowerTerritories().getPlacesArray().get(i);
+			TowerPlace towerPlace = (TowerPlace) place; 
+			towerPlace.setCorrespondingCard(chosenCard);
+			
 		}
 		
 	}
@@ -134,7 +136,10 @@ public class Deck implements Serializable {
 			int position = random.nextInt(tempListBuildings.size());
 			Development chosenCard = tempListBuildings.get(position);
 			tempListBuildings.remove(position);
-			board.getTowerBuildings().putCardInFirstEmptyPlace(chosenCard);
+			
+			Place place = board.getTowerBuildings().getPlacesArray().get(i);
+			TowerPlace towerPlace = (TowerPlace) place; 
+			towerPlace.setCorrespondingCard(chosenCard);
 		}
 	}
 
@@ -150,7 +155,10 @@ public class Deck implements Serializable {
 			int position = random.nextInt(tempListCharacters.size());
 			Development chosenCard = tempListCharacters.get(position);
 			tempListCharacters.remove(position);
-			board.getTowerCharacters().putCardInFirstEmptyPlace(chosenCard);
+			
+			Place place = board.getTowerCharacters().getPlacesArray().get(i);
+			TowerPlace towerPlace = (TowerPlace) place; 
+			towerPlace.setCorrespondingCard(chosenCard);
 		}
 	}
 
@@ -166,12 +174,33 @@ public class Deck implements Serializable {
 			int position = random.nextInt(tempListVentures.size());
 			Development chosenCard = tempListVentures.get(position);
 			tempListVentures.remove(position);
-			board.getTowerVentures().putCardInFirstEmptyPlace(chosenCard);
+			
+			Place place = board.getTowerVentures().getPlacesArray().get(i);
+			TowerPlace towerPlace = (TowerPlace) place; 
+			towerPlace.setCorrespondingCard(chosenCard);
 		}
 	}
 
 	public static void main(String args[]) throws IOException {
-
+		Player player1 = new Player(1);
+		Player player2 = new Player(2);
+		List<Player> lista = new ArrayList<>();
+		lista.add(player1);
+		lista.add(player2);
+		Model game = new Model(1);
+		game.setModel(lista);
+		
+		game.getCards().dealCards(game.getBoard(), 2);
+	
+	//	System.out.println(game.getCards().getTempListBuildings());
+		
+	//	System.out.println("CARTE DAL GAME\n");
+		
+		
+	//	System.out.println(game.getBoard().getTowerTerritories());
+	
+		
+	
 	/*	SetOfValues set = new SetOfValues();
 
 		SetOfValues set1 = new SetOfValues();
@@ -210,5 +239,45 @@ public class Deck implements Serializable {
 
 
 	}
+
+
+public List<Territories> getTempListTerritory() {
+	return tempListTerritory;
 }
 
+
+public void setTempListTerritory(List<Territories> tempListTerritory) {
+	this.tempListTerritory = tempListTerritory;
+}
+
+
+public List<Characters> getTempListCharacters() {
+	return tempListCharacters;
+}
+
+
+public void setTempListCharacters(List<Characters> tempListCharacters) {
+	this.tempListCharacters = tempListCharacters;
+}
+
+
+public List<Buildings> getTempListBuildings() {
+	return tempListBuildings;
+}
+
+
+public void setTempListBuildings(List<Buildings> tempListBuildings) {
+	this.tempListBuildings = tempListBuildings;
+}
+
+
+public List<Ventures> getTempListVentures() {
+	return tempListVentures;
+}
+
+
+public void setTempListVentures(List<Ventures> tempListVentures) {
+	this.tempListVentures = tempListVentures;
+}
+
+}

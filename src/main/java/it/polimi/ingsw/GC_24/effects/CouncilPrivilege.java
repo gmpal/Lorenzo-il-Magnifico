@@ -80,9 +80,6 @@ public class CouncilPrivilege extends ImmediateEffect {
 	 * }
 	 */
 
-	public void assignParameter(SetOfValues set) {
-		this.set = set;
-	}
 
 	@Override
 	public void giveImmediateEffect(Player player) {
@@ -122,6 +119,17 @@ public class CouncilPrivilege extends ImmediateEffect {
 
 	public void setNumberOfPrivileges(int numberOfPrivileges) {
 		this.numberOfPrivileges = numberOfPrivileges;
+	}
+
+	
+	/**This method receivesa a String that contains a number from 1 to 5,
+	 * it represents the position on the councilPrivilege the user wants to take*/
+	@Override
+	public void assignParameters(String string) {
+		StringTokenizer reader = new StringTokenizer(string);
+		int value = Integer.parseInt(string);
+		this.set = councilPrivileges.get(value-1);
+		
 	}
 
 }

@@ -49,4 +49,8 @@ public class MoltiplicationPoints extends Moltiplication{
 	public void getValue2(Value value2) {
 		this.value2 = value2;
 	}
+
+	@Override
+	public void assignParameters(String string) {
+	}
 }
