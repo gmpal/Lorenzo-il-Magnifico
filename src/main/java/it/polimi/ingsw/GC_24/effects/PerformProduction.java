@@ -44,4 +44,10 @@ public class PerformProduction extends PerformActivity {
 	public void setImmediateEffectsHarvest(List<ImmediateEffect> immediateEffectsProduction) {
 		this.immediateEffectsProduction = immediateEffectsProduction;
 	}
+
+	@Override
+	public void assignParameters(String string) {
+		//THE STRING CONTAINS THE NUMBER OF SERVANTS I WANT TO INCREMENT MY PRODUCTION
+		
+	}
 }

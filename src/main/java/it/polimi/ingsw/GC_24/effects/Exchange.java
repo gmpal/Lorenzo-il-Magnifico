@@ -33,7 +33,7 @@ public class Exchange extends ImmediateEffect {
 	}
 
 	public void assignParameter(ExchangePackage finalExchange) {
-		this.finalExchange = finalExchange;
+		
 	}
 
 	public List<ImmediateEffect> getImmediateEffectsFromExchange() {
@@ -63,5 +63,17 @@ public class Exchange extends ImmediateEffect {
 	@Override
 	public String toString() {
 		return "Exchange [exchangePackage=" + exchangePackage + ", exchangePackage1=" + exchangePackage1 + "]";
+	}
+
+	@Override
+	public void assignParameters(String string) {
+			if (string.equals("1")){
+				this.finalExchange = exchangePackage;
+			}
+			if (string.equals("2")){
+				this.finalExchange = exchangePackage1;
+			}
+	
+		
 	}
 }

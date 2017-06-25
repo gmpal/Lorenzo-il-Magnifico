@@ -3,7 +3,6 @@
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,17 +13,17 @@ import java.util.TimerTask;
 
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.MyObserver;
-import it.polimi.ingsw.GC_24.cards.Deck;
 import it.polimi.ingsw.GC_24.cards.Ventures;
+import it.polimi.ingsw.GC_24.effects.ChooseNewCard;
+import it.polimi.ingsw.GC_24.effects.CouncilPrivilege;
+import it.polimi.ingsw.GC_24.effects.Exchange;
 import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.State;
-import it.polimi.ingsw.GC_24.network.multi.Server;
 import it.polimi.ingsw.GC_24.places.TowerPlace;
 import it.polimi.ingsw.GC_24.values.MilitaryPoint;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
-import it.polimi.ingsw.GC_24.values.Value;
 import it.polimi.ingsw.GC_24.values.VictoryPoint;
 
 //Just one server's side controller for each game
@@ -36,22 +35,22 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	private Action action;
 	private HashMap<String, Object> hashMap;
 	private int controllerNumber = 0;
-	private HashMap<String, Object> hm;
 	private List<Player> councilTurnArray;
 	private List<Player> playerTurn;
 	private Player currentPlayer;
 	private int cardsIndex = 0;
-	
 
-	
+	private String parametersAnswer;
+
 	private boolean alreadyPlaying = false;
 	private boolean autocompleted;
+	private boolean parametersChosen = false;
 
 	// locks
 	private Object tempCostWaiting = new Object();
 	private Object actionWaiting = new Object();
-	private Object waitingForAutocompleting = new Object();;
-
+	private Object waitingForAutocompleting = new Object();
+	private Object waitingForParametersChoose = new Object();
 
 	// constructor
 
@@ -68,23 +67,20 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	@Override
 	public void run() {
-		
+
 		waitAndAutocomplete();
-		
-		
-		//WAITING FOR AUTOCOMPLETING
-		synchronized (waitingForAutocompleting){
-		while(!autocompleted){
-			try {
-				waitingForAutocompleting.wait();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+
+		// WAITING FOR AUTOCOMPLETING
+		synchronized (waitingForAutocompleting) {
+			while (!autocompleted) {
+				try {
+					waitingForAutocompleting.wait();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
-		}
-		
-
 
 		game.setModel(game.getPlayers());
 
@@ -95,10 +91,10 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		game.setGameState(State.PERIOD1_ROUND1);
 
 		while (!game.getGameState().equals(State.ENDED)) {
-			System.out.println("GAME STATE: " + game.getGameState());		
-			
+			System.out.println("GAME STATE: " + game.getGameState());
+
 			game.getBoard().clear();
-			game.getCards().dealCards(game.getBoard(), cardsIndex/2+1);
+			game.getCards().dealCards(game.getBoard(), cardsIndex / 2 + 1);
 			game.sendModel();
 
 			System.out.println("Controller: everything clear and model sent");
@@ -108,11 +104,11 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					// one familar gone for each player
 
 					game.setCurrentPlayer(playerTurn.get(i));
-				
+
 					sendTurnArray(playerTurn);
-					
+
 					if (!alreadyPlaying)
-				
+
 						letThemPlay();
 
 					/*
@@ -151,16 +147,15 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	private void waitAndAutocomplete() {
 		Timer timer = new Timer();
-		timer.schedule(new TimerTask(){
-				public void run(){
+		timer.schedule(new TimerTask() {
+			public void run() {
 				System.out.println("*****PLAYER NAME INSERTION TIME UP*****");
 				autoCompletePlayers();
 			}
 
 		}, 5000);
-		
-	}
 
+	}
 
 	/**
 	 * This method automatically completes the players name and colours,
@@ -170,23 +165,22 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 		for (Player p : game.getPlayers()) {
 
-			if (p.getMyName()==null) {
-				int index = game.getPlayers().indexOf(p) +1;
+			if (p.getMyName() == null) {
+				int index = game.getPlayers().indexOf(p) + 1;
 
 				p.setMyName("Player_" + index);
-				System.out.println("Player"+index+"autocompleted with name: "+p.getMyName());
-			
-				System.out.println("STO INVIANDO: "+game);
+				System.out.println("Player" + index + "autocompleted with name: " + p.getMyName());
+
+				System.out.println("STO INVIANDO: " + game);
 				game.sendModel();
-				
+
 			}
 
 		}
-		synchronized (waitingForAutocompleting){
+		synchronized (waitingForAutocompleting) {
 			autocompleted = true;
 			waitingForAutocompleting.notify();
 		}
-		
 
 	}
 
@@ -207,7 +201,13 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		giveVictoryPoints();
 		Player winner = winnerOfTheGame();
 
-		// notify(winner);
+		sendInfo("The winner of the game is" + winner);
+	}
+
+	private void sendInfo(String string) {
+		hashMap = new HashMap<>();
+		hashMap.put("info", string);
+		notifyMyObservers(hashMap);
 	}
 
 	public Player winnerOfTheGame() {
@@ -291,16 +291,16 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	private void letThemPlay() {
 		alreadyPlaying = true;
-		hm = new HashMap<>();
-		hm.put("Play!", null);
-		notifyMyObservers(hm);
+		hashMap = new HashMap<>();
+		hashMap.put("Play!", null);
+		notifyMyObservers(hashMap);
 
 	}
 
 	private void sendTurnArray(List<Player> turnArray) {
-		hm = new HashMap<>();
-		hm.put("Turns", turnArray);
-		notifyMyObservers(hm);
+		hashMap = new HashMap<>();
+		hashMap.put("Turns", turnArray);
+		notifyMyObservers(hashMap);
 	}
 
 	@Override
@@ -361,7 +361,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	private String handlePlayer(Map<String, Object> request) {
-		System.out.println("IO CONTROLLER HO RICEVUTO: "+ request);
+		System.out.println("IO CONTROLLER HO RICEVUTO: " + request);
 		String playerString = (String) request.get("player");
 		System.out.println(playerString);
 		StringTokenizer tokenizer = new StringTokenizer(playerString);
@@ -399,36 +399,58 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 			List<ImmediateEffect> interactiveEffects = action.run();
 			if (!interactiveEffects.isEmpty()) {
-				// TODO: interagisci con l'utente per prenderti i parametri
-				// che ti servono
+				for (ImmediateEffect effect : interactiveEffects) {
+					handleEffects(effect);
+					effect.giveImmediateEffect(currentPlayer);
+				}
+
+			} else {
+				sendProblems(o, responseToActionVerify);
+
 			}
+			/*
+			 * Hai compiuto un'azione, al giocatore resta la possibilità di
+			 * giocare una carta leader --> TODO: gestione delle carte leader e
+			 * conseguente scelta del giocatore di ultimare il turno
+			 */
 
-		} else {
-			sendProblems(o, responseToActionVerify);
+			// per adesso finisco il turno --> Aggiorno il currentPlayer e
+			// sveglio
+			// il run();
+			synchronized (actionWaiting) {
+				game.setCurrentPlayer(playerTurn.get(playerTurn.indexOf(game.getCurrentPlayer()) + 1));
+				actionWaiting.notify();
+			}
+			// Ho modificato il model. Lo invio!
+			game.sendModel();
+
+			return "Azione effettuata";
+		}
+	}
+
+	private void handleEffects(ImmediateEffect effect) {
+		
+			hashMap = new HashMap<>();
+			hashMap.put("askForParameters", effect);
+
+			synchronized (waitingForParametersChoose) {
+
+				while (!parametersChosen) {
+					waitingForParametersChoose.wait();
+				}
+			}
+			// i parametri sono stati scelti e passati all'effetto
+
+			effect.assignParameter(parametersAnswer);
 
 		}
-		/*
-		 * Hai compiuto un'azione, al giocatore resta la possibilità di giocare
-		 * una carta leader --> TODO: gestione delle carte leader e conseguente
-		 * scelta del giocatore di ultimare il turno
-		 */
 
-		// per adesso finisco il turno --> Aggiorno il currentPlayer e sveglio
-		// il run();
-		synchronized (actionWaiting) {
-			game.setCurrentPlayer(playerTurn.get(playerTurn.indexOf(game.getCurrentPlayer()) + 1));
-			actionWaiting.notify();
-		}
-		// Ho modificato il model. Lo invio!
-		game.sendModel();
-
-		return "Azione effettuata";
 	}
 
 	private void sendProblems(MyObservable o, String responseToActionVerify) {
-		hm = new HashMap<>();
-		hm.put("problems", responseToActionVerify);
-		notifySingleObserver((MyObserver) o, hm);
+		hashMap = new HashMap<>();
+		hashMap.put("problems", responseToActionVerify);
+		notifySingleObserver((MyObserver) o, hashMap);
 	}
 
 	/**
@@ -479,14 +501,10 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	public void setControllerNumber(int controllerNumber) {
 		this.controllerNumber = controllerNumber;
 	}
-/*	
-	public Deck getCards() {
-		return cards;
-	}
-
-	public void setCards(Deck cards) {
-		this.cards = cards;
-	}
-
-*/
+	/*
+	 * public Deck getCards() { return cards; }
+	 * 
+	 * public void setCards(Deck cards) { this.cards = cards; }
+	 * 
+	 */
 }

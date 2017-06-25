@@ -37,4 +37,10 @@ public class PerformHarvest extends PerformActivity {
 		this.immediateEffectsHarvest = immediateEffectsHarvest;
 	}
 
+	@Override
+	public void assignParameters(String string) {
+		//THE STRING CONTAINS THE NUMBER OF SERVANTS I WANT TO INCREMENT MY HARVEST
+		
+
+}
 }
