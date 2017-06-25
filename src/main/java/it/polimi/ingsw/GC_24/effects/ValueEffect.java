@@ -43,8 +43,14 @@ public class ValueEffect extends ImmediateEffect {
 	}
 
 	@Override
+	public void assignParameters(String string) {
+		// TODO Auto-generated method stub
+		
+	}
+
+/*	@Override
 	public String getRequestedParametersName() {
 		return null;
-	}
+	}*/
 
 }

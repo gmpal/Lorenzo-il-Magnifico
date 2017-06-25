@@ -435,16 +435,20 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			synchronized (waitingForParametersChoose) {
 
 				while (!parametersChosen) {
-					waitingForParametersChoose.wait();
+					try {
+						waitingForParametersChoose.wait();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 			// i parametri sono stati scelti e passati all'effetto
 
-			effect.assignParameter(parametersAnswer);
+			effect.assignParameters(parametersAnswer);
 
 		}
 
-	}
 
 	private void sendProblems(MyObservable o, String responseToActionVerify) {
 		hashMap = new HashMap<>();
