@@ -40,4 +40,9 @@ public class PersonalTerritories extends PersonalCards {
 			return new VictoryPoint(0);
 		}
 	}
+
+	@Override
+	public String getType() {
+		return "Territories";
+	}
 }

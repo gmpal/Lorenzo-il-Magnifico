@@ -2,8 +2,11 @@ package it.polimi.ingsw.GC_24.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import it.polimi.ingsw.GC_24.cards.Characters;
 import it.polimi.ingsw.GC_24.cards.Ventures;
 import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
+import it.polimi.ingsw.GC_24.effects.IncreaseDieValueCard;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.places.TowerPlace;
 import it.polimi.ingsw.GC_24.values.*;
@@ -39,11 +42,12 @@ public class ActionTower extends Action {
 			answerToPlayer = verifyBoardSpaceAvailability(answerToPlayer);
 			answerToPlayer = verifyCardResources(answerToPlayer);
 		}
-		if (answerToPlayer.equals("Answer: \n")) return "ok";
-		else return answerToPlayer;
+		if (answerToPlayer.equals("Answer: \n"))
+			return "ok";
+		else
+			return answerToPlayer;
 
 	}
-
 
 	@Override
 	public List<ImmediateEffect> run() {
@@ -51,19 +55,36 @@ public class ActionTower extends Action {
 		this.payCoinsforOccupiedTower();
 		this.payValue(new Servant(this.servants));
 		this.placeFamiliar();
-		this.takeValueFromPlace();
+		if (!isThereNoValueEffect()) {
+			this.takeValueFromPlace();
+		}
 		this.takeCardAndPay();
 		this.takeEffects();
 		this.giveValueEffect(immediateEffects);
-		
+
 		return immediateEffects;
 	}
 
-	private void payCoinsforOccupiedTower(){
-		if(zone.isOccupied())
+	/**This method is used to see if there is "noValueEffectFromTowerPlace" in player's Personal Board.
+	 * 
+	 * @return true if player have this effect, false othewise. 
+	 */
+	private boolean isThereNoValueEffect() {
+		Characters c;
+		for (int i = 0; i < player.getMyBoard().getPersonalCharacters().getCards().size(); i++) {
+			c = (Characters) player.getMyBoard().getPersonalCharacters().getCards().get(i);
+			if (c.getPermanentEffects().getName().equals("noValueEffectFromTowerPlace")) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private void payCoinsforOccupiedTower() {
+		if (zone.isOccupied())
 			this.payValue(new Coin(3));
 	}
-	
+
 	private void takeEffects() {
 		ImmediateEffect im = towerPlace.getCorrespondingCard().getImmediateEffect();
 		ImmediateEffect im1 = towerPlace.getCorrespondingCard().getImmediateEffect1();
@@ -76,16 +97,15 @@ public class ActionTower extends Action {
 	}
 
 	private void takeCardAndPay() {
-		//Mine - cost --> Then set
+		// Mine - cost --> Then set
 		this.player.setMyValues(temporaryCardCost.subTwoSetsOfValues(this.player.getMyValues()));
 		towerPlace.getCorrespondingCard().setCardOnPersonalBoard(player.getMyBoard());
 	}
 
-
 	private void takeRealCost() {
 		if (temporaryCardCost == null) {
 			TowerPlace towerPlace = (TowerPlace) this.place;
-			this.temporaryCardCost = towerPlace.getCorrespondingCard().getCost();
+			this.temporaryCardCost = setOfSales.subTwoSetsOfValues(towerPlace.getCorrespondingCard().getCost());
 		}
 	}
 
@@ -94,9 +114,9 @@ public class ActionTower extends Action {
 	 * tower occupied (3 coins)
 	 */
 	public String verifyMoneyForTowerOccupied(String answerToPlayer) {
-		
+
 		if (this.zone.isOccupied() && this.player.getMyValues().getCoins().getQuantity() < 3) {
-			return answerToPlayer+ "You don't have enough coins to place your familiar in an already occupied tower\n";
+			return answerToPlayer + "You don't have enough coins to place your familiar in an already occupied tower\n";
 		} else
 			return "ok";
 	}
@@ -104,8 +124,9 @@ public class ActionTower extends Action {
 	/*
 	 * It checks if you have the resources for taking the card in the place
 	 * you're trying to put your Family Member in. It's necessary to distinguish
-	 * Venture cards because of the extra requirements needed. If you satisfy the requirement,
-	 * this methods checks if you have the resources for this card
+	 * Venture cards because of the extra requirements needed. If you satisfy
+	 * the requirement, this methods checks if you have the resources for this
+	 * card
 	 */
 	public String verifyCardResources(String answerToPlayer) {
 
@@ -114,15 +135,14 @@ public class ActionTower extends Action {
 			Ventures specificCard = (Ventures) towerPlace.getCorrespondingCard();
 			Value requirement = specificCard.getRequiredMilitaryPoints();
 			if (!this.player.getMyValues().doIHaveEnoughOfThis(requirement)) {
-				return answerToPlayer+ "You don't have the required value for this card! Choose another card \n";
+				return answerToPlayer + "You don't have the required value for this card! Choose another card \n";
 			}
 		}
 		if (!player.getMyValues().doIHaveThisSet(temporaryCardCost)) {
-			return answerToPlayer+ "You don't have enough resources to take this card! Choose another card \n";
+			return answerToPlayer + "You don't have enough resources to take this card! Choose another card \n";
 		} else
 			return answerToPlayer;
 	}
-
 
 	public String verifyTerritorySpaceAvailability(String answerToPlayer) {
 
@@ -143,7 +163,7 @@ public class ActionTower extends Action {
 				return answerToPlayer + "Sorry, you need 12 Military Points to unlock the next Territory Space\n";
 			}
 			if (territorySize == 5 && militaryPoints < 18) {
-				return answerToPlayer +"Sorry, you need 18 Military Points to unlock the next Territory Space\n";
+				return answerToPlayer + "Sorry, you need 18 Military Points to unlock the next Territory Space\n";
 			}
 		}
 
@@ -151,18 +171,17 @@ public class ActionTower extends Action {
 
 	}
 
-
 	public String verifyBoardSpaceAvailability(String answerToPlayer) {
 		TowerPlace tempTowerPlace = (TowerPlace) this.place;
 		String typeOfCard = tempTowerPlace.getCorrespondingCard().getType();
 		if (typeOfCard.equals("Territory")) {
 			if (this.player.getMyBoard().getPersonalTerritories().getCards().size() >= 6) {
-				return answerToPlayer+ "You have already 6 Territory Cards, no more empty spaces \n ";
+				return answerToPlayer + "You have already 6 Territory Cards, no more empty spaces \n ";
 			}
 		}
 		if (typeOfCard.equals("Building")) {
 			if (this.player.getMyBoard().getPersonalBuildings().getCards().size() >= 6) {
-				return answerToPlayer+ "You have already 6 Buildings Cards, no more empty spaces \n"; 
+				return answerToPlayer + "You have already 6 Buildings Cards, no more empty spaces \n";
 			}
 		}
 		return answerToPlayer;

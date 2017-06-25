@@ -34,4 +34,6 @@ public abstract class PersonalCards implements java.io.Serializable{
 		return cards;
 	}
 
+	public abstract String getType();
+
 }

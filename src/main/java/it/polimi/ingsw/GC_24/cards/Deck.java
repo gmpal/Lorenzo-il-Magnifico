@@ -1,4 +1,4 @@
-﻿package it.polimi.ingsw.GC_24.cards;
+package it.polimi.ingsw.GC_24.cards;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -193,44 +193,63 @@ public class Deck implements Serializable {
 			board.getTowerVentures().putCardInFirstEmptyPlace(chosenCard);
 		}
 	}
+	
+	
+
+	public List<Territories> getDeckTerritories() {
+		return deckTerritories;
+	}
+
+
+	public void setDeckTerritories(List<Territories> deckTerritories) {
+		this.deckTerritories = deckTerritories;
+	}
+
+
+	public List<Characters> getDeckCharacters() {
+		return deckCharacters;
+	}
+
+
+	public void setDeckCharacters(List<Characters> deckCharacters) {
+		this.deckCharacters = deckCharacters;
+	}
+
+
+	public List<Buildings> getDeckBuildings() {
+		return deckBuildings;
+	}
+
+
+	public void setDeckBuildings(List<Buildings> deckBuildings) {
+		this.deckBuildings = deckBuildings;
+	}
+
+
+	public List<Ventures> getDeckVentures() {
+		return deckVentures;
+	}
+
+
+	public void setDeckVentures(List<Ventures> deckVentures) {
+		this.deckVentures = deckVentures;
+	}
+
+
+	public List<Leader> getDeckLeaders() {
+		return deckLeaders;
+	}
+
+
+	public void setDeckLeaders(List<Leader> deckLeaders) {
+		this.deckLeaders = deckLeaders;
+	}
+
 
 	public static void main(String args[]) throws IOException {
 
-	/*	SetOfValues set = new SetOfValues();
-
-		SetOfValues set1 = new SetOfValues();
-		ValueEffect ve=new ValueEffect("value");
-		ve.setEffectValues(set);
-		set.setCoins(new Coin(6));
-		ValueEffect ve1=new ValueEffect("value");
-		ve1.setEffectValues(set);
-		set1.setVictoryPoints(new VictoryPoint(5));
-		NoValueEffectFromTowerPlace nvet = new NoValueEffectFromTowerPlace("NoValueEffectFromTowerPlace");
-		CouncilPrivilege privilege = new CouncilPrivilege("CouncilPrivilege", 1);
-		ChooseNewCard cnc = new ChooseNewCard("ChooseNewCard", null, 7, null);
-		IncreaseDieValueActivity increase = new IncreaseDieValueActivity("IncreaseDieValueHarvest", 2);
-		Buildings t=new Buildings("Mint", 5, "Building", set, ve1, null, new MoltiplicationCards("moltiplicationCard", new Coin(1), new PersonalBuildings()), null, 1);
-		PerformHarvest ph = new PerformHarvest("Perform Harvest", 1);
-		PerformProduction pp = new PerformProduction("Perform Production", 0);
-		PersonalTerritories pt = new PersonalTerritories();
-		MoltiplicationCards mc = new MoltiplicationCards("MoltiplicationCards", new VictoryPoint(2), pt);
-		MoltiplicationPoints mp = new MoltiplicationPoints("MoltiplicationPoints", new VictoryPoint(1), new MilitaryPoint(2));
-		IncreaseDieValueCard pe = new IncreaseDieValueCard("IncreaseDieValueCard", pt, 2, null, null);
-		Ventures v = new Ventures("Reparing the Cathedral", "Venture", set, null, new VictoryPoint(5), null, ve, cnc, 3);
-		Characters c = new Characters("preacher", "Character", set, ve, nvet, null, 1);
-		Requirements requirements = new Requirements(null, 2, 4, 0, 0);
-		Leader l = new Leader("Girolamo Savonarola", requirements, null, pp, null, true);
-		System.out.println(gson.toJson(l));
-	br = new BufferedReader(new
-		FileReader("src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/provaC.json"));
-		String string;
-		string = br.readLine();
-		Buildings t1=gson.fromJson(string, Buildings.class);
-		ArrayList<Buildings> tx=new ArrayList<>();
-		tx.add(t1);
-		System.out.println(tx);*/
-
-		//PermanentEffect pe = new IncreaseDieValueActivity("production", 3);
+	Deck d=new Deck();
+	System.out.println(d.deckBuildings);
 
 
 	}

@@ -1,4 +1,4 @@
-﻿package it.polimi.ingsw.GC_24.controller;
+package it.polimi.ingsw.GC_24.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,9 +14,14 @@ import java.util.TimerTask;
 
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.MyObserver;
+import it.polimi.ingsw.GC_24.cards.Characters;
 import it.polimi.ingsw.GC_24.cards.Deck;
+import it.polimi.ingsw.GC_24.cards.Development;
 import it.polimi.ingsw.GC_24.cards.Ventures;
 import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
+import it.polimi.ingsw.GC_24.effects.IncreaseDieValueActivity;
+import it.polimi.ingsw.GC_24.effects.IncreaseDieValueCard;
+import it.polimi.ingsw.GC_24.effects.PermanentEffect;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.State;
@@ -44,11 +49,13 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	private boolean alreadyPlaying = false;
 	private boolean autocompleted;
+	private SetOfValues saleForPermanentEffect = new SetOfValues();
 
 	// locks
 	private Object tempCostWaiting = new Object();
 	private Object actionWaiting = new Object();
-	private Object waitingForAutocompleting = new Object();;
+	private Object waitingForAutocompleting = new Object();
+	private Object waitingForSalesChoice = new Object();
 
 	// constructor
 
@@ -238,7 +245,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 		for (int i = 0; i < game.getPlayers().size(); i++) {
 			player = game.getPlayers().get(i);
-			player.getMyValues().addTwoSetsOfValues(player.getMyValues().getFaithPoints().convertToValue());
+			player.getMyValues().addTwoSetsOfValues(
+					player.getMyValues().getFaithPoints().convertToValue(game.getCorrespondingValue()));
 			player.getMyValues().getVictoryPoints()
 					.addQuantity(player.getMyBoard().convertToVictoryPoints().getQuantity());
 			player.getMyValues().getVictoryPoints()
@@ -351,6 +359,13 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		else if (command.contains("action")) {
 
 			return handleAction(o, request);
+		} else if (command.contains("sale")) {
+			SetOfValues setOfSales = (SetOfValues) request.get("sale");
+			synchronized (waitingForSalesChoice) {
+				this.saleForPermanentEffect = setOfSales;
+				waitingForSalesChoice.notify();
+			}
+			return "sale chosen";
 		}
 
 		else {
@@ -386,7 +401,21 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		String tempZone = tokenizer.nextToken();
 		String tempFloor = tokenizer.nextToken();
 		String tempServants = tokenizer.nextToken();
-
+		
+		IncreaseDieValueCard pe = PermanentEffectWithAlternativeSale();
+		if (pe != null && pe.getPersonalCards().getType().equals(tempZone)) {
+			notifyMyObservers(new HashMap().put("sale", pe));
+			synchronized (waitingForSalesChoice) {
+				while (saleForPermanentEffect.equals(new SetOfValues())) {
+					try {
+						waitingForSalesChoice.wait();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		}
 		if (tempZone.equalsIgnoreCase("ventures")) {
 
 			handleVentures(o, request, tempZone, tempFloor);
@@ -422,6 +451,20 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		game.sendModel();
 
 		return "Azione effettuata";
+	}
+
+	private IncreaseDieValueCard PermanentEffectWithAlternativeSale() {
+		Characters c;
+		for (Development d : currentPlayer.getMyBoard().getPersonalCharacters().getCards()) {
+			c = (Characters) d;
+			if (c.getPermanentEffects().getName().equals("increaseDieValueCard")) {
+				IncreaseDieValueCard pe = (IncreaseDieValueCard) c.getPermanentEffects();
+				if (pe.getAlternativeSale() != null) {
+					return pe;
+				}
+			}
+		}
+		return null;
 	}
 
 	private void sendProblems(MyObservable o, String responseToActionVerify) {

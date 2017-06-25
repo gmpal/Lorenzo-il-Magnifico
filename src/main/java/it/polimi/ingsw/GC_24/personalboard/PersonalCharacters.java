@@ -30,4 +30,9 @@ public class PersonalCharacters extends PersonalCards {
 		int numCharacters = this.getCards().size();
 		return new VictoryPoint(numCharacters * ((numCharacters + 1) / 2));
 	}
+
+	@Override
+	public String getType() {
+		return "Characters";
+	}
 }
