@@ -12,43 +12,19 @@ import java.util.Timer;
 import java.util.TimerTask;
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.MyObserver;
-
-import it.polimi.ingsw.GC_24.board.Area;
-
-import it.polimi.ingsw.GC_24.cards.Characters;
-import it.polimi.ingsw.GC_24.cards.Deck;
-import it.polimi.ingsw.GC_24.cards.Development;
-
-
-import it.polimi.ingsw.GC_24.cards.Ventures;
-import it.polimi.ingsw.GC_24.effects.ChooseNewCard;
-import it.polimi.ingsw.GC_24.effects.CouncilPrivilege;
-import it.polimi.ingsw.GC_24.effects.Exchange;
-import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
-
-import it.polimi.ingsw.GC_24.effects.PerformActivity;
-import it.polimi.ingsw.GC_24.effects.PerformHarvest;
-import it.polimi.ingsw.GC_24.effects.PerformProduction;
-
-import it.polimi.ingsw.GC_24.effects.IncreaseDieValueActivity;
-import it.polimi.ingsw.GC_24.effects.IncreaseDieValueCard;
-import it.polimi.ingsw.GC_24.effects.PermanentEffect;
-
-import it.polimi.ingsw.GC_24.model.Model;
-import it.polimi.ingsw.GC_24.model.Player;
-import it.polimi.ingsw.GC_24.model.State;
+import it.polimi.ingsw.GC_24.cards.*;
+import it.polimi.ingsw.GC_24.effects.*;
+import it.polimi.ingsw.GC_24.model.*;
 import it.polimi.ingsw.GC_24.places.TowerPlace;
-import it.polimi.ingsw.GC_24.values.MilitaryPoint;
-import it.polimi.ingsw.GC_24.values.SetOfValues;
-import it.polimi.ingsw.GC_24.values.VictoryPoint;
+import it.polimi.ingsw.GC_24.values.*;
 
 //Just one server's side controller for each game
 public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	private final Model game;
-	private ActionFactory actionFactory;
-	private SetOfValues tempCost = null;
-	private Action action;
+	private ActionFactory actionFactory = new ActionFactory();
+	private SetOfValues tempCost = new SetOfValues();
+	private Action action=null;
 	private HashMap<String, Object> hashMap;
 	private int controllerNumber = 0;
 	private List<Player> councilTurnArray;
@@ -397,8 +373,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		}
 
 		else if (command.contains("action")) {
-
-
 			handleAction(o, request);
 			verifyAndExecuteAction(o, this.action);
 		}
@@ -411,7 +385,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				waitingForParametersChoose.notify();
 			}
 			return "parameters updated";
-
 		
 		} else if (command.contains("sale")) {
 			SetOfValues setOfSales = (SetOfValues) request.get("sale");
@@ -451,13 +424,14 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	private void handleAction(MyObservable o, Map<String, Object> request) {
 		System.out.println("Controller: started handling action");
+				
 		StringTokenizer tokenizer = new StringTokenizer((String) request.get("action"));
-
+		
 		String tempFamiliar = tokenizer.nextToken();
 		String tempZone = tokenizer.nextToken();
 		String tempFloor = tokenizer.nextToken();
 		String tempServants = tokenizer.nextToken();
-		
+	
 		IncreaseDieValueCard pe = PermanentEffectWithAlternativeSale();
 		if (pe != null && pe.getPersonalCards().getType().equals(tempZone)) {
 			notifyMyObservers(new HashMap().put("sale", pe));
@@ -477,7 +451,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 			handleVentures(o, tempZone, tempFloor);
 		}
-
 		this.action = actionFactory.makeAction(game, tempFamiliar, tempZone, tempFloor, tempServants, tempCost, saleForPermanentEffect);
 		
 	}
@@ -485,8 +458,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	private void verifyAndExecuteAction(MyObservable o, Action action2) {
 		String responseToActionVerify = action.verify();
 		if (responseToActionVerify.equals("ok")) {
-
 			List<ImmediateEffect> interactiveEffects = action.run();
+			System.out.println("hai superato run");
 			this.handleInteractiveEffects(o, interactiveEffects);
 
 		} else {
@@ -654,7 +627,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			this.notifySingleObserver((MyObserver) o, hashMap);
 
 			synchronized (tempCostWaiting) {
-				while (this.tempCost == null) {
+				while (this.tempCost.isEmpty()) {
 					try {
 						tempCostWaiting.wait();
 					} catch (InterruptedException e) {

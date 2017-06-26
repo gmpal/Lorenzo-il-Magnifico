@@ -98,12 +98,14 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 				view.setMiniModel(receivedModel);
 
 				System.out.println("GIOCATORI FINO ADESSO" + view.getMiniModel().getPlayers());
+
 				System.out.println("NUMERO GIOCATORE" + view.getMiniModel().getPlayers().get(0).getPlayerNumber());
 				System.out.println("....Player Number ...." + view.getPlayerNumber());
 
 				view.setMyself(view.getMiniModel().getPlayers().get(view.getPlayerNumber() - 1));
 				System.out.println("Myself ----> " + view.getMyself());
 				view.setPlayerTurn(view.getMiniModel().getPlayers());
+
 				view.getWaitingForAnswer().notify();
 			}
 		}
@@ -158,6 +160,7 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 			int modelNumber = (int) request.get("modelNumber");
 			if (view.getPlayerNumber() == 0) {
 				view.setPlayerNumber(playerNumber);
+
 			}
 			notifyMyObservers("You are the player #" + playerNumber + ", connected to game #" + modelNumber);
 
