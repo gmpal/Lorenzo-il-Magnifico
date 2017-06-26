@@ -15,6 +15,7 @@ public class ActionTower extends Action {
 	private List<ImmediateEffect> immediateEffects = new ArrayList<>();
 	protected SetOfValues temporaryCardCost;
 	private TowerPlace towerPlace;
+	private SetOfValues setOfSales;
 	private int valueOfFakeFamiliar;
 
 /**
@@ -23,10 +24,11 @@ public class ActionTower extends Action {
 	 * controller creating the action. If the parameter is null it uses the card
 	 * cost, otherwise it uses the parameters
 	 */
-	public ActionTower(Model game, String familiar, String zone, String floor, String servants, SetOfValues cost) {
+	public ActionTower(Model game, String familiar, String zone, String floor, String servants, SetOfValues cost, SetOfValues setOfSale) {
 		super(game, familiar, zone, floor, servants);
 		this.temporaryCardCost = cost;
 		this.towerPlace = (TowerPlace) this.place;
+		this.setOfSales=setOfSale;
 	}
 
 	@Override
@@ -68,7 +70,7 @@ public class ActionTower extends Action {
 
 	/**This method is used to see if there is "noValueEffectFromTowerPlace" in player's Personal Board.
 	 * 
-	 * @return true if player have this effect, false othewise. 
+	 * @return true if player have this effect, false otherwise. 
 	 */
 	private boolean isThereNoValueEffect() {
 		Characters c;
@@ -99,6 +101,7 @@ public class ActionTower extends Action {
 
 	private void takeCardAndPay() {
 		// Mine - cost --> Then set
+		setOfSales.subTwoSetsOfValues(temporaryCardCost);
 		this.player.setMyValues(temporaryCardCost.subTwoSetsOfValues(this.player.getMyValues()));
 		towerPlace.getCorrespondingCard().setCardOnPersonalBoard(player.getMyBoard());
 	}
@@ -188,6 +191,39 @@ public class ActionTower extends Action {
 		return answerToPlayer;
 	}
 	
+	@Override
+	protected String verifyIfEnoughServantsForThisPlace(String answerToPlayer) {
+		int placeCostRequired = this.place.getCostDice();
+		if (placeCostRequired > (this.familyMember.getMemberValue() + this.servants
+				+ getIncrementDieValueFromPermanentEffect())) {
+			return answerToPlayer + "You have not used enough servants for this place. Please choose another place. \n";
+		}
+		return answerToPlayer;
+	}
+
+	/**
+	 * This method checks in Personal Board the Permanent Effect of Characters
+	 * and if there is IncreaseDieValueCard Effect gives to player the increment
+	 * 
+	 * @return int
+	 */
+	public int getIncrementDieValueFromPermanentEffect() {
+		int incrementDieValueFromPermanentEffect = 0;
+		for (int i = 0; i < player.getMyBoard().getPersonalCharacters().getCards().size(); i++) {
+			Characters c = (Characters) player.getMyBoard().getPersonalCharacters().getCards().get(i);
+			if (c.getPermanentEffects().getName().equals("increaseDieValueCard")) {
+				IncreaseDieValueCard pe = (IncreaseDieValueCard) c.getPermanentEffects();
+				if (pe.getPersonalCards() != null && (pe.getPersonalCards().getType() == zoneString)) {
+					incrementDieValueFromPermanentEffect += pe.getIncreaseDieValue();
+					if(pe.getAlternativeSale()==null){
+						setOfSales=pe.getSale();
+					}
+				}
+			}
+		}
+		return incrementDieValueFromPermanentEffect;
+	}
+
 	public int getValueOfFakeFamiliar() {
 		return valueOfFakeFamiliar;
 	}
@@ -195,5 +231,4 @@ public class ActionTower extends Action {
 	public void setValueOfFakeFamiliar(int valueOfFakeFamiliar) {
 		this.valueOfFakeFamiliar = valueOfFakeFamiliar;
 	}
-
 }

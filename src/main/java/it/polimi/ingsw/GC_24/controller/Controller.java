@@ -55,8 +55,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	private List<Player> playerTurn;
 	private Player currentPlayer;
 	private int cardsIndex = 0;
-
-
 	private SetOfValues saleForPermanentEffect = new SetOfValues();
 	private String parametersAnswer;
 
@@ -457,13 +455,14 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					}
 				}
 			}
+			
 		}
 		if (tempZone.equalsIgnoreCase("ventures")) {
 
 			handleVentures(o, tempZone, tempFloor);
 		}
 
-		this.action = actionFactory.makeAction(game, tempFamiliar, tempZone, tempFloor, tempServants, tempCost);
+		this.action = actionFactory.makeAction(game, tempFamiliar, tempZone, tempFloor, tempServants, tempCost, saleForPermanentEffect);
 		
 	}
 
@@ -525,8 +524,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				handleInteractiveEffects(o, secondaryInteractiveEffects);
 			}
 
-		}
-
+    }
 	}
 
 	private void createNewActionForChooseNewCard(MyObservable o, int dieValue) {

@@ -299,10 +299,11 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		this.notifyMyObservers(hm);
 	}
 
-	public SetOfValues chooseSale(IncreaseDieValueCard increase) {
+	public void chooseSale(IncreaseDieValueCard increase) {
+		
 		SetOfValues finalIncrease;
 		do {
-			System.out.println("Choose sale: (1,2)");
+			System.out.println("Choose sale: (1,2)\n"+"1."+increase.getSale()+"\n2."+increase.getAlternativeSale());
 			int answer = 0;
 			try {
 				answer = scanner.nextInt();
@@ -319,7 +320,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 				finalIncrease = null;
 			}
 		} while (finalIncrease == null);
-		return finalIncrease;
+		notifyMyObservers(new HashMap().put("sale", finalIncrease));
 	}
 
 
