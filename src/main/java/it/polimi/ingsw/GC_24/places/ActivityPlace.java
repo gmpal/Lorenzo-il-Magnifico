@@ -17,15 +17,12 @@ public abstract class ActivityPlace extends Place{
 		this.additionalCostDice = additionalCostDice;
 	}
 	
-	/**gives the harvest or production value of the
-	 * bonus tile and the effects of the activated cards to the player 
-	 */
-	public abstract void doActivity(Player player);
+
+	//gives the harvest or production value of the
+	//bonus tile and the effects of the activated cards to the player 
+//	public abstract void doActivity(Player player);
+
 	
-	@Override 
-	public void giveEffects(Player player){
-		doActivity(player);
-	}
 	
 	//getter and setter
 	public int getAdditionalCostDice() {

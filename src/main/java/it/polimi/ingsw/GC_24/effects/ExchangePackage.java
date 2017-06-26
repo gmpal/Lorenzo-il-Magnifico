@@ -35,6 +35,6 @@ public class ExchangePackage implements java.io.Serializable{
 
 	@Override
 	public String toString() {
-		return "ExchangePackage [set=" + set + ", immediateEffect=" + immediateEffect + "]";
+		return set + " ----> " + immediateEffect; 
 	}
 }

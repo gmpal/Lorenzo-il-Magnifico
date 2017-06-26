@@ -57,11 +57,6 @@ public class ServerSocketView extends MyObservable implements Runnable, MyObserv
 
 	}
 
-	@Override
-	public void update() {
-		System.out.println("ServerOut: I have been notified!");
-
-	}
 
 	
 	

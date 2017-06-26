@@ -42,10 +42,6 @@ public class MoltiplicationCards extends Moltiplication {
 		this.personalCards = personalCards;
 	}
 
-	@Override
-	public void assignParameters(String string) {
-	
-	}
 
 	
 }

@@ -28,8 +28,14 @@ public abstract class Action {
 
 	// constructor
 	public Action(Model game, String familiar, String zone, String floor, String servants) {
+		if (familiar.equals("fakeFamiliarForChooseNewCard")){
+			//ForChooseNewCard effect
+			this.familyMember = new FamilyMember(null,null);
+		} else {
+			this.familyMember = player.getMyFamily().getMemberfromString(familiar);
+		}
+		
 		this.player = game.getCurrentPlayer();
-		this.familyMember = player.getMyFamily().getMemberfromString(familiar);
 		this.zone = game.getBoard().getZoneFromString(zone);
 		this.place = game.getBoard().getZoneFromString(zone).getPlaceFromStringOrFirstIfZero(floor);
 		this.servants = Integer.parseInt(servants);
@@ -46,7 +52,8 @@ public abstract class Action {
 			nameEffect = immediateEffects.get(i).getName();
 			if (nameEffect.equals("value")) {
 				immediateEffects.get(i).giveImmediateEffect(player);
-				immediateEffects.remove(immediateEffects.get(i--));
+				immediateEffects.remove(immediateEffects.get(i));
+				i--;
 			}
 		}
 	}

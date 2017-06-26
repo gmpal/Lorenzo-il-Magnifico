@@ -37,9 +37,7 @@ public abstract class Place implements java.io.Serializable {
 		
 	}
 
-	// redefined in MarketPlace, Tower, CouncilPlace change parameter in
-	// FamilyMember
-	public abstract void giveEffects(Player player);
+
 
 	// hashCode() and equals() redefined
 	@Override
