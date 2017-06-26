@@ -22,9 +22,9 @@ import it.polimi.ingsw.GC_24.values.*;
 public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	private final Model game;
-	private ActionFactory actionFactory;
-	private SetOfValues tempCost = null;
-	private Action action;
+	private ActionFactory actionFactory = new ActionFactory();
+	private SetOfValues tempCost = new SetOfValues();
+	private Action action=null;
 	private HashMap<String, Object> hashMap;
 	private int controllerNumber = 0;
 	private List<Player> councilTurnArray;
@@ -357,8 +357,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		}
 
 		else if (command.contains("action")) {
-
-
 			handleAction(o, request);
 			verifyAndExecuteAction(o, this.action);
 		}
@@ -410,13 +408,14 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	private void handleAction(MyObservable o, Map<String, Object> request) {
 		System.out.println("Controller: started handling action");
+				
 		StringTokenizer tokenizer = new StringTokenizer((String) request.get("action"));
-
+		
 		String tempFamiliar = tokenizer.nextToken();
 		String tempZone = tokenizer.nextToken();
 		String tempFloor = tokenizer.nextToken();
 		String tempServants = tokenizer.nextToken();
-		
+	
 		IncreaseDieValueCard pe = PermanentEffectWithAlternativeSale();
 		if (pe != null && pe.getPersonalCards().getType().equals(tempZone)) {
 			notifyMyObservers(new HashMap().put("sale", pe));
@@ -436,7 +435,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 			handleVentures(o, tempZone, tempFloor);
 		}
-
 		this.action = actionFactory.makeAction(game, tempFamiliar, tempZone, tempFloor, tempServants, tempCost, saleForPermanentEffect);
 		
 	}
@@ -444,8 +442,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	private void verifyAndExecuteAction(MyObservable o, Action action2) {
 		String responseToActionVerify = action.verify();
 		if (responseToActionVerify.equals("ok")) {
-
 			List<ImmediateEffect> interactiveEffects = action.run();
+			System.out.println("hai superato run");
 			this.handleInteractiveEffects(o, interactiveEffects);
 
 		} else {
@@ -610,7 +608,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			this.notifySingleObserver((MyObserver) o, hashMap);
 
 			synchronized (tempCostWaiting) {
-				while (this.tempCost == null) {
+				while (this.tempCost.isEmpty()) {
 					try {
 						tempCostWaiting.wait();
 					} catch (InterruptedException e) {

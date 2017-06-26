@@ -101,48 +101,46 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 				System.out.println("GIOCATORI FINO ADESSO" + view.getMiniModel().getPlayers());
 
 				view.setMyself(view.getMiniModel().getPlayers().get(view.getPlayerNumber() - 1));
-
 				view.getWaitingForAnswer().notify();
 			}
+		}
+		if (command.contains("askForParameters")) {
+			handleEffectParametersRequest((ImmediateEffect) request.get("askForParameters"));
 
-			if (command.contains("askForParameters")) {
-				handleEffectParametersRequest((ImmediateEffect) request.get("askForParameters"));
+		}
 
+		if (command.contains("info")) {
+			notifyMyObservers(request.get("info"));
+
+		}
+
+		if (command.contains("Play!")) {
+			view.play();
+
+		}
+		if (command.contains("Turns")) {
+			List<Player> playerTurn = (List<Player>) request.get("Turns");
+			view.setPlayerTurn(playerTurn);
+
+		}
+		if (command.contains("CurrentPlayer")) {
+			Player currentPlayer = (Player) request.get("Turns");
+			if (currentPlayer.equals(view.getMyself())) {
+				view.setMyTurn(true);
+			} else
+				view.setMyTurn(false);
+		}
+
+		if (command.contains("clientNumber")) {
+			int playerNumber = (int) request.get("clientNumber");
+			int modelNumber = (int) request.get("modelNumber");
+			if (view.getPlayerNumber() == 0) {
+				view.setPlayerNumber(playerNumber);
+				notifyMyObservers("You are the player #" + playerNumber + ", connected to game #" + modelNumber);
 			}
-
-			if (command.contains("info")) {
-				notifyMyObservers(request.get("info"));
-
-			}
-
-			if (command.contains("Play!")) {
-				view.play();
-
-			}
-			if (command.contains("Turns")) {
-				List<Player> playerTurn = (List<Player>) request.get("Turns");
-				view.setPlayerTurn(playerTurn);
-
-			}
-			if (command.contains("CurrentPlayer")) {
-				Player currentPlayer = (Player) request.get("Turns");
-				if (currentPlayer.equals(view.getMyself())) {
-					view.setMyTurn(true);
-				} else
-					view.setMyTurn(false);
-			}
-
-			if (command.contains("clientNumber")) {
-				int playerNumber = (int) request.get("clientNumber");
-				int modelNumber = (int) request.get("modelNumber");
-				if (view.getPlayerNumber() == 0) {
-					view.setPlayerNumber(playerNumber);
-					notifyMyObservers("You are the player #" + playerNumber + ", connected to game #" + modelNumber);
-				}
-			}
-			if (command.contains("sale")) {
-				view.chooseSale((IncreaseDieValueCard) request.get(command));
-			}
+		}
+		if (command.contains("sale")) {
+			view.chooseSale((IncreaseDieValueCard) request.get(command));
 		}
 	}
 
