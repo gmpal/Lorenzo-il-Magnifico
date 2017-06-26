@@ -21,24 +21,24 @@ public abstract class Action {
 	protected Player player;
 	protected Place place;
 	protected int servants;
-	protected SetOfValues temporaryCardCost;
 	protected String zoneString;
 
 
 	// constructor
 	public Action(Model game, String familiar, String zone, String floor, String servants) {
+		this.player = game.getCurrentPlayer();
+
 		if (familiar.equals("fakeFamiliarForChooseNewCard")){
 			//ForChooseNewCard effect
 			this.familyMember = new FamilyMember(null,null);
-		} else {
+		} else {		
 			this.familyMember = player.getMyFamily().getMemberfromString(familiar);
-		}
-		
-		this.player = game.getCurrentPlayer();
+		}		
 		this.zone = game.getBoard().getZoneFromString(zone);
 		this.place = game.getBoard().getZoneFromString(zone).getPlaceFromStringOrFirstIfZero(floor);
 		this.servants = Integer.parseInt(servants);
-		this.zoneString = zone;
+		this.zoneString = zone;	
+
 	}
 
 	/**

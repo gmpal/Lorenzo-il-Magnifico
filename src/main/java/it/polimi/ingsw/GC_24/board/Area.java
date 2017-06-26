@@ -58,9 +58,9 @@ public abstract class Area implements java.io.Serializable {
 				return null;
 			}
 			else return placesArray.get(i-1);
-		}else 
-			return this.getFirstEmptyPlace();
-		
+		}else{ 		
+			System.out.println("siamo su dddd");
+			return this.getFirstEmptyPlace();}
 		
 	}
 	

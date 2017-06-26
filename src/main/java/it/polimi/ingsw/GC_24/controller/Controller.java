@@ -12,43 +12,19 @@ import java.util.Timer;
 import java.util.TimerTask;
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.MyObserver;
-
-import it.polimi.ingsw.GC_24.board.Area;
-
-import it.polimi.ingsw.GC_24.cards.Characters;
-import it.polimi.ingsw.GC_24.cards.Deck;
-import it.polimi.ingsw.GC_24.cards.Development;
-
-
-import it.polimi.ingsw.GC_24.cards.Ventures;
-import it.polimi.ingsw.GC_24.effects.ChooseNewCard;
-import it.polimi.ingsw.GC_24.effects.CouncilPrivilege;
-import it.polimi.ingsw.GC_24.effects.Exchange;
-import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
-
-import it.polimi.ingsw.GC_24.effects.PerformActivity;
-import it.polimi.ingsw.GC_24.effects.PerformHarvest;
-import it.polimi.ingsw.GC_24.effects.PerformProduction;
-
-import it.polimi.ingsw.GC_24.effects.IncreaseDieValueActivity;
-import it.polimi.ingsw.GC_24.effects.IncreaseDieValueCard;
-import it.polimi.ingsw.GC_24.effects.PermanentEffect;
-
-import it.polimi.ingsw.GC_24.model.Model;
-import it.polimi.ingsw.GC_24.model.Player;
-import it.polimi.ingsw.GC_24.model.State;
+import it.polimi.ingsw.GC_24.cards.*;
+import it.polimi.ingsw.GC_24.effects.*;
+import it.polimi.ingsw.GC_24.model.*;
 import it.polimi.ingsw.GC_24.places.TowerPlace;
-import it.polimi.ingsw.GC_24.values.MilitaryPoint;
-import it.polimi.ingsw.GC_24.values.SetOfValues;
-import it.polimi.ingsw.GC_24.values.VictoryPoint;
+import it.polimi.ingsw.GC_24.values.*;
 
 //Just one server's side controller for each game
 public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	private final Model game;
-	private ActionFactory actionFactory;
-	private SetOfValues tempCost = null;
-	private Action action;
+	private ActionFactory actionFactory = new ActionFactory();
+	private SetOfValues tempCost = new SetOfValues();
+	private Action action=null;
 	private HashMap<String, Object> hashMap;
 	private int controllerNumber = 0;
 	private List<Player> councilTurnArray;
@@ -101,6 +77,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		}
 
 		game.setModel(game.getPlayers());
+		game.setCurrentPlayer(game.getPlayers().get(0));
 		game.sendModel();
 		this.currentPlayer = game.getCurrentPlayer();
 
@@ -116,18 +93,20 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 			System.out.println("Controller: everything clear and model sent");
 			for (int j = 0; j < 4; j++) {
-				// one Family gone for each player --> End of round
+			
 				for (int i = 0; i < playerTurn.size(); i++) {
 					// one familar gone for each player
 
-					game.setCurrentPlayer(playerTurn.get(i));
-
-					sendTurnArray(playerTurn);
-
-					if (!alreadyPlaying)
-
+					
+					this.currentPlayer = game.getCurrentPlayer();
+					System.out.println("Current Player is ---> "+this.currentPlayer.getMyName());
+				
+					sendCurrentPlayer();
+					
+						if (!alreadyPlaying)
 						letThemPlay();
 
+										
 					/*
 					 * This block waits for a player doing an action, because
 					 * after an action the game-currentPlayer is updated
@@ -143,8 +122,10 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 							}
 						}
 					}
+					
+					
 					// reset the current player
-					this.currentPlayer = game.getCurrentPlayer();
+					
 
 					/* Repeats until the players are finished */
 
@@ -153,6 +134,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			// it's time to look at the council palace for turn updates!
 			councilTurnArray = game.getBoard().getCouncilPalace().getTemporaryTurn();
 			updateListOfPlayerTurn(councilTurnArray);
+			sendTurnArray(playerTurn);
 			// let's go to next state
 			game.incrementState();
 			cardsIndex++;
@@ -163,6 +145,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	
+	
+
 	/**This method starts a timer and then calls another method that autocompletes the players*/
 	private void waitAndAutocomplete() {
 		Timer timer = new Timer();
@@ -188,6 +172,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				int index = game.getPlayers().indexOf(p) + 1;
 
 				p.setMyName("Player_" + index);
+				p.setAutocompleted(true);
 				System.out.println("Player" + index + "autocompleted with name: " + p.getMyName());
 
 				System.out.println("STO INVIANDO: " + game);
@@ -318,7 +303,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	private void letThemPlay() {
 		alreadyPlaying = true;
 		hashMap = new HashMap<>();
-		hashMap.put("Play!", null);
+		hashMap.put("startPlaying", "---> game starts here");
 		notifyMyObservers(hashMap);
 
 	}
@@ -329,6 +314,13 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		notifyMyObservers(hashMap);
 	}
 
+	private void sendCurrentPlayer() {
+		hashMap = new HashMap<>();
+		hashMap.put("currentPlayer", this.currentPlayer);
+		notifyMyObservers(hashMap);
+
+		
+	}
 
 	/**This method sends to the clients a simple information to be printed on the view*/
 	private void sendInfo(String string) {
@@ -381,8 +373,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		}
 
 		else if (command.contains("action")) {
-
-
 			handleAction(o, request);
 			verifyAndExecuteAction(o, this.action);
 		}
@@ -395,7 +385,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				waitingForParametersChoose.notify();
 			}
 			return "parameters updated";
-
 		
 		} else if (command.contains("sale")) {
 			SetOfValues setOfSales = (SetOfValues) request.get("sale");
@@ -435,13 +424,14 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	private void handleAction(MyObservable o, Map<String, Object> request) {
 		System.out.println("Controller: started handling action");
+				
 		StringTokenizer tokenizer = new StringTokenizer((String) request.get("action"));
-
+		
 		String tempFamiliar = tokenizer.nextToken();
 		String tempZone = tokenizer.nextToken();
 		String tempFloor = tokenizer.nextToken();
 		String tempServants = tokenizer.nextToken();
-		
+	
 		IncreaseDieValueCard pe = PermanentEffectWithAlternativeSale();
 		if (pe != null && pe.getPersonalCards().getType().equals(tempZone)) {
 			notifyMyObservers(new HashMap().put("sale", pe));
@@ -461,7 +451,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 			handleVentures(o, tempZone, tempFloor);
 		}
-
 		this.action = actionFactory.makeAction(game, tempFamiliar, tempZone, tempFloor, tempServants, tempCost, saleForPermanentEffect);
 		
 	}
@@ -469,8 +458,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	private void verifyAndExecuteAction(MyObservable o, Action action2) {
 		String responseToActionVerify = action.verify();
 		if (responseToActionVerify.equals("ok")) {
-
 			List<ImmediateEffect> interactiveEffects = action.run();
+			System.out.println("hai superato run");
 			this.handleInteractiveEffects(o, interactiveEffects);
 
 		} else {
@@ -492,9 +481,13 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			actionWaiting.notify();
 		}
 		// Ho modificato il model. Lo invio!
-		game.sendModel();
-
 		
+		awakenSleepingClient();
+		
+	}
+
+	private void awakenSleepingClient() {
+	 notifyMyObservers(new HashMap<String,Object>().put("actionDone", null));
 	}
 
 	private void handleInteractiveEffects(MyObservable o, List<ImmediateEffect> interactiveEffects) {
@@ -581,8 +574,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				// THE ANSWER IS SUPPOSED TO BE LIKE "Territory 1" --> that is
 				// tower
 				// and floor
-				((Exchange) effect)
-						.assignParameters(Integer.parseInt((new StringTokenizer(parametersAnswer).nextToken())));
+				((Exchange) effect).assignParameters(Integer.parseInt((new StringTokenizer(parametersAnswer).nextToken())));
 			}
 			// i parametri sono stati scelti e passati all'effetto
 			if (effect instanceof PerformActivity) {
@@ -635,7 +627,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			this.notifySingleObserver((MyObserver) o, hashMap);
 
 			synchronized (tempCostWaiting) {
-				while (this.tempCost == null) {
+				while (this.tempCost.isEmpty()) {
 					try {
 						tempCostWaiting.wait();
 					} catch (InterruptedException e) {

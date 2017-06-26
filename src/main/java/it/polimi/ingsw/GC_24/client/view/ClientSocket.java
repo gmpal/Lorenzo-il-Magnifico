@@ -44,6 +44,7 @@ public class ClientSocket {
 	//			createAndStartsInterface();
 
 		createClientSocketView(socket);
+		
 		executor.submit(viewCLI);
 		//TODO:sistemare quando creiamo la GUI
 		//minimodel is created inside the view

@@ -80,25 +80,25 @@ public class Board implements java.io.Serializable {
 	}
 
 	public Area getZoneFromString(String zone) {
-		if (zone.equals("Territories")) {
+		if (zone.equals("territories")) {
 			return this.towerTerritories;
 		}
-		if (zone.equals("Characters")) {
+		if (zone.equals("characters")) {
 			return this.towerCharacters;
 		}
-		if (zone.equals("Buildings")) {
+		if (zone.equals("buildings")) {
 			return this.towerBuildings;
 		}
-		if (zone.equals("Ventures")) {
+		if (zone.equals("ventures")) {
 			return this.towerVentures;
 		}
-		if (zone.equals("Harvest")) {
+		if (zone.equals("harvest")) {
 			return this.harvest;
 		}
-		if (zone.equals("Production")) {
+		if (zone.equals("production")) {
 			return this.production;
 		}
-		if (zone.equals("Council")) {
+		if (zone.equals("council")) {
 			return this.councilPalace;
 		} else
 			return null;
