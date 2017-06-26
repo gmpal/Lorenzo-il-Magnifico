@@ -1,5 +1,7 @@
 package it.polimi.ingsw.GC_24.effects;
 
+import java.util.StringTokenizer;
+
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.places.TowerPlace;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
@@ -26,15 +28,14 @@ public class ChooseNewCard extends ImmediateEffect {
 	}
 	
 	//useful methods
-	
+
 	public void assignParameters(TowerPlace towerPlace) {
 		this.towerPlace = towerPlace;
 	}
 
 	@Override
 	public void giveImmediateEffect(Player player) {
-		towerPlace.takeWithoutPlacing(player);
-		//TODO: controllare il costo della torre, lo sconto della carta che sto prendendo, e la gestione della creazione della azione
+	//This method is handled differently and doesn't do anything 
 	}
 	
 	@Override
@@ -76,11 +77,6 @@ public class ChooseNewCard extends ImmediateEffect {
 		this.setOfValue = setOfValue;
 	}
 
-	@Override
-	public void assignParameters(String string) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	
 	
 }

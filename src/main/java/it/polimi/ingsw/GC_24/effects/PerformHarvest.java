@@ -9,13 +9,16 @@ public class PerformHarvest extends PerformActivity {
 	 * 
 	 */
 	private static final long serialVersionUID = 7757590984515720227L;
-	private List<ImmediateEffect> immediateEffectsHarvest;
+	private List<ImmediateEffect> immediateEffectsHarvest  = new ArrayList<>();;
+	
 
 	// constructor
+	/*DIE VALUE ALREADY CONTAINS THE PERMANENT INCREMENT*/
 	public PerformHarvest(String name, int dieValue) {
 		super(name, dieValue);
 	}
 
+	//STEP ONE
 	@Override
 	public void giveImmediateEffect(Player player) {
 		List<Development> cards = player.getMyBoard().getPersonalTerritories().getCards();
@@ -23,8 +26,12 @@ public class PerformHarvest extends PerformActivity {
 		for (Development card : cards) {
 			Territories t = (Territories) card;
 			im = t.getEffectForHarvest();
-			if (im != null && t.getDieValueHarvest() <= dieValue) {
+			if (im != null && im instanceof ValueEffect ){
+				((ValueEffect)im).giveImmediateEffect(player);
+			}
+			else if (im != null && t.getDieValueHarvest() <= dieValue+incrementServants) {
 				immediateEffectsHarvest.add(im);
+				
 			}
 		}
 	}
@@ -34,7 +41,7 @@ public class PerformHarvest extends PerformActivity {
 		return "Perform Harvest: with a starting die value of " + getDieValue();
 	}
 
-	//getter and setter
+	//STEP TWO
 	public List<ImmediateEffect> getImmediateEffectsHarvest() {
 		return immediateEffectsHarvest;
 	}
@@ -43,9 +50,4 @@ public class PerformHarvest extends PerformActivity {
 		this.immediateEffectsHarvest = immediateEffectsHarvest;
 	}
 
-	@Override
-	public void assignParameters(String string) {
-		//THE STRING CONTAINS THE NUMBER OF SERVANTS I WANT TO INCREMENT MY HARVEST WITH
-		
-	}
 }

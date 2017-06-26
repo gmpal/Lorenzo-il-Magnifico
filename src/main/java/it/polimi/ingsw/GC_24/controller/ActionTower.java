@@ -15,8 +15,9 @@ public class ActionTower extends Action {
 	private List<ImmediateEffect> immediateEffects = new ArrayList<>();
 	protected SetOfValues temporaryCardCost;
 	private TowerPlace towerPlace;
+	private int valueOfFakeFamiliar;
 
-	/**
+/**
 	 * This constructor saves and uses a temporaryCost: in a single-cost card it
 	 * stores that cost, in a multi-cost card it saves the cost passed by the
 	 * controller creating the action. If the parameter is null it uses the card
@@ -185,6 +186,14 @@ public class ActionTower extends Action {
 			}
 		}
 		return answerToPlayer;
+	}
+	
+	public int getValueOfFakeFamiliar() {
+		return valueOfFakeFamiliar;
+	}
+
+	public void setValueOfFakeFamiliar(int valueOfFakeFamiliar) {
+		this.valueOfFakeFamiliar = valueOfFakeFamiliar;
 	}
 
 }

@@ -42,15 +42,5 @@ public class ValueEffect extends ImmediateEffect {
 		this.setOfValue = effectValues;
 	}
 
-	@Override
-	public void assignParameters(String string) {
-		// TODO Auto-generated method stub
-		
-	}
-
-/*	@Override
-	public String getRequestedParametersName() {
-		return null;
-	}*/
 
 }
