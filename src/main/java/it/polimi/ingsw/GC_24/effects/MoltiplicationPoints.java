@@ -50,7 +50,5 @@ public class MoltiplicationPoints extends Moltiplication{
 		this.value2 = value2;
 	}
 
-	@Override
-	public void assignParameters(String string) {
-	}
+
 }

@@ -24,12 +24,6 @@ public class RMIView extends MyObservable implements RMIViewRemote, MyObserver {
 		this.clients.add(clientStub);
 	}
 
-	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-		
-	}
-
 
 	@Override
 	public void getHashMap(HashMap<String, Object> map) {

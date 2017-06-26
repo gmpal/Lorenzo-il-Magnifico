@@ -25,11 +25,7 @@ public class ClientSocketViewGUI implements ClientSocketViewInterface {
 		
 	}
 
-	@Override
-	public void update() {
-		
-		
-	}
+
 
 	@Override
 	public <C> void update(MyObservable o, C change) {

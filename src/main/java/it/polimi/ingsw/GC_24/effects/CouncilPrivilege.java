@@ -53,40 +53,25 @@ public class CouncilPrivilege extends ImmediateEffect {
 
 	}
 
-	// Gives n different privileges to the selected player
-	/*
-	 * public void giveImmediateEffect(Player player){
-	 * 
-	 * Scanner scanner = new Scanner(System.in); System.out.println("Ciao " +
-	 * player.getMyName());
-	 * 
-	 * 
-	 * for (int i=0; i<numberOfPrivileges; i++){
-	 * 
-	 * System.out.println("Ecco i privilegi:\n" + this);
-	 * 
-	 * if (i==0) System.out.println("Scegli un elemento"); if (i!=0)
-	 * System.out.println("Scegli un altro elemento");
-	 * 
-	 * int index = scanner.nextInt(); System.out.println(index); while (index<1
-	 * || index>councilPrivileges.size()){
-	 * System.out.println("Il valore non è corretto, riprova:"); index =
-	 * scanner.nextInt(); } SetOfValues chosenPrivilege =
-	 * councilPrivileges.get(index-1);
-	 * chosenPrivilege.addTwoSetsOfValues(player.getMyValues());
-	 * 
-	 * councilPrivileges.remove(index-1);
-	 * System.out.println("Privilegio ("+index+") aggiunto alle tue risorse"); }
-	 * //reset the council scanner.close(); councilPrivileges.clear();
-	 * 
-	 * }
-	 */
+	/**This method receives a String that contains 1/2/3 number from 1 to 5,
+	 * they represent the position on the councilPrivileges the user wants to take
+	 * --> this input is parsed and saved. THEN giveImmediateEffect should be called */
 
+	public void assignParameters(String string) {
+		this.set = new SetOfValues();
+		StringTokenizer reader = new StringTokenizer(string);
+		while (reader.hasMoreTokens()){
+			int value = Integer.parseInt(string);
+			set.addTwoSetsOfValues(councilPrivileges.get(value-1));
+		}
+		
+	}
+
+	
 
 	@Override
 	public void giveImmediateEffect(Player player) {
 		set.addTwoSetsOfValues(player.getMyValues());
-		this.councilPrivileges = CreateCouncil();
 	}
 
 	// Prints the composition of the Council
@@ -123,14 +108,5 @@ public class CouncilPrivilege extends ImmediateEffect {
 	}
 
 	
-	/**This method receivesa a String that contains a number from 1 to 5,
-	 * it represents the position on the councilPrivilege the user wants to take*/
-	@Override
-	public void assignParameters(String string) {
-		StringTokenizer reader = new StringTokenizer(string);
-		int value = Integer.parseInt(string);
-		this.set = councilPrivileges.get(value-1);
-		
-	}
-
+	
 }

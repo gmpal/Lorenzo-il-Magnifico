@@ -1,5 +1,6 @@
 package it.polimi.ingsw.GC_24.effects;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import it.polimi.ingsw.GC_24.model.Player;
@@ -10,7 +11,7 @@ public class Exchange extends ImmediateEffect {
 	 * 
 	 */
 	private static final long serialVersionUID = 5137569904363140061L;
-	private List<ImmediateEffect> immediateEffectsFromExchange;
+	private List<ImmediateEffect> immediateEffectsFromExchange = new ArrayList<>();
 	private ExchangePackage exchangePackage;
 	private ExchangePackage exchangePackage1;
 	private ExchangePackage finalExchange;
@@ -19,22 +20,21 @@ public class Exchange extends ImmediateEffect {
 		super(name);
 		this.exchangePackage = exchangePackage;
 		this.exchangePackage1 = exchangePackage1;
+		this.finalExchange = exchangePackage;
 	}
 
 	@Override
 	public void giveImmediateEffect(Player player) {
-		ImmediateEffect im = exchangePackage.getImmediateEffect();
+		ImmediateEffect im = finalExchange.getImmediateEffect();
 		finalExchange.getSet().subTwoSetsOfValues(player.getMyValues());
-		if (im.getName().equals("value")) {
-			im.giveImmediateEffect(player);
+		if (im instanceof ValueEffect) {
+			((ValueEffect)im).giveImmediateEffect(player);
 		} else {
 			immediateEffectsFromExchange.add(im);
 		}
 	}
 
-	public void assignParameter(ExchangePackage finalExchange) {
-		
-	}
+
 
 	public List<ImmediateEffect> getImmediateEffectsFromExchange() {
 		return immediateEffectsFromExchange;
@@ -65,12 +65,12 @@ public class Exchange extends ImmediateEffect {
 		return "Exchange [exchangePackage=" + exchangePackage + ", exchangePackage1=" + exchangePackage1 + "]";
 	}
 
-	@Override
-	public void assignParameters(String string) {
-			if (string.equals("1")){
+	
+	public void assignParameters(int choice) {
+			if (choice == 1){
 				this.finalExchange = exchangePackage;
 			}
-			if (string.equals("2")){
+			if (choice == 2){
 				this.finalExchange = exchangePackage1;
 			}
 	

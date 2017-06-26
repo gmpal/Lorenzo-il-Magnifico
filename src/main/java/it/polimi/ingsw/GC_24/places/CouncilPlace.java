@@ -20,12 +20,12 @@ public class CouncilPlace extends Place {
 		this.value=value;
 		this.privilegeEffect = privilegeEffect;
 	}
-
+/*
 	@Override
 	public void giveEffects(Player player) {
 		player.setMyValues(this.value.getEffectValues().addTwoSetsOfValues(player.getMyValues()));
 	}
-
+*/
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

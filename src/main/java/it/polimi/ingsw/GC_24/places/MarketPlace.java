@@ -24,13 +24,13 @@ public class MarketPlace extends Place {
 		this.available = true;
 		this.famMemberOnPlace = null;
 	}
-
+/*
 	@Override
 	public void giveEffects(Player player) {
 		player.setMyValues(this.getValue().getEffectValues().addTwoSetsOfValues(player.getMyValues()));
 		player.setMyValues(this.value.getEffectValues().addTwoSetsOfValues(player.getMyValues()));
 	}
-
+*/
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

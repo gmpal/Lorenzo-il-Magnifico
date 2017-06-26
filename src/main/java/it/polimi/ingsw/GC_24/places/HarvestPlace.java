@@ -20,8 +20,8 @@ public class HarvestPlace extends ActivityPlace{
 		super(costDice, additionalCostDice);
 	}
 
-	@Override
-	public void doActivity(Player player){
+	
+	/*public void doActivity(Player player){
 	player.getMyBoard().getBonusTile().giveHarvestValues(player.getMyValues());
 	List<Development> harvestCards = player.getMyBoard().getPersonalTerritories().getCards();
 	for (Development  card:harvestCards){
@@ -31,10 +31,11 @@ public class HarvestPlace extends ActivityPlace{
 			territory.getImmediateEffect().giveImmediateEffect(player);
 			} 
 		}
-	}
+	}*/
 
 	@Override
 	public ValueEffect getValue() {
+		//returns the place value, but harvest place doesn't have one
 		return null;
 	}
 }

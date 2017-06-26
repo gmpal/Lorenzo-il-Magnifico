@@ -22,7 +22,7 @@ public class ProductionPlace extends ActivityPlace{
 	}
 	
 	//gives the production value of the bonus tile and the effects of the activated cards to the player 
-	@Override
+/*	@Override
 	public void doActivity(Player player){
 		player.getMyBoard().getBonusTile().giveHarvestValues(player.getMyValues());
 		List<Development> productionCards = player.getMyBoard().getPersonalBuildings().getCards();
@@ -35,7 +35,7 @@ public class ProductionPlace extends ActivityPlace{
 		}
 
 	}
-
+*/
 	@Override
 	public ValueEffect getValue() {
 		return null;
