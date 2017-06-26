@@ -264,7 +264,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 			}
 
 		}
-		return commandZone + " " + Integer.toString(choice);
+		return commandZone + Integer.toString(choice);
 
 	}
 

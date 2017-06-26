@@ -18,37 +18,34 @@ public class ActionFactory {
 
 		Action newAction = null;
 
-		if (zone.equalsIgnoreCase("Territories") || zone.equalsIgnoreCase("Characters")
-				|| zone.equalsIgnoreCase("Buildings") || zone.equalsIgnoreCase("Ventures")) {
-
+		if (zone.equalsIgnoreCase("territories") || zone.equalsIgnoreCase("characters")
+				|| zone.equalsIgnoreCase("buildings") || zone.equalsIgnoreCase("ventures")) {
 			newAction = new ActionTower(game, familiar, zone, floor, servants, cost, setOfSale);
-
 		}
 
-		if (zone.equalsIgnoreCase("Harvest")) {
+		else if (zone.equalsIgnoreCase("Harvest")) {
 
 			newAction = new HarvestAction(game, familiar, zone, floor, servants);
 
 		}
 		
-		if (zone.equalsIgnoreCase("Production")) {
+		else if (zone.equalsIgnoreCase("Production")) {
 
 			newAction = new ProductionAction(game, familiar, zone, floor, servants);
 
 		}
 
 
-		if (zone.equalsIgnoreCase("Council")) {
+		else if (zone.equalsIgnoreCase("Council")) {
 
 			newAction = new CouncilPalaceAction(game, familiar, zone, floor, servants);
 
 		}
-		if (zone.equalsIgnoreCase("Market")) {
+		else if (zone.equalsIgnoreCase("Market")) {
 
 			newAction = new MarketAction(game, familiar, zone, floor, servants);
 
 		}
-
 		return newAction;
 
 	}

@@ -13,9 +13,9 @@ import it.polimi.ingsw.GC_24.values.*;
 
 public class ActionTower extends Action {
 	private List<ImmediateEffect> immediateEffects = new ArrayList<>();
-	protected SetOfValues temporaryCardCost;
+	private SetOfValues temporaryCardCost;
 	private TowerPlace towerPlace;
-	private SetOfValues setOfSales;
+	private SetOfValues setOfSales=new SetOfValues();
 	private int valueOfFakeFamiliar;
 
 /**
@@ -26,17 +26,17 @@ public class ActionTower extends Action {
 	 */
 	public ActionTower(Model game, String familiar, String zone, String floor, String servants, SetOfValues cost, SetOfValues setOfSale) {
 		super(game, familiar, zone, floor, servants);
-		this.temporaryCardCost = cost;
+		this.temporaryCardCost = cost;		
 		this.towerPlace = (TowerPlace) this.place;
-		this.setOfSales=setOfSale;
-	}
+		this.setOfSales=setOfSale;	
+		}
 
 	@Override
 	public String verify() {
 		String answerToPlayer = "Answer: \n";
 		while (answerToPlayer.equals("Answer: \n")) {
 			answerToPlayer = verifyIfEnoughServants(answerToPlayer);
-			answerToPlayer = verifyIfEnoughServantsForThisPlace(answerToPlayer);
+			answerToPlayer = verifyIfEnoughServantsForThisPlace(answerToPlayer);			
 			answerToPlayer = verifyFamilyMemberAvailability(answerToPlayer);
 			answerToPlayer = verifyPlaceAvailability(answerToPlayer);
 			answerToPlayer = verifyZoneOccupiedByMe(answerToPlayer);
@@ -54,16 +54,26 @@ public class ActionTower extends Action {
 
 	@Override
 	public List<ImmediateEffect> run() {
+		int i=0;
+		System.out.println(Integer.toString(i++));
 		this.takeRealCost();
+		System.out.println(Integer.toString(i++));
 		this.payCoinsforOccupiedTower();
+		System.out.println(Integer.toString(i++));
 		this.payValue(new Servant(this.servants));
+		System.out.println(Integer.toString(i++));
 		this.placeFamiliar();
+		System.out.println(Integer.toString(i++));
 		if (!isThereNoValueEffect()) {
 			this.takeValueFromPlace();
 		}
+		System.out.println(Integer.toString(i++));
 		this.takeCardAndPay();
+		System.out.println(Integer.toString(i++));
 		this.takeEffects();
+		System.out.println(Integer.toString(i++));
 		this.giveValueEffect(immediateEffects);
+		System.out.println(Integer.toString(i++));
 
 		return immediateEffects;
 	}
@@ -107,10 +117,12 @@ public class ActionTower extends Action {
 	}
 
 	private void takeRealCost() {
-		if (temporaryCardCost == null) {
+		if (temporaryCardCost.isEmpty()) {
 			TowerPlace towerPlace = (TowerPlace) this.place;
+			System.out.println(towerPlace.toString());
 			this.temporaryCardCost = setOfSales.subTwoSetsOfValues(towerPlace.getCorrespondingCard().getCost());
 		}
+		System.out.println(temporaryCardCost);
 	}
 
 	/*
@@ -133,9 +145,8 @@ public class ActionTower extends Action {
 	 * card
 	 */
 	public String verifyCardResources(String answerToPlayer) {
-
 		String typeOfCard = towerPlace.getCorrespondingCard().getType();
-		if (typeOfCard.equals("Venture")) {
+		if (typeOfCard.equalsIgnoreCase("Venture")) {
 			Ventures specificCard = (Ventures) towerPlace.getCorrespondingCard();
 			Value requirement = specificCard.getRequiredMilitaryPoints();
 			if (!this.player.getMyValues().doIHaveEnoughOfThis(requirement)) {
@@ -144,8 +155,11 @@ public class ActionTower extends Action {
 		}
 		if (!player.getMyValues().doIHaveThisSet(temporaryCardCost)) {
 			return answerToPlayer + "You don't have enough resources to take this card! Choose another card \n";
-		} else
-			return answerToPlayer;
+		}
+		else{
+				return answerToPlayer;
+
+		}
 	}
 
 	public String verifyTerritorySpaceAvailability(String answerToPlayer) {
