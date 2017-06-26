@@ -12,35 +12,11 @@ import java.util.Timer;
 import java.util.TimerTask;
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.MyObserver;
-
-import it.polimi.ingsw.GC_24.board.Area;
-
-import it.polimi.ingsw.GC_24.cards.Characters;
-import it.polimi.ingsw.GC_24.cards.Deck;
-import it.polimi.ingsw.GC_24.cards.Development;
-
-
-import it.polimi.ingsw.GC_24.cards.Ventures;
-import it.polimi.ingsw.GC_24.effects.ChooseNewCard;
-import it.polimi.ingsw.GC_24.effects.CouncilPrivilege;
-import it.polimi.ingsw.GC_24.effects.Exchange;
-import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
-
-import it.polimi.ingsw.GC_24.effects.PerformActivity;
-import it.polimi.ingsw.GC_24.effects.PerformHarvest;
-import it.polimi.ingsw.GC_24.effects.PerformProduction;
-
-import it.polimi.ingsw.GC_24.effects.IncreaseDieValueActivity;
-import it.polimi.ingsw.GC_24.effects.IncreaseDieValueCard;
-import it.polimi.ingsw.GC_24.effects.PermanentEffect;
-
-import it.polimi.ingsw.GC_24.model.Model;
-import it.polimi.ingsw.GC_24.model.Player;
-import it.polimi.ingsw.GC_24.model.State;
+import it.polimi.ingsw.GC_24.cards.*;
+import it.polimi.ingsw.GC_24.effects.*;
+import it.polimi.ingsw.GC_24.model.*;
 import it.polimi.ingsw.GC_24.places.TowerPlace;
-import it.polimi.ingsw.GC_24.values.MilitaryPoint;
-import it.polimi.ingsw.GC_24.values.SetOfValues;
-import it.polimi.ingsw.GC_24.values.VictoryPoint;
+import it.polimi.ingsw.GC_24.values.*;
 
 //Just one server's side controller for each game
 public class Controller extends MyObservable implements MyObserver, Runnable {
@@ -395,7 +371,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				waitingForParametersChoose.notify();
 			}
 			return "parameters updated";
-
 		
 		} else if (command.contains("sale")) {
 			SetOfValues setOfSales = (SetOfValues) request.get("sale");

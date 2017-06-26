@@ -64,8 +64,7 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 	@Override
 	public <C> void update(MyObservable o, C change) {
 		try {
-			
-			
+
 			objToServer.writeObject(change);
 			objToServer.flush();
 			objToServer.reset();
@@ -76,8 +75,6 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 
 	}
 
-
-
 	/**
 	 * Based on the key of the object received, this method handles the request
 	 */
@@ -85,8 +82,6 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 	@Override
 	public void handleRequestFromServer(Map<String, Object> request) {
 		Set<String> command = request.keySet();
-
-		
 
 		/* IN THIS CASE the request is handled by the viewCLI */
 		if (command.contains("cost1")) {
@@ -97,62 +92,58 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 		}
 
 		if (command.contains("model")) {
-			synchronized(view.getWaitingForAnswer()){
-				
+			synchronized (view.getWaitingForAnswer()) {
+
 				Model receivedModel = (Model) request.get("model");
-				System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n"+receivedModel+"\n@@@@@@@@@@@@@@@@@@@@@@@@@");
+				System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n" + receivedModel + "\n@@@@@@@@@@@@@@@@@@@@@@@@@");
 				view.setMiniModel(receivedModel);
-								
-				
+
 				System.out.println("GIOCATORI FINO ADESSO" + view.getMiniModel().getPlayers());
-				
-				view.setMyself(view.getMiniModel().getPlayers().get(view.getPlayerNumber()-1));
+
+				view.setMyself(view.getMiniModel().getPlayers().get(view.getPlayerNumber() - 1));
 
 				view.getWaitingForAnswer().notify();
 			}
-		
 
-		
-		if (command.contains("askForParameters")){
-			handleEffectParametersRequest((ImmediateEffect) request.get( "askForParameters"));
-			
-		}
-		
-		
-		if (command.contains("info")) {
-			notifyMyObservers(request.get("info"));
+			if (command.contains("askForParameters")) {
+				handleEffectParametersRequest((ImmediateEffect) request.get("askForParameters"));
 
-		}
+			}
 
-		if (command.contains("Play!")) {
-			view.play();
+			if (command.contains("info")) {
+				notifyMyObservers(request.get("info"));
 
-		}
-		if (command.contains("Turns")) {
-			List<Player> playerTurn = (List<Player>) request.get("Turns");
-			view.setPlayerTurn(playerTurn);
+			}
 
-		}
-		if (command.contains("CurrentPlayer")) {
-			Player currentPlayer = (Player) request.get("Turns");
-			if (currentPlayer.equals(view.getMyself())) {
-				view.setMyTurn(true);
-			} else
-				view.setMyTurn(false);
-		}
+			if (command.contains("Play!")) {
+				view.play();
 
-		if (command.contains("clientNumber")) {
-			int playerNumber = (int) request.get("clientNumber");
-			int modelNumber = (int) request.get("modelNumber");
-			if (view.getPlayerNumber() == 0) {
-				view.setPlayerNumber(playerNumber);
-				notifyMyObservers("You are the player #" + playerNumber+", connected to game #"+modelNumber);
+			}
+			if (command.contains("Turns")) {
+				List<Player> playerTurn = (List<Player>) request.get("Turns");
+				view.setPlayerTurn(playerTurn);
+
+			}
+			if (command.contains("CurrentPlayer")) {
+				Player currentPlayer = (Player) request.get("Turns");
+				if (currentPlayer.equals(view.getMyself())) {
+					view.setMyTurn(true);
+				} else
+					view.setMyTurn(false);
+			}
+
+			if (command.contains("clientNumber")) {
+				int playerNumber = (int) request.get("clientNumber");
+				int modelNumber = (int) request.get("modelNumber");
+				if (view.getPlayerNumber() == 0) {
+					view.setPlayerNumber(playerNumber);
+					notifyMyObservers("You are the player #" + playerNumber + ", connected to game #" + modelNumber);
+				}
+			}
+			if (command.contains("sale")) {
+				view.chooseSale((IncreaseDieValueCard) request.get(command));
 			}
 		}
-		if(command.contains("sale")){
-			view.chooseSale((IncreaseDieValueCard) request.get(command));
-		}
-
 	}
 
 	private void handleEffectParametersRequest(ImmediateEffect immediateEffect) {
