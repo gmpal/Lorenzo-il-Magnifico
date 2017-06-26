@@ -4,7 +4,6 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -109,6 +108,7 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 				view.getWaitingForAnswer().notify();
 			}
 		}
+    
 		if (command.contains("askForParameters")) {
 			handleEffectParametersRequest((ImmediateEffect) request.get("askForParameters"));
 
@@ -160,7 +160,6 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 			int modelNumber = (int) request.get("modelNumber");
 			if (view.getPlayerNumber() == 0) {
 				view.setPlayerNumber(playerNumber);
-
 			}
 			notifyMyObservers("You are the player #" + playerNumber + ", connected to game #" + modelNumber);
 
@@ -169,6 +168,8 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 			view.chooseSale((IncreaseDieValueCard) request.get(command));
 		}
 	}
+
+	
 
 	private void handleEffectParametersRequest(ImmediateEffect immediateEffect) {
 		if (immediateEffect instanceof ChooseNewCard) {
