@@ -19,6 +19,7 @@ public class Player implements Serializable {
 	private SetOfValues myValues;
 	private PlayerColour myColour;
 	private int playerNumber;
+	public boolean autoCompleted = false;
 
 	// Constructor
 	public Player(int playerNumber){
@@ -66,6 +67,8 @@ public class Player implements Serializable {
 		else
 			return false;
 	}
+
+	
 
 	// Prints name of a Player
 	@Override
@@ -120,6 +123,14 @@ public class Player implements Serializable {
 
 	public void setPlayerNumber(int playerNumber) {
 		this.playerNumber = playerNumber;
+	}
+
+	public boolean getAutocompleted() {
+		return this.autoCompleted;
+	}
+	
+	public void setAutocompleted(boolean autoCompleted) {
+		this.autoCompleted=autoCompleted;
 	}
 
 }

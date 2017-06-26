@@ -22,7 +22,6 @@ import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.effects.IncreaseDieValueCard;
 import it.polimi.ingsw.GC_24.model.*;
 
-
 import it.polimi.ingsw.GC_24.values.MilitaryPoint;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 
@@ -100,7 +99,13 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 
 				System.out.println("GIOCATORI FINO ADESSO" + view.getMiniModel().getPlayers());
 
+				System.out.println("NUMERO GIOCATORE" + view.getMiniModel().getPlayers().get(0).getPlayerNumber());
+				System.out.println("....Player Number ...." + view.getPlayerNumber());
+
 				view.setMyself(view.getMiniModel().getPlayers().get(view.getPlayerNumber() - 1));
+				System.out.println("Myself ----> " + view.getMyself());
+				view.setPlayerTurn(view.getMiniModel().getPlayers());
+
 				view.getWaitingForAnswer().notify();
 			}
 		}
@@ -109,12 +114,27 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 
 		}
 
+		if (command.contains("actionDone")) {
+			synchronized (view.getWaitingForActionCompleted()) {
+				view.setActionDone(true);
+				view.getWaitingForActionCompleted().notify();
+			}
+
+		}
+
 		if (command.contains("info")) {
 			notifyMyObservers(request.get("info"));
 
 		}
 
-		if (command.contains("Play!")) {
+		if (command.contains("startPlaying")) {
+			System.out.println("GET READY --> GAME IS STARTING");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			view.play();
 
 		}
@@ -123,12 +143,16 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 			view.setPlayerTurn(playerTurn);
 
 		}
-		if (command.contains("CurrentPlayer")) {
-			Player currentPlayer = (Player) request.get("Turns");
-			if (currentPlayer.equals(view.getMyself())) {
+		if (command.contains("currentPlayer")) {
+			Player currentPlayer = (Player) request.get("currentPlayer");
+
+			if (currentPlayer.getPlayerNumber() == view.getMyself().getPlayerNumber()) {
+				System.out.println("Player #" + view.getMyself().getPlayerNumber() + " turn is TRUE  ");
 				view.setMyTurn(true);
-			} else
+			} else {
+				System.out.println("Player #" + view.getMyself().getPlayerNumber() + " turn is FALSE  ");
 				view.setMyTurn(false);
+			}
 		}
 
 		if (command.contains("clientNumber")) {
@@ -136,8 +160,10 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 			int modelNumber = (int) request.get("modelNumber");
 			if (view.getPlayerNumber() == 0) {
 				view.setPlayerNumber(playerNumber);
-				notifyMyObservers("You are the player #" + playerNumber + ", connected to game #" + modelNumber);
+
 			}
+			notifyMyObservers("You are the player #" + playerNumber + ", connected to game #" + modelNumber);
+
 		}
 		if (command.contains("sale")) {
 			view.chooseSale((IncreaseDieValueCard) request.get(command));
@@ -154,14 +180,14 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 		}
 
 		if (immediateEffect instanceof Exchange) {
-			
+
 			view.askForExchange((Exchange) immediateEffect);
-			
+
 		}
 		// i parametri sono stati scelti e passati all'effetto
 		if (immediateEffect instanceof PerformActivity) {
 			view.askForServantsForHarvestAndProduction((PerformActivity) immediateEffect);
 		}
-		
+
 	}
 }

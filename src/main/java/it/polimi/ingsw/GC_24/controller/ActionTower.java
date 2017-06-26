@@ -153,6 +153,7 @@ public class ActionTower extends Action {
 				return answerToPlayer + "You don't have the required value for this card! Choose another card \n";
 			}
 		}
+		
 		if (!player.getMyValues().doIHaveThisSet(temporaryCardCost)) {
 			return answerToPlayer + "You don't have enough resources to take this card! Choose another card \n";
 		}

@@ -34,11 +34,14 @@ public class Exchange extends ImmediateEffect {
 		}
 	}
 
+
+	
 	public void assignParameters(int string) {
-			if (string == 1){
+			if (string ==1){
 				this.finalExchange = exchangePackage;
 			}
-			if (string == 2){
+			if (string ==2){
+
 				this.finalExchange = exchangePackage1;
 			}
 	}
