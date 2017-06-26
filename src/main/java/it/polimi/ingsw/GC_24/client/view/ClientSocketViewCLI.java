@@ -4,7 +4,6 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -20,8 +19,6 @@ import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
 
 import it.polimi.ingsw.GC_24.effects.IncreaseDieValueCard;
-import it.polimi.ingsw.GC_24.model.*;
-
 
 import it.polimi.ingsw.GC_24.values.MilitaryPoint;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
@@ -64,8 +61,7 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 	@Override
 	public <C> void update(MyObservable o, C change) {
 		try {
-			
-			
+
 			objToServer.writeObject(change);
 			objToServer.flush();
 			objToServer.reset();
@@ -76,8 +72,6 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 
 	}
 
-
-
 	/**
 	 * Based on the key of the object received, this method handles the request
 	 */
@@ -85,8 +79,6 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 	@Override
 	public void handleRequestFromServer(Map<String, Object> request) {
 		Set<String> command = request.keySet();
-
-		
 
 		/* IN THIS CASE the request is handled by the viewCLI */
 		if (command.contains("cost1")) {
@@ -97,28 +89,25 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 		}
 
 		if (command.contains("model")) {
-			synchronized(view.getWaitingForAnswer()){
-				
+			synchronized (view.getWaitingForAnswer()) {
+
 				Model receivedModel = (Model) request.get("model");
-				System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n"+receivedModel+"\n@@@@@@@@@@@@@@@@@@@@@@@@@");
+				System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n" + receivedModel + "\n@@@@@@@@@@@@@@@@@@@@@@@@@");
 				view.setMiniModel(receivedModel);
-								
-				
+
 				System.out.println("GIOCATORI FINO ADESSO" + view.getMiniModel().getPlayers());
-				
-				view.setMyself(view.getMiniModel().getPlayers().get(view.getPlayerNumber()-1));
+
+				view.setMyself(view.getMiniModel().getPlayers().get(view.getPlayerNumber() - 1));
 
 				view.getWaitingForAnswer().notify();
 			}
-		
-
-		
-		if (command.contains("askForParameters")){
-			handleEffectParametersRequest((ImmediateEffect) request.get( "askForParameters"));
-			
 		}
-		
-		
+
+		if (command.contains("askForParameters")) {
+			handleEffectParametersRequest((ImmediateEffect) request.get("askForParameters"));
+
+		}
+
 		if (command.contains("info")) {
 			notifyMyObservers(request.get("info"));
 
@@ -146,14 +135,15 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 			int modelNumber = (int) request.get("modelNumber");
 			if (view.getPlayerNumber() == 0) {
 				view.setPlayerNumber(playerNumber);
-				notifyMyObservers("You are the player #" + playerNumber+", connected to game #"+modelNumber);
+				notifyMyObservers("You are the player #" + playerNumber + ", connected to game #" + modelNumber);
 			}
 		}
-		if(command.contains("sale")){
+		if (command.contains("sale")) {
 			view.chooseSale((IncreaseDieValueCard) request.get(command));
 		}
-
 	}
+
+	
 
 	private void handleEffectParametersRequest(ImmediateEffect immediateEffect) {
 		if (immediateEffect instanceof ChooseNewCard) {
@@ -165,14 +155,14 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 		}
 
 		if (immediateEffect instanceof Exchange) {
-			
+
 			view.askForExchange((Exchange) immediateEffect);
-			
+
 		}
 		// i parametri sono stati scelti e passati all'effetto
 		if (immediateEffect instanceof PerformActivity) {
 			view.askForServantsForHarvestAndProduction((PerformActivity) immediateEffect);
 		}
-		
+
 	}
 }
