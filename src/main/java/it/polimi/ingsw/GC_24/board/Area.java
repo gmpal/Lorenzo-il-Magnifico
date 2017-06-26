@@ -49,7 +49,7 @@ public abstract class Area implements java.io.Serializable {
 			place.clearPlace();
 		}
 	}
-	/*This methods returns the corresponding space if the value is different than zero,
+	/**This methods returns the corresponding space if the value is different than zero,
 	 * else it returns the first empty space available*/
 	public Place getPlaceFromStringOrFirstIfZero(String place){
 		if (!place.equals("0")){
@@ -101,7 +101,7 @@ public abstract class Area implements java.io.Serializable {
 	
 	@Override
 	public String toString() {
-		return "" + placesArray;
+		return placesArray.toString();
 	} 
 
 	//getter and setter

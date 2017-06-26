@@ -1,6 +1,9 @@
 package it.polimi.ingsw.GC_24.model;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,15 +11,19 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.google.gson.Gson;
+
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.board.Board;
 import it.polimi.ingsw.GC_24.cards.Deck;
 import it.polimi.ingsw.GC_24.client.view.ServerSocketView;
+import it.polimi.ingsw.GC_24.devCardJsonFile.GsonBuilders;
+
 import it.polimi.ingsw.GC_24.dice.SetOfDice;
 import it.polimi.ingsw.GC_24.network.multi.Server;
+import it.polimi.ingsw.GC_24.values.SetOfValues;
 
 public class Model extends MyObservable implements Serializable {
-
 
 	/**
 	 * 
@@ -26,7 +33,7 @@ public class Model extends MyObservable implements Serializable {
 	private Board board;
 	private Player currentPlayer;
 	private State gameState;
-	
+
 	private SetOfDice dice;
 	private List<Ranking> rankings;
 	private HashMap<String, Object> hm;
@@ -39,6 +46,7 @@ public class Model extends MyObservable implements Serializable {
 	private int counter;
 
 	private static Timer timer;
+	private List<SetOfValues> correspondingValue = new ArrayList<>();
 
 	public Model(int modelNumber) {
 
@@ -51,12 +59,11 @@ public class Model extends MyObservable implements Serializable {
 		this.counter = 0;
 		this.modelNumber = modelNumber;
 		this.cards = new Deck();
+		getCorrespondingValueFromFile();
 	}
 
-	
-	public synchronized void addPlayer(){
-		
-		
+	public synchronized void addPlayer() {
+
 
 		counter++;
 		sendNumberToClient();
@@ -77,7 +84,7 @@ public class Model extends MyObservable implements Serializable {
 					System.out.println("Model: *TIME UP*");
 
 					Server.launchAndCreateNewGame();
-					}
+				}
 
 			}, 15000);
 		}
@@ -91,11 +98,10 @@ public class Model extends MyObservable implements Serializable {
 
 	}
 
-	/*
+	/**
 	 * After a Model is created and the players are get, this method sets the
 	 * model so the game could start
 	 */
-
 	public void setModel(List<Player> players) {
 
 		this.players = players;
@@ -145,7 +151,7 @@ public class Model extends MyObservable implements Serializable {
 		return null;
 	}
 
-// getters and setters
+	// getters and setters
 
 	public int getModelNumber() {
 		return modelNumber;
@@ -210,11 +216,41 @@ public class Model extends MyObservable implements Serializable {
 	public void setCards(Deck cards) {
 		this.cards = cards;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Model [players=" + players + ", gameState=" + gameState + ", modelNumber=" + modelNumber + "]";
 	}
 
+	/**
+	 * This method converts Faith Points in Values specified in a configuration
+	 * file named "convertFaithPoints.json". Every line of file corresponds to a
+	 * score. All Values are entered in a List of SetOfValues
+	 */
+	public void getCorrespondingValueFromFile() {
+		BufferedReader br;
+		Gson gson = GsonBuilders.getGsonWithTypeAdapters();
+		String line = "ready";
+		try {
+			br = new BufferedReader(
+					new FileReader("src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/convertFaithPoints.json"));
+
+			while (line != null) {
+				line = GsonBuilders.getLine(br);
+				correspondingValue.add(gson.fromJson(line, SetOfValues.class));
+			}
+		} catch (IOException e) {
+			System.out.println("There is a problem with the configuration file");
+		}
+	}
+
+	public void setCorrespondingValue(List<SetOfValues> correspondingValue) {
+		this.correspondingValue = correspondingValue;
+	}
+
+	public List<SetOfValues> getCorrespondingValue() {
+		return correspondingValue;
+	}
+	
 
 }

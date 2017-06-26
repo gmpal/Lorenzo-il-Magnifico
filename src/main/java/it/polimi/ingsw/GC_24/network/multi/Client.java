@@ -1,21 +1,6 @@
 package it.polimi.ingsw.GC_24.network.multi;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-import javax.swing.JOptionPane;
-
-import it.polimi.ingsw.GC_24.client.rmi.ClientRMI;
-import it.polimi.ingsw.GC_24.client.view.ClientSocket;
-import it.polimi.ingsw.GC_24.client.view.ClientSocketViewCLI;
-import it.polimi.ingsw.GC_24.client.view.ClientSocketViewGUI;
-import it.polimi.ingsw.GC_24.client.view.ClientSocketViewInterface;
 import it.polimi.ingsw.GC_24.client.view.ViewCLI;
 import it.polimi.ingsw.GC_24.client.view.ViewGUI;
 

@@ -18,9 +18,9 @@ public abstract class PersonalCards implements java.io.Serializable{
 		this.cards = new ArrayList<>();
 	}
 	
-	/*finds an ArrayList of PersonalCards in the PersonalBoard if you don't already know the type
-	It's called on a specific PersonalCard and returns 
-	the corresponding subClass of PersonalCards in a specific Personal board */
+	/**finds an ArrayList of PersonalCards in the PersonalBoard if you don't already know the type
+	 * It's called on a specific PersonalCard and returns 
+	 * the corresponding subClass of PersonalCards in a specific Personal board */
 	public abstract PersonalCards findCardsInPersonalBoard(PersonalBoard playersBoard);
 	
 	public abstract  VictoryPoint convertCardToVictoryPoints();
@@ -33,5 +33,7 @@ public abstract class PersonalCards implements java.io.Serializable{
 	public List<Development> getCards(){
 		return cards;
 	}
+
+	public abstract String getType();
 
 }

@@ -1,7 +1,6 @@
 package it.polimi.ingsw.GC_24.places;
 
 import it.polimi.ingsw.GC_24.model.Player;
-import it.polimi.ingsw.GC_24.values.Value;
 
 public abstract class ActivityPlace extends Place{
 	
@@ -18,9 +17,11 @@ public abstract class ActivityPlace extends Place{
 		this.additionalCostDice = additionalCostDice;
 	}
 	
+
 	//gives the harvest or production value of the
 	//bonus tile and the effects of the activated cards to the player 
 //	public abstract void doActivity(Player player);
+
 	
 	
 	//getter and setter
@@ -35,7 +36,7 @@ public abstract class ActivityPlace extends Place{
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append( "Free? " + isAvailable());
+		builder.append( "\nFree? " + isAvailable());
 		if (!isAvailable()){
 			builder.append("extra die's cost: " + getAdditionalCostDice());
 		}

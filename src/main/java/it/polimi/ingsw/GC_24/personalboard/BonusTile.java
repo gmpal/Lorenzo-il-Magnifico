@@ -1,12 +1,9 @@
 package it.polimi.ingsw.GC_24.personalboard;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-
 import com.google.gson.Gson;
-
 import it.polimi.ingsw.GC_24.devCardJsonFile.GsonBuilders;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 
@@ -21,9 +18,9 @@ public class BonusTile implements java.io.Serializable {
 	private SetOfValues productionValues;
 
 	// constructor
-	public BonusTile(boolean advanceRules, int index) {
+	public BonusTile(boolean advancedRules, int index) {
 		try {
-			createBonusTile(advanceRules, index);
+			createBonusTile(advancedRules, index);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -42,13 +39,13 @@ public class BonusTile implements java.io.Serializable {
 	 * with the advanced rules
 	 * @throws IOException 
 	 */
-	private void createBonusTile(boolean advanceRules, int index) throws IOException{
+	private void createBonusTile(boolean advancedRules, int index) throws IOException{
 		BufferedReader br;
 		Gson gson = GsonBuilders.getGsonWithTypeAdapters();
 		String line;
 		br = new BufferedReader(new FileReader("src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/bonusTiles.json"));
-		if (advanceRules) {
-			for (int i = 0; i < 2 + index * 2; i++) {
+		if (advancedRules) {
+			for (int i = 0; i < 2 + (index-1) * 2; i++) {
 				line = GsonBuilders.getLine(br);
 			}
 		}
@@ -59,19 +56,19 @@ public class BonusTile implements java.io.Serializable {
 
 	}
 
-	// adds the harvestValues to the parameter
+	/** adds the harvestValues to the parameter*/
 	public void giveHarvestValues(SetOfValues v) {
 		harvestValues.addTwoSetsOfValues(v);
 	}
 
-	// adds the productionValues to the parameter
+	/** adds the productionValues to the parameter*/
 	public void giveProductionValues(SetOfValues v) {
 		productionValues.addTwoSetsOfValues(v);
 	}
 
 	@Override
 	public String toString() {
-		return "HarvestValues=" + harvestValues + ", ProductionValues=" + productionValues;
+		return "HarvestValues = " + harvestValues + ", ProductionValues = " + productionValues;
 	}
 
 	// getters e setters

@@ -4,11 +4,13 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import it.polimi.ingsw.GC_24.MyObservable;
+
 import it.polimi.ingsw.GC_24.effects.ChooseNewCard;
 import it.polimi.ingsw.GC_24.effects.CouncilPrivilege;
 import it.polimi.ingsw.GC_24.effects.Exchange;
@@ -16,6 +18,11 @@ import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
 import it.polimi.ingsw.GC_24.effects.PerformActivity;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
+
+import it.polimi.ingsw.GC_24.effects.IncreaseDieValueCard;
+import it.polimi.ingsw.GC_24.model.*;
+
+
 import it.polimi.ingsw.GC_24.values.MilitaryPoint;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 
@@ -144,6 +151,10 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 				view.setPlayerNumber(playerNumber);
 				notifyMyObservers("You are the player #" + playerNumber+", connected to game #"+modelNumber);
 			}
+		}
+		if(command.contains("sale")){
+			SetOfValues finalSale=view.chooseSale((IncreaseDieValueCard) request.get(command));
+			notifyMyObservers(new HashMap().put("sale", finalSale));
 		}
 
 	}

@@ -12,9 +12,11 @@ public class Leader extends Card{
 	private ValueEffect valueEffectLeader;
 	private ImmediateEffect immediateEffectLeader;
 	private PermanentEffect permanentEffectLeader;
-	private boolean inUse; // true if the card is already in use
-	private boolean oneTimePerTurn; // true if you can use it one time per turn,
-									// false if the effect is permanent
+	/** true if the card is already in use*/
+	private boolean inUse; 
+	/** true if you can use it one time per turn,
+	* false if the effect is permanent*/
+	private boolean oneTimePerTurn; 
 
 	// constructor
 	public Leader(String name, Requirements requirements, ValueEffect valueEffectLeader,

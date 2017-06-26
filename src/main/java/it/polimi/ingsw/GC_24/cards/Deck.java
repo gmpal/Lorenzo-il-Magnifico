@@ -1,4 +1,4 @@
-﻿package it.polimi.ingsw.GC_24.cards;
+package it.polimi.ingsw.GC_24.cards;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -7,16 +7,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
 import com.google.gson.Gson;
-
 import it.polimi.ingsw.GC_24.board.Board;
 import it.polimi.ingsw.GC_24.devCardJsonFile.GsonBuilders;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.places.Place;
 import it.polimi.ingsw.GC_24.places.TowerPlace;
-
 
 public class Deck implements Serializable {
 
@@ -49,8 +46,7 @@ public class Deck implements Serializable {
 	}
 
 
-	// create 4 deck arrayList from 4 different file with Json
-
+	/** creates 4 deck arrayList from 4 different file with Json*/
 	public void createDeck() throws IOException {
 		BufferedReader br;
 		Gson gson = GsonBuilders.getGsonWithTypeAdapters();
@@ -188,8 +184,61 @@ public class Deck implements Serializable {
 			towerPlace.setCorrespondingCard(chosenCard);
 		}
 	}
+	
+	
+
+	public List<Territories> getDeckTerritories() {
+		return deckTerritories;
+	}
+
+
+	public void setDeckTerritories(List<Territories> deckTerritories) {
+		this.deckTerritories = deckTerritories;
+	}
+
+
+	public List<Characters> getDeckCharacters() {
+		return deckCharacters;
+	}
+
+
+	public void setDeckCharacters(List<Characters> deckCharacters) {
+		this.deckCharacters = deckCharacters;
+	}
+
+
+	public List<Buildings> getDeckBuildings() {
+		return deckBuildings;
+	}
+
+
+	public void setDeckBuildings(List<Buildings> deckBuildings) {
+		this.deckBuildings = deckBuildings;
+	}
+
+
+	public List<Ventures> getDeckVentures() {
+		return deckVentures;
+	}
+
+
+	public void setDeckVentures(List<Ventures> deckVentures) {
+		this.deckVentures = deckVentures;
+	}
+
+
+	public List<Leader> getDeckLeaders() {
+		return deckLeaders;
+	}
+
+
+	public void setDeckLeaders(List<Leader> deckLeaders) {
+		this.deckLeaders = deckLeaders;
+	}
+
 
 	public static void main(String args[]) throws IOException {
+
 		Player player1 = new Player(1);
 		Player player2 = new Player(2);
 		List<Player> lista = new ArrayList<>();
@@ -244,7 +293,6 @@ public class Deck implements Serializable {
 		System.out.println(tx);*/
 
 		//PermanentEffect pe = new IncreaseDieValueActivity("production", 3);
-
 
 	}
 

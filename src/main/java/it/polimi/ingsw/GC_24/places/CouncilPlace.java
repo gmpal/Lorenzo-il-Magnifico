@@ -29,7 +29,7 @@ public class CouncilPlace extends Place {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append( "Free? " + isAvailable());
+		builder.append( "\nFree? " + isAvailable());
 		if (isAvailable()){
 			builder.append(" - You get: " + getValue() + " and a Council Privilege");
 		}

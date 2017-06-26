@@ -1,11 +1,8 @@
 package it.polimi.ingsw.GC_24.places;
 
-import it.polimi.ingsw.GC_24.effects.CouncilPrivilege;
 import it.polimi.ingsw.GC_24.effects.ValueEffect;
 import it.polimi.ingsw.GC_24.model.FamilyMember;
 import it.polimi.ingsw.GC_24.model.Player;
-import it.polimi.ingsw.GC_24.values.SetOfValues;
-import it.polimi.ingsw.GC_24.values.Value;
 
 public abstract class Place implements java.io.Serializable {
 
@@ -27,7 +24,7 @@ public abstract class Place implements java.io.Serializable {
 
 	// Useful methods
 
-	// clears the place from the Family Member
+	/** clears the place from the Family Member*/
 	public void clearPlace() {
 	
 		if (this.famMemberOnPlace != null) {

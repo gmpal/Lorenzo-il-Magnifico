@@ -5,13 +5,16 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Timer;
-
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.MyObserver;
+
 import it.polimi.ingsw.GC_24.effects.ChooseNewCard;
 import it.polimi.ingsw.GC_24.effects.CouncilPrivilege;
 import it.polimi.ingsw.GC_24.effects.Exchange;
 import it.polimi.ingsw.GC_24.effects.PerformActivity;
+
+import it.polimi.ingsw.GC_24.effects.IncreaseDieValueCard;
+
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.State;
@@ -122,7 +125,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 			System.out.println(myself.getMyBoard());
 		} else if (command.equals("c")) {
 			// TODO: aggiungere leadercards alla personalBoard
-			// System.out.println(myself.getMyBoard().);
+			// System.out.println(myself.getMyBoard());
 			System.out.println("This function is not been implemented yet");
 		} else if (command.equals("d")) {
 			System.out.println(myself.getMyFamily());
@@ -290,6 +293,29 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 
 		}
 		this.notifyMyObservers(hm);
+	}
+
+	public SetOfValues chooseSale(IncreaseDieValueCard increase) {
+		SetOfValues finalIncrease;
+		do {
+			System.out.println("Choose sale: (1,2)");
+			int answer = 0;
+			try {
+				answer = scanner.nextInt();
+			} catch (Exception e) {
+				finalIncrease = null;
+				answer=0;
+			}
+			if (answer == 1) {
+				finalIncrease = increase.getSale();
+			} else if (answer == 2) {
+				finalIncrease = increase.getAlternativeSale();
+			} else {
+				System.out.println("Wrong number");
+				finalIncrease = null;
+			}
+		} while (finalIncrease == null);
+		return finalIncrease;
 	}
 
 

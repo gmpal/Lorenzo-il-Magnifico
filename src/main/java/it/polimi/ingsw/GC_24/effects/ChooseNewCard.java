@@ -66,5 +66,11 @@ public class ChooseNewCard extends ImmediateEffect {
 		this.setOfValue = setOfValue;
 	}
 
+	@Override
+	public void assignParameters(String string) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 }

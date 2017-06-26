@@ -5,7 +5,6 @@ import it.polimi.ingsw.GC_24.cards.Development;
 import it.polimi.ingsw.GC_24.cards.Territories;
 import it.polimi.ingsw.GC_24.effects.ValueEffect;
 import it.polimi.ingsw.GC_24.model.Player;
-import it.polimi.ingsw.GC_24.values.Value;
 
 public class HarvestPlace extends ActivityPlace{
 	

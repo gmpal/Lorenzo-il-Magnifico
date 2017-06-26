@@ -37,6 +37,11 @@ public class PersonalVentures extends PersonalCards{
 		}
 		return point;
 	}
+
+	@Override
+	public String getType() {
+		return "Ventures";
+	}
 	
 	
 }

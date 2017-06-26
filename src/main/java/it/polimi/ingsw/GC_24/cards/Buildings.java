@@ -31,9 +31,20 @@ public class Buildings extends Development {
 
 	@Override
 	public String toString() {
-		return "Building: Name = " + name + " Cost = " + getCost() + " Immediate Effects = " + getImmediateEffect()+" "+getImmediateEffect1()+
-				"\nDie Value For Production = "+dieValueProduction +"Production Effects = "+productionEffect+" "+productionEffect1;
-  }
+		StringBuilder builder = new StringBuilder();
+		builder.append( "\nName = " + name + ", Cost = " + getCost());
+		if (getImmediateEffect()!=null){
+			builder.append(", Immediate Effects = " + getImmediateEffect());
+			if (getImmediateEffect1()!=null)
+				builder.append(" and " + getImmediateEffect1());
+		}
+		if (productionEffect!=null){
+			builder.append("\nDie Value For Production = "+dieValueProduction +", Production Effects = "+productionEffect);
+			if (productionEffect1!=null)
+				builder.append(" and " + productionEffect1);
+		}
+		return builder.toString();
+	}
 
 	// getter and setter
 	public ImmediateEffect getProductionEffect() {

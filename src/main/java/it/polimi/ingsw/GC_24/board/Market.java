@@ -22,8 +22,10 @@ public class Market extends Area {
 	 */
 	private static final long serialVersionUID = 2905959753632826514L;
 	private boolean placesLocked;
-	private static final int MINPLACES = 2; // Place with 2 players
-	private static final int MAXPLACES = 4; // Place from 3 players
+	/** Place with 2 players*/
+	private static final int MINPLACES = 2; 
+	/** Place from 3 players*/
+	private static final int MAXPLACES = 4;
 	private static final int COSTDICE = 1;
 	private List<ImmediateEffect> valueListMarket = new ArrayList<>();
 

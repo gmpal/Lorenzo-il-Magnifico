@@ -3,8 +3,11 @@ package it.polimi.ingsw.GC_24.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.polimi.ingsw.GC_24.cards.Characters;
 import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
+import it.polimi.ingsw.GC_24.effects.IncreaseDieValueActivity;
 import it.polimi.ingsw.GC_24.effects.PerformHarvest;
+import it.polimi.ingsw.GC_24.effects.PermanentEffect;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.places.HarvestPlace;
 import it.polimi.ingsw.GC_24.values.Servant;
@@ -12,7 +15,7 @@ import it.polimi.ingsw.GC_24.values.Servant;
 public class HarvestAction extends Action {
 	private List<ImmediateEffect> immediateEffects = new ArrayList<>();
 	private HarvestPlace harvestPlace;
-	private int finalActionValue;
+	private int finalActionValue=0;
 
 	public HarvestAction(Model game, String familiar, String zone, String floor, String servants) {
 		super(game, familiar, zone, floor, servants);
@@ -43,10 +46,16 @@ public class HarvestAction extends Action {
 		return immediateEffects;
 	}
 
-	private void getFinalActionValue() {
-		//TODO: fix with permanent effect
-		this.finalActionValue = familyMember.getMemberValue() - harvestPlace.getAdditionalCostDice()+servants;
+	public void getFinalActionValue() {
 		
+		for(int i=0;i<player.getMyBoard().getPersonalCharacters().getCards().size();i++){
+			Characters c=(Characters)player.getMyBoard().getPersonalCharacters().getCards().get(i);
+			if(c.getPermanentEffects().getName().equals("increaseDieValueHarvest")){
+				IncreaseDieValueActivity pe=(IncreaseDieValueActivity)c.getPermanentEffects();
+				this.finalActionValue+=pe.getIncreaseDieValue();
+			}
+		}
+		this.finalActionValue += familyMember.getMemberValue() - harvestPlace.getAdditionalCostDice()+servants;
 	}
 
 	private void createHarvestEffect() {

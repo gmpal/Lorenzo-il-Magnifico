@@ -28,6 +28,11 @@ public class PersonalBuildings extends PersonalCards {
 	public VictoryPoint convertCardToVictoryPoints() {
 		return new VictoryPoint(0);
 	}
+
+	@Override
+	public String getType() {
+		return "Buildings";
+	}
 	
 	
 }
