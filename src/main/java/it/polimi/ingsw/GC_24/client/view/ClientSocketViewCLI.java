@@ -95,17 +95,14 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 			synchronized(view.getWaitingForAnswer()){
 				
 				Model receivedModel = (Model) request.get("model");
-				
 				System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n"+receivedModel+"\n@@@@@@@@@@@@@@@@@@@@@@@@@");
 				view.setMiniModel(receivedModel);
 								
 				
 				System.out.println("GIOCATORI FINO ADESSO" + view.getMiniModel().getPlayers());
-			
-				if (view.getMyself() == null || view.getMyself().getMyName()==null){
-					  view.setMyself(view.getMiniModel().getPlayers().get(view.getPlayerNumber()-1));
-						System.out.println("MYSELF ADESSO" + view.getMyself().getMyName());
-				}
+				
+				view.setMyself(view.getMiniModel().getPlayers().get(view.getPlayerNumber()-1));
+						
 				view.getWaitingForAnswer().notify();
 			}
 		

@@ -20,5 +20,6 @@ public abstract class ImmediateEffect extends Effect {
 	 * the player when called
 	 */
 	public abstract void giveImmediateEffect(Player player);
+	
 	public abstract void assignParameters(String string);
 }

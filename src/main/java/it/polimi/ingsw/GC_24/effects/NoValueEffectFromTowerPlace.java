@@ -10,4 +10,9 @@ public class NoValueEffectFromTowerPlace extends PermanentEffect{
 	public NoValueEffectFromTowerPlace(String name) {
 		super(name);
 	}
+
+	@Override
+	public String toString() {
+		return "No Value Effect From Tower Place: when you place a family member on a tower place you won't get the values anymore ";
+	}
 }

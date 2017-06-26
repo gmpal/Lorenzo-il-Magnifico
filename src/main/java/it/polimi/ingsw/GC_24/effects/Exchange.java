@@ -31,11 +31,29 @@ public class Exchange extends ImmediateEffect {
 			immediateEffectsFromExchange.add(im);
 		}
 	}
-
-	public void assignParameter(ExchangePackage finalExchange) {
-		
+	
+	@Override
+	public void assignParameters(String string) {
+			if (string.equals("1")){
+				this.finalExchange = exchangePackage;
+			}
+			if (string.equals("2")){
+				this.finalExchange = exchangePackage1;
+			}
+	
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append( "Exchange: you can exchange "+ exchangePackage.getSet() +" for "+ exchangePackage.getImmediateEffect());
+		if (exchangePackage1!=null){
+			builder.append(" or otherwise " + exchangePackage1.getSet() +" for "+ exchangePackage1.getImmediateEffect());
+		}
+		return builder.toString();
 	}
 
+	//getters and setters
 	public List<ImmediateEffect> getImmediateEffectsFromExchange() {
 		return immediateEffectsFromExchange;
 	}
@@ -60,20 +78,4 @@ public class Exchange extends ImmediateEffect {
 		this.exchangePackage1 = exchangePackage1;
 	}
 
-	@Override
-	public String toString() {
-		return "Exchange [exchangePackage=" + exchangePackage + ", exchangePackage1=" + exchangePackage1 + "]";
-	}
-
-	@Override
-	public void assignParameters(String string) {
-			if (string.equals("1")){
-				this.finalExchange = exchangePackage;
-			}
-			if (string.equals("2")){
-				this.finalExchange = exchangePackage1;
-			}
-	
-		
-	}
 }

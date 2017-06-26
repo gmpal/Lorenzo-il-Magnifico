@@ -28,7 +28,13 @@ public class PerformHarvest extends PerformActivity {
 			}
 		}
 	}
+	
+	@Override
+	public String toString() {
+		return "Perform Harvest: with a starting die value of " + getDieValue();
+	}
 
+	//getter and setter
 	public List<ImmediateEffect> getImmediateEffectsHarvest() {
 		return immediateEffectsHarvest;
 	}
@@ -39,8 +45,7 @@ public class PerformHarvest extends PerformActivity {
 
 	@Override
 	public void assignParameters(String string) {
-		//THE STRING CONTAINS THE NUMBER OF SERVANTS I WANT TO INCREMENT MY HARVEST
+		//THE STRING CONTAINS THE NUMBER OF SERVANTS I WANT TO INCREMENT MY HARVEST WITH
 		
-
-}
+	}
 }

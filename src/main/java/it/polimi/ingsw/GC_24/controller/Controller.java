@@ -93,7 +93,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		}
 
 		game.setModel(game.getPlayers());
-
 		game.sendModel();
 		this.currentPlayer = game.getCurrentPlayer();
 

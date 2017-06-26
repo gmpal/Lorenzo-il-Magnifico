@@ -36,7 +36,13 @@ public class PerformProduction extends PerformActivity {
 			}
 		}
 	}
+	
+	@Override
+	public String toString() {
+		return "Perform Production: with a starting die value of " + getDieValue();
+	}
 
+	//getter and setter
 	public List<ImmediateEffect> getImmediateEffectsHarvest() {
 		return immediateEffectsProduction;
 	}
@@ -47,7 +53,7 @@ public class PerformProduction extends PerformActivity {
 
 	@Override
 	public void assignParameters(String string) {
-		//THE STRING CONTAINS THE NUMBER OF SERVANTS I WANT TO INCREMENT MY PRODUCTION
+		//THE STRING CONTAINS THE NUMBER OF SERVANTS I WANT TO INCREMENT MY PRODUCTION WITH
 		
 	}
 }

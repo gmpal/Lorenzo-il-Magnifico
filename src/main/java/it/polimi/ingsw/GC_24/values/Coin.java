@@ -32,11 +32,6 @@ public class Coin extends Value {
 	}
 
 	@Override
-	public String toString() {
-		return "Coin: " + this.getQuantity();
-	}
-
-	@Override
 	public String whatValueAmI() {
 		return "Coin";
 	}
@@ -44,6 +39,11 @@ public class Coin extends Value {
 	@Override
 	public Boolean amIpresentInThisSet(SetOfValues setOfValues) {
 		return (setOfValues.getCoins().getQuantity() >= this.quantity);
+	}
+	
+	@Override
+	public String toString() {
+		return "coins = " + getQuantity();
 	}
 
 }

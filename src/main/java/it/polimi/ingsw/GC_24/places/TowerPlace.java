@@ -52,7 +52,13 @@ public class TowerPlace extends Place {
 	
 	@Override
 	public String toString() {
-		return correspondingCard.toString();
+		StringBuilder builder = new StringBuilder();
+		builder.append(correspondingCard.toString());
+		if (!value.getEffectValues().isEmpty()){
+			builder.append("\n\tValue you get from place = "+value);
+		
+		}
+		return builder.toString();
 	}
 
 	public Development getCorrespondingCard() {

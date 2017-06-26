@@ -33,14 +33,18 @@ public class Family implements java.io.Serializable{
 				
 	}
 	
-	//Prints a whole family
 	@Override
 	public String toString() {
-		return  
-				"member1 --> " + member1 + 
-				"\nmember2 --> " + member2 + 
-				"\nmember3 --> " + member3 +
-				"\nmember4 --> " + member4 + "\n";
+		StringBuilder builder = new StringBuilder();
+		if (member1.isAvailable())
+			builder.append("Member 1 --> " + member1+"\n");
+		if (member2.isAvailable())
+			builder.append("Member 2 --> " + member2+"\n");
+		if (member3.isAvailable())
+			builder.append("Member 3 --> " + member3+"\n");
+		if (member4.isAvailable())
+			builder.append("Member 4 --> " + member4+"\n");
+		return builder.toString();
 	}
 	
 	//TODO:test

@@ -30,7 +30,7 @@ public class ValueEffect extends ImmediateEffect {
 
 	@Override
 	public String toString() {
-			return setOfValue.toString();
+			return "Values: "+setOfValue;
 	}
 
 	// getters and setters

@@ -93,10 +93,10 @@ public class CouncilPrivilege extends ImmediateEffect {
 		if (this.councilPrivileges != null) {
 			List<SetOfValues> array = this.getCouncilPrivileges();
 			StringBuilder builder = new StringBuilder();
+			builder.append("Council Privilege: ");
 			for (int i = 0; i < array.size(); i++) {
-				builder.append(", " + (i + 1) + ") " + array.get(i));
+				builder.append(" "+(i + 1) + ") " + array.get(i));
 			}
-			builder.append("\n");
 			return builder.toString();
 		} else {
 			return "noEffect";
