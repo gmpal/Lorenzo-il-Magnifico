@@ -16,7 +16,7 @@ public class ExchangePackage implements java.io.Serializable{
 		this.immediateEffect = immediateEffect;
 	}
 
-	// getters anda setters
+	// getters and setters
 	public SetOfValues getSet() {
 		return set;
 	}
@@ -31,10 +31,5 @@ public class ExchangePackage implements java.io.Serializable{
 
 	public void setImmediateEffect(ImmediateEffect immediateEffect) {
 		this.immediateEffect = immediateEffect;
-	}
-
-	@Override
-	public String toString() {
-		return "ExchangePackage [set=" + set + ", immediateEffect=" + immediateEffect + "]";
 	}
 }

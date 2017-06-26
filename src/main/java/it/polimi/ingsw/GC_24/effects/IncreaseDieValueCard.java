@@ -21,6 +21,19 @@ public class IncreaseDieValueCard extends IncreaseDieValueActivity {
 		this.alternativeSale = alternativeSale;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append( "Increase Die Value: from now on you will have a starting die value of " +getIncreaseDieValue()+
+						" when taking a " + personalCards.getType() + " card");
+		if (sale != null) {
+			builder.append(" and you will also have an extra discount on the price of the card of " + sale);
+			if (alternativeSale != null)
+				builder.append(" or of " + alternativeSale);
+		}
+		return builder.toString();
+	}
+
 	// getters and setters
 	public PersonalCards getPersonalCards() {
 		return personalCards;

@@ -20,20 +20,26 @@ public class MoltiplicationCards extends Moltiplication {
 
 	@Override
 	public void moltiplicationEffect(Player player) {
-		int valueQuantity = this.value.getQuantity();
+		int valueQuantity = this.getValue().getQuantity();
 		PersonalCards correspondingArrayList = this.personalCards.findCardsInPersonalBoard(player.getMyBoard());
 		int sizeOfArray = correspondingArrayList.getCards().size();
 		int newQuantity = (valueQuantity) * (sizeOfArray);
-		value.setQuantity(newQuantity);
+		getValue().setQuantity(newQuantity);
 		SetOfValues setOfValues = player.getMyValues();
-		value.addValueToSet(setOfValues);
+		getValue().addValueToSet(setOfValues);
 	}
 
 	@Override
 	public void giveImmediateEffect(Player player) {
 		moltiplicationEffect(player);
 	}
+	
+	@Override
+	public String toString() {
+		return "Moltiplication Cards: for your every " + personalCards.getType() + " card you will receive " + getValue().toString();
+	}
 
+	//getters and setters
 	public PersonalCards getPersonalCards() {
 		return personalCards;
 	}
@@ -42,10 +48,6 @@ public class MoltiplicationCards extends Moltiplication {
 		this.personalCards = personalCards;
 	}
 
-	@Override
-	public void assignParameters(String string) {
-	
-	}
 
 	
 }

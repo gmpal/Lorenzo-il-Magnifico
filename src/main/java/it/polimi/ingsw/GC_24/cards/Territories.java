@@ -38,7 +38,7 @@ public class Territories extends Development {
 				builder.append(" and " + getImmediateEffect1());
 		}
 		if (effectForHarvest!=null){
-			builder.append("\nDie Value For Harvest = "+dieValueHarvest +", Harvest Effects = "+effectForHarvest);
+			builder.append(", Die Value For Harvest = "+dieValueHarvest +", Harvest Effect = "+effectForHarvest);
 		}
 		return builder.toString();
 	}

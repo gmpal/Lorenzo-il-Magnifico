@@ -30,7 +30,7 @@ public class ValueEffect extends ImmediateEffect {
 
 	@Override
 	public String toString() {
-			return setOfValue.toString();
+			return "Values: "+setOfValue;
 	}
 
 	// getters and setters
@@ -42,15 +42,5 @@ public class ValueEffect extends ImmediateEffect {
 		this.setOfValue = effectValues;
 	}
 
-	@Override
-	public void assignParameters(String string) {
-		// TODO Auto-generated method stub
-		
-	}
-
-/*	@Override
-	public String getRequestedParametersName() {
-		return null;
-	}*/
 
 }

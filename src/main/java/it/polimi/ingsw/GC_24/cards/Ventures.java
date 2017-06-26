@@ -42,7 +42,7 @@ public class Ventures extends Development {
 		}else {
 			builder.append(", Cost = " + getCost());
 		}
-		builder.append(", Victory Points at the End = "+getPointsAtTheEnd());
+		builder.append(", Victory Points at the End = "+getPointsAtTheEnd().getQuantity());
 		return builder.toString();
 	}
   

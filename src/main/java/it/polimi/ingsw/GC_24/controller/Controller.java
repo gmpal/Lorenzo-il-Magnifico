@@ -12,18 +12,28 @@ import java.util.Timer;
 import java.util.TimerTask;
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.MyObserver;
+
+import it.polimi.ingsw.GC_24.board.Area;
+
 import it.polimi.ingsw.GC_24.cards.Characters;
 import it.polimi.ingsw.GC_24.cards.Deck;
 import it.polimi.ingsw.GC_24.cards.Development;
+
 
 import it.polimi.ingsw.GC_24.cards.Ventures;
 import it.polimi.ingsw.GC_24.effects.ChooseNewCard;
 import it.polimi.ingsw.GC_24.effects.CouncilPrivilege;
 import it.polimi.ingsw.GC_24.effects.Exchange;
 import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
+
+import it.polimi.ingsw.GC_24.effects.PerformActivity;
+import it.polimi.ingsw.GC_24.effects.PerformHarvest;
+import it.polimi.ingsw.GC_24.effects.PerformProduction;
+
 import it.polimi.ingsw.GC_24.effects.IncreaseDieValueActivity;
 import it.polimi.ingsw.GC_24.effects.IncreaseDieValueCard;
 import it.polimi.ingsw.GC_24.effects.PermanentEffect;
+
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.State;
@@ -91,7 +101,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		}
 
 		game.setModel(game.getPlayers());
-
 		game.sendModel();
 		this.currentPlayer = game.getCurrentPlayer();
 
@@ -153,6 +162,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	}
 
+	
+	/**This method starts a timer and then calls another method that autocompletes the players*/
 	private void waitAndAutocomplete() {
 		Timer timer = new Timer();
 		timer.schedule(new TimerTask() {
@@ -167,7 +178,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	/**
 	 * This method automatically completes the players name and colours,
-	 * notifying the clients
+	 * waking up the run() thread and notifying the clients
 	 */
 	public void autoCompletePlayers() {
 
@@ -212,13 +223,10 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		sendInfo("The winner of the game is" + winner);
 	}
 
-	private void sendInfo(String string) {
-		hashMap = new HashMap<>();
-		hashMap.put("info", string);
-		notifyMyObservers(hashMap);
-	}
 
-	/** This method returns the winner of the game */
+	
+/**This methods returns the winner of the game using victoryPoints*/
+
 	public Player winnerOfTheGame() {
 		List<Integer> finalVictoryPoints = new ArrayList<>();
 		List<Player> winners = new ArrayList<>();
@@ -247,7 +255,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		return winner;
 	}
 
-	/** This method gives to players Victory Points at the end of game */
+	/**This method calculates the final victory points for each player. based on the final rules of the game*/
 	public void giveVictoryPoints() {
 		Player player;
 		List<Integer> finalMilitaryPoints = new ArrayList<>();
@@ -279,6 +287,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	 * Integer, this list contains the players' quantity of Military Points
 	 * sorted.
 	 */
+
 	public void convertMilitaryPointsToVictoryPoints(List<Integer> finalMilitaryPoints) {
 		VictoryPoint v1 = new VictoryPoint(5);
 		VictoryPoint v2 = new VictoryPoint(2);
@@ -293,7 +302,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		}
 	}
 
-	// update the turn list from the councilPalace
+	/**This methods updates the turn list looking at the Council Palace, after every round*/
 	public void updateListOfPlayerTurn(List<Player> temporaryTurn) {
 		int i;
 		for (Player player : temporaryTurn) {
@@ -305,6 +314,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		}
 	}
 
+	/**This methods makes the users start playing, calling a method on the view */
 	private void letThemPlay() {
 		alreadyPlaying = true;
 		hashMap = new HashMap<>();
@@ -312,16 +322,21 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		notifyMyObservers(hashMap);
 
 	}
-
+	/**This method sends to the clients the turn array to be updated*/
 	private void sendTurnArray(List<Player> turnArray) {
 		hashMap = new HashMap<>();
 		hashMap.put("Turns", turnArray);
 		notifyMyObservers(hashMap);
 	}
 
-	@Override
-	public void update() {
+
+	/**This method sends to the clients a simple information to be printed on the view*/
+	private void sendInfo(String string) {
+		hashMap = new HashMap<>();
+		hashMap.put("info", string);
+		notifyMyObservers(hashMap);
 	}
+	
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -367,7 +382,21 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 		else if (command.contains("action")) {
 
-			return handleAction(o, request);
+
+			handleAction(o, request);
+			verifyAndExecuteAction(o, this.action);
+		}
+
+		else if (command.contains("answerForParameters")) {
+
+			synchronized (waitingForParametersChoose) {
+				this.parametersAnswer = (String) request.get("answerForParameters");
+				this.parametersChosen = true;
+				waitingForParametersChoose.notify();
+			}
+			return "parameters updated";
+
+		
 		} else if (command.contains("sale")) {
 			SetOfValues setOfSales = (SetOfValues) request.get("sale");
 			synchronized (waitingForSalesChoice) {
@@ -375,11 +404,13 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				waitingForSalesChoice.notify();
 			}
 			return "sale chosen";
+
 		}
 
 		else {
 			return "bad command";
 		}
+		return null;
 
 	}
 
@@ -402,7 +433,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	}
 
-	private String handleAction(MyObservable o, Map<String, Object> request) {
+	private void handleAction(MyObservable o, Map<String, Object> request) {
 		System.out.println("Controller: started handling action");
 		StringTokenizer tokenizer = new StringTokenizer((String) request.get("action"));
 
@@ -428,49 +459,97 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		}
 		if (tempZone.equalsIgnoreCase("ventures")) {
 
-			handleVentures(o, request, tempZone, tempFloor);
+			handleVentures(o, tempZone, tempFloor);
 		}
 
 		this.action = actionFactory.makeAction(game, tempFamiliar, tempZone, tempFloor, tempServants, tempCost, saleForPermanentEffect);
+		
+	}
+
+	private void verifyAndExecuteAction(MyObservable o, Action action2) {
 		String responseToActionVerify = action.verify();
 		if (responseToActionVerify.equals("ok")) {
 
 			List<ImmediateEffect> interactiveEffects = action.run();
-			if (!interactiveEffects.isEmpty()) {
-				for (ImmediateEffect effect : interactiveEffects) {
-					handleEffects(effect);
+			this.handleInteractiveEffects(o, interactiveEffects);
+
+		} else {
+			/*ACTION FAILS --> if it's a normal action, do nothing, the player would start again and create a new one
+			 * --> if it's a chooseNewCard action, I should ask the user to choose another card*/
+			sendProblems(o, responseToActionVerify);
+
+		}
+		/*
+		 * Hai compiuto un'azione, al giocatore resta la possibilità di giocare
+		 * una carta leader --> TODO: gestione delle carte leader e conseguente
+		 * scelta del giocatore di ultimare il turno
+		 */
+
+		// per adesso finisco il turno --> Aggiorno il currentPlayer e
+		// sveglio il run();
+		synchronized (actionWaiting) {
+			game.setCurrentPlayer(playerTurn.get(playerTurn.indexOf(game.getCurrentPlayer()) + 1));
+			actionWaiting.notify();
+		}
+		// Ho modificato il model. Lo invio!
+		game.sendModel();
+
+		
+	}
+
+	private void handleInteractiveEffects(MyObservable o, List<ImmediateEffect> interactiveEffects) {
+		List<ImmediateEffect> secondaryInteractiveEffects = new ArrayList<>();
+		if (!interactiveEffects.isEmpty()) {
+			for (ImmediateEffect effect : interactiveEffects) {
+				handleEffects(o, effect);
+
+				if (effect instanceof ChooseNewCard) {
+					createNewActionForChooseNewCard(o, ((ChooseNewCard) effect).getDieValue());
+				
+				} else {
 					effect.giveImmediateEffect(currentPlayer);
 				}
 
-			} else {
-				sendProblems(o, responseToActionVerify);
-
+				if (effect instanceof Exchange) {
+					secondaryInteractiveEffects.addAll(((Exchange) effect).getImmediateEffectsFromExchange());
+				}
+				if (effect instanceof PerformHarvest) {
+					secondaryInteractiveEffects.addAll(((PerformHarvest) effect).getImmediateEffectsHarvest());
+				}
+				if (effect instanceof PerformProduction) {
+					secondaryInteractiveEffects.addAll(((PerformProduction) effect).getImmediateEffectsProduction());
+				}
 			}
-			/*
-			 * Hai compiuto un'azione, al giocatore resta la possibilità di
-			 * giocare una carta leader --> TODO: gestione delle carte leader e
-			 * conseguente scelta del giocatore di ultimare il turno
-			 */
-
-			// per adesso finisco il turno --> Aggiorno il currentPlayer e
-			// sveglio
-			// il run();
-			synchronized (actionWaiting) {
-				game.setCurrentPlayer(playerTurn.get(playerTurn.indexOf(game.getCurrentPlayer()) + 1));
-				actionWaiting.notify();
+			if (!secondaryInteractiveEffects.isEmpty()) {
+				handleInteractiveEffects(o, secondaryInteractiveEffects);
 			}
-			// Ho modificato il model. Lo invio!
-			game.sendModel();
 
-			return "Azione effettuata";
-		}
-		return null;
+    }
 	}
 
-	private void handleEffects(ImmediateEffect effect) {
-		
+	private void createNewActionForChooseNewCard(MyObservable o, int dieValue) {
+		String finalActionRequest = "fakeFamiliarForChooseNewCard "+ this.parametersAnswer ;
+		hashMap = new HashMap<>();
+		hashMap.put("action", finalActionRequest);
+		handleAction(o,hashMap);
+		this.action.getFamilyMember().setMemberValue(dieValue);
+		verifyAndExecuteAction(o, this.action);
+	}
+
+	/**
+	 * This method handles the effect that needs interaction with user it sends
+	 * the effect to the client, it recognises them and asks the user to choose.
+	 * Then he sends a specific answer and
+	 * @param o 
+	 */
+	private void handleEffects(MyObservable o, ImmediateEffect effect) {
+
+		if (effect instanceof ChooseNewCard || effect instanceof CouncilPrivilege || effect instanceof PerformActivity
+				|| (effect instanceof Exchange && ((Exchange) effect).getExchangePackage1() != null)) {
+
 			hashMap = new HashMap<>();
 			hashMap.put("askForParameters", effect);
+			notifySingleObserver((MyObserver) o, hashMap);
 
 			synchronized (waitingForParametersChoose) {
 
@@ -483,12 +562,38 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					}
 				}
 			}
+
+
+			/*
+			 * I have received an answer from the client with his choice. I have
+			 * to switch between my effects in order to choose how to handle the
+			 * client answer
+			 */
+			
+			if (effect instanceof CouncilPrivilege) {
+				// THE ANSWER IS SUPPOSED TO BE LIKE "1 5 6" --> the chosen
+				// privileges. It's handled directly in councilPrivilege
+				((CouncilPrivilege) effect).assignParameters(parametersAnswer);
+			}
+
+
+			if (effect instanceof Exchange) {
+				// THE ANSWER IS SUPPOSED TO BE LIKE "Territory 1" --> that is
+				// tower
+				// and floor
+				((Exchange) effect)
+						.assignParameters(Integer.parseInt((new StringTokenizer(parametersAnswer).nextToken())));
+			}
 			// i parametri sono stati scelti e passati all'effetto
-
-			effect.assignParameters(parametersAnswer);
-
+			if (effect instanceof PerformActivity) {
+				// THE ANSWER IS SUPPOSED TO BE LIKE "1" that represents the
+				// number
+				// of servants you want to use
+				((PerformActivity) effect)
+						.assignParameters(Integer.parseInt((new StringTokenizer(parametersAnswer).nextToken())));
+			}
 		}
-
+	}
 
 	private IncreaseDieValueCard PermanentEffectWithAlternativeSale() {
 		Characters c;
@@ -515,7 +620,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	 * which one of the double costs to take (if a double cost exists). The
 	 * thread
 	 */
-	private void handleVentures(MyObservable o, Map<String, Object> request, String tempZone, String tempFloor) {
+	private void handleVentures(MyObservable o, String tempZone, String tempFloor) {
 		TowerPlace placeRequested = (TowerPlace) this.game.getBoard().getZoneFromString(tempZone)
 				.getPlaceFromStringOrFirstIfZero(tempFloor);
 		Ventures cardRequested = (Ventures) placeRequested.getCorrespondingCard();

@@ -1,12 +1,20 @@
 package it.polimi.ingsw.GC_24.client.view;
 
 import java.util.HashMap;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Timer;
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.MyObserver;
+
+import it.polimi.ingsw.GC_24.effects.ChooseNewCard;
+import it.polimi.ingsw.GC_24.effects.CouncilPrivilege;
+import it.polimi.ingsw.GC_24.effects.Exchange;
+import it.polimi.ingsw.GC_24.effects.PerformActivity;
+
 import it.polimi.ingsw.GC_24.effects.IncreaseDieValueCard;
+
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.State;
@@ -107,8 +115,8 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	public void showAndGetOption() {
 
 		System.out.println("Choose action:\n" + "a)Show board\n" + "b)Show personal board\n" + "c)Show leader cards\n"
-				+ "d)Place family member\n" + "e)Use a leader card\n" + "f)Throw a leader card\n" + "g)End turn\n"
-				+ "h)Exit");
+				+ "d)Show family members\n" + "e)Show my resources\n" + "f)Place family member\n" 
+				+ "g)Use a leader card\n" + "h)Throw a leader card\n" + "i)End turn\n" + "j)Exit");
 		String command = scanner.nextLine();
 
 		if (command.equals("a")) {
@@ -121,22 +129,26 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 			System.out.println("This function is not been implemented yet");
 		} else if (command.equals("d")) {
 			System.out.println(myself.getMyFamily());
+		} else if (command.equals("e")) {
+			System.out.println(myself.getMyValues());
+		} else if (command.equals("f")) {
+			System.out.println(myself.getMyFamily());
 			command = fourChoice("family member") + " " + choosePlace();
 			if (command.contains("cancel"))
 				System.out.println("Action cancelled");
 			else
 				sendAction(command);
-		} else if (command.equals("e")) {
+		} else if (command.equals("g")) {
 			// miniModel.getPlayerfromColour(PlayerColour.valueOf(colour.toUpperCase())).getLeaderCards().chooseLeaderCard();
 			System.out.println("This function is not been implemented yet");
-		} else if (command.equals("f")) {
+		} else if (command.equals("h")) {
 			// miniModel.getPlayerfromColour(PlayerColour.valueOf(colour.toUpperCase())).getLeaderCards().throwLeaderCard();
 			System.out.println("This function is not been implemented yet");
-		} else if (command.equals("g")) {
+		} else if (command.equals("i")) {
 			command = "end";
 			System.out.println("This function is not been implemented yet");
 			// TODO: gestione della fine del turno
-		} else if (command.equals("h")) {
+		} else if (command.equals("j")) {
 			System.out.println("This function is not been implemented yet");
 			// break;
 			// TODO:gestire la disconnessione;
@@ -206,48 +218,54 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	public String fourChoice(String s) {
 		String commandFloor;
 		int commandFloorInt = 0;
-		do {
-			System.out.println("Choose " + s + " (1,2,3,4) 5)Cancel ");
-			commandFloor = isInt(scanner.nextLine());
-			if (commandFloor != null) {
-				commandFloorInt = Integer.parseInt(commandFloor);
-			}
-			if (commandFloor == null && (commandFloorInt > 5 || commandFloorInt < 1)) {
-				System.out.println("Wrong number!");
+		
+			System.out.println("Choose " + s + " (1,2,3,4)  0 --> Cancel ");
+			String validChoice = null;
+			while (validChoice == null){
+				try{
+			
+				commandFloorInt = scanner.nextInt(); 
+				validChoice = "ok";
+			
+				if ((commandFloorInt > 5 || commandFloorInt < 1)) {
+				System.out.println("Invalid number, try again");
 				commandFloor = null;
 			}
-		} while (commandFloor == null || (commandFloorInt > 5 || commandFloorInt < 1));
-
-		if (commandFloorInt == 5) {
+		}catch (InputMismatchException e){
+			System.out.println("Please, type a number!");
+			
+		}
+			}		
+		if (commandFloorInt == 0) {
 			commandFloor = "Cancel";
 		}
-		return commandFloor;
+		return Integer.toString(commandFloorInt);
 	}
 
 	public String increaseDieValue(String commandZone) {
-		String increase;
-		int servants = myself.getMyValues().getServants().getQuantity();
-		System.out.println("How much do you want to increase the die's value?");
-		increase = isInt(scanner.nextLine());
-		if (increase == null) {
-			return null;
-		} else if (Integer.parseInt(increase) >= 0 && Integer.parseInt(increase) <= servants) {
-			return commandZone + increase;
-		} else {
-			System.out.println("You don't have enough servants");
-			return null;
-		}
-	}
+		System.out.println("Do you want to use some servants to increment the die value?");
+		System.out.println("Write the number of servants you want to use : ");
 
-	public String isInt(String string) {
-		Integer stringToInt;
-		try {
-			stringToInt = Integer.parseInt(string);
-		} catch (Exception e) {
-			System.out.println("Typing error");
-			return null;
+		String validChoice = null;
+		int choice = 0;
+		while (validChoice == null) {
+			try {
+
+				choice = scanner.nextInt();
+				validChoice = "ok";
+				if (choice < 0) {
+					System.out.println("Invalid number, try again");
+					validChoice = null;
+				}
+
+			} catch (InputMismatchException e) {
+				System.out.println("Please, type a number!");
+
+			}
+
 		}
-		return stringToInt.toString();
+		return commandZone + " " + Integer.toString(choice);
+
 	}
 
 	/*
@@ -305,13 +323,104 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		notifyMyObservers(new HashMap().put("sale", finalIncrease));
 	}
 
-	// updates
-	@Override
-	public void update() {
 
-		System.out.println("View: I have been updated!");
+	public void askForChooseNewCard(ChooseNewCard im) {
+		System.out.println("With the choise you have made you can pick another card!");
+		String zone;
+		if ((im.getType()) == null) {
+			System.out.println("Write the tower you want to pick your card from");
+			System.out.println("Territory/Character/Building/Venture");
+
+			zone = scanner.nextLine();
+			while (!(zone.equals("Territory") || zone.equals("Building") || zone.equals("Venture")
+					|| zone.equals("Character"))) {
+				System.out.println("Wrong choice, try again");
+				zone = scanner.nextLine();
+			}
+
+		} else {
+			zone = im.getType();
+		}
+
+		System.out.println("Write the floor you want to pick your card from");
+		System.out.println("1/2/3/4");
+
+		String floor = scanner.nextLine();
+
+		while (!(floor.equals("1") || floor.equals("2") || floor.equals("3") || floor.equals("4"))) {
+			System.out.println("Wrong choice, try again");
+			floor = scanner.nextLine();
+
+		}
+
+		String answer = zone + " " + floor;
+		increaseDieValue(answer);
+
+		sendAnswerForParameters(answer);
+	}
+
+	private void sendAnswerForParameters(String answer) {
+		hm = new HashMap<>();
+		hm.put("answerForParameters", answer);
+		this.notifyMyObservers(hm);
 
 	}
+
+	public void askForCouncilePrivilege(CouncilPrivilege immediateEffect) {
+		int number = immediateEffect.getNumberOfPrivileges();
+		System.out.println("You have to choose " + number + " Council Privilege(s): ");
+		System.out.println(immediateEffect.getCouncilPrivileges());
+		System.out.println("Make your choice: (1/2/3/4/5)");
+		String answer = "";
+		for (int i = 0; i < number; i++) {
+			System.out.println("Choice number " + i + " of " + number);
+			String choice = scanner.nextLine();
+			while (!(choice.equals("1") || choice.equals("2") || choice.equals("3") || choice.equals("4")
+					|| choice.equals("5")) || answer.contains(choice)) {
+				System.out.println("Wrong choice, try again");
+				choice = scanner.nextLine();
+			}
+
+			answer = answer + " " + choice;
+		}
+
+		sendAnswerForParameters(answer);
+	}
+
+	public void askForExchange(Exchange immediateEffect) {
+
+		System.out.println("The card you picked has two choices");
+		System.out.println("1) " + immediateEffect.getExchangePackage());
+		System.out.println("2) " + immediateEffect.getExchangePackage1());
+		System.out.println("What do you want to choose? Choose wisely: (1 / 2)");
+
+		String choice = scanner.nextLine();
+
+		while (!(choice.equals("1") || choice.equals("2"))) {
+			System.out.println("Wrong choice, try again");
+			choice = scanner.nextLine();
+
+		}
+
+		System.out.println("Well done!");
+		sendAnswerForParameters(choice);
+	}
+
+	public void askForServantsForHarvestAndProduction(PerformActivity immediateEffect) {
+		if (immediateEffect.getName().equals("performHarvest")) {
+			System.out.println("The card you picked lets you perform the Harvest");
+		} else {
+			System.out.println("The card you picked lets you perform the Production");
+		}
+
+		String answer = "";
+		increaseDieValue(answer);
+		sendAnswerForParameters(answer);
+
+	}
+
+	
+
 
 	@Override
 	public <C> void update(MyObservable o, C change) {

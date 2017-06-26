@@ -19,14 +19,14 @@ public class MoltiplicationPoints extends Moltiplication{
 
 	@Override
 	public void moltiplicationEffect(Player player) {
-		int factor1 = value.getQuantity();
+		int factor1 = getValue().getQuantity();
 		int quanityplayervalue2 = value2.findValueInPlayer(player).getQuantity();
 		int dividervalue2 = value2.getQuantity();
 		int factor2 = quanityplayervalue2 / dividervalue2;
 
-		value.setQuantity(factor1 * factor2);
+		getValue().setQuantity(factor1 * factor2);
 
-		value.addValueToSet(player.getMyValues());
+		getValue().addValueToSet(player.getMyValues());
 	}
 
 	@Override
@@ -34,23 +34,19 @@ public class MoltiplicationPoints extends Moltiplication{
 		moltiplicationEffect(player);
 	}
 
-	public Value getValue() {
-		return this.value;
+	@Override
+	public String toString() {
+		return "Moltiplication Points: for your every " + getValue() + " you will receive " + value2;
 	}
 
+	//getters and setters
 	public Value getValue2() {
 		return this.value2;
-	}
-
-	public void setValue(Value value) {
-		this.value = value;
 	}
 
 	public void getValue2(Value value2) {
 		this.value2 = value2;
 	}
 
-	@Override
-	public void assignParameters(String string) {
-	}
+
 }

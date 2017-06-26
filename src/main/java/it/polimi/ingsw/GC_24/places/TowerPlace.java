@@ -29,7 +29,7 @@ public class TowerPlace extends Place {
 		this.correspondingCard.setCardOnPersonalBoard(player.getMyBoard());
 		this.correspondingCard.getImmediateEffect().giveImmediateEffect(player);
 	}
-	
+	/*
 	@Override
 	public void giveEffects(Player player){
 		correspondingCard.setCardOnPersonalBoard(player.getMyBoard());
@@ -37,7 +37,7 @@ public class TowerPlace extends Place {
 		correspondingCard.getImmediateEffect1();
 		this.correspondingCard = null;
 	}
-
+*/
 	@Override
 	public void clearPlace() {
 		if (this.famMemberOnPlace != null){
@@ -52,7 +52,13 @@ public class TowerPlace extends Place {
 	
 	@Override
 	public String toString() {
-		return correspondingCard.toString();
+		StringBuilder builder = new StringBuilder();
+		builder.append(correspondingCard.toString());
+		if (!value.getEffectValues().isEmpty()){
+			builder.append("\n\tValue you get from place = "+value);
+		
+		}
+		return builder.toString();
 	}
 
 	public Development getCorrespondingCard() {

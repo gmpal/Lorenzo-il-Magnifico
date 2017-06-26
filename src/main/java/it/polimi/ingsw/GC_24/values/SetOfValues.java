@@ -105,6 +105,11 @@ public class SetOfValues implements Serializable {
 		return new VictoryPoint((int)((this.coins.quantity+this.servants.quantity+this.stones.quantity+this.woods.quantity)/5));
 	}
 
+	public boolean isEmpty() {
+		return (woods.getQuantity()==0 && stones.getQuantity()==0 && coins.getQuantity()==0 &&
+				servants.getQuantity()==0 && faithPoints.getQuantity()==0 &&
+				militaryPoints.getQuantity()==0 && victoryPoints.getQuantity()==0);
+	}
 	// hashCode() redefined
 	@Override
 	public int hashCode() {
@@ -176,20 +181,20 @@ public class SetOfValues implements Serializable {
 		builder.append("[");
 
 		if (woods.getQuantity() != 0)
-			builder.append("woods = " + woods.getQuantity());
+			builder.append(" "+woods);
 		if (stones.getQuantity() != 0)
-			builder.append(" stones = " + stones.getQuantity());
+			builder.append(" "+stones);
 		if (coins.getQuantity() != 0)
-			builder.append(" coins = " + coins.getQuantity());
+			builder.append(" "+coins);
 		if (servants.getQuantity() != 0)
-			builder.append(" servants = " + servants.getQuantity());
+			builder.append(" "+servants);
 		if (faithPoints.getQuantity() != 0)
-			builder.append(" faithPoints = " + faithPoints.getQuantity());
+			builder.append(" "+faithPoints);
 		if (militaryPoints.getQuantity() != 0)
-			builder.append(" militaryPoints = " + militaryPoints.getQuantity());
+			builder.append(" "+militaryPoints);
 		if (victoryPoints.getQuantity() != 0)
-			builder.append(" victoryPoints = " + victoryPoints.getQuantity());
-		builder.append("]");
+			builder.append(" "+victoryPoints);
+		builder.append(" ]");
 		return builder.toString();
 	}
 

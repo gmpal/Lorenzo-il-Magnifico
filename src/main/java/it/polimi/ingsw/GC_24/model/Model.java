@@ -131,7 +131,7 @@ public class Model extends MyObservable implements Serializable {
 	public void sendModel() {
 		hm = new HashMap<>();
 		hm.put("model", this);
-		// System.out.println("FROM MODEL SENDING THIS "+this);
+		//System.out.println("FROM MODEL SENDING THIS "+this.getPlayers().get(0).getMyValues());
 		notifyMyObservers(hm);
 	}
 
@@ -152,7 +152,6 @@ public class Model extends MyObservable implements Serializable {
 	}
 
 	// getters and setters
-
 	public int getModelNumber() {
 		return modelNumber;
 	}
