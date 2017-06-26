@@ -101,6 +101,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		}
 
 		game.setModel(game.getPlayers());
+		game.setCurrentPlayer(game.getPlayers().get(0));
 		game.sendModel();
 		this.currentPlayer = game.getCurrentPlayer();
 
@@ -116,18 +117,20 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 			System.out.println("Controller: everything clear and model sent");
 			for (int j = 0; j < 4; j++) {
-				// one Family gone for each player --> End of round
+			
 				for (int i = 0; i < playerTurn.size(); i++) {
 					// one familar gone for each player
 
-					game.setCurrentPlayer(playerTurn.get(i));
-
-					sendTurnArray(playerTurn);
-
-					if (!alreadyPlaying)
-
+					
+					this.currentPlayer = game.getCurrentPlayer();
+					System.out.println("Current Player is ---> "+this.currentPlayer.getMyName());
+				
+					sendCurrentPlayer();
+					
+						if (!alreadyPlaying)
 						letThemPlay();
 
+										
 					/*
 					 * This block waits for a player doing an action, because
 					 * after an action the game-currentPlayer is updated
@@ -143,8 +146,10 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 							}
 						}
 					}
+					
+					
 					// reset the current player
-					this.currentPlayer = game.getCurrentPlayer();
+					
 
 					/* Repeats until the players are finished */
 
@@ -153,6 +158,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			// it's time to look at the council palace for turn updates!
 			councilTurnArray = game.getBoard().getCouncilPalace().getTemporaryTurn();
 			updateListOfPlayerTurn(councilTurnArray);
+			sendTurnArray(playerTurn);
 			// let's go to next state
 			game.incrementState();
 			cardsIndex++;
@@ -163,6 +169,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	
+	
+
 	/**This method starts a timer and then calls another method that autocompletes the players*/
 	private void waitAndAutocomplete() {
 		Timer timer = new Timer();
@@ -188,6 +196,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				int index = game.getPlayers().indexOf(p) + 1;
 
 				p.setMyName("Player_" + index);
+				p.setAutocompleted(true);
 				System.out.println("Player" + index + "autocompleted with name: " + p.getMyName());
 
 				System.out.println("STO INVIANDO: " + game);
@@ -318,7 +327,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	private void letThemPlay() {
 		alreadyPlaying = true;
 		hashMap = new HashMap<>();
-		hashMap.put("Play!", null);
+		hashMap.put("startPlaying", "---> game starts here");
 		notifyMyObservers(hashMap);
 
 	}
@@ -329,6 +338,13 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		notifyMyObservers(hashMap);
 	}
 
+	private void sendCurrentPlayer() {
+		hashMap = new HashMap<>();
+		hashMap.put("currentPlayer", this.currentPlayer);
+		notifyMyObservers(hashMap);
+
+		
+	}
 
 	/**This method sends to the clients a simple information to be printed on the view*/
 	private void sendInfo(String string) {
@@ -492,9 +508,13 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			actionWaiting.notify();
 		}
 		// Ho modificato il model. Lo invio!
-		game.sendModel();
-
 		
+		awakenSleepingClient();
+		
+	}
+
+	private void awakenSleepingClient() {
+	 notifyMyObservers(new HashMap<String,Object>().put("actionDone", null));
 	}
 
 	private void handleInteractiveEffects(MyObservable o, List<ImmediateEffect> interactiveEffects) {
@@ -581,8 +601,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				// THE ANSWER IS SUPPOSED TO BE LIKE "Territory 1" --> that is
 				// tower
 				// and floor
-				((Exchange) effect)
-						.assignParameters(Integer.parseInt((new StringTokenizer(parametersAnswer).nextToken())));
+				((Exchange) effect).assignParameters(Integer.parseInt((new StringTokenizer(parametersAnswer).nextToken())));
 			}
 			// i parametri sono stati scelti e passati all'effetto
 			if (effect instanceof PerformActivity) {
