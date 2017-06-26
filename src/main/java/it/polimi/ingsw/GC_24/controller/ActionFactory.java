@@ -14,14 +14,14 @@ public class ActionFactory {
 	// are willing to give up subclassing it
 
 	public Action makeAction(Model game, String familiar, String zone, String floor, String servants,
-			SetOfValues cost) {
+			SetOfValues cost, SetOfValues setOfSale) {
 
 		Action newAction = null;
 
 		if (zone.equalsIgnoreCase("Territories") || zone.equalsIgnoreCase("Characters")
 				|| zone.equalsIgnoreCase("Buildings") || zone.equalsIgnoreCase("Ventures")) {
 
-			newAction = new ActionTower(game, familiar, zone, floor, servants, cost);
+			newAction = new ActionTower(game, familiar, zone, floor, servants, cost, setOfSale);
 
 		}
 

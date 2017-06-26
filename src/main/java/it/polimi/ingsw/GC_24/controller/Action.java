@@ -45,7 +45,8 @@ public abstract class Action {
 			nameEffect = immediateEffects.get(i).getName();
 			if (nameEffect.equals("value")) {
 				immediateEffects.get(i).giveImmediateEffect(player);
-				immediateEffects.remove(immediateEffects.get(i--));
+				immediateEffects.remove(immediateEffects.get(i));
+				i--;
 			}
 		}
 	}

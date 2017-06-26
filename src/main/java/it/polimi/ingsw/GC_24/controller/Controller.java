@@ -45,8 +45,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	private List<Player> playerTurn;
 	private Player currentPlayer;
 	private int cardsIndex = 0;
-
-
 	private SetOfValues saleForPermanentEffect = new SetOfValues();
 	private String parametersAnswer;
 
@@ -433,7 +431,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			handleVentures(o, request, tempZone, tempFloor);
 		}
 
-		this.action = actionFactory.makeAction(game, tempFamiliar, tempZone, tempFloor, tempServants, tempCost);
+		this.action = actionFactory.makeAction(game, tempFamiliar, tempZone, tempFloor, tempServants, tempCost, saleForPermanentEffect);
 		String responseToActionVerify = action.verify();
 		if (responseToActionVerify.equals("ok")) {
 

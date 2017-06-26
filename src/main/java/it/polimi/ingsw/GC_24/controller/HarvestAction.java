@@ -7,7 +7,6 @@ import it.polimi.ingsw.GC_24.cards.Characters;
 import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
 import it.polimi.ingsw.GC_24.effects.IncreaseDieValueActivity;
 import it.polimi.ingsw.GC_24.effects.PerformHarvest;
-import it.polimi.ingsw.GC_24.effects.PermanentEffect;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.places.HarvestPlace;
 import it.polimi.ingsw.GC_24.values.Servant;
@@ -46,6 +45,10 @@ public class HarvestAction extends Action {
 		return immediateEffects;
 	}
 
+	/**
+	 * This method check if player has a card with Permanent Effect
+	 * "IncreaseDieValueHarvest" and set the final action value
+	 */
 	public void getFinalActionValue() {
 		
 		for(int i=0;i<player.getMyBoard().getPersonalCharacters().getCards().size();i++){

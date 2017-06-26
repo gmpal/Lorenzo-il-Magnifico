@@ -25,16 +25,18 @@ public class ProductionAction extends Action {
 
 	@Override
 	public String verify() {
-			String answerToPlayer = "Answer: \n";
-			while (answerToPlayer.equals("Answer: \n")) {
-				answerToPlayer = verifyIfEnoughServants(answerToPlayer);
-				answerToPlayer = verifyIfEnoughServantsForThisPlace(answerToPlayer);
-				answerToPlayer = verifyFamilyMemberAvailability(answerToPlayer);
-				answerToPlayer = verifyPlaceAvailability(answerToPlayer);
-				answerToPlayer = verifyZoneOccupiedByMe(answerToPlayer);
-			}
-			if (answerToPlayer.equals("Answer: \n")) return "ok";
-			else return answerToPlayer;
+		String answerToPlayer = "Answer: \n";
+		while (answerToPlayer.equals("Answer: \n")) {
+			answerToPlayer = verifyIfEnoughServants(answerToPlayer);
+			answerToPlayer = verifyIfEnoughServantsForThisPlace(answerToPlayer);
+			answerToPlayer = verifyFamilyMemberAvailability(answerToPlayer);
+			answerToPlayer = verifyPlaceAvailability(answerToPlayer);
+			answerToPlayer = verifyZoneOccupiedByMe(answerToPlayer);
+		}
+		if (answerToPlayer.equals("Answer: \n"))
+			return "ok";
+		else
+			return answerToPlayer;
 	}
 
 	@Override
@@ -47,25 +49,29 @@ public class ProductionAction extends Action {
 		return immediateEffects;
 	}
 
+	/**
+	 * This method check if player has a card with Permanent Effect
+	 * "IncreaseDieValueProduction" and set the final action value.
+	 */
 	private void getFinalActionValue() {
-		for(int i=0;i<player.getMyBoard().getPersonalCharacters().getCards().size();i++){
-			Characters c=(Characters)player.getMyBoard().getPersonalCharacters().getCards().get(i);
-			if(c.getPermanentEffects().getName().equals("increaseDieValueProduction")){
-				IncreaseDieValueActivity pe=(IncreaseDieValueActivity)c.getPermanentEffects();
-				this.finalActionValue+=pe.getIncreaseDieValue();
+		for (int i = 0; i < player.getMyBoard().getPersonalCharacters().getCards().size(); i++) {
+			Characters c = (Characters) player.getMyBoard().getPersonalCharacters().getCards().get(i);
+			if (c.getPermanentEffects().getName().equals("increaseDieValueProduction")) {
+				IncreaseDieValueActivity pe = (IncreaseDieValueActivity) c.getPermanentEffects();
+				this.finalActionValue += pe.getIncreaseDieValue();
 			}
 		}
-		this.finalActionValue += familyMember.getMemberValue() - productionPlace.getAdditionalCostDice()+servants;
+		this.finalActionValue += familyMember.getMemberValue() - productionPlace.getAdditionalCostDice() + servants;
 	}
 
 	private void createProductionEffect() {
-		
+
 		immediateEffects.add(new PerformProduction("performProduction", finalActionValue));
-		
+
 	}
 
 	private void getProductionTileValues() {
 		player.getMyBoard().getBonusTile().giveProductionValues(player.getMyValues());
-		
+
 	}
 }

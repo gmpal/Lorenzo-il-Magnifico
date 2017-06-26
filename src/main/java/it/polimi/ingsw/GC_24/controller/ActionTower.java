@@ -70,7 +70,7 @@ public class ActionTower extends Action {
 
 	/**This method is used to see if there is "noValueEffectFromTowerPlace" in player's Personal Board.
 	 * 
-	 * @return true if player have this effect, false othewise. 
+	 * @return true if player have this effect, false otherwise. 
 	 */
 	private boolean isThereNoValueEffect() {
 		Characters c;
