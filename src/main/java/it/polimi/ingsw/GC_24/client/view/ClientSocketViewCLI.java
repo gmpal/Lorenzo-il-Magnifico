@@ -142,8 +142,7 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 			}
 		}
 		if(command.contains("sale")){
-			SetOfValues finalSale=view.chooseSale((IncreaseDieValueCard) request.get(command));
-			notifyMyObservers(new HashMap().put("sale", finalSale));
+			view.chooseSale((IncreaseDieValueCard) request.get(command));
 		}
 
 	}

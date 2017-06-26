@@ -15,6 +15,8 @@ public class ActionTower extends Action {
 	private List<ImmediateEffect> immediateEffects = new ArrayList<>();
 	protected SetOfValues temporaryCardCost;
 	private TowerPlace towerPlace;
+	private SetOfValues setOfSales;
+
 
 	/**
 	 * This constructor saves and uses a temporaryCost: in a single-cost card it
@@ -22,10 +24,11 @@ public class ActionTower extends Action {
 	 * controller creating the action. If the parameter is null it uses the card
 	 * cost, otherwise it uses the parameters
 	 */
-	public ActionTower(Model game, String familiar, String zone, String floor, String servants, SetOfValues cost) {
+	public ActionTower(Model game, String familiar, String zone, String floor, String servants, SetOfValues cost, SetOfValues setOfSale) {
 		super(game, familiar, zone, floor, servants);
 		this.temporaryCardCost = cost;
 		this.towerPlace = (TowerPlace) this.place;
+		this.setOfSales=setOfSale;
 	}
 
 	@Override
@@ -98,6 +101,7 @@ public class ActionTower extends Action {
 
 	private void takeCardAndPay() {
 		// Mine - cost --> Then set
+		setOfSales.subTwoSetsOfValues(temporaryCardCost);
 		this.player.setMyValues(temporaryCardCost.subTwoSetsOfValues(this.player.getMyValues()));
 		towerPlace.getCorrespondingCard().setCardOnPersonalBoard(player.getMyBoard());
 	}
@@ -186,5 +190,39 @@ public class ActionTower extends Action {
 		}
 		return answerToPlayer;
 	}
+	
+	@Override
+	protected String verifyIfEnoughServantsForThisPlace(String answerToPlayer) {
+		int placeCostRequired = this.place.getCostDice();
+		if (placeCostRequired > (this.familyMember.getMemberValue() + this.servants
+				+ getIncrementDieValueFromPermanentEffect())) {
+			return answerToPlayer + "You have not used enough servants for this place. Please choose another place. \n";
+		}
+		return answerToPlayer;
+	}
+
+	/**
+	 * This method checks in Personal Board the Permanent Effect of Characters
+	 * and if there is IncreaseDieValueCard Effect gives to player the increment
+	 * 
+	 * @return int
+	 */
+	public int getIncrementDieValueFromPermanentEffect() {
+		int incrementDieValueFromPermanentEffect = 0;
+		for (int i = 0; i < player.getMyBoard().getPersonalCharacters().getCards().size(); i++) {
+			Characters c = (Characters) player.getMyBoard().getPersonalCharacters().getCards().get(i);
+			if (c.getPermanentEffects().getName().equals("increaseDieValueCard")) {
+				IncreaseDieValueCard pe = (IncreaseDieValueCard) c.getPermanentEffects();
+				if (pe.getPersonalCards() != null && (pe.getPersonalCards().getType() == zoneString)) {
+					incrementDieValueFromPermanentEffect += pe.getIncreaseDieValue();
+					if(pe.getAlternativeSale()==null){
+						setOfSales=pe.getSale();
+					}
+				}
+			}
+		}
+		return incrementDieValueFromPermanentEffect;
+	}
+
 
 }

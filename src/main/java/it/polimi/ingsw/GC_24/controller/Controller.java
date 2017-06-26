@@ -426,6 +426,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					}
 				}
 			}
+			
 		}
 		if (tempZone.equalsIgnoreCase("ventures")) {
 
@@ -465,6 +466,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 			return "Azione effettuata";
 		}
+		return null;
 	}
 
 	private void handleEffects(ImmediateEffect effect) {

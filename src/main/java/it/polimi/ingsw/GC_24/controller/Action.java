@@ -22,8 +22,7 @@ public abstract class Action {
 	protected Place place;
 	protected int servants;
 	protected SetOfValues temporaryCardCost;
-	private String zoneString;
-	protected SetOfValues setOfSales=new SetOfValues();
+	protected String zoneString;
 
 
 	// constructor
@@ -99,36 +98,13 @@ public abstract class Action {
 
 	protected String verifyIfEnoughServantsForThisPlace(String answerToPlayer) {
 		int placeCostRequired = this.place.getCostDice();
-		if (placeCostRequired > (this.familyMember.getMemberValue() + this.servants
-				+ getIncrementDieValueFromPermanentEffect())) {
+		if (placeCostRequired > (this.familyMember.getMemberValue() + this.servants)){
 			return answerToPlayer + "You have not used enough servants for this place. Please choose another place. \n";
 		}
 		return answerToPlayer;
 	}
 
-	/**
-	 * This method checks in Personal Board the Permanent Effect of Characters
-	 * and if there is IncreaseDieValueCard Effect gives to player the increment
-	 * 
-	 * @return int
-	 */
-	public int getIncrementDieValueFromPermanentEffect() {
-		int incrementDieValueFromPermanentEffect = 0;
-		for (int i = 0; i < player.getMyBoard().getPersonalCharacters().getCards().size(); i++) {
-			Characters c = (Characters) player.getMyBoard().getPersonalCharacters().getCards().get(i);
-			if (c.getPermanentEffects().getName().equals("increaseDieValueCard")) {
-				IncreaseDieValueCard pe = (IncreaseDieValueCard) c.getPermanentEffects();
-				if (pe.getPersonalCards() != null && (pe.getPersonalCards().getType() == zoneString)) {
-					incrementDieValueFromPermanentEffect += pe.getIncreaseDieValue();
-					if(pe.getAlternativeSale()==null){
-						setOfSales=pe.getSale();
-					}
-				}
-			}
-		}
-		return incrementDieValueFromPermanentEffect;
-	}
-
+	
 	// shared run methods
 	protected void placeFamiliar() {
 		place.setFamMemberOnPlace(familyMember);
