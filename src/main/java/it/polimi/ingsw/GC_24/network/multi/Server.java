@@ -36,7 +36,7 @@ public class Server {
 	// Crea un server e fa partire il suo metodo startServer()
 	public static void main(String[] args) throws IOException, AlreadyBoundException, InterruptedException {
 		Server server = new Server();
-		server.startSocketServer();
+		Server.startSocketServer();
 		server.startRMI();
 	}
 
