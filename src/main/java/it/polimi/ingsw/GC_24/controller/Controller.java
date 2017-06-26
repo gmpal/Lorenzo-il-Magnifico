@@ -596,7 +596,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 						.assignParameters(Integer.parseInt((new StringTokenizer(parametersAnswer).nextToken())));
 			}
 		}
-
+	}
 
 	private IncreaseDieValueCard PermanentEffectWithAlternativeSale() {
 		Characters c;
