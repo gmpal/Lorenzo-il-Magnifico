@@ -37,9 +37,20 @@ public class ChooseNewCard extends ImmediateEffect {
 	public void giveImmediateEffect(Player player) {
 	//This method is handled differently and doesn't do anything 
 	}
-
-
-
+	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append( "Choose New Card:" );
+		if (type!=null){
+			builder.append(" You can take a " + type + " card with die value " + dieValue);
+		}else
+			builder.append(" You can take a card of any type with die value " + dieValue);
+		if (setOfValue!=null){
+			builder.append(" and you have an extra discount on the card's price of " + setOfValue);
+		}
+		return builder.toString();
+	}
 
 	// getters and setters
 	public int getDieValue() {

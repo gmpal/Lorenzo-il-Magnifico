@@ -44,7 +44,7 @@ public class Wood extends Value  {
 	
 	@Override
 	public String toString(){
-			return "Wood: " + this.getQuantity();
+			return "woods = " + getQuantity();
 		
 	}
 }

@@ -57,4 +57,9 @@ public class FaithPoint extends Value {
 	public SetOfValues convertToValue(List<SetOfValues> correspondingValue) {
 		return correspondingValue.get(this.quantity - 1);
 	}
+	
+	@Override
+	public String toString() {
+		return "faithPoints = " + getQuantity();
+	}
 }

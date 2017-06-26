@@ -43,6 +43,11 @@ public class PerformProduction extends PerformActivity {
 			}
 		}
 	}
+	
+	@Override
+	public String toString() {
+		return "Perform Production: with a starting die value of " + getDieValue();
+	}
 
 	public List<ImmediateEffect> getImmediateEffectsProduction() {
 		return immediateEffectsProduction;
@@ -52,6 +57,4 @@ public class PerformProduction extends PerformActivity {
 		this.immediateEffectsProduction = immediateEffectsProduction;
 	}
 
-	
-	
 }

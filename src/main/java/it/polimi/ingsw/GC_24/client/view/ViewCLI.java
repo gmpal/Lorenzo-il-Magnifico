@@ -115,8 +115,8 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	public void showAndGetOption() {
 
 		System.out.println("Choose action:\n" + "a)Show board\n" + "b)Show personal board\n" + "c)Show leader cards\n"
-				+ "d)Place family member\n" + "e)Use a leader card\n" + "f)Throw a leader card\n" + "g)End turn\n"
-				+ "h)Exit");
+				+ "d)Show family members\n" + "e)Show my resources\n" + "f)Place family member\n" 
+				+ "g)Use a leader card\n" + "h)Throw a leader card\n" + "i)End turn\n" + "j)Exit");
 		String command = scanner.nextLine();
 
 		if (command.equals("a")) {
@@ -129,22 +129,26 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 			System.out.println("This function is not been implemented yet");
 		} else if (command.equals("d")) {
 			System.out.println(myself.getMyFamily());
+		} else if (command.equals("e")) {
+			System.out.println(myself.getMyValues());
+		} else if (command.equals("f")) {
+			System.out.println(myself.getMyFamily());
 			command = fourChoice("family member") + " " + choosePlace();
 			if (command.contains("cancel"))
 				System.out.println("Action cancelled");
 			else
 				sendAction(command);
-		} else if (command.equals("e")) {
+		} else if (command.equals("g")) {
 			// miniModel.getPlayerfromColour(PlayerColour.valueOf(colour.toUpperCase())).getLeaderCards().chooseLeaderCard();
 			System.out.println("This function is not been implemented yet");
-		} else if (command.equals("f")) {
+		} else if (command.equals("h")) {
 			// miniModel.getPlayerfromColour(PlayerColour.valueOf(colour.toUpperCase())).getLeaderCards().throwLeaderCard();
 			System.out.println("This function is not been implemented yet");
-		} else if (command.equals("g")) {
+		} else if (command.equals("i")) {
 			command = "end";
 			System.out.println("This function is not been implemented yet");
 			// TODO: gestione della fine del turno
-		} else if (command.equals("h")) {
+		} else if (command.equals("j")) {
 			System.out.println("This function is not been implemented yet");
 			// break;
 			// TODO:gestire la disconnessione;

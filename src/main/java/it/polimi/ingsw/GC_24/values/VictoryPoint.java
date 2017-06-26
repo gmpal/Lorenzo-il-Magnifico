@@ -40,4 +40,9 @@ public class VictoryPoint extends Value{
 	public Boolean amIpresentInThisSet(SetOfValues setOfValues) {
 		return (setOfValues.getVictoryPoints().getQuantity() >= this.quantity);
 	}
+	
+	@Override
+	public String toString() {
+		return "victoryPoints = " + getQuantity();
+	}
 }

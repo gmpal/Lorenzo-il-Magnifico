@@ -41,4 +41,10 @@ public class Servant extends Value {
 	public Boolean amIpresentInThisSet(SetOfValues setOfValues) {
 		return (setOfValues.getServants().getQuantity() >= this.quantity);
 	}
+	
+	@Override
+	public String toString(){
+			return "servants = " + getQuantity();
+		
+	}
 }

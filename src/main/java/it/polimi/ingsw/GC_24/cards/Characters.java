@@ -34,7 +34,7 @@ public class Characters extends Development {
 				builder.append(" and " + getImmediateEffect1());
 		}
 		if (permanentEffects!=null){
-			builder.append("Permanent Effect = "+permanentEffects);
+			builder.append(", Permanent Effect = "+permanentEffects);
 		}
 		return builder.toString();
 	}

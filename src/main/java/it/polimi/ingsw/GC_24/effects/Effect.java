@@ -13,11 +13,6 @@ public abstract class Effect implements java.io.Serializable {
 		this.name = name;
 	}
 
-	@Override
-	public String toString() {
-		return "Effect [name=" + name + "]";
-	}
-
 	public String getName() {
 		return name;
 	}

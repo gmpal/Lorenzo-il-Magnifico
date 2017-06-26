@@ -35,8 +35,12 @@ public class PerformHarvest extends PerformActivity {
 			}
 		}
 	}
-
 	
+	@Override
+	public String toString() {
+		return "Perform Harvest: with a starting die value of " + getDieValue();
+	}
+
 	//STEP TWO
 	public List<ImmediateEffect> getImmediateEffectsHarvest() {
 		return immediateEffectsHarvest;
@@ -45,7 +49,5 @@ public class PerformHarvest extends PerformActivity {
 	public void setImmediateEffectsHarvest(List<ImmediateEffect> immediateEffectsHarvest) {
 		this.immediateEffectsHarvest = immediateEffectsHarvest;
 	}
-
-	
 
 }

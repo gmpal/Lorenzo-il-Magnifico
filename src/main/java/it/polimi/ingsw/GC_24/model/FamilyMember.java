@@ -45,10 +45,16 @@ public class FamilyMember implements java.io.Serializable {
 		this.setMemberValue(die.getValue());
 	}
 	
-	//Prints a family member
 	@Override
 	public String toString() {
-		return  "Status = "+isAvailableString()+ ", Value = " + memberValue + ", Colour = " + memberColour;
+		StringBuilder builder = new StringBuilder();
+		builder.append( "Status = "+isAvailableString()+ ", Value = " + memberValue );
+		if (memberColour!=null){
+			builder.append(", Colour = " + memberColour);
+		}else {
+			builder.append(", Colour = NEUTRAL");
+		}
+		return builder.toString();
 	}
 	
 	public String isAvailableString(){

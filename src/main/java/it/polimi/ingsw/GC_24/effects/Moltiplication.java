@@ -9,8 +9,8 @@ public abstract class Moltiplication extends ImmediateEffect{
 	 */
 	private static final long serialVersionUID = 7186806258388556423L;
 	
-	protected Value value;
-	protected Player player;
+	private Value value;
+	private Player player;
 	
 	//constructor
 	public Moltiplication(String name, Value value) {
@@ -20,4 +20,13 @@ public abstract class Moltiplication extends ImmediateEffect{
 	
 	//gives the effect to the player
 	public abstract void moltiplicationEffect(Player player); //redefined for every subclass
+
+	//getter and setter
+	public Value getValue() {
+		return value;
+	}
+
+	public void setValue(Value value) {
+		this.value = value;
+	}
 }

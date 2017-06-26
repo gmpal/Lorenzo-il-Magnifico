@@ -41,4 +41,10 @@ public class Stone extends Value {
 	public Boolean amIpresentInThisSet(SetOfValues setOfValues) {
 		return (setOfValues.getStones().getQuantity() >= this.quantity);
 	}
+	
+	@Override
+	public String toString(){
+			return "stones = " + getQuantity();
+		
+	}
 }
