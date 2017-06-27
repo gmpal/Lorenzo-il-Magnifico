@@ -373,6 +373,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 			System.out.println("Write the tower you want to pick your card from");
 			System.out.println("Territory/Character/Building/Venture");
 
+			
 			zone = scanner.nextLine();
 			while (!(zone.equalsIgnoreCase("Territory") || zone.equalsIgnoreCase("Building") || zone.equalsIgnoreCase("Venture")
 					|| zone.equalsIgnoreCase("Character"))) {

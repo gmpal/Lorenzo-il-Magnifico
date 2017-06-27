@@ -43,6 +43,7 @@ public class FamilyMember implements java.io.Serializable {
 	public void setMember(Die die) {
 		this.setMemberColour(die.getColour());
 		this.setMemberValue(die.getValue());
+		this.setNeutral(false);
 	}
 	
 	@Override
