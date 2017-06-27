@@ -1,25 +1,11 @@
 package it.polimi.ingsw.GC_24.client.view;
 
-import java.util.HashMap;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
-import java.util.Timer;
+import java.util.*;
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.MyObserver;
-
-import it.polimi.ingsw.GC_24.effects.ChooseNewCard;
-import it.polimi.ingsw.GC_24.effects.CouncilPrivilege;
-import it.polimi.ingsw.GC_24.effects.Exchange;
-import it.polimi.ingsw.GC_24.effects.PerformActivity;
-
-import it.polimi.ingsw.GC_24.effects.IncreaseDieValueCard;
-
-import it.polimi.ingsw.GC_24.model.Model;
-import it.polimi.ingsw.GC_24.model.Player;
-import it.polimi.ingsw.GC_24.model.State;
-import it.polimi.ingsw.GC_24.values.MilitaryPoint;
-import it.polimi.ingsw.GC_24.values.SetOfValues;
+import it.polimi.ingsw.GC_24.effects.*;
+import it.polimi.ingsw.GC_24.model.*;
+import it.polimi.ingsw.GC_24.values.*;
 
 public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	private static Scanner scanner = new Scanner(System.in);
@@ -29,20 +15,15 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 
 	private HashMap<String, Object> hm;
 	private Timer timer;
-	
+
 	private Object waitingForNameUpdate = new Object();
 	private Object waitingForActionCompleted = new Object();
-	
-	
 
 	private boolean myTurn = false;
 	private List<Player> playerTurn;
 	private int playerNumber = 0;
 	private boolean actionDone = false;
-	
 	private volatile Player myself = null;
-
-	
 
 	@Override
 	public synchronized void run() {
@@ -88,13 +69,12 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	}
 
 	public void sendPlayerString(String name) throws InterruptedException {
-		
+
 		String player = (playerNumber + " " + name);
 		hm = new HashMap<>();
 		hm.put("player", player);
 		this.notifyMyObservers(hm);
 		System.out.println("Your name has been sent");
-		
 
 		synchronized (waitingForNameUpdate) {
 			while (!miniModel.getPlayers().get((playerNumber) - 1).getMyName().equalsIgnoreCase(name)) {
@@ -113,8 +93,10 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	}
 
 	public void play() {
-		System.out.println("Good luck "+myself.getMyName()+"!");
-		if (myself.getAutocompleted()) { System.out.println("You were supposed to write your name! Press any key to start Playing");}
+		System.out.println("Good luck " + myself.getMyName() + "!");
+		if (myself.getAutocompleted()) {
+			System.out.println("You were supposed to write your name! Press any key to start Playing");
+		}
 		while (true) {
 			showAndGetOption();
 		}
@@ -128,57 +110,59 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 				+ "g)Use a leader card\n" + "h)Throw a leader card\n" + "i)End turn\n" + "j)Exit");
 		String command = scanner.nextLine();
 
-		if (command.equals("a")) {
-			
+		if (command.equalsIgnoreCase("a")) {
+
 			System.out.println(miniModel.getBoard());
-			
-			
-		} else if (command.equals("b")) {
-			
+
+		} else if (command.equalsIgnoreCase("b")) {
+
 			System.out.println(myself.getMyBoard());
-			
-			
-		} else if (command.equals("c")) {
-			
+
+		} else if (command.equalsIgnoreCase("c")) {
+
 			// TODO: aggiungere leadercards alla personalBoard
 			// System.out.println(myself.getMyBoard());
 			System.out.println("This function is not been implemented yet");
-			
-			
-		} else if (command.equals("d")) {
-			
+
+		} else if (command.equalsIgnoreCase("d")) {
+
 			System.out.println(myself.getMyFamily());
-			
-			
-		} else if (command.equals("e")) {
-			
+
+		} else if (command.equalsIgnoreCase("e")) {
+
 			System.out.println(myself.getMyValues());
-			
-			
-		} else if (command.equals("f")) {
-			
-			if (myTurn){
+
+		} else if (command.equalsIgnoreCase("f")) {
+
+			if (myTurn) {
 				System.out.println(myself.getMyFamily());
-				command = fourChoice("family member") + " " + choosePlace();
-					if (command.contains("cancel"))
-							System.out.println("Action cancelled");
-					else
+				command = fourChoice("family member");
+				if (command.contains("cancel")) {
+					System.out.println("Action cancelled");
+
+				} else {
+					command += " " + choosePlace();
+					if (command.contains("cancel")) {
+						System.out.println("Action cancelled");
+					}else {
 						sendAction(command);
-			}else {
-				System.out.println("Not your turn. You can't do an action.\n");
+					}
+				}
+			} else {
+				System.out.println("Not your turn. You can't do any action.\n");
 			}
-			
-		} else if (command.equals("g")) {
+
+		} else if (command.equalsIgnoreCase("g")) {
 			// miniModel.getPlayerfromColour(PlayerColour.valueOf(colour.toUpperCase())).getLeaderCards().chooseLeaderCard();
 			System.out.println("This function is not been implemented yet");
-		} else if (command.equals("h")) {
+		} else if (command.equalsIgnoreCase("h")) {
 			// miniModel.getPlayerfromColour(PlayerColour.valueOf(colour.toUpperCase())).getLeaderCards().throwLeaderCard();
 			System.out.println("This function is not been implemented yet");
-		} else if (command.equals("i")) {
+		} else if (command.equalsIgnoreCase("i")) {
 			command = "end";
 			System.out.println("This function is not been implemented yet");
 			// TODO: gestione della fine del turno
-		} else if (command.equals("j")) {
+		} else if (command.equalsIgnoreCase("j")) {
 			System.out.println("This function is not been implemented yet");
 			// break;
 			// TODO:gestire la disconnessione;
@@ -186,27 +170,6 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 			System.out.println("Wrong character");
 		}
 
-	}
-
-	private void sendAction(String command) {
-		hm = new HashMap<>();
-		hm.put("action", command);
-		
-		/*This block of code notifies the Server of the action*/
-		synchronized (waitingForActionCompleted ){
-		notifyMyObservers(hm);
-		System.out.println("----Waiting for your action to be completed----");
-		while (!actionDone){
-			try {
-				waitingForActionCompleted.wait();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		System.out.println(actionDone);
-
-	}
 	}
 
 	private String choosePlace() {
@@ -218,73 +181,82 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 					+ "h)Council Palace\n" + "i)Cancel");
 			commandZone = scanner.nextLine();
 			String cf;
-			if (commandZone.equals("a")) {
+			if (commandZone.equalsIgnoreCase("a")) {
 				cf = fourChoice(floor);
 				commandZone = "territories " + cf + " ";
-				commandZone = increaseDieValue(commandZone);
-			} else if (commandZone.equals("b")) {
+			
+			} else if (commandZone.equalsIgnoreCase("b")) {
 				cf = fourChoice(floor);
 				commandZone = "characters " + cf + " ";
-				commandZone = increaseDieValue(commandZone);
-			} else if (commandZone.equals("c")) {
+				
+			} else if (commandZone.equalsIgnoreCase("c")) {
 				cf = fourChoice(floor);
 				commandZone = "buildings " + cf + " ";
-				commandZone = increaseDieValue(commandZone);
-			} else if (commandZone.equals("d")) {
+				
+			} else if (commandZone.equalsIgnoreCase("d")) {
 				cf = fourChoice(floor);
 				commandZone = "ventures " + cf + " ";
-				commandZone = increaseDieValue(commandZone);
-			} else if (commandZone.equals("e")) {
+				
+			} else if (commandZone.equalsIgnoreCase("e")) {
 				cf = fourChoice("place");
 				commandZone = "market " + cf + " ";
-				commandZone = increaseDieValue(commandZone);
-			} else if (commandZone.equals("f")) {
+				
+			} else if (commandZone.equalsIgnoreCase("f")) {
 				commandZone = "production 0 ";
-				commandZone = increaseDieValue(commandZone);
-			} else if (commandZone.equals("g")) {
+				
+			} else if (commandZone.equalsIgnoreCase("g")) {
 				commandZone = "harvest 0 ";
-				commandZone = increaseDieValue(commandZone);
-			} else if (commandZone.equals("h")) {
+				
+			} else if (commandZone.equalsIgnoreCase("h")) {
 				commandZone = "council 0 ";
-				commandZone = increaseDieValue(commandZone);
-			} else if (commandZone.equals("i")) {
+			
+			} else if (commandZone.equalsIgnoreCase("i")) {
 				commandZone = "cancel";
 			} else {
 				System.out.println("Wrong character");
 				commandZone = null;
 			}
 		} while (commandZone == null);
+		
 		if (commandZone.contains("cancel")) {
 			commandZone = "cancel";
+		} else {
+			commandZone = increaseDieValue(commandZone);
 		}
+		
 		return commandZone;
 	}
 
 	public String fourChoice(String s) {
-		String commandFloor;
-		int commandFloorInt = 0;
-
 		System.out.println("Choose " + s + " (1,2,3,4)  0 --> Cancel ");
-		String validChoice = null;
-		while (validChoice == null) {
-			try {
 
-				commandFloorInt = scanner.nextInt();
-				validChoice = "ok";
-
-				if ((commandFloorInt > 5 || commandFloorInt < 1)) {
-					System.out.println("Invalid number, try again");
-					commandFloor = null;
-				}
-			} catch (InputMismatchException e) {
-				System.out.println("Please, type a number!");
-
-			}
+		String choice = scanner.nextLine();
+		while (!(choice.equals("1") || choice.equals("2") || choice.equals("3") || choice.equals("4")
+				|| choice.equals("0"))) {
+			System.out.println("Wrong choice, try again;");
+			choice = scanner.nextLine();
 		}
-		if (commandFloorInt == 0) {
-			commandFloor = "Cancel";
+
+		if (choice.equals("0")) {
+			choice = "cancel";
 		}
-		return Integer.toString(commandFloorInt);
+
+		return choice;
+
+		/*
+		 * String validChoice = null; while (validChoice == null &&
+		 * scanner.hasNextInt()) { try {
+		 * 
+		 * commandFloorInt = scanner.nextInt(); validChoice = "ok";
+		 * 
+		 * if ((commandFloorInt > 5 || commandFloorInt < 1)) {
+		 * System.out.println("Invalid number, try again"); commandFloor = null;
+		 * } } catch (InputMismatchException e) {
+		 * System.out.println("Please, type a number!");
+		 * 
+		 * } }
+		 */
+
 	}
 
 	public String increaseDieValue(String commandZone) {
@@ -313,12 +285,30 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 
 	}
 
-	/*
+	private void sendAction(String command) {
+		hm = new HashMap<>();
+		hm.put("action", command);
+
+		/* This block of code notifies the Server of the action */
+		synchronized (waitingForActionCompleted) {
+			notifyMyObservers(hm);
+			System.out.println("----Waiting for your action to be completed----");
+			while (!actionDone) {
+				try {
+					waitingForActionCompleted.wait();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	/**
 	 * this method lets the user choose between two alternative costs. It
 	 * contains a Military Point value because the alternative values are always
 	 * associated with militaryPoints
 	 */
-	// TODO: rendere scalabile il MilitaryPoint
 
 	public void chooseAlternativeCost(SetOfValues cost1, SetOfValues cost2, MilitaryPoint militaryPoints) {
 		System.out.println("The card you have chosen has two different costs:");
@@ -377,8 +367,8 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 			System.out.println("Territory/Character/Building/Venture");
 
 			zone = scanner.nextLine();
-			while (!(zone.equals("Territory") || zone.equals("Building") || zone.equals("Venture")
-					|| zone.equals("Character"))) {
+			while (!(zone.equalsIgnoreCase("Territory") || zone.equalsIgnoreCase("Building") || zone.equalsIgnoreCase("Venture")
+					|| zone.equalsIgnoreCase("Character"))) {
 				System.out.println("Wrong choice, try again");
 				zone = scanner.nextLine();
 			}
@@ -452,7 +442,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	}
 
 	public void askForServantsForHarvestAndProduction(PerformActivity immediateEffect) {
-		if (immediateEffect.getName().equals("performHarvest")) {
+		if (immediateEffect.getName().equalsIgnoreCase("performHarvest")) {
 			System.out.println("The card you picked lets you perform the Harvest");
 		} else {
 			System.out.println("The card you picked lets you perform the Production");
@@ -494,11 +484,12 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 
 	public void setMyTurn(boolean myTurn) {
 		this.myTurn = myTurn;
-		if (myTurn){
+		if (myTurn) {
 			System.out.println("**********It's your turn!!!!**********");
-		}else {
+		} else {
 			System.out.println("**********Not your turn**********");
-		};
+		}
+		;
 	}
 
 	public List<Player> getPlayerTurn() {
@@ -528,7 +519,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	public Object getWaitingForAnswer() {
 		return waitingForNameUpdate;
 	}
-	
+
 	public Object getWaitingForActionCompleted() {
 		return waitingForActionCompleted;
 	}
@@ -536,7 +527,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	public void setWaitingForActionCompleted(Object waitingForActionCompleted) {
 		this.waitingForActionCompleted = waitingForActionCompleted;
 	}
-	
+
 	public boolean isActionDone() {
 		return actionDone;
 	}
@@ -544,7 +535,5 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	public void setActionDone(boolean actionDone) {
 		this.actionDone = actionDone;
 	}
-
-	
 
 }

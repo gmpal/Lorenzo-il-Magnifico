@@ -25,12 +25,12 @@ public abstract class MyObservable {
 		this.MyObservers.clear();
 	}
 
-	public <C> void notifyMyObservers(C change) {
+	public synchronized <C> void notifyMyObservers(C change) {
 		for (MyObserver o : this.MyObservers) {
 			o.update(this, change);
 		}
 	}
-	public <C> void notifySingleObserver(MyObserver o, C change) {
+	public synchronized <C> void notifySingleObserver(MyObserver o, C change) {
 		
 			o.update(this, change);
 		

@@ -77,9 +77,9 @@ public class ClientSocket {
 		objFromServer = new ObjectInputStream(socket.getInputStream());
 
 		clientSocketView = new ClientSocketViewCLI(objFromServer, objToServer, viewCLI);
-
-		executor.submit(clientSocketView);
 		
+		executor.submit(clientSocketView);
+	
 	}
 
 }

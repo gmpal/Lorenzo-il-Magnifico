@@ -1,29 +1,11 @@
 package it.polimi.ingsw.GC_24.client.view;
 
-import java.io.EOFException;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
+import java.io.*;
+import java.util.*;
 import it.polimi.ingsw.GC_24.MyObservable;
-
-import it.polimi.ingsw.GC_24.effects.ChooseNewCard;
-import it.polimi.ingsw.GC_24.effects.CouncilPrivilege;
-import it.polimi.ingsw.GC_24.effects.Exchange;
-import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
-import it.polimi.ingsw.GC_24.effects.PerformActivity;
-import it.polimi.ingsw.GC_24.model.Model;
-import it.polimi.ingsw.GC_24.model.Player;
-
-import it.polimi.ingsw.GC_24.effects.IncreaseDieValueCard;
+import it.polimi.ingsw.GC_24.effects.*;
 import it.polimi.ingsw.GC_24.model.*;
-
-import it.polimi.ingsw.GC_24.values.MilitaryPoint;
-import it.polimi.ingsw.GC_24.values.SetOfValues;
+import it.polimi.ingsw.GC_24.values.*;
 
 //ClientInHandler is observed by the ViewPLayer,
 //whenever the server communicates something, ClientInHandler notifies ViewPLayer
@@ -44,13 +26,24 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 	@SuppressWarnings("unchecked")
 	@Override
 	public void run() {
-
+		int i = 0;
+	
 		try {
 			while (true) {
+				i++;
+				System.out.println("Ricezione numero "+i);
+
 				HashMap<String, Object> requestFromServer;
+			
+				
 				requestFromServer = (HashMap<String, Object>) objFromServer.readObject();
-				System.out.println(requestFromServer);
-				this.handleRequestFromServer(requestFromServer);
+			
+				Thread t1 = new Thread(new Runnable(){
+					public void run(){
+						handleRequestFromServer(requestFromServer);
+					}
+				});
+					t1.start();
 
 			}
 		} catch (EOFException e) {
@@ -64,10 +57,10 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 	@Override
 	public <C> void update(MyObservable o, C change) {
 		try {
-
+			objToServer.reset();
 			objToServer.writeObject(change);
 			objToServer.flush();
-			objToServer.reset();
+			
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -118,7 +111,7 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 		}
 
 		if (command.contains("actionDone")) {
-			System.out.println("dentrocommand");
+			System.out.println("RICEVUTO RISVEGLIO DAL CLIENT");
 			synchronized (view.getWaitingForActionCompleted()) {
 				view.setActionDone(true);
 				view.getWaitingForActionCompleted().notify();
@@ -140,7 +133,6 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 				e.printStackTrace();
 			}
 			view.play();
-
 		}
 		if (command.contains("Turns")) {
 			List<Player> playerTurn = (List<Player>) request.get("Turns");

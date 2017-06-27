@@ -459,7 +459,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		String responseToActionVerify = action.verify();
 		if (responseToActionVerify.equals("ok")) {
 			List<ImmediateEffect> interactiveEffects = action.run();
-			System.out.println("hai superato run");
 			this.handleInteractiveEffects(o, interactiveEffects);
 
 		} else {
@@ -485,8 +484,10 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	private void awakenSleepingClient() {
-	 notifyMyObservers(new HashMap<String,Object>().put("actionDone", null));
-	}
+		hashMap = new HashMap<>();
+		hashMap.put("actionDone", "awakeningTheClients");
+		notifyMyObservers(hashMap);
+		}
 
 	private void handleInteractiveEffects(MyObservable o, List<ImmediateEffect> interactiveEffects) {
 		List<ImmediateEffect> secondaryInteractiveEffects = new ArrayList<>();

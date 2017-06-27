@@ -53,7 +53,11 @@ public class TowerPlace extends Place {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append(correspondingCard.toString());
+		if (correspondingCard!=null){
+			builder.append(correspondingCard.toString());
+		}else{
+			builder.append("Card already taken by the "+famMemberOnPlace.getPlayerColour()+" player");
+		}
 		if (!value.getEffectValues().isEmpty()){
 			builder.append("\n\tValue you get from place = "+value);
 		

@@ -54,26 +54,16 @@ public class ActionTower extends Action {
 
 	@Override
 	public List<ImmediateEffect> run() {
-		int i=0;
-		System.out.println(Integer.toString(i++));
 		this.takeRealCost();
-		System.out.println(Integer.toString(i++));
 		this.payCoinsforOccupiedTower();
-		System.out.println(Integer.toString(i++));
 		this.payValue(new Servant(this.servants));
-		System.out.println(Integer.toString(i++));
 		this.placeFamiliar();
-		System.out.println(Integer.toString(i++));
 		if (!isThereNoValueEffect()) {
 			this.takeValueFromPlace();
 		}
-		System.out.println(Integer.toString(i++));
 		this.takeCardAndPay();
-		System.out.println(Integer.toString(i++));
-		this.takeEffects();
-		System.out.println(Integer.toString(i++));
+		this.takeEffectsAndRemoveCard();
 		this.giveValueEffect(immediateEffects);
-		System.out.println(Integer.toString(i++));
 
 		return immediateEffects;
 	}
@@ -98,7 +88,7 @@ public class ActionTower extends Action {
 			this.payValue(new Coin(3));
 	}
 
-	private void takeEffects() {
+	private void takeEffectsAndRemoveCard() {
 		ImmediateEffect im = towerPlace.getCorrespondingCard().getImmediateEffect();
 		ImmediateEffect im1 = towerPlace.getCorrespondingCard().getImmediateEffect1();
 		if (im != null) {
@@ -107,6 +97,7 @@ public class ActionTower extends Action {
 		if (im1 != null) {
 			immediateEffects.add(im1);
 		}
+		towerPlace.setCorrespondingCard(null);
 	}
 
 	private void takeCardAndPay() {
@@ -114,7 +105,7 @@ public class ActionTower extends Action {
 		setOfSales.subTwoSetsOfValues(temporaryCardCost);
 		this.player.setMyValues(temporaryCardCost.subTwoSetsOfValues(this.player.getMyValues()));
 		towerPlace.getCorrespondingCard().setCardOnPersonalBoard(player.getMyBoard());
-	}
+		}
 
 	private void takeRealCost() {
 		if (temporaryCardCost.isEmpty()) {
