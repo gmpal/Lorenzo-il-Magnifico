@@ -77,36 +77,11 @@ public class Tower extends Area {
 		return placesArray;
 	}
 
-	/** returns true if a family member is already on a place in the Tower
-	* I have to pay 3 coins to place a familiar*/
-	public boolean isTowerOccupied() {
-		for (Place towerPlace : this.placesArray) {
-			if (!towerPlace.isAvailable()) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	/** returns true if one of my family members is already on a place in the
-	* Tower, not neutral
-	* I cannot place the familiar except if it's the neutral familiar*/
-	public boolean isTowerOccupiedByMe(Player player) {
-		for (Place towerPlace : this.placesArray) {
-			if (towerPlace.getFamMemberOnPlace().getPlayerColour().equals(player.getMyColour())
-					&& !towerPlace.getFamMemberOnPlace().isNeutral()) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-
-	public void putCardInFirstEmptyPlace(Development card){
-		for (Place p:this.getPlacesArray()){
+	public void putCardInFirstEmptyPlace(Development card) {
+		for (Place p : this.getPlacesArray()) {
 			TowerPlace tempPlace = (TowerPlace) p;
-			if (tempPlace.getCorrespondingCard()==null)
-			tempPlace.setCorrespondingCard(card);
-			}
+			if (tempPlace.getCorrespondingCard() == null)
+				tempPlace.setCorrespondingCard(card);
+		}
 	}
 }

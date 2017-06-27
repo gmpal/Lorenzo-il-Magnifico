@@ -1,4 +1,4 @@
-package it.polimi.ingsw.GC_24;
+package it.polimi.ingsw.GC_24.modeltest;
 
 import static org.junit.Assert.*;
 
@@ -27,21 +27,21 @@ public class TestPlayer {
 	}
 
 	@Test
-	public void testGetMyValuesFromColour() {
+	public void testGetMyValuesFromColour() throws Exception {
 		player.getMyValues().setInitialValues(1);
 		values.setInitialValues(1);
 		assertEquals(values, player.getMyValuesFromColour(PlayerColour.RED));
 	}
 	
 	@Test
-	public void testGetMyValuesFromColourTwoDifferentColours() {
+	public void testGetMyValuesFromColourTwoDifferentColours() throws Exception {
 		player.getMyValues().setInitialValues(1);
 		values.setInitialValues(1);
 		assertFalse(values.equals(player.getMyValuesFromColour(PlayerColour.GREEN)));
 	}
 
 	@Test
-	public void testTakeValuesFromPlace() {
+	public void testTakeValuesFromPlace() throws Exception {
 		player.getMyValues().setInitialValues(1);
 		values.setInitialValues(1);
 		values.getCoins().addQuantity(2);
@@ -50,21 +50,21 @@ public class TestPlayer {
 	}
 
 	@Test
-	public void testIsPossibleIncreaseDieValueTrue() {
+	public void testIsPossibleIncreaseDieValueTrue() throws Exception {
 		player.getMyValues().setInitialValues(1);
 		values.getCoins().setQuantity(4);
 		assertTrue(player.isPossibleIncreaseDieValue(2));
 	}
 	
 	@Test
-	public void testIsPossibleIncreaseDieValueFalse() {
+	public void testIsPossibleIncreaseDieValueFalse() throws Exception {
 		player.getMyValues().setInitialValues(1);
 		values.getCoins().setQuantity(4);
 		assertFalse(player.isPossibleIncreaseDieValue(5));
 	}
 	
 	@Test
-	public void testIsPossibleIncreaseDieValueNegative() {
+	public void testIsPossibleIncreaseDieValueNegative() throws Exception {
 		player.getMyValues().setInitialValues(1);
 		values.getCoins().setQuantity(4);
 		assertFalse(player.isPossibleIncreaseDieValue(-2));

@@ -5,7 +5,6 @@ import it.polimi.ingsw.GC_24.effects.ValueEffect;
 import it.polimi.ingsw.GC_24.model.Player;
 
 public class CouncilPlace extends Place {
-	
 
 	/**
 	 * 
@@ -20,18 +19,15 @@ public class CouncilPlace extends Place {
 		this.value=value;
 		this.privilegeEffect = privilegeEffect;
 	}
-/*
-	@Override
-	public void giveEffects(Player player) {
-		player.setMyValues(this.value.getEffectValues().addTwoSetsOfValues(player.getMyValues()));
-	}
-*/
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append( "\nFree? " + isAvailable());
+		builder.append("\n");
 		if (isAvailable()){
-			builder.append(" - You get: " + getValue() + " and a Council Privilege");
+			builder.append("- You get: " + getValue() + " and a Council Privilege");
+		}else{
+			builder.append("Place occupied by the " + getFamMemberOnPlace().getPlayerColour() + " player");
 		}
 		return builder.toString();
 	}

@@ -58,4 +58,19 @@ public class TestMilitaryPoint {
 		assertEquals(player.getMyValues().getMilitaryPoints(), militaryPoint.findValueInPlayer(player));
 	}
 	
+	@Test
+	public void testAmIPresentInThisSetFalse() throws Exception {
+		militaryPoint.setQuantity(5);
+		values.getMilitaryPoints().setQuantity(3);
+		assertFalse(militaryPoint.amIPresentInThisSet(values));
+	}
+	
+	@Test
+	public void testAmIPresentInThisSetTrue() throws Exception {
+		militaryPoint.setQuantity(5);
+		values.getMilitaryPoints().setQuantity(9);
+		assertTrue(militaryPoint.amIPresentInThisSet(values));
+	}
+	
+	
 }

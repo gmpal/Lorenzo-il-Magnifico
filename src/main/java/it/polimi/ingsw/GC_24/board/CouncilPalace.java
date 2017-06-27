@@ -30,9 +30,14 @@ public class CouncilPalace extends Area {
 	private List<ImmediateEffect> valueListCouncil = new ArrayList<>();
 
 	// constructor
-	public CouncilPalace(int numPlayers) throws IOException {
+	public CouncilPalace(int numPlayers) {
 		this.numPlayers = numPlayers;
-		this.placesArray = createCouncil();
+		try {
+			this.placesArray = createCouncil();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	// useful methods
@@ -65,7 +70,6 @@ public class CouncilPalace extends Area {
 	/** returns the updated list of players' turn*/
 	public List<Player> updateTurn(Player player) {
 		if (!temporaryTurn.contains(player))
-
 			temporaryTurn.add(player);
 		return temporaryTurn;
 	}

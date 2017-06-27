@@ -3,7 +3,6 @@ package it.polimi.ingsw.GC_24.placestest;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-import it.polimi.ingsw.GC_24.model.FamilyMember;
 import it.polimi.ingsw.GC_24.model.*;
 import it.polimi.ingsw.GC_24.places.CouncilPlace;
 import it.polimi.ingsw.GC_24.places.Place;

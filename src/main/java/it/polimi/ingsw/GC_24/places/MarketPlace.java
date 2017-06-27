@@ -32,13 +32,15 @@ public class MarketPlace extends Place {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append( "\nFree? " + isAvailable());
+		builder.append( "\n" );
 		if (isAvailable()){
-			builder.append(" - You can get: ");
+			builder.append("- You can get: ");
 			if (value != null)
 				builder.append(value);
 			if (privilegeEffect != null)
 				builder.append(privilegeEffect);
+		}else{
+			builder.append("Place occupied by the " + getFamMemberOnPlace().getPlayerColour() + " player");
 		}
 		return builder.toString();
 	}

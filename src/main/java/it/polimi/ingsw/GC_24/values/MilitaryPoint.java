@@ -38,7 +38,7 @@ public class MilitaryPoint extends Value {
 	}
 	
 	@Override
-	public Boolean amIpresentInThisSet(SetOfValues setOfValues) {
+	public Boolean amIPresentInThisSet(SetOfValues setOfValues) {
 		return (setOfValues.getMilitaryPoints().getQuantity() >= this.quantity);
 	}
 	
