@@ -88,6 +88,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				System.out.println("GAME STATE: " + game.getGameState());
 
 				game.getBoard().clear();
+				System.out.println("1");
 				game.getCards().dealCards(game.getBoard(), cardsIndex / 2 + 1);
 				game.sendModel();
 
