@@ -34,7 +34,7 @@ public class ActionTower extends Action {
 	@Override
 	public String verify() {
 		String answerToPlayer = "Answer: \n";
-		while (answerToPlayer.equals("Answer: \n")) {
+		
 			answerToPlayer = verifyIfEnoughServants(answerToPlayer);
 			answerToPlayer = verifyIfEnoughServantsForThisPlace(answerToPlayer);			
 			answerToPlayer = verifyFamilyMemberAvailability(answerToPlayer);
@@ -44,7 +44,7 @@ public class ActionTower extends Action {
 			answerToPlayer = verifyTerritorySpaceAvailability(answerToPlayer);
 			answerToPlayer = verifyBoardSpaceAvailability(answerToPlayer);
 			answerToPlayer = verifyCardResources(answerToPlayer);
-		}
+		
 		if (answerToPlayer.equals("Answer: \n"))
 			return "ok";
 		else

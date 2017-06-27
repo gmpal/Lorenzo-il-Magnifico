@@ -99,6 +99,12 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 			MilitaryPoint militaryPoints = (MilitaryPoint) request.get("Requirements");
 			view.chooseAlternativeCost(cost1, cost2, militaryPoints);
 		}
+		
+		if (command.contains("problems")) {
+			String problems = (String) request.get("problems");
+			notifyMyObservers(problems);
+		}
+
 
 		if (command.contains("model")) {
 			synchronized (view.getWaitingForAnswer()) {
