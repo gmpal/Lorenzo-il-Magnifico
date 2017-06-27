@@ -6,6 +6,10 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
-		StartingFrame frame = new StartingFrame("Lorenzo-il_Magnifico");
+		String s1 = "1";
+		String s2 = "0";
+		
+		
+		System.out.println(s2.compareTo(s1));
 	}
 }

@@ -144,7 +144,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 					command += " " + choosePlace();
 					if (command.contains("cancel")) {
 						System.out.println("Action cancelled");
-					}else {
+					} else {
 						sendAction(command);
 					}
 				}
@@ -184,39 +184,39 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 			if (commandZone.equalsIgnoreCase("a")) {
 				System.out.println(miniModel.getBoard().getTowerTerritories());
 				cf = fourChoice(floor);
-				commandZone = "territories " + cf + " ";			
+				commandZone = "territories " + cf + " ";
 			} else if (commandZone.equalsIgnoreCase("b")) {
 				System.out.println(miniModel.getBoard().getTowerCharacters());
 				cf = fourChoice(floor);
 				commandZone = "characters " + cf + " ";
-				
+
 			} else if (commandZone.equalsIgnoreCase("c")) {
 				System.out.println(miniModel.getBoard().getTowerBuildings());
 				cf = fourChoice(floor);
 				commandZone = "buildings " + cf + " ";
-				
+
 			} else if (commandZone.equalsIgnoreCase("d")) {
 				System.out.println(miniModel.getBoard().getTowerVentures());
 				cf = fourChoice(floor);
 				commandZone = "ventures " + cf + " ";
-				
+
 			} else if (commandZone.equalsIgnoreCase("e")) {
 				System.out.println(miniModel.getBoard().getMarket());
 				cf = fourChoice("place");
 				commandZone = "market " + cf + " ";
-				
+
 			} else if (commandZone.equalsIgnoreCase("f")) {
 				System.out.println(miniModel.getBoard().getProduction());
 				commandZone = "production 0 ";
-				
+
 			} else if (commandZone.equalsIgnoreCase("g")) {
 				System.out.println(miniModel.getBoard().getHarvest());
 				commandZone = "harvest 0 ";
-				
+
 			} else if (commandZone.equalsIgnoreCase("h")) {
 				System.out.println(miniModel.getBoard().getCouncilPalace());
 				commandZone = "council 0 ";
-			
+
 			} else if (commandZone.equalsIgnoreCase("i")) {
 				commandZone = "cancel";
 			} else {
@@ -224,13 +224,13 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 				commandZone = null;
 			}
 		} while (commandZone == null);
-		
+
 		if (commandZone.contains("cancel")) {
 			commandZone = "cancel";
 		} else {
 			commandZone = increaseDieValue(commandZone);
 		}
-		
+
 		return commandZone;
 	}
 
@@ -269,26 +269,20 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	public String increaseDieValue(String commandZone) {
 		System.out.println("Do you want to use some servants to increment the die value?");
 		System.out.println("Write the number of servants you want to use : ");
-
-		String validChoice = null;
-		int choice = 0;
-		while (validChoice == null) {
-			try {
-				choice = 0;
-				choice = scanner.nextInt();
-				validChoice = "ok";
-				if (choice < 0) {
-					System.out.println("Invalid number, try again");
-					validChoice = null;
-				}
-
-			} catch (InputMismatchException e) {
-				System.out.println("Please, type a number!");
-
-			}
-
-		}
-		return commandZone + Integer.toString(choice);
+		String choice;
+		do{
+			choice = scanner.nextLine();
+		
+		try{
+		Integer.parseInt(choice);
+		} catch (NumberFormatException e ){
+			System.out.println("Please type a number:");
+			choice = null;
+		}}while(choice == null);
+		
+		
+		
+		return commandZone + " " + choice;
 
 	}
 
@@ -371,11 +365,11 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		String zone;
 		if ((im.getType()) == null) {
 			System.out.println("Write the tower you want to pick your card from");
-			System.out.println("Territory/Character/Building/Venture");
+			System.out.println("Territories/Characters/Buildings/Ventures");
 
 			zone = scanner.nextLine();
-			while (!(zone.equalsIgnoreCase("Territory") || zone.equalsIgnoreCase("Building") || zone.equalsIgnoreCase("Venture")
-					|| zone.equalsIgnoreCase("Character"))) {
+			while (!(zone.equalsIgnoreCase("territories") || zone.equalsIgnoreCase("Buildings")
+					|| zone.equalsIgnoreCase("Ventures") || zone.equalsIgnoreCase("Characters"))) {
 				System.out.println("Wrong choice, try again");
 				zone = scanner.nextLine();
 			}
@@ -396,7 +390,8 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		}
 
 		String answer = zone + " " + floor;
-		increaseDieValue(answer);
+		answer = increaseDieValue(answer);
+		System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" + answer);
 		sendAnswerForParameters(answer);
 	}
 
@@ -414,7 +409,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		System.out.println("Make your choice: (1/2/3/4/5)");
 		String answer = "";
 		for (int i = 0; i < number; i++) {
-			System.out.println("Choice number " + i + " of " + number);
+			System.out.println("Choice number " + i + 1 + " of " + number);
 			String choice = scanner.nextLine();
 			while (!(choice.equals("1") || choice.equals("2") || choice.equals("3") || choice.equals("4")
 					|| choice.equals("5")) || answer.contains(choice)) {
