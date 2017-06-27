@@ -72,7 +72,7 @@ public abstract class Action {
 	public abstract List<ImmediateEffect> run();
 
 	// verify methods
-	protected String verifyIfEnoughServants(String answerToPlayer) {
+	public String verifyIfEnoughServants(String answerToPlayer) {
 		if (player.getMyValues().getServants().getQuantity() < this.servants) {
 
 			return answerToPlayer + "You don't have enough servants to use! \n";
