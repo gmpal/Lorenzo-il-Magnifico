@@ -34,19 +34,30 @@ public class ActionTower extends Action {
 	@Override
 	public String verify() {
 		String answerToPlayer = "Answer: \n";
-		while (answerToPlayer.equals("Answer: \n")) {
+		System.out.println(answerToPlayer);
+		//while (answerToPlayer.equals("Answer: \n")) {
 			answerToPlayer = verifyIfEnoughServants(answerToPlayer);
-			answerToPlayer = verifyIfEnoughServantsForThisPlace(answerToPlayer);			
+			System.out.println(answerToPlayer);
+			answerToPlayer = verifyIfEnoughServantsForThisPlace(answerToPlayer);
+			System.out.println(answerToPlayer);
 			answerToPlayer = verifyFamilyMemberAvailability(answerToPlayer);
+			System.out.println(answerToPlayer);
 			answerToPlayer = verifyPlaceAvailability(answerToPlayer);
+			System.out.println(answerToPlayer);
 			answerToPlayer = verifyZoneOccupiedByMe(answerToPlayer);
+			System.out.println(answerToPlayer);
 			answerToPlayer = verifyMoneyForTowerOccupied(answerToPlayer);
+			System.out.println(answerToPlayer);
 			answerToPlayer = verifyTerritorySpaceAvailability(answerToPlayer);
+			System.out.println(answerToPlayer);
 			answerToPlayer = verifyBoardSpaceAvailability(answerToPlayer);
+			System.out.println(answerToPlayer);
 			answerToPlayer = verifyCardResources(answerToPlayer);
-		}
-		if (answerToPlayer.equals("Answer: \n"))
+			System.out.println(answerToPlayer);
+			if (answerToPlayer.equals("Answer: \n"))
 			return "ok";
+		//}
+		
 		else
 			return answerToPlayer;
 
@@ -135,7 +146,7 @@ public class ActionTower extends Action {
 		if (this.zone.isOccupied() && this.player.getMyValues().getCoins().getQuantity() < 3) {
 			return answerToPlayer + "You don't have enough coins to place your familiar in an already occupied tower\n";
 		} else
-			return "ok";
+			return answerToPlayer;
 	}
 
 	/**

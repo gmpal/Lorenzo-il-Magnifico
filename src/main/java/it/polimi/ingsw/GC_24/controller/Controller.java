@@ -461,6 +461,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			List<ImmediateEffect> interactiveEffects = action.run();
 			System.out.println("hai superato run");
 			this.handleInteractiveEffects(o, interactiveEffects);
+			System.out.println("ho gli effetti");
 
 		} else {
 			/*ACTION FAILS --> if it's a normal action, do nothing, the player would start again and create a new one
@@ -477,7 +478,12 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		// per adesso finisco il turno --> Aggiorno il currentPlayer e
 		// sveglio il run();
 		synchronized (actionWaiting) {
-			game.setCurrentPlayer(playerTurn.get(playerTurn.indexOf(game.getCurrentPlayer()) + 1));
+			if(playerTurn.indexOf(game.getCurrentPlayer())==game.getPlayers().size()-1){
+				game.setCurrentPlayer(playerTurn.get(0));
+			}
+			else{
+				game.setCurrentPlayer(playerTurn.get(playerTurn.indexOf(game.getCurrentPlayer()) + 1));
+			}
 			actionWaiting.notify();
 		}
 		
