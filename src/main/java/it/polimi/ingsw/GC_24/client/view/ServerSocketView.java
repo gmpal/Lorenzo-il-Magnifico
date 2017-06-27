@@ -65,9 +65,10 @@ public class ServerSocketView extends MyObservable implements Runnable, MyObserv
 	//	System.out.println("ServerOut: I have been notified by " + o.getClass().getSimpleName());
 
 		try {
-			objToClient.reset();
+
 			objToClient.writeObject(change);
 			objToClient.flush();
+			objToClient.reset();
 			System.out.println("ServerOut: I have sent"+change);
 			
 		} catch (IOException e) {

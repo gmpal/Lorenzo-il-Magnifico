@@ -6,7 +6,7 @@ import it.polimi.ingsw.GC_24.effects.ValueEffect;
 import it.polimi.ingsw.GC_24.model.Player;
 
 public class TowerPlace extends Place {
-	
+
 	/**
 	 * 
 	 */
@@ -14,49 +14,46 @@ public class TowerPlace extends Place {
 	private Development correspondingCard;
 	private ValueEffect value;
 	private ImmediateEffect privilege;
-	
-	
-	//constructor
-	public TowerPlace(int costDice, ValueEffect value, ImmediateEffect privilege){
+
+	// constructor
+	public TowerPlace(int costDice, ValueEffect value, ImmediateEffect privilege) {
 		super(costDice);
-		this.value=value;
-		this.privilege=privilege;
-		this.correspondingCard=null;
+		this.value = value;
+		this.privilege = privilege;
+		this.correspondingCard = null;
 	}
-	
-	/**method to take a card without placing a family member*/
-	public void takeWithoutPlacing(Player player){
+
+	/** method to take a card without placing a family member */
+	public void takeWithoutPlacing(Player player) {
 		this.correspondingCard.setCardOnPersonalBoard(player.getMyBoard());
 		this.correspondingCard.getImmediateEffect().giveImmediateEffect(player);
 	}
+
 	/*
-	@Override
-	public void giveEffects(Player player){
-		correspondingCard.setCardOnPersonalBoard(player.getMyBoard());
-		correspondingCard.getImmediateEffect();
-		correspondingCard.getImmediateEffect1();
-		this.correspondingCard = null;
-	}
-*/
+	 * @Override public void giveEffects(Player player){
+	 * correspondingCard.setCardOnPersonalBoard(player.getMyBoard());
+	 * correspondingCard.getImmediateEffect();
+	 * correspondingCard.getImmediateEffect1(); this.correspondingCard = null; }
+	 */
 	@Override
 	public void clearPlace() {
-		if (this.famMemberOnPlace != null){
-		this.famMemberOnPlace.setAvailable(true);
+		if (this.famMemberOnPlace != null) {
+			this.famMemberOnPlace.setAvailable(true);
 		}
 		this.famMemberOnPlace = null;
 		this.setAvailable(true);
-		
-	
 		this.correspondingCard = null;
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append(correspondingCard.toString());
-		if (!value.getEffectValues().isEmpty()){
-			builder.append("\n\tValue you get from place = "+value);
-		
+		if(correspondingCard!=null){
+			builder.append(correspondingCard.toString());
+		}
+		if (!value.getEffectValues().isEmpty()) {
+			builder.append("\n\tValue you get from place = " + value);
+
 		}
 		return builder.toString();
 	}

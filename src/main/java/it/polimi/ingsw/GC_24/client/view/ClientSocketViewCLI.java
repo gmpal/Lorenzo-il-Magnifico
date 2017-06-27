@@ -4,6 +4,7 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -75,9 +76,10 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 	@Override
 	public <C> void update(MyObservable o, C change) {
 		try {
-			objToServer.reset();
 			objToServer.writeObject(change);
 			objToServer.flush();
+			objToServer.reset();
+
 			
 
 		} catch (IOException e) {

@@ -70,7 +70,7 @@ public class ActionTower extends Action {
 		System.out.println(Integer.toString(i++));
 		this.takeCardAndPay();
 		System.out.println(Integer.toString(i++));
-		this.takeEffects();
+		this.takeEffectsAndRemoveCard();
 		System.out.println(Integer.toString(i++));
 		this.giveValueEffect(immediateEffects);
 		System.out.println(Integer.toString(i++));
@@ -98,7 +98,7 @@ public class ActionTower extends Action {
 			this.payValue(new Coin(3));
 	}
 
-	private void takeEffects() {
+	private void takeEffectsAndRemoveCard() {
 		ImmediateEffect im = towerPlace.getCorrespondingCard().getImmediateEffect();
 		ImmediateEffect im1 = towerPlace.getCorrespondingCard().getImmediateEffect1();
 		if (im != null) {
@@ -107,6 +107,7 @@ public class ActionTower extends Action {
 		if (im1 != null) {
 			immediateEffects.add(im1);
 		}
+		towerPlace.setCorrespondingCard(null);
 	}
 
 	private void takeCardAndPay() {
