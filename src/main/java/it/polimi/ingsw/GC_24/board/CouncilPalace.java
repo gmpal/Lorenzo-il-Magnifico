@@ -1,12 +1,13 @@
 package it.polimi.ingsw.GC_24.board;
 
 import java.io.BufferedReader;
-
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import it.polimi.ingsw.GC_24.devCardJsonFile.GsonBuilders;
 import it.polimi.ingsw.GC_24.effects.*;
@@ -30,13 +31,19 @@ public class CouncilPalace extends Area {
 	private List<ImmediateEffect> valueListCouncil = new ArrayList<>();
 
 	// constructor
-	public CouncilPalace(int numPlayers) throws IOException {
+	public CouncilPalace(int numPlayers) {
 		this.numPlayers = numPlayers;
-		this.placesArray = createCouncil();
+		
+		try {
+			this.placesArray = createCouncil();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	// useful methods
-	public List<Place> createCouncil() throws IOException {
+	public List<Place> createCouncil() throws IOException   {
 		Gson gson = GsonBuilders.getGsonWithTypeAdapters();
 		String line;
 		BufferedReader br = new BufferedReader(
