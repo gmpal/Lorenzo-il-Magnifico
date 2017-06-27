@@ -112,7 +112,9 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 		}
     
 		if (command.contains("askForParameters")) {
+			System.out.println("sono su askforparameters");
 			handleEffectParametersRequest((ImmediateEffect) request.get("askForParameters"));
+			System.out.println("ho suoereto handle");
 
 		}
 

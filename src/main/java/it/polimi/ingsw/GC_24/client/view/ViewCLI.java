@@ -109,7 +109,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 				+ "d)Show family members\n" + "e)Show my resources\n" + "f)Place family member\n"
 				+ "g)Use a leader card\n" + "h)Throw a leader card\n" + "i)End turn\n" + "j)Exit");
 		String command = scanner.nextLine();
-
+		
 		if (command.equalsIgnoreCase("a")) {
 
 			System.out.println(miniModel.getBoard());
@@ -381,7 +381,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		System.out.println("Write the floor you want to pick your card from");
 		System.out.println("1/2/3/4");
 
-		String floor = scanner.nextLine();
+		String floor= scanner.nextLine();
 
 		while (!(floor.equals("1") || floor.equals("2") || floor.equals("3") || floor.equals("4"))) {
 			System.out.println("Wrong choice, try again");
@@ -414,6 +414,8 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 			while (!(choice.equals("1") || choice.equals("2") || choice.equals("3") || choice.equals("4")
 					|| choice.equals("5")) || answer.contains(choice)) {
 				System.out.println("Wrong choice, try again");
+				scanner.reset();
+				choice="";
 				choice = scanner.nextLine();
 			}
 
