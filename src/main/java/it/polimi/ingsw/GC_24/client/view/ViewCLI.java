@@ -29,20 +29,16 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 
 	private HashMap<String, Object> hm;
 	private Timer timer;
-	
+
 	private Object waitingForNameUpdate = new Object();
 	private Object waitingForActionCompleted = new Object();
-	
-	
 
 	private boolean myTurn = false;
 	private List<Player> playerTurn;
 	private int playerNumber = 0;
 	private boolean actionDone;
-	
-	private volatile Player myself = null;
 
-	
+	private volatile Player myself = null;
 
 	@Override
 	public synchronized void run() {
@@ -88,13 +84,12 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	}
 
 	public void sendPlayerString(String name) throws InterruptedException {
-		
+
 		String player = (playerNumber + " " + name);
 		hm = new HashMap<>();
 		hm.put("player", player);
 		this.notifyMyObservers(hm);
 		System.out.println("Your name has been sent");
-		
 
 		synchronized (waitingForNameUpdate) {
 			while (!miniModel.getPlayers().get((playerNumber) - 1).getMyName().equalsIgnoreCase(name)) {
@@ -113,8 +108,10 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	}
 
 	public void play() {
-		System.out.println("Good luck "+myself.getMyName()+"!");
-		if (myself.getAutocompleted()) { System.out.println("You were supposed to write your name! Press any key to start Playing");}
+		System.out.println("Good luck " + myself.getMyName() + "!");
+		if (myself.getAutocompleted()) {
+			System.out.println("You were supposed to write your name! Press any key to start Playing");
+		}
 		while (true) {
 			showAndGetOption();
 		}
@@ -129,45 +126,47 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		String command = scanner.nextLine();
 
 		if (command.equals("a")) {
-			
+
 			System.out.println(miniModel.getBoard());
-			
-			
+
 		} else if (command.equals("b")) {
-			
+
 			System.out.println(myself.getMyBoard());
-			
-			
+
 		} else if (command.equals("c")) {
-			
+
 			// TODO: aggiungere leadercards alla personalBoard
 			// System.out.println(myself.getMyBoard());
 			System.out.println("This function is not been implemented yet");
-			
-			
+
 		} else if (command.equals("d")) {
-			
+
 			System.out.println(myself.getMyFamily());
-			
-			
+
 		} else if (command.equals("e")) {
-			
+
 			System.out.println(myself.getMyValues());
-			
-			
+
 		} else if (command.equals("f")) {
-			
-			if (myTurn){
+
+			if (myTurn) {
 				System.out.println(myself.getMyFamily());
-				command = fourChoice("family member") + " " + choosePlace();
-					if (command.contains("cancel"))
-							System.out.println("Action cancelled");
-					else
+				command = fourChoice("family member");
+				if (command.contains("cancel")) {
+					System.out.println("Action cancelled");
+
+				} else {
+					command += " " + choosePlace();
+					if (command.contains("cancel")) {
+						System.out.println("Action cancelled");
+					}else {
 						sendAction(command);
-			}else {
+					}
+				}
+			} else {
 				System.out.println("Not your turn. You can't do an action.\n");
 			}
-			
+
 		} else if (command.equals("g")) {
 			// miniModel.getPlayerfromColour(PlayerColour.valueOf(colour.toUpperCase())).getLeaderCards().chooseLeaderCard();
 			System.out.println("This function is not been implemented yet");
@@ -188,25 +187,6 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 
 	}
 
-	private void sendAction(String command) {
-		hm = new HashMap<>();
-		hm.put("action", command);
-		
-		/*This block of code notifies the Server of the action*/
-		synchronized (waitingForActionCompleted ){
-		notifyMyObservers(hm);
-		System.out.println("----Waiting for your action to be ----");
-		while (!actionDone){
-			try {
-				waitingForActionCompleted.wait();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
-	}
-
 	private String choosePlace() {
 		String commandZone;
 		String floor = "floor";
@@ -219,32 +199,32 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 			if (commandZone.equals("a")) {
 				cf = fourChoice(floor);
 				commandZone = "territories " + cf + " ";
-				commandZone = increaseDieValue(commandZone);
+			
 			} else if (commandZone.equals("b")) {
 				cf = fourChoice(floor);
 				commandZone = "characters " + cf + " ";
-				commandZone = increaseDieValue(commandZone);
+				
 			} else if (commandZone.equals("c")) {
 				cf = fourChoice(floor);
 				commandZone = "buildings " + cf + " ";
-				commandZone = increaseDieValue(commandZone);
+				
 			} else if (commandZone.equals("d")) {
 				cf = fourChoice(floor);
 				commandZone = "ventures " + cf + " ";
-				commandZone = increaseDieValue(commandZone);
+				
 			} else if (commandZone.equals("e")) {
 				cf = fourChoice("place");
 				commandZone = "market " + cf + " ";
-				commandZone = increaseDieValue(commandZone);
+				
 			} else if (commandZone.equals("f")) {
 				commandZone = "production 0 ";
-				commandZone = increaseDieValue(commandZone);
+				
 			} else if (commandZone.equals("g")) {
 				commandZone = "harvest 0 ";
-				commandZone = increaseDieValue(commandZone);
+				
 			} else if (commandZone.equals("h")) {
 				commandZone = "council 0 ";
-				commandZone = increaseDieValue(commandZone);
+			
 			} else if (commandZone.equals("i")) {
 				commandZone = "cancel";
 			} else {
@@ -252,37 +232,46 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 				commandZone = null;
 			}
 		} while (commandZone == null);
+		
 		if (commandZone.contains("cancel")) {
 			commandZone = "cancel";
+		} else {
+			commandZone = increaseDieValue(commandZone);
 		}
+		
 		return commandZone;
 	}
 
 	public String fourChoice(String s) {
-		String commandFloor;
-		int commandFloorInt = 0;
-
 		System.out.println("Choose " + s + " (1,2,3,4)  0 --> Cancel ");
-		String validChoice = null;
-		while (validChoice == null) {
-			try {
 
-				commandFloorInt = scanner.nextInt();
-				validChoice = "ok";
-
-				if ((commandFloorInt > 5 || commandFloorInt < 1)) {
-					System.out.println("Invalid number, try again");
-					commandFloor = null;
-				}
-			} catch (InputMismatchException e) {
-				System.out.println("Please, type a number!");
-
-			}
+		String choice = scanner.nextLine();
+		while (!(choice.equals("1") || choice.equals("2") || choice.equals("3") || choice.equals("4")
+				|| choice.equals("0"))) {
+			System.out.println("Wrong choice, try again;");
+			choice = scanner.nextLine();
 		}
-		if (commandFloorInt == 0) {
-			commandFloor = "Cancel";
+
+		if (choice.equals("0")) {
+			choice = "cancel";
 		}
-		return Integer.toString(commandFloorInt);
+
+		return choice;
+
+		/*
+		 * String validChoice = null; while (validChoice == null &&
+		 * scanner.hasNextInt()) { try {
+		 * 
+		 * commandFloorInt = scanner.nextInt(); validChoice = "ok";
+		 * 
+		 * if ((commandFloorInt > 5 || commandFloorInt < 1)) {
+		 * System.out.println("Invalid number, try again"); commandFloor = null;
+		 * } } catch (InputMismatchException e) {
+		 * System.out.println("Please, type a number!");
+		 * 
+		 * } }
+		 */
+
 	}
 
 	public String increaseDieValue(String commandZone) {
@@ -311,12 +300,30 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 
 	}
 
-	/*
+	private void sendAction(String command) {
+		hm = new HashMap<>();
+		hm.put("action", command);
+
+		/* This block of code notifies the Server of the action */
+		synchronized (waitingForActionCompleted) {
+			notifyMyObservers(hm);
+			System.out.println("----Waiting for your action to be completed----");
+			while (!actionDone) {
+				try {
+					waitingForActionCompleted.wait();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	/**
 	 * this method lets the user choose between two alternative costs. It
 	 * contains a Military Point value because the alternative values are always
 	 * associated with militaryPoints
 	 */
-	// TODO: rendere scalabile il MilitaryPoint
 
 	public void chooseAlternativeCost(SetOfValues cost1, SetOfValues cost2, MilitaryPoint militaryPoints) {
 		System.out.println("The card you have chosen has two different costs:");
@@ -492,11 +499,12 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 
 	public void setMyTurn(boolean myTurn) {
 		this.myTurn = myTurn;
-		if (myTurn){
+		if (myTurn) {
 			System.out.println("**********It's your turn!!!!**********");
-		}else {
+		} else {
 			System.out.println("**********Not your turn**********");
-		};
+		}
+		;
 	}
 
 	public List<Player> getPlayerTurn() {
@@ -526,7 +534,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	public Object getWaitingForAnswer() {
 		return waitingForNameUpdate;
 	}
-	
+
 	public Object getWaitingForActionCompleted() {
 		return waitingForActionCompleted;
 	}
@@ -534,7 +542,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	public void setWaitingForActionCompleted(Object waitingForActionCompleted) {
 		this.waitingForActionCompleted = waitingForActionCompleted;
 	}
-	
+
 	public boolean isActionDone() {
 		return actionDone;
 	}
@@ -542,7 +550,5 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	public void setActionDone(boolean actionDone) {
 		this.actionDone = actionDone;
 	}
-
-	
 
 }
