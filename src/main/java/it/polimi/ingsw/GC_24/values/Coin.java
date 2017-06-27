@@ -37,7 +37,7 @@ public class Coin extends Value {
 	}
 
 	@Override
-	public Boolean amIpresentInThisSet(SetOfValues setOfValues) {
+	public Boolean amIPresentInThisSet(SetOfValues setOfValues) {
 		return (setOfValues.getCoins().getQuantity() >= this.quantity);
 	}
 	

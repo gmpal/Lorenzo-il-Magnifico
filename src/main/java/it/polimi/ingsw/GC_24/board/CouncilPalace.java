@@ -33,7 +33,7 @@ public class CouncilPalace extends Area {
 	// constructor
 	public CouncilPalace(int numPlayers) {
 		this.numPlayers = numPlayers;
-		
+    
 		try {
 			this.placesArray = createCouncil();
 		} catch (IOException e) {
@@ -72,7 +72,6 @@ public class CouncilPalace extends Area {
 	/** returns the updated list of players' turn*/
 	public List<Player> updateTurn(Player player) {
 		if (!temporaryTurn.contains(player))
-
 			temporaryTurn.add(player);
 		return temporaryTurn;
 	}

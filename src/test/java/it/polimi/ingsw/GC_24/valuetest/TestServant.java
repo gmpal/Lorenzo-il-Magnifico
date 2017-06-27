@@ -58,4 +58,17 @@ public class TestServant {
 		assertEquals(player.getMyValues().getServants(), servant.findValueInPlayer(player));
 	}
 	
+	@Test
+	public void testAmIPresentInThisSetFalse() throws Exception {
+		servant.setQuantity(5);
+		values.getServants().setQuantity(3);
+		assertFalse(servant.amIPresentInThisSet(values));
+	}
+	
+	@Test
+	public void testAmIPresentInThisSetTrue() throws Exception {
+		servant.setQuantity(5);
+		values.getServants().setQuantity(9);
+		assertTrue(servant.amIPresentInThisSet(values));
+	}
 }

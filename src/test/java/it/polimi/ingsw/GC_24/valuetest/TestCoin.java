@@ -57,4 +57,18 @@ public class TestCoin {
 		assertEquals(player.getMyValues().getCoins(), coin.findValueInPlayer(player));
 	}
 	
+	@Test
+	public void testAmIPresentInThisSetFalse() throws Exception {
+		coin.setQuantity(5);
+		values.getCoins().setQuantity(3);
+		assertFalse(coin.amIPresentInThisSet(values));
+	}
+	
+	@Test
+	public void testAmIPresentInThisSetTrue() throws Exception {
+		coin.setQuantity(5);
+		values.getCoins().setQuantity(9);
+		assertTrue(coin.amIPresentInThisSet(values));
+	}
+	
 }

@@ -1,20 +1,14 @@
 package it.polimi.ingsw.GC_24.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.StringTokenizer;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.MyObserver;
 import it.polimi.ingsw.GC_24.cards.*;
 import it.polimi.ingsw.GC_24.effects.*;
-import it.polimi.ingsw.GC_24.model.*;
+import it.polimi.ingsw.GC_24.model.Model;
+import it.polimi.ingsw.GC_24.model.Player;
+import it.polimi.ingsw.GC_24.model.State;
 import it.polimi.ingsw.GC_24.places.TowerPlace;
 import it.polimi.ingsw.GC_24.values.*;
 
@@ -691,11 +685,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		public int getControllerNumber() {
 			return controllerNumber;
 		}
-
-		public void setControllerNumber(int controllerNumber) {
-			this.controllerNumber = controllerNumber;
-	  }
+  
+	public void setControllerNumber(int controllerNumber) {
+		this.controllerNumber = controllerNumber;
+  }
 }
-
-
-

@@ -26,7 +26,7 @@ public class TestPersonalBuildings {
 	}
 
 	@Test
-	public void testFindCardsInPersonalBoard() {
+	public void testFindCardsInPersonalBoard() throws Exception {
 		building1.setCardOnPersonalBoard(player.getMyBoard());
 		building2.setCardOnPersonalBoard(player.getMyBoard());
 		buildingsexpected.getCards().add(building1);
@@ -35,7 +35,7 @@ public class TestPersonalBuildings {
 	}
 	
 	@Test
-	public void testFindCardsInPersonalBoardFalse1() {
+	public void testFindCardsInPersonalBoardFalse1() throws Exception {
 		building1.setCardOnPersonalBoard(player.getMyBoard());
 		building2.setCardOnPersonalBoard(player.getMyBoard());
 		buildingsexpected.getCards().add(building1);
@@ -43,7 +43,7 @@ public class TestPersonalBuildings {
 	}
 	
 	@Test
-	public void testFindCardsInPersonalBoardFalse2() {
+	public void testFindCardsInPersonalBoardFalse2() throws Exception {
 		building1.setCardOnPersonalBoard(player.getMyBoard());
 		buildingsexpected.getCards().add(building1);
 		buildingsexpected.getCards().add(building2);

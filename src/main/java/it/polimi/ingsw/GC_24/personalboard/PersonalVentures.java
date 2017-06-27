@@ -29,11 +29,11 @@ public class PersonalVentures extends PersonalCards{
 
 	@Override
 	public VictoryPoint convertCardToVictoryPoints() {
-		Ventures v=new Ventures(null, null, null, null, null, null, null, null, 0);
-		VictoryPoint point=new VictoryPoint(0);
-		for(Development d: this.getCards()){
-		v=(Ventures) d;
-		point.addQuantity(v.getPointsAtTheEnd().getQuantity());
+		Ventures v = new Ventures(null, null, null, null, null, null, null, null, 0);
+		VictoryPoint point = new VictoryPoint(0);
+		for (Development d : this.getCards()) {
+			v = (Ventures) d;
+			point.addQuantity(v.getPointsAtTheEnd().getQuantity());
 		}
 		return point;
 	}

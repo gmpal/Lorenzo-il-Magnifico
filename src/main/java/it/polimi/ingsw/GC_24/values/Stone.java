@@ -38,7 +38,7 @@ public class Stone extends Value {
 	}
 	
 	@Override
-	public Boolean amIpresentInThisSet(SetOfValues setOfValues) {
+	public Boolean amIPresentInThisSet(SetOfValues setOfValues) {
 		return (setOfValues.getStones().getQuantity() >= this.quantity);
 	}
 	

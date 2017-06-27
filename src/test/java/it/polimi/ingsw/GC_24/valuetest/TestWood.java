@@ -57,5 +57,19 @@ public class TestWood {
 		assertEquals(player.getMyValues().getWoods(), wood.findValueInPlayer(player));
 	}
 	
+	@Test
+	public void testAmIPresentInThisSetFalse() throws Exception {
+		wood.setQuantity(5);
+		values.getWoods().setQuantity(3);
+		assertFalse(wood.amIPresentInThisSet(values));
+	}
+	
+	@Test
+	public void testAmIPresentInThisSetTrue() throws Exception {
+		wood.setQuantity(5);
+		values.getWoods().setQuantity(9);
+		assertTrue(wood.amIPresentInThisSet(values));
+	}
+	
 }
 
