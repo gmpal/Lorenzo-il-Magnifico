@@ -50,12 +50,12 @@ public class TowerPlace extends Place {
 		StringBuilder builder = new StringBuilder();
 		if (correspondingCard!=null){
 			builder.append(correspondingCard.toString());
+			if (!value.getEffectValues().isEmpty()){
+				builder.append("\n\tValue you get from place = "+value);
+			}
 		}else{
 			builder.append("Card already taken by the "+famMemberOnPlace.getPlayerColour()+" player");
 		}
-		if (!value.getEffectValues().isEmpty()){
-			builder.append("\n\tValue you get from place = "+value);
-				}
 		return builder.toString();
 	}
 
