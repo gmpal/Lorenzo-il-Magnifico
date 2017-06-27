@@ -28,7 +28,7 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 	@Override
 	public void run() {
 		int i = 0;
-	
+		Thread t1;
 		try {
 			while (true) {
 				i++;
@@ -39,7 +39,7 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 				
 				requestFromServer = (HashMap<String, Object>) objFromServer.readObject();
 			
-				Thread t1 = new Thread(new Runnable(){
+				 t1 = new Thread(new Runnable(){
 					public void run(){
 						handleRequestFromServer(requestFromServer);
 					}
@@ -56,9 +56,9 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 	}
 
 	@Override
-	public <C> void update(MyObservable o, C change) {
+	public synchronized <C> void update(MyObservable o, C change) {
 		try {
-		
+			System.out.println("------------------------------------->SENDING " + change);
 			objToServer.writeObject(change);
 			objToServer.flush();
 			objToServer.reset();			

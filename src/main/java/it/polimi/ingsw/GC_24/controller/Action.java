@@ -30,7 +30,7 @@ public abstract class Action {
 
 		if (familiar.equals("fakeFamiliarForChooseNewCard")){
 			//ForChooseNewCard effect
-			this.familyMember = new FamilyMember(null,null);
+			this.familyMember = new FamilyMember(game.getCurrentPlayer().getMyColour());
 		} else {		
 			this.familyMember = player.getMyFamily().getMemberfromString(familiar);
 		}		

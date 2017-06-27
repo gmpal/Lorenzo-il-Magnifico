@@ -65,6 +65,7 @@ public class ActionTower extends Action {
 		this.payCoinsforOccupiedTower();
 		this.payValue(new Servant(this.servants));
 		this.placeFamiliar();
+		
 		if (!isThereNoValueEffect()) {
 			this.takeValueFromPlace();
 		}
@@ -83,7 +84,7 @@ public class ActionTower extends Action {
 		Characters c;
 		for (int i = 0; i < player.getMyBoard().getPersonalCharacters().getCards().size(); i++) {
 			c = (Characters) player.getMyBoard().getPersonalCharacters().getCards().get(i);
-			if (c.getPermanentEffects().getName().equals("noValueEffectFromTowerPlace")) {
+			if (c.getPermanentEffects() != null && c.getPermanentEffects().getName().equals("noValueEffectFromTowerPlace")) {
 				return true;
 			}
 		}
@@ -224,7 +225,7 @@ public class ActionTower extends Action {
 		int incrementDieValueFromPermanentEffect = 0;
 		for (int i = 0; i < player.getMyBoard().getPersonalCharacters().getCards().size(); i++) {
 			Characters c = (Characters) player.getMyBoard().getPersonalCharacters().getCards().get(i);
-			if (c.getPermanentEffects().getName().equals("increaseDieValueCard")) {
+			if (c.getPermanentEffects()!=null && c.getPermanentEffects().getName().equals("increaseDieValueCard")) {
 				IncreaseDieValueCard pe = (IncreaseDieValueCard) c.getPermanentEffects();
 				if (pe.getPersonalCards() != null && (pe.getPersonalCards().getType() == zoneString)) {
 					incrementDieValueFromPermanentEffect += pe.getIncreaseDieValue();
