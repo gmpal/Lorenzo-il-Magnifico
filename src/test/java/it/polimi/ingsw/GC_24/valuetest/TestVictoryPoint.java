@@ -57,4 +57,18 @@ public class TestVictoryPoint {
 		assertEquals(player.getMyValues().getVictoryPoints(), victoryPoint.findValueInPlayer(player));
 	}
 	
+	@Test
+	public void testAmIPresentInThisSetFalse() throws Exception {
+		victoryPoint.setQuantity(5);
+		values.getVictoryPoints().setQuantity(3);
+		assertFalse(victoryPoint.amIPresentInThisSet(values));
+	}
+	
+	@Test
+	public void testAmIPresentInThisSetTrue() throws Exception {
+		victoryPoint.setQuantity(5);
+		values.getVictoryPoints().setQuantity(9);
+		assertTrue(victoryPoint.amIPresentInThisSet(values));
+	}
+	
 }

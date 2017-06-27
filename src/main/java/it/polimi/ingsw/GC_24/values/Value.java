@@ -47,7 +47,7 @@ public abstract class Value implements Serializable {
 
 	public abstract String whatValueAmI();
 	
-	public abstract Boolean amIpresentInThisSet(SetOfValues setOfValues);
+	public abstract Boolean amIPresentInThisSet(SetOfValues setOfValues);
 	
 	// HashCode() redefined
 	@Override

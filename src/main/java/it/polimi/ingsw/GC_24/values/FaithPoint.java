@@ -45,14 +45,12 @@ public class FaithPoint extends Value {
 	}
 
 	@Override
-	public Boolean amIpresentInThisSet(SetOfValues setOfValues) {
+	public Boolean amIPresentInThisSet(SetOfValues setOfValues) {
 		return (setOfValues.getFaithPoints().getQuantity() >= this.quantity);
 	}
 
 	/**
 	 * This method return the corresponding Values of Faith Points
-	 * 
-	 * @return SetOfValues
 	 */
 	public SetOfValues convertToValue(List<SetOfValues> correspondingValue) {
 		return correspondingValue.get(this.quantity - 1);

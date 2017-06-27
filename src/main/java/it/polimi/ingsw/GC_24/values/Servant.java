@@ -38,8 +38,8 @@ public class Servant extends Value {
 	}
 	
 	@Override
-	public Boolean amIpresentInThisSet(SetOfValues setOfValues) {
-		return (setOfValues.getServants().getQuantity() >= this.quantity);
+	public Boolean amIPresentInThisSet(SetOfValues setOfValues) {
+		return (setOfValues.getServants().getQuantity() >= getQuantity());
 	}
 	
 	@Override

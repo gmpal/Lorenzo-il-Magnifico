@@ -67,7 +67,7 @@ public class SetOfValues implements Serializable {
 
 	/** This method returns true if you have...enough of that Value */
 	public boolean doIHaveEnoughOfThis(Value value) {
-		return value.amIpresentInThisSet(this);
+		return value.amIPresentInThisSet(this);
 	}
 
 	/** Returns true if my SetOfValues contains the cost Set */
@@ -76,7 +76,7 @@ public class SetOfValues implements Serializable {
 		// this-cost >=0;
 	}
 
-	public Value valueNotNullFromSet() {
+	/*public Value valueNotNullFromSet() {
 		if (this.coins.quantity != 0) {
 			return coins;
 		} else if (this.faithPoints.quantity != 0) {
@@ -91,7 +91,7 @@ public class SetOfValues implements Serializable {
 			return woods;
 		} else
 			return null;
-	}
+	}*/
 
 	/** Returns true if the Set does not contains negative quantity */
 	public boolean isAcceptable() {

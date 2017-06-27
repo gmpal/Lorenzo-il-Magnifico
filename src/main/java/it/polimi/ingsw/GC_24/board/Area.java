@@ -33,9 +33,9 @@ public abstract class Area implements java.io.Serializable {
 		return false;
 	}
 	
-	
+	/** returns true if a family member is already on a place in the placesArray
+	* I have to pay 3 coins to place a familiar*/
 	public boolean isOccupied () {
-		
 		for (Place place : this.placesArray) {
 			if (!place.isAvailable()){
 				return true;
@@ -68,7 +68,6 @@ public abstract class Area implements java.io.Serializable {
 				return placesArray.get(i-1);
 			}
 		}else{ 		
-			System.out.println("siamo su dddd");
 			return this.getFirstEmptyPlace();}
 		
 	}
