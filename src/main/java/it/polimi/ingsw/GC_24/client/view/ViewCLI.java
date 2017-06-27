@@ -182,32 +182,39 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 			commandZone = scanner.nextLine();
 			String cf;
 			if (commandZone.equalsIgnoreCase("a")) {
+				System.out.println(miniModel.getBoard().getTowerTerritories());
 				cf = fourChoice(floor);
-				commandZone = "territories " + cf + " ";
-			
+				commandZone = "territories " + cf + " ";			
 			} else if (commandZone.equalsIgnoreCase("b")) {
+				System.out.println(miniModel.getBoard().getTowerCharacters());
 				cf = fourChoice(floor);
 				commandZone = "characters " + cf + " ";
 				
 			} else if (commandZone.equalsIgnoreCase("c")) {
+				System.out.println(miniModel.getBoard().getTowerBuildings());
 				cf = fourChoice(floor);
 				commandZone = "buildings " + cf + " ";
 				
 			} else if (commandZone.equalsIgnoreCase("d")) {
+				System.out.println(miniModel.getBoard().getTowerVentures());
 				cf = fourChoice(floor);
 				commandZone = "ventures " + cf + " ";
 				
 			} else if (commandZone.equalsIgnoreCase("e")) {
+				System.out.println(miniModel.getBoard().getMarket());
 				cf = fourChoice("place");
 				commandZone = "market " + cf + " ";
 				
 			} else if (commandZone.equalsIgnoreCase("f")) {
+				System.out.println(miniModel.getBoard().getProduction());
 				commandZone = "production 0 ";
 				
 			} else if (commandZone.equalsIgnoreCase("g")) {
+				System.out.println(miniModel.getBoard().getHarvest());
 				commandZone = "harvest 0 ";
 				
 			} else if (commandZone.equalsIgnoreCase("h")) {
+				System.out.println(miniModel.getBoard().getCouncilPalace());
 				commandZone = "council 0 ";
 			
 			} else if (commandZone.equalsIgnoreCase("i")) {

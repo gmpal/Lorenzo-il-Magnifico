@@ -123,7 +123,7 @@ public class ActionTower extends Action {
 	public String verifyMoneyForTowerOccupied(String answerToPlayer) {
 
 		if (this.zone.isOccupied() && this.player.getMyValues().getCoins().getQuantity() < 3) {
-			return answerToPlayer + "You don't have enough coins to place your familiar in an already occupied tower\n";
+			return answerToPlayer + "You don't have enough coins to place your family member in a tower already occupied\n";
 		} else
 			return "ok";
 	}
