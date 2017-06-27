@@ -6,7 +6,6 @@ import it.polimi.ingsw.GC_24.MyObserver;
 import it.polimi.ingsw.GC_24.effects.*;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
-import it.polimi.ingsw.GC_24.modeltest.*;
 import it.polimi.ingsw.GC_24.values.*;
 
 public class ViewCLI extends MyObservable implements MyObserver, Runnable {

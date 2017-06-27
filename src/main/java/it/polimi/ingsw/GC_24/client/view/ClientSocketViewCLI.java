@@ -6,7 +6,6 @@ import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.effects.*;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
-import it.polimi.ingsw.GC_24.modeltest.*;
 import it.polimi.ingsw.GC_24.values.*;
 
 //ClientInHandler is observed by the ViewPLayer,
