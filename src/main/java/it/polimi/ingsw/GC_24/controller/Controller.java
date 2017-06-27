@@ -20,7 +20,7 @@ import it.polimi.ingsw.GC_24.values.*;
 
 
 public class Controller extends MyObservable implements MyObserver, Runnable {
-  
+
 		private final Model game;
 		private ActionFactory actionFactory = new ActionFactory();
 		private SetOfValues tempCost = new SetOfValues();
@@ -81,7 +81,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			game.sendModel();
 			this.currentPlayer = game.getCurrentPlayer();
 
-
 			playerTurn = game.getPlayers();
 			game.setGameState(State.PERIOD1_ROUND1);
 
@@ -127,6 +126,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 						
 						// reset the current player
 						/* Repeats until the players are finished */
+
 					}
 				}
 				// it's time to look at the council palace for turn updates!
@@ -144,7 +144,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 		
 		
-
 
 		/**This method starts a timer and then calls another method that autocompletes the players*/
 		private void waitAndAutocomplete() {
@@ -166,6 +165,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		public void autoCompletePlayers() {
 
 			for (Player p : game.getPlayers()) {
+
 				if (p.getMyName() == null) {
 					int index = game.getPlayers().indexOf(p) + 1;
 
@@ -185,7 +185,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			}
 
 		}
-
 
 		/**
 		 * This method handles the end of the game. 1)Conquered Territories:
@@ -236,7 +235,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			} else {
 				winner = winners.get(0);
 			}
-
 			return winner;
 		}
 
@@ -298,7 +296,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				playerTurn.add(i, player);
 			}
 		}
-
 
 		/**This methods makes the users start playing, calling a method on the view */
 		private void letThemPlay() {
@@ -460,14 +457,13 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				}
 				
 			}
-
 			if (tempZone.equalsIgnoreCase("ventures")) {
+
 				handleVentures(o, tempZone, tempFloor);
 			}
 			this.action = actionFactory.makeAction(game, tempFamiliar, tempZone, tempFloor, tempServants, tempCost, saleForPermanentEffect);
 			
 		}
-
 
 		private void verifyAndExecuteAction(MyObservable o, Action action2) {
 			String responseToActionVerify = action.verify();
@@ -507,6 +503,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			// Ho modificato il model. Lo invio!
 			game.sendModel();
 			awakenSleepingClient();
+
 		}
 
 		private void awakenSleepingClient() {
@@ -530,6 +527,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					} else {
 						effect.giveImmediateEffect(currentPlayer);
 					}
+
 					if (effect instanceof Exchange) {
 						secondaryInteractiveEffects.addAll(((Exchange) effect).getImmediateEffectsFromExchange());
 					}
@@ -543,6 +541,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				if (!secondaryInteractiveEffects.isEmpty()) {
 					handleInteractiveEffects(o, secondaryInteractiveEffects);
 				}
+
 	    }
 		}
 
@@ -569,6 +568,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 			if (effect instanceof ChooseNewCard || effect instanceof CouncilPrivilege || effect instanceof PerformActivity
 					|| (effect instanceof Exchange && ((Exchange) effect).getExchangePackage1() != null)) {
+
 				hashMap = new HashMap<>();
 				hashMap.put("askForParameters", effect);
 				notifySingleObserver((MyObserver) o, hashMap);
@@ -592,6 +592,11 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				 * to switch between my effects in order to choose how to handle the
 				 * client answer
 				 */
+				
+				
+				
+			
+				
 				
 				if (effect instanceof CouncilPrivilege) {
 					System.out.println("era un effetto consiglio");
@@ -618,7 +623,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					((PerformActivity) effect)
 							.assignParameters(Integer.parseInt((new StringTokenizer(parametersAnswer).nextToken())));
 				}
-      }
+			}
 		}
 
 		private IncreaseDieValueCard PermanentEffectWithAlternativeSale() {
@@ -686,7 +691,10 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			return controllerNumber;
 		}
 
-	public void setControllerNumber(int controllerNumber) {
-		this.controllerNumber = controllerNumber;
-	}
+		public void setControllerNumber(int controllerNumber) {
+			this.controllerNumber = controllerNumber;
+	  }
 }
+
+
+
