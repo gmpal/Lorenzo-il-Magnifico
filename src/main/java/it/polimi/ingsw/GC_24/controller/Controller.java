@@ -1,4 +1,4 @@
-package it.polimi.ingsw.GC_24.controller;
+﻿package it.polimi.ingsw.GC_24.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -457,11 +457,11 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	private void verifyAndExecuteAction(MyObservable o, Action action2) {
 		String responseToActionVerify = action.verify();
+		this.sendInfo(responseToActionVerify);
 		if (responseToActionVerify.equals("ok")) {
 			List<ImmediateEffect> interactiveEffects = action.run();
-			System.out.println("hai superato run");
 			this.handleInteractiveEffects(o, interactiveEffects);
-			System.out.println("ho gli effetti");
+			System.out.println("Gestiti eventuali effetti interattivi");
 
 		} else {
 			/*ACTION FAILS --> if it's a normal action, do nothing, the player would start again and create a new one
@@ -478,19 +478,19 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		// per adesso finisco il turno --> Aggiorno il currentPlayer e
 		// sveglio il run();
 		synchronized (actionWaiting) {
-			if(playerTurn.indexOf(game.getCurrentPlayer())==game.getPlayers().size()-1){
+			
+			if (playerTurn.indexOf(game.getCurrentPlayer()) == playerTurn.size()-1){
 				game.setCurrentPlayer(playerTurn.get(0));
-			}
-			else{
+			} else {
 				game.setCurrentPlayer(playerTurn.get(playerTurn.indexOf(game.getCurrentPlayer()) + 1));
 			}
-			actionWaiting.notify();
+				actionWaiting.notify();
 		}
-		
+		System.out.println("SUPERATO BLOCCO actionwaiting");
 		// Ho modificato il model. Lo invio!
 		game.sendModel();
 		awakenSleepingClient();
-		
+
 	}
 
 	private void awakenSleepingClient() {

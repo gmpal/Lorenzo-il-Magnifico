@@ -1,25 +1,11 @@
 package it.polimi.ingsw.GC_24.client.view;
 
-import java.util.HashMap;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
-import java.util.Timer;
+import java.util.*;
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.MyObserver;
-
-import it.polimi.ingsw.GC_24.effects.ChooseNewCard;
-import it.polimi.ingsw.GC_24.effects.CouncilPrivilege;
-import it.polimi.ingsw.GC_24.effects.Exchange;
-import it.polimi.ingsw.GC_24.effects.PerformActivity;
-
-import it.polimi.ingsw.GC_24.effects.IncreaseDieValueCard;
-
-import it.polimi.ingsw.GC_24.model.Model;
-import it.polimi.ingsw.GC_24.model.Player;
-import it.polimi.ingsw.GC_24.model.State;
-import it.polimi.ingsw.GC_24.values.MilitaryPoint;
-import it.polimi.ingsw.GC_24.values.SetOfValues;
+import it.polimi.ingsw.GC_24.effects.*;
+import it.polimi.ingsw.GC_24.model.*;
+import it.polimi.ingsw.GC_24.values.*;
 
 public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	private static Scanner scanner = new Scanner(System.in);
@@ -36,8 +22,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	private boolean myTurn = false;
 	private List<Player> playerTurn;
 	private int playerNumber = 0;
-	private boolean actionDone;
-
+	private boolean actionDone = false;
 	private volatile Player myself = null;
 
 	@Override
@@ -125,29 +110,29 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 				+ "g)Use a leader card\n" + "h)Throw a leader card\n" + "i)End turn\n" + "j)Exit");
 		String command = scanner.nextLine();
 
-		if (command.equals("a")) {
+		if (command.equalsIgnoreCase("a")) {
 
 			System.out.println(miniModel.getBoard());
 
-		} else if (command.equals("b")) {
+		} else if (command.equalsIgnoreCase("b")) {
 
 			System.out.println(myself.getMyBoard());
 
-		} else if (command.equals("c")) {
+		} else if (command.equalsIgnoreCase("c")) {
 
 			// TODO: aggiungere leadercards alla personalBoard
 			// System.out.println(myself.getMyBoard());
 			System.out.println("This function is not been implemented yet");
 
-		} else if (command.equals("d")) {
+		} else if (command.equalsIgnoreCase("d")) {
 
 			System.out.println(myself.getMyFamily());
 
-		} else if (command.equals("e")) {
+		} else if (command.equalsIgnoreCase("e")) {
 
 			System.out.println(myself.getMyValues());
 
-		} else if (command.equals("f")) {
+		} else if (command.equalsIgnoreCase("f")) {
 
 			if (myTurn) {
 				System.out.println(myself.getMyFamily());
@@ -164,20 +149,20 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 					}
 				}
 			} else {
-				System.out.println("Not your turn. You can't do an action.\n");
+				System.out.println("Not your turn. You can't do any action.\n");
 			}
 
-		} else if (command.equals("g")) {
+		} else if (command.equalsIgnoreCase("g")) {
 			// miniModel.getPlayerfromColour(PlayerColour.valueOf(colour.toUpperCase())).getLeaderCards().chooseLeaderCard();
 			System.out.println("This function is not been implemented yet");
-		} else if (command.equals("h")) {
+		} else if (command.equalsIgnoreCase("h")) {
 			// miniModel.getPlayerfromColour(PlayerColour.valueOf(colour.toUpperCase())).getLeaderCards().throwLeaderCard();
 			System.out.println("This function is not been implemented yet");
-		} else if (command.equals("i")) {
+		} else if (command.equalsIgnoreCase("i")) {
 			command = "end";
 			System.out.println("This function is not been implemented yet");
 			// TODO: gestione della fine del turno
-		} else if (command.equals("j")) {
+		} else if (command.equalsIgnoreCase("j")) {
 			System.out.println("This function is not been implemented yet");
 			// break;
 			// TODO:gestire la disconnessione;
@@ -196,36 +181,43 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 					+ "h)Council Palace\n" + "i)Cancel");
 			commandZone = scanner.nextLine();
 			String cf;
-			if (commandZone.equals("a")) {
+			if (commandZone.equalsIgnoreCase("a")) {
+				System.out.println(miniModel.getBoard().getTowerTerritories());
 				cf = fourChoice(floor);
-				commandZone = "territories " + cf + " ";
-			
-			} else if (commandZone.equals("b")) {
+				commandZone = "territories " + cf + " ";			
+			} else if (commandZone.equalsIgnoreCase("b")) {
+				System.out.println(miniModel.getBoard().getTowerCharacters());
 				cf = fourChoice(floor);
 				commandZone = "characters " + cf + " ";
 				
-			} else if (commandZone.equals("c")) {
+			} else if (commandZone.equalsIgnoreCase("c")) {
+				System.out.println(miniModel.getBoard().getTowerBuildings());
 				cf = fourChoice(floor);
 				commandZone = "buildings " + cf + " ";
 				
-			} else if (commandZone.equals("d")) {
+			} else if (commandZone.equalsIgnoreCase("d")) {
+				System.out.println(miniModel.getBoard().getTowerVentures());
 				cf = fourChoice(floor);
 				commandZone = "ventures " + cf + " ";
 				
-			} else if (commandZone.equals("e")) {
+			} else if (commandZone.equalsIgnoreCase("e")) {
+				System.out.println(miniModel.getBoard().getMarket());
 				cf = fourChoice("place");
 				commandZone = "market " + cf + " ";
 				
-			} else if (commandZone.equals("f")) {
+			} else if (commandZone.equalsIgnoreCase("f")) {
+				System.out.println(miniModel.getBoard().getProduction());
 				commandZone = "production 0 ";
 				
-			} else if (commandZone.equals("g")) {
+			} else if (commandZone.equalsIgnoreCase("g")) {
+				System.out.println(miniModel.getBoard().getHarvest());
 				commandZone = "harvest 0 ";
 				
-			} else if (commandZone.equals("h")) {
+			} else if (commandZone.equalsIgnoreCase("h")) {
+				System.out.println(miniModel.getBoard().getCouncilPalace());
 				commandZone = "council 0 ";
 			
-			} else if (commandZone.equals("i")) {
+			} else if (commandZone.equalsIgnoreCase("i")) {
 				commandZone = "cancel";
 			} else {
 				System.out.println("Wrong character");
@@ -381,9 +373,10 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 			System.out.println("Write the tower you want to pick your card from");
 			System.out.println("Territory/Character/Building/Venture");
 
+			
 			zone = scanner.nextLine();
-			while (!(zone.equals("Territory") || zone.equals("Building") || zone.equals("Venture")
-					|| zone.equals("Character"))) {
+			while (!(zone.equalsIgnoreCase("Territory") || zone.equalsIgnoreCase("Building") || zone.equalsIgnoreCase("Venture")
+					|| zone.equalsIgnoreCase("Character"))) {
 				System.out.println("Wrong choice, try again");
 				zone = scanner.nextLine();
 			}
@@ -457,7 +450,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	}
 
 	public void askForServantsForHarvestAndProduction(PerformActivity immediateEffect) {
-		if (immediateEffect.getName().equals("performHarvest")) {
+		if (immediateEffect.getName().equalsIgnoreCase("performHarvest")) {
 			System.out.println("The card you picked lets you perform the Harvest");
 		} else {
 			System.out.println("The card you picked lets you perform the Production");

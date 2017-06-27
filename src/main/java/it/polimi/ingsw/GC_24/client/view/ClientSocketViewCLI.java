@@ -1,25 +1,11 @@
 package it.polimi.ingsw.GC_24.client.view;
 
-import java.io.EOFException;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
+import java.io.*;
+import java.util.*;
 import it.polimi.ingsw.GC_24.MyObservable;
-import it.polimi.ingsw.GC_24.effects.ChooseNewCard;
-import it.polimi.ingsw.GC_24.effects.CouncilPrivilege;
-import it.polimi.ingsw.GC_24.effects.Exchange;
-import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
-import it.polimi.ingsw.GC_24.effects.IncreaseDieValueCard;
-import it.polimi.ingsw.GC_24.effects.PerformActivity;
-import it.polimi.ingsw.GC_24.model.Model;
-import it.polimi.ingsw.GC_24.model.Player;
-import it.polimi.ingsw.GC_24.values.MilitaryPoint;
-import it.polimi.ingsw.GC_24.values.SetOfValues;
+import it.polimi.ingsw.GC_24.effects.*;
+import it.polimi.ingsw.GC_24.model.*;
+import it.polimi.ingsw.GC_24.values.*;
 
 //ClientInHandler is observed by the ViewPLayer,
 //whenever the server communicates something, ClientInHandler notifies ViewPLayer
@@ -58,7 +44,6 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 					}
 				});
 					t1.start();
-				
 
 			}
 		} catch (EOFException e) {
@@ -89,6 +74,7 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 	@SuppressWarnings("unchecked")
 	@Override
 	public void handleRequestFromServer(Map<String, Object> request) {
+		System.out.println("in hadlerequestfrkondoni");
 		Set<String> command = request.keySet();
 
 		/* IN THIS CASE the request is handled by the viewCLI */
@@ -98,6 +84,12 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 			MilitaryPoint militaryPoints = (MilitaryPoint) request.get("Requirements");
 			view.chooseAlternativeCost(cost1, cost2, militaryPoints);
 		}
+		
+		if (command.contains("problems")) {
+			String problems = (String) request.get("problems");
+			notifyMyObservers(problems);
+		}
+
 
 		if (command.contains("model")) {
 			synchronized (view.getWaitingForAnswer()) {
@@ -178,8 +170,6 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 			view.chooseSale((IncreaseDieValueCard) request.get(command));
 		}
 	}
-
-	
 
 	private void handleEffectParametersRequest(ImmediateEffect immediateEffect) {
 		if (immediateEffect instanceof ChooseNewCard) {

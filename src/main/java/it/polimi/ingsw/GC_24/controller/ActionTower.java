@@ -34,8 +34,6 @@ public class ActionTower extends Action {
 	@Override
 	public String verify() {
 		String answerToPlayer = "Answer: \n";
-		System.out.println(answerToPlayer);
-		//while (answerToPlayer.equals("Answer: \n")) {
 			answerToPlayer = verifyIfEnoughServants(answerToPlayer);
 			System.out.println(answerToPlayer);
 			answerToPlayer = verifyIfEnoughServantsForThisPlace(answerToPlayer);
@@ -53,10 +51,8 @@ public class ActionTower extends Action {
 			answerToPlayer = verifyBoardSpaceAvailability(answerToPlayer);
 			System.out.println(answerToPlayer);
 			answerToPlayer = verifyCardResources(answerToPlayer);
-			System.out.println(answerToPlayer);
 			if (answerToPlayer.equals("Answer: \n"))
 			return "ok";
-		//}
 		
 		else
 			return answerToPlayer;
@@ -65,26 +61,16 @@ public class ActionTower extends Action {
 
 	@Override
 	public List<ImmediateEffect> run() {
-		int i=0;
-		System.out.println(Integer.toString(i++));
 		this.takeRealCost();
-		System.out.println(Integer.toString(i++));
 		this.payCoinsforOccupiedTower();
-		System.out.println(Integer.toString(i++));
 		this.payValue(new Servant(this.servants));
-		System.out.println(Integer.toString(i++));
 		this.placeFamiliar();
-		System.out.println(Integer.toString(i++));
 		if (!isThereNoValueEffect()) {
 			this.takeValueFromPlace();
 		}
-		System.out.println(Integer.toString(i++));
 		this.takeCardAndPay();
-		System.out.println(Integer.toString(i++));
 		this.takeEffectsAndRemoveCard();
-		System.out.println(Integer.toString(i++));
 		this.giveValueEffect(immediateEffects);
-		System.out.println(Integer.toString(i++));
 
 		return immediateEffects;
 	}
@@ -126,8 +112,8 @@ public class ActionTower extends Action {
 		setOfSales.subTwoSetsOfValues(temporaryCardCost);
 		this.player.setMyValues(temporaryCardCost.subTwoSetsOfValues(this.player.getMyValues()));
 		towerPlace.getCorrespondingCard().setCardOnPersonalBoard(player.getMyBoard());
-		
 	}
+
 	private void takeRealCost() {
 		if (temporaryCardCost.isEmpty()) {
 			TowerPlace towerPlace = (TowerPlace) this.place;
@@ -144,7 +130,7 @@ public class ActionTower extends Action {
 	public String verifyMoneyForTowerOccupied(String answerToPlayer) {
 
 		if (this.zone.isOccupied() && this.player.getMyValues().getCoins().getQuantity() < 3) {
-			return answerToPlayer + "You don't have enough coins to place your familiar in an already occupied tower\n";
+			return answerToPlayer + "You don't have enough coins to place your family member in a tower already occupied\n";
 		} else
 			return answerToPlayer;
 	}

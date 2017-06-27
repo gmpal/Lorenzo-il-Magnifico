@@ -98,7 +98,7 @@ public abstract class Action {
 
 	protected String verifyZoneOccupiedByMe(String answerToPlayer) {
 		if (this.zone.isThereSameColour(this.familyMember)) {
-			return answerToPlayer + "This zone is already occupied by one of your familiar. Choose another zone. \n";
+			return answerToPlayer + "This zone is already occupied by one of your family members. Choose another zone. \n";
 		} else
 			return answerToPlayer;
 	}
