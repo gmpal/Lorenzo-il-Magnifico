@@ -487,8 +487,10 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	private void awakenSleepingClient() {
-	 notifyMyObservers(new HashMap<String,Object>().put("actionDone", null));
-	}
+		hashMap = new HashMap<>();
+		hashMap.put("actionDone", "awakeningTheClients");
+		notifyMyObservers(hashMap);
+		}
 
 	private void handleInteractiveEffects(MyObservable o, List<ImmediateEffect> interactiveEffects) {
 		List<ImmediateEffect> secondaryInteractiveEffects = new ArrayList<>();

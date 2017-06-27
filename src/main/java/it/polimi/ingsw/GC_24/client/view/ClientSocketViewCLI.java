@@ -44,12 +44,25 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 	@SuppressWarnings("unchecked")
 	@Override
 	public void run() {
+		int i = 0;
+	
 		try {
 			while (true) {
+				i++;
+				System.out.println("Ricezione numero "+i);
 
-				Map<String, Object> requestFromServer;
-				requestFromServer = (Map<String, Object>) objFromServer.readObject();
-				this.handleRequestFromServer(requestFromServer);
+				HashMap<String, Object> requestFromServer;
+			
+				
+				requestFromServer = (HashMap<String, Object>) objFromServer.readObject();
+			
+				Thread t1 = new Thread(new Runnable(){
+					public void run(){
+						handleRequestFromServer(requestFromServer);
+					}
+				});
+					t1.start();
+				
 
 			}
 		} catch (EOFException e) {
@@ -63,10 +76,10 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 	@Override
 	public <C> void update(MyObservable o, C change) {
 		try {
-
+			objToServer.reset();
 			objToServer.writeObject(change);
 			objToServer.flush();
-			objToServer.reset();
+			
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -115,6 +128,7 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 		}
 
 		if (command.contains("actionDone")) {
+			System.out.println("RICEVUTO RISVEGLIO DAL CLIENT");
 			synchronized (view.getWaitingForActionCompleted()) {
 				view.setActionDone(true);
 				view.getWaitingForActionCompleted().notify();
@@ -136,7 +150,6 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 				e.printStackTrace();
 			}
 			view.play();
-
 		}
 		if (command.contains("Turns")) {
 			List<Player> playerTurn = (List<Player>) request.get("Turns");
