@@ -1,15 +1,7 @@
-﻿package it.polimi.ingsw.GC_24.controller;
+package it.polimi.ingsw.GC_24.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.StringTokenizer;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.MyObserver;
 import it.polimi.ingsw.GC_24.cards.*;
@@ -665,4 +657,3 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		this.controllerNumber = controllerNumber;
   }
 }
-
