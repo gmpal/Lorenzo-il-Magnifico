@@ -480,8 +480,9 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			game.setCurrentPlayer(playerTurn.get(playerTurn.indexOf(game.getCurrentPlayer()) + 1));
 			actionWaiting.notify();
 		}
-		// Ho modificato il model. Lo invio!
 		
+		// Ho modificato il model. Lo invio!
+		game.sendModel();
 		awakenSleepingClient();
 		
 	}
