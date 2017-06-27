@@ -115,8 +115,8 @@ public class ActionTower extends Action {
 		setOfSales.subTwoSetsOfValues(temporaryCardCost);
 		this.player.setMyValues(temporaryCardCost.subTwoSetsOfValues(this.player.getMyValues()));
 		towerPlace.getCorrespondingCard().setCardOnPersonalBoard(player.getMyBoard());
+		
 	}
-
 	private void takeRealCost() {
 		if (temporaryCardCost.isEmpty()) {
 			TowerPlace towerPlace = (TowerPlace) this.place;

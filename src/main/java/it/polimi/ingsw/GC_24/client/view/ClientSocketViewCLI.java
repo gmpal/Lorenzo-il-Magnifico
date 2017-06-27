@@ -10,18 +10,14 @@ import java.util.Map;
 import java.util.Set;
 
 import it.polimi.ingsw.GC_24.MyObservable;
-
 import it.polimi.ingsw.GC_24.effects.ChooseNewCard;
 import it.polimi.ingsw.GC_24.effects.CouncilPrivilege;
 import it.polimi.ingsw.GC_24.effects.Exchange;
 import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
+import it.polimi.ingsw.GC_24.effects.IncreaseDieValueCard;
 import it.polimi.ingsw.GC_24.effects.PerformActivity;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
-
-import it.polimi.ingsw.GC_24.effects.IncreaseDieValueCard;
-import it.polimi.ingsw.GC_24.model.*;
-
 import it.polimi.ingsw.GC_24.values.MilitaryPoint;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 
@@ -76,11 +72,10 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 	@Override
 	public <C> void update(MyObservable o, C change) {
 		try {
+		
 			objToServer.writeObject(change);
 			objToServer.flush();
-			objToServer.reset();
-
-			
+			objToServer.reset();			
 
 		} catch (IOException e) {
 			e.printStackTrace();

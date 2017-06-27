@@ -31,10 +31,10 @@ public abstract class MyObservable {
 			o.update(this, change);
 		}
 	}
-
+  
 	public synchronized <C> void notifySingleObserver(MyObserver o, C change) {
-
-		o.update(this, change);
-
+		
+			o.update(this, change);
+		
 	}
 }
