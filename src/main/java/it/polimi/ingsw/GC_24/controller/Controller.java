@@ -484,8 +484,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			} else {
 				game.setCurrentPlayer(playerTurn.get(playerTurn.indexOf(game.getCurrentPlayer()) + 1));
 			}
-			
-			actionWaiting.notify();
+				actionWaiting.notify();
 		}
 		System.out.println("SUPERATO BLOCCO actionwaiting");
 		// Ho modificato il model. Lo invio!

@@ -20,6 +20,8 @@ public abstract class Area implements java.io.Serializable {
 	public boolean isThereSameColour(FamilyMember familyMember) {
 		PlayerColour colour = familyMember.getPlayerColour();
 		if (familyMember.isNeutral()) {
+			System.out.println("ma sono neutro e non lo sapevo?");
+
 			return false;
 		}
 		for (Place place : this.placesArray) {
