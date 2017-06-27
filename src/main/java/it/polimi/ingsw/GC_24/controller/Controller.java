@@ -1,4 +1,4 @@
-﻿package it.polimi.ingsw.GC_24.controller;
+package it.polimi.ingsw.GC_24.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	private final Model game;
 	private ActionFactory actionFactory = new ActionFactory();
 	private SetOfValues tempCost = new SetOfValues();
-	private Action action=null;
+	private Action action = null;
 	private HashMap<String, Object> hashMap;
 	private int controllerNumber = 0;
 	private List<Player> councilTurnArray;
@@ -37,7 +37,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	private boolean alreadyPlaying = false;
 	private boolean autocompleted;
 	private boolean parametersChosen = false;
-
 
 	// locks
 	private Object tempCostWaiting = new Object();
@@ -93,20 +92,18 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 			System.out.println("Controller: everything clear and model sent");
 			for (int j = 0; j < 4; j++) {
-			
+
 				for (int i = 0; i < playerTurn.size(); i++) {
 					// one familar gone for each player
 
-					
 					this.currentPlayer = game.getCurrentPlayer();
-					System.out.println("Current Player is ---> "+this.currentPlayer.getMyName());
-				
+					System.out.println("Current Player is ---> " + this.currentPlayer.getMyName());
+
 					sendCurrentPlayer();
-					
-						if (!alreadyPlaying)
+
+					if (!alreadyPlaying)
 						letThemPlay();
 
-										
 					/*
 					 * This block waits for a player doing an action, because
 					 * after an action the game-currentPlayer is updated
@@ -122,10 +119,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 							}
 						}
 					}
-					
-					
+
 					// reset the current player
-					
 
 					/* Repeats until the players are finished */
 
@@ -144,10 +139,10 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	}
 
-	
-	
-
-	/**This method starts a timer and then calls another method that autocompletes the players*/
+	/**
+	 * This method starts a timer and then calls another method that
+	 * autocompletes the players
+	 */
 	private void waitAndAutocomplete() {
 		Timer timer = new Timer();
 		timer.schedule(new TimerTask() {
@@ -161,8 +156,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	/**
-	 * This method automatically completes the players name and colours,
-	 * waking up the run() thread and notifying the clients
+	 * This method automatically completes the players name and colours, waking
+	 * up the run() thread and notifying the clients
 	 */
 	public void autoCompletePlayers() {
 
@@ -208,9 +203,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		sendInfo("The winner of the game is" + winner);
 	}
 
-
-	
-/**This methods returns the winner of the game using victoryPoints*/
+	/** This methods returns the winner of the game using victoryPoints */
 
 	public Player winnerOfTheGame() {
 		List<Integer> finalVictoryPoints = new ArrayList<>();
@@ -240,7 +233,10 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		return winner;
 	}
 
-	/**This method calculates the final victory points for each player. based on the final rules of the game*/
+	/**
+	 * This method calculates the final victory points for each player. based on
+	 * the final rules of the game
+	 */
 	public void giveVictoryPoints() {
 		Player player;
 		List<Integer> finalMilitaryPoints = new ArrayList<>();
@@ -287,7 +283,10 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		}
 	}
 
-	/**This methods updates the turn list looking at the Council Palace, after every round*/
+	/**
+	 * This methods updates the turn list looking at the Council Palace, after
+	 * every round
+	 */
 	public void updateListOfPlayerTurn(List<Player> temporaryTurn) {
 		int i;
 		for (Player player : temporaryTurn) {
@@ -299,7 +298,9 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		}
 	}
 
-	/**This methods makes the users start playing, calling a method on the view */
+	/**
+	 * This methods makes the users start playing, calling a method on the view
+	 */
 	private void letThemPlay() {
 		alreadyPlaying = true;
 		hashMap = new HashMap<>();
@@ -307,7 +308,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		notifyMyObservers(hashMap);
 
 	}
-	/**This method sends to the clients the turn array to be updated*/
+
+	/** This method sends to the clients the turn array to be updated */
 	private void sendTurnArray(List<Player> turnArray) {
 		hashMap = new HashMap<>();
 		hashMap.put("Turns", turnArray);
@@ -319,16 +321,17 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		hashMap.put("currentPlayer", this.currentPlayer);
 		notifyMyObservers(hashMap);
 
-		
 	}
 
-	/**This method sends to the clients a simple information to be printed on the view*/
+	/**
+	 * This method sends to the clients a simple information to be printed on
+	 * the view
+	 */
 	private void sendInfo(String string) {
 		hashMap = new HashMap<>();
 		hashMap.put("info", string);
 		notifyMyObservers(hashMap);
 	}
-	
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -378,14 +381,17 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		}
 
 		else if (command.contains("answerForParameters")) {
-
+			System.out.println("sono su answer parameter");
 			synchronized (waitingForParametersChoose) {
 				this.parametersAnswer = (String) request.get("answerForParameters");
+				System.out.println(parametersAnswer);
 				this.parametersChosen = true;
 				waitingForParametersChoose.notify();
+				System.out.println("ho nitidicato");
 			}
+			System.out.println("sono uscito dal synchwnfiushyg");
 			return "parameters updated";
-		
+
 		} else if (command.contains("sale")) {
 			SetOfValues setOfSales = (SetOfValues) request.get("sale");
 			synchronized (waitingForSalesChoice) {
@@ -424,14 +430,14 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	private void handleAction(MyObservable o, Map<String, Object> request) {
 		System.out.println("Controller: started handling action");
-				
+
 		StringTokenizer tokenizer = new StringTokenizer((String) request.get("action"));
-		
+
 		String tempFamiliar = tokenizer.nextToken();
 		String tempZone = tokenizer.nextToken();
 		String tempFloor = tokenizer.nextToken();
 		String tempServants = tokenizer.nextToken();
-	
+
 		IncreaseDieValueCard pe = PermanentEffectWithAlternativeSale();
 		if (pe != null && pe.getPersonalCards().getType().equals(tempZone)) {
 			notifyMyObservers(new HashMap().put("sale", pe));
@@ -445,27 +451,40 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					}
 				}
 			}
-			
+
 		}
 		if (tempZone.equalsIgnoreCase("ventures")) {
 
 			handleVentures(o, tempZone, tempFloor);
 		}
-		this.action = actionFactory.makeAction(game, tempFamiliar, tempZone, tempFloor, tempServants, tempCost, saleForPermanentEffect);
-		
+		this.action = actionFactory.makeAction(game, tempFamiliar, tempZone, tempFloor, tempServants, tempCost,
+				saleForPermanentEffect);
+
 	}
 
 	private void verifyAndExecuteAction(MyObservable o, Action action2) {
 		String responseToActionVerify = action.verify();
-		this.sendInfo(responseToActionVerify);
 		if (responseToActionVerify.equals("ok")) {
 			List<ImmediateEffect> interactiveEffects = action.run();
 			this.handleInteractiveEffects(o, interactiveEffects);
 			System.out.println("Gestiti eventuali effetti interattivi");
+			synchronized (actionWaiting) {
+
+				if (playerTurn.indexOf(game.getCurrentPlayer()) == playerTurn.size() - 1) {
+					game.setCurrentPlayer(playerTurn.get(0));
+				} else {
+					game.setCurrentPlayer(playerTurn.get(playerTurn.indexOf(game.getCurrentPlayer()) + 1));
+				}
+				actionWaiting.notify();
+			}
 
 		} else {
-			/*ACTION FAILS --> if it's a normal action, do nothing, the player would start again and create a new one
-			 * --> if it's a chooseNewCard action, I should ask the user to choose another card*/
+			/*
+			 * ACTION FAILS --> if it's a normal action, do nothing, the player
+			 * would start again and create a new one --> if it's a
+			 * chooseNewCard action, I should ask the user to choose another
+			 * card
+			 */
 			sendProblems(o, responseToActionVerify);
 
 		}
@@ -477,15 +496,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 		// per adesso finisco il turno --> Aggiorno il currentPlayer e
 		// sveglio il run();
-		synchronized (actionWaiting) {
-			
-			if (playerTurn.indexOf(game.getCurrentPlayer()) == playerTurn.size()-1){
-				game.setCurrentPlayer(playerTurn.get(0));
-			} else {
-				game.setCurrentPlayer(playerTurn.get(playerTurn.indexOf(game.getCurrentPlayer()) + 1));
-			}
-				actionWaiting.notify();
-		}
+
 		System.out.println("SUPERATO BLOCCO actionwaiting");
 		// Ho modificato il model. Lo invio!
 		game.sendModel();
@@ -497,17 +508,18 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		hashMap = new HashMap<>();
 		hashMap.put("actionDone", "awakeningTheClients");
 		notifyMyObservers(hashMap);
-		}
+	}
 
 	private void handleInteractiveEffects(MyObservable o, List<ImmediateEffect> interactiveEffects) {
+		System.out.println("sono in handleInteractiveEffects");
 		List<ImmediateEffect> secondaryInteractiveEffects = new ArrayList<>();
 		if (!interactiveEffects.isEmpty()) {
 			for (ImmediateEffect effect : interactiveEffects) {
 				handleEffects(o, effect);
-
+				System.out.println("devo ancora creare  choose");
 				if (effect instanceof ChooseNewCard) {
 					createNewActionForChooseNewCard(o, ((ChooseNewCard) effect).getDieValue());
-				
+
 				} else {
 					effect.giveImmediateEffect(currentPlayer);
 				}
@@ -526,14 +538,14 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				handleInteractiveEffects(o, secondaryInteractiveEffects);
 			}
 
-    }
+		}
 	}
 
 	private void createNewActionForChooseNewCard(MyObservable o, int dieValue) {
-		String finalActionRequest = "fakeFamiliarForChooseNewCard "+ this.parametersAnswer ;
+		String finalActionRequest = "fakeFamiliarForChooseNewCard " + this.parametersAnswer;
 		hashMap = new HashMap<>();
 		hashMap.put("action", finalActionRequest);
-		handleAction(o,hashMap);
+		handleAction(o, hashMap);
 		this.action.getFamilyMember().setMemberValue(dieValue);
 		verifyAndExecuteAction(o, this.action);
 	}
@@ -542,17 +554,18 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	 * This method handles the effect that needs interaction with user it sends
 	 * the effect to the client, it recognises them and asks the user to choose.
 	 * Then he sends a specific answer and
-	 * @param o 
+	 * 
+	 * @param o
 	 */
 	private void handleEffects(MyObservable o, ImmediateEffect effect) {
 
 		if (effect instanceof ChooseNewCard || effect instanceof CouncilPrivilege || effect instanceof PerformActivity
 				|| (effect instanceof Exchange && ((Exchange) effect).getExchangePackage1() != null)) {
-
+			System.out.println("sono su istace of choose new card");
 			hashMap = new HashMap<>();
 			hashMap.put("askForParameters", effect);
 			notifySingleObserver((MyObserver) o, hashMap);
-
+			System.out.println("notificato");
 			synchronized (waitingForParametersChoose) {
 
 				while (!parametersChosen) {
@@ -563,27 +576,27 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 						e.printStackTrace();
 					}
 				}
+				System.out.println(parametersChosen);
 			}
-
 
 			/*
 			 * I have received an answer from the client with his choice. I have
 			 * to switch between my effects in order to choose how to handle the
 			 * client answer
 			 */
-			
+
 			if (effect instanceof CouncilPrivilege) {
 				// THE ANSWER IS SUPPOSED TO BE LIKE "1 5 6" --> the chosen
 				// privileges. It's handled directly in councilPrivilege
 				((CouncilPrivilege) effect).assignParameters(parametersAnswer);
 			}
 
-
 			if (effect instanceof Exchange) {
 				// THE ANSWER IS SUPPOSED TO BE LIKE "Territory 1" --> that is
 				// tower
 				// and floor
-				((Exchange) effect).assignParameters(Integer.parseInt((new StringTokenizer(parametersAnswer).nextToken())));
+				((Exchange) effect)
+						.assignParameters(Integer.parseInt((new StringTokenizer(parametersAnswer).nextToken())));
 			}
 			// i parametri sono stati scelti e passati all'effetto
 			if (effect instanceof PerformActivity) {
@@ -663,6 +676,5 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	public void setControllerNumber(int controllerNumber) {
 		this.controllerNumber = controllerNumber;
-  }
+	}
 }
-
