@@ -75,8 +75,7 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 		
 			objToServer.writeObject(change);
 			objToServer.flush();
-			objToServer.reset();
-			
+			objToServer.reset();			
 
 		} catch (IOException e) {
 			e.printStackTrace();
