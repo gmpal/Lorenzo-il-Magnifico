@@ -1,4 +1,4 @@
-package it.polimi.ingsw.GC_24.controller;
+﻿package it.polimi.ingsw.GC_24.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -479,8 +479,11 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			game.setCurrentPlayer(playerTurn.get(playerTurn.indexOf(game.getCurrentPlayer()) + 1));
 			actionWaiting.notify();
 		}
+		
 		// Ho modificato il model. Lo invio!
-		awakenSleepingClient();		
+		game.sendModel();
+		awakenSleepingClient();
+
 	}
 
 	private void awakenSleepingClient() {
