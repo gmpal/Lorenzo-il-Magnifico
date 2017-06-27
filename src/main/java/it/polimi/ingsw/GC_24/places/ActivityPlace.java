@@ -27,7 +27,7 @@ public abstract class ActivityPlace extends Place{
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append( "\n" );
-		if (!isAvailable()){
+		if (isAvailable()){
 			builder.append("Extra die's cost: " + getAdditionalCostDice());
 		}else{
 			builder.append("Place occupied by the " + getFamMemberOnPlace().getPlayerColour() + " player");
