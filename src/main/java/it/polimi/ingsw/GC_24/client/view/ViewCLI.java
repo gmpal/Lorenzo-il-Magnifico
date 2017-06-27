@@ -38,7 +38,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	private boolean myTurn = false;
 	private List<Player> playerTurn;
 	private int playerNumber = 0;
-	private boolean actionDone;
+	private boolean actionDone = false;
 	
 	private volatile Player myself = null;
 
@@ -195,7 +195,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		/*This block of code notifies the Server of the action*/
 		synchronized (waitingForActionCompleted ){
 		notifyMyObservers(hm);
-		System.out.println("----Waiting for your action to be ----");
+		System.out.println("----Waiting for your action to be completed----");
 		while (!actionDone){
 			try {
 				waitingForActionCompleted.wait();
@@ -204,6 +204,8 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 				e.printStackTrace();
 			}
 		}
+		System.out.println(actionDone);
+
 	}
 	}
 

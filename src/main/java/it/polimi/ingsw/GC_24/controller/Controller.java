@@ -481,9 +481,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			actionWaiting.notify();
 		}
 		// Ho modificato il model. Lo invio!
-		
-		awakenSleepingClient();
-		
+		awakenSleepingClient();		
 	}
 
 	private void awakenSleepingClient() {

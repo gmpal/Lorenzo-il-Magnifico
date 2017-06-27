@@ -4,6 +4,7 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -43,11 +44,12 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 	@SuppressWarnings("unchecked")
 	@Override
 	public void run() {
+
 		try {
 			while (true) {
-
-				Map<String, Object> requestFromServer;
-				requestFromServer = (Map<String, Object>) objFromServer.readObject();
+				HashMap<String, Object> requestFromServer;
+				requestFromServer = (HashMap<String, Object>) objFromServer.readObject();
+				System.out.println(requestFromServer);
 				this.handleRequestFromServer(requestFromServer);
 
 			}
@@ -79,6 +81,7 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 	@SuppressWarnings("unchecked")
 	@Override
 	public void handleRequestFromServer(Map<String, Object> request) {
+		System.out.println("in hadlerequestfrkondoni");
 		Set<String> command = request.keySet();
 
 		/* IN THIS CASE the request is handled by the viewCLI */
@@ -115,6 +118,7 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 		}
 
 		if (command.contains("actionDone")) {
+			System.out.println("dentrocommand");
 			synchronized (view.getWaitingForActionCompleted()) {
 				view.setActionDone(true);
 				view.getWaitingForActionCompleted().notify();
@@ -168,8 +172,6 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 			view.chooseSale((IncreaseDieValueCard) request.get(command));
 		}
 	}
-
-	
 
 	private void handleEffectParametersRequest(ImmediateEffect immediateEffect) {
 		if (immediateEffect instanceof ChooseNewCard) {
