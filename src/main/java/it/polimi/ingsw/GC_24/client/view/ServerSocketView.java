@@ -41,7 +41,7 @@ public class ServerSocketView extends MyObservable implements Runnable, MyObserv
 				
 
 				Map<String, Object> request = (Map<String, Object>) objFromClient.readObject();
-			//	System.out.println("ServerIn: received from client: " + request);
+				System.out.println("ServerIn: received from client: " + request);
 				this.notifyMyObservers(request);
 				
 			}
@@ -61,7 +61,7 @@ public class ServerSocketView extends MyObservable implements Runnable, MyObserv
 	
 	
 	@Override
-	public <C> void update(MyObservable o, C change) {
+	public synchronized <C> void update(MyObservable o, C change) {
 	//	System.out.println("ServerOut: I have been notified by " + o.getClass().getSimpleName());
 
 		try {
