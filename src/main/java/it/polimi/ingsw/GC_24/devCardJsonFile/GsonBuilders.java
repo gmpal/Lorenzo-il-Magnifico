@@ -25,6 +25,12 @@ public class GsonBuilders {
 				.registerSubtype(FaithPoint.class, "faithPoint").registerSubtype(VictoryPoint.class, "victoryPoint");
 	}
 
+	public static RuntimeTypeAdapterFactory<Effect> getEffectTypeAdapter() {
+		return RuntimeTypeAdapterFactory.of(Effect.class, "EffectType")
+				.registerSubtype(NoVictoryPointsFromCard.class, "noVictoryPointsFromCard")
+				.registerSubtype(SubVicrotyPointsFromSetOfValue.class, "subVicrotyPointsFromSetOfValue");
+	}
+
 	public static RuntimeTypeAdapterFactory<ImmediateEffect> getImmediateEffectTypeAdapter() {
 		return RuntimeTypeAdapterFactory.of(ImmediateEffect.class, "immediateEffectType")
 				.registerSubtype(MoltiplicationPoints.class, "moltiplicationPoints")
@@ -39,7 +45,11 @@ public class GsonBuilders {
 		return RuntimeTypeAdapterFactory.of(PermanentEffect.class, "permanentEffectType")
 				.registerSubtype(IncreaseDieValueActivity.class, "increaseDieValueActivity")
 				.registerSubtype(IncreaseDieValueCard.class, "increaseDieValueCard")
-				.registerSubtype(NoValueEffectFromTowerPlace.class, "noValueEffectFromTowerPlace");
+				.registerSubtype(NoValueEffectFromTowerPlace.class, "noValueEffectFromTowerPlace")
+				.registerSubtype(ChangeServantsValue.class, "changeServantsValue")
+				.registerSubtype(FirstPlacementAtTheEnd.class, "firstPlacementAtTheEnd")
+				.registerSubtype(NoMarketAvailability.class, "noMarketAvailability")
+				.registerSubtype(SubSetOfValues.class, "subSetOfValues");
 	}
 
 	public static RuntimeTypeAdapterFactory<PersonalCards> getPersonalCardTypeAdapter() {
@@ -52,6 +62,7 @@ public class GsonBuilders {
 
 	public static Gson getGsonWithTypeAdapters() {
 		builder.registerTypeAdapterFactory(getValueTypeAdapter());
+		builder.registerTypeAdapterFactory(getEffectTypeAdapter());
 		builder.registerTypeAdapterFactory(getImmediateEffectTypeAdapter());
 		builder.registerTypeAdapterFactory(getPersonalCardTypeAdapter());
 		builder.registerTypeAdapterFactory(getPermanentEffectTypeAdapter());

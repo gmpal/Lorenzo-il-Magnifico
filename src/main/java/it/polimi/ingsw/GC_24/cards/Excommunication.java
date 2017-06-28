@@ -1,17 +1,24 @@
 package it.polimi.ingsw.GC_24.cards;
 
+import java.io.Serializable;
+
+import it.polimi.ingsw.GC_24.effects.Effect;
 import it.polimi.ingsw.GC_24.effects.PermanentEffect;
 
-public class Excommunication {
+public class Excommunication implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2328755180790165117L;
 	private PermanentEffect permanentEffect;
-	private PermanentEffect alternativPermanentEffect;
+	private Effect effect;
 	private int round;
 
 	// constructor
-	public Excommunication(PermanentEffect permanentEffect, PermanentEffect alternativPermanentEffect, int round) {
+	public Excommunication(PermanentEffect permanentEffect, Effect effect, int round) {
 		this.permanentEffect = permanentEffect;
-		this.alternativPermanentEffect = alternativPermanentEffect;
-		this.setRound(round);
+		this.effect = effect;
+		this.round = round;
 	}
 
 	// getters and setters
@@ -23,12 +30,12 @@ public class Excommunication {
 		this.permanentEffect = permanentEffect;
 	}
 
-	public PermanentEffect getAlternativPermanentEffect() {
-		return alternativPermanentEffect;
+	public Effect getEffect() {
+		return effect;
 	}
 
-	public void setAlternativPermanentEffect(PermanentEffect alternativPermanentEffect) {
-		this.alternativPermanentEffect = alternativPermanentEffect;
+	public void setEffect(Effect effect) {
+		this.effect = effect;
 	}
 
 	public int getRound() {
