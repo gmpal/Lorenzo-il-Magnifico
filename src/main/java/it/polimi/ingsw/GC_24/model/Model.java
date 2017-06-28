@@ -47,7 +47,7 @@ public class Model extends MyObservable implements Serializable {
 		this.counter = 0;
 		this.modelNumber = modelNumber;
 		this.cards = new Deck();
-		getCorrespondingValueFromFile();
+		
 	}
 
 	public synchronized void addPlayer() {
@@ -99,6 +99,7 @@ public class Model extends MyObservable implements Serializable {
 		this.cards = new Deck();
 		this.dice = new SetOfDice();
 		this.dice.reset();
+		getCorrespondingValueFromFile();
 
 		// Setting the players
 		for (Player p : players) {
@@ -168,7 +169,7 @@ public class Model extends MyObservable implements Serializable {
 		return dice;
 	}
 
-	public void setPlayers(ArrayList<Player> players) {
+	public void setPlayers(List<Player> players) {
 		this.players = players;
 	}
 

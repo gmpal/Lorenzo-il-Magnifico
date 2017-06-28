@@ -6,7 +6,6 @@ import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.places.MarketPlace;
 import it.polimi.ingsw.GC_24.values.Servant;
-import it.polimi.ingsw.GC_24.values.SetOfValues;
 
 public class MarketAction extends Action {
 	
