@@ -26,13 +26,13 @@ public class ProductionAction extends Action {
 	@Override
 	public String verify() {
 		String answerToPlayer = "Answer: \n";
-		while (answerToPlayer.equals("Answer: \n")) {
+	
 			answerToPlayer = verifyIfEnoughServants(answerToPlayer);
 			answerToPlayer = verifyIfEnoughServantsForThisPlace(answerToPlayer);
 			answerToPlayer = verifyFamilyMemberAvailability(answerToPlayer);
 			answerToPlayer = verifyPlaceAvailability(answerToPlayer);
 			answerToPlayer = verifyZoneOccupiedByMe(answerToPlayer);
-		}
+		
 		if (answerToPlayer.equals("Answer: \n"))
 			return "ok";
 		else

@@ -95,6 +95,9 @@ public class Board implements java.io.Serializable {
 		if (zone.equals("harvest")) {
 			return this.harvest;
 		}
+		if (zone.equals("market")) {
+			return this.market;
+		}
 		if (zone.equals("production")) {
 			return this.production;
 		}

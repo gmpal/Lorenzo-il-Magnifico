@@ -228,7 +228,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 
 		if (commandZone.contains("cancel")) {
 			commandZone = "cancel";
-		} else {
+		} else  {
 			commandZone = increaseDieValue(commandZone);
 		}
 
@@ -347,6 +347,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 			int answer = 0;
 			try {
 				answer = scanner.nextInt();
+				scanner.nextLine();
 			} catch (Exception e) {
 				finalIncrease = null;
 				answer = 0;
@@ -391,9 +392,9 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		System.out.println("Write the floor you want to pick your card from");
 		System.out.println("1/2/3/4");
 
-		
-		floor = scanner.nextLine();
 		scanner.nextLine();
+		floor = scanner.nextLine();
+		
 		
 
 		while (!(floor.equals("1") || floor.equals("2") || floor.equals("3") || floor.equals("4"))) {
@@ -423,10 +424,11 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		System.out.println(immediateEffect.getCouncilPrivileges());
 		System.out.println("Make your choice: (1/2/3/4/5)");
 		String answer = "";
-		for (int i = 0; i < number; i++) {
-			System.out.println("Choice number " + (i++) + " of " + number);
+		for (int i = 1; i <= number; i++) {
+			System.out.println("Choice number " + (i) + " of " + number);
 			String choice = "";
 			try{
+			
 			choice = scanner.nextLine();
 			} catch (IndexOutOfBoundsException e){
 				System.out.println( " AYAYAYAY");
@@ -434,6 +436,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 			while (!(choice.equals("1") || choice.equals("2") || choice.equals("3") || choice.equals("4")
 					|| choice.equals("5")) || answer.contains(choice)) {
 				System.out.println("Wrong choice, try again");
+			
 				choice = scanner.nextLine();
 			}
 

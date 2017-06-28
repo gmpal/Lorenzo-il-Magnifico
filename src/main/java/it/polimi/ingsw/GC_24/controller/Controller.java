@@ -32,7 +32,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	private boolean alreadyPlaying = false;
 	private boolean autocompleted;
-	private boolean parametersChosen = false;
+	private boolean parametersChosen = true;
 
 	// locks
 	private Object tempCostWaiting = new Object();
@@ -93,6 +93,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				for (int i = 0; i < playerTurn.size(); i++) {
 					// one familar gone for each player
 
+					// reset the current player
 					this.currentPlayer = game.getCurrentPlayer();
 					System.out.println("Current Player is ---> " + this.currentPlayer.getMyName());
 
@@ -105,21 +106,23 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					 * This block waits for a player doing an action, because
 					 * after an action the game-currentPlayer is updated
 					 */
+					Timer t1 = new Timer();
+					startTimerForPlayerAction(t1);
+
 					synchronized (actionWaiting) {
 
 						while (this.currentPlayer.equals(game.getCurrentPlayer())) {
 							try {
 								actionWaiting.wait();
 							} catch (InterruptedException e) {
-								// TODO: auto-generated catch block
 								e.printStackTrace();
 							}
 						}
 					}
 
-					// reset the current player
-					/* Repeats until the players are finished */
+					t1.cancel();
 
+					/* Repeats until the players are finished */
 				}
 			}
 			// it's time to look at the council palace for turn updates!
@@ -135,6 +138,21 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	}
 
+	private void startTimerForPlayerAction(Timer t1) {
+
+		t1.schedule(new TimerTask() {
+			public void run() {
+				sendInfo("Time out for "+currentPlayer.getMyName()+ ", player number "+currentPlayer.getPlayerNumber()+", colour "+currentPlayer.getMyColour());
+				incrementTurn();
+				// wakes up the run() that is followed by a timer.cancel();
+				synchronized (actionWaiting) {
+					actionWaiting.notify();
+				}
+			}
+		}, 100000);
+
+	}
+
 	/**
 	 * This method starts a timer and then calls another method that
 	 * autocompletes the players
@@ -147,7 +165,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				autoCompletePlayers();
 			}
 
-		}, 5000);
+		}, 1000);
 
 	}
 
@@ -386,10 +404,9 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			System.out.println("Controller --> Ricevuta un'azione di piazzamento ");
 			handleAction(o, request);
 			String answer = verifyAction(this.action);
-			if (!answer.equals("ok")){
+			if (!answer.equals("ok")) {
 				incorrenctActionHandling(o, answer);
-			}
-			else {
+			} else {
 				correctActionExecute(o);
 			}
 		}
@@ -440,8 +457,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		return "player " + clientNumber + " updated";
 
 	}
-	
-	//#1
+
+	// #1
 	private void handleAction(MyObservable o, Map<String, Object> request) {
 		System.out.println("Controller --> Sto gestendo un'azione");
 		StringTokenizer tokenizer = new StringTokenizer((String) request.get("action"));
@@ -483,12 +500,11 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	}
 
-	
 	private void askForSale(IncreaseDieValueCard pe) {
 		hashMap = new HashMap<>();
 		hashMap.put("sale", pe);
 		notifyMyObservers(hashMap);
-		
+
 	}
 
 	private String verifyAction(Action action2) {
@@ -496,8 +512,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		String responseToActionVerify = action.verify();
 		return responseToActionVerify;
 	}
-		
-	private void correctActionExecute(MyObservable o){
+
+	private void correctActionExecute(MyObservable o) {
 		System.out.println("Controller --> La verifica dell'azione è andata a buon fine ");
 		List<ImmediateEffect> interactiveEffects = action.run();
 		this.handleInteractiveEffects(o, interactiveEffects);
@@ -506,40 +522,43 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		game.sendModel();
 		awakenSleepingClient();
 		System.out.println("Controller --> Richiesta di risveglio inviata");
-		
+
 	}
-	
-	private void correctChooseNewCardExecute(MyObservable o){
+
+	private void correctChooseNewCardExecute(MyObservable o) {
 		System.out.println("Controller --> La verifica dell'azione è andata a buon fine ");
 		List<ImmediateEffect> interactiveEffects = action.run();
 		this.handleInteractiveEffects(o, interactiveEffects);
 		System.out.println("Controller --> Conclusa gestione dei costi interattivi ");
 		game.sendModel();
-		//	awakenSleepingClient();
+		// awakenSleepingClient();
 		System.out.println("Controller --> Richiesta di risveglio inviata");
-		
+
 	}
-	
-	private void incorrenctActionHandling(MyObservable o, String responseToActionVerify){
+
+	private void incorrenctActionHandling(MyObservable o, String responseToActionVerify) {
 		System.out.println("Controller --> L'azione non ha superato i controlli");
 		sendProblems(o, responseToActionVerify);
 		System.out.println("Controller --> Inviata richiesta di problemi al client");
 	}
-	
 
-	
-	private void notifyToProceedWithTurns(){
+	private void notifyToProceedWithTurns() {
 		System.out.println(
 				"Controller --> Sto aggiornando il turno e risvegliando il metodo run() che era in attesa di una mia azione ");
 		synchronized (actionWaiting) {
-			//QUESTO MI FAREBBE CAMBIARE GIOCATORE
-			if (playerTurn.indexOf(game.getCurrentPlayer()) == playerTurn.size() - 1) {
-				game.setCurrentPlayer(playerTurn.get(0));
-			} else {
-				game.setCurrentPlayer(playerTurn.get(playerTurn.indexOf(game.getCurrentPlayer()) + 1));
-			}
+			// QUESTO MI FAREBBE CAMBIARE GIOCATORE
+			incrementTurn();
 			actionWaiting.notify();
 		}
+	}
+
+	private void incrementTurn() {
+		if (playerTurn.indexOf(game.getCurrentPlayer()) == playerTurn.size() - 1) {
+			game.setCurrentPlayer(playerTurn.get(0));
+		} else {
+			game.setCurrentPlayer(playerTurn.get(playerTurn.indexOf(game.getCurrentPlayer()) + 1));
+		}
+
 	}
 
 	private void awakenSleepingClient() {
@@ -557,17 +576,22 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		if (!interactiveEffects.isEmpty()) {
 			System.out.println("Controller --> La lista contiene qualcosa");
 			int i = 0;
+		
 			for (ImmediateEffect effect : interactiveEffects) {
 				game.sendModel();
 				i++;
-				System.out.println("Controller --> Gestendo l'effetto specifico #"+i +"of "+interactiveEffects.size()+": " + effect);
+				System.out.println("Controller --> Gestendo l'effetto specifico #" + i + "of "
+						+ interactiveEffects.size() + ": " + effect);
 				checkIfThereIsInteractionAndAskForParameters(o, effect);
-				System.out.println("Controller -->  Finito di gestire l'effetto specifico#"+i +"of "+interactiveEffects.size() +": " + effect);
+				System.out.println("Controller -->  Finito di gestire l'effetto specifico#" + i + "of "
+						+ interactiveEffects.size() + ": " + effect);
 				if (effect instanceof ChooseNewCard) {
 					System.out.println("Controller --> è un chooseNewCard, creo l'azione corrispondente");
-					String response = createNewActionForChooseNewCard(o, ((ChooseNewCard) effect).getDieValue(), effect);
-					//until my choose new card verify is correct I create another one 
-					while (!response.equals("ok")){
+					String response = createNewActionForChooseNewCard(o, ((ChooseNewCard) effect).getDieValue(),
+							effect);
+					// until my choose new card verify is correct I create
+					// another one
+					while (!response.equals("ok")) {
 						response = createNewActionForChooseNewCard(o, ((ChooseNewCard) effect).getDieValue(), effect);
 					}
 					correctChooseNewCardExecute(o);
@@ -615,20 +639,19 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		this.action.getFamilyMember().setMemberValue(dieValue);
 		System.out.println("Controller --> Valore del dado del familiare fittizio settato");
 		String response = verifyAction(this.action);
-		if (!response.equals("ok")){
+		if (!response.equals("ok")) {
 			System.out.println("Controller --> L'azione Choose New Card non ha superato i controlli");
 			sendProblems(o, response);
 			System.out.println("Controller --> Inviata richiesta di problemi al client, e richiesta parametri");
 			askAndWaitForParameters(o, effect);
 			return response;
-			
-			}
-		else {
-		System.out.println("Controller --> verifica ed esecuzione dell'azione completata ");
-		return response;
-			
+
+		} else {
+			System.out.println("Controller --> verifica ed esecuzione dell'azione completata ");
+			return response;
+
 		}
-		
+
 	}
 
 	/**
@@ -643,7 +666,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		if (effect instanceof ChooseNewCard || effect instanceof CouncilPrivilege || effect instanceof PerformActivity
 				|| (effect instanceof Exchange && ((Exchange) effect).getExchangePackage1() != null)) {
 			System.out.println("Controller --> L'effetto richiede interazione! Invio la richiesta ");
-			askAndWaitForParameters(o,effect);
+			askAndWaitForParameters(o, effect);
 			System.out.println(
 					"Controller --> Attesa conclusa, mi sono risvegliato, ecco cosa ho ricevuto: " + parametersAnswer);
 
@@ -673,14 +696,15 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			if (effect instanceof PerformActivity) {
 				System.out.println(
 						"Controller --> Ho ricevuto i parametri per un effetto harvest/production, li assegno ");
-				// THE ANSWER IS SUPPOSED TO BE LIKE "1" that represents the number of servants you want to use
+				// THE ANSWER IS SUPPOSED TO BE LIKE "1" that represents the
+				// number of servants you want to use
 				((PerformActivity) effect)
 						.assignParameters(Integer.parseInt((new StringTokenizer(parametersAnswer).nextToken())));
 			}
-		}else {
+		} else {
 			System.out.println("L'effetto non richiede interazione!");
 		}
-		
+
 	}
 
 	private void askAndWaitForParameters(MyObservable o, ImmediateEffect effect) {
@@ -700,7 +724,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				}
 			}
 		}
-		
+
 	}
 
 	/***/

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.Map;
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.MyObserver;
@@ -39,7 +40,8 @@ public class ServerSocketView extends MyObservable implements Runnable, MyObserv
 
 			while (true) {
 				
-
+				
+				
 				Map<String, Object> request = (Map<String, Object>) objFromClient.readObject();
 				System.out.println("ServerIn: received from client: " + request);
 				this.notifyMyObservers(request);
@@ -50,9 +52,17 @@ public class ServerSocketView extends MyObservable implements Runnable, MyObserv
 			ioe.printStackTrace();
 		} catch (EOFException eof) {
 			System.out.println("SERVERIn: end of file reached");
-		} catch (IOException io) {
-			io.printStackTrace();
-
+		} catch ( SocketException e ) {
+			System.out.println("Player disconnesso");
+			try {
+				this.socket.close();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+		} catch (IOException e){
+			e.printStackTrace();
 		}
 
 	}

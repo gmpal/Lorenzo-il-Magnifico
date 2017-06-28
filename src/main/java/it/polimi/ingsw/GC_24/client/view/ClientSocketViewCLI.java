@@ -74,7 +74,7 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public void handleRequestFromServer(Map<String, Object> request) {
+	public synchronized void handleRequestFromServer(Map<String, Object> request) {
 		System.out.println("CSV ---> Gestendo una richiesta ");
 		Set<String> command = request.keySet();
 
@@ -84,7 +84,12 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 			SetOfValues cost1 = (SetOfValues) request.get("Cost1");
 			SetOfValues cost2 = (SetOfValues) request.get("Cost2");
 			MilitaryPoint militaryPoints = (MilitaryPoint) request.get("Requirements");
-			view.chooseAlternativeCost(cost1, cost2, militaryPoints);
+			
+			new Thread (new Runnable(){
+				public void run(){
+					view.chooseAlternativeCost(cost1, cost2, militaryPoints);
+				}
+			}).start();
 		}
 		
 		if (command.contains("problems")) {
@@ -109,8 +114,12 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
     
 		if (command.contains("askForParameters")) {
 			System.out.println("CSV ---> Ricevuta richiesta di parametri ");
-			handleEffectParametersRequest((ImmediateEffect) request.get("askForParameters"));
-
+			new Thread(new Runnable(){
+					public void run(){
+						handleEffectParametersRequest((ImmediateEffect) request.get("askForParameters"));
+					}
+			}).start();
+			
 		}
 
 		if (command.contains("actionDone")) {
@@ -136,7 +145,11 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			view.play();
+			new Thread(new Runnable(){
+				public void run(){
+					view.play();
+				}
+			}).start();
 		}
 		if (command.contains("Turns")) {
 			System.out.println("CSV ---> Ricevuti turni ");
@@ -169,7 +182,11 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 		}
 		if (command.contains("sale")) {
 			System.out.println("CSV ---> Ricevuta richiesta sconto multiplo");
-			view.chooseSale((IncreaseDieValueCard) request.get(command));
+			new Thread( new Runnable(){
+				public void run(){
+					view.chooseSale((IncreaseDieValueCard) request.get(command));
+				}
+			}).start();
 		}
 	}
 
