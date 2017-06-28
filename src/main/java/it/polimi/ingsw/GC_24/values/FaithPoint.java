@@ -53,7 +53,7 @@ public class FaithPoint extends Value {
 	 * This method return the corresponding Values of Faith Points
 	 */
 	public SetOfValues convertToValue(List<SetOfValues> correspondingValue) {
-		return correspondingValue.get(this.quantity - 1);
+		return correspondingValue.get(this.quantity);
 	}
 	
 	@Override
