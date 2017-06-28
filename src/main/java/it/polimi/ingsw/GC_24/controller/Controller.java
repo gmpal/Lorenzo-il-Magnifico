@@ -810,7 +810,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 
-	}
 
 	// getters and setters
 
