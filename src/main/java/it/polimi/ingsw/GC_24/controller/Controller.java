@@ -1,4 +1,4 @@
-package it.polimi.ingsw.GC_24.controller;
+﻿package it.polimi.ingsw.GC_24.controller;
 
 import java.io.IOException;
 import java.util.*;
@@ -143,8 +143,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	}
 
-	private void startTimerForPlayerAction(Timer t1) {
 
+	private void startTimerForPlayerAction(Timer t1) {
 		t1.schedule(new TimerTask() {
 			public void run() {
 				sendInfo("Time out for "+currentPlayer.getMyName()+ ", player number "+currentPlayer.getPlayerNumber()+", colour "+currentPlayer.getMyColour());
@@ -382,6 +382,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	}
 
+
 	/**
 	 * This method analyzes the incoming HashMap. If it finds specific keywords
 	 * in the keySet, it does different things with different objects
@@ -400,6 +401,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			return handlePlayer(request);
 
 		}
+
 
 		else if (command.contains("chosenCost")) {
 			synchronized (tempCostWaiting) {
@@ -439,6 +441,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				waitingForSalesChoice.notify();
 			}
 			return "sale chosen";
+
 
 		}
 
@@ -498,6 +501,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 
+
 					}
 				}
 			}
@@ -519,6 +523,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		notifyMyObservers(hashMap);
 
 	}
+
 
 	private String verifyAction(Action action2) {
 		System.out.println("Controller --> Sto verificando ed eseguendo un'azione ");
@@ -546,6 +551,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		game.sendModel();
 		// awakenSleepingClient();
 		System.out.println("Controller --> Richiesta di risveglio inviata");
+
 
 	}
 
@@ -808,6 +814,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		}
 		System.out.println("Controller --> Fine gestione carta Venture ");
 	}
+
+
 
 	// getters and setters
 
