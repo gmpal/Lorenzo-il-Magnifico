@@ -809,9 +809,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		System.out.println("Controller --> Fine gestione carta Venture ");
 	}
 
-
-	}
-
 	// getters and setters
 
 	public Model getGame() {
