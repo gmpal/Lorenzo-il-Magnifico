@@ -10,10 +10,22 @@ import java.util.Random;
 import com.google.gson.Gson;
 import it.polimi.ingsw.GC_24.board.Board;
 import it.polimi.ingsw.GC_24.devCardJsonFile.GsonBuilders;
+import it.polimi.ingsw.GC_24.effects.ChangeServantsValue;
+import it.polimi.ingsw.GC_24.effects.FirstPlacementAtTheEnd;
+import it.polimi.ingsw.GC_24.effects.IncreaseDieValueActivity;
+import it.polimi.ingsw.GC_24.effects.IncreaseDieValueCard;
+import it.polimi.ingsw.GC_24.effects.NoMarketAvailability;
+import it.polimi.ingsw.GC_24.effects.NoVictoryPointsFromCard;
+import it.polimi.ingsw.GC_24.effects.SubSetOfValues;
+import it.polimi.ingsw.GC_24.effects.SubVicrotyPointsFromSetOfValue;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
+import it.polimi.ingsw.GC_24.personalboard.PersonalCharacters;
+import it.polimi.ingsw.GC_24.personalboard.PersonalTerritories;
 import it.polimi.ingsw.GC_24.places.Place;
 import it.polimi.ingsw.GC_24.places.TowerPlace;
+import it.polimi.ingsw.GC_24.values.SetOfValues;
+import it.polimi.ingsw.GC_24.values.VictoryPoint;
 
 public class Deck implements Serializable {
 
@@ -239,7 +251,10 @@ public class Deck implements Serializable {
 
 	public static void main(String args[]) throws IOException {
 
-		Player player1 = new Player(1);
+		Excommunication ex=new Excommunication(null, new SubVicrotyPointsFromSetOfValue("subVicrotyPointsFromSetOfValue", new SetOfValues(), new VictoryPoint(1)) , 3);
+		Gson gson=GsonBuilders.getGsonWithTypeAdapters();
+		System.out.println(gson.toJson(ex));
+		/*Player player1 = new Player(1);
 		Player player2 = new Player(2);
 		List<Player> lista = new ArrayList<>();
 		lista.add(player1);
