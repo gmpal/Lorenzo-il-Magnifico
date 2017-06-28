@@ -1,6 +1,8 @@
 package it.polimi.ingsw.GC_24.client.view;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
+
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.MyObserver;
 import it.polimi.ingsw.GC_24.effects.*;
@@ -33,12 +35,12 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 
 		// SLEEP FOR TWO SECONDS
 		try {
-			Thread.sleep(400);
+			TimeUnit.SECONDS.sleep(2);
 		} catch (InterruptedException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+			Thread.currentThread().interrupt();
 		}
-
 		name = setName();
 
 		if (myself.getMyName() == null) {
@@ -50,6 +52,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				Thread.currentThread().interrupt();
 			}
 		} else {
 			System.out.println("You have exceeded the time limit to choose your name and colour");
@@ -228,7 +231,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 
 		if (commandZone.contains("cancel")) {
 			commandZone = "cancel";
-		} else {
+		} else  {
 			commandZone = increaseDieValue(commandZone);
 		}
 
@@ -301,6 +304,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+					Thread.currentThread().interrupt();
 				}
 			}
 		}
@@ -320,14 +324,16 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		System.out.println(
 				"but it requires that you have " + militaryPoints.getQuantity() + " military points to be used");
 		System.out.println("Make your choice (1/2):");
-		int choice = scanner.nextInt();
-		while (!(choice == 1 || choice == 2)) {
+		String choice = scanner.nextLine();
+
+		while (!(choice.equals("1") || choice.equals("2"))) {
 			System.out.println("Wrong choice, try again");
-			choice = scanner.nextInt();
+			choice = scanner.nextLine();
+
 		}
 
 		hm = new HashMap<>();
-		if (choice == 1) {
+		if (choice.equals("1")) {
 			hm.put("chosenCost", cost1);
 		} else {
 			hm.put("chosenCost", cost2);
@@ -345,6 +351,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 			int answer = 0;
 			try {
 				answer = scanner.nextInt();
+				scanner.nextLine();
 			} catch (Exception e) {
 				finalIncrease = null;
 				answer = 0;
@@ -364,10 +371,16 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	public void askForChooseNewCard(ChooseNewCard im) {
 		System.out.println("With the choise you have made you can pick another card!");
 		String zone;
+		String floor;
 		if ((im.getType()) == null) {
+			System.out.println(miniModel.getBoard().getTowerTerritories());
+			System.out.println(miniModel.getBoard().getTowerCharacters());
+			System.out.println(miniModel.getBoard().getTowerBuildings());
+			System.out.println(miniModel.getBoard().getTowerVentures());
+			
 			System.out.println("Write the tower you want to pick your card from");
 			System.out.println("Territories/Characters/Buildings/Ventures");
-
+			
 			zone = scanner.nextLine();
 			while (!(zone.equalsIgnoreCase("territories") || zone.equalsIgnoreCase("Buildings")
 					|| zone.equalsIgnoreCase("Ventures") || zone.equalsIgnoreCase("Characters"))) {
@@ -377,12 +390,16 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 
 		} else {
 			zone = im.getType();
+			System.out.println(miniModel.getBoard().getZoneFromString(zone));
 		}
 
 		System.out.println("Write the floor you want to pick your card from");
 		System.out.println("1/2/3/4");
 
-		String floor = scanner.nextLine();
+		scanner.nextLine();
+		floor = scanner.nextLine();
+		
+		
 
 		while (!(floor.equals("1") || floor.equals("2") || floor.equals("3") || floor.equals("4"))) {
 			System.out.println("Wrong choice, try again");
@@ -404,21 +421,30 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	}
 
 	public void askForCouncilePrivilege(CouncilPrivilege immediateEffect) {
+		
+		//TODO: AYAYAY
 		int number = immediateEffect.getNumberOfPrivileges();
 		System.out.println("You have to choose " + number + " Council Privilege(s): ");
 		System.out.println(immediateEffect.getCouncilPrivileges());
 		System.out.println("Make your choice: (1/2/3/4/5)");
 		String answer = "";
-		for (int i = 0; i < number; i++) {
-			System.out.println("Choice number " + i + 1 + " of " + number);
-			String choice = scanner.nextLine();
+		for (int i = 1; i <= number; i++) {
+			System.out.println("Choice number " + (i) + " of " + number);
+			String choice = "";
+			try{
+			
+			choice = scanner.nextLine();
+			} catch (IndexOutOfBoundsException e){
+				System.out.println( " AYAYAYAY");
+			}
 			while (!(choice.equals("1") || choice.equals("2") || choice.equals("3") || choice.equals("4")
 					|| choice.equals("5")) || answer.contains(choice)) {
 				System.out.println("Wrong choice, try again");
+			
 				choice = scanner.nextLine();
 			}
 
-			answer = answer + " " + choice;
+			answer = answer +" " +choice;
 		}
 
 		sendAnswerForParameters(answer);

@@ -33,7 +33,7 @@ public class Ventures extends Development {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append( "\nName = " + name );
+		builder.append( "\n[Name = " + name );
 		if (requiredMilitaryPoints!=null){
 			builder.append("Cost Military Points = "+alternativeCost+" (Required Military Points = " +requiredMilitaryPoints+")");
 			if (getCost()!=null){
@@ -42,7 +42,7 @@ public class Ventures extends Development {
 		}else {
 			builder.append(", Cost = " + getCost());
 		}
-		builder.append(", Victory Points at the End = "+getPointsAtTheEnd().getQuantity());
+		builder.append(", Victory Points at the End = "+getPointsAtTheEnd().getQuantity()+"]");
 		return builder.toString();
 	}
   

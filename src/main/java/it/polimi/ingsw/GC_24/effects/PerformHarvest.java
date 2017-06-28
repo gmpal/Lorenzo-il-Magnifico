@@ -34,6 +34,7 @@ public class PerformHarvest extends PerformActivity {
 				
 			}
 		}
+		System.out.println("Immediate effects taken");
 	}
 	
 	@Override

@@ -24,13 +24,13 @@ public class HarvestAction extends Action {
 	@Override
 	public String verify() {
 		String answerToPlayer = "Answer: \n";
-		while (answerToPlayer.equals("Answer: \n")) {
+		
 			answerToPlayer = verifyIfEnoughServants(answerToPlayer);
 			answerToPlayer = verifyIfEnoughServantsForThisPlace(answerToPlayer);
 			answerToPlayer = verifyFamilyMemberAvailability(answerToPlayer);
 			answerToPlayer = verifyPlaceAvailability(answerToPlayer);
 			answerToPlayer = verifyZoneOccupiedByMe(answerToPlayer);
-		}
+		
 		if (answerToPlayer.equals("Answer: \n")) return "ok";
 		else return answerToPlayer;
 	}
@@ -45,7 +45,7 @@ public class HarvestAction extends Action {
 		return immediateEffects;
 	}
 
-	/**
+	/** ##PERMANENT EFFECT CHECK HERE: Increase Die Value Harvest##
 	 * This method check if player has a card with Permanent Effect
 	 * "IncreaseDieValueHarvest" and set the final action value
 	 */
@@ -58,7 +58,7 @@ public class HarvestAction extends Action {
 				this.finalActionValue+=pe.getIncreaseDieValue();
 			}
 		}
-		this.finalActionValue += familyMember.getMemberValue() - harvestPlace.getAdditionalCostDice()+servants;
+		this.finalActionValue += familyMember.getMemberValue() - harvestPlace.getAdditionalCostDice() + servants;
 	}
 
 	private void createHarvestEffect() {
@@ -68,4 +68,9 @@ public class HarvestAction extends Action {
 	private void getHarvestTileValues() {
 		player.getMyBoard().getBonusTile().giveHarvestValues(player.getMyValues());		
 	}
+
+	public int getFinalValue() {
+		return finalActionValue;
+	}	
+	
 }

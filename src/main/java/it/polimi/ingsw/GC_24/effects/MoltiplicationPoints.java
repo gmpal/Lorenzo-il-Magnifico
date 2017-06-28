@@ -19,6 +19,7 @@ public class MoltiplicationPoints extends Moltiplication{
 
 	@Override
 	public void moltiplicationEffect(Player player) {
+		System.out.println("Values before:" +player.getMyValues());
 		int factor1 = getValue().getQuantity();
 		int quanityplayervalue2 = value2.findValueInPlayer(player).getQuantity();
 		int dividervalue2 = value2.getQuantity();
@@ -27,6 +28,7 @@ public class MoltiplicationPoints extends Moltiplication{
 		getValue().setQuantity(factor1 * factor2);
 
 		getValue().addValueToSet(player.getMyValues());
+		System.out.println("Values after:" +player.getMyValues());
 	}
 
 	@Override

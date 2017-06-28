@@ -74,29 +74,35 @@ public class Board implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "BOARD\nTERRITORIES\n" + towerTerritories + "\nCHARACTERS\n" + towerCharacters + "\nBUILDINGS\n"
-				+ towerBuildings + "\nVENTURES\n" + towerVentures + "\nHARVEST\n" + harvest + "\nPRODUCTION\n"
-				+ production + "\nMARKET\n" + market + "\nCOUNCIL PALACE\n" + councilPalace + "\n";
+		return "BOARD\nTERRITORIES\n" + towerTerritories + "\n\nCHARACTERS\n\n" + towerCharacters + "\n\nBUILDINGS\n"
+				+ towerBuildings + "\n\nVENTURES\n" + towerVentures + "\n\nHARVEST\n" + harvest + "\n\nPRODUCTION\n"
+				+ production + "\n\nMARKET\n" + market + "\n\nCOUNCIL PALACE\n" + councilPalace + "\n";
 	}
 
 	public Area getZoneFromString(String zone) {
-		if (zone.equals("territories")) {
+		if (zone.equalsIgnoreCase("territories") || zone.equalsIgnoreCase("territory")) {
 			return this.towerTerritories;
 		}
-		if (zone.equals("characters")) {
+		if (zone.equalsIgnoreCase("characters") || zone.equalsIgnoreCase("character")) {
 			return this.towerCharacters;
 		}
-		if (zone.equals("buildings")) {
+		if (zone.equalsIgnoreCase("buildings") || zone.equalsIgnoreCase("building")) {
 			return this.towerBuildings;
 		}
-		if (zone.equals("ventures")) {
+		if (zone.equalsIgnoreCase("ventures")|| zone.equalsIgnoreCase("venture")) {
 			return this.towerVentures;
 		}
 		if (zone.equals("harvest")) {
 			return this.harvest;
 		}
+		if (zone.equals("market")) {
+			return this.market;
+		}
 		if (zone.equals("production")) {
 			return this.production;
+		}
+		if (zone.equals("market")) {
+			return this.market;
 		}
 		if (zone.equals("council")) {
 			return this.councilPalace;

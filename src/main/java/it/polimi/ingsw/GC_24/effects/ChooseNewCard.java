@@ -36,6 +36,7 @@ public class ChooseNewCard extends ImmediateEffect {
 	@Override
 	public void giveImmediateEffect(Player player) {
 	//This method is handled differently and doesn't do anything 
+		System.out.println("No immediate effect to give here");
 	}
 	
 	@Override

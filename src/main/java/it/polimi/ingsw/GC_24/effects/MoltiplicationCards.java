@@ -20,6 +20,7 @@ public class MoltiplicationCards extends Moltiplication {
 
 	@Override
 	public void moltiplicationEffect(Player player) {
+		System.out.println("Values before:" +player.getMyValues());
 		int valueQuantity = this.getValue().getQuantity();
 		PersonalCards correspondingArrayList = this.personalCards.findCardsInPersonalBoard(player.getMyBoard());
 		int sizeOfArray = correspondingArrayList.getCards().size();
@@ -27,11 +28,14 @@ public class MoltiplicationCards extends Moltiplication {
 		getValue().setQuantity(newQuantity);
 		SetOfValues setOfValues = player.getMyValues();
 		getValue().addValueToSet(setOfValues);
+		System.out.println("Values after:" +player.getMyValues());
 	}
 
 	@Override
 	public void giveImmediateEffect(Player player) {
+		System.out.println("Giving moltiplication effect");
 		moltiplicationEffect(player);
+		System.out.println("Moltiplication effect given");
 	}
 	
 	@Override

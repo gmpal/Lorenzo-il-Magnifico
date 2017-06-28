@@ -21,8 +21,14 @@ import it.polimi.ingsw.GC_24.cards.Deck;
 import it.polimi.ingsw.GC_24.cards.Excommunication;
 import it.polimi.ingsw.GC_24.cards.Territories;
 import it.polimi.ingsw.GC_24.client.view.ServerSocketView;
-import it.polimi.ingsw.GC_24.devCardJsonFile.GsonBuilders;
 
+import java.io.*;
+import java.util.*;
+import com.google.gson.Gson;
+import it.polimi.ingsw.GC_24.MyObservable;
+import it.polimi.ingsw.GC_24.board.Board;
+import it.polimi.ingsw.GC_24.cards.Deck;
+import it.polimi.ingsw.GC_24.devCardJsonFile.GsonBuilders;
 import it.polimi.ingsw.GC_24.dice.SetOfDice;
 import it.polimi.ingsw.GC_24.network.multi.Server;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
@@ -52,6 +58,7 @@ public class Model extends MyObservable implements Serializable {
 
 	private static Timer timer;
 	private List<SetOfValues> correspondingValue = new ArrayList<>();
+	private int countingModelSent = 0;
 
 	public Model(int modelNumber) {
 
@@ -66,7 +73,7 @@ public class Model extends MyObservable implements Serializable {
 		this.cards = new Deck();
 		getCorrespondingValueFromFile();
 		createExcommunicationDeck();
-	}
+  }
 
 	private void createExcommunicationDeck() {
 		BufferedReader br;
@@ -132,10 +139,11 @@ public class Model extends MyObservable implements Serializable {
 		this.cards = new Deck();
 		this.dice = new SetOfDice();
 		this.dice.reset();
+		getCorrespondingValueFromFile();
 
 		// Setting the players
 		for (Player p : players) {
-			p.getMyValues().setInitialValues(players.indexOf(p));
+			p.getMyValues().setInitialValues(players.indexOf(p)+1);
 			p.setMyColour(PlayerColour.valueOf(PlayerColour.getValues().get(players.indexOf(p))));
 			p.setMyFamily(new Family(p.getMyColour()));
 			p.getMyFamily().setFamily(this.dice);
@@ -150,6 +158,8 @@ public class Model extends MyObservable implements Serializable {
 	}
 
 	public void sendModel() {
+		countingModelSent ++;
+		System.out.println("Model --> Invio del model #"+ countingModelSent);
 		hm = new HashMap<>();
 		hm.put("model", this);
 		// System.out.println("FROM MODEL SENDING THIS
@@ -202,7 +212,7 @@ public class Model extends MyObservable implements Serializable {
 		return dice;
 	}
 
-	public void setPlayers(ArrayList<Player> players) {
+	public void setPlayers(List<Player> players) {
 		this.players = players;
 	}
 
@@ -249,13 +259,10 @@ public class Model extends MyObservable implements Serializable {
 	 * score. All Values are entered in a List of SetOfValues
 	 */
 	public void getCorrespondingValueFromFile() {
-		BufferedReader br;
 		Gson gson = GsonBuilders.getGsonWithTypeAdapters();
 		String line = "ready";
-		try {
-			br = new BufferedReader(
-					new FileReader("src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/convertFaithPoints.json"));
-
+		try (BufferedReader br = new BufferedReader(
+				new FileReader("src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/convertFaithPoints.json"))){
 			while (line != null) {
 				line = GsonBuilders.getLine(br);
 				correspondingValue.add(gson.fromJson(line, SetOfValues.class));

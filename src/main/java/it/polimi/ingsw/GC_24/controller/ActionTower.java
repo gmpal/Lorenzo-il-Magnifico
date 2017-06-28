@@ -35,22 +35,23 @@ public class ActionTower extends Action {
 	public String verify() {
 		String answerToPlayer = "Answer: \n";
 			answerToPlayer = verifyIfEnoughServants(answerToPlayer);
-			System.out.println(answerToPlayer);
+			
 			answerToPlayer = verifyIfEnoughServantsForThisPlace(answerToPlayer);
-			System.out.println(answerToPlayer);
+			
 			answerToPlayer = verifyFamilyMemberAvailability(answerToPlayer);
-			System.out.println(answerToPlayer);
+	
 			answerToPlayer = verifyPlaceAvailability(answerToPlayer);
-			System.out.println(answerToPlayer);
+			
 			answerToPlayer = verifyZoneOccupiedByMe(answerToPlayer);
-			System.out.println(answerToPlayer);
+			
 			answerToPlayer = verifyMoneyForTowerOccupied(answerToPlayer);
-			System.out.println(answerToPlayer);
+		
 			answerToPlayer = verifyTerritorySpaceAvailability(answerToPlayer);
-			System.out.println(answerToPlayer);
+		
 			answerToPlayer = verifyBoardSpaceAvailability(answerToPlayer);
-			System.out.println(answerToPlayer);
+	
 			answerToPlayer = verifyCardResources(answerToPlayer);
+			
 			if (answerToPlayer.equals("Answer: \n"))
 			return "ok";
 		
@@ -206,7 +207,7 @@ public class ActionTower extends Action {
 	}
 	
 	@Override
-	protected String verifyIfEnoughServantsForThisPlace(String answerToPlayer) {
+	public String verifyIfEnoughServantsForThisPlace(String answerToPlayer) {
 		int placeCostRequired = this.place.getCostDice();
 		if (placeCostRequired > (this.familyMember.getMemberValue() + this.servants
 				+ getIncrementDieValueFromPermanentEffect())) {
@@ -215,7 +216,7 @@ public class ActionTower extends Action {
 		return answerToPlayer;
 	}
 
-	/**
+	/**##PERMANENT EFFECT CHECK HERE: Increase Die Value Card##
 	 * This method checks in Personal Board the Permanent Effect of Characters
 	 * and if there is IncreaseDieValueCard Effect gives to player the increment
 	 * 
@@ -223,15 +224,22 @@ public class ActionTower extends Action {
 	 */
 	public int getIncrementDieValueFromPermanentEffect() {
 		int incrementDieValueFromPermanentEffect = 0;
+		//checks the personalCharacters
 		for (int i = 0; i < player.getMyBoard().getPersonalCharacters().getCards().size(); i++) {
 			Characters c = (Characters) player.getMyBoard().getPersonalCharacters().getCards().get(i);
+			//for each character, checks if there's a permanent Effect of type "Increase Die Value Card"
 			if (c.getPermanentEffects()!=null && c.getPermanentEffects().getName().equals("increaseDieValueCard")) {
 				IncreaseDieValueCard pe = (IncreaseDieValueCard) c.getPermanentEffects();
+				//if  this effect is for a specific card (not null) and the type is similar to the card I'm trying to take..
 				if (pe.getPersonalCards() != null && (pe.getPersonalCards().getType() == zoneString)) {
+					//... I add the increment
 					incrementDieValueFromPermanentEffect += pe.getIncreaseDieValue();
+					//if there's no alternative cost in the card
 					if(pe.getAlternativeSale()==null){
+						//i simply get the sale for the card I take 
 						setOfSales=pe.getSale();
 					}
+					//if there's an alternative sale the condition is checked before doing any action, asking the player 
 				}
 			}
 		}
