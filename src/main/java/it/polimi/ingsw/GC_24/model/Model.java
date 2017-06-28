@@ -71,8 +71,7 @@ public class Model extends MyObservable implements Serializable {
 		this.counter = 0;
 		this.modelNumber = modelNumber;
 		this.cards = new Deck();
-		getCorrespondingValueFromFile();
-		createExcommunicationDeck();
+		
   }
 
 	private void createExcommunicationDeck() {
@@ -140,6 +139,7 @@ public class Model extends MyObservable implements Serializable {
 		this.dice = new SetOfDice();
 		this.dice.reset();
 		getCorrespondingValueFromFile();
+		createExcommunicationDeck();
 
 		// Setting the players
 		for (Player p : players) {
