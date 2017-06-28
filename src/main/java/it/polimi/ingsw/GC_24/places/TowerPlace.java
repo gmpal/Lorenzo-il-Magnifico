@@ -3,7 +3,6 @@ package it.polimi.ingsw.GC_24.places;
 import it.polimi.ingsw.GC_24.cards.Development;
 import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
 import it.polimi.ingsw.GC_24.effects.ValueEffect;
-import it.polimi.ingsw.GC_24.model.Player;
 
 public class TowerPlace extends Place {
 

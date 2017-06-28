@@ -55,16 +55,16 @@ public abstract class Area implements java.io.Serializable {
 	 * else it returns the first empty space available*/
 	public Place getPlaceFromStringOrFirstIfZero(String place){
 		if (!place.equals("0")){
-			System.out.println("Place received is different than 0");
+			//System.out.println("Place received is different than 0");
 			int i = Integer.parseInt(place);
 			System.out.println("IntegerParsed");
 			if (placesArray.size() < i){
-				System.out.println("Dimensione minore del richiesto");
+				//System.out.println("Dimensione minore del richiesto");
 				return null;
 			}
 			else {
-				System.out.println("Richiesta ok vediamo placesArray");
-				System.out.println(placesArray);
+			//	System.out.println("Richiesta ok vediamo placesArray");
+			//	System.out.println(placesArray);
 				return placesArray.get(i-1);
 			}
 		}else{ 		

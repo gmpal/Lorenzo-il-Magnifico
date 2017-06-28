@@ -1,17 +1,10 @@
 package it.polimi.ingsw.GC_24.controller;
 
 import java.util.List;
-
 import it.polimi.ingsw.GC_24.board.Area;
-import it.polimi.ingsw.GC_24.cards.Characters;
 import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
-import it.polimi.ingsw.GC_24.effects.IncreaseDieValueActivity;
-import it.polimi.ingsw.GC_24.effects.IncreaseDieValueCard;
-import it.polimi.ingsw.GC_24.model.FamilyMember;
-import it.polimi.ingsw.GC_24.model.Model;
-import it.polimi.ingsw.GC_24.model.Player;
+import it.polimi.ingsw.GC_24.model.*;
 import it.polimi.ingsw.GC_24.places.Place;
-import it.polimi.ingsw.GC_24.values.SetOfValues;
 import it.polimi.ingsw.GC_24.values.Value;
 
 public abstract class Action {
@@ -126,6 +119,58 @@ public abstract class Action {
 		if (place.getValue().getEffectValues() != null) {
 			place.getValue().getEffectValues().addTwoSetsOfValues(player.getMyValues());
 		}
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((familyMember == null) ? 0 : familyMember.hashCode());
+		result = prime * result + ((place == null) ? 0 : place.hashCode());
+		result = prime * result + ((player == null) ? 0 : player.hashCode());
+		result = prime * result + servants;
+		result = prime * result + ((zone == null) ? 0 : zone.hashCode());
+		result = prime * result + ((zoneString == null) ? 0 : zoneString.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Action other = (Action) obj;
+		if (familyMember == null) {
+			if (other.familyMember != null)
+				return false;
+		} else if (!familyMember.equals(other.familyMember))
+			return false;
+		if (place == null) {
+			if (other.place != null)
+				return false;
+		} else if (!place.equals(other.place))
+			return false;
+		if (player == null) {
+			if (other.player != null)
+				return false;
+		} else if (!player.equals(other.player))
+			return false;
+		if (servants != other.servants)
+			return false;
+		if (zone == null) {
+			if (other.zone != null)
+				return false;
+		} else if (!zone.equals(other.zone))
+			return false;
+		if (zoneString == null) {
+			if (other.zoneString != null)
+				return false;
+		} else if (!zoneString.equals(other.zoneString))
+			return false;
+		return true;
 	}
 
 	// getters and setters

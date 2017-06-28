@@ -1,29 +1,14 @@
 package it.polimi.ingsw.GC_24.controllertest;
 
 import static org.junit.Assert.*;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
-
-import it.polimi.ingsw.GC_24.controller.Action;
-import it.polimi.ingsw.GC_24.controller.ActionTower;
-import it.polimi.ingsw.GC_24.controller.CouncilPalaceAction;
-import it.polimi.ingsw.GC_24.controller.HarvestAction;
-import it.polimi.ingsw.GC_24.controller.ProductionAction;
-import it.polimi.ingsw.GC_24.effects.ChooseNewCard;
-import it.polimi.ingsw.GC_24.effects.CouncilPrivilege;
-import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
-import it.polimi.ingsw.GC_24.effects.ValueEffect;
-import it.polimi.ingsw.GC_24.model.FamilyMember;
-import it.polimi.ingsw.GC_24.model.Model;
-import it.polimi.ingsw.GC_24.model.Player;
-import it.polimi.ingsw.GC_24.model.PlayerColour;
-import it.polimi.ingsw.GC_24.values.Coin;
-import it.polimi.ingsw.GC_24.values.SetOfValues;
-import it.polimi.ingsw.GC_24.values.Value;
+import it.polimi.ingsw.GC_24.controller.*;
+import it.polimi.ingsw.GC_24.effects.*;
+import it.polimi.ingsw.GC_24.model.*;
+import it.polimi.ingsw.GC_24.values.*;
 
 public class TestAction {
 	
@@ -56,7 +41,6 @@ public class TestAction {
 		action = new CouncilPalaceAction(game, "1", "council", "1", "0");
 		action2 = new HarvestAction(game, "2", "harvest", "1", "4");
 		action3 = new ProductionAction(game, "4", "production", "1", "0");
-		//chooseNewCard = new ChooseNewCard("ChooseNewCard", "personalVentures", 4, null);
 		privilege = new CouncilPrivilege("CouncilPrivilege", 1);
 		valueEffect = new ValueEffect("value");		
 		value = new Coin(0);
