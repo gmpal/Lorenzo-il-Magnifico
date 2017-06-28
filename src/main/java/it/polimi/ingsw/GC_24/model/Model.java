@@ -48,7 +48,7 @@ public class Model extends MyObservable implements Serializable {
 	private List<Ranking> rankings;
 	private HashMap<String, Object> hm;
 	private Deck cards;
-	private List<Excommunication> excommunicationDeck = new ArrayList<>();;
+	private List<Excommunication> excommunicationDeck = new ArrayList<>();
 
 	private int modelNumber;
 
