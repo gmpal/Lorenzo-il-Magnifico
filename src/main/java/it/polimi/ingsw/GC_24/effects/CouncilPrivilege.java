@@ -59,7 +59,7 @@ public class CouncilPrivilege extends ImmediateEffect {
 		this.set = new SetOfValues();
 		StringTokenizer reader = new StringTokenizer(string);
 		while (reader.hasMoreTokens()){
-			int value = Integer.parseInt(string);
+			int value = Integer.parseInt(reader.nextToken());
 			set.addTwoSetsOfValues(councilPrivileges.get(value-1));
 		}
 		

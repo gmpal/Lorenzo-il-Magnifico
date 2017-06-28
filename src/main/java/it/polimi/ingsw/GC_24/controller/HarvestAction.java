@@ -45,7 +45,7 @@ public class HarvestAction extends Action {
 		return immediateEffects;
 	}
 
-	/**
+	/** ##PERMANENT EFFECT CHECK HERE: Increase Die Value Harvest##
 	 * This method check if player has a card with Permanent Effect
 	 * "IncreaseDieValueHarvest" and set the final action value
 	 */

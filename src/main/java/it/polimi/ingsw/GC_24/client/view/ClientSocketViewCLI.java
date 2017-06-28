@@ -75,11 +75,12 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 	@SuppressWarnings("unchecked")
 	@Override
 	public void handleRequestFromServer(Map<String, Object> request) {
-		System.out.println("in hadlerequestfrkondoni");
+		System.out.println("CSV ---> Gestendo una richiesta ");
 		Set<String> command = request.keySet();
 
 		/* IN THIS CASE the request is handled by the viewCLI */
-		if (command.contains("cost1")) {
+		if (command.contains("Cost1")) {
+			System.out.println("CSV --> Ricevuto un costo alternativo");
 			SetOfValues cost1 = (SetOfValues) request.get("Cost1");
 			SetOfValues cost2 = (SetOfValues) request.get("Cost2");
 			MilitaryPoint militaryPoints = (MilitaryPoint) request.get("Requirements");
@@ -87,38 +88,33 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 		}
 		
 		if (command.contains("problems")) {
+			System.out.println("CSV ---> Ricevuti problemi");
 			String problems = (String) request.get("problems");
 			notifyMyObservers(problems);
 		}
 
 
 		if (command.contains("model")) {
+			System.out.println("CSV ---> Ricevuto Model");
 			synchronized (view.getWaitingForAnswer()) {
 
 				Model receivedModel = (Model) request.get("model");
-				System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n" + receivedModel + "\n@@@@@@@@@@@@@@@@@@@@@@@@@");
+				
 				view.setMiniModel(receivedModel);
-
-				System.out.println("GIOCATORI FINO ADESSO" + view.getMiniModel().getPlayers());
-
-				System.out.println("NUMERO GIOCATORE" + view.getMiniModel().getPlayers().get(0).getPlayerNumber());
-				System.out.println("....Player Number ...." + view.getPlayerNumber());
-
 				view.setMyself(view.getMiniModel().getPlayers().get(view.getPlayerNumber() - 1));
-				System.out.println("Myself ----> " + view.getMyself());
 				view.setPlayerTurn(view.getMiniModel().getPlayers());
-
 				view.getWaitingForAnswer().notify();
 			}
 		}
     
 		if (command.contains("askForParameters")) {
+			System.out.println("CSV ---> Ricevuta richiesta di parametri ");
 			handleEffectParametersRequest((ImmediateEffect) request.get("askForParameters"));
 
 		}
 
 		if (command.contains("actionDone")) {
-			System.out.println("RICEVUTO RISVEGLIO DAL CLIENT");
+			System.out.println("CSV ---> Ricevuta segnalazione di azione completata ");
 			synchronized (view.getWaitingForActionCompleted()) {
 				view.setActionDone(true);
 				view.getWaitingForActionCompleted().notify();
@@ -127,12 +123,13 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 		}
 
 		if (command.contains("info")) {
+			System.out.println("CSV ---> Ricevute informazioni da mostrare a video");
 			notifyMyObservers(request.get("info"));
 
 		}
 
 		if (command.contains("startPlaying")) {
-			System.out.println("GET READY --> GAME IS STARTING");
+			System.out.println("CSV ---> Ricevuta richiesta di avviamento partita");
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
@@ -142,11 +139,13 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 			view.play();
 		}
 		if (command.contains("Turns")) {
+			System.out.println("CSV ---> Ricevuti turni ");
 			List<Player> playerTurn = (List<Player>) request.get("Turns");
 			view.setPlayerTurn(playerTurn);
 
 		}
 		if (command.contains("currentPlayer")) {
+			System.out.println("CSV ---> Ricevuto giocatore corrente ");
 			Player currentPlayer = (Player) request.get("currentPlayer");
 
 			if (currentPlayer.getPlayerNumber() == view.getMyself().getPlayerNumber()) {
@@ -159,6 +158,7 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 		}
 
 		if (command.contains("clientNumber")) {
+			System.out.println("CSV ---> Ricevuto numero client");
 			int playerNumber = (int) request.get("clientNumber");
 			int modelNumber = (int) request.get("modelNumber");
 			if (view.getPlayerNumber() == 0) {
@@ -168,26 +168,30 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 
 		}
 		if (command.contains("sale")) {
+			System.out.println("CSV ---> Ricevuta richiesta sconto multiplo");
 			view.chooseSale((IncreaseDieValueCard) request.get(command));
 		}
 	}
 
 	private void handleEffectParametersRequest(ImmediateEffect immediateEffect) {
 		if (immediateEffect instanceof ChooseNewCard) {
+			System.out.println("CSV ---> E' un ChooseNewCard ");
 			view.askForChooseNewCard((ChooseNewCard) immediateEffect);
 		}
 
 		if (immediateEffect instanceof CouncilPrivilege) {
+			System.out.println("CSV ---> E' un CouncilPrivilege ");
 			view.askForCouncilePrivilege((CouncilPrivilege) immediateEffect);
 		}
 
 		if (immediateEffect instanceof Exchange) {
-
+			System.out.println("CSV ---> E' un Exchange ");
 			view.askForExchange((Exchange) immediateEffect);
 
 		}
 		// i parametri sono stati scelti e passati all'effetto
 		if (immediateEffect instanceof PerformActivity) {
+			System.out.println("CSV ---> E' un PerformActivity ");
 			view.askForServantsForHarvestAndProduction((PerformActivity) immediateEffect);
 		}
 

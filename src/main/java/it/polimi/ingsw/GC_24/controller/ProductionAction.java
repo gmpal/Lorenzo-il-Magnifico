@@ -49,7 +49,7 @@ public class ProductionAction extends Action {
 		return immediateEffects;
 	}
 
-	/**
+	/**##PERMANENT EFFECT CHECK HERE: Increase Die Value Production##
 	 * This method check if player has a card with Permanent Effect
 	 * "IncreaseDieValueProduction" and set the final action value.
 	 */

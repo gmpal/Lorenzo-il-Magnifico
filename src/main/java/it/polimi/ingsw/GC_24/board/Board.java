@@ -80,16 +80,16 @@ public class Board implements java.io.Serializable {
 	}
 
 	public Area getZoneFromString(String zone) {
-		if (zone.equals("territories")) {
+		if (zone.equalsIgnoreCase("territories") || zone.equalsIgnoreCase("territory")) {
 			return this.towerTerritories;
 		}
-		if (zone.equals("characters")) {
+		if (zone.equalsIgnoreCase("characters") || zone.equalsIgnoreCase("character")) {
 			return this.towerCharacters;
 		}
-		if (zone.equals("buildings")) {
+		if (zone.equalsIgnoreCase("buildings") || zone.equalsIgnoreCase("building")) {
 			return this.towerBuildings;
 		}
-		if (zone.equals("ventures")) {
+		if (zone.equalsIgnoreCase("ventures")|| zone.equalsIgnoreCase("venture")) {
 			return this.towerVentures;
 		}
 		if (zone.equals("harvest")) {
