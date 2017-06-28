@@ -74,6 +74,22 @@ public class CouncilPalace extends Area {
 		return temporaryTurn;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("\n");
+		for (Place p : placesArray){
+			if (!p.isAvailable()) {
+				builder.append("[Place occupied by the " + p.getFamMemberOnPlace().getPlayerColour() + " player]");
+			} else {
+				builder.append("[Place Available] --> You get: " + p.getValue() + " and a Council Privilege");
+				return builder.toString();
+			}
+			builder.append("\n");
+		}
+		return builder.toString();
+	}
+	
 	public List<Player> getTemporaryTurn() {
 		return temporaryTurn;
 	}

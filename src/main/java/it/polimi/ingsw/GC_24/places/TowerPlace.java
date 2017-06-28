@@ -32,7 +32,7 @@ public class TowerPlace extends Place {
 		this.correspondingCard = null;
 	}
 
-	@Override
+	/*@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		if (correspondingCard!=null){
@@ -44,7 +44,7 @@ public class TowerPlace extends Place {
 			builder.append("Card already taken by the "+famMemberOnPlace.getPlayerColour()+" player");
 		}
 		return builder.toString();
-	}
+	}*/
 
 	public Development getCorrespondingCard() {
 		return correspondingCard;

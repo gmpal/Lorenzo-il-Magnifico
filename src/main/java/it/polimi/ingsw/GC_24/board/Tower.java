@@ -82,4 +82,22 @@ public class Tower extends Area {
 				tempPlace.setCorrespondingCard(card);
 		}
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("\n");
+		for (Place p : placesArray) {
+			if (((TowerPlace) p).getCorrespondingCard() != null) {
+				builder.append(((TowerPlace) p).getCorrespondingCard().toString());
+				if (!p.getValue().getEffectValues().isEmpty()) {
+					builder.append("\n\tValue you get from place = " + p.getValue());
+				}
+			} else {
+				builder.append("[Card already taken by the " + p.getFamMemberOnPlace().getPlayerColour() + " player]");
+			}
+			builder.append("\n");
+		}
+		return builder.toString();
+	}
 }

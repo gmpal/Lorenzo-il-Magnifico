@@ -74,9 +74,9 @@ public class Board implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "BOARD\nTERRITORIES\n" + towerTerritories + "\nCHARACTERS\n" + towerCharacters + "\nBUILDINGS\n"
-				+ towerBuildings + "\nVENTURES\n" + towerVentures + "\nHARVEST\n" + harvest + "\nPRODUCTION\n"
-				+ production + "\nMARKET\n" + market + "\nCOUNCIL PALACE\n" + councilPalace + "\n";
+		return "BOARD\nTERRITORIES\n" + towerTerritories + "\n\nCHARACTERS\n\n" + towerCharacters + "\n\nBUILDINGS\n"
+				+ towerBuildings + "\n\nVENTURES\n" + towerVentures + "\n\nHARVEST\n" + harvest + "\n\nPRODUCTION\n"
+				+ production + "\n\nMARKET\n" + market + "\n\nCOUNCIL PALACE\n" + councilPalace + "\n";
 	}
 
 	public Area getZoneFromString(String zone) {

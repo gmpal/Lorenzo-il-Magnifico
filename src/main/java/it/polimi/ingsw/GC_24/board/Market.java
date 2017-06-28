@@ -69,5 +69,24 @@ public class Market extends Area {
 		}
 		return placesArray;
 	}
+	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("\n");
+		for (Place p : placesArray) {
+			if (p.isAvailable()){
+				builder.append("[Place Available] - You can get: ");
+				if (p.getValue() != null)
+					builder.append(p.getValue());
+				if (((MarketPlace)p).getPrivilegeEffect() != null)
+					builder.append(((MarketPlace)p).getPrivilegeEffect());
+			}else{
+				builder.append("[Place occupied by the " + p.getFamMemberOnPlace().getPlayerColour() + " player]");
+			}
+			builder.append("\n");
+		}
+		return builder.toString();
+	}
 
 }

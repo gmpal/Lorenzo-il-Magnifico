@@ -36,4 +36,15 @@ public abstract class PersonalCards implements java.io.Serializable{
 
 	public abstract String getType();
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("\n");
+		for(Development d:cards){
+			builder.append("[" + d.toString() + "]");
+		}
+		builder.append("\n");
+		return builder.toString();
+	}
+
 }
