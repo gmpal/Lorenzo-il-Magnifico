@@ -1,10 +1,7 @@
-﻿package it.polimi.ingsw.GC_24.controller;
+package it.polimi.ingsw.GC_24.controller;
 
 import java.io.IOException;
 import java.util.*;
-
-import javax.print.attribute.HashAttributeSet;
-
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.MyObserver;
 import it.polimi.ingsw.GC_24.cards.*;
@@ -815,8 +812,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		System.out.println("Controller --> Fine gestione carta Venture ");
 	}
 
-
-
 	// getters and setters
 
 	public Model getGame() {
@@ -842,3 +837,4 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	
 
 }
+

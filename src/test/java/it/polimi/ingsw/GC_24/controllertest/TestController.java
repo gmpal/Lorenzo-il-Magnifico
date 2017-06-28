@@ -93,12 +93,12 @@ public class TestController {
 		character1.setCardOnPersonalBoard(player.getMyBoard());
 		venture1.setCardOnPersonalBoard(player.getMyBoard());
 		venture2.setCardOnPersonalBoard(player.getMyBoard());
-		player.getMyValues().getFaithPoints().setQuantity(4);
+	//	player.getMyValues().getFaithPoints().setQuantity(4);
 		player.getMyValues().getMilitaryPoints().setQuantity(6);
 		player2.getMyValues().getMilitaryPoints().setQuantity(3);
 		player3.getMyValues().getMilitaryPoints().setQuantity(10);
 		controller.giveVictoryPoints();
-		vc.setQuantity(15);
+		vc.setQuantity(11);
 		assertEquals(vc, player.getMyValues().getVictoryPoints());
 	}
 
