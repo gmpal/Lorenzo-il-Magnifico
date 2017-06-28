@@ -81,48 +81,48 @@ public abstract class Action {
 		return answerToPlayer;
 	}
 
-	protected String verifyPlaceAvailability(String answerToPlayer) {
+	public String verifyPlaceAvailability(String answerToPlayer) {
 
 		if (!this.place.isAvailable() || this.place == null) {
-			return answerToPlayer + "Sorry, place not available!";
+			return answerToPlayer + "Sorry, place not available!\n";
 		} else
 			return answerToPlayer;
 	}
 
-	protected String verifyFamilyMemberAvailability(String answerToPlayer) {
+	public String verifyFamilyMemberAvailability(String answerToPlayer) {
 		if (!this.familyMember.isAvailable()) {
 			return answerToPlayer + "Sorry, this familiar is not available! \n";
 		} else
 			return answerToPlayer;
 	}
 
-	protected String verifyZoneOccupiedByMe(String answerToPlayer) {
+	public String verifyZoneOccupiedByMe(String answerToPlayer) {
 		if (this.zone.isThereSameColour(this.familyMember)) {
-			return answerToPlayer + "This zone is already occupied by one of your family members. Choose another zone. \n";
+			return answerToPlayer + "This zone is already occupied by one of your family members. Choose another zone\n";
 		} else
 			return answerToPlayer;
 	}
 
-	protected String verifyIfEnoughServantsForThisPlace(String answerToPlayer) {
+	public String verifyIfEnoughServantsForThisPlace(String answerToPlayer) {
 		int placeCostRequired = this.place.getCostDice();
 		if (placeCostRequired > (this.familyMember.getMemberValue() + this.servants)){
-			return answerToPlayer + "You have not used enough servants for this place. Please choose another place. \n";
+			return answerToPlayer + "You have not used enough servants for this place. Please choose another place\n";
 		}
 		return answerToPlayer;
 	}
 
 	
 	// shared run methods
-	protected void placeFamiliar() {
+	public void placeFamiliar() {
 		place.setFamMemberOnPlace(familyMember);
 		familyMember.setAvailable(false);
 	}
 
-	protected void payValue(Value value) {
+	public void payValue(Value value) {
 		value.subValuefromSet(player.getMyValues());
 	}
 
-	protected void takeValueFromPlace() {
+	public void takeValueFromPlace() {
 		if (place.getValue().getEffectValues() != null) {
 			place.getValue().getEffectValues().addTwoSetsOfValues(player.getMyValues());
 		}
@@ -149,4 +149,15 @@ public abstract class Action {
 		this.player = player;
 	}
 
+	public Player getPlayer() {
+		return player;
+	}
+	
+	public void setZone(Area zone) {
+		this.zone = zone;
+	}
+
+	public Area getZone() {
+		return zone;
+	}
 }

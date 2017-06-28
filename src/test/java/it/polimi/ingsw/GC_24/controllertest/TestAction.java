@@ -11,14 +11,19 @@ import org.junit.Test;
 import it.polimi.ingsw.GC_24.controller.Action;
 import it.polimi.ingsw.GC_24.controller.ActionTower;
 import it.polimi.ingsw.GC_24.controller.CouncilPalaceAction;
+import it.polimi.ingsw.GC_24.controller.HarvestAction;
+import it.polimi.ingsw.GC_24.controller.ProductionAction;
 import it.polimi.ingsw.GC_24.effects.ChooseNewCard;
 import it.polimi.ingsw.GC_24.effects.CouncilPrivilege;
 import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
 import it.polimi.ingsw.GC_24.effects.ValueEffect;
+import it.polimi.ingsw.GC_24.model.FamilyMember;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.PlayerColour;
+import it.polimi.ingsw.GC_24.values.Coin;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
+import it.polimi.ingsw.GC_24.values.Value;
 
 public class TestAction {
 	
@@ -26,28 +31,36 @@ public class TestAction {
 	List<ImmediateEffect> immediateEffectsExpected;
 	List<Player> players;
 	Action action;
+	Action action2;
+	Action action3;
 	Model game;
 	Player player;
 	Player player2;
 	ImmediateEffect chooseNewCard;
 	ImmediateEffect valueEffect;
 	ImmediateEffect privilege;
+	Value value;
+	SetOfValues values;
 
 	@Before
 	public void setUp() throws Exception {
 		immediateEffects = new ArrayList<>();
 		immediateEffectsExpected = new ArrayList<>();
 		players = new ArrayList<>();
-		game = new Model(0);
+		game = new Model(1);
 		player = new Player("Giorgia", PlayerColour.RED);
 		player2 = new Player("Carlo", PlayerColour.GREEN);
 		players.add(player);
 		players.add(player2);
 		game.setModel(players);
 		action = new CouncilPalaceAction(game, "1", "council", "1", "0");
+		action2 = new HarvestAction(game, "2", "harvest", "1", "4");
+		action3 = new ProductionAction(game, "4", "production", "1", "0");
 		//chooseNewCard = new ChooseNewCard("ChooseNewCard", "personalVentures", 4, null);
 		privilege = new CouncilPrivilege("CouncilPrivilege", 1);
 		valueEffect = new ValueEffect("value");		
+		value = new Coin(0);
+		values = new SetOfValues();
 	}
 	
 	@Test
@@ -61,8 +74,77 @@ public class TestAction {
 	
 	@Test
 	public void testVerifyIfEnoughServants() throws Exception {
-		action.verifyIfEnoughServants(answerToPlayer)
-		assertEquals(immediateEffectsExpected, immediateEffects);
+		assertEquals("answerToPlayer", action.verifyIfEnoughServants("answerToPlayer"));
 	}
 	
+	@Test
+	public void testVerifyIfEnoughServantsWrong() throws Exception {
+		assertEquals("answerToPlayerYou don't have enough servants to use! \n", action2.verifyIfEnoughServants("answerToPlayer"));
+	}
+	
+	@Test
+	public void testVerifyPlaceAvailability() throws Exception {
+		assertEquals("answerToPlayer", action.verifyPlaceAvailability("answerToPlayer"));
+	}
+	
+	@Test
+	public void testVerifyPlaceAvailabilityWrong() throws Exception {
+		action.getPlace().setFamMemberOnPlace(new FamilyMember(PlayerColour.BLUE));
+		assertEquals("answerToPlayerSorry, place not available!\n", action.verifyPlaceAvailability("answerToPlayer"));
+	}
+	
+	@Test
+	public void testVerifyFamilyMemberAvailability() throws Exception {
+		assertEquals("answerToPlayer", action.verifyFamilyMemberAvailability("answerToPlayer"));
+	}
+	
+	@Test
+	public void testVerifyFamilyMemberAvailabilityWrong() throws Exception {
+		action2.getPlayer().getMyFamily().getMember1().setAvailable(false);
+		assertEquals("answerToPlayerSorry, this familiar is not available! \n", action.verifyFamilyMemberAvailability("answerToPlayer"));
+	}
+	
+	@Test
+	public void testVerifyZoneOccupiedByMe() throws Exception {
+		action2.getZone().getFirstEmptyPlace().setFamMemberOnPlace(new FamilyMember(PlayerColour.BLUE));
+		assertEquals("answerToPlayer", action2.verifyZoneOccupiedByMe("answerToPlayer"));
+	}
+	
+	@Test
+	public void testVerifyZoneOccupiedByMeWrong() throws Exception {
+		action.getZone().getPlacesArray().get(3).setFamMemberOnPlace(player.getMyFamily().getMember2());
+		assertEquals("answerToPlayerThis zone is already occupied by one of your family members. Choose another zone\n", action.verifyZoneOccupiedByMe("answerToPlayer"));
+	}
+	
+	@Test
+	public void testVerifyIfEnoughServantsForThisPlace() throws Exception {
+		assertEquals("answerToPlayer", action2.verifyIfEnoughServantsForThisPlace("answerToPlayer"));
+	}
+	
+	@Test
+	public void testVerifyIfEnoughServantsForThisPlaceWrong() throws Exception {
+		assertEquals("answerToPlayerYou have not used enough servants for this place. Please choose another place\n", action3.verifyIfEnoughServantsForThisPlace("answerToPlayer"));
+	}
+	
+	@Test
+	public void testPlaceFamiliar() throws Exception {
+		action2.placeFamiliar();
+		assertFalse(action2.getFamilyMember().isAvailable());
+	}
+	
+	@Test
+	public void testPayValue() throws Exception {
+		value.setQuantity(3);
+		action2.payValue(value);
+		value.setQuantity(2);
+		assertEquals(value, action2.getPlayer().getMyValues().getCoins());
+	}
+	
+	@Test
+	public void testTakeValueFromPlace() throws Exception {
+		action.takeValueFromPlace();
+		values.setInitialValues(1);
+		values.getCoins().addQuantity(1);
+		assertEquals(values, player.getMyValues());
+	}
 }

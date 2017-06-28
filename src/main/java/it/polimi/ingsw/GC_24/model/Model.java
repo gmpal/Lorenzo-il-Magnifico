@@ -102,7 +102,7 @@ public class Model extends MyObservable implements Serializable {
 
 		// Setting the players
 		for (Player p : players) {
-			p.getMyValues().setInitialValues(players.indexOf(p));
+			p.getMyValues().setInitialValues(players.indexOf(p)+1);
 			p.setMyColour(PlayerColour.valueOf(PlayerColour.getValues().get(players.indexOf(p))));
 			p.setMyFamily(new Family(p.getMyColour()));
 			p.getMyFamily().setFamily(this.dice);
