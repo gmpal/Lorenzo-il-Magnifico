@@ -66,6 +66,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
+						Thread.currentThread().interrupt();
 					}
 				}
 			}
@@ -114,6 +115,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 								} catch (InterruptedException e) {
 									// TODO: auto-generated catch block
 									e.printStackTrace();
+									Thread.currentThread().interrupt();
 								}
 							}
 						}
@@ -447,6 +449,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
+							Thread.currentThread().interrupt();
 						}
 					}
 				}
@@ -576,6 +579,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
+							Thread.currentThread().interrupt();
 						}
 					}
 				}
@@ -667,6 +671,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
+						Thread.currentThread().interrupt();
 					}
 				}
 

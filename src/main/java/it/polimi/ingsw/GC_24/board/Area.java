@@ -12,7 +12,7 @@ public abstract class Area implements java.io.Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 2756356223377195910L;
-	protected List<Place> placesArray = new ArrayList<>();
+	protected ArrayList<Place> placesArray = new ArrayList<>();
 	
 	/**This method returns true if in the zone you're trying to put your family member in
 	 * there's already a family member of the same Player. If you're trying to put a neutral
@@ -118,6 +118,6 @@ public abstract class Area implements java.io.Serializable {
 	}
 
 	public void setPlacesArray(List<Place> placesArray) {
-		this.placesArray = placesArray;
+		this.placesArray = (ArrayList<Place>) placesArray;
 	}
 }

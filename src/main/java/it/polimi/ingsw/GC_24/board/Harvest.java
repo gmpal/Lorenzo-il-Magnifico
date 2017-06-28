@@ -33,7 +33,7 @@ public class Harvest extends Area {
 	}
 	
 	/**inserts empty ProductionPlaces in Production*/
-	public List<Place> createHarvest(){
+	public ArrayList<Place> createHarvest(){
 		int numProducionPlaces;	
 		if(this.placesLocked){
 			numProducionPlaces=MINPLACES;

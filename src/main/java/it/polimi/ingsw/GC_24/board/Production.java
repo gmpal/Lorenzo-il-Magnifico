@@ -33,7 +33,7 @@ public class Production extends Area {
 	}
 	
 	/**inserts empty ProductionPlaces in Production*/
-	public List<Place> createProduction(){
+	public ArrayList<Place> createProduction(){
 		int numProducionPlaces;	
 		
 		if(this.placesLocked){

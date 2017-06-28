@@ -62,10 +62,7 @@ public class CouncilPrivilege extends ImmediateEffect {
 			int value = Integer.parseInt(string);
 			set.addTwoSetsOfValues(councilPrivileges.get(value-1));
 		}
-		
 	}
-
-	
 
 	@Override
 	public void giveImmediateEffect(Player player) {

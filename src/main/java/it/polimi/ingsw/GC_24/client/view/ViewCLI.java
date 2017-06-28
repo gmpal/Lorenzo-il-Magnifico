@@ -1,6 +1,8 @@
 package it.polimi.ingsw.GC_24.client.view;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
+
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.MyObserver;
 import it.polimi.ingsw.GC_24.effects.*;
@@ -33,12 +35,12 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 
 		// SLEEP FOR TWO SECONDS
 		try {
-			Thread.sleep(400);
+			TimeUnit.SECONDS.sleep(2);
 		} catch (InterruptedException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+			Thread.currentThread().interrupt();
 		}
-
 		name = setName();
 
 		if (myself.getMyName() == null) {
@@ -50,6 +52,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				Thread.currentThread().interrupt();
 			}
 		} else {
 			System.out.println("You have exceeded the time limit to choose your name and colour");
@@ -301,6 +304,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+					Thread.currentThread().interrupt();
 				}
 			}
 		}

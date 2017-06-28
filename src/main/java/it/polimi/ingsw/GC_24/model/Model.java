@@ -216,13 +216,10 @@ public class Model extends MyObservable implements Serializable {
 	 * score. All Values are entered in a List of SetOfValues
 	 */
 	public void getCorrespondingValueFromFile() {
-		BufferedReader br;
 		Gson gson = GsonBuilders.getGsonWithTypeAdapters();
 		String line = "ready";
-		try {
-			br = new BufferedReader(
-					new FileReader("src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/convertFaithPoints.json"));
-
+		try (BufferedReader br = new BufferedReader(
+				new FileReader("src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/convertFaithPoints.json"))){
 			while (line != null) {
 				line = GsonBuilders.getLine(br);
 				correspondingValue.add(gson.fromJson(line, SetOfValues.class));

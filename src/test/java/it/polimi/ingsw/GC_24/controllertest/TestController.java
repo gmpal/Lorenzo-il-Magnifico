@@ -27,9 +27,7 @@ public class TestController {
 	Characters character1;
 	Ventures venture1;
 	Ventures venture2;
-	
-	
-	
+
 	@Before
 	public void setUp() throws Exception {
 		players = new ArrayList<>();
