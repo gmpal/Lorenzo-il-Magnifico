@@ -31,7 +31,7 @@ public class Territories extends Development {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append( "\nName = " + name );
+		builder.append( "\n[Name = " + name );
 		if (getImmediateEffect()!=null){
 			builder.append(", Immediate Effects = " + getImmediateEffect());
 			if (getImmediateEffect1()!=null)
@@ -40,6 +40,7 @@ public class Territories extends Development {
 		if (effectForHarvest!=null){
 			builder.append(", Die Value For Harvest = "+dieValueHarvest +", Harvest Effect = "+effectForHarvest);
 		}
+		builder.append("]");
 		return builder.toString();
 	}
   

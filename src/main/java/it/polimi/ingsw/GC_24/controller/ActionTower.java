@@ -207,7 +207,7 @@ public class ActionTower extends Action {
 	}
 	
 	@Override
-	protected String verifyIfEnoughServantsForThisPlace(String answerToPlayer) {
+	public String verifyIfEnoughServantsForThisPlace(String answerToPlayer) {
 		int placeCostRequired = this.place.getCostDice();
 		if (placeCostRequired > (this.familyMember.getMemberValue() + this.servants
 				+ getIncrementDieValueFromPermanentEffect())) {

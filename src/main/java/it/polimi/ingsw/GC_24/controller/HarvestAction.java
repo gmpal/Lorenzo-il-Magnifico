@@ -58,7 +58,7 @@ public class HarvestAction extends Action {
 				this.finalActionValue+=pe.getIncreaseDieValue();
 			}
 		}
-		this.finalActionValue += familyMember.getMemberValue() - harvestPlace.getAdditionalCostDice()+servants;
+		this.finalActionValue += familyMember.getMemberValue() - harvestPlace.getAdditionalCostDice() + servants;
 	}
 
 	private void createHarvestEffect() {
@@ -68,4 +68,9 @@ public class HarvestAction extends Action {
 	private void getHarvestTileValues() {
 		player.getMyBoard().getBonusTile().giveHarvestValues(player.getMyValues());		
 	}
+
+	public int getFinalValue() {
+		return finalActionValue;
+	}	
+	
 }

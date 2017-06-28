@@ -65,7 +65,7 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+			}
 
 	}
 
@@ -144,6 +144,7 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				Thread.currentThread().interrupt();
 			}
 			new Thread(new Runnable(){
 				public void run(){

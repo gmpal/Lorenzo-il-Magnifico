@@ -20,7 +20,7 @@ public class CouncilPlace extends Place {
 		this.privilegeEffect = privilegeEffect;
 	}
 
-	@Override
+/*	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("\n");
@@ -30,7 +30,7 @@ public class CouncilPlace extends Place {
 			builder.append("Place occupied by the " + getFamMemberOnPlace().getPlayerColour() + " player");
 		}
 		return builder.toString();
-	}
+	}*/
 
 	// getter and setter
 	public ImmediateEffect getPrivilegeEffect() {

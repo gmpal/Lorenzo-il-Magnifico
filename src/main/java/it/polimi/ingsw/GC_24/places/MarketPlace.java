@@ -29,7 +29,7 @@ public class MarketPlace extends Place {
 		player.setMyValues(this.value.getEffectValues().addTwoSetsOfValues(player.getMyValues()));
 	}
 */
-	@Override
+/*	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append( "\n" );
@@ -43,14 +43,9 @@ public class MarketPlace extends Place {
 			builder.append("Place occupied by the " + getFamMemberOnPlace().getPlayerColour() + " player");
 		}
 		return builder.toString();
-	}
+	}*/
 
 	// getters and setters
-	
-
-	public ImmediateEffect getPrivilegeEffect() {
-		return privilegeEffect;
-	}
 
 	public ValueEffect getValue() {
 		return value;
@@ -58,6 +53,10 @@ public class MarketPlace extends Place {
 
 	public void setValue(ValueEffect value) {
 		this.value = value;
+	}
+	
+	public ImmediateEffect getPrivilegeEffect() {
+		return privilegeEffect;
 	}
 
 	public void setPrivilegeEffect(ImmediateEffect privilegeEffect) {

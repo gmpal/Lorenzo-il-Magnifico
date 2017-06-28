@@ -23,7 +23,7 @@ public abstract class ActivityPlace extends Place{
 		this.additionalCostDice = additionalCostDice;
 	}	
 	
-	@Override
+/*	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append( "\n" );
@@ -34,5 +34,5 @@ public abstract class ActivityPlace extends Place{
 		}
 		return builder.toString();
 	}
-		
+		*/
 }

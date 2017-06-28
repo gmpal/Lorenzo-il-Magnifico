@@ -1,7 +1,6 @@
 package it.polimi.ingsw.GC_24.board;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
@@ -35,7 +34,7 @@ public class Market extends Area {
 		this.placesArray = createMarket();
 	}
 
-	public List<Place> createMarket() throws IOException {
+	public ArrayList<Place> createMarket() throws IOException {
 		int numPlaces;
 		BufferedReader br;
 		int indexEffectMarket = 0; // Is an index to take two effect per place
@@ -69,6 +68,25 @@ public class Market extends Area {
 					valueListMarket.get(indexEffectMarket++), COSTDICE));
 		}
 		return placesArray;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("\n");
+		for (Place p : placesArray) {
+			if (p.isAvailable()){
+				builder.append("[Place Available] - You can get: ");
+				if (p.getValue() != null)
+					builder.append(p.getValue());
+				if (((MarketPlace)p).getPrivilegeEffect() != null)
+					builder.append(((MarketPlace)p).getPrivilegeEffect());
+			}else{
+				builder.append("[Place occupied by the " + p.getFamMemberOnPlace().getPlayerColour() + " player]");
+			}
+			builder.append("\n");
+		}
+		return builder.toString();
 	}
 
 }

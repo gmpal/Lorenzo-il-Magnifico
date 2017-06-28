@@ -25,30 +25,33 @@ public class ActionFactory {
 			System.out.println("Fabbrica --> Creando un ActionTower");
 			newAction = new ActionTower(game, familiar, zone, floor, servants, cost, setOfSale);
 		}
-
 		else if (zone.equalsIgnoreCase("Harvest")) {
 			System.out.println("Fabbrica --> Creando un harvestAction ");
 			newAction = new HarvestAction(game, familiar, zone, floor, servants);
+
 			System.out.println("Fabbrica --> creata un harvestAction ");
+
 		}
-		
 		else if (zone.equalsIgnoreCase("Production")) {
 			System.out.println("Fabbrica --> creando una production action");
 			newAction = new ProductionAction(game, familiar, zone, floor, servants);
+
 			System.out.println("Fabbrica --> creata una production action");
 
 		}
-
-
 		else if (zone.equalsIgnoreCase("Council")) {
 			System.out.println("Fabbrica --> creando una councilpalace action ");
 			newAction = new CouncilPalaceAction(game, familiar, zone, floor, servants);
+
 			System.out.println("Fabbrica --> creata una councilpalace action ");
+
 		}
 		else if (zone.equalsIgnoreCase("Market")) {
 			System.out.println("Fabbrica --> creando una market action ");
 			newAction = new MarketAction(game, familiar, zone, floor, servants);
+
 			System.out.println("Fabbrica --> creata una market action ");
+
 		}
 		return newAction;
 

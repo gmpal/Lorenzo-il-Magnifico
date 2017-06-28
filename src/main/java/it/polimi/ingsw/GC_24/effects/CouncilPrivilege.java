@@ -65,10 +65,7 @@ public class CouncilPrivilege extends ImmediateEffect {
 			(councilPrivileges.get(value-1)).addTwoSetsOfValues(set);
 		
 		}
-		
 	}
-
-	
 
 	@Override
 	public void giveImmediateEffect(Player player) {

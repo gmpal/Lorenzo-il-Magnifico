@@ -82,9 +82,11 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		while (!game.getGameState().equals(State.ENDED)) {
 			System.out.println("GAME STATE: " + game.getGameState());
 
+
 			game.getBoard().clear();
 			System.out.println("1");
 			game.getCards().dealCards(game.getBoard(), cardsIndex / 2 + 1);
+
 			game.sendModel();
 
 			System.out.println("Controller: everything clear and model sent");
@@ -96,6 +98,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					// reset the current player
 					this.currentPlayer = game.getCurrentPlayer();
 					System.out.println("Current Player is ---> " + this.currentPlayer.getMyName());
+
 
 					sendCurrentPlayer();
 
@@ -116,6 +119,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 								actionWaiting.wait();
 							} catch (InterruptedException e) {
 								e.printStackTrace();
+
 							}
 						}
 					}
@@ -124,6 +128,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 					/* Repeats until the players are finished */
 				}
+
 			}
 			// it's time to look at the council palace for turn updates!
 			councilTurnArray = game.getBoard().getCouncilPalace().getTemporaryTurn();
@@ -232,18 +237,21 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			if (game.getPlayers().get(i).getMyValues().getVictoryPoints().getQuantity() == finalVictoryPoints.get(0)) {
 				winners.add(game.getPlayers().get(i));
 			}
+
 		}
 		if (winners.size() > 1) {
 			for (Player playert : playerTurn) {
 				for (Player p : winners) {
 					if (playert.equals(p)) {
 						winner = p;
+
 					}
 				}
 			}
 		} else {
 			winner = winners.get(0);
 		}
+
 		return winner;
 	}
 
@@ -264,6 +272,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			player.getMyValues().getVictoryPoints()
 					.addQuantity(player.getMyValues().convertSetToVictoryPoints().getQuantity());
 			finalMilitaryPoints.add(player.getMyValues().getMilitaryPoints().getQuantity());
+
 		}
 		for (int i = 0; i < finalMilitaryPoints.size() - 1; i++) {
 			for (int j = i + 1; j < finalMilitaryPoints.size(); j++) {
@@ -295,6 +304,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				v2.addValueToSet(game.getPlayers().get(i).getMyValues());
 			}
 		}
+
 	}
 
 	/**
@@ -309,6 +319,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			}
 			i = temporaryTurn.indexOf(player);
 			playerTurn.add(i, player);
+
 		}
 	}
 
@@ -322,7 +333,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		notifyMyObservers(hashMap);
 
 	}
-
+  //SEND METHODS
 	/** This method sends to the clients the turn array to be updated */
 	private void sendTurnArray(List<Player> turnArray) {
 		hashMap = new HashMap<>();
@@ -468,6 +479,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		String tempFloor = tokenizer.nextToken();
 		String tempServants = tokenizer.nextToken();
 
+
 		/**
 		 * Sees if there's an interactive permanent effect WITH DOUBLE SALE
 		 * before doing an action, because this particular effect requires user
@@ -485,6 +497,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
+
 					}
 				}
 			}
@@ -679,10 +692,12 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			if (effect instanceof CouncilPrivilege) {
 				System.out.println("Controller --> Ho ricevuto i parametri per un effetto consiglio, li assegno ");
 
+
 				// THE ANSWER IS SUPPOSED TO BE LIKE "1 5 6" --> the chosen
 				// privileges. It's handled directly in councilPrivilege
 				((CouncilPrivilege) effect).assignParameters(parametersAnswer);
 			}
+
 
 			if (effect instanceof Exchange) {
 				System.out.println("Controller --> Ho ricevuto i parametri per un effetto exchange, li assegno ");
@@ -764,12 +779,14 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			System.out.println("Controller --> C'è un doppio costo, invio l'interazione ");
 			MilitaryPoint requirements = cardRequested.getRequiredMilitaryPoints();
 			hashMap = new HashMap<>();
+
 			hashMap.put("Cost1", cost1);
 			hashMap.put("Cost2", cost2);
 			hashMap.put("Requirements", requirements);
 			this.notifySingleObserver((MyObserver) o, hashMap);
 			System.out.println(
 					"Controller --> Inviando la richiesta di scelta costo, mi metto in attesa della risposta  ");
+
 			synchronized (tempCostWaiting) {
 				while (this.tempCost.isEmpty()) {
 					try {
@@ -777,17 +794,26 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
+
+						Thread.currentThread().interrupt();
+
 					}
 				}
 
 			}
 
+
 			System.out.println("Controller --> L'utente ha scelto, mi sono risvegliato ");
+
 		}
 		System.out.println("Controller --> Fine gestione carta Venture ");
 	}
 
-	// game's getter
+
+	}
+
+	// getters and setters
+
 	public Model getGame() {
 		return game;
 	}
@@ -799,4 +825,15 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	public void setControllerNumber(int controllerNumber) {
 		this.controllerNumber = controllerNumber;
 	}
+
+
+	public List<Player> getPlayerTurn() {
+		return playerTurn;
+	}
+
+	public void setPlayerTurn(List<Player> playerTurn) {
+		this.playerTurn = playerTurn;
+	}
+	
+
 }

@@ -17,8 +17,6 @@ import it.polimi.ingsw.GC_24.devCardJsonFile.GsonBuilders;
 import it.polimi.ingsw.GC_24.effects.CouncilPrivilege;
 import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
 import it.polimi.ingsw.GC_24.effects.ValueEffect;
-
-import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.places.Place;
 import it.polimi.ingsw.GC_24.places.TowerPlace;
 
@@ -46,7 +44,7 @@ public class Tower extends Area {
 	 * 
 	 * @param string
 	 */
-	public List<Place> createTower(String fileName) throws IOException {
+	public ArrayList<Place> createTower(String fileName) throws IOException {
 		int value = 1; // Default dieCost's value of place
 		int indexEffectTower = 0; // Is an index to take two effect per place
 		BufferedReader br;
@@ -83,5 +81,23 @@ public class Tower extends Area {
 			if (tempPlace.getCorrespondingCard() == null)
 				tempPlace.setCorrespondingCard(card);
 		}
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("\n");
+		for (Place p : placesArray) {
+			if (((TowerPlace) p).getCorrespondingCard() != null) {
+				builder.append(((TowerPlace) p).getCorrespondingCard().toString());
+				if (!p.getValue().getEffectValues().isEmpty()) {
+					builder.append("\n\tValue you get from place = " + p.getValue());
+				}
+			} else {
+				builder.append("[Card already taken by the " + p.getFamMemberOnPlace().getPlayerColour() + " player]");
+			}
+			builder.append("\n");
+		}
+		return builder.toString();
 	}
 }
