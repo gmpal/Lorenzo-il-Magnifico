@@ -59,14 +59,20 @@ public class CouncilPrivilege extends ImmediateEffect {
 		this.set = new SetOfValues();
 		StringTokenizer reader = new StringTokenizer(string);
 		while (reader.hasMoreTokens()){
-			int value = Integer.parseInt(string);
-			set.addTwoSetsOfValues(councilPrivileges.get(value-1));
+			
+			int value = Integer.parseInt(reader.nextToken());
+		
+			(councilPrivileges.get(value-1)).addTwoSetsOfValues(set);
+		
 		}
 	}
 
 	@Override
 	public void giveImmediateEffect(Player player) {
+		System.out.println("Before"+player.getMyValues());
 		set.addTwoSetsOfValues(player.getMyValues());
+	
+		System.out.println("After"+player.getMyValues());
 	}
 
 	// Prints the composition of the Council

@@ -23,9 +23,11 @@ public class ValueEffect extends ImmediateEffect {
 	*/
 	@Override
 	public void giveImmediateEffect(Player player) {
+		System.out.println("Values before"+ player.getMyValues());
 		if (this.setOfValue != null) {
 			this.setOfValue.addTwoSetsOfValues(player.getMyValues());
 		}
+		System.out.println("Values after"+ player.getMyValues());
 	}
 
 	@Override

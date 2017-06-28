@@ -67,8 +67,9 @@ public class Server {
 					registerObservers();
 					game.addPlayer();
 				
-      } catch (IOException e) {
+      } catch (Exception e) {
 				e.printStackTrace();
+				System.out.println("PLAYER DISCONNESSO, CHE SI FA?");
 				break;
 			}
 		}

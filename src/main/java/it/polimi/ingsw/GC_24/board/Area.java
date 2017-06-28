@@ -54,20 +54,25 @@ public abstract class Area implements java.io.Serializable {
 	/**This methods returns the corresponding space if the value is different than zero,
 	 * else it returns the first empty space available*/
 	public Place getPlaceFromStringOrFirstIfZero(String place){
+		System.out.println("Controller --> (Dentro getPlaceFromStringOrFirstIfZero) Controllo il place che mi hai inviato ");
 		if (!place.equals("0")){
-			//System.out.println("Place received is different than 0");
+
+			System.out.println("Controller --> (Dentro getPlaceFromStringOrFirstIfZero) Il place è diverso da 0");
+
 			int i = Integer.parseInt(place);
-			System.out.println("IntegerParsed");
+			System.out.println("Controller --> (Dentro getPlaceFromStringOrFirstIfZero) Place trasformato in un intero");
 			if (placesArray.size() < i){
-				//System.out.println("Dimensione minore del richiesto");
+
+				System.out.println("Controller --> (Dentro getPlaceFromStringOrFirstIfZero) l'array non è abbastanza grande per il posto scelto da te ");
 				return null;
 			}
 			else {
-			//	System.out.println("Richiesta ok vediamo placesArray");
-			//	System.out.println(placesArray);
+				System.out.println("Controller --> (Dentro getPlaceFromStringOrFirstIfZero) La tua richiesta è adeguata, ritorno il posto corrispondente");
+
 				return placesArray.get(i-1);
 			}
 		}else{ 		
+			System.out.println("Controller -->(Dentro getPlaceFromStringOrFirstIfZero) Ricevuto un posto nullo, quindi vuoi il primo posto libero");
 			return this.getFirstEmptyPlace();}
 		
 	}
