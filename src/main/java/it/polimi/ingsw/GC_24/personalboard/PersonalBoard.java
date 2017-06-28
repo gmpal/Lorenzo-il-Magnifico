@@ -1,5 +1,9 @@
 package it.polimi.ingsw.GC_24.personalboard;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import it.polimi.ingsw.GC_24.cards.Excommunication;
 import it.polimi.ingsw.GC_24.values.VictoryPoint;
 
 public class PersonalBoard implements java.io.Serializable {
@@ -16,6 +20,7 @@ public class PersonalBoard implements java.io.Serializable {
 	private PersonalTerritories personalTerritories;
 	private PersonalCharacters personalCharacters;
 	private BonusTile mybonusTile;
+	private List<Excommunication> personalExcommunication=new ArrayList<>();
 
 	// constructor
 	public PersonalBoard(int playerNumber) {
@@ -24,6 +29,7 @@ public class PersonalBoard implements java.io.Serializable {
 		this.personalTerritories = new PersonalTerritories();
 		this.personalCharacters = new PersonalCharacters();
 		this.mybonusTile = new BonusTile(true, playerNumber);
+		this.personalExcommunication=new ArrayList<>();
 	}
 
 	@Override
@@ -78,5 +84,13 @@ public class PersonalBoard implements java.io.Serializable {
 
 	public void setBonusTile(BonusTile mybonusTile) {
 		this.mybonusTile = mybonusTile;
+	}
+
+	public List<Excommunication> getPersonalExcommunication() {
+		return personalExcommunication;
+	}
+
+	public void setPersonalExcommunication(List<Excommunication> personalExcommunication) {
+		this.personalExcommunication = personalExcommunication;
 	}
 }

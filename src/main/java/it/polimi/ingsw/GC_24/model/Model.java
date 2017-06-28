@@ -1,6 +1,7 @@
 package it.polimi.ingsw.GC_24.model;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -12,10 +13,13 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.board.Board;
 import it.polimi.ingsw.GC_24.cards.Deck;
+import it.polimi.ingsw.GC_24.cards.Excommunication;
+import it.polimi.ingsw.GC_24.cards.Territories;
 import it.polimi.ingsw.GC_24.client.view.ServerSocketView;
 import it.polimi.ingsw.GC_24.devCardJsonFile.GsonBuilders;
 
@@ -38,6 +42,7 @@ public class Model extends MyObservable implements Serializable {
 	private List<Ranking> rankings;
 	private HashMap<String, Object> hm;
 	private Deck cards;
+	private List<Excommunication> excommunicationDeck = new ArrayList<>();;
 
 	private int modelNumber;
 
@@ -60,10 +65,26 @@ public class Model extends MyObservable implements Serializable {
 		this.modelNumber = modelNumber;
 		this.cards = new Deck();
 		getCorrespondingValueFromFile();
+		createExcommunicationDeck();
+	}
+
+	private void createExcommunicationDeck() {
+		BufferedReader br;
+		Gson gson = GsonBuilders.getGsonWithTypeAdapters();
+		String line;
+		try {
+			br = new BufferedReader(
+					new FileReader("src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/excommunicationCards.json"));
+
+			while ((line = GsonBuilders.getLine(br)) != null) {
+				this.excommunicationDeck.add(gson.fromJson(line, Excommunication.class));
+			}
+		} catch (IOException e) {
+			System.out.println("There is a problem with the configuration file");
+		}
 	}
 
 	public synchronized void addPlayer() {
-
 
 		counter++;
 		sendNumberToClient();
@@ -131,7 +152,8 @@ public class Model extends MyObservable implements Serializable {
 	public void sendModel() {
 		hm = new HashMap<>();
 		hm.put("model", this);
-		//System.out.println("FROM MODEL SENDING THIS "+this.getPlayers().get(0).getMyValues());
+		// System.out.println("FROM MODEL SENDING THIS
+		// "+this.getPlayers().get(0).getMyValues());
 		notifyMyObservers(hm);
 	}
 
@@ -250,6 +272,5 @@ public class Model extends MyObservable implements Serializable {
 	public List<SetOfValues> getCorrespondingValue() {
 		return correspondingValue;
 	}
-	
 
 }
