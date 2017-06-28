@@ -32,7 +32,7 @@ public class Buildings extends Development {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append( "\nName = " + name + ", Cost = " + getCost());
+		builder.append( "\n[Name = " + name + ", Cost = " + getCost());
 		if (getImmediateEffect()!=null){
 			builder.append(", Immediate Effects = " + getImmediateEffect());
 			if (getImmediateEffect1()!=null)
@@ -43,6 +43,7 @@ public class Buildings extends Development {
 			if (productionEffect1!=null)
 				builder.append(" and " + productionEffect1);
 		}
+		builder.append("]");
 		return builder.toString();
 	}
 

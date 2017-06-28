@@ -66,6 +66,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
+						Thread.currentThread().interrupt();
 					}
 				}
 			}
@@ -114,6 +115,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 								} catch (InterruptedException e) {
 									// TODO: auto-generated catch block
 									e.printStackTrace();
+									Thread.currentThread().interrupt();
 								}
 							}
 						}
@@ -131,7 +133,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				// let's go to next state
 				game.incrementState();
 				cardsIndex++;
-				// and repeat everything til state "ENDED"
+				// and repeat everything until the state "ENDED"
 			}
 			gameEndHandler();
 
@@ -250,7 +252,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			}
 			for (int i = 0; i < finalMilitaryPoints.size() - 1; i++) {
 				for (int j = i + 1; j < finalMilitaryPoints.size(); j++) {
-					if (finalMilitaryPoints.get(i) == finalMilitaryPoints.get(j)) {
+					if (finalMilitaryPoints.get(i).equals(finalMilitaryPoints.get(j))) {
 						finalMilitaryPoints.remove(j--);
 					}
 				}
@@ -261,7 +263,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		}
 
 		/**
-		 * This method convert Military Points to Victory Points though a List of
+		 * This method convert Military Points to Victory Points through a List of
 		 * Integer, this list contains the players' quantity of Military Points
 		 * sorted.
 		 */
@@ -270,11 +272,9 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			VictoryPoint v1 = new VictoryPoint(5);
 			VictoryPoint v2 = new VictoryPoint(2);
 			for (int i = 0; i < game.getPlayers().size(); i++) {
-				if (game.getPlayers().get(i).getMyValues().getMilitaryPoints().getQuantity() == finalMilitaryPoints
-						.get(0)) {
+				if (game.getPlayers().get(i).getMyValues().getMilitaryPoints().getQuantity() == finalMilitaryPoints.get(0)) {
 					v1.addValueToSet(game.getPlayers().get(i).getMyValues());
-				} else if (game.getPlayers().get(i).getMyValues().getMilitaryPoints().getQuantity() == finalMilitaryPoints
-						.get(1)) {
+				} else if (game.getPlayers().get(i).getMyValues().getMilitaryPoints().getQuantity() == finalMilitaryPoints.get(1)) {
 					v2.addValueToSet(game.getPlayers().get(i).getMyValues());
 				}
 			}
@@ -300,6 +300,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			notifyMyObservers(hashMap);
 
 		}
+		
+		// SEND METHODS
 		/**This method sends to the clients the turn array to be updated*/
 		private void sendTurnArray(List<Player> turnArray) {
 			hashMap = new HashMap<>();
@@ -447,6 +449,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
+							Thread.currentThread().interrupt();
 						}
 					}
 				}
@@ -576,6 +579,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
+							Thread.currentThread().interrupt();
 						}
 					}
 				}
@@ -657,36 +661,47 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				hashMap = new HashMap<>();
 				hashMap.put("Cost1", cost1);
 				hashMap.put("Cost2", cost2);
-				hashMap.put("Requirements", requirements);
-				this.notifySingleObserver((MyObserver) o, hashMap);
+			hashMap.put("Requirements", requirements);
+			this.notifySingleObserver((MyObserver) o, hashMap);
 
-				synchronized (tempCostWaiting) {
-					while (this.tempCost.isEmpty()) {
-						try {
-							tempCostWaiting.wait();
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+			synchronized (tempCostWaiting) {
+				while (this.tempCost.isEmpty()) {
+					try {
+						tempCostWaiting.wait();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						Thread.currentThread().interrupt();
 					}
-
 				}
 
-				System.out.println("The user has chosen the double cost he wants");
 			}
 
+			System.out.println("The user has chosen the double cost he wants");
 		}
 
-		// game's getter
-		public Model getGame() {
-			return game;
-		}
+	}
 
-		public int getControllerNumber() {
-			return controllerNumber;
-		}
-  
+	// getters and setters
+	public Model getGame() {
+		return game;
+	}
+
+	public int getControllerNumber() {
+		return controllerNumber;
+	}
+
 	public void setControllerNumber(int controllerNumber) {
 		this.controllerNumber = controllerNumber;
-  }
+	}
+
+	public List<Player> getPlayerTurn() {
+		return playerTurn;
+	}
+
+	public void setPlayerTurn(List<Player> playerTurn) {
+		this.playerTurn = playerTurn;
+	}
+	
+	
 }

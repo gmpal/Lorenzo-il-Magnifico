@@ -2,12 +2,9 @@ package it.polimi.ingsw.GC_24.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import it.polimi.ingsw.GC_24.cards.Characters;
 import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
 import it.polimi.ingsw.GC_24.effects.IncreaseDieValueActivity;
-import it.polimi.ingsw.GC_24.effects.PerformHarvest;
-
 import it.polimi.ingsw.GC_24.effects.PerformProduction;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.places.ProductionPlace;
@@ -53,7 +50,7 @@ public class ProductionAction extends Action {
 	 * This method check if player has a card with Permanent Effect
 	 * "IncreaseDieValueProduction" and set the final action value.
 	 */
-	private void getFinalActionValue() {
+	public void getFinalActionValue() {
 		for (int i = 0; i < player.getMyBoard().getPersonalCharacters().getCards().size(); i++) {
 			Characters c = (Characters) player.getMyBoard().getPersonalCharacters().getCards().get(i);
 			if (c.getPermanentEffects().getName().equals("increaseDieValueProduction")) {
@@ -73,5 +70,9 @@ public class ProductionAction extends Action {
 	private void getProductionTileValues() {
 		player.getMyBoard().getBonusTile().giveProductionValues(player.getMyValues());
 
+	}
+	
+	public int getFinalValue() {
+		return finalActionValue;
 	}
 }

@@ -27,7 +27,7 @@ public class Characters extends Development {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append( "\nName = " + name + ", Cost = " + getCost());
+		builder.append( "\n[Name = " + name + ", Cost = " + getCost());
 		if (getImmediateEffect()!=null){
 			builder.append(", Immediate Effects = " + getImmediateEffect());
 			if (getImmediateEffect1()!=null)
@@ -36,6 +36,7 @@ public class Characters extends Development {
 		if (permanentEffects!=null){
 			builder.append(", Permanent Effect = "+permanentEffects);
 		}
+		builder.append("]");
 		return builder.toString();
 	}
 
