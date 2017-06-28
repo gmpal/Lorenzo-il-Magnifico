@@ -1,14 +1,11 @@
 package it.polimi.ingsw.GC_24.boardtest;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+
 import org.junit.Before;
 import org.junit.Test;
 import it.polimi.ingsw.GC_24.board.Tower;
 import it.polimi.ingsw.GC_24.cards.Territories;
-import it.polimi.ingsw.GC_24.model.Player;
-import it.polimi.ingsw.GC_24.model.PlayerColour;
 import it.polimi.ingsw.GC_24.places.TowerPlace;
 
 public class TestTower {

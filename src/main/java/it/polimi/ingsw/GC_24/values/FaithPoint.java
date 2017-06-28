@@ -1,13 +1,6 @@
 package it.polimi.ingsw.GC_24.values;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-
-import com.google.gson.Gson;
-import it.polimi.ingsw.GC_24.devCardJsonFile.GsonBuilders;
 import it.polimi.ingsw.GC_24.model.Player;
 
 public class FaithPoint extends Value {
@@ -53,7 +46,7 @@ public class FaithPoint extends Value {
 	 * This method return the corresponding Values of Faith Points
 	 */
 	public SetOfValues convertToValue(List<SetOfValues> correspondingValue) {
-		return correspondingValue.get(this.quantity - 1);
+		return correspondingValue.get(this.quantity);
 	}
 	
 	@Override

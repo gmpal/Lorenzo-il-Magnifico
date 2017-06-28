@@ -1,17 +1,10 @@
 package it.polimi.ingsw.GC_24.controller;
 
 import java.util.List;
-
 import it.polimi.ingsw.GC_24.board.Area;
-import it.polimi.ingsw.GC_24.cards.Characters;
 import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
-import it.polimi.ingsw.GC_24.effects.IncreaseDieValueActivity;
-import it.polimi.ingsw.GC_24.effects.IncreaseDieValueCard;
-import it.polimi.ingsw.GC_24.model.FamilyMember;
-import it.polimi.ingsw.GC_24.model.Model;
-import it.polimi.ingsw.GC_24.model.Player;
+import it.polimi.ingsw.GC_24.model.*;
 import it.polimi.ingsw.GC_24.places.Place;
-import it.polimi.ingsw.GC_24.values.SetOfValues;
 import it.polimi.ingsw.GC_24.values.Value;
 
 public abstract class Action {
@@ -72,7 +65,7 @@ public abstract class Action {
 	public abstract List<ImmediateEffect> run();
 
 	// verify methods
-	protected String verifyIfEnoughServants(String answerToPlayer) {
+	public String verifyIfEnoughServants(String answerToPlayer) {
 		if (player.getMyValues().getServants().getQuantity() < this.servants) {
 
 			return answerToPlayer + "You don't have enough servants to use! \n";
@@ -81,51 +74,103 @@ public abstract class Action {
 		return answerToPlayer;
 	}
 
-	protected String verifyPlaceAvailability(String answerToPlayer) {
+	public String verifyPlaceAvailability(String answerToPlayer) {
 
 		if (!this.place.isAvailable() || this.place == null) {
-			return answerToPlayer + "Sorry, place not available!";
+			return answerToPlayer + "Sorry, place not available!\n";
 		} else
 			return answerToPlayer;
 	}
 
-	protected String verifyFamilyMemberAvailability(String answerToPlayer) {
+	public String verifyFamilyMemberAvailability(String answerToPlayer) {
 		if (!this.familyMember.isAvailable()) {
 			return answerToPlayer + "Sorry, this familiar is not available! \n";
 		} else
 			return answerToPlayer;
 	}
 
-	protected String verifyZoneOccupiedByMe(String answerToPlayer) {
+	public String verifyZoneOccupiedByMe(String answerToPlayer) {
 		if (this.zone.isThereSameColour(this.familyMember)) {
-			return answerToPlayer + "This zone is already occupied by one of your family members. Choose another zone. \n";
+			return answerToPlayer + "This zone is already occupied by one of your family members. Choose another zone\n";
 		} else
 			return answerToPlayer;
 	}
 
-	protected String verifyIfEnoughServantsForThisPlace(String answerToPlayer) {
+	public String verifyIfEnoughServantsForThisPlace(String answerToPlayer) {
 		int placeCostRequired = this.place.getCostDice();
 		if (placeCostRequired > (this.familyMember.getMemberValue() + this.servants)){
-			return answerToPlayer + "You have not used enough servants for this place. Please choose another place. \n";
+			return answerToPlayer + "You have not used enough servants for this place. Please choose another place\n";
 		}
 		return answerToPlayer;
 	}
 
 	
 	// shared run methods
-	protected void placeFamiliar() {
+	public void placeFamiliar() {
 		place.setFamMemberOnPlace(familyMember);
 		familyMember.setAvailable(false);
 	}
 
-	protected void payValue(Value value) {
+	public void payValue(Value value) {
 		value.subValuefromSet(player.getMyValues());
 	}
 
-	protected void takeValueFromPlace() {
+	public void takeValueFromPlace() {
 		if (place.getValue().getEffectValues() != null) {
 			place.getValue().getEffectValues().addTwoSetsOfValues(player.getMyValues());
 		}
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((familyMember == null) ? 0 : familyMember.hashCode());
+		result = prime * result + ((place == null) ? 0 : place.hashCode());
+		result = prime * result + ((player == null) ? 0 : player.hashCode());
+		result = prime * result + servants;
+		result = prime * result + ((zone == null) ? 0 : zone.hashCode());
+		result = prime * result + ((zoneString == null) ? 0 : zoneString.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Action other = (Action) obj;
+		if (familyMember == null) {
+			if (other.familyMember != null)
+				return false;
+		} else if (!familyMember.equals(other.familyMember))
+			return false;
+		if (place == null) {
+			if (other.place != null)
+				return false;
+		} else if (!place.equals(other.place))
+			return false;
+		if (player == null) {
+			if (other.player != null)
+				return false;
+		} else if (!player.equals(other.player))
+			return false;
+		if (servants != other.servants)
+			return false;
+		if (zone == null) {
+			if (other.zone != null)
+				return false;
+		} else if (!zone.equals(other.zone))
+			return false;
+		if (zoneString == null) {
+			if (other.zoneString != null)
+				return false;
+		} else if (!zoneString.equals(other.zoneString))
+			return false;
+		return true;
 	}
 
 	// getters and setters
@@ -149,4 +194,15 @@ public abstract class Action {
 		this.player = player;
 	}
 
+	public Player getPlayer() {
+		return player;
+	}
+	
+	public void setZone(Area zone) {
+		this.zone = zone;
+	}
+
+	public Area getZone() {
+		return zone;
+	}
 }

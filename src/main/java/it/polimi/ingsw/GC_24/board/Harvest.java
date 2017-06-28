@@ -33,7 +33,7 @@ public class Harvest extends Area {
 	}
 	
 	/**inserts empty ProductionPlaces in Production*/
-	public List<Place> createHarvest(){
+	public ArrayList<Place> createHarvest(){
 		int numProducionPlaces;	
 		if(this.placesLocked){
 			numProducionPlaces=MINPLACES;
@@ -49,4 +49,22 @@ public class Harvest extends Area {
 		return placesArray;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("\n");
+		for (Place p : placesArray){
+			if (!p.isAvailable()) {
+				builder.append("[Place occupied by the " + p.getFamMemberOnPlace().getPlayerColour() + " player]");
+			} else {
+				if(p.getValue()!=null)
+					builder.append("[Place Available] --> You will have to pay an extra die's cost of: " + p.getValue());
+				else
+					builder.append("[Place Available]");
+				return builder.toString();
+			}
+			builder.append("\n");
+		}
+		return builder.toString();
+	}
 }

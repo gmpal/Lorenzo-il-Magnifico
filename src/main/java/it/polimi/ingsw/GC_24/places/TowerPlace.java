@@ -3,7 +3,6 @@ package it.polimi.ingsw.GC_24.places;
 import it.polimi.ingsw.GC_24.cards.Development;
 import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
 import it.polimi.ingsw.GC_24.effects.ValueEffect;
-import it.polimi.ingsw.GC_24.model.Player;
 
 public class TowerPlace extends Place {
 
@@ -33,7 +32,7 @@ public class TowerPlace extends Place {
 		this.correspondingCard = null;
 	}
 
-	@Override
+	/*@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		if (correspondingCard!=null){
@@ -45,7 +44,7 @@ public class TowerPlace extends Place {
 			builder.append("Card already taken by the "+famMemberOnPlace.getPlayerColour()+" player");
 		}
 		return builder.toString();
-	}
+	}*/
 
 	public Development getCorrespondingCard() {
 		return correspondingCard;

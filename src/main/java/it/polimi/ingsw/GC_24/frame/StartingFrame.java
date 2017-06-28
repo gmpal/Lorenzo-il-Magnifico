@@ -18,7 +18,7 @@ public class StartingFrame extends JFrame {
 	private JPanel panel4;
 	private JSplitPane splitPane;
 	
-	private Image board = Toolkit.getDefaultToolkit().getImage("gameboard.jpeg");
+	//private Image board = Toolkit.getDefaultToolkit().getImage("gameboard.jpeg");
 	
 	public StartingFrame(String title){
 		setTitle(title);
@@ -90,15 +90,16 @@ public class StartingFrame extends JFrame {
 			track.waitForID(0);
 		} catch (InterruptedException e){
 			e.printStackTrace();
+			Thread.currentThread().interrupt();
 		}
 	}
 	
-	@Override
+/*	@Override
 	public void paintComponents(Graphics graphic) {
 		super.paintComponents(graphic);
 		loadImage(board);
 		graphic.drawImage(board,0,0,getWidth(),getHeight(),this);
-	}
+	}*/
 }
 
 

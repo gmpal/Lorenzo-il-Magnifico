@@ -22,29 +22,21 @@ public class ActionFactory {
 				|| zone.equalsIgnoreCase("buildings") || zone.equalsIgnoreCase("ventures")) {
 			newAction = new ActionTower(game, familiar, zone, floor, servants, cost, setOfSale);
 		}
-
 		else if (zone.equalsIgnoreCase("Harvest")) {
 
 			newAction = new HarvestAction(game, familiar, zone, floor, servants);
-
 		}
-		
 		else if (zone.equalsIgnoreCase("Production")) {
 
 			newAction = new ProductionAction(game, familiar, zone, floor, servants);
-
 		}
-
-
 		else if (zone.equalsIgnoreCase("Council")) {
 
 			newAction = new CouncilPalaceAction(game, familiar, zone, floor, servants);
-
 		}
 		else if (zone.equalsIgnoreCase("Market")) {
 
 			newAction = new MarketAction(game, familiar, zone, floor, servants);
-
 		}
 		return newAction;
 
