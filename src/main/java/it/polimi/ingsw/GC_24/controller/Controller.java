@@ -79,7 +79,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		while (!game.getGameState().equals(State.ENDED)) {
 			System.out.println("GAME STATE: " + game.getGameState());
 
-
 			game.getBoard().clear();
 			System.out.println("1");
 			game.getCards().dealCards(game.getBoard(), cardsIndex / 2 + 1);
@@ -95,7 +94,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					// reset the current player
 					this.currentPlayer = game.getCurrentPlayer();
 					System.out.println("Current Player is ---> " + this.currentPlayer.getMyName());
-
 
 					sendCurrentPlayer();
 
@@ -140,11 +138,11 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	}
 
-
 	private void startTimerForPlayerAction(Timer t1) {
 		t1.schedule(new TimerTask() {
 			public void run() {
-				sendInfo("Time out for "+currentPlayer.getMyName()+ ", player number "+currentPlayer.getPlayerNumber()+", colour "+currentPlayer.getMyColour());
+				sendInfo("Time out for " + currentPlayer.getMyName() + ", player number "
+						+ currentPlayer.getPlayerNumber() + ", colour " + currentPlayer.getMyColour());
 				incrementTurn();
 				// wakes up the run() that is followed by a timer.cancel();
 				synchronized (actionWaiting) {
@@ -262,8 +260,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 		for (int i = 0; i < game.getPlayers().size(); i++) {
 			player = game.getPlayers().get(i);
-			player.getMyValues().addTwoSetsOfValues(
-					player.getMyValues().getFaithPoints().convertToValue(game.getCorrespondingValue()));
+			player.getMyValues().getFaithPoints().convertToValue(game.getCorrespondingValue())
+					.addTwoSetsOfValues(player.getMyValues());
 			player.getMyValues().getVictoryPoints()
 					.addQuantity(player.getMyBoard().convertToVictoryPoints().getQuantity());
 			player.getMyValues().getVictoryPoints()
@@ -330,7 +328,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		notifyMyObservers(hashMap);
 
 	}
-  //SEND METHODS
+
+	// SEND METHODS
 	/** This method sends to the clients the turn array to be updated */
 	private void sendTurnArray(List<Player> turnArray) {
 		hashMap = new HashMap<>();
@@ -379,7 +378,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	}
 
-
 	/**
 	 * This method analyzes the incoming HashMap. If it finds specific keywords
 	 * in the keySet, it does different things with different objects
@@ -398,7 +396,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			return handlePlayer(request);
 
 		}
-
 
 		else if (command.contains("chosenCost")) {
 			synchronized (tempCostWaiting) {
@@ -439,7 +436,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			}
 			return "sale chosen";
 
-
 		}
 
 		else {
@@ -479,7 +475,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		String tempFloor = tokenizer.nextToken();
 		String tempServants = tokenizer.nextToken();
 
-
 		/**
 		 * Sees if there's an interactive permanent effect WITH DOUBLE SALE
 		 * before doing an action, because this particular effect requires user
@@ -497,7 +492,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-
 
 					}
 				}
@@ -520,7 +514,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		notifyMyObservers(hashMap);
 
 	}
-
 
 	private String verifyAction(Action action2) {
 		System.out.println("Controller --> Sto verificando ed eseguendo un'azione ");
@@ -548,7 +541,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		game.sendModel();
 		// awakenSleepingClient();
 		System.out.println("Controller --> Richiesta di risveglio inviata");
-
 
 	}
 
@@ -592,7 +584,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		if (!interactiveEffects.isEmpty()) {
 			System.out.println("Controller --> La lista contiene qualcosa");
 			int i = 0;
-		
+
 			for (ImmediateEffect effect : interactiveEffects) {
 				game.sendModel();
 				i++;
@@ -695,12 +687,10 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			if (effect instanceof CouncilPrivilege) {
 				System.out.println("Controller --> Ho ricevuto i parametri per un effetto consiglio, li assegno ");
 
-
 				// THE ANSWER IS SUPPOSED TO BE LIKE "1 5 6" --> the chosen
 				// privileges. It's handled directly in councilPrivilege
 				((CouncilPrivilege) effect).assignParameters(parametersAnswer);
 			}
-
 
 			if (effect instanceof Exchange) {
 				System.out.println("Controller --> Ho ricevuto i parametri per un effetto exchange, li assegno ");
@@ -805,7 +795,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 			}
 
-
 			System.out.println("Controller --> L'utente ha scelto, mi sono risvegliato ");
 
 		}
@@ -826,7 +815,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		this.controllerNumber = controllerNumber;
 	}
 
-
 	public List<Player> getPlayerTurn() {
 		return playerTurn;
 	}
@@ -834,7 +822,5 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	public void setPlayerTurn(List<Player> playerTurn) {
 		this.playerTurn = playerTurn;
 	}
-	
 
 }
-
