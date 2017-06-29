@@ -149,7 +149,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					actionWaiting.notify();
 				}
 			}
-		}, 100000);
+		}, 500000);
 
 	}
 
@@ -548,6 +548,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		System.out.println("Controller --> L'azione non ha superato i controlli");
 		sendProblems(o, responseToActionVerify);
 		System.out.println("Controller --> Inviata richiesta di problemi al client");
+		awakenSleepingClient();
 	}
 
 	private void notifyToProceedWithTurns() {

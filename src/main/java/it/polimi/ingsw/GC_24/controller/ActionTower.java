@@ -145,62 +145,64 @@ public class ActionTower extends Action {
 	 * card
 	 */
 	public String verifyCardResources(String answerToPlayer) {
-		String typeOfCard = towerPlace.getCorrespondingCard().getType();
-		if (typeOfCard.equalsIgnoreCase("Venture")) {
-			Ventures specificCard = (Ventures) towerPlace.getCorrespondingCard();
-			Value requirement = specificCard.getRequiredMilitaryPoints();
-			if (!this.player.getMyValues().doIHaveEnoughOfThis(requirement)) {
-				return answerToPlayer + "You don't have the required value for this card! Choose another card \n";
+		if (towerPlace.getCorrespondingCard() != null) {
+			String typeOfCard = towerPlace.getCorrespondingCard().getType();
+			if (typeOfCard.equalsIgnoreCase("Venture")) {
+				Ventures specificCard = (Ventures) towerPlace.getCorrespondingCard();
+				Value requirement = specificCard.getRequiredMilitaryPoints();
+				if (!this.player.getMyValues().doIHaveEnoughOfThis(requirement)) {
+					return answerToPlayer + "You don't have the required value for this card! Choose another card \n";
+				}
+			}
+
+			if (!player.getMyValues().doIHaveThisSet(temporaryCardCost)) {
+				return answerToPlayer + "You don't have enough resources to take this card! Choose another card \n";
 			}
 		}
-		
-		if (!player.getMyValues().doIHaveThisSet(temporaryCardCost)) {
-			return answerToPlayer + "You don't have enough resources to take this card! Choose another card \n";
-		}
-		else{
-				return answerToPlayer;
-
-		}
+		return answerToPlayer;
 	}
 
 	public String verifyTerritorySpaceAvailability(String answerToPlayer) {
 
 		TowerPlace tempTowerPlace = (TowerPlace) this.place;
-		String typeOfCard = tempTowerPlace.getCorrespondingCard().getType();
+		if (tempTowerPlace.getCorrespondingCard() != null) {
+			String typeOfCard = tempTowerPlace.getCorrespondingCard().getType();
 
-		int militaryPoints = this.player.getMyValues().getMilitaryPoints().getQuantity();
-		int territorySize = this.player.getMyBoard().getPersonalTerritories().getCards().size();
+			int militaryPoints = this.player.getMyValues().getMilitaryPoints().getQuantity();
+			int territorySize = this.player.getMyBoard().getPersonalTerritories().getCards().size();
 
-		if (typeOfCard.equals("Territory")) {
-			if (territorySize == 2 && militaryPoints < 3) {
-				return answerToPlayer + "Sorry, you need 3 Military Points to unlock the next Territory Space\n";
-			}
-			if (territorySize == 3 && militaryPoints < 7) {
-				return answerToPlayer + "Sorry, you need 7 Military Points to unlock the next Territory Space\n";
-			}
-			if (territorySize == 4 && militaryPoints < 12) {
-				return answerToPlayer + "Sorry, you need 12 Military Points to unlock the next Territory Space\n";
-			}
-			if (territorySize == 5 && militaryPoints < 18) {
-				return answerToPlayer + "Sorry, you need 18 Military Points to unlock the next Territory Space\n";
+			if (typeOfCard.equals("Territory")) {
+				if (territorySize == 2 && militaryPoints < 3) {
+					return answerToPlayer + "Sorry, you need 3 Military Points to unlock the next Territory Space\n";
+				}
+				if (territorySize == 3 && militaryPoints < 7) {
+					return answerToPlayer + "Sorry, you need 7 Military Points to unlock the next Territory Space\n";
+				}
+				if (territorySize == 4 && militaryPoints < 12) {
+					return answerToPlayer + "Sorry, you need 12 Military Points to unlock the next Territory Space\n";
+				}
+				if (territorySize == 5 && militaryPoints < 18) {
+					return answerToPlayer + "Sorry, you need 18 Military Points to unlock the next Territory Space\n";
+				}
 			}
 		}
-
 		return answerToPlayer;
 
 	}
 
 	public String verifyBoardSpaceAvailability(String answerToPlayer) {
 		TowerPlace tempTowerPlace = (TowerPlace) this.place;
-		String typeOfCard = tempTowerPlace.getCorrespondingCard().getType();
-		if (typeOfCard.equals("Territory")) {
-			if (this.player.getMyBoard().getPersonalTerritories().getCards().size() >= 6) {
-				return answerToPlayer + "You have already 6 Territory Cards, no more empty spaces \n ";
+		if (tempTowerPlace.getCorrespondingCard() != null) {
+			String typeOfCard = tempTowerPlace.getCorrespondingCard().getType();
+			if (typeOfCard.equalsIgnoreCase("Territory")) {
+				if (this.player.getMyBoard().getPersonalTerritories().getCards().size() >= 6) {
+					return answerToPlayer + "You have already 6 Territory Cards, no more empty spaces \n ";
+				}
 			}
-		}
-		if (typeOfCard.equals("Building")) {
-			if (this.player.getMyBoard().getPersonalBuildings().getCards().size() >= 6) {
-				return answerToPlayer + "You have already 6 Buildings Cards, no more empty spaces \n";
+			if (typeOfCard.equalsIgnoreCase("Building")) {
+				if (this.player.getMyBoard().getPersonalBuildings().getCards().size() >= 6) {
+					return answerToPlayer + "You have already 6 Buildings Cards, no more empty spaces \n";
+				}
 			}
 		}
 		return answerToPlayer;

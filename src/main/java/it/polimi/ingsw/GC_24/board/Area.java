@@ -25,7 +25,7 @@ public abstract class Area implements java.io.Serializable {
 			return false;
 		}
 		for (Place place : this.placesArray) {
-			if (!place.isAvailable() && !place.getFamMemberOnPlace().isNeutral()
+			if (place.getFamMemberOnPlace()!=null&&!place.isAvailable() && !place.getFamMemberOnPlace().isNeutral()
 				&& (place.getFamMemberOnPlace().getPlayerColour()).equals(colour)){
 				return true;
 			}

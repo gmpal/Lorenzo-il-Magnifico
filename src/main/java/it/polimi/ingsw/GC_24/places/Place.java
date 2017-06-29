@@ -29,12 +29,10 @@ public abstract class Place implements java.io.Serializable {
 	
 		if (this.famMemberOnPlace != null) {
 			this.famMemberOnPlace.setAvailable(true);
+			this.setAvailable(true);
 		}
 
 		this.famMemberOnPlace = null;
-		
-		this.setAvailable(true);
-		
 	}
 
 

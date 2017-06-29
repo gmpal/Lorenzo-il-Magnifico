@@ -94,7 +94,7 @@ public class Tower extends Area {
 					builder.append("\n\tValue you get from place = " + p.getValue());
 				}
 			} else {
-				builder.append("[Card already taken by the " + p.getFamMemberOnPlace().getPlayerColour() + " player]");
+				builder.append("\n[Card already taken by the " + p.getFamMemberOnPlace().getPlayerColour() + " player]");
 			}
 			builder.append("\n");
 		}

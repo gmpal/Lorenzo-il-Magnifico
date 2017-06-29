@@ -75,8 +75,8 @@ public abstract class Action {
 	}
 
 	public String verifyPlaceAvailability(String answerToPlayer) {
-
-		if (!this.place.isAvailable() || this.place == null) {
+System.out.println(this.place.isAvailable());
+		if (!this.place.isAvailable()) {
 			return answerToPlayer + "Sorry, place not available!\n";
 		} else
 			return answerToPlayer;

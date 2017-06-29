@@ -28,7 +28,8 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 	@Override
 	public void run() {
 		int i = 0;
-		Thread t1;
+
+
 		try {
 			while (true) {
 				i++;
@@ -39,12 +40,9 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 				
 				requestFromServer = (HashMap<String, Object>) objFromServer.readObject();
 			
-				 t1 = new Thread(new Runnable(){
-					public void run(){
+			
 						handleRequestFromServer(requestFromServer);
-					}
-				});
-					t1.start();
+				
 
 			}
 		} catch (EOFException e) {
@@ -85,11 +83,9 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 			SetOfValues cost2 = (SetOfValues) request.get("Cost2");
 			MilitaryPoint militaryPoints = (MilitaryPoint) request.get("Requirements");
 			
-			new Thread (new Runnable(){
-				public void run(){
+			
 					view.chooseAlternativeCost(cost1, cost2, militaryPoints);
-				}
-			}).start();
+			
 		}
 		
 		if (command.contains("problems")) {
@@ -114,13 +110,12 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
     
 		if (command.contains("askForParameters")) {
 			System.out.println("CSV ---> Ricevuta richiesta di parametri ");
-			new Thread(new Runnable(){
-					public void run(){
+			
 						handleEffectParametersRequest((ImmediateEffect) request.get("askForParameters"));
 					}
-			}).start();
+		
 			
-		}
+		
 
 		if (command.contains("actionDone")) {
 			System.out.println("CSV ---> Ricevuta segnalazione di azione completata ");
@@ -138,19 +133,14 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 		}
 
 		if (command.contains("startPlaying")) {
-			System.out.println("CSV ---> Ricevuta richiesta di avviamento partita");
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				Thread.currentThread().interrupt();
-			}
-			new Thread(new Runnable(){
+	
+			Thread t1 = new Thread(new Runnable(){
 				public void run(){
 					view.play();
 				}
-			}).start();
+			});
+			t1.start();
+				
 		}
 		if (command.contains("Turns")) {
 			System.out.println("CSV ---> Ricevuti turni ");
@@ -183,11 +173,9 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 		}
 		if (command.contains("sale")) {
 			System.out.println("CSV ---> Ricevuta richiesta sconto multiplo");
-			new Thread( new Runnable(){
-				public void run(){
+			
 					view.chooseSale((IncreaseDieValueCard) request.get(command));
-				}
-			}).start();
+			
 		}
 	}
 
@@ -199,7 +187,7 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 
 		if (immediateEffect instanceof CouncilPrivilege) {
 			System.out.println("CSV ---> E' un CouncilPrivilege ");
-			view.askForCouncilePrivilege((CouncilPrivilege) immediateEffect);
+			view.askForCouncilPrivilege((CouncilPrivilege) immediateEffect);
 		}
 
 		if (immediateEffect instanceof Exchange) {

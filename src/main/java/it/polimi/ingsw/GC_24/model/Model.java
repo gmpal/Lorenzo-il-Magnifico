@@ -159,6 +159,7 @@ public class Model extends MyObservable implements Serializable {
 	public void sendModel() {
 		countingModelSent ++;
 		System.out.println("Model --> Invio del model #"+ countingModelSent);
+	
 		hm = new HashMap<>();
 		hm.put("model", this);
 		// System.out.println("FROM MODEL SENDING THIS

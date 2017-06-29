@@ -21,8 +21,6 @@ public class Market extends Area {
 	 */
 	private static final long serialVersionUID = 2905959753632826514L;
 	private boolean placesLocked;
-	/** Place with 2 players*/
-	private static final int MINPLACES = 2; 
 	/** Place from 3 players*/
 	private static final int MAXPLACES = 4;
 	private static final int COSTDICE = 1;
@@ -58,31 +56,36 @@ public class Market extends Area {
 				}
 			}
 		}
-		if (this.placesLocked) {
-			numPlaces = MINPLACES;
-		} else
-			numPlaces = MAXPLACES;
-
-		for (int num = 0; num < numPlaces; num++) {
+		for (int num = 0; num < MAXPLACES; num++) {
 			placesArray.add(new MarketPlace((ValueEffect) valueListMarket.get(indexEffectMarket++),
 					valueListMarket.get(indexEffectMarket++), COSTDICE));
+			if (placesLocked && num>1){
+				placesArray.get(num).setAvailable(false);
+			}
 		}
 		return placesArray;
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("\n");
-		for (Place p : placesArray) {
-			if (p.isAvailable()){
+		int num;
+		if (placesLocked) {
+			num = 2;
+		} else {
+			num = MAXPLACES;
+		}
+		for (int i = 0; i < num; i++) {
+			if (placesArray.get(i).isAvailable()) {
 				builder.append("[Place Available] - You can get: ");
-				if (p.getValue() != null)
-					builder.append(p.getValue());
-				if (((MarketPlace)p).getPrivilegeEffect() != null)
-					builder.append(((MarketPlace)p).getPrivilegeEffect());
-			}else{
-				builder.append("[Place occupied by the " + p.getFamMemberOnPlace().getPlayerColour() + " player]");
+				if (placesArray.get(i).getValue() != null)
+					builder.append(placesArray.get(i).getValue());
+				if (((MarketPlace) placesArray.get(i)).getPrivilegeEffect() != null)
+					builder.append(((MarketPlace) placesArray.get(i)).getPrivilegeEffect());
+			} else {
+				builder.append("[Place occupied by the " + placesArray.get(i).getFamMemberOnPlace().getPlayerColour()
+						+ " player]");
 			}
 			builder.append("\n");
 		}

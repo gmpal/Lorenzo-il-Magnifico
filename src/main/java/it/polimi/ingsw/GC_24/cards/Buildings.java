@@ -39,7 +39,7 @@ public class Buildings extends Development {
 				builder.append(" and " + getImmediateEffect1());
 		}
 		if (productionEffect!=null){
-			builder.append("\nDie Value For Production = "+dieValueProduction +", Production Effects = "+productionEffect);
+			builder.append("\n\tDie Value For Production = "+dieValueProduction +", Production Effects = "+productionEffect);
 			if (productionEffect1!=null)
 				builder.append(" and " + productionEffect1);
 		}
