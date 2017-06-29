@@ -35,10 +35,31 @@ public class Server {
 	private static ExecutorService threadPool = Executors.newCachedThreadPool();
 
 	// Crea un server e fa partire il suo metodo startServer()
-	public static void main(String[] args) throws IOException, AlreadyBoundException, InterruptedException {
+	public static void main(String[] args) throws RemoteException  {
 		Server server = new Server();
-		Server.startSocketServer();
-		server.startRMIServer();
+		
+		new Thread (new Runnable() {
+			public void run(){
+				try {
+					Server.startSocketServer();
+				} catch (Exception e) {
+					
+					e.printStackTrace();
+				
+				}
+			}
+		}).start();
+		new Thread (new Runnable() {
+			public void run(){
+				try {
+					server.startRMIServer();
+				} catch (Exception e) {
+					
+					e.printStackTrace();
+				
+				}
+			}
+		}).start();
 	}
 
 	// constructor
@@ -72,7 +93,7 @@ public class Server {
 		ServerViewRemote viewRemote = (ServerViewRemote) UnicastRemoteObject.exportObject(rmiView, 0);
 
 		System.out.println("Binding the server implementation to the registry");
-		registry.bind("rmiServer", rmiView);
+		registry.bind("remoteServer", rmiView);
 
 	}
 

@@ -177,7 +177,9 @@ public class ClientSocketViewCLI extends MyObservable implements Runnable, MyObs
 
 		if (command.contains("clientNumber")) {
 			System.out.println("CSV ---> Ricevuto numero client");
+			System.out.println(request);
 			int playerNumber = (int) request.get("clientNumber");
+			System.out.println(playerNumber);
 			int modelNumber = (int) request.get("modelNumber");
 			view.updatePlayerNumber(playerNumber, modelNumber);
 

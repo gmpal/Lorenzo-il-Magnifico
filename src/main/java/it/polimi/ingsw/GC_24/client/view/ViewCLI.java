@@ -1,5 +1,6 @@
 package it.polimi.ingsw.GC_24.client.view;
 
+import java.io.Serializable;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -10,7 +11,12 @@ import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.values.*;
 
-public class ViewCLI extends MyObservable implements ViewInterface {
+public class ViewCLI extends MyObservable implements ViewInterface, Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3464968492100842959L;
+
 	private static Scanner scanner = new Scanner(System.in);
 
 	private volatile Model miniModel;
@@ -494,9 +500,9 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 	@Override
 	public void updatePlayerNumber(int playerNumber2, int modelNumber) {
 		if (getPlayerNumber() == 0) {
-			setPlayerNumber(playerNumber);
+			setPlayerNumber(playerNumber2);
 		}
-		System.out.println("You are the player #" + playerNumber + ", connected to game #" + modelNumber);
+		System.out.println("You are the player #" + playerNumber2 + ", connected to game #" + modelNumber);
 
 	}
 

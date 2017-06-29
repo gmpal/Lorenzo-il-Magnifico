@@ -1,24 +1,31 @@
 package it.polimi.ingsw.GC_24.client.rmi;
 
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
 
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.client.view.ViewInterface;
-import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
 import it.polimi.ingsw.GC_24.effects.IncreaseDieValueCard;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
-import it.polimi.ingsw.GC_24.values.Value;
 
-public class ClientRMIView extends MyObservable implements ClientViewRemote {
+public class ClientRMIView extends MyObservable implements ClientViewRemote, Serializable {
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2902379951860570079L;
 	private ViewInterface view;
+	private ServerViewRemote serverStub;
 
-	public ClientRMIView(ViewInterface view) throws RemoteException {
+	public ClientRMIView(ServerViewRemote serverStub, ViewInterface view) throws RemoteException {
 		this.view = view;
+		this.serverStub = serverStub;
 		}
 
 
@@ -130,6 +137,40 @@ public class ClientRMIView extends MyObservable implements ClientViewRemote {
 	@Override
 	public String getPlayerName() throws RemoteException {
 		return view.getName();
+	}
+
+
+
+	@Override
+	public <C> void update(C change) {
+		HashMap<String,Object> request = (HashMap<String,Object>) change;
+		try {
+			handleRequestFromClient(request);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		}
+
+
+
+	public void handleRequestFromClient(HashMap<String, Object> request) throws RemoteException {
+		Set<String> command = request.keySet();
+		 	if (command.contains("action")) {
+		 		String actionRequest = (String) request.get("action");
+		 		serverStub.sendAction(actionRequest);
+		 	}
+		 	
+			if (command.contains("player")) {
+		 		String playerRequest = (String) request.get("player");
+		 		serverStub.sendPlayerString(playerRequest);
+		 	}
+			
+			if (command.contains("player")) {
+		 		String playerRequest = (String) request.get("player");
+		 		serverStub.sendPlayerString(playerRequest);
+		 	}
+		
 	}
 
 	

@@ -8,14 +8,15 @@ import java.net.UnknownHostException;
 import java.rmi.NotBoundException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import javax.swing.JOptionPane;
 
-import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.client.rmi.ClientRMIView;
+import it.polimi.ingsw.GC_24.client.rmi.ClientViewRemote;
 import it.polimi.ingsw.GC_24.client.rmi.ServerViewRemote;
 
 public class ClientSocket {
@@ -117,9 +118,19 @@ public class ClientSocket {
 				
 				ServerViewRemote serverStub = (ServerViewRemote) registry.lookup(RMINAME);
 
-				ClientRMIView clientRMIView=new ClientRMIView(view);
+				ClientRMIView clientRMIView=new ClientRMIView(serverStub,view);
 				
 				serverStub.registerClient(clientRMIView);
+				
+				@SuppressWarnings("unused")
+				ClientViewRemote viewRemote = (ClientViewRemote) UnicastRemoteObject.exportObject(clientRMIView, 0);
+				
+				if (view instanceof ViewCLI){
+					((ViewCLI) view).registerMyObserver(clientRMIView);
+					}
+
+				
+				executor.submit(view);
 	}
 
 	

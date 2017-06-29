@@ -1,5 +1,6 @@
 package it.polimi.ingsw.GC_24.client.rmi;
 
+import java.io.Serializable;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
@@ -7,7 +8,7 @@ import it.polimi.ingsw.GC_24.values.SetOfValues;
 
 
 
-public interface ServerViewRemote extends Remote {
+public interface ServerViewRemote extends Remote, Serializable {
 
 	public abstract void registerClient(ClientViewRemote clientStub) throws RemoteException;
 		

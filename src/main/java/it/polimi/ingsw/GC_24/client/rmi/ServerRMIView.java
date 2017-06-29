@@ -15,6 +15,11 @@ import it.polimi.ingsw.GC_24.values.SetOfValues;
 
 //TODO: davvero con le hashMap?
 public class ServerRMIView extends MyObservable implements ServerViewRemote, MyObserver {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -971969735113991230L;
+
 	HashMap<String, Object> hm = new HashMap<>();
 
 	private Set<ClientViewRemote> clients;

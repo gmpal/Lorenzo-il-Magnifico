@@ -4,15 +4,14 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
+import it.polimi.ingsw.GC_24.MyObserver;
 import it.polimi.ingsw.GC_24.effects.IncreaseDieValueCard;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
-import it.polimi.ingsw.GC_24.values.Value;
 
 
-public interface ClientViewRemote extends Remote {
+public interface ClientViewRemote extends Remote, MyObserver {
 	
 
 	public abstract void show(String message) throws RemoteException;

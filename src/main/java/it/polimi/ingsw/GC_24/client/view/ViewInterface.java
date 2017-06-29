@@ -1,21 +1,15 @@
 package it.polimi.ingsw.GC_24.client.view;
 
+import java.io.Serializable;
 import java.util.List;
 
 import it.polimi.ingsw.GC_24.MyObserver;
-import it.polimi.ingsw.GC_24.effects.ChooseNewCard;
-import it.polimi.ingsw.GC_24.effects.CouncilPrivilege;
-import it.polimi.ingsw.GC_24.effects.Exchange;
-import it.polimi.ingsw.GC_24.effects.ExchangePackage;
-import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
 import it.polimi.ingsw.GC_24.effects.IncreaseDieValueCard;
-import it.polimi.ingsw.GC_24.effects.PerformActivity;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
-import it.polimi.ingsw.GC_24.values.MilitaryPoint;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 
-public interface ViewInterface extends Runnable, MyObserver {
+public interface ViewInterface extends Runnable, MyObserver, Serializable {
 	
 
 	//FROM SERVER TO CLIENT
