@@ -10,22 +10,9 @@ import java.util.Random;
 import com.google.gson.Gson;
 import it.polimi.ingsw.GC_24.board.Board;
 import it.polimi.ingsw.GC_24.devCardJsonFile.GsonBuilders;
-import it.polimi.ingsw.GC_24.effects.ChangeServantsValue;
-import it.polimi.ingsw.GC_24.effects.FirstPlacementAtTheEnd;
-import it.polimi.ingsw.GC_24.effects.IncreaseDieValueActivity;
-import it.polimi.ingsw.GC_24.effects.IncreaseDieValueCard;
-import it.polimi.ingsw.GC_24.effects.NoMarketAvailability;
-import it.polimi.ingsw.GC_24.effects.NoVictoryPointsFromCard;
-import it.polimi.ingsw.GC_24.effects.SubSetOfValues;
 import it.polimi.ingsw.GC_24.effects.SubVicrotyPointsFromSetOfValue;
-import it.polimi.ingsw.GC_24.model.Model;
-import it.polimi.ingsw.GC_24.model.Player;
-import it.polimi.ingsw.GC_24.personalboard.PersonalCharacters;
-import it.polimi.ingsw.GC_24.personalboard.PersonalTerritories;
-import it.polimi.ingsw.GC_24.places.Place;
-import it.polimi.ingsw.GC_24.places.TowerPlace;
-import it.polimi.ingsw.GC_24.values.SetOfValues;
-import it.polimi.ingsw.GC_24.values.VictoryPoint;
+import it.polimi.ingsw.GC_24.places.*;
+import it.polimi.ingsw.GC_24.values.*;
 
 public class Deck implements Serializable {
 
