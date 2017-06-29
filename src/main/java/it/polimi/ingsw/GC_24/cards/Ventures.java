@@ -35,7 +35,7 @@ public class Ventures extends Development {
 		StringBuilder builder = new StringBuilder();
 		builder.append( "\n[Name = " + name );
 		if (requiredMilitaryPoints!=null){
-			builder.append("Cost Military Points = "+alternativeCost+" (Required Military Points = " +requiredMilitaryPoints+")");
+			builder.append(", Cost Military Points = "+alternativeCost+" (Required Military Points = " +requiredMilitaryPoints+")");
 			if (getCost()!=null){
 				builder.append(", Cost Values = " + getCost());
 			}
