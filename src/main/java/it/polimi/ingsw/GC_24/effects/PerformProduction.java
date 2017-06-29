@@ -58,4 +58,17 @@ public class PerformProduction extends PerformActivity {
 		this.immediateEffectsProduction = immediateEffectsProduction;
 	}
 
+	@Override
+	public String generateParametersRequest() {
+		String response = "You can increment the value of the Production using servants.\n How many servants do you want to use? ";
+		return response;
+	}
+	
+	@Override
+	public List<ImmediateEffect> addAllNewEffectsToThisSet(List<ImmediateEffect> secondaryInteractiveEffects) {
+		secondaryInteractiveEffects.addAll(getImmediateEffectsProduction());
+		return secondaryInteractiveEffects;
+	}
+
+	
 }

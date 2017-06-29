@@ -10,7 +10,7 @@ import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.values.*;
 
-public class ViewCLI extends MyObservable implements MyObserver, Runnable {
+public class ViewCLI extends MyObservable implements ViewInterface {
 	private static Scanner scanner = new Scanner(System.in);
 
 	private volatile Model miniModel;
@@ -23,7 +23,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	private Object waitingForActionCompleted = new Object();
 
 	private boolean myTurn = false;
-	private List<Player> playerTurn;
+	private List<Player> playersTurn;
 	private int playerNumber = 0;
 	private boolean actionDone = false;
 	private volatile Player myself = null;
@@ -72,6 +72,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		return sc;
 	}
 
+	@Override
 	public void sendPlayerString(String name) throws InterruptedException {
 
 		String player = (playerNumber + " " + name);
@@ -96,6 +97,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		}
 	}
 
+	@Override
 	public void play() {
 		System.out.println("Good luck " + myself.getMyName() + "!");
 		if (myself.getAutocompleted()) {
@@ -231,7 +233,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 
 		if (commandZone.contains("cancel")) {
 			commandZone = "cancel";
-		} else  {
+		} else {
 			commandZone = increaseDieValue(commandZone);
 		}
 
@@ -274,23 +276,23 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		System.out.println("Do you want to use some servants to increment the die value?");
 		System.out.println("Write the number of servants you want to use : ");
 		String choice;
-		do{
+		do {
 			choice = scanner.nextLine();
-		
-		try{
-		Integer.parseInt(choice);
-		} catch (NumberFormatException e ){
-			System.out.println("Please type a number:");
-			choice = null;
-		}}while(choice == null);
-		
-		
-		
+
+			try {
+				Integer.parseInt(choice);
+			} catch (NumberFormatException e) {
+				System.out.println("Please type a number:");
+				choice = null;
+			}
+		} while (choice == null);
+
 		return commandZone + " " + choice;
 
 	}
 
-	private void sendAction(String command) {
+	@Override
+	public void sendAction(String command) {
 		hm = new HashMap<>();
 		hm.put("action", command);
 
@@ -315,15 +317,11 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 	 * contains a Military Point value because the alternative values are always
 	 * associated with militaryPoints
 	 */
-
-	public void chooseAlternativeCost(SetOfValues cost1, SetOfValues cost2, MilitaryPoint militaryPoints) {
-		System.out.println("The card you have chosen has two different costs:");
-		System.out.println("The first one is " + cost1);
-
-		System.out.println("The second one is " + cost2);
-		System.out.println(
-				"but it requires that you have " + militaryPoints.getQuantity() + " military points to be used");
-		System.out.println("Make your choice (1/2):");
+	@Override
+	public String chooseAlternativeCost(String request) {
+		System.out.println("The card you picked has two different costs:");
+		System.out.println(request);
+		System.out.println("\nMake your choice (1/2):");
 		String choice = scanner.nextLine();
 
 		while (!(choice.equals("1") || choice.equals("2"))) {
@@ -332,22 +330,17 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 
 		}
 
-		hm = new HashMap<>();
-		if (choice.equals("1")) {
-			hm.put("chosenCost", cost1);
-		} else {
-			hm.put("chosenCost", cost2);
+		return choice;
 
-		}
-		this.notifyMyObservers(hm);
 	}
 
-	public void chooseSale(IncreaseDieValueCard increase) {
+	@Override
+	public SetOfValues chooseSale(IncreaseDieValueCard increase){
 
 		SetOfValues finalIncrease;
 		do {
 			System.out.println(
-					"Choose sale: (1,2)\n" + "1." + increase.getSale() + "\n2." + increase.getAlternativeSale());
+				);
 			int answer = 0;
 			try {
 				answer = scanner.nextInt();
@@ -365,22 +358,25 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 				finalIncrease = null;
 			}
 		} while (finalIncrease == null);
-		notifyMyObservers(new HashMap().put("sale", finalIncrease));
+
+		return finalIncrease;
+
 	}
 
-	public void askForChooseNewCard(ChooseNewCard im) {
+	@Override
+	public String askForChooseNewCard(String request) {
 		System.out.println("With the choise you have made you can pick another card!");
 		String zone;
 		String floor;
-		if ((im.getType()) == null) {
+		if (request.equals("everyTower")) {
 			System.out.println(miniModel.getBoard().getTowerTerritories());
 			System.out.println(miniModel.getBoard().getTowerCharacters());
 			System.out.println(miniModel.getBoard().getTowerBuildings());
 			System.out.println(miniModel.getBoard().getTowerVentures());
-			
+
 			System.out.println("Write the tower you want to pick your card from");
 			System.out.println("Territories/Characters/Buildings/Ventures");
-			
+
 			zone = scanner.nextLine();
 			while (!(zone.equalsIgnoreCase("territories") || zone.equalsIgnoreCase("Buildings")
 					|| zone.equalsIgnoreCase("Ventures") || zone.equalsIgnoreCase("Characters"))) {
@@ -389,7 +385,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 			}
 
 		} else {
-			zone = im.getType();
+			zone = request;
 			System.out.println(miniModel.getBoard().getZoneFromString(zone));
 		}
 
@@ -398,8 +394,6 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 
 		scanner.nextLine();
 		floor = scanner.nextLine();
-		
-		
 
 		while (!(floor.equals("1") || floor.equals("2") || floor.equals("3") || floor.equals("4"))) {
 			System.out.println("Wrong choice, try again");
@@ -410,52 +404,43 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		String answer = zone + " " + floor;
 		answer = increaseDieValue(answer);
 		System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" + answer);
-		sendAnswerForParameters(answer);
+
+		return answer;
 	}
 
-	private void sendAnswerForParameters(String answer) {
-		hm = new HashMap<>();
-		hm.put("answerForParameters", answer);
-		this.notifyMyObservers(hm);
+	@Override
+	public String askForCouncilPrivilege(String request) {
 
-	}
-
-	public void askForCouncilePrivilege(CouncilPrivilege immediateEffect) {
+		StringTokenizer tokenizer = new StringTokenizer(request);
+		int number = Integer.parseInt(tokenizer.nextToken());
 		
-		//TODO: AYAYAY
-		int number = immediateEffect.getNumberOfPrivileges();
-		System.out.println("You have to choose " + number + " Council Privilege(s): ");
-		System.out.println(immediateEffect.getCouncilPrivileges());
-		System.out.println("Make your choice: (1/2/3/4/5)");
 		String answer = "";
 		for (int i = 1; i <= number; i++) {
 			System.out.println("Choice number " + (i) + " of " + number);
 			String choice = "";
-			try{
-			
-			choice = scanner.nextLine();
-			} catch (IndexOutOfBoundsException e){
-				System.out.println( " AYAYAYAY");
+			try {
+
+				choice = scanner.nextLine();
+			} catch (IndexOutOfBoundsException e) {
+				System.out.println(" AYAYAYAY");
 			}
 			while (!(choice.equals("1") || choice.equals("2") || choice.equals("3") || choice.equals("4")
 					|| choice.equals("5")) || answer.contains(choice)) {
 				System.out.println("Wrong choice, try again");
-			
+
 				choice = scanner.nextLine();
 			}
 
-			answer = answer +" " +choice;
+			answer = answer + " " + choice;
 		}
 
-		sendAnswerForParameters(answer);
+		return answer;
 	}
 
-	public void askForExchange(Exchange immediateEffect) {
+	@Override
+	public String askForExchange(String request) {
 
-		System.out.println("The card you picked has two choices");
-		System.out.println("1) " + immediateEffect.getExchangePackage());
-		System.out.println("2) " + immediateEffect.getExchangePackage1());
-		System.out.println("What do you want to choose? Choose wisely: (1 / 2)");
+		System.out.println(request);
 
 		String choice = scanner.nextLine();
 
@@ -464,32 +449,103 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 			choice = scanner.nextLine();
 
 		}
-
-		System.out.println("Well done!");
-		sendAnswerForParameters(choice);
-	}
-
-	public void askForServantsForHarvestAndProduction(PerformActivity immediateEffect) {
-		if (immediateEffect.getName().equalsIgnoreCase("performHarvest")) {
-			System.out.println("The card you picked lets you perform the Harvest");
-		} else {
-			System.out.println("The card you picked lets you perform the Production");
-		}
-
-		String answer = "";
-		increaseDieValue(answer);
-		sendAnswerForParameters(answer);
+		return choice;
 
 	}
 
 	@Override
-	public <C> void update(MyObservable o, C change) {
+	public String askForServantsForHarvestOrProduction(String request) {
+		System.out.println(request);
+		String choice;
+		int choiceInt = 0;
+		do {
+			choice = scanner.nextLine();
 
-		System.out.println(change);
+			try {
+				Integer.parseInt(choice);
+			} catch (NumberFormatException e) {
+				System.out.println("Please type a number:");
+				choice = null;
+			}
+		} while (choice == null);
+
+		return choice;
+
+	}
+	
+
+	@Override
+	public void setMyTurn(Player currentPlayer) {
+		if (currentPlayer.getPlayerNumber() == getMyself().getPlayerNumber()) {
+			System.out.println("Player #" + getMyself().getPlayerNumber() + " turn is TRUE  ");
+			myTurn = true;
+		} else {
+			System.out.println("Player #" + getMyself().getPlayerNumber() + " turn is FALSE  ");
+			myTurn = false;
+
+			if (myTurn) {
+				System.out.println("**********It's your turn!!!!**********");
+			} else {
+				System.out.println("**********Not your turn**********");
+			}
+		}
+	}
+
+	@Override
+	public void updatePlayerNumber(int playerNumber2, int modelNumber) {
+		if (getPlayerNumber() == 0) {
+			setPlayerNumber(playerNumber);
+		}
+		System.out.println("You are the player #" + playerNumber + ", connected to game #" + modelNumber);
 
 	}
 
+	@Override
+	public void updateTurn(List<Player> playerTurn) {
+		setPlayersTurn(playerTurn);
+
+	}
+
+	@Override
+	public void communicateActionDone() {
+		synchronized (getWaitingForActionCompleted()) {
+			setActionDone(true);
+			getWaitingForActionCompleted().notify();
+		}
+
+	}
+
+	@Override
+	public void show(String message) {
+		System.out.println(message);
+
+	}
+
+	@Override
+	public void getInformationForReceivedModel(Model model) {
+		synchronized (getWaitingForAnswer()) {
+			setMiniModel(model);
+			setMyself(getMiniModel().getPlayers().get(getPlayerNumber() - 1));
+			// TODO: serve davvero questo? Che cosa fa?
+			setPlayersTurn(getMiniModel().getPlayers());
+
+			getWaitingForAnswer().notify();
+		}
+
+	}
+
+	@Override
+	public void showToSinglePlayer(Player currentPlayer, String message) {
+		if (currentPlayer.getMyName().equals(myself.getMyName())) {
+			System.out.println(message);
+		}
+
+	}
+
+	
+
 	// getters and setters
+	@Override
 	public String getName() {
 		return name;
 	}
@@ -510,22 +566,12 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		return myTurn;
 	}
 
-	public void setMyTurn(boolean myTurn) {
-		this.myTurn = myTurn;
-		if (myTurn) {
-			System.out.println("**********It's your turn!!!!**********");
-		} else {
-			System.out.println("**********Not your turn**********");
-		}
-		;
+	public List<Player> getPlayersTurn() {
+		return playersTurn;
 	}
 
-	public List<Player> getPlayerTurn() {
-		return playerTurn;
-	}
-
-	public void setPlayerTurn(List<Player> playerTurn) {
-		this.playerTurn = playerTurn;
+	public void setPlayersTurn(List<Player> playerTurn) {
+		this.playersTurn = playerTurn;
 	}
 
 	public Player getMyself() {
@@ -564,4 +610,28 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		this.actionDone = actionDone;
 	}
 
-}
+	@Override
+	public void sendAnswerForParameters(String answer) {
+	hm = new HashMap<>();
+	hm.put("answerForParameters", answer);
+	notifyMyObservers(hm);	
+	}
+
+	@Override
+	public void sendAlternativeCost(String response) {
+		hm = new HashMap<>();
+		hm.put("doubleCost", response);
+		notifyMyObservers(hm);	
+		
+	}
+
+	@Override
+	public <C> void update(C change) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+	}
+
+

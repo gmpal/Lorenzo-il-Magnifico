@@ -71,8 +71,8 @@ public class Model extends MyObservable implements Serializable {
 		this.counter = 0;
 		this.modelNumber = modelNumber;
 		this.cards = new Deck();
-		getCorrespondingValueFromFile();
-		createExcommunicationDeck();
+	//	getCorrespondingValueFromFile();
+	//	createExcommunicationDeck();
   }
 
 	private void createExcommunicationDeck() {

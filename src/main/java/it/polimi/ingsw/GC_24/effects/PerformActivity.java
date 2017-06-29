@@ -1,5 +1,7 @@
 package it.polimi.ingsw.GC_24.effects;
 
+import java.util.HashMap;
+
 import it.polimi.ingsw.GC_24.model.Player;
 
 public abstract class PerformActivity extends ImmediateEffect {
@@ -30,9 +32,16 @@ public abstract class PerformActivity extends ImmediateEffect {
 		this.dieValue = dieValue;
 	}
 
-	public void assignParameters(int servants) {
-		this.incrementServants = servants;
-
+	@Override
+	public void assignParameters(String response) {
+		this.incrementServants = Integer.parseInt(response);
+	}
+	
+	@Override
+	public HashMap<String, Object> generateHashMapToSend(String response) {
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("activityParamRequest", response);
+		return map;
 	}
 
 }

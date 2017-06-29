@@ -50,5 +50,20 @@ public class PerformHarvest extends PerformActivity {
 	public void setImmediateEffectsHarvest(List<ImmediateEffect> immediateEffectsHarvest) {
 		this.immediateEffectsHarvest = immediateEffectsHarvest;
 	}
+	
+	
+	@Override
+	public String generateParametersRequest() {
+		String response = "You can increment the value of the Harvest using servants.\n How many servants do you want to use? ";
+		return response;
+	}
+
+	@Override
+	public List<ImmediateEffect> addAllNewEffectsToThisSet(List<ImmediateEffect> secondaryInteractiveEffects) {
+		secondaryInteractiveEffects.addAll(getImmediateEffectsHarvest());
+		return secondaryInteractiveEffects;
+	}
+
+	
 
 }

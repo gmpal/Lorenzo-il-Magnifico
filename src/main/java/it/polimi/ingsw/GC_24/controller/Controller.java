@@ -40,6 +40,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	private Object waitingForAutocompleting = new Object();
 	private Object waitingForSalesChoice = new Object();
 	private Object waitingForParametersChoose = new Object();
+	private String tempCostString = new String();
 
 	// constructor
 
@@ -82,7 +83,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		while (!game.getGameState().equals(State.ENDED)) {
 			System.out.println("GAME STATE: " + game.getGameState());
 
-
 			game.getBoard().clear();
 			System.out.println("1");
 			game.getCards().dealCards(game.getBoard(), cardsIndex / 2 + 1);
@@ -98,7 +98,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					// reset the current player
 					this.currentPlayer = game.getCurrentPlayer();
 					System.out.println("Current Player is ---> " + this.currentPlayer.getMyName());
-
 
 					sendCurrentPlayer();
 
@@ -143,11 +142,11 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	}
 
-
 	private void startTimerForPlayerAction(Timer t1) {
 		t1.schedule(new TimerTask() {
 			public void run() {
-				sendInfo("Time out for "+currentPlayer.getMyName()+ ", player number "+currentPlayer.getPlayerNumber()+", colour "+currentPlayer.getMyColour());
+				sendInfo("Time out for " + currentPlayer.getMyName() + ", player number "
+						+ currentPlayer.getPlayerNumber() + ", colour " + currentPlayer.getMyColour());
 				incrementTurn();
 				// wakes up the run() that is followed by a timer.cancel();
 				synchronized (actionWaiting) {
@@ -333,7 +332,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		notifyMyObservers(hashMap);
 
 	}
-  //SEND METHODS
+
+	// SEND METHODS
 	/** This method sends to the clients the turn array to be updated */
 	private void sendTurnArray(List<Player> turnArray) {
 		hashMap = new HashMap<>();
@@ -360,16 +360,15 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public synchronized <C> void update(MyObservable o, C change) {
+	public synchronized <C> void update(C change) {
 
-		System.out.println("Controller: I have been notified by " + o.getClass().getSimpleName());
 		System.out.println("Controller: i received this :" + change);
 
 		Thread t1 = new Thread(new Runnable() {
 			public void run() {
 				String answer;
 				try {
-					answer = handleRequestFromClient(o, (Map<String, Object>) change);
+					answer = handleRequestFromClient((Map<String, Object>) change);
 					System.out.println("--------------" + answer);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -382,14 +381,13 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	}
 
-
 	/**
 	 * This method analyzes the incoming HashMap. If it finds specific keywords
 	 * in the keySet, it does different things with different objects
 	 * 
 	 * @throws IOException
 	 */
-	private String handleRequestFromClient(MyObservable o, Map<String, Object> request) throws IOException {
+	private String handleRequestFromClient(Map<String, Object> request) throws IOException {
 
 		System.out.println("Controller --> ricevuto una richiesta dal client");
 
@@ -402,11 +400,10 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 		}
 
-
 		else if (command.contains("chosenCost")) {
 			synchronized (tempCostWaiting) {
 				System.out.println("Controller --> Ricevuta la scelta di un costo doppio");
-				this.tempCost = (SetOfValues) request.get("chosenCost");
+				this.tempCostString = (String) request.get("chosenCost");
 				tempCostWaiting.notify();
 			}
 			return "Controller: chosen cost updated";
@@ -415,12 +412,13 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 		else if (command.contains("action")) {
 			System.out.println("Controller --> Ricevuta un'azione di piazzamento ");
-			handleAction(o, request);
+			handleAction(request);
 			String answer = verifyAction(this.action);
 			if (!answer.equals("ok")) {
-				incorrenctActionHandling(o, answer);
+				incorrenctActionHandling(answer);
+
 			} else {
-				correctActionExecute(o);
+				correctActionExecute();
 			}
 		}
 
@@ -442,8 +440,13 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			}
 			return "sale chosen";
 
-
+		} 
+		/*RMI COMMANDS*/
+		
+		else if (command.contains("addPlayer")) {
+			game.addPlayer();
 		}
+		
 
 		else {
 			System.out.println("Controller --> COMANDO NON RICONOSCIUTO ");
@@ -473,7 +476,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	// #1
-	private void handleAction(MyObservable o, Map<String, Object> request) {
+	private void handleAction(Map<String, Object> request) {
 		System.out.println("Controller --> Sto gestendo un'azione");
 		StringTokenizer tokenizer = new StringTokenizer((String) request.get("action"));
 
@@ -481,7 +484,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		String tempZone = tokenizer.nextToken();
 		String tempFloor = tokenizer.nextToken();
 		String tempServants = tokenizer.nextToken();
-
 
 		/**
 		 * Sees if there's an interactive permanent effect WITH DOUBLE SALE
@@ -501,7 +503,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 
-
 					}
 				}
 			}
@@ -509,7 +510,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		}
 		if (tempZone.equalsIgnoreCase("ventures")) {
 
-			handleVentures(o, tempZone, tempFloor);
+			handleVentures(tempZone, tempFloor);
 		}
 		System.out.println("Controller --> Inviando la richiesta di creazione azione in fabbrica...");
 		this.action = actionFactory.makeAction(game, tempFamiliar, tempZone, tempFloor, tempServants, tempCost,
@@ -524,17 +525,16 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	}
 
-
 	private String verifyAction(Action action2) {
 		System.out.println("Controller --> Sto verificando ed eseguendo un'azione ");
 		String responseToActionVerify = action.verify();
 		return responseToActionVerify;
 	}
 
-	private void correctActionExecute(MyObservable o) {
+	private void correctActionExecute() {
 		System.out.println("Controller --> La verifica dell'azione è andata a buon fine ");
 		List<ImmediateEffect> interactiveEffects = action.run();
-		this.handleInteractiveEffects(o, interactiveEffects);
+		this.handleInteractiveEffects(interactiveEffects);
 		System.out.println("Controller --> Conclusa gestione dei costi interattivi ");
 		notifyToProceedWithTurns();
 		game.sendModel();
@@ -543,22 +543,22 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	}
 
-	private void correctChooseNewCardExecute(MyObservable o) {
+	private void correctChooseNewCardExecute() {
 		System.out.println("Controller --> La verifica dell'azione è andata a buon fine ");
 		List<ImmediateEffect> interactiveEffects = action.run();
-		this.handleInteractiveEffects(o, interactiveEffects);
+		this.handleInteractiveEffects(interactiveEffects);
 		System.out.println("Controller --> Conclusa gestione dei costi interattivi ");
 		game.sendModel();
 		// awakenSleepingClient();
-		System.out.println("Controller --> Richiesta di risveglio inviata");
-
+		// System.out.println("Controller --> Richiesta di risveglio inviata");
 
 	}
 
-	private void incorrenctActionHandling(MyObservable o, String responseToActionVerify) {
+	private void incorrenctActionHandling(String responseToActionVerify) {
 		System.out.println("Controller --> L'azione non ha superato i controlli");
-		sendProblems(o, responseToActionVerify);
+		sendProblemsToCurrentPlayer(responseToActionVerify);
 		System.out.println("Controller --> Inviata richiesta di problemi al client");
+		awakenSleepingClient();
 	}
 
 	private void notifyToProceedWithTurns() {
@@ -587,7 +587,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	/* Subito dopo run() */
-	private void handleInteractiveEffects(MyObservable o, List<ImmediateEffect> interactiveEffects) {
+	private void handleInteractiveEffects(List<ImmediateEffect> interactiveEffects) {
 		System.out.println("Controller --> Iniziando a gestire gli effetti interattivi ");
 		System.out.println("Controller --> lista: " + interactiveEffects);
 		List<ImmediateEffect> secondaryInteractiveEffects = new ArrayList<>();
@@ -595,25 +595,27 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		if (!interactiveEffects.isEmpty()) {
 			System.out.println("Controller --> La lista contiene qualcosa");
 			int i = 0;
-		
+
 			for (ImmediateEffect effect : interactiveEffects) {
 				game.sendModel();
 				i++;
 				System.out.println("Controller --> Gestendo l'effetto specifico #" + i + "of "
 						+ interactiveEffects.size() + ": " + effect);
-				checkIfThereIsInteractionAndAskForParameters(o, effect);
+
+				askAndWaitForParameters(effect);
+
 				System.out.println("Controller -->  Finito di gestire l'effetto specifico#" + i + "of "
 						+ interactiveEffects.size() + ": " + effect);
+
 				if (effect instanceof ChooseNewCard) {
 					System.out.println("Controller --> è un chooseNewCard, creo l'azione corrispondente");
-					String response = createNewActionForChooseNewCard(o, ((ChooseNewCard) effect).getDieValue(),
-							effect);
+					String response = createNewActionForChooseNewCard(((ChooseNewCard) effect).getDieValue(), effect);
 					// until my choose new card verify is correct I create
 					// another one
 					while (!response.equals("ok")) {
-						response = createNewActionForChooseNewCard(o, ((ChooseNewCard) effect).getDieValue(), effect);
+						response = createNewActionForChooseNewCard(((ChooseNewCard) effect).getDieValue(), effect);
 					}
-					correctChooseNewCardExecute(o);
+					correctChooseNewCardExecute();
 
 				} else {
 					System.out.println("Controller --> non è un chooseNewCard");
@@ -622,36 +624,26 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					System.out.println("Controller --> fatto il give immediate Effect");
 				}
 
-				if (effect instanceof Exchange) {
-					System.out.println("Controller --> era un exchange, ho raccolto altri effetti");
-					secondaryInteractiveEffects.addAll(((Exchange) effect).getImmediateEffectsFromExchange());
-				}
-				if (effect instanceof PerformHarvest) {
-					System.out.println("Controller --> era un PerformHarvest, ho raccolto altri effetti");
-					secondaryInteractiveEffects.addAll(((PerformHarvest) effect).getImmediateEffectsHarvest());
-				}
-				if (effect instanceof PerformProduction) {
-					System.out.println("Controller --> era un PerformProduction, ho raccolto altri effetti");
-					secondaryInteractiveEffects.addAll(((PerformProduction) effect).getImmediateEffectsProduction());
-				}
+				secondaryInteractiveEffects = effect.addAllNewEffectsToThisSet(secondaryInteractiveEffects);
+
 			}
 			if (!secondaryInteractiveEffects.isEmpty()) {
 				System.out.println("Controller --> la lista non è vuota");
 				System.out.println("Controller --> ecco la lista: " + secondaryInteractiveEffects);
 				System.out.println("Controller --> la sto gestendo ");
-				handleInteractiveEffects(o, secondaryInteractiveEffects);
+				handleInteractiveEffects(secondaryInteractiveEffects);
 				System.out.println("Controller --> Finito di gestire la lista secondaria");
 			}
 
 		}
 	}
 
-	private String createNewActionForChooseNewCard(MyObservable o, int dieValue, ImmediateEffect effect) {
+	private String createNewActionForChooseNewCard(int dieValue, ImmediateEffect effect) {
 		String finalActionRequest = "fakeFamiliarForChooseNewCard " + this.parametersAnswer;
 		System.out.println("Controller --> Sto creando un'azione corrispondente");
 		hashMap = new HashMap<>();
 		hashMap.put("action", finalActionRequest);
-		handleAction(o, hashMap);
+		handleAction(hashMap);
 		System.out.println("Controller --> Azione per choose new Card creata ");
 		System.out.println(this.action);
 		System.out.println(this.action.getFamilyMember());
@@ -660,9 +652,11 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		String response = verifyAction(this.action);
 		if (!response.equals("ok")) {
 			System.out.println("Controller --> L'azione Choose New Card non ha superato i controlli");
-			sendProblems(o, response);
+			hashMap = new HashMap<>();
+			hashMap.put("problems", response);
+			sendToCurrentPlayer(hashMap);
 			System.out.println("Controller --> Inviata richiesta di problemi al client, e richiesta parametri");
-			askAndWaitForParameters(o, effect);
+			askAndWaitForParameters(effect);
 			return response;
 
 		} else {
@@ -680,73 +674,38 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	 * 
 	 * @param o
 	 */
-	private void checkIfThereIsInteractionAndAskForParameters(MyObservable o, ImmediateEffect effect) {
-		System.out.println("Controller --> Controllando se c'è interazione");
-		if (effect instanceof ChooseNewCard || effect instanceof CouncilPrivilege || effect instanceof PerformActivity
-				|| (effect instanceof Exchange && ((Exchange) effect).getExchangePackage1() != null)) {
-			System.out.println("Controller --> L'effetto richiede interazione! Invio la richiesta ");
-			askAndWaitForParameters(o, effect);
-			System.out.println(
-					"Controller --> Attesa conclusa, mi sono risvegliato, ecco cosa ho ricevuto: " + parametersAnswer);
 
-			/*
-			 * I have received an answer from the client with his choice. I have
-			 * to switch between my effects in order to choose how to handle the
-			 * client answer
-			 */
-
-			if (effect instanceof CouncilPrivilege) {
-				System.out.println("Controller --> Ho ricevuto i parametri per un effetto consiglio, li assegno ");
-
-
-				// THE ANSWER IS SUPPOSED TO BE LIKE "1 5 6" --> the chosen
-				// privileges. It's handled directly in councilPrivilege
-				((CouncilPrivilege) effect).assignParameters(parametersAnswer);
-			}
-
-
-			if (effect instanceof Exchange) {
-				System.out.println("Controller --> Ho ricevuto i parametri per un effetto exchange, li assegno ");
-				// THE ANSWER IS SUPPOSED TO BE LIKE "Territory 1" --> that is
-				// tower
-				// and floor
-				((Exchange) effect)
-						.assignParameters(Integer.parseInt((new StringTokenizer(parametersAnswer).nextToken())));
-			}
-			// i parametri sono stati scelti e passati all'effetto
-			if (effect instanceof PerformActivity) {
-				System.out.println(
-						"Controller --> Ho ricevuto i parametri per un effetto harvest/production, li assegno ");
-				// THE ANSWER IS SUPPOSED TO BE LIKE "1" that represents the
-				// number of servants you want to use
-				((PerformActivity) effect)
-						.assignParameters(Integer.parseInt((new StringTokenizer(parametersAnswer).nextToken())));
-			}
-		} else {
-			System.out.println("L'effetto non richiede interazione!");
-		}
-
-	}
-
-	private void askAndWaitForParameters(MyObservable o, ImmediateEffect effect) {
+	private void askAndWaitForParameters(ImmediateEffect effect) {
 		parametersChosen = false;
-		hashMap = new HashMap<>();
-		hashMap.put("askForParameters", effect);
-		notifySingleObserver((MyObserver) o, hashMap);
-		System.out.println("Controller --> Richiesta inviata, mi metto in attesa...");
-		synchronized (waitingForParametersChoose) {
 
-			while (!parametersChosen) {
-				try {
-					waitingForParametersChoose.wait();
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+		String paramRequest = effect.generateParametersRequest();
+		if (!(paramRequest == null)) {
+			sendToCurrentPlayer(effect.generateHashMapToSend(paramRequest));
+
+			synchronized (waitingForParametersChoose) {
+
+				while (!parametersChosen) {
+					try {
+						waitingForParametersChoose.wait();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
+			if (!(effect instanceof ChooseNewCard)) {
+				effect.assignParameters(parametersAnswer);
+			}
 		}
-
 	}
+
+	private void sendToCurrentPlayer(HashMap<String, Object> hashMap2) {
+		hashMap2.put("currentPlayer", currentPlayer);
+		notifyMyObservers(hashMap2);
+	}
+
+	// "Choose sale: (1,2)\n" + "1." + increase.getSale() + "\n2." +
+	// increase.getAlternativeSale()
 
 	/***/
 	private IncreaseDieValueCard PermanentEffectWithAlternativeSale() {
@@ -763,18 +722,17 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		return null;
 	}
 
-	private void sendProblems(MyObservable o, String responseToActionVerify) {
-		hashMap = new HashMap<>();
-		hashMap.put("problems", responseToActionVerify);
-		notifySingleObserver((MyObserver) o, hashMap);
+	private void sendProblemsToCurrentPlayer(String responseToActionVerify) {
+
+		hashMap.put("currentPlayer", currentPlayer.getMyName());
+		notifyMyObservers(hashMap);
 	}
 
 	/**
 	 * If the player wants to take a ventures card, this method let him choose
-	 * which one of the double costs to take (if a double cost exists). The
-	 * thread
+	 * which one of the double costs to take (if a double cost exists).
 	 */
-	private void handleVentures(MyObservable o, String tempZone, String tempFloor) {
+	private void handleVentures(String tempZone, String tempFloor) {
 		System.out.println("Controller --> Sto gestendo una carta venture per il doppio costo... ");
 		TowerPlace placeRequested = (TowerPlace) this.game.getBoard().getZoneFromString(tempZone)
 				.getPlaceFromStringOrFirstIfZero(tempFloor);
@@ -784,17 +742,17 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		if (cost1 != null && cost2 != null) {
 			System.out.println("Controller --> C'è un doppio costo, invio l'interazione ");
 			MilitaryPoint requirements = cardRequested.getRequiredMilitaryPoints();
+			String request = "Cost1: " + cost1.toString() + "\nCost2: " + cost2.toString() + "\nRequest for cost2 :"
+					+ requirements.toString();
 			hashMap = new HashMap<>();
+			hashMap.put("doubleCost", request);
 
-			hashMap.put("Cost1", cost1);
-			hashMap.put("Cost2", cost2);
-			hashMap.put("Requirements", requirements);
-			this.notifySingleObserver((MyObserver) o, hashMap);
+			sendToCurrentPlayer(hashMap);
 			System.out.println(
 					"Controller --> Inviando la richiesta di scelta costo, mi metto in attesa della risposta  ");
 
 			synchronized (tempCostWaiting) {
-				while (this.tempCost.isEmpty()) {
+				while (this.tempCostString.equals(new String())) {
 					try {
 						tempCostWaiting.wait();
 					} catch (InterruptedException e) {
@@ -807,15 +765,17 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				}
 
 			}
-
+			if (this.tempCostString.equals("1")){
+				tempCost = cost1;
+			} else {
+				tempCost = cost2;
+			}
 
 			System.out.println("Controller --> L'utente ha scelto, mi sono risvegliato ");
 
 		}
 		System.out.println("Controller --> Fine gestione carta Venture ");
 	}
-
-
 
 	// getters and setters
 
@@ -831,7 +791,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		this.controllerNumber = controllerNumber;
 	}
 
-
 	public List<Player> getPlayerTurn() {
 		return playerTurn;
 	}
@@ -839,6 +798,5 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	public void setPlayerTurn(List<Player> playerTurn) {
 		this.playerTurn = playerTurn;
 	}
-	
 
 }

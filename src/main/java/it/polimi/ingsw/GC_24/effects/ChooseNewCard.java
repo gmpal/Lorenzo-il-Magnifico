@@ -1,5 +1,7 @@
 package it.polimi.ingsw.GC_24.effects;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.StringTokenizer;
 
 import it.polimi.ingsw.GC_24.model.Player;
@@ -78,6 +80,31 @@ public class ChooseNewCard extends ImmediateEffect {
 		this.setOfValue = setOfValue;
 	}
 
+	/*Not necessary methods, but better than choosing with if...
+	 * CHOOSE NEW CARD EFFECT IS HANDLED DIFFERENTLY*/
+	@Override
+	public String generateParametersRequest() {
+		if (type == null){
+			return "everyTower";
+		} else return type;
+	}
+
+	@Override
+	public HashMap<String, Object> generateHashMapToSend(String response) {
+		HashMap<String, Object> hashMap = new HashMap<>();
+		hashMap.put("chooseNewCard", response);
+		return hashMap;
+	}
+
+	@Override
+	public void assignParameters(String responseFromClient) {
+		
+	}
+
+	@Override
+	public List<ImmediateEffect> addAllNewEffectsToThisSet(List<ImmediateEffect> secondaryInteractiveEffects) {
+		return secondaryInteractiveEffects;
+	}
 	
 	
 }

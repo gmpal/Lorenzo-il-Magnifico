@@ -12,8 +12,8 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import it.polimi.ingsw.GC_24.client.rmi.RMIView;
-import it.polimi.ingsw.GC_24.client.rmi.RMIViewRemote;
+import it.polimi.ingsw.GC_24.client.rmi.ServerRMIView;
+import it.polimi.ingsw.GC_24.client.rmi.ServerViewRemote;
 import it.polimi.ingsw.GC_24.client.view.ServerSocketView;
 import it.polimi.ingsw.GC_24.controller.Controller;
 import it.polimi.ingsw.GC_24.model.Model;
@@ -23,8 +23,9 @@ import it.polimi.ingsw.GC_24.model.PlayerColour;
 
 public class Server {
 
+	//TODO: è davvero necessario il triangolo MVC se tanto alla fine poi chiamo sempre game.sendModel()?
 	private static final int PORT = 19999;
-	private final static int RMI_PORT = 29999;
+	private final static int RMI_PORT = 28469;
 
 	private static Model game;
 	private static Controller controller;
@@ -37,7 +38,7 @@ public class Server {
 	public static void main(String[] args) throws IOException, AlreadyBoundException, InterruptedException {
 		Server server = new Server();
 		Server.startSocketServer();
-		server.startRMI();
+		server.startRMIServer();
 	}
 
 	// constructor
@@ -48,6 +49,32 @@ public class Server {
 		System.out.println("SERVER: Controller Created");
 	}
 
+	
+
+	private void startRMIServer() throws RemoteException, AlreadyBoundException {
+
+		// create the registry to publish remote objects
+		Registry registry = LocateRegistry.createRegistry(RMI_PORT);
+		System.out.println("Constructing the RMI registry");
+
+		// Create the RMI View, that will be shared with the client
+		ServerRMIView rmiView = new ServerRMIView();
+
+		// controller observes this view
+		rmiView.registerMyObserver(controller);
+		controller.registerMyObserver(rmiView);
+		
+		// this view observes the model
+		game.registerMyObserver(rmiView);
+
+		// publish the view in the registry as a remote object
+		@SuppressWarnings("unused")
+		ServerViewRemote viewRemote = (ServerViewRemote) UnicastRemoteObject.exportObject(rmiView, 0);
+
+		System.out.println("Binding the server implementation to the registry");
+		registry.bind("rmiServer", rmiView);
+
+	}
 
 	/**Handle the clients connection adding them to the model, if it is not already full*/
 	public static void startSocketServer() throws IOException, InterruptedException {
@@ -111,27 +138,4 @@ public class Server {
 	}
 
 	
-	private void startRMI() throws RemoteException, AlreadyBoundException {
-
-		// create the registry to publish remote objects
-		Registry registry = LocateRegistry.createRegistry(RMI_PORT);
-		System.out.println("Constructing the RMI registry");
-
-		// Create the RMI View, that will be shared with the client
-		RMIView rmiView = new RMIView();
-
-		// controller observes this view
-		rmiView.registerMyObserver(controller);
-
-		// this view observes the model
-		this.game.registerMyObserver(rmiView);
-
-		// publish the view in the registry as a remote object
-		@SuppressWarnings("unused")
-		RMIViewRemote viewRemote = (RMIViewRemote) UnicastRemoteObject.exportObject(rmiView, 0);
-
-		System.out.println("Binding the server implementation to the registry");
-		registry.bind("rmiView", rmiView);
-
-	}
 }

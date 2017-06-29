@@ -1,5 +1,8 @@
 package it.polimi.ingsw.GC_24.effects;
 
+import java.util.HashMap;
+import java.util.List;
+
 import it.polimi.ingsw.GC_24.model.Player;
 
 public abstract class ImmediateEffect extends Effect {
@@ -20,5 +23,13 @@ public abstract class ImmediateEffect extends Effect {
 	 * the player when called
 	 */
 	public abstract void giveImmediateEffect(Player player);
+	
+	public abstract String generateParametersRequest();
+	
+	public abstract HashMap<String,Object> generateHashMapToSend(String response);
+	
+	public abstract void assignParameters(String responseFromClient);
+
+	public abstract List<ImmediateEffect> addAllNewEffectsToThisSet(List<ImmediateEffect> secondaryInteractiveEffects);
 
 }

@@ -54,7 +54,7 @@ public class CouncilPrivilege extends ImmediateEffect {
 	/**This method receives a String that contains 1/2/3 number from 1 to 5,
 	 * they represent the position on the councilPrivileges the user wants to take
 	 * --> this input is parsed and saved. THEN giveImmediateEffect should be called */
-
+	@Override
 	public void assignParameters(String string) {
 		this.set = new SetOfValues();
 		StringTokenizer reader = new StringTokenizer(string);
@@ -108,6 +108,28 @@ public class CouncilPrivilege extends ImmediateEffect {
 	public void setNumberOfPrivileges(int numberOfPrivileges) {
 		this.numberOfPrivileges = numberOfPrivileges;
 	}
+
+	@Override
+	public String generateParametersRequest() {
+		String response = numberOfPrivileges+" council privileges needs to be chosen" +councilPrivileges +"\n Choose: (1/2/3/4/5)";
+		return response;
+	}
+
+	@Override
+	public HashMap<String, Object> generateHashMapToSend(String response) {
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("councilParamRequest", response);
+		return map;
+	}
+
+	@Override
+	public List<ImmediateEffect> addAllNewEffectsToThisSet(List<ImmediateEffect> secondaryInteractiveEffects) {
+		return secondaryInteractiveEffects;
+	}
+
+
+	
+	
 
 	
 	
