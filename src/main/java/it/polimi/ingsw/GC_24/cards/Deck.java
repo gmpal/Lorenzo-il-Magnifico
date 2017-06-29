@@ -13,6 +13,8 @@ import it.polimi.ingsw.GC_24.devCardJsonFile.GsonBuilders;
 import it.polimi.ingsw.GC_24.effects.SubVicrotyPointsFromSetOfValue;
 import it.polimi.ingsw.GC_24.places.*;
 import it.polimi.ingsw.GC_24.values.*;
+import it.polimi.ingsw.GC_24.model.*;
+import it.polimi.ingsw.GC_24.personalboard.*;
 
 public class Deck implements Serializable {
 
@@ -238,9 +240,31 @@ public class Deck implements Serializable {
 
 	public static void main(String args[]) throws IOException {
 
-		Excommunication ex=new Excommunication(null, new SubVicrotyPointsFromSetOfValue("subVicrotyPointsFromSetOfValue", new SetOfValues(), new VictoryPoint(1)) , 3);
+		//Excommunication ex=new Excommunication(null, new SubVicrotyPointsFromSetOfValue("subVicrotyPointsFromSetOfValue", new SetOfValues(), new VictoryPoint(1)) , 3);
 		Gson gson=GsonBuilders.getGsonWithTypeAdapters();
-		System.out.println(gson.toJson(ex));
+		List<SetOfValues> sett=new ArrayList<>();
+		BufferedReader br;
+		String line;
+		try {
+			br = new BufferedReader(
+					new FileReader("src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/convertFaithPoints.json"));
+
+			while ((line = GsonBuilders.getLine(br)) != null) {
+				sett.add(gson.fromJson(line, SetOfValues.class));
+			}
+		} catch (IOException e) {
+			System.out.println("There is a problem with the configuration file");
+		}
+		for(int i=0; i<20;i++){
+			System.out.println(sett.get(i));
+		}
+		SetOfValues set1=new SetOfValues();
+		SetOfValues set2=new SetOfValues();
+		set2.setFaithPoints(new FaithPoint(1));
+		set1.setFaithPoints(new FaithPoint(1));
+		set1.addTwoSetsOfValues(set2);
+		System.out.println(	set2);
+
 		/*Player player1 = new Player(1);
 		Player player2 = new Player(2);
 		List<Player> lista = new ArrayList<>();

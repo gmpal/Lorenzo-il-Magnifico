@@ -50,7 +50,8 @@ public class SetOfValues implements Serializable {
 		v.setFaithPoints(new FaithPoint(this.faithPoints.getQuantity() + v.getFaithPoints().getQuantity()));
 		v.setMilitaryPoints(new MilitaryPoint(this.militaryPoints.getQuantity() + v.getMilitaryPoints().getQuantity()));
 		v.setVictoryPoints(new VictoryPoint(this.victoryPoints.getQuantity() + v.getVictoryPoints().getQuantity()));
-		return v;
+		SetOfValues c=v;
+		return c;
 	}
 
 	/** method to subtract two sets of values [v- this]*/
