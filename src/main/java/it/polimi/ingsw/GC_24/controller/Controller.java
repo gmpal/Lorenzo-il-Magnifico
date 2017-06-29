@@ -2,9 +2,6 @@ package it.polimi.ingsw.GC_24.controller;
 
 import java.io.IOException;
 import java.util.*;
-
-import javax.print.attribute.HashAttributeSet;
-
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.MyObserver;
 import it.polimi.ingsw.GC_24.cards.*;
