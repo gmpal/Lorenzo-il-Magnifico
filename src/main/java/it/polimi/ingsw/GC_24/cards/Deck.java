@@ -10,11 +10,9 @@ import java.util.Random;
 import com.google.gson.Gson;
 import it.polimi.ingsw.GC_24.board.Board;
 import it.polimi.ingsw.GC_24.devCardJsonFile.GsonBuilders;
-import it.polimi.ingsw.GC_24.effects.SubVicrotyPointsFromSetOfValue;
+import it.polimi.ingsw.GC_24.personalboard.PersonalBoard;
 import it.polimi.ingsw.GC_24.places.*;
 import it.polimi.ingsw.GC_24.values.*;
-import it.polimi.ingsw.GC_24.model.*;
-import it.polimi.ingsw.GC_24.personalboard.*;
 
 public class Deck implements Serializable {
 
@@ -185,8 +183,6 @@ public class Deck implements Serializable {
 			towerPlace.setCorrespondingCard(chosenCard);
 		}
 	}
-	
-	
 
 	public List<Territories> getDeckTerritories() {
 		return deckTerritories;

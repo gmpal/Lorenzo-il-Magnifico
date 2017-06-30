@@ -436,14 +436,83 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			}
 			return "sale chosen";
 
-		}
-
-		else {
+		} else if (command.contains("leader")) {
+			System.out.println("Controller --> Ricevuta un'azione leader");
+			handleAndVerifyLeader(o, request);
+		
+		}else {
 			System.out.println("Controller --> COMANDO NON RICONOSCIUTO ");
 			return "bad command";
 		}
 		return null;
 
+	}
+
+	private void handleAndVerifyLeader(MyObservable o, Map<String, Object> request) {
+		System.out.println("Controller --> Sto gestendo un leader");
+		StringTokenizer tokenizer = new StringTokenizer((String) request.get("leader"));
+
+		String actionLeader = tokenizer.nextToken();
+		String indexLeader = tokenizer.nextToken();
+		int index = Integer.parseInt(indexLeader) - 1;
+
+		String feedback = "Answer: \n";
+		if (actionLeader.equalsIgnoreCase("activate")) {
+			feedback = verifyAvailability(index, feedback);
+			feedback = verifyRequirementsLeader(index, feedback);
+
+			if (!feedback.equals("Answer: \n")) {
+				incorrenctLeaderHandling(o, feedback);
+			} else {
+				assignLeaderEffects(index);
+			}
+		}else if (actionLeader.equalsIgnoreCase("discard")) {
+			feedback = verifyAvailability(index, feedback);
+			if (!feedback.equals("Answer: \n")) {
+				incorrenctLeaderHandling(o, feedback);
+			} else {
+				CouncilPrivilege privilege = new CouncilPrivilege("council", 1);
+				//TODO attivare il privilegio
+			}
+		}
+
+	}
+
+	private String verifyAvailability(int index, String feedback) {
+		if (currentPlayer.getMyBoard().getPersonalLeader().get(index).isInUse()){
+			return feedback + "This card is already in use\n";
+		}
+		return feedback;	
+	}
+
+	private String verifyRequirementsLeader(int index, String feedback) {
+		Requirements requirements = currentPlayer.getMyBoard().getPersonalLeader().get(index).getRequirements();
+		if (!requirements.getRequirementSetOfVaue().isEmpty()) {
+			if (!currentPlayer.getMyValues().doIHaveThisSet(requirements.getRequirementSetOfVaue())) {
+				feedback = feedback + "You don't have enough resources to activate this card!\n";
+			}
+		}
+		if (requirements.getRequirmentTerritories() != 0) {
+			if (currentPlayer.getMyBoard().getPersonalTerritories().getCards().size()<requirements.getRequirmentTerritories()) {
+				feedback = feedback + "You don't have enough Territories to activate this card!\n";
+			}
+		}
+		if (requirements.getRequirmentCharacters() != 0) {
+			if (currentPlayer.getMyBoard().getPersonalCharacters().getCards().size()<requirements.getRequirmentCharacters()) {
+				return feedback + "You don't have enough Characters to activate this card!\n";
+			}
+		}
+		if (requirements.getRequirmentBuildings() != 0) {
+			if (currentPlayer.getMyBoard().getPersonalBuildings().getCards().size()<requirements.getRequirmentBuildings()) {
+				feedback = feedback + "You don't have enough Buildings to activate this card!\n";
+			}
+		}
+		if (requirements.getRequirmentVentures() != 0) {
+			if (currentPlayer.getMyBoard().getPersonalVentures().getCards().size()<requirements.getRequirmentVentures()) {
+				feedback = feedback + "You don't have enough Ventures to activate this card!\n";
+			}
+		}
+		return feedback;
 	}
 
 	private String handlePlayer(Map<String, Object> request) {
@@ -465,7 +534,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	}
 
-	// #1
 	private void handleAction(MyObservable o, Map<String, Object> request) {
 		System.out.println("Controller --> Sto gestendo un'azione");
 		StringTokenizer tokenizer = new StringTokenizer((String) request.get("action"));
@@ -533,6 +601,21 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	}
 
+	private void assignLeaderEffects(int index) {
+		System.out.println("Controller --> La verifica dell' attivazione della carta leader è andata a buon fine ");
+		Leader card = currentPlayer.getMyBoard().getPersonalLeader().get(index);
+		if (card.getImmediateEffectLeader()!=null){
+			card.getImmediateEffectLeader().giveImmediateEffect(currentPlayer);
+		}
+		if (card.getValueEffectLeader()!=null){
+			card.getValueEffectLeader().giveImmediateEffect(currentPlayer);
+		}
+		card.setInUse(true);
+		game.sendModel();
+		awakenSleepingClient();
+		System.out.println("Controller --> Richiesta di risveglio inviata");
+	}
+
 	private void correctChooseNewCardExecute(MyObservable o) {
 		System.out.println("Controller --> La verifica dell'azione è andata a buon fine ");
 		List<ImmediateEffect> interactiveEffects = action.run();
@@ -542,6 +625,13 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		// awakenSleepingClient();
 		System.out.println("Controller --> Richiesta di risveglio inviata");
 
+	}
+	
+	private void incorrenctLeaderHandling(MyObservable o, String feedback) {
+		System.out.println("Controller --> L'attivazione della carta leader non ha superato i controlli");
+		sendProblems(o, feedback);
+		System.out.println("Controller --> Inviata richiesta di problemi al client");
+		awakenSleepingClient();		
 	}
 
 	private void incorrenctActionHandling(MyObservable o, String responseToActionVerify) {

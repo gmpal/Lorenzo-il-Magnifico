@@ -29,26 +29,27 @@ public class Leader extends Card{
 		this.inUse = false;
 		this.oneTimePerTurn = oneTimePerTurn;
 	}
-
+	
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("Leader Card: Name: " + name + "\nRequirements: " + requirements.toString());
-		if (valueEffectLeader != null) {
-			sb.append("\nValue Effect: " + valueEffectLeader.toString());
+		StringBuilder builder = new StringBuilder();
+		builder.append( "\n[Name = " + name + ", Requirements: " + requirements);
+		if (immediateEffectLeader!=null){
+			builder.append(", Immediate Effect: " + immediateEffectLeader);
 		}
-		if (immediateEffectLeader != null) {
-			sb.append("\nImmediate Effect: " + immediateEffectLeader.toString());
+		if (valueEffectLeader != null) {
+			builder.append(", Value Effect: " + valueEffectLeader);
 		}
 		if (permanentEffectLeader != null) {
-			sb.append("\nPermanent Effect: " + permanentEffectLeader.toString());
+			builder.append(", Permanent Effect: " + permanentEffectLeader);
 		}
 		if (this.oneTimePerTurn) {
-			sb.append("\nYou can use this card one time per turn");
-		} else {
-			sb.append("\nThe card's effects are permanent");
+			builder.append("\n\tYou can activate this card only one time per turn");
+		}else {
+			builder.append("\n\tThe card's effect is permanent");
 		}
-		return sb.toString();
+		builder.append("]");
+		return builder.toString();
 	}
 
 	// getters and setters
