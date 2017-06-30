@@ -1,7 +1,6 @@
 package it.polimi.ingsw.GC_24.model;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -13,22 +12,14 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.board.Board;
 import it.polimi.ingsw.GC_24.cards.Deck;
 import it.polimi.ingsw.GC_24.cards.Excommunication;
 import it.polimi.ingsw.GC_24.cards.Leader;
-import it.polimi.ingsw.GC_24.cards.Territories;
-import it.polimi.ingsw.GC_24.client.view.ServerSocketView;
 
-import java.io.*;
 import java.util.*;
-import com.google.gson.Gson;
-import it.polimi.ingsw.GC_24.MyObservable;
-import it.polimi.ingsw.GC_24.board.Board;
-import it.polimi.ingsw.GC_24.cards.Deck;
 import it.polimi.ingsw.GC_24.devCardJsonFile.GsonBuilders;
 import it.polimi.ingsw.GC_24.dice.SetOfDice;
 import it.polimi.ingsw.GC_24.network.multi.Server;
@@ -69,7 +60,7 @@ public class Model extends MyObservable implements Serializable {
 		this.currentPlayer = null;
 		this.gameState = State.WAITINGFORPLAYERONE;
 		this.dice = null;
-		this.rankings = new ArrayList<Ranking>();
+		this.rankings = new ArrayList<>();
 		this.counter = 0;
 		this.modelNumber = modelNumber;
 		this.cards = new Deck();
@@ -317,5 +308,15 @@ public class Model extends MyObservable implements Serializable {
 	public List<SetOfValues> getCorrespondingValue() {
 		return correspondingValue;
 	}
+
+	public List<Excommunication> getExcommunicationDeck() {
+		return excommunicationDeck;
+	}
+
+	public void setExcommunicationDeck(List<Excommunication> excommunicationDeck) {
+		this.excommunicationDeck = excommunicationDeck;
+	}
+	
+	
 
 }

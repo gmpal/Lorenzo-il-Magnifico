@@ -474,6 +474,18 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		sendAnswerForParameters(answer);
 
 	}
+	
+	public void askForExcommunication(){
+		System.out.println("Do you want to support the Vatican?(Y/N)");
+		String answer=scanner.next();
+		sendAnswerToVatican(answer);
+	}
+
+	private void sendAnswerToVatican(String answer) {
+		hm = new HashMap<>();
+		hm.put("answerForVatican", answer);
+		this.notifyMyObservers(hm);		
+	}
 
 	@Override
 	public <C> void update(MyObservable o, C change) {
@@ -510,8 +522,10 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		} else {
 			System.out.println("**********Not your turn**********");
 		}
-		;
+		
 	}
+	
+	
 
 	public List<Player> getPlayerTurn() {
 		return playerTurn;

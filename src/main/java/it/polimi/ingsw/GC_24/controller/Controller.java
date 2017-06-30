@@ -26,6 +26,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	private int cardsIndex = 0;
 	private SetOfValues saleForPermanentEffect = new SetOfValues();
 	private String parametersAnswer;
+	private Timers timers = new Timers();
 
 	private boolean alreadyPlaying = false;
 	private boolean autocompleted;
@@ -436,14 +437,46 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			}
 			return "sale chosen";
 
+		} else if (command.contains("answerForVatican")) {
+			System.out.println("Controller --> Ricevuta la scelta di supporto al vaticano ");
+			String answer = (String) request.get("answerForVatican");
+			giveExcommunication(answer);
 		}
 
 		else {
 			System.out.println("Controller --> COMANDO NON RICONOSCIUTO ");
 			return "bad command";
 		}
+
 		return null;
 
+	}
+
+	/**
+	 * This method gives an excommunication card to the player that either
+	 * decides not to give his support to the Vatican or doesn't have the faith
+	 * requirements.
+	 */
+	private void giveExcommunication(String answer) {
+		int period = cardsIndex / 2;
+		if (answer.equalsIgnoreCase("y") && verifyRequiremetsExcommunication()) {
+			currentPlayer.getMyValues().addTwoSetsOfValues(
+					currentPlayer.getMyValues().getFaithPoints().convertToValue(game.getCorrespondingValue()));
+			currentPlayer.getMyValues().getFaithPoints().setQuantity(0);
+		} else {
+			currentPlayer.getMyBoard().getPersonalExcommunication().add(game.getExcommunicationDeck().get(period));
+		}
+	}
+
+	/**
+	 * This method verify if the player have the requirements to support
+	 * Vatican.
+	 * 
+	 * @return true if player have requirements, false otherwise.
+	 */
+	private boolean verifyRequiremetsExcommunication() {
+		return game.getExcommunicationDeck().get(cardsIndex / 2).getRequiremetsForExcommunication()
+				.getQuantity() <= currentPlayer.getMyValues().getFaithPoints().getQuantity();
 	}
 
 	private String handlePlayer(Map<String, Object> request) {
