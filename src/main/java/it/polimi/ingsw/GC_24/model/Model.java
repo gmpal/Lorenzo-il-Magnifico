@@ -57,6 +57,7 @@ public class Model extends MyObservable implements Serializable {
 		this.cards = null;
 	}
 
+
 	/**
 	 * This method create the Excommunication Cards' deck from a configuration
 	 * file named "excommunicationCards.json". All cards are put in an
@@ -91,14 +92,18 @@ public class Model extends MyObservable implements Serializable {
 	public synchronized void addPlayer() {
 
 		counter++;
+		System.out.println("Model --> Contatore incrementato");
 		sendNumberToClient();
+		System.out.println("Model --> Numero inviato al client");
 		Player player = new Player(counter);
 		this.getPlayers().add(player);
 		System.out.println("Model: PLAYER " + player);
 		System.out.println("Model: Player #" + counter + "added to Game #" + getModelNumber());
 
 		incrementState();
+		System.out.println("Model --> stato incrementato");
 		sendModel();
+		System.out.println("Model --> model inviato");
 
 		if (getGameState().equals(State.WAITINGFORPLAYERTHREE)) {
 			System.out.println("Model: Timer Starting");
@@ -167,11 +172,12 @@ public class Model extends MyObservable implements Serializable {
 	}
 
 	private void sendNumberToClient() {
+		System.out.println("Richiesta di invio numero");
 		hm = new HashMap<>();
 		hm.put("clientNumber", counter);
 		hm.put("modelNumber", modelNumber);
 		notifyMyObservers(hm);
-
+System.out.println("Numero inviato");
 	}
 
 	public Player getPlayerfromColour(PlayerColour colour) {

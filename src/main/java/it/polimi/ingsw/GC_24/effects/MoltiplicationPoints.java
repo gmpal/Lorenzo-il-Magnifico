@@ -1,5 +1,8 @@
 package it.polimi.ingsw.GC_24.effects;
 
+import java.util.HashMap;
+import java.util.List;
+
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.values.*;
 
@@ -48,6 +51,27 @@ public class MoltiplicationPoints extends Moltiplication{
 
 	public void getValue2(Value value2) {
 		this.value2 = value2;
+	}
+	
+	/*Not necessary methods, but better than choosing with if...*/
+	@Override
+	public String generateParametersRequest() {
+		return null;
+	}
+
+	@Override
+	public HashMap<String, Object> generateHashMapToSend(String response) {
+		return null;
+	}
+
+	@Override
+	public void assignParameters(String responseFromClient) {
+		
+	}
+
+	@Override
+	public List<ImmediateEffect> addAllNewEffectsToThisSet(List<ImmediateEffect> secondaryInteractiveEffects) {
+		return secondaryInteractiveEffects;
 	}
 
 

@@ -28,13 +28,8 @@ public abstract class MyObservable {
 
 	public synchronized <C> void notifyMyObservers(C change) {
 		for (MyObserver o : this.MyObservers) {
-			o.update(this, change);
+			o.update(change);
 		}
 	}
   
-	public synchronized <C> void notifySingleObserver(MyObserver o, C change) {
-		
-			o.update(this, change);
-		
-	}
 }

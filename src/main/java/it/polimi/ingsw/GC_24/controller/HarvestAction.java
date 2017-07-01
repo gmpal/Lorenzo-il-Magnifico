@@ -53,7 +53,7 @@ public class HarvestAction extends Action {
 		
 		for(int i=0;i<player.getMyBoard().getPersonalCharacters().getCards().size();i++){
 			Characters c=(Characters)player.getMyBoard().getPersonalCharacters().getCards().get(i);
-			if(c.getPermanentEffects().getName().equals("increaseDieValueHarvest")){
+			if(c != null && c.getPermanentEffects()!= null && c.getPermanentEffects().getName().equals("increaseDieValueHarvest")){
 				IncreaseDieValueActivity pe=(IncreaseDieValueActivity)c.getPermanentEffects();
 				this.finalActionValue+=pe.getIncreaseDieValue();
 			}
