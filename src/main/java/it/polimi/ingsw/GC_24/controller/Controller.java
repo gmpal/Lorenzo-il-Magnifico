@@ -559,11 +559,20 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		List<ImmediateEffect> interactiveEffects = action.run();
 		this.handleInteractiveEffects(o, interactiveEffects);
 		System.out.println("Controller --> Conclusa gestione dei costi interattivi ");
+		if(cardsIndex==1||cardsIndex==3||cardsIndex==5){
+			askForSupportVatican();
+		}
 		notifyToProceedWithTurns();
 		game.sendModel();
 		awakenSleepingClient();
 		System.out.println("Controller --> Richiesta di risveglio inviata");
 
+	}
+
+	private void askForSupportVatican() {
+		hashMap = new HashMap<>();
+		hashMap.put("vatican", null);
+		notifyMyObservers(hashMap);		
 	}
 
 	private void correctChooseNewCardExecute(MyObservable o) {
