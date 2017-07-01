@@ -559,7 +559,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		List<ImmediateEffect> interactiveEffects = action.run();
 		this.handleInteractiveEffects(o, interactiveEffects);
 		System.out.println("Controller --> Conclusa gestione dei costi interattivi ");
-		if(cardsIndex==1||cardsIndex==3||cardsIndex==5){
+		if((cardsIndex==1||cardsIndex==3||cardsIndex==5)&&currentPlayer.getMyFamily().isEmpty()){
 			askForSupportVatican();
 		}
 		notifyToProceedWithTurns();
