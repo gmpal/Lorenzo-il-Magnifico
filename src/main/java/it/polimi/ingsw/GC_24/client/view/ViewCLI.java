@@ -257,7 +257,7 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 
 	public String chooseLeader() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Choose Leader Card (");
+		builder.append("\nChoose Leader Card (");
 		for (int i=1; i<=myself.getMyBoard().getPersonalLeader().size(); i++){
 			if (i==myself.getMyBoard().getPersonalLeader().size()){
 				builder.append(i);

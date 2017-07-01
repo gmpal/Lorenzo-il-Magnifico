@@ -22,6 +22,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	private int controllerNumber = 0;
 	private List<Player> councilTurnArray;
 	private List<Player> playerTurn;
+	private List<Leader> leaderOneTimePerTurn;
 	private Player currentPlayer;
 	private int cardsIndex = 0;
 	private SetOfValues saleForPermanentEffect = new SetOfValues();
@@ -131,11 +132,28 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			sendTurnArray(playerTurn);
 			// let's go to next state
 			game.incrementState();
+			checkToActivateLeader();
 			cardsIndex++;
 			// and repeat everything til state "ENDED"
 		}
 		gameEndHandler();
 
+	}
+	
+	/**
+	 * checks if in the player's personalLeader there are some activated cards
+	 * that are oneTimePerTurn and in that case the method sets this boolean to
+	 * false
+	 */
+	public void checkToActivateLeader() {
+		for (Player p : playerTurn) {
+			for (Leader l : p.getMyBoard().getPersonalLeader()) {
+				if (l.isOneTimePerTurn() && l.isInUse()) {
+					l.setInUse(false);
+				}
+			}
+		}
+		game.sendModel();
 	}
 
 	private void startTimerForPlayerAction(Timer t1) {
@@ -448,6 +466,12 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	}
 
+	/**
+	 * receives the command action on leader cards. If it is to activate the
+	 * leader, it verifies if the player can, and in that case gives them the
+	 * effects. If it's to discard the card, then the method will check the
+	 * card's availability and will give a council privilege o the player
+	 */
 	private void handleAndVerifyLeader(MyObservable o, Map<String, Object> request) {
 		System.out.println("Controller --> Sto gestendo un leader");
 		StringTokenizer tokenizer = new StringTokenizer((String) request.get("leader"));
@@ -458,7 +482,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 		String feedback = "Answer: \n";
 		if (actionLeader.equalsIgnoreCase("activate")) {
-			feedback = verifyAvailability(index, feedback);
+			feedback = verifyAvailabilityLeader(index, feedback);
 			feedback = verifyRequirementsLeader(index, feedback);
 
 			if (!feedback.equals("Answer: \n")) {
@@ -467,50 +491,50 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				assignLeaderEffects(index);
 			}
 		}else if (actionLeader.equalsIgnoreCase("discard")) {
-			feedback = verifyAvailability(index, feedback);
+			feedback = verifyAvailabilityLeader(index, feedback);
 			if (!feedback.equals("Answer: \n")) {
 				incorrenctLeaderHandling(o, feedback);
 			} else {
 				CouncilPrivilege privilege = new CouncilPrivilege("council", 1);
-				//TODO attivare il privilegio
+				//TODO attivare il privilegio e rimuovere la carta dall'arraylist
 			}
 		}
 
 	}
 
-	private String verifyAvailability(int index, String feedback) {
+	private String verifyAvailabilityLeader(int index, String feedback) {
 		if (currentPlayer.getMyBoard().getPersonalLeader().get(index).isInUse()){
 			return feedback + "This card is already in use\n";
 		}
-		return feedback;	
+		return feedback;
 	}
 
 	private String verifyRequirementsLeader(int index, String feedback) {
 		Requirements requirements = currentPlayer.getMyBoard().getPersonalLeader().get(index).getRequirements();
-		if (!requirements.getRequirementSetOfVaue().isEmpty()) {
-			if (!currentPlayer.getMyValues().doIHaveThisSet(requirements.getRequirementSetOfVaue())) {
-				feedback = feedback + "You don't have enough resources to activate this card!\n";
+		for (Leader card : leaderOneTimePerTurn) {
+			if (currentPlayer.getMyBoard().getPersonalLeader().get(index).getName().equals(card.getName())) {
+				return feedback;
 			}
 		}
-		if (requirements.getRequirmentTerritories() != 0) {
-			if (currentPlayer.getMyBoard().getPersonalTerritories().getCards().size()<requirements.getRequirmentTerritories()) {
-				feedback = feedback + "You don't have enough Territories to activate this card!\n";
-			}
+		if (!requirements.getRequirementSetOfVaue().isEmpty()
+				&& !currentPlayer.getMyValues().doIHaveThisSet(requirements.getRequirementSetOfVaue())) {
+			feedback = feedback + "You don't have enough resources to activate this card!\n";
 		}
-		if (requirements.getRequirmentCharacters() != 0) {
-			if (currentPlayer.getMyBoard().getPersonalCharacters().getCards().size()<requirements.getRequirmentCharacters()) {
-				return feedback + "You don't have enough Characters to activate this card!\n";
-			}
+		if (requirements.getRequirmentTerritories() != 0 && currentPlayer.getMyBoard().getPersonalTerritories()
+				.getCards().size() < requirements.getRequirmentTerritories()) {
+			feedback = feedback + "You don't have enough Territories to activate this card!\n";
 		}
-		if (requirements.getRequirmentBuildings() != 0) {
-			if (currentPlayer.getMyBoard().getPersonalBuildings().getCards().size()<requirements.getRequirmentBuildings()) {
-				feedback = feedback + "You don't have enough Buildings to activate this card!\n";
-			}
+		if (requirements.getRequirmentCharacters() != 0 && currentPlayer.getMyBoard().getPersonalCharacters().getCards()
+				.size() < requirements.getRequirmentCharacters()) {
+			return feedback + "You don't have enough Characters to activate this card!\n";
 		}
-		if (requirements.getRequirmentVentures() != 0) {
-			if (currentPlayer.getMyBoard().getPersonalVentures().getCards().size()<requirements.getRequirmentVentures()) {
-				feedback = feedback + "You don't have enough Ventures to activate this card!\n";
-			}
+		if (requirements.getRequirmentBuildings() != 0 && currentPlayer.getMyBoard().getPersonalBuildings().getCards()
+				.size() < requirements.getRequirmentBuildings()) {
+			feedback = feedback + "You don't have enough Buildings to activate this card!\n";
+		}
+		if (requirements.getRequirmentVentures() != 0 && currentPlayer.getMyBoard().getPersonalVentures().getCards()
+				.size() < requirements.getRequirmentVentures()) {
+			feedback = feedback + "You don't have enough Ventures to activate this card!\n";
 		}
 		return feedback;
 	}
@@ -611,6 +635,9 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			card.getValueEffectLeader().giveImmediateEffect(currentPlayer);
 		}
 		card.setInUse(true);
+		if (card.isOneTimePerTurn() && !leaderOneTimePerTurn.contains(card)){
+			leaderOneTimePerTurn.add(card);
+		}
 		game.sendModel();
 		awakenSleepingClient();
 		System.out.println("Controller --> Richiesta di risveglio inviata");
