@@ -3,22 +3,13 @@ package it.polimi.ingsw.GC_24.model;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import com.google.gson.Gson;
-
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.board.Board;
 import it.polimi.ingsw.GC_24.cards.Deck;
 import it.polimi.ingsw.GC_24.cards.Excommunication;
 import it.polimi.ingsw.GC_24.cards.Leader;
-
 import java.util.*;
 import it.polimi.ingsw.GC_24.devCardJsonFile.GsonBuilders;
 import it.polimi.ingsw.GC_24.dice.SetOfDice;
@@ -63,7 +54,7 @@ public class Model extends MyObservable implements Serializable {
 		this.rankings = new ArrayList<>();
 		this.counter = 0;
 		this.modelNumber = modelNumber;
-		this.cards = new Deck();
+		this.cards = null;
 	}
 
 	/**
@@ -145,9 +136,9 @@ public class Model extends MyObservable implements Serializable {
 		this.cards = new Deck();
 		this.dice = new SetOfDice();
 		this.dice.reset();
+		dealLeaders(cards.getDeckLeaders(),players);
 		getCorrespondingValueFromFile();
 		createExcommunicationDeck();
-		createLeaderDeck();
 
 		// Setting the players
 		for (Player p : players) {
@@ -155,30 +146,9 @@ public class Model extends MyObservable implements Serializable {
 			p.setMyColour(PlayerColour.valueOf(PlayerColour.getValues().get(players.indexOf(p))));
 			p.setMyFamily(new Family(p.getMyColour()));
 			p.getMyFamily().setFamily(this.dice);
-
 			rankings.add(new Ranking(p));
 		}
 
-	}
-
-	/**
-	 * This method create the Leader Cards' deck from a configuration file named
-	 * "leadersCards.json". Each line of file represents a card.
-	 */
-	private void createLeaderDeck() {
-		BufferedReader br;
-		Gson gson = GsonBuilders.getGsonWithTypeAdapters();
-		String line;
-		try {
-			br = new BufferedReader(
-					new FileReader("src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/leadersCards.json"));
-
-			while ((line = GsonBuilders.getLine(br)) != null) {
-				leaderDeck.add(gson.fromJson(line, Leader.class));
-			}
-		} catch (IOException e) {
-			System.out.println("There is a problem with the configuration file");
-		}
 	}
 
 	public void incrementState() {
@@ -210,6 +180,18 @@ public class Model extends MyObservable implements Serializable {
 				return player;
 		}
 		return null;
+	}
+
+	private void dealLeaders(List<Leader> leaderDeck, List<Player> players) {
+		Random random = new Random();
+		int num = (leaderDeck.size() / players.size());
+		for (Player p : players) {
+			for (int i = 0; i < num; i++) {
+				int position = random.nextInt(leaderDeck.size());
+				p.getMyBoard().getPersonalLeader().add(leaderDeck.get(position));
+				leaderDeck.remove(position);
+			}
+		}
 	}
 
 	// getters and setters

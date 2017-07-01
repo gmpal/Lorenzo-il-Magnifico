@@ -109,9 +109,9 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 
 	public void showAndGetOption() {
 
-		System.out.println("Choose action:\n" + "a)Show board\n" + "b)Show personal board\n" + "c)Show leader cards\n"
-				+ "d)Show family members\n" + "e)Show my resources\n" + "f)Place family member\n"
-				+ "g)Use a leader card\n" + "h)Throw a leader card\n" + "i)End turn\n" + "j)Exit");
+		System.out.println("Choose action:\n" + "a)Show board\n" + "b)Show personal board\n"
+				+ "c)Show family members\n" + "d)Show my resources\n" + "e)Place family member\n"
+				+ "f)Activate a leader card\n" + "g)Discard a leader card\n" + "h)End turn\n" + "i)Exit");
 		String command = scanner.next();
 
 		if (command.equalsIgnoreCase("a")) {
@@ -124,19 +124,13 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 
 		} else if (command.equalsIgnoreCase("c")) {
 
-			// TODO: aggiungere leadercards alla personalBoard
-			// System.out.println(myself.getMyBoard());
-			System.out.println("This function is not been implemented yet");
+			System.out.println(myself.getMyFamily());
 
 		} else if (command.equalsIgnoreCase("d")) {
 
-			System.out.println(myself.getMyFamily());
-
-		} else if (command.equalsIgnoreCase("e")) {
-
 			System.out.println(myself.getMyValues());
 
-		} else if (command.equalsIgnoreCase("f")) {
+		} else if (command.equalsIgnoreCase("e")) {
 
 			if (myTurn) {
 				System.out.println(myself.getMyFamily());
@@ -156,17 +150,41 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 				System.out.println("Not your turn. You can't do any action.\n");
 			}
 
+		} else if (command.equalsIgnoreCase("f")) {
+
+			if (myTurn) {
+				System.out.println(myself.getMyBoard().getPersonalLeader());
+				command = "activate " + chooseLeader();
+				if (command.contains("cancel")) {
+					System.out.println("Action cancelled");
+				} else {
+					sendLeader(command);
+				}
+
+			} else {
+				System.out.println("Not your turn. You can't do any action.\n");
+			}
+
 		} else if (command.equalsIgnoreCase("g")) {
-			// miniModel.getPlayerfromColour(PlayerColour.valueOf(colour.toUpperCase())).getLeaderCards().chooseLeaderCard();
-			System.out.println("This function is not been implemented yet");
+			
+			if (myTurn) {
+				System.out.println(myself.getMyBoard().getPersonalLeader());
+				command = "discard " + chooseLeader();
+				if (command.contains("cancel")) {
+					System.out.println("Action cancelled");
+				} else {
+					sendLeader(command);
+				}
+
+			} else {
+				System.out.println("Not your turn. You can't do any action.\n");
+			}
+			
 		} else if (command.equalsIgnoreCase("h")) {
-			// miniModel.getPlayerfromColour(PlayerColour.valueOf(colour.toUpperCase())).getLeaderCards().throwLeaderCard();
-			System.out.println("This function is not been implemented yet");
-		} else if (command.equalsIgnoreCase("i")) {
 			command = "end";
 			System.out.println("This function is not been implemented yet");
 			// TODO: gestione della fine del turno
-		} else if (command.equalsIgnoreCase("j")) {
+		} else if (command.equalsIgnoreCase("i")) {
 			System.out.println("This function is not been implemented yet");
 			// break;
 			// TODO:gestire la disconnessione;
@@ -237,6 +255,28 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		return commandZone;
 	}
 
+	public String chooseLeader() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("\nChoose Leader Card (");
+		for (int i=1; i<=myself.getMyBoard().getPersonalLeader().size(); i++){
+			if (i==myself.getMyBoard().getPersonalLeader().size()){
+				builder.append(i);
+				break;
+			}
+			builder.append(i+",");
+		}
+		builder.append(")  0 --> Cancel ");
+		System.out.println(builder.toString());
+		String choice = scanner.next();
+		while (!(builder.toString().contains(choice))) {
+			System.out.println("Wrong choice, try again;");
+			choice = scanner.next();
+		}
+		if (choice.equals("0")) {
+			choice = "cancel";
+		}
+		return choice;
+	}
 	public String fourChoice(String s) {
 		System.out.println("Choose " + s + " (1,2,3,4)  0 --> Cancel ");
 
@@ -251,21 +291,6 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		}
 
 		return choice;
-
-		/*
-		 * String validChoice = null; while (validChoice == null &&
-		 * scanner.hasNextInt()) { try {
-		 * 
-		 * commandFloorInt = scanner.nextInt(); validChoice = "ok";
-		 * 
-		 * if ((commandFloorInt > 5 || commandFloorInt < 1)) {
-		 * System.out.println("Invalid number, try again"); commandFloor = null;
-		 * } } catch (InputMismatchException e) {
-		 * System.out.println("Please, type a number!");
-		 * 
-		 * } }
-		 */
-
 	}
 
 	public String increaseDieValue(String commandZone) {
@@ -285,13 +310,10 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 		return commandZone + " " + choice;
 	}
 
-	private void sendAction(String command) {
-		hm = new HashMap<>();
-		hm.put("action", command);
-
+	/** This block of code notifies the Server of the action */
+	private void waitForActionDone() {
 		/* This block of code notifies the Server of the action */
 		synchronized (waitingForActionCompleted) {
-			notifyMyObservers(hm);
 			System.out.println("----Waiting for your action to be completed----");
 			while (!actionDone) {
 				try {
@@ -303,6 +325,20 @@ public class ViewCLI extends MyObservable implements MyObserver, Runnable {
 				}
 			}
 		}
+	}
+
+	private void sendAction(String command) {
+		hm = new HashMap<>();
+		hm.put("action", command);
+		notifyMyObservers(hm);
+		waitForActionDone();
+	}
+	
+	private void sendLeader(String command) {
+		hm = new HashMap<>();
+		hm.put("leader", command);
+		this.notifyMyObservers(hm);
+		waitForActionDone();
 	}
 
 	/**
