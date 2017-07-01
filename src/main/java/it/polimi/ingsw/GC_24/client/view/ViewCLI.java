@@ -1,13 +1,8 @@
 package it.polimi.ingsw.GC_24.client.view;
 
-import java.io.Serializable;
-
 import java.util.*;
 import java.util.concurrent.TimeUnit;
-
 import it.polimi.ingsw.GC_24.MyObservable;
-import it.polimi.ingsw.GC_24.MyObserver;
-
 import it.polimi.ingsw.GC_24.effects.*;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
@@ -239,10 +234,12 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 				commandZone = "market " + cf + " ";
 
 			} else if (commandZone.equalsIgnoreCase("f")) {
+				System.out.println("My buildings:\n"+myself.getMyBoard().getPersonalBuildings().getCards());
 				System.out.println(miniModel.getBoard().getProduction());
 				commandZone = "production 0 ";
 
 			} else if (commandZone.equalsIgnoreCase("g")) {
+				System.out.println("My territories:\n"+myself.getMyBoard().getPersonalTerritories().getCards());
 				System.out.println(miniModel.getBoard().getHarvest());
 				commandZone = "harvest 0 ";
 
@@ -265,32 +262,35 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 			commandZone = increaseDieValue(commandZone);
 
 		}
-		commandZone = increaseDieValue(commandZone);
 		return commandZone;
 	}
 
 	public String chooseLeader() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("\nChoose Leader Card (");
-		for (int i=1; i<=myself.getMyBoard().getPersonalLeader().size(); i++){
-			if (i==myself.getMyBoard().getPersonalLeader().size()){
+		String string = "0";
+		for (int i = 1; i <= myself.getMyBoard().getPersonalLeader().size(); i++) {
+			if (i == myself.getMyBoard().getPersonalLeader().size()) {
 				builder.append(i);
+				string = string + i;
 				break;
 			}
-			builder.append(i+",");
+			builder.append(i + ",");
 		}
 		builder.append(")  0 --> Cancel ");
 		System.out.println(builder.toString());
+		
 		String choice = scanner.next();
-		while (!(builder.toString().contains(choice))) {
-			System.out.println("Wrong choice, try again;");
+		while (!(string.contains(choice))) {
+			System.out.println("Wrong choice, try again");
 			choice = scanner.next();
 		}
 		if (choice.equals("0")) {
 			choice = "cancel";
-		}
+		} 
 		return choice;
 	}
+
 	public String fourChoice(String s) {
 		System.out.println("Choose " + s + " (1,2,3,4)  0 --> Cancel ");
 
@@ -355,7 +355,7 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 					Thread.currentThread().interrupt();
 				}
 			}
-
+			System.out.println("--------Action Completed");
 		}
 	}
 
@@ -475,9 +475,9 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 			System.out.println("Choice number " + (i) + " of " + number);
 			String choice = "";
 			try {
-
-
+				
 				choice = scanner.nextLine();
+			
 
 			} catch (IndexOutOfBoundsException e) {
 				System.out.println(" AYAYAYAY");
@@ -488,7 +488,7 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 
 
 				choice = scanner.nextLine();
-
+				System.out.println("+++++++++++++++++++++++++++++++++++++++++++"+choice);
 			}
 
 			answer = answer + " " + choice;
