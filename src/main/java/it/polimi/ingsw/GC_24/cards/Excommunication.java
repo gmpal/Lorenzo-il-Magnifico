@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import it.polimi.ingsw.GC_24.effects.Effect;
 import it.polimi.ingsw.GC_24.effects.PermanentEffect;
+import it.polimi.ingsw.GC_24.values.FaithPoint;
 
 public class Excommunication implements Serializable {
 	/**
@@ -13,12 +14,15 @@ public class Excommunication implements Serializable {
 	private PermanentEffect permanentEffect;
 	private Effect effect;
 	private int round;
+	private FaithPoint requiremetsForExcommunication;
 
 	// constructor
-	public Excommunication(PermanentEffect permanentEffect, Effect effect, int round) {
+	public Excommunication(PermanentEffect permanentEffect, Effect effect, int round,
+			FaithPoint requiremetsForExcommunication) {
 		this.permanentEffect = permanentEffect;
 		this.effect = effect;
 		this.round = round;
+		this.setRequiremetsForExcommunication(requiremetsForExcommunication);
 	}
 
 	// getters and setters
@@ -44,5 +48,13 @@ public class Excommunication implements Serializable {
 
 	public void setRound(int round) {
 		this.round = round;
+	}
+
+	public FaithPoint getRequiremetsForExcommunication() {
+		return requiremetsForExcommunication;
+	}
+
+	public void setRequiremetsForExcommunication(FaithPoint requiremetsForExcommunication) {
+		this.requiremetsForExcommunication = requiremetsForExcommunication;
 	}
 }

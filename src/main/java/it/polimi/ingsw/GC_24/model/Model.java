@@ -291,4 +291,14 @@ public class Model extends MyObservable implements Serializable {
 		return correspondingValue;
 	}
 
+	public List<Excommunication> getExcommunicationDeck() {
+		return excommunicationDeck;
+	}
+
+	public void setExcommunicationDeck(List<Excommunication> excommunicationDeck) {
+		this.excommunicationDeck = excommunicationDeck;
+	}
+	
+	
+
 }

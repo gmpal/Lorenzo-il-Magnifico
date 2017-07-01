@@ -236,9 +236,10 @@ public class Deck implements Serializable {
 
 	public static void main(String args[]) throws IOException {
 
-		//Excommunication ex=new Excommunication(null, new SubVicrotyPointsFromSetOfValue("subVicrotyPointsFromSetOfValue", new SetOfValues(), new VictoryPoint(1)) , 3);
+		Excommunication ex=new Excommunication(null, new SubVicrotyPointsFromSetOfValue("subVicrotyPointsFromSetOfValue", new SetOfValues(), new VictoryPoint(1)) , 3, new FaithPoint(3));
 		Gson gson=GsonBuilders.getGsonWithTypeAdapters();
-		List<SetOfValues> sett=new ArrayList<>();
+		System.out.println(gson.toJson(ex));
+		/*List<SetOfValues> sett=new ArrayList<>();
 		BufferedReader br;
 		String line;
 		try {

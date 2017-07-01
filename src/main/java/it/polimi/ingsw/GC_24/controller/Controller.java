@@ -27,6 +27,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	private int cardsIndex = 0;
 	private SetOfValues saleForPermanentEffect = new SetOfValues();
 	private String parametersAnswer;
+	private Timers timers = new Timers();
 
 	private boolean alreadyPlaying = false;
 	private boolean autocompleted;
@@ -457,11 +458,18 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		} else if (command.contains("leader")) {
 			System.out.println("Controller --> Ricevuta un'azione leader");
 			handleAndVerifyLeader(o, request);
-		
-		}else {
+
+		} else if (command.contains("answerForVatican")) {
+			System.out.println("Controller --> Ricevuta la scelta di supporto al vaticano ");
+			String answer = (String) request.get("answerForVatican");
+			giveExcommunication(answer);
+		}
+
+		else {
 			System.out.println("Controller --> COMANDO NON RICONOSCIUTO ");
 			return "bad command";
 		}
+
 		return null;
 
 	}
@@ -537,6 +545,31 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			feedback = feedback + "You don't have enough Ventures to activate this card!\n";
 		}
 		return feedback;
+  /**
+	 * This method gives an excommunication card to the player that either
+	 * decides not to give his support to the Vatican or doesn't have the faith
+	 * requirements.
+	 */
+	private void giveExcommunication(String answer) {
+		int period = cardsIndex / 2;
+		if (answer.equalsIgnoreCase("y") && verifyRequiremetsExcommunication()) {
+			currentPlayer.getMyValues().addTwoSetsOfValues(
+					currentPlayer.getMyValues().getFaithPoints().convertToValue(game.getCorrespondingValue()));
+			currentPlayer.getMyValues().getFaithPoints().setQuantity(0);
+		} else {
+			currentPlayer.getMyBoard().getPersonalExcommunication().add(game.getExcommunicationDeck().get(period));
+		}
+	}
+
+	/**
+	 * This method verify if the player have the requirements to support
+	 * Vatican.
+	 * 
+	 * @return true if player have requirements, false otherwise.
+	 */
+	private boolean verifyRequiremetsExcommunication() {
+		return game.getExcommunicationDeck().get(cardsIndex / 2).getRequiremetsForExcommunication()
+				.getQuantity() <= currentPlayer.getMyValues().getFaithPoints().getQuantity();
 	}
 
 	private String handlePlayer(Map<String, Object> request) {
@@ -618,12 +651,16 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		List<ImmediateEffect> interactiveEffects = action.run();
 		this.handleInteractiveEffects(o, interactiveEffects);
 		System.out.println("Controller --> Conclusa gestione dei costi interattivi ");
+		if((cardsIndex==1||cardsIndex==3||cardsIndex==5)&&currentPlayer.getMyFamily().isEmpty()){
+			askForSupportVatican();
+		}
 		notifyToProceedWithTurns();
 		game.sendModel();
 		awakenSleepingClient();
 		System.out.println("Controller --> Richiesta di risveglio inviata");
 
 	}
+
 
 	private void assignLeaderEffects(int index) {
 		System.out.println("Controller --> La verifica dell' attivazione della carta leader è andata a buon fine ");
@@ -641,6 +678,12 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		game.sendModel();
 		awakenSleepingClient();
 		System.out.println("Controller --> Richiesta di risveglio inviata");
+  }
+
+	private void askForSupportVatican() {
+		hashMap = new HashMap<>();
+		hashMap.put("vatican", null);
+		notifyMyObservers(hashMap);		
 	}
 
 	private void correctChooseNewCardExecute(MyObservable o) {

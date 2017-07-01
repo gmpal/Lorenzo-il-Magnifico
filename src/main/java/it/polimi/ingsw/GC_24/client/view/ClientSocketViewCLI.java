@@ -29,20 +29,16 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 	public void run() {
 		int i = 0;
 
-
 		try {
 			while (true) {
 				i++;
-				System.out.println("Ricezione numero "+i);
+				System.out.println("Ricezione numero " + i);
 
 				HashMap<String, Object> requestFromServer;
-			
-				
+
 				requestFromServer = (HashMap<String, Object>) objFromServer.readObject();
-			
-			
-						handleRequestFromServer(requestFromServer);
-				
+
+				handleRequestFromServer(requestFromServer);
 
 			}
 		} catch (EOFException e) {
@@ -59,11 +55,11 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 			System.out.println("------------------------------------->SENDING " + change);
 			objToServer.writeObject(change);
 			objToServer.flush();
-			objToServer.reset();			
+			objToServer.reset();
 
 		} catch (IOException e) {
 			e.printStackTrace();
-			}
+		}
 
 	}
 
@@ -82,40 +78,40 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 			SetOfValues cost1 = (SetOfValues) request.get("Cost1");
 			SetOfValues cost2 = (SetOfValues) request.get("Cost2");
 			MilitaryPoint militaryPoints = (MilitaryPoint) request.get("Requirements");
-			
-			
-					view.chooseAlternativeCost(cost1, cost2, militaryPoints);
-			
+
+			view.chooseAlternativeCost(cost1, cost2, militaryPoints);
+
 		}
-		
+
 		if (command.contains("problems")) {
 			System.out.println("CSV ---> Ricevuti problemi");
 			String problems = (String) request.get("problems");
 			notifyMyObservers(problems);
 		}
 
-
 		if (command.contains("model")) {
 			System.out.println("CSV ---> Ricevuto Model");
 			synchronized (view.getWaitingForAnswer()) {
 
 				Model receivedModel = (Model) request.get("model");
-				
+
 				view.setMiniModel(receivedModel);
 				view.setMyself(view.getMiniModel().getPlayers().get(view.getPlayerNumber() - 1));
 				view.setPlayerTurn(view.getMiniModel().getPlayers());
 				view.getWaitingForAnswer().notify();
 			}
 		}
-    
+
 		if (command.contains("askForParameters")) {
 			System.out.println("CSV ---> Ricevuta richiesta di parametri ");
-			
-						handleEffectParametersRequest((ImmediateEffect) request.get("askForParameters"));
-					}
-		
-			
-		
+
+			handleEffectParametersRequest((ImmediateEffect) request.get("askForParameters"));
+		}
+
+		if (command.contains("vatican")) {
+			System.out.println("CSV ---> Ricevuto Vaticano");
+			view.askForExcommunication();
+		}
 
 		if (command.contains("actionDone")) {
 			System.out.println("CSV ---> Ricevuta segnalazione di azione completata ");
@@ -133,14 +129,14 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 		}
 
 		if (command.contains("startPlaying")) {
-	
-			Thread t1 = new Thread(new Runnable(){
-				public void run(){
+
+			Thread t1 = new Thread(new Runnable() {
+				public void run() {
 					view.play();
 				}
 			});
 			t1.start();
-				
+
 		}
 		if (command.contains("Turns")) {
 			System.out.println("CSV ---> Ricevuti turni ");
@@ -173,9 +169,9 @@ public class ClientSocketViewCLI extends MyObservable implements ClientSocketVie
 		}
 		if (command.contains("sale")) {
 			System.out.println("CSV ---> Ricevuta richiesta sconto multiplo");
-			
-					view.chooseSale((IncreaseDieValueCard) request.get(command));
-			
+
+			view.chooseSale((IncreaseDieValueCard) request.get(command));
+
 		}
 	}
 
