@@ -36,7 +36,7 @@ public class ClientSocketViewCLI extends MyObservable implements Runnable, MyObs
 	@Override
 	public void run() {
 		int i = 0;
-		Thread t1;
+
 		try {
 			while (true) {
 				i++;
@@ -45,6 +45,7 @@ public class ClientSocketViewCLI extends MyObservable implements Runnable, MyObs
 				HashMap<String, Object> requestFromServer;
 
 				requestFromServer = (HashMap<String, Object>) objFromServer.readObject();
+
 				System.out.println("CSV ---> CASTATO");
 				executor.submit(new Thread(new Runnable() {
 					public void run() {
@@ -85,6 +86,7 @@ public class ClientSocketViewCLI extends MyObservable implements Runnable, MyObs
 	public synchronized void handleRequestFromServer(Map<String, Object> request) {
 		System.out.println("CSV ---> Gestendo una richiesta ");
 		Set<String> command = request.keySet();
+
 
 		if (command.contains("currentPlayerName")) {
 			System.out.println("CSV --> Ricevuto qualcosa per un singolo giocatore");
@@ -139,6 +141,7 @@ public class ClientSocketViewCLI extends MyObservable implements Runnable, MyObs
 		if (command.contains("model")) {
 			System.out.println("CSV ---> Ricevuto Model");
 			view.getInformationForReceivedModel((Model) request.get("model"));
+
 		}
 
 		if (command.contains("actionDone")) {
@@ -160,6 +163,7 @@ public class ClientSocketViewCLI extends MyObservable implements Runnable, MyObs
 					view.play();
 				}
 			}).start();
+
 
 		}
 		if (command.contains("Turns")) {
@@ -187,6 +191,7 @@ public class ClientSocketViewCLI extends MyObservable implements Runnable, MyObs
 		if (command.contains("sale")) {
 			System.out.println("CSV ---> Ricevuta richiesta sconto multiplo");
 			view.chooseSale((IncreaseDieValueCard) request.get(command));
+
 
 		}
 	}

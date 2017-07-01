@@ -33,18 +33,15 @@ public class Harvest extends Area {
 	}
 	
 	/**inserts empty ProductionPlaces in Production*/
-	public ArrayList<Place> createHarvest(){
-		int numProducionPlaces;	
-		if(this.placesLocked){
-			numProducionPlaces=MINPLACES;
-		}
-		else numProducionPlaces=numPlayers*FACTOR;
-				
-		for(int num=0;num<numProducionPlaces;num++){
+	public ArrayList<Place> createHarvest(){	
+		for(int num=0;num<numPlayers*FACTOR;num++){
 			if(num==0){
 				this.placesArray.add(new HarvestPlace(COSTDICE, ADDITIONALCOST));
 			}
 			else this.placesArray.add(new HarvestPlace(COSTDICE, ADDITIONALCOST2));
+			if (placesLocked && num>1){
+				placesArray.get(num).setAvailable(false);
+			}
 		}
 		return placesArray;
 	}

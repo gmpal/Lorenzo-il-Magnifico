@@ -1,33 +1,16 @@
 package it.polimi.ingsw.GC_24.model;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
-
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.board.Board;
 import it.polimi.ingsw.GC_24.cards.Deck;
 import it.polimi.ingsw.GC_24.cards.Excommunication;
-import it.polimi.ingsw.GC_24.cards.Territories;
-import it.polimi.ingsw.GC_24.client.view.ServerSocketView;
-
-import java.io.*;
+import it.polimi.ingsw.GC_24.cards.Leader;
 import java.util.*;
-import com.google.gson.Gson;
-import it.polimi.ingsw.GC_24.MyObservable;
-import it.polimi.ingsw.GC_24.board.Board;
-import it.polimi.ingsw.GC_24.cards.Deck;
 import it.polimi.ingsw.GC_24.devCardJsonFile.GsonBuilders;
 import it.polimi.ingsw.GC_24.dice.SetOfDice;
 import it.polimi.ingsw.GC_24.network.multi.Server;
@@ -48,7 +31,9 @@ public class Model extends MyObservable implements Serializable {
 	private List<Ranking> rankings;
 	private HashMap<String, Object> hm;
 	private Deck cards;
-	private List<Excommunication> excommunicationDeck = new ArrayList<>();;
+	private List<Excommunication> excommunicationDeck = new ArrayList<>();
+	private List<SetOfValues> correspondingValue = new ArrayList<>();
+	private List<Leader> leaderDeck = new ArrayList<>();
 
 	private int modelNumber;
 
@@ -57,7 +42,6 @@ public class Model extends MyObservable implements Serializable {
 	private int counter;
 
 	private static Timer timer;
-	private List<SetOfValues> correspondingValue = new ArrayList<>();
 	private int countingModelSent = 0;
 
 	public Model(int modelNumber) {
@@ -67,27 +51,41 @@ public class Model extends MyObservable implements Serializable {
 		this.currentPlayer = null;
 		this.gameState = State.WAITINGFORPLAYERONE;
 		this.dice = null;
-		this.rankings = new ArrayList<Ranking>();
+		this.rankings = new ArrayList<>();
 		this.counter = 0;
 		this.modelNumber = modelNumber;
-		this.cards = new Deck();
-	//	getCorrespondingValueFromFile();
-	//	createExcommunicationDeck();
-  }
+		this.cards = null;
+	}
 
+
+	/**
+	 * This method create the Excommunication Cards' deck from a configuration
+	 * file named "excommunicationCards.json". All cards are put in an
+	 * ArrayList, then it will take three random cards and it put them in
+	 * another ArrayList, one per round. This final ArrayList contains the
+	 * possible excommunication card the player can take when it will choose to
+	 * not support the Vatican.
+	 */
 	private void createExcommunicationDeck() {
 		BufferedReader br;
 		Gson gson = GsonBuilders.getGsonWithTypeAdapters();
 		String line;
+		List<Excommunication> completeDeck = new ArrayList<>();
 		try {
 			br = new BufferedReader(
 					new FileReader("src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/excommunicationCards.json"));
 
 			while ((line = GsonBuilders.getLine(br)) != null) {
-				this.excommunicationDeck.add(gson.fromJson(line, Excommunication.class));
+				completeDeck.add(gson.fromJson(line, Excommunication.class));
 			}
 		} catch (IOException e) {
 			System.out.println("There is a problem with the configuration file");
+		}
+		Random randomExcommunication = new Random();
+		int randomInt;
+		for (int i = 0; i < 3; i++) {
+			randomInt = randomExcommunication.nextInt(7) + (i * 7);
+			this.excommunicationDeck.add(completeDeck.get(randomInt));
 		}
 	}
 
@@ -143,15 +141,16 @@ public class Model extends MyObservable implements Serializable {
 		this.cards = new Deck();
 		this.dice = new SetOfDice();
 		this.dice.reset();
+		dealLeaders(cards.getDeckLeaders(),players);
 		getCorrespondingValueFromFile();
+		createExcommunicationDeck();
 
 		// Setting the players
 		for (Player p : players) {
-			p.getMyValues().setInitialValues(players.indexOf(p)+1);
+			p.getMyValues().setInitialValues(players.indexOf(p) + 1);
 			p.setMyColour(PlayerColour.valueOf(PlayerColour.getValues().get(players.indexOf(p))));
 			p.setMyFamily(new Family(p.getMyColour()));
 			p.getMyFamily().setFamily(this.dice);
-
 			rankings.add(new Ranking(p));
 		}
 
@@ -162,8 +161,9 @@ public class Model extends MyObservable implements Serializable {
 	}
 
 	public void sendModel() {
-		countingModelSent ++;
-		System.out.println("Model --> Invio del model #"+ countingModelSent);
+		countingModelSent++;
+		System.out.println("Model --> Invio del model #" + countingModelSent);
+
 		hm = new HashMap<>();
 		hm.put("model", this);
 		// System.out.println("FROM MODEL SENDING THIS
@@ -186,6 +186,18 @@ System.out.println("Numero inviato");
 				return player;
 		}
 		return null;
+	}
+
+	private void dealLeaders(List<Leader> leaderDeck, List<Player> players) {
+		Random random = new Random();
+		int num = (leaderDeck.size() / players.size());
+		for (Player p : players) {
+			for (int i = 0; i < num; i++) {
+				int position = random.nextInt(leaderDeck.size());
+				p.getMyBoard().getPersonalLeader().add(leaderDeck.get(position));
+				leaderDeck.remove(position);
+			}
+		}
 	}
 
 	// getters and setters
@@ -267,7 +279,7 @@ System.out.println("Numero inviato");
 		Gson gson = GsonBuilders.getGsonWithTypeAdapters();
 		String line = "ready";
 		try (BufferedReader br = new BufferedReader(
-				new FileReader("src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/convertFaithPoints.json"))){
+				new FileReader("src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/convertFaithPoints.json"))) {
 			while (line != null) {
 				line = GsonBuilders.getLine(br);
 				correspondingValue.add(gson.fromJson(line, SetOfValues.class));
@@ -284,5 +296,15 @@ System.out.println("Numero inviato");
 	public List<SetOfValues> getCorrespondingValue() {
 		return correspondingValue;
 	}
+
+	public List<Excommunication> getExcommunicationDeck() {
+		return excommunicationDeck;
+	}
+
+	public void setExcommunicationDeck(List<Excommunication> excommunicationDeck) {
+		this.excommunicationDeck = excommunicationDeck;
+	}
+	
+	
 
 }

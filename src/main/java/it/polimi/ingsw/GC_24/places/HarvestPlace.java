@@ -1,10 +1,6 @@
 package it.polimi.ingsw.GC_24.places;
 
-import java.util.*;
-import it.polimi.ingsw.GC_24.cards.Development;
-import it.polimi.ingsw.GC_24.cards.Territories;
 import it.polimi.ingsw.GC_24.effects.ValueEffect;
-import it.polimi.ingsw.GC_24.model.Player;
 
 public class HarvestPlace extends ActivityPlace{
 	

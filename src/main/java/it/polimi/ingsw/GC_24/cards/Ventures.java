@@ -34,8 +34,13 @@ public class Ventures extends Development {
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append( "\n[Name = " + name );
+		if (getImmediateEffect()!=null){
+			builder.append(", Immediate Effects = " + getImmediateEffect());
+			if (getImmediateEffect1()!=null)
+				builder.append(" and " + getImmediateEffect1());
+		}
 		if (requiredMilitaryPoints!=null){
-			builder.append("Cost Military Points = "+alternativeCost+" (Required Military Points = " +requiredMilitaryPoints+")");
+			builder.append(", Cost Military Points = "+alternativeCost+" (Required Military Points = " +requiredMilitaryPoints+")");
 			if (getCost()!=null){
 				builder.append(", Cost Values = " + getCost());
 			}

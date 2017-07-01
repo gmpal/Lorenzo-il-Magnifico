@@ -32,8 +32,6 @@ public class MarketAction extends Action {
 			System.out.println("## --> verifyFamilyMemberAvailability ");
 			answerToPlayer = verifyPlaceAvailability(answerToPlayer);
 			System.out.println("## --> verifyPlaceAvailability ");
-			answerToPlayer = verifyZoneOccupiedByMe(answerToPlayer);
-			System.out.println("## --> verifyZoneOccupiedByMe ");
 		
 		if (answerToPlayer.equals("Answer: \n")) return "ok";
 		else return answerToPlayer;

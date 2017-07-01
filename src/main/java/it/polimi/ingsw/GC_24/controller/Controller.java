@@ -1,10 +1,8 @@
-﻿package it.polimi.ingsw.GC_24.controller;
+package it.polimi.ingsw.GC_24.controller;
 
 import java.io.IOException;
 
 import java.util.*;
-
-
 
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.MyObserver;
@@ -27,10 +25,12 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	private int controllerNumber = 0;
 	private List<Player> councilTurnArray;
 	private List<Player> playerTurn;
+	private List<Leader> leaderOneTimePerTurn;
 	private Player currentPlayer;
 	private int cardsIndex = 0;
 	private SetOfValues saleForPermanentEffect = new SetOfValues();
 	private String parametersAnswer;
+	private Timers timers = new Timers();
 
 	private boolean alreadyPlaying = false;
 	private boolean autocompleted;
@@ -141,12 +141,31 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			sendTurnArray(playerTurn);
 			// let's go to next state
 			game.incrementState();
+			checkToActivateLeader();
 			cardsIndex++;
 			// and repeat everything til state "ENDED"
 		}
 		gameEndHandler();
 
 	}
+
+	
+	/**
+	 * checks if in the player's personalLeader there are some activated cards
+	 * that are oneTimePerTurn and in that case the method sets this boolean to
+	 * false
+	 */
+	public void checkToActivateLeader() {
+		for (Player p : playerTurn) {
+			for (Leader l : p.getMyBoard().getPersonalLeader()) {
+				if (l.isOneTimePerTurn() && l.isInUse()) {
+					l.setInUse(false);
+				}
+			}
+		}
+		game.sendModel();
+	}
+
 
 	private void startTimerForPlayerAction(Timer t1) {
 		t1.schedule(new TimerTask() {
@@ -159,7 +178,9 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					actionWaiting.notify();
 				}
 			}
+
 		}, 750000);
+
 
 	}
 
@@ -270,8 +291,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 		for (int i = 0; i < game.getPlayers().size(); i++) {
 			player = game.getPlayers().get(i);
-			player.getMyValues().addTwoSetsOfValues(
-					player.getMyValues().getFaithPoints().convertToValue(game.getCorrespondingValue()));
+			player.getMyValues().getFaithPoints().convertToValue(game.getCorrespondingValue())
+					.addTwoSetsOfValues(player.getMyValues());
 			player.getMyValues().getVictoryPoints()
 					.addQuantity(player.getMyBoard().convertToVictoryPoints().getQuantity());
 			player.getMyValues().getVictoryPoints()
@@ -449,11 +470,22 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			}
 			return "sale chosen";
 
+
 		} 
 		/*RMI COMMANDS*/
 		
 		else if (command.contains("addPlayer")) {
 			game.addPlayer();
+
+		} else if (command.contains("leader")) {
+			System.out.println("Controller --> Ricevuta un'azione leader");
+			handleAndVerifyLeader(o, request);
+
+		} else if (command.contains("answerForVatican")) {
+			System.out.println("Controller --> Ricevuta la scelta di supporto al vaticano ");
+			String answer = (String) request.get("answerForVatican");
+			giveExcommunication(answer);
+
 		}
 		
 
@@ -461,8 +493,107 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			System.out.println("Controller --> COMANDO NON RICONOSCIUTO ");
 			return "bad command";
 		}
+
 		return null;
 
+	}
+
+	/**
+	 * receives the command action on leader cards. If it is to activate the
+	 * leader, it verifies if the player can, and in that case gives them the
+	 * effects. If it's to discard the card, then the method will check the
+	 * card's availability and will give a council privilege o the player
+	 */
+	private void handleAndVerifyLeader(MyObservable o, Map<String, Object> request) {
+		System.out.println("Controller --> Sto gestendo un leader");
+		StringTokenizer tokenizer = new StringTokenizer((String) request.get("leader"));
+
+		String actionLeader = tokenizer.nextToken();
+		String indexLeader = tokenizer.nextToken();
+		int index = Integer.parseInt(indexLeader) - 1;
+
+		String feedback = "Answer: \n";
+		if (actionLeader.equalsIgnoreCase("activate")) {
+			feedback = verifyAvailabilityLeader(index, feedback);
+			feedback = verifyRequirementsLeader(index, feedback);
+
+			if (!feedback.equals("Answer: \n")) {
+				incorrenctLeaderHandling(o, feedback);
+			} else {
+				assignLeaderEffects(index);
+			}
+		}else if (actionLeader.equalsIgnoreCase("discard")) {
+			feedback = verifyAvailabilityLeader(index, feedback);
+			if (!feedback.equals("Answer: \n")) {
+				incorrenctLeaderHandling(o, feedback);
+			} else {
+				CouncilPrivilege privilege = new CouncilPrivilege("council", 1);
+				//TODO attivare il privilegio e rimuovere la carta dall'arraylist
+			}
+		}
+
+	}
+
+	private String verifyAvailabilityLeader(int index, String feedback) {
+		if (currentPlayer.getMyBoard().getPersonalLeader().get(index).isInUse()){
+			return feedback + "This card is already in use\n";
+		}
+		return feedback;
+	}
+
+	private String verifyRequirementsLeader(int index, String feedback) {
+		Requirements requirements = currentPlayer.getMyBoard().getPersonalLeader().get(index).getRequirements();
+		for (Leader card : leaderOneTimePerTurn) {
+			if (currentPlayer.getMyBoard().getPersonalLeader().get(index).getName().equals(card.getName())) {
+				return feedback;
+			}
+		}
+		if (!requirements.getRequirementSetOfVaue().isEmpty()
+				&& !currentPlayer.getMyValues().doIHaveThisSet(requirements.getRequirementSetOfVaue())) {
+			feedback = feedback + "You don't have enough resources to activate this card!\n";
+		}
+		if (requirements.getRequirmentTerritories() != 0 && currentPlayer.getMyBoard().getPersonalTerritories()
+				.getCards().size() < requirements.getRequirmentTerritories()) {
+			feedback = feedback + "You don't have enough Territories to activate this card!\n";
+		}
+		if (requirements.getRequirmentCharacters() != 0 && currentPlayer.getMyBoard().getPersonalCharacters().getCards()
+				.size() < requirements.getRequirmentCharacters()) {
+			return feedback + "You don't have enough Characters to activate this card!\n";
+		}
+		if (requirements.getRequirmentBuildings() != 0 && currentPlayer.getMyBoard().getPersonalBuildings().getCards()
+				.size() < requirements.getRequirmentBuildings()) {
+			feedback = feedback + "You don't have enough Buildings to activate this card!\n";
+		}
+		if (requirements.getRequirmentVentures() != 0 && currentPlayer.getMyBoard().getPersonalVentures().getCards()
+				.size() < requirements.getRequirmentVentures()) {
+			feedback = feedback + "You don't have enough Ventures to activate this card!\n";
+		}
+		return feedback;
+  /**
+	 * This method gives an excommunication card to the player that either
+	 * decides not to give his support to the Vatican or doesn't have the faith
+	 * requirements.
+	 */
+	private void giveExcommunication(String answer) {
+		int period = cardsIndex / 2;
+		if (answer.equalsIgnoreCase("y") && verifyRequiremetsExcommunication()) {
+			currentPlayer.getMyValues().addTwoSetsOfValues(
+					currentPlayer.getMyValues().getFaithPoints().convertToValue(game.getCorrespondingValue()));
+			currentPlayer.getMyValues().getFaithPoints().setQuantity(0);
+		} else {
+			currentPlayer.getMyBoard().getPersonalExcommunication().add(game.getExcommunicationDeck().get(period));
+		}
+	}
+
+	/**
+	 * This method verify if the player have the requirements to support
+	 * Vatican.
+	 * 
+	 * @return true if player have requirements, false otherwise.
+	 */
+	private boolean verifyRequiremetsExcommunication() {
+		return game.getExcommunicationDeck().get(cardsIndex / 2).getRequiremetsForExcommunication()
+				.getQuantity() <= currentPlayer.getMyValues().getFaithPoints().getQuantity();
 	}
 
 	private String handlePlayer(Map<String, Object> request) {
@@ -483,6 +614,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		return "player " + clientNumber + " updated";
 
 	}
+
 
 	// #1
 	private void handleAction(Map<String, Object> request) {
@@ -545,6 +677,9 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		List<ImmediateEffect> interactiveEffects = action.run();
 		this.handleInteractiveEffects(interactiveEffects);
 		System.out.println("Controller --> Conclusa gestione dei costi interattivi ");
+		if((cardsIndex==1||cardsIndex==3||cardsIndex==5)&&currentPlayer.getMyFamily().isEmpty()){
+			askForSupportVatican();
+		}
 		notifyToProceedWithTurns();
 		game.sendModel();
 		awakenSleepingClient();
@@ -552,7 +687,33 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	}
 
+
+	private void assignLeaderEffects(int index) {
+		System.out.println("Controller --> La verifica dell' attivazione della carta leader è andata a buon fine ");
+		Leader card = currentPlayer.getMyBoard().getPersonalLeader().get(index);
+		if (card.getImmediateEffectLeader()!=null){
+			card.getImmediateEffectLeader().giveImmediateEffect(currentPlayer);
+		}
+		if (card.getValueEffectLeader()!=null){
+			card.getValueEffectLeader().giveImmediateEffect(currentPlayer);
+		}
+		card.setInUse(true);
+		if (card.isOneTimePerTurn() && !leaderOneTimePerTurn.contains(card)){
+			leaderOneTimePerTurn.add(card);
+		}
+		game.sendModel();
+		awakenSleepingClient();
+		System.out.println("Controller --> Richiesta di risveglio inviata");
+  }
+
+	private void askForSupportVatican() {
+		hashMap = new HashMap<>();
+		hashMap.put("vatican", null);
+		notifyMyObservers(hashMap);		
+	}
+
 	private void correctChooseNewCardExecute() {
+
 		System.out.println("Controller --> La verifica dell'azione è andata a buon fine ");
 		List<ImmediateEffect> interactiveEffects = action.run();
 		this.handleInteractiveEffects(interactiveEffects);
@@ -560,6 +721,14 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		game.sendModel();
 		// awakenSleepingClient();
 		// System.out.println("Controller --> Richiesta di risveglio inviata");
+
+	}
+	
+	private void incorrenctLeaderHandling(MyObservable o, String feedback) {
+		System.out.println("Controller --> L'attivazione della carta leader non ha superato i controlli");
+		sendProblems(o, feedback);
+		System.out.println("Controller --> Inviata richiesta di problemi al client");
+		awakenSleepingClient();		
 
 	}
 
@@ -685,6 +854,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	 * @param o
 	 */
 
+
 	private void askAndWaitForParameters(ImmediateEffect effect) {
 		parametersChosen = false;
 
@@ -702,6 +872,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 						e.printStackTrace();
 					}
 				}
+
 			}
 			if (!(effect instanceof ChooseNewCard)) {
 				effect.assignParameters(parametersAnswer);
@@ -778,11 +949,13 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				}
 
 			}
+
 			if (this.tempCostString.equals("1")){
 				tempCost = cost1;
 			} else {
 				tempCost = cost2;
 			}
+
 
 			System.out.println("Controller --> L'utente ha scelto, mi sono risvegliato ");
 
