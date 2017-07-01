@@ -9,7 +9,7 @@ import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 
-public interface ViewInterface extends Runnable, MyObserver, Serializable {
+public interface ViewInterface extends Runnable, MyObserver {
 	
 
 	//FROM SERVER TO CLIENT

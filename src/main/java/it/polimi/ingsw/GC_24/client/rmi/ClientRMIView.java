@@ -7,13 +7,14 @@ import java.util.HashMap;
 import java.util.Set;
 
 import it.polimi.ingsw.GC_24.MyObservable;
+import it.polimi.ingsw.GC_24.MyObserver;
 import it.polimi.ingsw.GC_24.client.view.ViewInterface;
 import it.polimi.ingsw.GC_24.effects.IncreaseDieValueCard;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 
-public class ClientRMIView extends MyObservable implements ClientViewRemote, Serializable {
+public class ClientRMIView extends MyObservable implements ClientViewRemote, Serializable, MyObserver {
 	
 	
 	/**
@@ -56,7 +57,11 @@ public class ClientRMIView extends MyObservable implements ClientViewRemote, Ser
 	@Override
 	public void startPlaying() throws RemoteException {
 		System.out.println("RMI Client View --> startPlaying ");
-		view.play();
+		new Thread(new Runnable(){
+			public void run(){
+				view.play();
+			}
+		}).start();
 	}
 
 	@Override

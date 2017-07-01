@@ -13,16 +13,9 @@ import java.util.concurrent.Executors;
 
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.MyObserver;
-import it.polimi.ingsw.GC_24.effects.ChooseNewCard;
-import it.polimi.ingsw.GC_24.effects.CouncilPrivilege;
-import it.polimi.ingsw.GC_24.effects.Exchange;
-import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
 import it.polimi.ingsw.GC_24.effects.IncreaseDieValueCard;
-import it.polimi.ingsw.GC_24.effects.PerformActivity;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
-import it.polimi.ingsw.GC_24.values.MilitaryPoint;
-import it.polimi.ingsw.GC_24.values.SetOfValues;
 
 //ClientInHandler is observed by the ViewPLayer,
 //whenever the server communicates something, ClientInHandler notifies ViewPLayer
@@ -30,6 +23,7 @@ public class ClientSocketViewCLI extends MyObservable implements Runnable, MyObs
 
 	private ObjectInputStream objFromServer;
 	private ObjectOutputStream objToServer;
+	private ExecutorService executor = Executors.newCachedThreadPool();
 	private ViewInterface view;
 
 	public ClientSocketViewCLI(ObjectInputStream objFromServer, ObjectOutputStream objToServer, ViewInterface view) {
@@ -51,13 +45,14 @@ public class ClientSocketViewCLI extends MyObservable implements Runnable, MyObs
 				HashMap<String, Object> requestFromServer;
 
 				requestFromServer = (HashMap<String, Object>) objFromServer.readObject();
-
-				t1 = new Thread(new Runnable() {
+				System.out.println("CSV ---> CASTATO");
+				executor.submit(new Thread(new Runnable() {
 					public void run() {
+						System.out.println("Entrato in run");
 						handleRequestFromServer(requestFromServer);
 					}
-				});
-				t1.start();
+				}));
+				
 
 			}
 		} catch (EOFException e) {
@@ -82,6 +77,7 @@ public class ClientSocketViewCLI extends MyObservable implements Runnable, MyObs
 
 	}
 
+
 	/**
 	 * Based on the key of the object received, this method handles the request
 	 */
@@ -90,9 +86,9 @@ public class ClientSocketViewCLI extends MyObservable implements Runnable, MyObs
 		System.out.println("CSV ---> Gestendo una richiesta ");
 		Set<String> command = request.keySet();
 
-		if (command.contains("currentPlayer")) {
+		if (command.contains("currentPlayerName")) {
 			System.out.println("CSV --> Ricevuto qualcosa per un singolo giocatore");
-			String currentPlayerName = (String) request.get("currentPlayer");
+			String currentPlayerName = (String) request.get("currentPlayerName");
 			// TODO:alternativa al cast
 			if (currentPlayerName.equals(view.getName())) {
 
@@ -115,7 +111,7 @@ public class ClientSocketViewCLI extends MyObservable implements Runnable, MyObs
 					String answer = view.askForCouncilPrivilege(question);
 					view.sendAnswerForParameters(answer);
 				}
-				
+
 				if (command.contains("chooseNewCard")) {
 					System.out.println("CSV ---> Ricevuta richiesta chooseNewCard");
 					String question = (String) request.get("chooseNewCard");
@@ -159,7 +155,11 @@ public class ClientSocketViewCLI extends MyObservable implements Runnable, MyObs
 
 		if (command.contains("startPlaying")) {
 			System.out.println("CSV ---> Ricevuta richiesta di avviamento partita");
-			view.play();
+			new Thread(new Runnable() {
+				public void run() {
+					view.play();
+				}
+			}).start();
 
 		}
 		if (command.contains("Turns")) {
@@ -190,5 +190,5 @@ public class ClientSocketViewCLI extends MyObservable implements Runnable, MyObs
 
 		}
 	}
-
+	
 }

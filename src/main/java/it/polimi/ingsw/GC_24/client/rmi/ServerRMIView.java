@@ -43,10 +43,11 @@ public class ServerRMIView extends MyObservable implements ServerViewRemote, MyO
 	@Override
 	public <C> void update(C change) {
 		HashMap<String,Object> request = (HashMap<String,Object>) change;
-		
+		System.out.println("*******************RMI SERVER VIEW***************************\n \t \t RECEIVED THIS "+change);
 		
 		try {
 			this.handleRequestFromServer(request);
+			
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -58,8 +59,8 @@ public class ServerRMIView extends MyObservable implements ServerViewRemote, MyO
 		Set<String> command = request.keySet();
 		for (ClientViewRemote clientstub : this.clients) {
 
-			if (command.contains("currentPlayer")) {
-				String currentPlayerName = (String) request.get("currentPlayer");
+			if (command.contains("currentPlayerName")) {
+				String currentPlayerName = (String) request.get("currentPlayerName");
 				System.out.println("RMI Server View --> Ricevuto qualcosa per un singolo giocatore");
 
 				if (currentPlayerName.equals(clientstub.getPlayerName())) {
@@ -102,12 +103,20 @@ public class ServerRMIView extends MyObservable implements ServerViewRemote, MyO
 						System.out.println("RMI Server View ---> Ricevuti problemi");
 						clientstub.show((String) request.get("problems"));
 					}
+					
 
 				}
 			}
 
 			/* IN THIS CASE the request is handled by the viewCLI */
+			if (command.contains("clientNumber")) {
+				System.out.println("RMI Server View ---> Ricevuto numero client");
+				int playerNumber = (int) request.get("clientNumber");
+				int modelNumber = (int) request.get("modelNumber");
+				clientstub.setPlayerNumber(playerNumber, modelNumber);
 
+			}
+			
 			if (command.contains("model")) {
 				System.out.println("RMI Server View ---> Ricevuto Model");
 				clientstub.updateModelAndRelatedFields((Model) request.get("model"));
@@ -143,13 +152,6 @@ public class ServerRMIView extends MyObservable implements ServerViewRemote, MyO
 
 			}
 
-			if (command.contains("clientNumber")) {
-				System.out.println("RMI Server View ---> Ricevuto numero client");
-				int playerNumber = (int) request.get("clientNumber");
-				int modelNumber = (int) request.get("modelNumber");
-				clientstub.setPlayerNumber(playerNumber, modelNumber);
-
-			}
 			if (command.contains("sale")) {
 				System.out.println("RMI Server View ---> Ricevuta richiesta sconto multiplo");
 				SetOfValues alternativeSale = clientstub

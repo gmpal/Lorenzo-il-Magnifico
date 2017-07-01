@@ -1,17 +1,19 @@
 package it.polimi.ingsw.GC_24.client.view;
 
 import java.io.Serializable;
+
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.MyObserver;
+
 import it.polimi.ingsw.GC_24.effects.*;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.values.*;
 
-public class ViewCLI extends MyObservable implements ViewInterface, Serializable {
+public class ViewCLI extends MyObservable implements ViewInterface {
 	/**
 	 * 
 	 */
@@ -41,14 +43,15 @@ public class ViewCLI extends MyObservable implements ViewInterface, Serializable
 
 		// SLEEP FOR TWO SECONDS
 		try {
-			TimeUnit.SECONDS.sleep(2);
+			TimeUnit.SECONDS.sleep(1);
 		} catch (InterruptedException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 			Thread.currentThread().interrupt();
 		}
 		name = setName();
-
+		System.out.println("SetName superato");
+		System.out.println(myself);
 		if (myself.getMyName() == null) {
 			System.out.println("ENTRATO NELL IF");
 
@@ -74,8 +77,10 @@ public class ViewCLI extends MyObservable implements ViewInterface, Serializable
 		System.out.println("Insert your name:");
 		if (scanner.hasNextLine()) {
 			sc = scanner.nextLine();
+			System.out.println("Nome letto");
 		}
 		return sc;
+
 	}
 
 	@Override
@@ -262,20 +267,6 @@ public class ViewCLI extends MyObservable implements ViewInterface, Serializable
 
 		return choice;
 
-		/*
-		 * String validChoice = null; while (validChoice == null &&
-		 * scanner.hasNextInt()) { try {
-		 * 
-		 * commandFloorInt = scanner.nextInt(); validChoice = "ok";
-		 * 
-		 * if ((commandFloorInt > 5 || commandFloorInt < 1)) {
-		 * System.out.println("Invalid number, try again"); commandFloor = null;
-		 * } } catch (InputMismatchException e) {
-		 * System.out.println("Please, type a number!");
-		 * 
-		 * } }
-		 */
-
 	}
 
 	public String increaseDieValue(String commandZone) {
@@ -299,15 +290,24 @@ public class ViewCLI extends MyObservable implements ViewInterface, Serializable
 
 	@Override
 	public void sendAction(String command) {
+		actionDone = false;
+
 		hm = new HashMap<>();
 		hm.put("action", command);
+		notifyMyObservers(hm);
 
+		waitForActionDone();
+
+	}
+
+	private void waitForActionDone() {
 		/* This block of code notifies the Server of the action */
 		synchronized (waitingForActionCompleted) {
-			notifyMyObservers(hm);
+
 			System.out.println("----Waiting for your action to be completed----");
 			while (!actionDone) {
 				try {
+					System.out.println("----Waitin'----");
 					waitingForActionCompleted.wait();
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
@@ -315,6 +315,7 @@ public class ViewCLI extends MyObservable implements ViewInterface, Serializable
 					Thread.currentThread().interrupt();
 				}
 			}
+
 		}
 	}
 
@@ -341,12 +342,11 @@ public class ViewCLI extends MyObservable implements ViewInterface, Serializable
 	}
 
 	@Override
-	public SetOfValues chooseSale(IncreaseDieValueCard increase){
+	public SetOfValues chooseSale(IncreaseDieValueCard increase) {
 
 		SetOfValues finalIncrease;
 		do {
-			System.out.println(
-				);
+			System.out.println();
 			int answer = 0;
 			try {
 				answer = scanner.nextInt();
@@ -396,12 +396,12 @@ public class ViewCLI extends MyObservable implements ViewInterface, Serializable
 		}
 
 		System.out.println("Write the floor you want to pick your card from");
-		System.out.println("1/2/3/4");
+		System.out.println("1/2/3/4 ----- \"null\" to ignore this effect");
 
-		scanner.nextLine();
 		floor = scanner.nextLine();
 
-		while (!(floor.equals("1") || floor.equals("2") || floor.equals("3") || floor.equals("4"))) {
+		while (!(floor.equals("1") || floor.equals("2") || floor.equals("3") || floor.equals("4")
+				|| floor.equals("null"))) {
 			System.out.println("Wrong choice, try again");
 			floor = scanner.nextLine();
 
@@ -419,9 +419,10 @@ public class ViewCLI extends MyObservable implements ViewInterface, Serializable
 
 		StringTokenizer tokenizer = new StringTokenizer(request);
 		int number = Integer.parseInt(tokenizer.nextToken());
-		
+
 		String answer = "";
 		for (int i = 1; i <= number; i++) {
+			System.out.println(request);
 			System.out.println("Choice number " + (i) + " of " + number);
 			String choice = "";
 			try {
@@ -478,7 +479,6 @@ public class ViewCLI extends MyObservable implements ViewInterface, Serializable
 		return choice;
 
 	}
-	
 
 	@Override
 	public void setMyTurn(Player currentPlayer) {
@@ -499,11 +499,13 @@ public class ViewCLI extends MyObservable implements ViewInterface, Serializable
 
 	@Override
 	public void updatePlayerNumber(int playerNumber2, int modelNumber) {
+		System.out.println("View CLI --> Ricevuto un player number");
 		if (getPlayerNumber() == 0) {
 			setPlayerNumber(playerNumber2);
+			System.out.println("You are the player #" + playerNumber2 + ", connected to game #" + modelNumber);
+		} else {
+			System.out.println("View CLI --> Non era un player number per me");
 		}
-		System.out.println("You are the player #" + playerNumber2 + ", connected to game #" + modelNumber);
-
 	}
 
 	@Override
@@ -531,7 +533,11 @@ public class ViewCLI extends MyObservable implements ViewInterface, Serializable
 	public void getInformationForReceivedModel(Model model) {
 		synchronized (getWaitingForAnswer()) {
 			setMiniModel(model);
-			setMyself(getMiniModel().getPlayers().get(getPlayerNumber() - 1));
+
+			setMyself(getMiniModel().getPlayers().get(playerNumber - 1));
+
+			setName(myself.getMyName());
+
 			// TODO: serve davvero questo? Che cosa fa?
 			setPlayersTurn(getMiniModel().getPlayers());
 
@@ -547,8 +553,6 @@ public class ViewCLI extends MyObservable implements ViewInterface, Serializable
 		}
 
 	}
-
-	
 
 	// getters and setters
 	@Override
@@ -604,10 +608,6 @@ public class ViewCLI extends MyObservable implements ViewInterface, Serializable
 		return waitingForActionCompleted;
 	}
 
-	public void setWaitingForActionCompleted(Object waitingForActionCompleted) {
-		this.waitingForActionCompleted = waitingForActionCompleted;
-	}
-
 	public boolean isActionDone() {
 		return actionDone;
 	}
@@ -618,26 +618,23 @@ public class ViewCLI extends MyObservable implements ViewInterface, Serializable
 
 	@Override
 	public void sendAnswerForParameters(String answer) {
-	hm = new HashMap<>();
-	hm.put("answerForParameters", answer);
-	notifyMyObservers(hm);	
+		hm = new HashMap<>();
+		hm.put("answerForParameters", answer);
+		notifyMyObservers(hm);
 	}
 
 	@Override
 	public void sendAlternativeCost(String response) {
 		hm = new HashMap<>();
-		hm.put("doubleCost", response);
-		notifyMyObservers(hm);	
-		
+		hm.put("chosenCost", response);
+		notifyMyObservers(hm);
+
 	}
 
 	@Override
 	public <C> void update(C change) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	
-	}
-
-
+}

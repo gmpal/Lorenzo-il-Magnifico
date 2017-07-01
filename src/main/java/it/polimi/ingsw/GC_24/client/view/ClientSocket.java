@@ -22,7 +22,6 @@ import it.polimi.ingsw.GC_24.client.rmi.ServerViewRemote;
 public class ClientSocket {
 
 	private ViewInterface view = new ViewCLI();
-	
 
 	private final static int SOCKETPORT = 19999;
 	private final static String IP = "127.0.0.1";
@@ -40,7 +39,7 @@ public class ClientSocket {
 		String network = askForSocketOrRMI();
 		if (network.equalsIgnoreCase("SOC")) {
 			client.startSocketClient();
-		}else {
+		} else {
 			try {
 				client.startRMIClient();
 			} catch (NotBoundException e) {
@@ -61,7 +60,7 @@ public class ClientSocket {
 		}
 		return choice;
 	}
-	
+
 	/* Shows an Option Dialog that lets the user choose between CLI and GUI */
 	public int createAndStartsInterface() {
 		String[] array = { "GUI", "CLI" };
@@ -88,7 +87,6 @@ public class ClientSocket {
 		Socket socket = new Socket(IP, SOCKETPORT);
 		System.out.println("CLIENT: Connection established");
 
-		
 		ObjectOutputStream objToServer = new ObjectOutputStream(socket.getOutputStream());
 		objToServer.flush();
 		ObjectInputStream objFromServer = new ObjectInputStream(socket.getInputStream());
@@ -96,42 +94,37 @@ public class ClientSocket {
 		ClientSocketViewCLI clientSocketView = new ClientSocketViewCLI(objFromServer, objToServer, view);
 
 		executor.submit(clientSocketView);
-		
-
 
 		clientSocketView.registerMyObserver(view);
-		
-		//TODO: trovare un modo per sistemare casting		
-		if (view instanceof ViewCLI){
-		((ViewCLI) view).registerMyObserver(clientSocketView);
+
+		// TODO: trovare un modo per sistemare casting
+		if (view instanceof ViewCLI) {
+			((ViewCLI) view).registerMyObserver(clientSocketView);
 		}
 
-	
 		executor.submit(view);
 		// TODO:sistemare quando creiamo la GUI
 		// minimodel is created inside the view
 	}
-	
+
 	public void startRMIClient() throws IOException, NotBoundException {
 
-				Registry registry = LocateRegistry.getRegistry(IP, RMIPORT);
-				
-				ServerViewRemote serverStub = (ServerViewRemote) registry.lookup(RMINAME);
+		Registry registry = LocateRegistry.getRegistry(IP, RMIPORT);
 
-				ClientRMIView clientRMIView=new ClientRMIView(serverStub,view);
-				
-				serverStub.registerClient(clientRMIView);
-				
-				@SuppressWarnings("unused")
-				ClientViewRemote viewRemote = (ClientViewRemote) UnicastRemoteObject.exportObject(clientRMIView, 0);
-				
-				if (view instanceof ViewCLI){
-					((ViewCLI) view).registerMyObserver(clientRMIView);
-					}
+		ServerViewRemote serverStub = (ServerViewRemote) registry.lookup(RMINAME);
 
-				
-				executor.submit(view);
+		ClientRMIView clientRMIView = new ClientRMIView(serverStub, view);
+
+		@SuppressWarnings("unused")
+		ClientViewRemote viewRemote = (ClientViewRemote) UnicastRemoteObject.exportObject(clientRMIView, 0);
+
+		serverStub.registerClient(viewRemote);
+
+		if (view instanceof ViewCLI) {
+			((ViewCLI) view).registerMyObserver(clientRMIView);
+		}
+
+		executor.submit(view);
 	}
 
-	
 }

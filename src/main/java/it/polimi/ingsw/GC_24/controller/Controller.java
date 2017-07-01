@@ -1,12 +1,14 @@
 ﻿package it.polimi.ingsw.GC_24.controller;
 
 import java.io.IOException;
+
 import java.util.*;
 
-import javax.print.attribute.HashAttributeSet;
+
 
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.MyObserver;
+
 import it.polimi.ingsw.GC_24.cards.*;
 import it.polimi.ingsw.GC_24.effects.*;
 import it.polimi.ingsw.GC_24.model.Model;
@@ -84,7 +86,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			System.out.println("GAME STATE: " + game.getGameState());
 
 			game.getBoard().clear();
-			System.out.println("1");
+			
 			game.getCards().dealCards(game.getBoard(), cardsIndex / 2 + 1);
 
 			game.sendModel();
@@ -100,10 +102,14 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					System.out.println("Current Player is ---> " + this.currentPlayer.getMyName());
 
 					sendCurrentPlayer();
-
-					if (!alreadyPlaying)
+					System.out.println("Controller --> Current Player Sent");
+					System.out.println("Controller --> Are  they already playing? "+alreadyPlaying);
+					if (!alreadyPlaying){
 						letThemPlay();
-
+						System.out.println("Controller --> Play request sent!");
+					}
+					
+					
 					/*
 					 * This block waits for a player doing an action, because
 					 * after an action the game-currentPlayer is updated
@@ -153,7 +159,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					actionWaiting.notify();
 				}
 			}
-		}, 100000);
+		}, 750000);
 
 	}
 
@@ -342,10 +348,13 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	private void sendCurrentPlayer() {
+		
 		hashMap = new HashMap<>();
+		
 		hashMap.put("currentPlayer", this.currentPlayer);
+		
 		notifyMyObservers(hashMap);
-
+		
 	}
 
 	/**
@@ -609,6 +618,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 				if (effect instanceof ChooseNewCard) {
 					System.out.println("Controller --> è un chooseNewCard, creo l'azione corrispondente");
+					if (!parametersAnswer.contains("null")){
 					String response = createNewActionForChooseNewCard(((ChooseNewCard) effect).getDieValue(), effect);
 					// until my choose new card verify is correct I create
 					// another one
@@ -616,7 +626,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 						response = createNewActionForChooseNewCard(((ChooseNewCard) effect).getDieValue(), effect);
 					}
 					correctChooseNewCardExecute();
-
+					}
 				} else {
 					System.out.println("Controller --> non è un chooseNewCard");
 					System.out.println("Controller --> faccio il GiveImmediateEffect()");
@@ -700,7 +710,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	private void sendToCurrentPlayer(HashMap<String, Object> hashMap2) {
-		hashMap2.put("currentPlayer", currentPlayer);
+		String name = currentPlayer.getMyName();
+		hashMap2.put("currentPlayerName", name);
 		notifyMyObservers(hashMap2);
 	}
 
@@ -723,8 +734,9 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	private void sendProblemsToCurrentPlayer(String responseToActionVerify) {
-
-		hashMap.put("currentPlayer", currentPlayer.getMyName());
+		hashMap = new HashMap<>();
+		hashMap.put("problems",responseToActionVerify);
+		hashMap.put("currentPlayerName", currentPlayer.getMyName());
 		notifyMyObservers(hashMap);
 	}
 
@@ -751,6 +763,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			System.out.println(
 					"Controller --> Inviando la richiesta di scelta costo, mi metto in attesa della risposta  ");
 
+			this.tempCostString = new String();
 			synchronized (tempCostWaiting) {
 				while (this.tempCostString.equals(new String())) {
 					try {

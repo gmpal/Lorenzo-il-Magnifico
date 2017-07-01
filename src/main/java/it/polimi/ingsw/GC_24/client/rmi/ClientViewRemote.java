@@ -11,7 +11,7 @@ import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.values.SetOfValues;
 
 
-public interface ClientViewRemote extends Remote, MyObserver {
+public interface ClientViewRemote extends Remote {
 	
 
 	public abstract void show(String message) throws RemoteException;
