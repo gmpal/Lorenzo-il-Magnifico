@@ -10,6 +10,7 @@ import java.util.Random;
 import com.google.gson.Gson;
 import it.polimi.ingsw.GC_24.board.Board;
 import it.polimi.ingsw.GC_24.devCardJsonFile.GsonBuilders;
+import it.polimi.ingsw.GC_24.effects.SubVicrotyPointsFromSetOfValue;
 import it.polimi.ingsw.GC_24.personalboard.PersonalBoard;
 import it.polimi.ingsw.GC_24.places.*;
 import it.polimi.ingsw.GC_24.values.*;

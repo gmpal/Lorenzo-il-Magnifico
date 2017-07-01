@@ -479,7 +479,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 		} else if (command.contains("leader")) {
 			System.out.println("Controller --> Ricevuta un'azione leader");
-			handleAndVerifyLeader(o, request);
+			handleAndVerifyLeader(request);
 
 		} else if (command.contains("answerForVatican")) {
 			System.out.println("Controller --> Ricevuta la scelta di supporto al vaticano ");
@@ -504,7 +504,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	 * effects. If it's to discard the card, then the method will check the
 	 * card's availability and will give a council privilege o the player
 	 */
-	private void handleAndVerifyLeader(MyObservable o, Map<String, Object> request) {
+	private void handleAndVerifyLeader(Map<String, Object> request) {
 		System.out.println("Controller --> Sto gestendo un leader");
 		StringTokenizer tokenizer = new StringTokenizer((String) request.get("leader"));
 
@@ -518,14 +518,14 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			feedback = verifyRequirementsLeader(index, feedback);
 
 			if (!feedback.equals("Answer: \n")) {
-				incorrenctLeaderHandling(o, feedback);
+				incorrenctLeaderHandling(feedback);
 			} else {
 				assignLeaderEffects(index);
 			}
 		}else if (actionLeader.equalsIgnoreCase("discard")) {
 			feedback = verifyAvailabilityLeader(index, feedback);
 			if (!feedback.equals("Answer: \n")) {
-				incorrenctLeaderHandling(o, feedback);
+				incorrenctLeaderHandling(feedback);
 			} else {
 				CouncilPrivilege privilege = new CouncilPrivilege("council", 1);
 				//TODO attivare il privilegio e rimuovere la carta dall'arraylist
@@ -569,6 +569,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			feedback = feedback + "You don't have enough Ventures to activate this card!\n";
 		}
 		return feedback;
+	}
   /**
 	 * This method gives an excommunication card to the player that either
 	 * decides not to give his support to the Vatican or doesn't have the faith
@@ -724,9 +725,9 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	}
 	
-	private void incorrenctLeaderHandling(MyObservable o, String feedback) {
+	private void incorrenctLeaderHandling(String feedback) {
 		System.out.println("Controller --> L'attivazione della carta leader non ha superato i controlli");
-		sendProblems(o, feedback);
+		sendProblemsToCurrentPlayer(feedback);
 		System.out.println("Controller --> Inviata richiesta di problemi al client");
 		awakenSleepingClient();		
 
