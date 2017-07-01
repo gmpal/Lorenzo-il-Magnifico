@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import java.util.*;
 
+import javax.swing.JOptionPane;
+
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.MyObserver;
 
@@ -86,7 +88,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			System.out.println("GAME STATE: " + game.getGameState());
 
 			game.getBoard().clear();
-			
+
 			game.getCards().dealCards(game.getBoard(), cardsIndex / 2 + 1);
 
 			game.sendModel();
@@ -103,13 +105,12 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 					sendCurrentPlayer();
 					System.out.println("Controller --> Current Player Sent");
-					System.out.println("Controller --> Are  they already playing? "+alreadyPlaying);
-					if (!alreadyPlaying){
+					System.out.println("Controller --> Are  they already playing? " + alreadyPlaying);
+					if (!alreadyPlaying) {
 						letThemPlay();
 						System.out.println("Controller --> Play request sent!");
 					}
-					
-					
+
 					/*
 					 * This block waits for a player doing an action, because
 					 * after an action the game-currentPlayer is updated
@@ -149,7 +150,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	}
 
-	
 	/**
 	 * checks if in the player's personalLeader there are some activated cards
 	 * that are oneTimePerTurn and in that case the method sets this boolean to
@@ -166,7 +166,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		game.sendModel();
 	}
 
-
 	private void startTimerForPlayerAction(Timer t1) {
 		t1.schedule(new TimerTask() {
 			public void run() {
@@ -180,7 +179,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			}
 
 		}, 750000);
-
 
 	}
 
@@ -369,13 +367,13 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	private void sendCurrentPlayer() {
-		
+
 		hashMap = new HashMap<>();
-		
+
 		hashMap.put("currentPlayer", this.currentPlayer);
-		
+
 		notifyMyObservers(hashMap);
-		
+
 	}
 
 	/**
@@ -470,10 +468,9 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			}
 			return "sale chosen";
 
+		}
+		/* RMI COMMANDS */
 
-		} 
-		/*RMI COMMANDS*/
-		
 		else if (command.contains("addPlayer")) {
 			game.addPlayer();
 
@@ -487,7 +484,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			giveExcommunication(answer);
 
 		}
-		
 
 		else {
 			System.out.println("Controller --> COMANDO NON RICONOSCIUTO ");
@@ -522,20 +518,21 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			} else {
 				assignLeaderEffects(index);
 			}
-		}else if (actionLeader.equalsIgnoreCase("discard")) {
+		} else if (actionLeader.equalsIgnoreCase("discard")) {
 			feedback = verifyAvailabilityLeader(index, feedback);
 			if (!feedback.equals("Answer: \n")) {
 				incorrenctLeaderHandling(feedback);
 			} else {
 				CouncilPrivilege privilege = new CouncilPrivilege("council", 1);
-				//TODO attivare il privilegio e rimuovere la carta dall'arraylist
+				// TODO attivare il privilegio e rimuovere la carta
+				// dall'arraylist
 			}
 		}
 
 	}
 
 	private String verifyAvailabilityLeader(int index, String feedback) {
-		if (currentPlayer.getMyBoard().getPersonalLeader().get(index).isInUse()){
+		if (currentPlayer.getMyBoard().getPersonalLeader().get(index).isInUse()) {
 			return feedback + "This card is already in use\n";
 		}
 		return feedback;
@@ -570,7 +567,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		}
 		return feedback;
 	}
-  /**
+
+	/**
 	 * This method gives an excommunication card to the player that either
 	 * decides not to give his support to the Vatican or doesn't have the faith
 	 * requirements.
@@ -615,7 +613,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		return "player " + clientNumber + " updated";
 
 	}
-
 
 	// #1
 	private void handleAction(Map<String, Object> request) {
@@ -678,7 +675,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		List<ImmediateEffect> interactiveEffects = action.run();
 		this.handleInteractiveEffects(interactiveEffects);
 		System.out.println("Controller --> Conclusa gestione dei costi interattivi ");
-		if((cardsIndex==1||cardsIndex==3||cardsIndex==5)&&currentPlayer.getMyFamily().isEmpty()){
+		System.out.println(cardsIndex + "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+		if ((cardsIndex == 1 || cardsIndex == 3 || cardsIndex == 5) && (currentPlayer.getMyFamily().isEmpty())) {
 			askForSupportVatican();
 		}
 		notifyToProceedWithTurns();
@@ -688,29 +686,28 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	}
 
-
 	private void assignLeaderEffects(int index) {
 		System.out.println("Controller --> La verifica dell' attivazione della carta leader è andata a buon fine ");
 		Leader card = currentPlayer.getMyBoard().getPersonalLeader().get(index);
-		if (card.getImmediateEffectLeader()!=null){
+		if (card.getImmediateEffectLeader() != null) {
 			card.getImmediateEffectLeader().giveImmediateEffect(currentPlayer);
 		}
-		if (card.getValueEffectLeader()!=null){
+		if (card.getValueEffectLeader() != null) {
 			card.getValueEffectLeader().giveImmediateEffect(currentPlayer);
 		}
 		card.setInUse(true);
-		if (card.isOneTimePerTurn() && !leaderOneTimePerTurn.contains(card)){
+		if (card.isOneTimePerTurn() && !leaderOneTimePerTurn.contains(card)) {
 			leaderOneTimePerTurn.add(card);
 		}
 		game.sendModel();
 		awakenSleepingClient();
 		System.out.println("Controller --> Richiesta di risveglio inviata");
-  }
+	}
 
 	private void askForSupportVatican() {
 		hashMap = new HashMap<>();
 		hashMap.put("vatican", null);
-		notifyMyObservers(hashMap);		
+		notifyMyObservers(hashMap);
 	}
 
 	private void correctChooseNewCardExecute() {
@@ -724,12 +721,12 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		// System.out.println("Controller --> Richiesta di risveglio inviata");
 
 	}
-	
+
 	private void incorrenctLeaderHandling(String feedback) {
 		System.out.println("Controller --> L'attivazione della carta leader non ha superato i controlli");
 		sendProblemsToCurrentPlayer(feedback);
 		System.out.println("Controller --> Inviata richiesta di problemi al client");
-		awakenSleepingClient();		
+		awakenSleepingClient();
 
 	}
 
@@ -788,14 +785,15 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 				if (effect instanceof ChooseNewCard) {
 					System.out.println("Controller --> è un chooseNewCard, creo l'azione corrispondente");
-					if (!parametersAnswer.contains("null")){
-					String response = createNewActionForChooseNewCard(((ChooseNewCard) effect).getDieValue(), effect);
-					// until my choose new card verify is correct I create
-					// another one
-					while (!response.equals("ok")) {
-						response = createNewActionForChooseNewCard(((ChooseNewCard) effect).getDieValue(), effect);
-					}
-					correctChooseNewCardExecute();
+					if (!parametersAnswer.contains("null")) {
+						String response = createNewActionForChooseNewCard(((ChooseNewCard) effect).getDieValue(),
+								effect);
+						// until my choose new card verify is correct I create
+						// another one
+						while (!response.equals("ok")) {
+							response = createNewActionForChooseNewCard(((ChooseNewCard) effect).getDieValue(), effect);
+						}
+						correctChooseNewCardExecute();
 					}
 				} else {
 					System.out.println("Controller --> non è un chooseNewCard");
@@ -855,7 +853,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	 * @param o
 	 */
 
-
 	private void askAndWaitForParameters(ImmediateEffect effect) {
 		parametersChosen = false;
 
@@ -907,7 +904,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	private void sendProblemsToCurrentPlayer(String responseToActionVerify) {
 		hashMap = new HashMap<>();
-		hashMap.put("problems",responseToActionVerify);
+		hashMap.put("problems", responseToActionVerify);
 		hashMap.put("currentPlayerName", currentPlayer.getMyName());
 		notifyMyObservers(hashMap);
 	}
@@ -951,12 +948,11 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 			}
 
-			if (this.tempCostString.equals("1")){
+			if (this.tempCostString.equals("1")) {
 				tempCost = cost1;
 			} else {
 				tempCost = cost2;
 			}
-
 
 			System.out.println("Controller --> L'utente ha scelto, mi sono risvegliato ");
 

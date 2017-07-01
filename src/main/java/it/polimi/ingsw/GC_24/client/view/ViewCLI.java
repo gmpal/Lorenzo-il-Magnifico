@@ -265,7 +265,6 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 			commandZone = increaseDieValue(commandZone);
 
 		}
-		commandZone = increaseDieValue(commandZone);
 		return commandZone;
 	}
 
@@ -569,6 +568,7 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 
 	}
 	
+	@Override
 	public void askForExcommunication(){
 		System.out.println("Do you want to support the Vatican?(Y/N)");
 		String answer=scanner.next();

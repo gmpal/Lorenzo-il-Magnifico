@@ -53,7 +53,6 @@ public class ClientSocketViewCLI extends MyObservable implements Runnable, MyObs
 						handleRequestFromServer(requestFromServer);
 					}
 				}));
-				
 
 			}
 		} catch (EOFException e) {
@@ -78,7 +77,6 @@ public class ClientSocketViewCLI extends MyObservable implements Runnable, MyObs
 
 	}
 
-
 	/**
 	 * Based on the key of the object received, this method handles the request
 	 */
@@ -86,7 +84,6 @@ public class ClientSocketViewCLI extends MyObservable implements Runnable, MyObs
 	public synchronized void handleRequestFromServer(Map<String, Object> request) {
 		System.out.println("CSV ---> Gestendo una richiesta ");
 		Set<String> command = request.keySet();
-
 
 		if (command.contains("currentPlayerName")) {
 			System.out.println("CSV --> Ricevuto qualcosa per un singolo giocatore");
@@ -164,7 +161,6 @@ public class ClientSocketViewCLI extends MyObservable implements Runnable, MyObs
 				}
 			}).start();
 
-
 		}
 		if (command.contains("Turns")) {
 			System.out.println("CSV ---> Ricevuti turni ");
@@ -192,8 +188,11 @@ public class ClientSocketViewCLI extends MyObservable implements Runnable, MyObs
 			System.out.println("CSV ---> Ricevuta richiesta sconto multiplo");
 			view.chooseSale((IncreaseDieValueCard) request.get(command));
 
-
+		}
+		if (command.contains("vatican")) {
+			System.out.println("CSV ---> Ricevuta richiesta scomunica");
+			view.askForExcommunication();
 		}
 	}
-	
+
 }
