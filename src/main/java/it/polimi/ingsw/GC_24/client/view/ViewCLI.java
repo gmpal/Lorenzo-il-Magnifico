@@ -117,7 +117,9 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 		System.out.println("Choose action:\n" + "a)Show board\n" + "b)Show personal board\n" + "c)Show family members\n"
 				+ "d)Show my resources\n" + "e)Place family member\n" + "f)Activate a leader card\n"
 				+ "g)Discard a leader card\n" + "h)End turn\n" + "i)Exit");
-		String command = scanner.next();
+
+		String command = scanner.nextLine();
+
 
 		if (command.equalsIgnoreCase("a")) {
 
@@ -206,7 +208,7 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 			System.out.println("Choose an area:\n" + "a)Tower territories\n" + "b)Tower characters\n"
 					+ "c)Tower buildings\n" + "d)Tower ventures\n" + "e)Market\n" + "f)Production\n" + "g)Harvest\n"
 					+ "h)Council Palace\n" + "i)Cancel");
-			commandZone = scanner.next();
+			commandZone = scanner.nextLine();
 			String cf;
 			if (commandZone.equalsIgnoreCase("a")) {
 				System.out.println(miniModel.getBoard().getTowerTerritories());
@@ -268,7 +270,9 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 		StringBuilder builder = new StringBuilder();
 		builder.append("\nChoose Leader Card (");
 
+
 		String string = "0";
+
 
 		for (int i = 1; i <= myself.getMyBoard().getPersonalLeader().size(); i++) {
 			if (i == myself.getMyBoard().getPersonalLeader().size()) {
@@ -277,14 +281,17 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 				break;
 			}
 			builder.append(i + ",");
+
 			string = string + i;
 
 		}
 		builder.append(")  0 --> Cancel ");
 		System.out.println(builder.toString());
 		String choice = scanner.nextLine();
+
 		while (!(string.contains(choice))) {
 			System.out.println("Wrong choice, try again");
+
 			choice = scanner.nextLine();
 		}
 		if (choice.equals("0")) {
@@ -296,11 +303,11 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 	public String fourChoice(String s) {
 		System.out.println("Choose " + s + " (1,2,3,4)  0 --> Cancel ");
 
-		String choice = scanner.next();
+		String choice = scanner.nextLine();
 		while (!(choice.equals("1") || choice.equals("2") || choice.equals("3") || choice.equals("4")
 				|| choice.equals("0"))) {
 			System.out.println("Wrong choice, try again;");
-			choice = scanner.next();
+			choice = scanner.nextLine();
 		}
 		if (choice.equals("0")) {
 			choice = "cancel";
@@ -361,6 +368,7 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 	}
 
 	private void sendLeader(String command) {
+		actionDone = false;
 		hm = new HashMap<>();
 		hm.put("leader", command);
 		this.notifyMyObservers(hm);
@@ -368,9 +376,9 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 	}
 
 	/**
-	 * this method lets the user choose between two alternative costs. It
-	 * contains a Military Point value because the alternative values are always
-	 * associated with militaryPoints
+	 * this method lets the user choose between two alternative costs. It contains a
+	 * Military Point value because the alternative values are always associated
+	 * with militaryPoints
 	 */
 
 	@Override
@@ -396,17 +404,18 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 		SetOfValues finalIncrease;
 		do {
 			System.out.println();
-			int answer = 0;
+			String answer = "";
 			try {
-				answer = scanner.nextInt();
-				scanner.nextLine();
+
+				answer = scanner.nextLine();
+			
 			} catch (Exception e) {
 				finalIncrease = null;
-				answer = 0;
+				answer = "";
 			}
-			if (answer == 1) {
+			if (answer.equals(1)) {
 				finalIncrease = increase.getSale();
-			} else if (answer == 2) {
+			} else if (answer.equals(1)) {
 				finalIncrease = increase.getAlternativeSale();
 			} else {
 				System.out.println("Wrong number");
@@ -475,7 +484,6 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 			System.out.println("Choice number " + (i) + " of " + number);
 			String choice = "";
 			try {
-
 				choice = scanner.nextLine();
 			
 
@@ -540,12 +548,11 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 		} else {
 			System.out.println("Player #" + getMyself().getPlayerNumber() + " turn is FALSE  ");
 			myTurn = false;
-
-			if (myTurn) {
-				System.out.println("**********It's your turn!!!!**********");
-			} else {
-				System.out.println("**********Not your turn**********");
-			}
+		}
+		if (myTurn) {
+			System.out.println("**********It's your turn!!!!**********");
+		} else {
+			System.out.println("**********Not your turn**********");
 		}
 	}
 
@@ -575,6 +582,7 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 		while (!answer.equalsIgnoreCase("y") && !answer.equalsIgnoreCase("n")) {
 			answer = scanner.nextLine();
 		}
+
 		sendAnswerToVatican(answer);
 	}
 

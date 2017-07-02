@@ -110,8 +110,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					}
 
 					/*
-					 * This block waits for a player doing an action, because
-					 * after an action the game-currentPlayer is updated
+					 * This block waits for a player doing an action, because after an action the
+					 * game-currentPlayer is updated
 					 */
 					Timer t1 = new Timer();
 					startTimerForPlayerAction(t1);
@@ -149,9 +149,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	/**
-	 * checks if in the player's personalLeader there are some activated cards
-	 * that are oneTimePerTurn and in that case the method sets this boolean to
-	 * false
+	 * checks if in the player's personalLeader there are some activated cards that
+	 * are oneTimePerTurn and in that case the method sets this boolean to false
 	 */
 	public void checkToActivateLeader() {
 		for (Player p : playerTurn) {
@@ -181,8 +180,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	/**
-	 * This method starts a timer and then calls another method that
-	 * autocompletes the players
+	 * This method starts a timer and then calls another method that autocompletes
+	 * the players
 	 */
 	private void waitAndAutocomplete() {
 		Timer timer = new Timer();
@@ -197,8 +196,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	/**
-	 * This method automatically completes the players name and colours, waking
-	 * up the run() thread and notifying the clients
+	 * This method automatically completes the players name and colours, waking up
+	 * the run() thread and notifying the clients
 	 */
 	public void autoCompletePlayers() {
 
@@ -225,17 +224,17 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	/**
-	 * This method handles the end of the game. 1)Conquered Territories:
-	 * 1/4/10/20 Victory Points for 3/4/5/6 Territory Cards on your Personal
-	 * Board. 2)Influenced Characters: 1/3/6/10/15/21 Victory Points for
-	 * 1/2/3/4/5/6 Character Cards next to your Personal Board. 3)Encouraged
-	 * Ventures: The sum of all Victory Points on the Venture Cards next to your
-	 * Personal Board. 4)Military Strength: If there is a tie between first
-	 * players, they all gain 5 Victory Points and nobody gains 2 Victory
-	 * Points. If there is a tie between second players, they all gain 2 Victory
-	 * Points. 5)Collected Resources: 1 Victory Point for every 5 resources of
-	 * all types. ---> The player with most Victory Points is the winner. In
-	 * case of a tie, the player more advanced on the Turn Order is the winner.
+	 * This method handles the end of the game. 1)Conquered Territories: 1/4/10/20
+	 * Victory Points for 3/4/5/6 Territory Cards on your Personal Board.
+	 * 2)Influenced Characters: 1/3/6/10/15/21 Victory Points for 1/2/3/4/5/6
+	 * Character Cards next to your Personal Board. 3)Encouraged Ventures: The sum
+	 * of all Victory Points on the Venture Cards next to your Personal Board.
+	 * 4)Military Strength: If there is a tie between first players, they all gain 5
+	 * Victory Points and nobody gains 2 Victory Points. If there is a tie between
+	 * second players, they all gain 2 Victory Points. 5)Collected Resources: 1
+	 * Victory Point for every 5 resources of all types. ---> The player with most
+	 * Victory Points is the winner. In case of a tie, the player more advanced on
+	 * the Turn Order is the winner.
 	 */
 	private void gameEndHandler() {
 		giveVictoryPoints();
@@ -278,8 +277,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	/**
-	 * This method calculates the final victory points for each player. based on
-	 * the final rules of the game
+	 * This method calculates the final victory points for each player. based on the
+	 * final rules of the game
 	 */
 	public void giveVictoryPoints() {
 		Player player;
@@ -310,8 +309,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	/**
 	 * This method convert Military Points to Victory Points though a List of
-	 * Integer, this list contains the players' quantity of Military Points
-	 * sorted.
+	 * Integer, this list contains the players' quantity of Military Points sorted.
 	 */
 
 	public void convertMilitaryPointsToVictoryPoints(List<Integer> finalMilitaryPoints) {
@@ -330,8 +328,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	/**
-	 * This methods updates the turn list looking at the Council Palace, after
-	 * every round
+	 * This methods updates the turn list looking at the Council Palace, after every
+	 * round
 	 */
 	public void updateListOfPlayerTurn(List<Player> temporaryTurn) {
 		int i;
@@ -375,8 +373,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	/**
-	 * This method sends to the clients a simple information to be printed on
-	 * the view
+	 * This method sends to the clients a simple information to be printed on the
+	 * view
 	 */
 	private void sendInfo(String string) {
 		hashMap = new HashMap<>();
@@ -408,8 +406,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	/**
-	 * This method analyzes the incoming HashMap. If it finds specific keywords
-	 * in the keySet, it does different things with different objects
+	 * This method analyzes the incoming HashMap. If it finds specific keywords in
+	 * the keySet, it does different things with different objects
 	 * 
 	 * @throws IOException
 	 */
@@ -496,10 +494,10 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	/**
-	 * receives the command action on leader cards. If it is to activate the
-	 * leader, it verifies if the player can, and in that case gives them the
-	 * effects. If it's to discard the card, then the method will check the
-	 * card's availability and will give a council privilege o the player
+	 * receives the command action on leader cards. If it is to activate the leader,
+	 * it verifies if the player can, and in that case gives them the effects. If
+	 * it's to discard the card, then the method will check the card's availability
+	 * and will give a council privilege o the player
 	 */
 	private void handleAndVerifyLeader(Map<String, Object> request) {
 		System.out.println("Controller --> Sto gestendo un leader");
@@ -590,8 +588,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	/**
-	 * This method verify if the player have the requirements to support
-	 * Vatican.
+	 * This method verify if the player have the requirements to support Vatican.
 	 * 
 	 * @return true if player have requirements, false otherwise.
 	 */
@@ -629,9 +626,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		String tempServants = tokenizer.nextToken();
 
 		/**
-		 * Sees if there's an interactive permanent effect WITH DOUBLE SALE
-		 * before doing an action, because this particular effect requires user
-		 * interaction
+		 * Sees if there's an interactive permanent effect WITH DOUBLE SALE before doing
+		 * an action, because this particular effect requires user interaction
 		 */
 		IncreaseDieValueCard pe = PermanentEffectWithAlternativeSale();
 
@@ -680,6 +676,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		this.handleInteractiveEffects(interactiveEffects);
 		System.out.println("Controller --> Conclusa gestione dei costi interattivi ");
 
+
 		if ((cardsIndex == 1 || cardsIndex == 3 || cardsIndex == 5) && (currentPlayer.getMyFamily().isEmpty())) {
 			if (verifyRequiremetsExcommunication()) {
 				askForSupportVatican();
@@ -687,7 +684,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				sendProblemsToCurrentPlayer("You don't have enough faith points so you have been excommunicated.");
 				currentPlayer.getMyBoard().getPersonalExcommunication()
 						.add(game.getExcommunicationDeck().get(cardsIndex / 2));
-			}
+      }
 		}
 		notifyToProceedWithTurns();
 		game.sendModel();
@@ -699,7 +696,9 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	private void assignLeaderEffects(int index) {
 		System.out.println("Controller --> La verifica dell' attivazione della carta leader è andata a buon fine ");
 		Leader card = currentPlayer.getMyBoard().getPersonalLeader().get(index);
+
 		if (card.getImmediateEffectLeader()!=null){
+
 			askAndWaitForParameters(card.getImmediateEffectLeader());
 			card.getImmediateEffectLeader().giveImmediateEffect(currentPlayer);
 		}
@@ -719,6 +718,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		hashMap = new HashMap<>();
 		hashMap.put("vatican", null);
 		notifyMyObservers(hashMap);
+
 		vaticanChosen = false;
 		synchronized (waitingForVaticanChoice) {
 			while (!vaticanChosen) {
@@ -730,6 +730,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				}
 			}
 		}
+
 	}
 
 	private void correctChooseNewCardExecute() {
@@ -868,9 +869,9 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	/**
-	 * This method handles the effect that needs interaction with user it sends
-	 * the effect to the client, it recognises them and asks the user to choose.
-	 * Then he sends a specific answer and
+	 * This method handles the effect that needs interaction with user it sends the
+	 * effect to the client, it recognises them and asks the user to choose. Then he
+	 * sends a specific answer and
 	 * 
 	 * @param o
 	 */
@@ -896,6 +897,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			}
 			if (!(effect instanceof ChooseNewCard)) {
 				effect.assignParameters(parametersAnswer);
+				System.out.println("Controller --> Parametri assegnati");
 			}
 		}
 	}
@@ -931,8 +933,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	/**
-	 * If the player wants to take a ventures card, this method let him choose
-	 * which one of the double costs to take (if a double cost exists).
+	 * If the player wants to take a ventures card, this method let him choose which
+	 * one of the double costs to take (if a double cost exists).
 	 */
 	private void handleVentures(String tempZone, String tempFloor) {
 		System.out.println("Controller --> Sto gestendo una carta venture per il doppio costo... ");
@@ -971,11 +973,13 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 			if (this.tempCostString.equals("1")) {
 				tempCost = cost1;
+
 			} else {
 				tempCost = cost2;
 			}
 
 			System.out.println("Controller --> L'utente ha scelto, mi sono risvegliato ");
+			System.out.println("Controller --> SCELTA DELL UTENTE: " + tempCost);
 
 		}
 		System.out.println("Controller --> Fine gestione carta Venture ");
