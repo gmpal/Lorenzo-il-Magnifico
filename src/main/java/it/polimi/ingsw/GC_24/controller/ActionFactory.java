@@ -1,7 +1,7 @@
 package it.polimi.ingsw.GC_24.controller;
 
 import it.polimi.ingsw.GC_24.model.Model;
-import it.polimi.ingsw.GC_24.values.SetOfValues;
+import it.polimi.ingsw.GC_24.model.values.SetOfValues;
 
 /**
  * This is a factory thats only job is creating actions By encapsulating actions

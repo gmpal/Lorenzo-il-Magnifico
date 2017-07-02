@@ -5,10 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
-import it.polimi.ingsw.GC_24.cards.Characters;
+
 import it.polimi.ingsw.GC_24.controller.*;
-import it.polimi.ingsw.GC_24.effects.IncreaseDieValueActivity;
 import it.polimi.ingsw.GC_24.model.*;
+import it.polimi.ingsw.GC_24.model.cards.Characters;
+import it.polimi.ingsw.GC_24.model.effects.IncreaseDieValueActivity;
 
 
 public class TestHarvestAction {

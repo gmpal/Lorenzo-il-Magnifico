@@ -7,9 +7,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import it.polimi.ingsw.GC_24.devCardJsonFile.RuntimeTypeAdapterFactory;
-import it.polimi.ingsw.GC_24.effects.*;
-import it.polimi.ingsw.GC_24.personalboard.*;
-import it.polimi.ingsw.GC_24.values.*;
+import it.polimi.ingsw.GC_24.model.effects.*;
+import it.polimi.ingsw.GC_24.model.personalboard.*;
+import it.polimi.ingsw.GC_24.model.values.*;
 
 public class GsonBuilders {
 	public GsonBuilders() {

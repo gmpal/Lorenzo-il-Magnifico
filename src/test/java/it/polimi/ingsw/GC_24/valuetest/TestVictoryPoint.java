@@ -5,8 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.PlayerColour;
-import it.polimi.ingsw.GC_24.values.SetOfValues;
-import it.polimi.ingsw.GC_24.values.VictoryPoint;
+import it.polimi.ingsw.GC_24.model.values.SetOfValues;
+import it.polimi.ingsw.GC_24.model.values.VictoryPoint;
 
 public class TestVictoryPoint {
 	

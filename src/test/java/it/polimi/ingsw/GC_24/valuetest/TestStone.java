@@ -6,8 +6,8 @@ import org.junit.Test;
 
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.PlayerColour;
-import it.polimi.ingsw.GC_24.values.SetOfValues;
-import it.polimi.ingsw.GC_24.values.Stone;
+import it.polimi.ingsw.GC_24.model.values.SetOfValues;
+import it.polimi.ingsw.GC_24.model.values.Stone;
 
 
 public class TestStone {

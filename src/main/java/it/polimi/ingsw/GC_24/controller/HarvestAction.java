@@ -3,13 +3,13 @@ package it.polimi.ingsw.GC_24.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.polimi.ingsw.GC_24.cards.Characters;
-import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
-import it.polimi.ingsw.GC_24.effects.IncreaseDieValueActivity;
-import it.polimi.ingsw.GC_24.effects.PerformHarvest;
 import it.polimi.ingsw.GC_24.model.Model;
-import it.polimi.ingsw.GC_24.places.HarvestPlace;
-import it.polimi.ingsw.GC_24.values.Servant;
+import it.polimi.ingsw.GC_24.model.cards.Characters;
+import it.polimi.ingsw.GC_24.model.effects.ImmediateEffect;
+import it.polimi.ingsw.GC_24.model.effects.IncreaseDieValueActivity;
+import it.polimi.ingsw.GC_24.model.effects.PerformHarvest;
+import it.polimi.ingsw.GC_24.model.places.HarvestPlace;
+import it.polimi.ingsw.GC_24.model.values.Servant;
 
 public class HarvestAction extends Action {
 	private List<ImmediateEffect> immediateEffects = new ArrayList<>();

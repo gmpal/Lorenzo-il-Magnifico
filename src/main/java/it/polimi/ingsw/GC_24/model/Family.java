@@ -1,6 +1,6 @@
 package it.polimi.ingsw.GC_24.model;
 
-import it.polimi.ingsw.GC_24.dice.SetOfDice;
+import it.polimi.ingsw.GC_24.model.dice.SetOfDice;
 
 public class Family implements java.io.Serializable {
 

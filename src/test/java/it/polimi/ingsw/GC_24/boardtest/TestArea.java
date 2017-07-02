@@ -3,10 +3,11 @@ package it.polimi.ingsw.GC_24.boardtest;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-import it.polimi.ingsw.GC_24.board.Harvest;
-import it.polimi.ingsw.GC_24.dice.*;
+
 import it.polimi.ingsw.GC_24.model.FamilyMember;
 import it.polimi.ingsw.GC_24.model.PlayerColour;
+import it.polimi.ingsw.GC_24.model.board.Harvest;
+import it.polimi.ingsw.GC_24.model.dice.*;
 
 public class TestArea {
 	

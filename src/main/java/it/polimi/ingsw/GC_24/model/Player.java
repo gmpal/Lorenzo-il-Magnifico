@@ -1,9 +1,10 @@
 package it.polimi.ingsw.GC_24.model;
 
 import java.io.Serializable;
-import it.polimi.ingsw.GC_24.personalboard.PersonalBoard;
-import it.polimi.ingsw.GC_24.places.Place;
-import it.polimi.ingsw.GC_24.values.*;
+
+import it.polimi.ingsw.GC_24.model.personalboard.PersonalBoard;
+import it.polimi.ingsw.GC_24.model.places.Place;
+import it.polimi.ingsw.GC_24.model.values.*;
 
 public class Player implements Serializable {
 	

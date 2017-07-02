@@ -4,9 +4,10 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
-import it.polimi.ingsw.GC_24.board.Tower;
-import it.polimi.ingsw.GC_24.cards.Territories;
-import it.polimi.ingsw.GC_24.places.TowerPlace;
+
+import it.polimi.ingsw.GC_24.model.board.Tower;
+import it.polimi.ingsw.GC_24.model.cards.Territories;
+import it.polimi.ingsw.GC_24.model.places.TowerPlace;
 
 public class TestTower {
 

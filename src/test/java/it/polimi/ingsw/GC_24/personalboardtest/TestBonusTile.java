@@ -3,8 +3,9 @@ package it.polimi.ingsw.GC_24.personalboardtest;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-import it.polimi.ingsw.GC_24.personalboard.BonusTile;
-import it.polimi.ingsw.GC_24.values.SetOfValues;
+
+import it.polimi.ingsw.GC_24.model.personalboard.BonusTile;
+import it.polimi.ingsw.GC_24.model.values.SetOfValues;
 
 public class TestBonusTile {
 	

@@ -8,9 +8,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import it.polimi.ingsw.GC_24.controller.MarketAction;
-import it.polimi.ingsw.GC_24.effects.CouncilPrivilege;
-import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
 import it.polimi.ingsw.GC_24.model.*;
+import it.polimi.ingsw.GC_24.model.effects.CouncilPrivilege;
+import it.polimi.ingsw.GC_24.model.effects.ImmediateEffect;
 
 public class TestMarketAction {
 	

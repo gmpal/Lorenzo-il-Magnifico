@@ -5,9 +5,9 @@ import java.util.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import it.polimi.ingsw.GC_24.board.CouncilPalace;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.PlayerColour;
+import it.polimi.ingsw.GC_24.model.board.CouncilPalace;
 
 public class TestCouncilPalace {
 	

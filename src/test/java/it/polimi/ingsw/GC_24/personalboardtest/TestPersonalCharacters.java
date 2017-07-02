@@ -3,11 +3,12 @@ package it.polimi.ingsw.GC_24.personalboardtest;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-import it.polimi.ingsw.GC_24.cards.Characters;
+
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.PlayerColour;
-import it.polimi.ingsw.GC_24.personalboard.PersonalCharacters;
-import it.polimi.ingsw.GC_24.values.VictoryPoint;
+import it.polimi.ingsw.GC_24.model.cards.Characters;
+import it.polimi.ingsw.GC_24.model.personalboard.PersonalCharacters;
+import it.polimi.ingsw.GC_24.model.values.VictoryPoint;
 
 
 public class TestPersonalCharacters {

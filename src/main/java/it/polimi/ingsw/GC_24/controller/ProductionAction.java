@@ -2,13 +2,14 @@ package it.polimi.ingsw.GC_24.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import it.polimi.ingsw.GC_24.cards.Characters;
-import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
-import it.polimi.ingsw.GC_24.effects.IncreaseDieValueActivity;
-import it.polimi.ingsw.GC_24.effects.PerformProduction;
+
 import it.polimi.ingsw.GC_24.model.Model;
-import it.polimi.ingsw.GC_24.places.ProductionPlace;
-import it.polimi.ingsw.GC_24.values.Servant;
+import it.polimi.ingsw.GC_24.model.cards.Characters;
+import it.polimi.ingsw.GC_24.model.effects.ImmediateEffect;
+import it.polimi.ingsw.GC_24.model.effects.IncreaseDieValueActivity;
+import it.polimi.ingsw.GC_24.model.effects.PerformProduction;
+import it.polimi.ingsw.GC_24.model.places.ProductionPlace;
+import it.polimi.ingsw.GC_24.model.values.Servant;
 
 public class ProductionAction extends Action {
 	private List<ImmediateEffect> immediateEffects = new ArrayList<>();

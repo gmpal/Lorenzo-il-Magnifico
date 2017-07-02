@@ -4,11 +4,12 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
-import it.polimi.ingsw.GC_24.effects.ValueEffect;
+
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.PlayerColour;
-import it.polimi.ingsw.GC_24.places.*;
-import it.polimi.ingsw.GC_24.values.*;
+import it.polimi.ingsw.GC_24.model.effects.ValueEffect;
+import it.polimi.ingsw.GC_24.model.places.*;
+import it.polimi.ingsw.GC_24.model.values.*;
 
 public class TestPlayer {
 	

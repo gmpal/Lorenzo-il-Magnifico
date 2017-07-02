@@ -8,12 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
-import it.polimi.ingsw.GC_24.cards.Characters;
-import it.polimi.ingsw.GC_24.cards.Leader;
-import it.polimi.ingsw.GC_24.cards.Ventures;
+
 import it.polimi.ingsw.GC_24.controller.Controller;
 import it.polimi.ingsw.GC_24.model.*;
-import it.polimi.ingsw.GC_24.values.*;
+import it.polimi.ingsw.GC_24.model.cards.Characters;
+import it.polimi.ingsw.GC_24.model.cards.Leader;
+import it.polimi.ingsw.GC_24.model.cards.Ventures;
+import it.polimi.ingsw.GC_24.model.values.*;
 
 public class TestController {
 	

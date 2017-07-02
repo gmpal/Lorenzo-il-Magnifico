@@ -1,11 +1,12 @@
 package it.polimi.ingsw.GC_24.controller;
 
 import java.util.List;
-import it.polimi.ingsw.GC_24.board.Area;
-import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
+
 import it.polimi.ingsw.GC_24.model.*;
-import it.polimi.ingsw.GC_24.places.Place;
-import it.polimi.ingsw.GC_24.values.Value;
+import it.polimi.ingsw.GC_24.model.board.Area;
+import it.polimi.ingsw.GC_24.model.effects.ImmediateEffect;
+import it.polimi.ingsw.GC_24.model.places.Place;
+import it.polimi.ingsw.GC_24.model.values.Value;
 
 public abstract class Action {
 

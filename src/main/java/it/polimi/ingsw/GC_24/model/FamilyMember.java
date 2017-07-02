@@ -1,7 +1,7 @@
 package it.polimi.ingsw.GC_24.model;
 
-import it.polimi.ingsw.GC_24.dice.Die;
-import it.polimi.ingsw.GC_24.dice.DieColour;
+import it.polimi.ingsw.GC_24.model.dice.Die;
+import it.polimi.ingsw.GC_24.model.dice.DieColour;
 
 public class FamilyMember implements java.io.Serializable {
 	

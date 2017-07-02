@@ -2,10 +2,11 @@ package it.polimi.ingsw.GC_24.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
+
 import it.polimi.ingsw.GC_24.model.Model;
-import it.polimi.ingsw.GC_24.places.MarketPlace;
-import it.polimi.ingsw.GC_24.values.Servant;
+import it.polimi.ingsw.GC_24.model.effects.ImmediateEffect;
+import it.polimi.ingsw.GC_24.model.places.MarketPlace;
+import it.polimi.ingsw.GC_24.model.values.Servant;
 
 public class MarketAction extends Action {
 	

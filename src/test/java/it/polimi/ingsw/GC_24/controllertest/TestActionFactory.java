@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import it.polimi.ingsw.GC_24.controller.*;
 import it.polimi.ingsw.GC_24.model.*;
-import it.polimi.ingsw.GC_24.values.SetOfValues;
+import it.polimi.ingsw.GC_24.model.values.SetOfValues;
 
 
 public class TestActionFactory {

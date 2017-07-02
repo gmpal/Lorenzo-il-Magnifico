@@ -4,16 +4,15 @@ import java.io.IOException;
 
 import java.util.*;
 
-import it.polimi.ingsw.GC_24.MyObservable;
-import it.polimi.ingsw.GC_24.MyObserver;
-
-import it.polimi.ingsw.GC_24.cards.*;
-import it.polimi.ingsw.GC_24.effects.*;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.State;
-import it.polimi.ingsw.GC_24.places.TowerPlace;
-import it.polimi.ingsw.GC_24.values.*;
+import it.polimi.ingsw.GC_24.model.cards.*;
+import it.polimi.ingsw.GC_24.model.effects.*;
+import it.polimi.ingsw.GC_24.model.places.TowerPlace;
+import it.polimi.ingsw.GC_24.model.values.*;
+import it.polimi.ingsw.GC_24.observers.MyObservable;
+import it.polimi.ingsw.GC_24.observers.MyObserver;
 
 public class Controller extends MyObservable implements MyObserver, Runnable {
 

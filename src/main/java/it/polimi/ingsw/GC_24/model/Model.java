@@ -5,16 +5,18 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Serializable;
 import com.google.gson.Gson;
-import it.polimi.ingsw.GC_24.MyObservable;
-import it.polimi.ingsw.GC_24.board.Board;
-import it.polimi.ingsw.GC_24.cards.Deck;
-import it.polimi.ingsw.GC_24.cards.Excommunication;
-import it.polimi.ingsw.GC_24.cards.Leader;
+
 import java.util.*;
+
 import it.polimi.ingsw.GC_24.devCardJsonFile.GsonBuilders;
-import it.polimi.ingsw.GC_24.dice.SetOfDice;
-import it.polimi.ingsw.GC_24.network.multi.Server;
-import it.polimi.ingsw.GC_24.values.SetOfValues;
+import it.polimi.ingsw.GC_24.model.board.Board;
+import it.polimi.ingsw.GC_24.model.cards.Deck;
+import it.polimi.ingsw.GC_24.model.cards.Excommunication;
+import it.polimi.ingsw.GC_24.model.cards.Leader;
+import it.polimi.ingsw.GC_24.model.dice.SetOfDice;
+import it.polimi.ingsw.GC_24.model.values.SetOfValues;
+import it.polimi.ingsw.GC_24.network.Server;
+import it.polimi.ingsw.GC_24.observers.MyObservable;
 
 public class Model extends MyObservable implements Serializable {
 

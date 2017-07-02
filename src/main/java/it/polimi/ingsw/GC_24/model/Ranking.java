@@ -1,6 +1,6 @@
 package it.polimi.ingsw.GC_24.model;
 
-import it.polimi.ingsw.GC_24.values.*;
+import it.polimi.ingsw.GC_24.model.values.*;
 
 public class Ranking implements java.io.Serializable {
 	

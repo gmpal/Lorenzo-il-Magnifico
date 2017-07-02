@@ -8,12 +8,12 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import it.polimi.ingsw.GC_24.cards.Characters;
 import it.polimi.ingsw.GC_24.controller.ProductionAction;
-import it.polimi.ingsw.GC_24.effects.IncreaseDieValueActivity;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.PlayerColour;
+import it.polimi.ingsw.GC_24.model.cards.Characters;
+import it.polimi.ingsw.GC_24.model.effects.IncreaseDieValueActivity;
 
 public class TestProductionAction {
 

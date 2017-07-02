@@ -3,10 +3,11 @@ package it.polimi.ingsw.GC_24.cardstest;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-import it.polimi.ingsw.GC_24.cards.Buildings;
+
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.PlayerColour;
-import it.polimi.ingsw.GC_24.personalboard.PersonalBuildings;
+import it.polimi.ingsw.GC_24.model.cards.Buildings;
+import it.polimi.ingsw.GC_24.model.personalboard.PersonalBuildings;
 
 public class TestBuildings {
 

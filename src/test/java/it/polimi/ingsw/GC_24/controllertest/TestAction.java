@@ -6,9 +6,9 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import it.polimi.ingsw.GC_24.controller.*;
-import it.polimi.ingsw.GC_24.effects.*;
 import it.polimi.ingsw.GC_24.model.*;
-import it.polimi.ingsw.GC_24.values.*;
+import it.polimi.ingsw.GC_24.model.effects.*;
+import it.polimi.ingsw.GC_24.model.values.*;
 
 public class TestAction {
 	

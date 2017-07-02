@@ -4,9 +4,9 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import it.polimi.ingsw.GC_24.model.*;
-import it.polimi.ingsw.GC_24.places.CouncilPlace;
-import it.polimi.ingsw.GC_24.places.Place;
-import it.polimi.ingsw.GC_24.values.Value;
+import it.polimi.ingsw.GC_24.model.places.CouncilPlace;
+import it.polimi.ingsw.GC_24.model.places.Place;
+import it.polimi.ingsw.GC_24.model.values.Value;
 
 public class TestPlace {
 

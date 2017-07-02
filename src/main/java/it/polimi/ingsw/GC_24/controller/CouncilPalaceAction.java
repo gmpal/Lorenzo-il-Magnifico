@@ -3,10 +3,10 @@ package it.polimi.ingsw.GC_24.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.polimi.ingsw.GC_24.board.CouncilPalace;
-import it.polimi.ingsw.GC_24.effects.ImmediateEffect;
 import it.polimi.ingsw.GC_24.model.Model;
-import it.polimi.ingsw.GC_24.places.CouncilPlace;
+import it.polimi.ingsw.GC_24.model.board.CouncilPalace;
+import it.polimi.ingsw.GC_24.model.effects.ImmediateEffect;
+import it.polimi.ingsw.GC_24.model.places.CouncilPlace;
 
 public class CouncilPalaceAction extends Action {
 	private List<ImmediateEffect> immediateEffects = new ArrayList<>();

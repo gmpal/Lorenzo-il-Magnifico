@@ -3,10 +3,11 @@ package it.polimi.ingsw.GC_24.valuetest;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-import it.polimi.ingsw.GC_24.values.Coin;
-import it.polimi.ingsw.GC_24.values.SetOfValues;
-import it.polimi.ingsw.GC_24.values.Value;
-import it.polimi.ingsw.GC_24.values.VictoryPoint;
+
+import it.polimi.ingsw.GC_24.model.values.Coin;
+import it.polimi.ingsw.GC_24.model.values.SetOfValues;
+import it.polimi.ingsw.GC_24.model.values.Value;
+import it.polimi.ingsw.GC_24.model.values.VictoryPoint;
 
 public class TestSetOfValues {
 	
