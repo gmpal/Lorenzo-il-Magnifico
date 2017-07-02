@@ -40,10 +40,10 @@ public class Client {
 	public static void main(String[] args) throws UnknownHostException, IOException {
 		Client client = new Client();
 		// createAndStartsInterface();
-		String network = askForSocketOrRMI();
-		if (network.equalsIgnoreCase("SOC")) {
+//		String network = askForSocketOrRMI();
+//		if (network.equalsIgnoreCase("SOC")) {
 			client.startSocketClient();
-		} else {
+/*		} else {
 			try {
 				client.startRMIClient();
 			} catch (NotBoundException e) {
@@ -51,7 +51,7 @@ public class Client {
 				e.printStackTrace();
 			}
 		}
-	}
+*/	}
 
 	private static String askForSocketOrRMI() {
 		Scanner scanner = new Scanner(System.in);

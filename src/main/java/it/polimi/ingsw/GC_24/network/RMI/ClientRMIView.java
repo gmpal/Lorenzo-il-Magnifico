@@ -14,13 +14,9 @@ import it.polimi.ingsw.GC_24.observers.MyObservable;
 import it.polimi.ingsw.GC_24.observers.MyObserver;
 import it.polimi.ingsw.GC_24.view.ViewInterface;
 
-public class ClientRMIView extends MyObservable implements ClientViewRemote, Serializable, MyObserver {
+public class ClientRMIView extends MyObservable implements ClientViewRemote, MyObserver {
 	
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 2902379951860570079L;
 	private ViewInterface view;
 	private ServerViewRemote serverStub;
 

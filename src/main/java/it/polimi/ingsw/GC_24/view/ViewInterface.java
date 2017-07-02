@@ -22,7 +22,7 @@ public interface ViewInterface extends Runnable, MyObserver {
 
 	public SetOfValues chooseSale(IncreaseDieValueCard increase); 
 	
-	
+	public abstract void askForExcommunication();
 	
 	public abstract String askForCouncilPrivilege(String request);
 	

@@ -8,7 +8,7 @@ import it.polimi.ingsw.GC_24.model.values.SetOfValues;
 
 
 
-public interface ServerViewRemote extends Remote, Serializable {
+public interface ServerViewRemote extends Remote {
 
 	public abstract void registerClient(ClientViewRemote clientStub) throws RemoteException;
 		

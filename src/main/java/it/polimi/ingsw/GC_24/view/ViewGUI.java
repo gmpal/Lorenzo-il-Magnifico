@@ -136,4 +136,10 @@ public class ViewGUI implements ViewInterface {
 		
 	}
 
+	@Override
+	public void askForExcommunication() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

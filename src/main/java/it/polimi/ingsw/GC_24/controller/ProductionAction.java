@@ -14,7 +14,7 @@ import it.polimi.ingsw.GC_24.model.values.Servant;
 public class ProductionAction extends Action {
 	private List<ImmediateEffect> immediateEffects = new ArrayList<>();
 	private ProductionPlace productionPlace;
-	private int finalActionValue;
+	private int finalActionValue=0;
 
 	public ProductionAction(Model game, String familiar, String zone, String floor, String servants) {
 		super(game, familiar, zone, floor, servants);
@@ -54,7 +54,7 @@ public class ProductionAction extends Action {
 	public void getFinalActionValue() {
 		for (int i = 0; i < player.getMyBoard().getPersonalCharacters().getCards().size(); i++) {
 			Characters c = (Characters) player.getMyBoard().getPersonalCharacters().getCards().get(i);
-			if (c.getPermanentEffects().getName().equals("increaseDieValueProduction")) {
+			if (c.getPermanentEffects()!=null&&c.getPermanentEffects().getName().equals("increaseDieValueProduction")) {
 				IncreaseDieValueActivity pe = (IncreaseDieValueActivity) c.getPermanentEffects();
 				this.finalActionValue += pe.getIncreaseDieValue();
 			}
