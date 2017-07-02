@@ -1,15 +1,16 @@
 package it.polimi.ingsw.GC_24.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import it.polimi.ingsw.GC_24.model.effects.PermanentEffect;
 import it.polimi.ingsw.GC_24.model.personalboard.PersonalBoard;
 import it.polimi.ingsw.GC_24.model.places.Place;
 import it.polimi.ingsw.GC_24.model.values.*;
 
 public class Player implements Serializable {
-	
 
-	
 	/**
 	 * 
 	 */
@@ -21,9 +22,10 @@ public class Player implements Serializable {
 	private PlayerColour myColour;
 	private int playerNumber;
 	public boolean autoCompleted = false;
+	private List<PermanentEffect> activePermanentEffects = new ArrayList<>();
 
 	// Constructor
-	public Player(int playerNumber){
+	public Player(int playerNumber) {
 		this.myColour = null;
 		this.myName = null;
 		this.myFamily = null;
@@ -42,7 +44,7 @@ public class Player implements Serializable {
 		this.playerNumber = 1;
 	}
 
-	/** useful to find the value of the player if you only know his colour*/
+	/** useful to find the value of the player if you only know his colour */
 	public SetOfValues getMyValuesFromColour(PlayerColour playerColour) {
 		if (this.myColour.equals(playerColour))
 			return myValues;
@@ -55,11 +57,10 @@ public class Player implements Serializable {
 		this.myValues = value.addTwoSetsOfValues(this.myValues);
 	}
 
-	/** returns false if the increment is a negative number(not allowed) or if it
-	 *  is grater
-	 * than the number of servants of the player, hence it is not possible to
-	 * raise the die's
-	 * value of the required increment
+	/**
+	 * returns false if the increment is a negative number(not allowed) or if it is
+	 * grater than the number of servants of the player, hence it is not possible to
+	 * raise the die's value of the required increment
 	 */
 	public boolean isPossibleIncreaseDieValue(int increment) {
 		int myservants = this.getMyValues().getServants().getQuantity();
@@ -69,7 +70,38 @@ public class Player implements Serializable {
 			return false;
 	}
 
-	
+	/**
+	 * This method checks the activePermanentEffects list of the player.
+	 * 
+	 * @param nameEffect
+	 * @return first PermanentEffect with the name asked in the parameter, otherwise
+	 *         null.
+	 */
+	public PermanentEffect getPermanentEffect(String nameEffect) {
+		for (PermanentEffect pe : activePermanentEffects) {
+			if (pe.getName().equalsIgnoreCase(nameEffect)) {
+				return pe;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * This method checks the activePermanentEffects list of the player.
+	 * 
+	 * @param nameEffect
+	 * @return all PermanentEffect with the name asked in the parameter, otherwise
+	 *         null.
+	 */
+	public List<PermanentEffect> getPermanentEffectList(String nameEffect) {
+		List<PermanentEffect> peList = new ArrayList<>();
+		for (PermanentEffect pe : activePermanentEffects) {
+			if (pe.getName().equalsIgnoreCase(nameEffect)) {
+				peList.add(pe);
+			}
+		}
+		return peList;
+	}
 
 	// Prints name of a Player
 	@Override
@@ -129,9 +161,17 @@ public class Player implements Serializable {
 	public boolean getAutocompleted() {
 		return this.autoCompleted;
 	}
-	
+
 	public void setAutocompleted(boolean autoCompleted) {
-		this.autoCompleted=autoCompleted;
+		this.autoCompleted = autoCompleted;
+	}
+
+	public List<PermanentEffect> getActivePermanentEffects() {
+		return activePermanentEffects;
+	}
+
+	public void setActivePermanentEffects(List<PermanentEffect> activePermanentEffects) {
+		this.activePermanentEffects = activePermanentEffects;
 	}
 
 }

@@ -58,7 +58,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	@Override
 	public void run() {
-
 		waitAndAutocomplete();
 
 		// WAITING FOR AUTOCOMPLETING
@@ -414,7 +413,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 		System.out.println("Controller --> ricevuto una richiesta dal client");
 
-
 		Set<String> command = request.keySet();
 		System.out.println(command);
 
@@ -571,8 +569,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	/**
-	 * This method gives an excommunication card to the player that either
-	 * decides not to give his support to the Vatican or doesn't have the faith
+	 * This method gives an excommunication card to the player that either decides
+	 * not to give his support to the Vatican or doesn't have the faith
 	 * requirements.
 	 */
 	private void giveExcommunication(String answer) {
@@ -582,7 +580,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					currentPlayer.getMyValues().getFaithPoints().convertToValue(game.getCorrespondingValue())));
 			currentPlayer.getMyValues().getFaithPoints().setQuantity(0);
 		} else {
-			currentPlayer.getMyBoard().getPersonalExcommunication().add(game.getExcommunicationDeck().get(period));
+			currentPlayer.getActivePermanentEffects()
+					.add(game.getExcommunicationDeck().get(period).getPermanentEffect());
 			sendProblemsToCurrentPlayer("You have decided to not support the Vatican so you have been excommunicated");
 		}
 	}
@@ -629,7 +628,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		 * Sees if there's an interactive permanent effect WITH DOUBLE SALE before doing
 		 * an action, because this particular effect requires user interaction
 		 */
-		IncreaseDieValueCard pe = PermanentEffectWithAlternativeSale();
+		IncreaseDieValueCard pe = PermanentEffectWithAlternativeSale(
+				(IncreaseDieValueCard) currentPlayer.getPermanentEffect("increaseDieValueCard"));
 
 		if (pe != null && pe.getPersonalCards().getType().equals(tempZone)) {
 
@@ -676,15 +676,14 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		this.handleInteractiveEffects(interactiveEffects);
 		System.out.println("Controller --> Conclusa gestione dei costi interattivi ");
 
-
-		if ((cardsIndex == 1 || cardsIndex == 3 || cardsIndex == 5) && (currentPlayer.getMyFamily().isEmpty())) {
+		if ((cardsIndex == 1 || cardsIndex == 3) && (currentPlayer.getMyFamily().isEmpty())) {
 			if (verifyRequiremetsExcommunication()) {
 				askForSupportVatican();
 			} else {
 				sendProblemsToCurrentPlayer("You don't have enough faith points so you have been excommunicated.");
-				currentPlayer.getMyBoard().getPersonalExcommunication()
-						.add(game.getExcommunicationDeck().get(cardsIndex / 2));
-      }
+				currentPlayer.getActivePermanentEffects()
+						.add(game.getExcommunicationDeck().get(cardsIndex / 2).getPermanentEffect());
+			}
 		}
 		notifyToProceedWithTurns();
 		game.sendModel();
@@ -697,7 +696,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		System.out.println("Controller --> La verifica dell' attivazione della carta leader è andata a buon fine ");
 		Leader card = currentPlayer.getMyBoard().getPersonalLeader().get(index);
 
-		if (card.getImmediateEffectLeader()!=null){
+		if (card.getImmediateEffectLeader() != null) {
 
 			askAndWaitForParameters(card.getImmediateEffectLeader());
 			card.getImmediateEffectLeader().giveImmediateEffect(currentPlayer);
@@ -706,6 +705,9 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			card.getValueEffectLeader().giveImmediateEffect(currentPlayer);
 		}
 		card.setInUse(true);
+		if (card.getPermanentEffectLeader() != null) {
+			currentPlayer.getActivePermanentEffects().add(card.getPermanentEffectLeader());
+		}
 		if (card.isOneTimePerTurn() && !leaderOneTimePerTurn.contains(card)) {
 			leaderOneTimePerTurn.add(card);
 		}
@@ -911,16 +913,9 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	// "Choose sale: (1,2)\n" + "1." + increase.getSale() + "\n2." +
 	// increase.getAlternativeSale()
 
-	private IncreaseDieValueCard PermanentEffectWithAlternativeSale() {
-		Characters c;
-		for (Development d : currentPlayer.getMyBoard().getPersonalCharacters().getCards()) {
-			c = (Characters) d;
-			if (c.getPermanentEffects() != null && c.getPermanentEffects().getName().equals("increaseDieValueCard")) {
-				IncreaseDieValueCard pe = (IncreaseDieValueCard) c.getPermanentEffects();
-				if (pe.getAlternativeSale() != null) {
-					return pe;
-				}
-			}
+	private IncreaseDieValueCard PermanentEffectWithAlternativeSale(IncreaseDieValueCard pe) {
+		if (pe.getAlternativeSale() != null) {
+			return pe;
 		}
 		return null;
 	}
