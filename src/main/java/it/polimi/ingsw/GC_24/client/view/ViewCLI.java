@@ -1,13 +1,8 @@
 package it.polimi.ingsw.GC_24.client.view;
 
-import java.io.Serializable;
-
 import java.util.*;
 import java.util.concurrent.TimeUnit;
-
 import it.polimi.ingsw.GC_24.MyObservable;
-import it.polimi.ingsw.GC_24.MyObserver;
-
 import it.polimi.ingsw.GC_24.effects.*;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
@@ -122,7 +117,9 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 		System.out.println("Choose action:\n" + "a)Show board\n" + "b)Show personal board\n" + "c)Show family members\n"
 				+ "d)Show my resources\n" + "e)Place family member\n" + "f)Activate a leader card\n"
 				+ "g)Discard a leader card\n" + "h)End turn\n" + "i)Exit");
+
 		String command = scanner.nextLine();
+
 
 		if (command.equalsIgnoreCase("a")) {
 
@@ -238,10 +235,12 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 				commandZone = "market " + cf + " ";
 
 			} else if (commandZone.equalsIgnoreCase("f")) {
+				System.out.println("My buildings:\n"+myself.getMyBoard().getPersonalBuildings().getCards());
 				System.out.println(miniModel.getBoard().getProduction());
 				commandZone = "production 0 ";
 
 			} else if (commandZone.equalsIgnoreCase("g")) {
+				System.out.println("My territories:\n"+myself.getMyBoard().getPersonalTerritories().getCards());
 				System.out.println(miniModel.getBoard().getHarvest());
 				commandZone = "harvest 0 ";
 
@@ -264,30 +263,40 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 			commandZone = increaseDieValue(commandZone);
 
 		}
-		commandZone = increaseDieValue(commandZone);
 		return commandZone;
 	}
 
 	public String chooseLeader() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("\nChoose Leader Card (");
+
+
+		String string = "0";
+
+
 		for (int i = 1; i <= myself.getMyBoard().getPersonalLeader().size(); i++) {
 			if (i == myself.getMyBoard().getPersonalLeader().size()) {
 				builder.append(i);
+				string = string + i;
 				break;
 			}
 			builder.append(i + ",");
+
+			string = string + i;
+
 		}
 		builder.append(")  0 --> Cancel ");
 		System.out.println(builder.toString());
 		String choice = scanner.nextLine();
-		while (!(builder.toString().contains(choice))) {
-			System.out.println("Wrong choice, try again;");
+
+		while (!(string.contains(choice))) {
+			System.out.println("Wrong choice, try again");
+
 			choice = scanner.nextLine();
 		}
 		if (choice.equals("0")) {
 			choice = "cancel";
-		}
+		} 
 		return choice;
 	}
 
@@ -341,6 +350,7 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 
 	private void waitForActionDone() {
 		/* This block of code notifies the Server of the action */
+		actionDone = false;
 		synchronized (waitingForActionCompleted) {
 			System.out.println("----Waiting for your action to be completed----");
 			while (!actionDone) {
@@ -353,7 +363,7 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 					Thread.currentThread().interrupt();
 				}
 			}
-
+			System.out.println("--------Action Completed");
 		}
 	}
 
@@ -396,6 +406,7 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 			System.out.println();
 			String answer = "";
 			try {
+
 				answer = scanner.nextLine();
 			
 			} catch (Exception e) {
@@ -473,10 +484,8 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 			System.out.println("Choice number " + (i) + " of " + number);
 			String choice = "";
 			try {
-		//		String tempChoice = scanner.nextLine();
-				
-			
 				choice = scanner.nextLine();
+			
 
 			} catch (IndexOutOfBoundsException e) {
 				System.out.println(" AYAYAYAY");
@@ -486,7 +495,6 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 				System.out.println("Wrong choice, try again");
 
 				choice = scanner.nextLine();
-
 			}
 
 			answer = answer + " " + choice;
@@ -565,9 +573,16 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 
 	}
 
+	@Override
 	public void askForExcommunication() {
 		System.out.println("Do you want to support the Vatican?(Y/N)");
-		String answer = scanner.nextLine();
+
+		String answer=scanner.nextLine();
+
+		while (!answer.equalsIgnoreCase("y") && !answer.equalsIgnoreCase("n")) {
+			answer = scanner.nextLine();
+		}
+
 		sendAnswerToVatican(answer);
 	}
 

@@ -67,6 +67,14 @@ public class Family implements java.io.Serializable {
 	}
 
 	/**
+	 * @return true if all the family members in the family are available,
+	 *         false otherwise.
+	 */
+	public boolean isFull() {
+		return member1.isAvailable() && member2.isAvailable() && member3.isAvailable() && member4.isAvailable();
+	}
+	
+	/**
 	 * @return true if all the family members in the family are not available,
 	 *         false otherwise.
 	 */

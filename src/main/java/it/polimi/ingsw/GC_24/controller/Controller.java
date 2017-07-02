@@ -1,12 +1,10 @@
 package it.polimi.ingsw.GC_24.controller;
 
 import java.io.IOException;
-
 import java.util.*;
-
+import javax.swing.JOptionPane;
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.MyObserver;
-
 import it.polimi.ingsw.GC_24.cards.*;
 import it.polimi.ingsw.GC_24.effects.*;
 import it.polimi.ingsw.GC_24.model.Model;
@@ -35,6 +33,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	private boolean alreadyPlaying = false;
 	private boolean autocompleted;
 	private boolean parametersChosen = true;
+	private boolean vaticanChosen;
 
 	// locks
 	private Object tempCostWaiting = new Object();
@@ -42,6 +41,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	private Object waitingForAutocompleting = new Object();
 	private Object waitingForSalesChoice = new Object();
 	private Object waitingForParametersChoose = new Object();
+	private Object waitingForVaticanChoice = new Object();
 	private String tempCostString = new String();
 
 	// constructor
@@ -478,7 +478,10 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			System.out.println("Controller --> Ricevuta la scelta di supporto al vaticano ");
 			String answer = (String) request.get("answerForVatican");
 			giveExcommunication(answer);
-
+			synchronized (waitingForVaticanChoice) {
+				vaticanChosen = true;
+				waitingForVaticanChoice.notify();
+			}
 		}
 
 		else {
@@ -508,7 +511,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		if (actionLeader.equalsIgnoreCase("activate")) {
 			feedback = verifyAvailabilityLeader(index, feedback);
 			feedback = verifyRequirementsLeader(index, feedback);
-
 			if (!feedback.equals("Answer: \n")) {
 				incorrenctLeaderHandling(feedback);
 			} else {
@@ -519,7 +521,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			if (!feedback.equals("Answer: \n")) {
 				incorrenctLeaderHandling(feedback);
 			} else {
-				System.out.println("CREANDO IL COUNCILPRIVILEGE EFFECT LEADER");
 				CouncilPrivilege leaderDiscardCouncilPrivilege = new CouncilPrivilege("council", 1);
 				askAndWaitForParameters(leaderDiscardCouncilPrivilege);
 				leaderDiscardCouncilPrivilege.giveImmediateEffect(currentPlayer);
@@ -570,18 +571,19 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	/**
-	 * This method gives an excommunication card to the player that either decides
-	 * not to give his support to the Vatican or doesn't have the faith
+	 * This method gives an excommunication card to the player that either
+	 * decides not to give his support to the Vatican or doesn't have the faith
 	 * requirements.
 	 */
 	private void giveExcommunication(String answer) {
 		int period = cardsIndex / 2;
-		if (answer.equalsIgnoreCase("y") && verifyRequiremetsExcommunication()) {
-			currentPlayer.getMyValues().addTwoSetsOfValues(
-					currentPlayer.getMyValues().getFaithPoints().convertToValue(game.getCorrespondingValue()));
+		if (answer.equalsIgnoreCase("y")) {
+			currentPlayer.setMyValues(currentPlayer.getMyValues().addTwoSetsOfValues(
+					currentPlayer.getMyValues().getFaithPoints().convertToValue(game.getCorrespondingValue())));
 			currentPlayer.getMyValues().getFaithPoints().setQuantity(0);
 		} else {
 			currentPlayer.getMyBoard().getPersonalExcommunication().add(game.getExcommunicationDeck().get(period));
+			sendProblemsToCurrentPlayer("You have decided to not support the Vatican so you have been excommunicated");
 		}
 	}
 
@@ -614,7 +616,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	}
 
-	// #1
 	private void handleAction(Map<String, Object> request) {
 		System.out.println("Controller --> Sto gestendo un'azione");
 		StringTokenizer tokenizer = new StringTokenizer((String) request.get("action"));
@@ -674,8 +675,16 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		List<ImmediateEffect> interactiveEffects = action.run();
 		this.handleInteractiveEffects(interactiveEffects);
 		System.out.println("Controller --> Conclusa gestione dei costi interattivi ");
-		if ((cardsIndex == 1 || cardsIndex == 3 || cardsIndex == 5) && currentPlayer.getMyFamily().isEmpty()) {
-			askForSupportVatican();
+
+
+		if ((cardsIndex == 1 || cardsIndex == 3 || cardsIndex == 5) && (currentPlayer.getMyFamily().isEmpty())) {
+			if (verifyRequiremetsExcommunication()) {
+				askForSupportVatican();
+			} else {
+				sendProblemsToCurrentPlayer("You don't have enough faith points so you have been excommunicated.");
+				currentPlayer.getMyBoard().getPersonalExcommunication()
+						.add(game.getExcommunicationDeck().get(cardsIndex / 2));
+      }
 		}
 		notifyToProceedWithTurns();
 		game.sendModel();
@@ -687,7 +696,9 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	private void assignLeaderEffects(int index) {
 		System.out.println("Controller --> La verifica dell' attivazione della carta leader è andata a buon fine ");
 		Leader card = currentPlayer.getMyBoard().getPersonalLeader().get(index);
-		if (card.getImmediateEffectLeader() != null) {
+
+		if (card.getImmediateEffectLeader()!=null){
+
 			askAndWaitForParameters(card.getImmediateEffectLeader());
 			card.getImmediateEffectLeader().giveImmediateEffect(currentPlayer);
 		}
@@ -707,6 +718,19 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		hashMap = new HashMap<>();
 		hashMap.put("vatican", null);
 		notifyMyObservers(hashMap);
+
+		vaticanChosen = false;
+		synchronized (waitingForVaticanChoice) {
+			while (!vaticanChosen) {
+				try {
+					waitingForVaticanChoice.wait();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+
 	}
 
 	private void correctChooseNewCardExecute() {
@@ -887,7 +911,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	// "Choose sale: (1,2)\n" + "1." + increase.getSale() + "\n2." +
 	// increase.getAlternativeSale()
 
-	/***/
 	private IncreaseDieValueCard PermanentEffectWithAlternativeSale() {
 		Characters c;
 		for (Development d : currentPlayer.getMyBoard().getPersonalCharacters().getCards()) {

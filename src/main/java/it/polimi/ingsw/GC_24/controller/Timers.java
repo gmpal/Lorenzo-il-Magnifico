@@ -14,13 +14,10 @@ import java.util.List;
 public class Timers {
 	private int timeToStartGame;
 	private int timeToDisconnectPlayer;
-	private List<String> listFileName = new ArrayList<>();
-
+	
 	public Timers() {
-		this.timeToStartGame = 0;
-		this.timeToDisconnectPlayer = 0;
-		this.listFileName.add("src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/timerToStart.json");
-		this.listFileName.add("src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/timerToDisconnectPlayer.json");
+		this.timeToStartGame = takeTimer("src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/timerToStart.json");
+		this.timeToDisconnectPlayer = takeTimer("src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/timerToDisconnectPlayer.json");		
 	}
 
 	/**
@@ -45,15 +42,6 @@ public class Timers {
 			System.out.println("There is a problem with the configuration file");
 		}
 		return time;
-	}
-
-	/**
-	 * This method set time to start game and time to disconnect player both
-	 * using the method takeTimer().
-	 */
-	public void setTimes() {
-		timeToStartGame = takeTimer(listFileName.get(0));
-		timeToDisconnectPlayer = takeTimer(listFileName.get(1));
 	}
 
 	// getters and setters
