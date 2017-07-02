@@ -1,13 +1,8 @@
 package it.polimi.ingsw.GC_24.client.view;
 
-import java.io.Serializable;
-
 import java.util.*;
 import java.util.concurrent.TimeUnit;
-
 import it.polimi.ingsw.GC_24.MyObservable;
-import it.polimi.ingsw.GC_24.MyObserver;
-
 import it.polimi.ingsw.GC_24.effects.*;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
@@ -238,10 +233,12 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 				commandZone = "market " + cf + " ";
 
 			} else if (commandZone.equalsIgnoreCase("f")) {
+				System.out.println("My buildings:\n"+myself.getMyBoard().getPersonalBuildings().getCards());
 				System.out.println(miniModel.getBoard().getProduction());
 				commandZone = "production 0 ";
 
 			} else if (commandZone.equalsIgnoreCase("g")) {
+				System.out.println("My territories:\n"+myself.getMyBoard().getPersonalTerritories().getCards());
 				System.out.println(miniModel.getBoard().getHarvest());
 				commandZone = "harvest 0 ";
 
@@ -270,23 +267,29 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 	public String chooseLeader() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("\nChoose Leader Card (");
+
+		String string = "0";
+
 		for (int i = 1; i <= myself.getMyBoard().getPersonalLeader().size(); i++) {
 			if (i == myself.getMyBoard().getPersonalLeader().size()) {
 				builder.append(i);
+				string = string + i;
 				break;
 			}
 			builder.append(i + ",");
+			string = string + i;
+
 		}
 		builder.append(")  0 --> Cancel ");
 		System.out.println(builder.toString());
-		String choice = scanner.next();
-		while (!(builder.toString().contains(choice))) {
-			System.out.println("Wrong choice, try again;");
-			choice = scanner.next();
+		String choice = scanner.nextLine();
+		while (!(string.contains(choice))) {
+			System.out.println("Wrong choice, try again");
+			choice = scanner.nextLine();
 		}
 		if (choice.equals("0")) {
 			choice = "cancel";
-		}
+		} 
 		return choice;
 	}
 
@@ -340,6 +343,7 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 
 	private void waitForActionDone() {
 		/* This block of code notifies the Server of the action */
+		actionDone = false;
 		synchronized (waitingForActionCompleted) {
 			System.out.println("----Waiting for your action to be completed----");
 			while (!actionDone) {
@@ -352,7 +356,7 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 					Thread.currentThread().interrupt();
 				}
 			}
-
+			System.out.println("--------Action Completed");
 		}
 	}
 
@@ -378,7 +382,7 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 
 		while (!(choice.equals("1") || choice.equals("2"))) {
 			System.out.println("Wrong choice, try again");
-			choice = scanner.next();
+			choice = scanner.nextLine();
 
 		}
 
@@ -395,7 +399,7 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 			int answer = 0;
 			try {
 				answer = scanner.nextInt();
-				scanner.next();
+				scanner.nextLine();
 			} catch (Exception e) {
 				finalIncrease = null;
 				answer = 0;
@@ -432,7 +436,7 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 			while (!(zone.equalsIgnoreCase("territories") || zone.equalsIgnoreCase("Buildings")
 					|| zone.equalsIgnoreCase("Ventures") || zone.equalsIgnoreCase("Characters"))) {
 				System.out.println("Wrong choice, try again");
-				zone = scanner.next();
+				zone = scanner.nextLine();
 			}
 
 		} else {
@@ -448,7 +452,7 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 		while (!(floor.equals("1") || floor.equals("2") || floor.equals("3") || floor.equals("4")
 				|| floor.equals("null"))) {
 			System.out.println("Wrong choice, try again");
-			floor = scanner.next();
+			floor = scanner.nextLine();
 
 		}
 
@@ -473,6 +477,7 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 			try {
 
 				choice = scanner.nextLine();
+			
 
 			} catch (IndexOutOfBoundsException e) {
 				System.out.println(" AYAYAYAY");
@@ -482,7 +487,6 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 				System.out.println("Wrong choice, try again");
 
 				choice = scanner.nextLine();
-
 			}
 
 			answer = answer + " " + choice;
@@ -496,11 +500,11 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 
 		System.out.println(request);
 
-		String choice = scanner.next();
+		String choice = scanner.nextLine();
 
 		while (!(choice.equals("1") || choice.equals("2"))) {
 			System.out.println("Wrong choice, try again");
-			choice = scanner.next();
+			choice = scanner.nextLine();
 
 		}
 		return choice;
@@ -565,9 +569,11 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 	@Override
 	public void askForExcommunication() {
 		System.out.println("Do you want to support the Vatican?(Y/N)");
-		String answer = scanner.next();
+
+		String answer=scanner.nextLine();
+
 		while (!answer.equalsIgnoreCase("y") && !answer.equalsIgnoreCase("n")) {
-			answer = scanner.next();
+			answer = scanner.nextLine();
 		}
 		sendAnswerToVatican(answer);
 	}

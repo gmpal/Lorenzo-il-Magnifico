@@ -1,14 +1,10 @@
 package it.polimi.ingsw.GC_24.controller;
 
 import java.io.IOException;
-
 import java.util.*;
-
 import javax.swing.JOptionPane;
-
 import it.polimi.ingsw.GC_24.MyObservable;
 import it.polimi.ingsw.GC_24.MyObserver;
-
 import it.polimi.ingsw.GC_24.cards.*;
 import it.polimi.ingsw.GC_24.effects.*;
 import it.polimi.ingsw.GC_24.model.Model;
@@ -27,7 +23,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	private int controllerNumber = 0;
 	private List<Player> councilTurnArray;
 	private List<Player> playerTurn;
-	private List<Leader> leaderOneTimePerTurn;
+	private List<Leader> leaderOneTimePerTurn = new ArrayList<>();
 	private Player currentPlayer;
 	private int cardsIndex = 0;
 	private SetOfValues saleForPermanentEffect = new SetOfValues();
@@ -517,7 +513,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		if (actionLeader.equalsIgnoreCase("activate")) {
 			feedback = verifyAvailabilityLeader(index, feedback);
 			feedback = verifyRequirementsLeader(index, feedback);
-
 			if (!feedback.equals("Answer: \n")) {
 				incorrenctLeaderHandling(feedback);
 			} else {
@@ -528,9 +523,11 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			if (!feedback.equals("Answer: \n")) {
 				incorrenctLeaderHandling(feedback);
 			} else {
-				CouncilPrivilege privilege = new CouncilPrivilege("council", 1);
-				// TODO attivare il privilegio e rimuovere la carta
-				// dall'arraylist
+				CouncilPrivilege leaderDiscardCouncilPrivilege = new CouncilPrivilege("council", 1);
+				askAndWaitForParameters(leaderDiscardCouncilPrivilege);
+				leaderDiscardCouncilPrivilege.giveImmediateEffect(currentPlayer);
+				game.sendModel();
+				awakenSleepingClient();
 			}
 		}
 
@@ -545,9 +542,11 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	private String verifyRequirementsLeader(int index, String feedback) {
 		Requirements requirements = currentPlayer.getMyBoard().getPersonalLeader().get(index).getRequirements();
-		for (Leader card : leaderOneTimePerTurn) {
-			if (currentPlayer.getMyBoard().getPersonalLeader().get(index).getName().equals(card.getName())) {
-				return feedback;
+		if (!leaderOneTimePerTurn.isEmpty()) {
+			for (Leader card : leaderOneTimePerTurn) {
+				if (currentPlayer.getMyBoard().getPersonalLeader().get(index).getName().equals(card.getName())) {
+					return feedback;
+				}
 			}
 		}
 		if (!requirements.getRequirementSetOfVaue().isEmpty()
@@ -620,7 +619,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	}
 
-	// #1
 	private void handleAction(Map<String, Object> request) {
 		System.out.println("Controller --> Sto gestendo un'azione");
 		StringTokenizer tokenizer = new StringTokenizer((String) request.get("action"));
@@ -701,7 +699,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	private void assignLeaderEffects(int index) {
 		System.out.println("Controller --> La verifica dell' attivazione della carta leader è andata a buon fine ");
 		Leader card = currentPlayer.getMyBoard().getPersonalLeader().get(index);
-		if (card.getImmediateEffectLeader() != null) {
+		if (card.getImmediateEffectLeader()!=null){
+			askAndWaitForParameters(card.getImmediateEffectLeader());
 			card.getImmediateEffectLeader().giveImmediateEffect(currentPlayer);
 		}
 		if (card.getValueEffectLeader() != null) {
@@ -910,7 +909,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	// "Choose sale: (1,2)\n" + "1." + increase.getSale() + "\n2." +
 	// increase.getAlternativeSale()
 
-	/***/
 	private IncreaseDieValueCard PermanentEffectWithAlternativeSale() {
 		Characters c;
 		for (Development d : currentPlayer.getMyBoard().getPersonalCharacters().getCards()) {
