@@ -1,10 +1,15 @@
 package it.polimi.ingsw.GC_24.model;
 
-import it.polimi.ingsw.GC_24.dice.Die;
-import it.polimi.ingsw.GC_24.dice.DieColour;
+import it.polimi.ingsw.GC_24.model.dice.Die;
+import it.polimi.ingsw.GC_24.model.dice.DieColour;
 
-public class FamilyMember {
-
+public class FamilyMember implements java.io.Serializable {
+	
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2479077189933957526L;
 	private int memberValue;
 	private boolean available;
 	private DieColour memberColour;
@@ -13,7 +18,7 @@ public class FamilyMember {
 	
 	//constructors
 
-	//creates a family member with a value
+	/**creates a family member with a value*/
 	public FamilyMember(PlayerColour playerColour, Die die) {
 		this.memberValue = die.getValue();
 		this.available = true;
@@ -22,7 +27,7 @@ public class FamilyMember {
 		this.playerColour = playerColour;
 	}
 	
-	//creates a neutral family member
+	/**creates a neutral family member*/
 	public FamilyMember(PlayerColour playerColour) {
 		this.memberValue = 0;
 		this.available = true;
@@ -32,20 +37,24 @@ public class FamilyMember {
 	}
 	
 	
-	//sets a family member value and colour from a SetOfDice
+	/**sets a family member value and colour from a SetOfDice*/
 	public void setMember(Die die) {
 		this.setMemberColour(die.getColour());
 		this.setMemberValue(die.getValue());
+		this.setNeutral(false);
 	}
 	
-	//Prints a family member
 	@Override
 	public String toString() {
-		return "Value=" + memberValue + 
-				"\tColour=" + memberColour+
-				 "\t Status= "+isAvailableString();
+		StringBuilder builder = new StringBuilder();
+		builder.append( "Status = "+isAvailableString()+ ", Value = " + memberValue );
+		if (memberColour!=null){
+			builder.append(", Colour = " + memberColour);
+		}else {
+			builder.append(", Colour = NEUTRAL");
+		}
+		return builder.toString();
 	}
-
 	
 	public String isAvailableString(){
 		if(this.isAvailable()){return "available";}

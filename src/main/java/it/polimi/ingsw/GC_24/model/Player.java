@@ -1,61 +1,83 @@
 package it.polimi.ingsw.GC_24.model;
 
-import it.polimi.ingsw.GC_24.personalboard.PersonalBoard;
-import it.polimi.ingsw.GC_24.places.Place;
-import it.polimi.ingsw.GC_24.values.*;
+import java.io.Serializable;
 
+import it.polimi.ingsw.GC_24.model.personalboard.PersonalBoard;
+import it.polimi.ingsw.GC_24.model.places.Place;
+import it.polimi.ingsw.GC_24.model.values.*;
 
-public class Player {
+public class Player implements Serializable {
 	
+
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2255445460112622580L;
 	private String myName;
 	private Family myFamily;
-	private PersonalBoard myBoard; 
+	private PersonalBoard myBoard;
 	private SetOfValues myValues;
 	private PlayerColour myColour;
-	
-	//Constructor number1 --> NEED to create a setOfValues
-	public Player(String myName, PlayerColour myColour) {
-		this.myColour = myColour;
-		this.myName = myName;
-		this.myFamily =  new Family(myColour);
-		this.myBoard = new PersonalBoard();
+	private int playerNumber;
+	public boolean autoCompleted = false;
+
+	// Constructor
+	public Player(int playerNumber){
+		this.myColour = null;
+		this.myName = null;
+		this.myFamily = null;
+		this.myBoard = new PersonalBoard(playerNumber);
 		this.myValues = new SetOfValues();
+		this.playerNumber = playerNumber;
 	}
-	
-	//useful methods
-	
-	//useful to find the value of the player if you only know his colour
+
+	// constructor for tests
+	public Player(String name, PlayerColour colour) {
+		this.myColour = colour;
+		this.myName = name;
+		this.myFamily = new Family(colour);
+		this.myBoard = new PersonalBoard(1);
+		this.myValues = new SetOfValues();
+		this.playerNumber = 1;
+	}
+
+	/** useful to find the value of the player if you only know his colour*/
 	public SetOfValues getMyValuesFromColour(PlayerColour playerColour) {
-		if(this.myColour.equals(playerColour))
+		if (this.myColour.equals(playerColour))
 			return myValues;
 		else
 			return null;
 	}
-	
-	public void takeValuesFromPlace(Place place){
-		Value value = place.getValue();
-		this.myValues = value.addValueToSet(this.myValues);
+
+	public void takeValuesFromPlace(Place place) {
+		SetOfValues value = place.getValue().getEffectValues();
+		this.myValues = value.addTwoSetsOfValues(this.myValues);
 	}
-	
-	//returns false if the increment is a negative number(not allowed) or if it is grater 
-	//than the number of servants of the player, hence it is not possible to raise the die's
-	//value of the required increment
-	public boolean isPossibleIncreaseDieValue(int increment){
+
+	/** returns false if the increment is a negative number(not allowed) or if it
+	 *  is grater
+	 * than the number of servants of the player, hence it is not possible to
+	 * raise the die's
+	 * value of the required increment
+	 */
+	public boolean isPossibleIncreaseDieValue(int increment) {
 		int myservants = this.getMyValues().getServants().getQuantity();
 		if (increment >= 0)
 			return myservants >= increment;
 		else
 			return false;
 	}
+
 	
-	//Prints name and number of a Player
+
+	// Prints name of a Player
 	@Override
 	public String toString() {
-		return myName;
-
+		return "Player [myName=" + myName + ", myColour=" + myColour + "]";
 	}
-		
-	//getters and setters
+
+	// getters and setters
 	public String getMyName() {
 		return myName;
 	}
@@ -95,7 +117,21 @@ public class Player {
 	public void setMyValues(SetOfValues myValues) {
 		this.myValues = myValues;
 	}
+
+	public int getPlayerNumber() {
+		return playerNumber;
+	}
+
+	public void setPlayerNumber(int playerNumber) {
+		this.playerNumber = playerNumber;
+	}
+
+	public boolean getAutocompleted() {
+		return this.autoCompleted;
+	}
 	
+	public void setAutocompleted(boolean autoCompleted) {
+		this.autoCompleted=autoCompleted;
+	}
+
 }
-
-

@@ -5,8 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.PlayerColour;
-import it.polimi.ingsw.GC_24.values.Servant;
-import it.polimi.ingsw.GC_24.values.SetOfValues;
+import it.polimi.ingsw.GC_24.model.values.Servant;
+import it.polimi.ingsw.GC_24.model.values.SetOfValues;
 
 public class TestServant {
 
@@ -58,4 +58,17 @@ public class TestServant {
 		assertEquals(player.getMyValues().getServants(), servant.findValueInPlayer(player));
 	}
 	
+	@Test
+	public void testAmIPresentInThisSetFalse() throws Exception {
+		servant.setQuantity(5);
+		values.getServants().setQuantity(3);
+		assertFalse(servant.amIPresentInThisSet(values));
+	}
+	
+	@Test
+	public void testAmIPresentInThisSetTrue() throws Exception {
+		servant.setQuantity(5);
+		values.getServants().setQuantity(9);
+		assertTrue(servant.amIPresentInThisSet(values));
+	}
 }

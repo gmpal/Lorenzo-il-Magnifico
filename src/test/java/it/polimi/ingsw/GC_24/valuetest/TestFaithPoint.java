@@ -5,8 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.PlayerColour;
-import it.polimi.ingsw.GC_24.values.FaithPoint;
-import it.polimi.ingsw.GC_24.values.SetOfValues;
+import it.polimi.ingsw.GC_24.model.values.FaithPoint;
+import it.polimi.ingsw.GC_24.model.values.SetOfValues;
 
 
 public class TestFaithPoint {
@@ -58,4 +58,17 @@ public class TestFaithPoint {
 		assertEquals(player.getMyValues().getFaithPoints(), faithPoint.findValueInPlayer(player));
 	}
 	
+	@Test
+	public void testAmIPresentInThisSetFalse() throws Exception {
+		faithPoint.setQuantity(5);
+		values.getFaithPoints().setQuantity(3);
+		assertFalse(faithPoint.amIPresentInThisSet(values));
+	}
+	
+	@Test
+	public void testAmIPresentInThisSetTrue() throws Exception {
+		faithPoint.setQuantity(5);
+		values.getFaithPoints().setQuantity(9);
+		assertTrue(faithPoint.amIPresentInThisSet(values));
+	}
 }

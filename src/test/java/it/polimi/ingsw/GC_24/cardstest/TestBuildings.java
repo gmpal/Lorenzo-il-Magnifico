@@ -3,10 +3,11 @@ package it.polimi.ingsw.GC_24.cardstest;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-import it.polimi.ingsw.GC_24.cards.Buildings;
+
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.PlayerColour;
-import it.polimi.ingsw.GC_24.personalboard.PersonalBuildings;
+import it.polimi.ingsw.GC_24.model.cards.Buildings;
+import it.polimi.ingsw.GC_24.model.personalboard.PersonalBuildings;
 
 public class TestBuildings {
 
@@ -18,9 +19,9 @@ public class TestBuildings {
 	@Before
 	public void setUp() throws Exception {
 		player = new Player("Giorgia", PlayerColour.RED);
-		building = new Buildings("Building", 0, "Building", null, null, null, 1, null);
+		building = new Buildings("Building", 0, "Building", null, null, null, null, null, 1);
 		buildings = new PersonalBuildings();
-		building2 = new Buildings("Building2", 0, "Building", null, null, null, 3, null);
+		building2 = new Buildings("Building2", 0, "Building", null, null, null, null, null, 3);
 	}
 	
 	@Test

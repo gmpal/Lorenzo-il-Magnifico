@@ -3,10 +3,11 @@ package it.polimi.ingsw.GC_24.cardstest;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-import it.polimi.ingsw.GC_24.cards.Territories;
+
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.PlayerColour;
-import it.polimi.ingsw.GC_24.personalboard.PersonalTerritories;
+import it.polimi.ingsw.GC_24.model.cards.Territories;
+import it.polimi.ingsw.GC_24.model.personalboard.PersonalTerritories;
 
 public class TestTerritories {
 
@@ -18,9 +19,9 @@ public class TestTerritories {
 	@Before
 	public void setUp() throws Exception {
 		player = new Player("Giorgia", PlayerColour.RED);
-		territory = new Territories("Territory", 0, "Territory", null, null, null, 2, null);
+		territory = new Territories("Territory", 0, "Territory", null, null, null, null, 2);
 		territories = new PersonalTerritories();
-		territory2 = new Territories("Territory2", 0, "Territory", null, null, null, 1, null);
+		territory2 = new Territories("Territory2", 0, "Territory", null, null, null, null, 1);
 	}
 	
 	@Test

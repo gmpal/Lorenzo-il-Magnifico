@@ -5,8 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.PlayerColour;
-import it.polimi.ingsw.GC_24.values.SetOfValues;
-import it.polimi.ingsw.GC_24.values.VictoryPoint;
+import it.polimi.ingsw.GC_24.model.values.SetOfValues;
+import it.polimi.ingsw.GC_24.model.values.VictoryPoint;
 
 public class TestVictoryPoint {
 	
@@ -55,6 +55,20 @@ public class TestVictoryPoint {
 		victoryPoint.setQuantity(5);
 		player.getMyValues().getVictoryPoints().setQuantity(10);
 		assertEquals(player.getMyValues().getVictoryPoints(), victoryPoint.findValueInPlayer(player));
+	}
+	
+	@Test
+	public void testAmIPresentInThisSetFalse() throws Exception {
+		victoryPoint.setQuantity(5);
+		values.getVictoryPoints().setQuantity(3);
+		assertFalse(victoryPoint.amIPresentInThisSet(values));
+	}
+	
+	@Test
+	public void testAmIPresentInThisSetTrue() throws Exception {
+		victoryPoint.setQuantity(5);
+		values.getVictoryPoints().setQuantity(9);
+		assertTrue(victoryPoint.amIPresentInThisSet(values));
 	}
 	
 }

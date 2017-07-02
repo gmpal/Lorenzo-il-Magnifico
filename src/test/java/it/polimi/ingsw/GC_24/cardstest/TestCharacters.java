@@ -3,10 +3,11 @@ package it.polimi.ingsw.GC_24.cardstest;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-import it.polimi.ingsw.GC_24.cards.Characters;
+
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.PlayerColour;
-import it.polimi.ingsw.GC_24.personalboard.PersonalCharacters;
+import it.polimi.ingsw.GC_24.model.cards.Characters;
+import it.polimi.ingsw.GC_24.model.personalboard.PersonalCharacters;
 
 public class TestCharacters {
 
@@ -18,9 +19,9 @@ public class TestCharacters {
 	@Before
 	public void setUp() throws Exception {
 		player = new Player("Giorgia", PlayerColour.RED);
-		character = new Characters("Character", "Character", null, null, null, 1, null);
+		character = new Characters("Character", "Character", null, null, null, null, 1);
 		characters = new PersonalCharacters();
-		characters2 = new Characters("Character2", "Character", null, null, null, 2, null);
+		characters2 = new Characters("Character2", "Character", null, null, null, null, 2);
 	}
 	
 	@Test

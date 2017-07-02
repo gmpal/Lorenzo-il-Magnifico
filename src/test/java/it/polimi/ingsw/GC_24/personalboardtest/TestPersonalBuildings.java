@@ -3,10 +3,11 @@ package it.polimi.ingsw.GC_24.personalboardtest;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-import it.polimi.ingsw.GC_24.cards.Buildings;
+
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.PlayerColour;
-import it.polimi.ingsw.GC_24.personalboard.PersonalBuildings;
+import it.polimi.ingsw.GC_24.model.cards.Buildings;
+import it.polimi.ingsw.GC_24.model.personalboard.PersonalBuildings;
 
 public class TestPersonalBuildings {
 	
@@ -19,14 +20,14 @@ public class TestPersonalBuildings {
 	@Before
 	public void setUp() throws Exception {
 		player = new Player("Giorgia", PlayerColour.RED);
-		building1 = new Buildings("Building1", 0, "Building", null, null, null, 1, null);
-		building2 = new Buildings("Building2", 0, "Building", null, null, null, 3, null);
+		building1 = new Buildings("Building1", 0, "Building", null, null, null, null, null, 1);
+		building2 = new Buildings("Building2", 0, "Building", null, null, null, null, null, 3);
 		buildings = new PersonalBuildings();
 		buildingsexpected = new PersonalBuildings();
 	}
 
 	@Test
-	public void testFindCardsInPersonalBoard() {
+	public void testFindCardsInPersonalBoard() throws Exception {
 		building1.setCardOnPersonalBoard(player.getMyBoard());
 		building2.setCardOnPersonalBoard(player.getMyBoard());
 		buildingsexpected.getCards().add(building1);
@@ -35,7 +36,7 @@ public class TestPersonalBuildings {
 	}
 	
 	@Test
-	public void testFindCardsInPersonalBoardFalse1() {
+	public void testFindCardsInPersonalBoardFalse1() throws Exception {
 		building1.setCardOnPersonalBoard(player.getMyBoard());
 		building2.setCardOnPersonalBoard(player.getMyBoard());
 		buildingsexpected.getCards().add(building1);
@@ -43,7 +44,7 @@ public class TestPersonalBuildings {
 	}
 	
 	@Test
-	public void testFindCardsInPersonalBoardFalse2() {
+	public void testFindCardsInPersonalBoardFalse2() throws Exception {
 		building1.setCardOnPersonalBoard(player.getMyBoard());
 		buildingsexpected.getCards().add(building1);
 		buildingsexpected.getCards().add(building2);

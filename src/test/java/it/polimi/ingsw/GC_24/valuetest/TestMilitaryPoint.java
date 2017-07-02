@@ -5,8 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.PlayerColour;
-import it.polimi.ingsw.GC_24.values.MilitaryPoint;
-import it.polimi.ingsw.GC_24.values.SetOfValues;
+import it.polimi.ingsw.GC_24.model.values.MilitaryPoint;
+import it.polimi.ingsw.GC_24.model.values.SetOfValues;
 
 
 public class TestMilitaryPoint {
@@ -57,5 +57,20 @@ public class TestMilitaryPoint {
 		player.getMyValues().getMilitaryPoints().setQuantity(10);
 		assertEquals(player.getMyValues().getMilitaryPoints(), militaryPoint.findValueInPlayer(player));
 	}
+	
+	@Test
+	public void testAmIPresentInThisSetFalse() throws Exception {
+		militaryPoint.setQuantity(5);
+		values.getMilitaryPoints().setQuantity(3);
+		assertFalse(militaryPoint.amIPresentInThisSet(values));
+	}
+	
+	@Test
+	public void testAmIPresentInThisSetTrue() throws Exception {
+		militaryPoint.setQuantity(5);
+		values.getMilitaryPoints().setQuantity(9);
+		assertTrue(militaryPoint.amIPresentInThisSet(values));
+	}
+	
 	
 }

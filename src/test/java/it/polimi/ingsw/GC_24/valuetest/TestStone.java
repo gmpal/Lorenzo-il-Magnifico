@@ -6,8 +6,8 @@ import org.junit.Test;
 
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.PlayerColour;
-import it.polimi.ingsw.GC_24.values.SetOfValues;
-import it.polimi.ingsw.GC_24.values.Stone;
+import it.polimi.ingsw.GC_24.model.values.SetOfValues;
+import it.polimi.ingsw.GC_24.model.values.Stone;
 
 
 public class TestStone {
@@ -59,4 +59,17 @@ public class TestStone {
 		assertEquals(player.getMyValues().getStones(), stone.findValueInPlayer(player));
 	}
 	
+	@Test
+	public void testAmIPresentInThisSetFalse() throws Exception {
+		stone.setQuantity(5);
+		values.getStones().setQuantity(3);
+		assertFalse(stone.amIPresentInThisSet(values));
+	}
+	
+	@Test
+	public void testAmIPresentInThisSetTrue() throws Exception {
+		stone.setQuantity(5);
+		values.getStones().setQuantity(9);
+		assertTrue(stone.amIPresentInThisSet(values));
+	}
 }

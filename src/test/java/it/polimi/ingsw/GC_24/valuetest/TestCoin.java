@@ -5,8 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.PlayerColour;
-import it.polimi.ingsw.GC_24.values.Coin;
-import it.polimi.ingsw.GC_24.values.SetOfValues;
+import it.polimi.ingsw.GC_24.model.values.Coin;
+import it.polimi.ingsw.GC_24.model.values.SetOfValues;
 
 public class TestCoin {
 	
@@ -55,6 +55,20 @@ public class TestCoin {
 		coin.setQuantity(5);
 		player.getMyValues().getCoins().setQuantity(10);
 		assertEquals(player.getMyValues().getCoins(), coin.findValueInPlayer(player));
+	}
+	
+	@Test
+	public void testAmIPresentInThisSetFalse() throws Exception {
+		coin.setQuantity(5);
+		values.getCoins().setQuantity(3);
+		assertFalse(coin.amIPresentInThisSet(values));
+	}
+	
+	@Test
+	public void testAmIPresentInThisSetTrue() throws Exception {
+		coin.setQuantity(5);
+		values.getCoins().setQuantity(9);
+		assertTrue(coin.amIPresentInThisSet(values));
 	}
 	
 }

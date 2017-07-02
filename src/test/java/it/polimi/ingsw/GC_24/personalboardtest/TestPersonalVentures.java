@@ -3,50 +3,62 @@ package it.polimi.ingsw.GC_24.personalboardtest;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-import it.polimi.ingsw.GC_24.cards.Ventures;
+
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.PlayerColour;
-import it.polimi.ingsw.GC_24.personalboard.PersonalVentures;
+import it.polimi.ingsw.GC_24.model.cards.Ventures;
+import it.polimi.ingsw.GC_24.model.personalboard.PersonalVentures;
+import it.polimi.ingsw.GC_24.model.values.VictoryPoint;
 
 public class TestPersonalVentures {
 	
-	Ventures building1;
-	Ventures building2;
-	PersonalVentures buildings;
-	PersonalVentures buildingsexpected;	
+	Ventures venture1;
+	Ventures venture2;
+	PersonalVentures ventures;
+	PersonalVentures venturesexpected;	
 	Player player;
+	VictoryPoint victoryPoints;
 
 	@Before
 	public void setUp() throws Exception {
 		player = new Player("Giorgia", PlayerColour.RED);
-		building1 = new Ventures("Venture1", "Venture", null, null, null, null, 1, null);
-		building2 = new Ventures("Venture2", "Venture", null, null, null, null, 1, null);
-		buildings = new PersonalVentures();
-		buildingsexpected = new PersonalVentures();
+		venture1 = new Ventures("Venture", "Venture", null, null, new VictoryPoint(5), null, null, null, 3);
+		venture2 = new Ventures("Venture2", "Venture", null, null, new VictoryPoint(3), null, null, null, 3);
+		ventures = new PersonalVentures();
+		venturesexpected = new PersonalVentures();
+		victoryPoints = new VictoryPoint(0);
 	}
 
 	@Test
-	public void testFindCardsInPersonalBoard() {
-		building1.setCardOnPersonalBoard(player.getMyBoard());
-		building2.setCardOnPersonalBoard(player.getMyBoard());
-		buildingsexpected.getCards().add(building1);
-		buildingsexpected.getCards().add(building2);
-		assertEquals(buildingsexpected.getCards(), buildings.findCardsInPersonalBoard(player.getMyBoard()).getCards());
+	public void testFindCardsInPersonalBoard() throws Exception {
+		venture1.setCardOnPersonalBoard(player.getMyBoard());
+		venture2.setCardOnPersonalBoard(player.getMyBoard());
+		venturesexpected.getCards().add(venture1);
+		venturesexpected.getCards().add(venture2);
+		assertEquals(venturesexpected.getCards(), ventures.findCardsInPersonalBoard(player.getMyBoard()).getCards());
 	}
 	
 	@Test
-	public void testFindCardsInPersonalBoardFalse1() {
-		building1.setCardOnPersonalBoard(player.getMyBoard());
-		building2.setCardOnPersonalBoard(player.getMyBoard());
-		buildingsexpected.getCards().add(building1);
-		assertFalse(buildingsexpected.getCards().equals(buildings.findCardsInPersonalBoard(player.getMyBoard()).getCards()));
+	public void testFindCardsInPersonalBoardFalse1() throws Exception {
+		venture1.setCardOnPersonalBoard(player.getMyBoard());
+		venture2.setCardOnPersonalBoard(player.getMyBoard());
+		venturesexpected.getCards().add(venture1);
+		assertFalse(venturesexpected.getCards().equals(ventures.findCardsInPersonalBoard(player.getMyBoard()).getCards()));
 	}
 	
 	@Test
-	public void testFindCardsInPersonalBoardFalse2() {
-		building1.setCardOnPersonalBoard(player.getMyBoard());
-		buildingsexpected.getCards().add(building1);
-		buildingsexpected.getCards().add(building2);
-		assertFalse(buildingsexpected.getCards().equals(buildings.findCardsInPersonalBoard(player.getMyBoard()).getCards()));
+	public void testFindCardsInPersonalBoardFalse2() throws Exception {
+		venture1.setCardOnPersonalBoard(player.getMyBoard());
+		venturesexpected.getCards().add(venture1);
+		venturesexpected.getCards().add(venture2);
+		assertFalse(venturesexpected.getCards().equals(ventures.findCardsInPersonalBoard(player.getMyBoard()).getCards()));
+	}
+	
+	@Test
+	public void testConvertCardToVictoryPoints() throws Exception {
+		venture1.setCardOnPersonalBoard(player.getMyBoard());
+		venture2.setCardOnPersonalBoard(player.getMyBoard());
+		victoryPoints.setQuantity(8);
+		assertEquals(victoryPoints, player.getMyBoard().getPersonalVentures().convertCardToVictoryPoints());
 	}
 }

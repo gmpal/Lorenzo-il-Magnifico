@@ -5,8 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.PlayerColour;
-import it.polimi.ingsw.GC_24.values.SetOfValues;
-import it.polimi.ingsw.GC_24.values.Wood;
+import it.polimi.ingsw.GC_24.model.values.SetOfValues;
+import it.polimi.ingsw.GC_24.model.values.Wood;
 
 public class TestWood {
 
@@ -55,6 +55,20 @@ public class TestWood {
 		wood.setQuantity(5);
 		player.getMyValues().getWoods().setQuantity(10);
 		assertEquals(player.getMyValues().getWoods(), wood.findValueInPlayer(player));
+	}
+	
+	@Test
+	public void testAmIPresentInThisSetFalse() throws Exception {
+		wood.setQuantity(5);
+		values.getWoods().setQuantity(3);
+		assertFalse(wood.amIPresentInThisSet(values));
+	}
+	
+	@Test
+	public void testAmIPresentInThisSetTrue() throws Exception {
+		wood.setQuantity(5);
+		values.getWoods().setQuantity(9);
+		assertTrue(wood.amIPresentInThisSet(values));
 	}
 	
 }
