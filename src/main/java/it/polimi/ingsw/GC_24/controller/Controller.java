@@ -525,6 +525,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			} else {
 				CouncilPrivilege leaderDiscardCouncilPrivilege = new CouncilPrivilege("council", 1);
 				askAndWaitForParameters(leaderDiscardCouncilPrivilege);
+				leaderDiscardCouncilPrivilege.giveImmediateEffect(currentPlayer);
 				game.sendModel();
 				awakenSleepingClient();
 			}
@@ -691,6 +692,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		Leader card = currentPlayer.getMyBoard().getPersonalLeader().get(index);
 		if (card.getImmediateEffectLeader()!=null){
 			askAndWaitForParameters(card.getImmediateEffectLeader());
+			card.getImmediateEffectLeader().giveImmediateEffect(currentPlayer);
 		}
 		if (card.getValueEffectLeader()!=null){
 			card.getValueEffectLeader().giveImmediateEffect(currentPlayer);
