@@ -87,6 +87,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			game.getBoard().clear();
 
 			game.getCards().dealCards(game.getBoard(), cardsIndex / 2 + 1);
+			
+			game.updateModel();
 
 			game.sendModel();
 
@@ -571,8 +573,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	/**
-	 * This method gives an excommunication card to the player that either
-	 * decides not to give his support to the Vatican or doesn't have the faith
+	 * This method gives an excommunication card to the player that either decides
+	 * not to give his support to the Vatican or doesn't have the faith
 	 * requirements.
 	 */
 	private void giveExcommunication(String answer) {
@@ -582,7 +584,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					currentPlayer.getMyValues().getFaithPoints().convertToValue(game.getCorrespondingValue())));
 			currentPlayer.getMyValues().getFaithPoints().setQuantity(0);
 		} else {
-			currentPlayer.getMyBoard().getPersonalExcommunication().add(game.getExcommunicationDeck().get(period));
+			currentPlayer.getActivePermanentEffects()
+					.add(game.getExcommunicationDeck().get(period).getPermanentEffect());
 			sendProblemsToCurrentPlayer("You have decided to not support the Vatican so you have been excommunicated");
 		}
 	}
@@ -647,6 +650,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			}
 
 		}
+		
 		if (tempZone.equalsIgnoreCase("ventures")) {
 
 			handleVentures(tempZone, tempFloor);
@@ -655,6 +659,18 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		this.action = actionFactory.makeAction(game, tempFamiliar, tempZone, tempFloor, tempServants, tempCost,
 				saleForPermanentEffect);
 
+	}
+
+	private IncreaseDieValueActivity setSpecificDieValue() {
+		for (Leader card : currentPlayer.getMyBoard().getPersonalLeader()) {
+			if (card.getPermanentEffectLeader() != null
+					&& card.getPermanentEffectLeader().getName().equalsIgnoreCase("setDieValue") && card.isInUse()) {
+				IncreaseDieValueActivity pe = (IncreaseDieValueCard) card.getPermanentEffectLeader();
+				return pe;
+			}
+
+		}
+		return null;
 	}
 
 	private void askForSale(IncreaseDieValueCard pe) {
@@ -676,15 +692,14 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		this.handleInteractiveEffects(interactiveEffects);
 		System.out.println("Controller --> Conclusa gestione dei costi interattivi ");
 
-
-		if ((cardsIndex == 1 || cardsIndex == 3 || cardsIndex == 5) && (currentPlayer.getMyFamily().isEmpty())) {
+		if ((cardsIndex == 1 || cardsIndex == 3) && (currentPlayer.getMyFamily().isEmpty())) {
 			if (verifyRequiremetsExcommunication()) {
 				askForSupportVatican();
 			} else {
 				sendProblemsToCurrentPlayer("You don't have enough faith points so you have been excommunicated.");
-				currentPlayer.getMyBoard().getPersonalExcommunication()
-						.add(game.getExcommunicationDeck().get(cardsIndex / 2));
-      }
+				currentPlayer.getActivePermanentEffects()
+						.add(game.getExcommunicationDeck().get(cardsIndex / 2).getPermanentEffect());
+			}
 		}
 		notifyToProceedWithTurns();
 		game.sendModel();
@@ -697,7 +712,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		System.out.println("Controller --> La verifica dell' attivazione della carta leader è andata a buon fine ");
 		Leader card = currentPlayer.getMyBoard().getPersonalLeader().get(index);
 
-		if (card.getImmediateEffectLeader()!=null){
+		if (card.getImmediateEffectLeader() != null) {
 
 			askAndWaitForParameters(card.getImmediateEffectLeader());
 			card.getImmediateEffectLeader().giveImmediateEffect(currentPlayer);
@@ -706,6 +721,9 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			card.getValueEffectLeader().giveImmediateEffect(currentPlayer);
 		}
 		card.setInUse(true);
+		if (card.getPermanentEffectLeader() != null) {
+			currentPlayer.getActivePermanentEffects().add(card.getPermanentEffectLeader());
+		}
 		if (card.isOneTimePerTurn() && !leaderOneTimePerTurn.contains(card)) {
 			leaderOneTimePerTurn.add(card);
 		}

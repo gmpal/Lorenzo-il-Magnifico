@@ -1,7 +1,10 @@
 package it.polimi.ingsw.GC_24.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import it.polimi.ingsw.GC_24.model.effects.PermanentEffect;
 import it.polimi.ingsw.GC_24.model.personalboard.PersonalBoard;
 import it.polimi.ingsw.GC_24.model.places.Place;
 import it.polimi.ingsw.GC_24.model.values.*;
@@ -21,6 +24,7 @@ public class Player implements Serializable {
 	private PlayerColour myColour;
 	private int playerNumber;
 	public boolean autoCompleted = false;
+	private List<PermanentEffect> activePermanentEffects = new ArrayList<>();
 
 	// Constructor
 	public Player(int playerNumber){
@@ -69,7 +73,14 @@ public class Player implements Serializable {
 			return false;
 	}
 
-	
+	public PermanentEffect getPermanentEffect(String nameEffect) {
+		for (PermanentEffect pe : activePermanentEffects) {
+			if (pe.getName().equalsIgnoreCase(nameEffect)) {
+				return pe;
+			}
+		}
+		return null;
+	}
 
 	// Prints name of a Player
 	@Override
@@ -133,5 +144,15 @@ public class Player implements Serializable {
 	public void setAutocompleted(boolean autoCompleted) {
 		this.autoCompleted=autoCompleted;
 	}
+
+	public List<PermanentEffect> getActivePermanentEffects() {
+		return activePermanentEffects;
+	}
+
+	public void setActivePermanentEffects(List<PermanentEffect> activePermanentEffects) {
+		this.activePermanentEffects = activePermanentEffects;
+	}
+	
+	
 
 }

@@ -14,6 +14,8 @@ import it.polimi.ingsw.GC_24.model.cards.Deck;
 import it.polimi.ingsw.GC_24.model.cards.Excommunication;
 import it.polimi.ingsw.GC_24.model.cards.Leader;
 import it.polimi.ingsw.GC_24.model.dice.SetOfDice;
+import it.polimi.ingsw.GC_24.model.effects.IncreaseDieValueActivity;
+import it.polimi.ingsw.GC_24.model.effects.PermanentEffect;
 import it.polimi.ingsw.GC_24.model.values.SetOfValues;
 import it.polimi.ingsw.GC_24.network.Server;
 import it.polimi.ingsw.GC_24.observers.MyObservable;
@@ -160,6 +162,35 @@ public class Model extends MyObservable implements Serializable {
 		}
 
 
+	}
+
+	public void updateModel() {
+		this.dice.reset();
+		for (Player p : players) {
+			p.getMyFamily().setFamily(this.dice);
+			if (p.getPermanentEffect("setDiceValue") != null) {
+				IncreaseDieValueActivity pe = (IncreaseDieValueActivity) p.getPermanentEffect("setDieValue");
+				int value = pe.getIncreaseDieValue();
+				p.getMyFamily().getMember1().setMemberValue(value);
+				p.getMyFamily().getMember2().setMemberValue(value);
+				p.getMyFamily().getMember3().setMemberValue(value);
+			}
+			if (p.getPermanentEffect("setValueFamilyMember") != null) {
+				List<Integer> dieValues = new ArrayList<>();
+				dieValues.add(p.getMyFamily().getMember1().getMemberValue());
+				dieValues.add(p.getMyFamily().getMember2().getMemberValue());
+				dieValues.add(p.getMyFamily().getMember3().getMemberValue());
+				Collections.sort(dieValues);
+				Collections.reverse(dieValues);
+				if (p.getMyFamily().getMember1().getMemberValue() == dieValues.get(0)) {
+					p.getMyFamily().getMember1().setMemberValue(6);
+				} else if (p.getMyFamily().getMember2().getMemberValue() == dieValues.get(0)) {
+					p.getMyFamily().getMember1().setMemberValue(6);
+				} else if (p.getMyFamily().getMember3().getMemberValue() == dieValues.get(0)) {
+					p.getMyFamily().getMember1().setMemberValue(6);
+				}
+			}
+		}
 	}
 
 	public void incrementState() {

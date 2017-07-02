@@ -5,9 +5,11 @@ import java.util.List;
 
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.cards.Characters;
+import it.polimi.ingsw.GC_24.model.cards.Leader;
 import it.polimi.ingsw.GC_24.model.cards.Ventures;
 import it.polimi.ingsw.GC_24.model.effects.ImmediateEffect;
 import it.polimi.ingsw.GC_24.model.effects.IncreaseDieValueCard;
+import it.polimi.ingsw.GC_24.model.effects.PermanentEffect;
 import it.polimi.ingsw.GC_24.model.places.TowerPlace;
 import it.polimi.ingsw.GC_24.model.values.*;
 
@@ -15,46 +17,47 @@ public class ActionTower extends Action {
 	private List<ImmediateEffect> immediateEffects = new ArrayList<>();
 	private SetOfValues temporaryCardCost;
 	private TowerPlace towerPlace;
-	private SetOfValues setOfSales=new SetOfValues();
+	private SetOfValues setOfSales = new SetOfValues();
 	private int valueOfFakeFamiliar;
 
-/**
+	/**
 	 * This constructor saves and uses a temporaryCost: in a single-cost card it
 	 * stores that cost, in a multi-cost card it saves the cost passed by the
 	 * controller creating the action. If the parameter is null it uses the card
 	 * cost, otherwise it uses the parameters
 	 */
-	public ActionTower(Model game, String familiar, String zone, String floor, String servants, SetOfValues cost, SetOfValues setOfSale) {
+	public ActionTower(Model game, String familiar, String zone, String floor, String servants, SetOfValues cost,
+			SetOfValues setOfSale) {
 		super(game, familiar, zone, floor, servants);
-		this.temporaryCardCost = cost;		
+		this.temporaryCardCost = cost;
 		this.towerPlace = (TowerPlace) this.place;
-		this.setOfSales=setOfSale;	
-		}
+		this.setOfSales = setOfSale;
+	}
 
 	@Override
 	public String verify() {
 		String answerToPlayer = "Answer: \n";
-			answerToPlayer = verifyIfEnoughServants(answerToPlayer);
-			
-			answerToPlayer = verifyIfEnoughServantsForThisPlace(answerToPlayer);
-			
-			answerToPlayer = verifyFamilyMemberAvailability(answerToPlayer);
-	
-			answerToPlayer = verifyPlaceAvailability(answerToPlayer);
-			
-			answerToPlayer = verifyZoneOccupiedByMe(answerToPlayer);
-			
-			answerToPlayer = verifyMoneyForTowerOccupied(answerToPlayer);
-		
-			answerToPlayer = verifyTerritorySpaceAvailability(answerToPlayer);
-		
-			answerToPlayer = verifyBoardSpaceAvailability(answerToPlayer);
-	
-			answerToPlayer = verifyCardResources(answerToPlayer);
-			
-			if (answerToPlayer.equals("Answer: \n"))
+		answerToPlayer = verifyIfEnoughServants(answerToPlayer);
+
+		answerToPlayer = verifyIfEnoughServantsForThisPlace(answerToPlayer);
+
+		answerToPlayer = verifyFamilyMemberAvailability(answerToPlayer);
+
+		answerToPlayer = verifyPlaceAvailability(answerToPlayer);
+
+		answerToPlayer = verifyZoneOccupiedByMe(answerToPlayer);
+
+		answerToPlayer = verifyMoneyForTowerOccupied(answerToPlayer);
+
+		answerToPlayer = verifyTerritorySpaceAvailability(answerToPlayer);
+
+		answerToPlayer = verifyBoardSpaceAvailability(answerToPlayer);
+
+		answerToPlayer = verifyCardResources(answerToPlayer);
+
+		if (answerToPlayer.equals("Answer: \n"))
 			return "ok";
-		
+
 		else
 			return answerToPlayer;
 
@@ -66,7 +69,7 @@ public class ActionTower extends Action {
 		this.payCoinsforOccupiedTower();
 		this.payValue(new Servant(this.servants));
 		this.placeFamiliar();
-		
+
 		if (!isThereNoValueEffect()) {
 			this.takeValueFromPlace();
 		}
@@ -77,15 +80,18 @@ public class ActionTower extends Action {
 		return immediateEffects;
 	}
 
-	/**This method is used to see if there is "noValueEffectFromTowerPlace" in player's Personal Board.
+	/**
+	 * This method is used to see if there is "noValueEffectFromTowerPlace" in
+	 * player's Personal Board.
 	 * 
-	 * @return true if player have this effect, false otherwise. 
+	 * @return true if player have this effect, false otherwise.
 	 */
 	private boolean isThereNoValueEffect() {
 		Characters c;
 		for (int i = 0; i < player.getMyBoard().getPersonalCharacters().getCards().size(); i++) {
 			c = (Characters) player.getMyBoard().getPersonalCharacters().getCards().get(i);
-			if (c.getPermanentEffects() != null && c.getPermanentEffects().getName().equals("noValueEffectFromTowerPlace")) {
+			if (c.getPermanentEffects() != null
+					&& c.getPermanentEffects().getName().equals("noValueEffectFromTowerPlace")) {
 				return true;
 			}
 		}
@@ -93,8 +99,10 @@ public class ActionTower extends Action {
 	}
 
 	private void payCoinsforOccupiedTower() {
-		if (zone.isOccupied())
-			this.payValue(new Coin(3));
+		if (player.getPermanentEffect("noCoinsForOccupiedTower") == null) {
+			if (zone.isOccupied())
+				this.payValue(new Coin(3));
+		}
 	}
 
 	private void takeEffectsAndRemoveCard() {
@@ -113,6 +121,12 @@ public class ActionTower extends Action {
 		// Mine - cost --> Then set
 		setOfSales.subTwoSetsOfValues(temporaryCardCost);
 		this.player.setMyValues(temporaryCardCost.subTwoSetsOfValues(this.player.getMyValues()));
+		if (towerPlace.getCorrespondingCard().getType().equalsIgnoreCase("character")) {
+			Characters c = (Characters) towerPlace.getCorrespondingCard();
+			if (c.getPermanentEffects() != null) {
+				player.getActivePermanentEffects().add(c.getPermanentEffects());
+			}
+		}
 		towerPlace.getCorrespondingCard().setCardOnPersonalBoard(player.getMyBoard());
 	}
 
@@ -132,17 +146,17 @@ public class ActionTower extends Action {
 	public String verifyMoneyForTowerOccupied(String answerToPlayer) {
 
 		if (this.zone.isOccupied() && this.player.getMyValues().getCoins().getQuantity() < 3) {
-			return answerToPlayer + "You don't have enough coins to place your family member in a tower already occupied\n";
+			return answerToPlayer
+					+ "You don't have enough coins to place your family member in a tower already occupied\n";
 		} else
 			return answerToPlayer;
 	}
 
 	/**
-	 * It checks if you have the resources for taking the card in the place
-	 * you're trying to put your Family Member in. It's necessary to distinguish
-	 * Venture cards because of the extra requirements needed. If you satisfy
-	 * the requirement, this methods checks if you have the resources for this
-	 * card
+	 * It checks if you have the resources for taking the card in the place you're
+	 * trying to put your Family Member in. It's necessary to distinguish Venture
+	 * cards because of the extra requirements needed. If you satisfy the
+	 * requirement, this methods checks if you have the resources for this card
 	 */
 	public String verifyCardResources(String answerToPlayer) {
 		if (towerPlace.getCorrespondingCard() != null) {
@@ -167,6 +181,10 @@ public class ActionTower extends Action {
 		TowerPlace tempTowerPlace = (TowerPlace) this.place;
 		if (tempTowerPlace.getCorrespondingCard() != null) {
 			String typeOfCard = tempTowerPlace.getCorrespondingCard().getType();
+
+			if (player.getPermanentEffect("noMilitaryPointsForTerritories") != null) {
+				return answerToPlayer;
+			}
 
 			int militaryPoints = this.player.getMyValues().getMilitaryPoints().getQuantity();
 			int territorySize = this.player.getMyBoard().getPersonalTerritories().getCards().size();
@@ -207,7 +225,7 @@ public class ActionTower extends Action {
 		}
 		return answerToPlayer;
 	}
-	
+
 	@Override
 	public String verifyIfEnoughServantsForThisPlace(String answerToPlayer) {
 		int placeCostRequired = this.place.getCostDice();
@@ -218,30 +236,34 @@ public class ActionTower extends Action {
 		return answerToPlayer;
 	}
 
-	/**##PERMANENT EFFECT CHECK HERE: Increase Die Value Card##
-	 * This method checks in Personal Board the Permanent Effect of Characters
-	 * and if there is IncreaseDieValueCard Effect gives to player the increment
+	/**
+	 * ##PERMANENT EFFECT CHECK HERE: Increase Die Value Card## This method checks
+	 * in Personal Board the Permanent Effect of Characters and if there is
+	 * IncreaseDieValueCard Effect gives to player the increment
 	 * 
 	 * @return int
 	 */
 	public int getIncrementDieValueFromPermanentEffect() {
 		int incrementDieValueFromPermanentEffect = 0;
-		//checks the personalCharacters
+		// checks the personalCharacters
 		for (int i = 0; i < player.getMyBoard().getPersonalCharacters().getCards().size(); i++) {
 			Characters c = (Characters) player.getMyBoard().getPersonalCharacters().getCards().get(i);
-			//for each character, checks if there's a permanent Effect of type "Increase Die Value Card"
-			if (c.getPermanentEffects()!=null && c.getPermanentEffects().getName().equals("increaseDieValueCard")) {
+			// for each character, checks if there's a permanent Effect of type "Increase
+			// Die Value Card"
+			if (c.getPermanentEffects() != null && c.getPermanentEffects().getName().equals("increaseDieValueCard")) {
 				IncreaseDieValueCard pe = (IncreaseDieValueCard) c.getPermanentEffects();
-				//if  this effect is for a specific card (not null) and the type is similar to the card I'm trying to take..
+				// if this effect is for a specific card (not null) and the type is similar to
+				// the card I'm trying to take..
 				if (pe.getPersonalCards() != null && (pe.getPersonalCards().getType() == zoneString)) {
-					//... I add the increment
+					// ... I add the increment
 					incrementDieValueFromPermanentEffect += pe.getIncreaseDieValue();
-					//if there's no alternative cost in the card
-					if(pe.getAlternativeSale()==null){
-						//i simply get the sale for the card I take 
-						setOfSales=pe.getSale();
+					// if there's no alternative cost in the card
+					if (pe.getAlternativeSale() == null) {
+						// i simply get the sale for the card I take
+						setOfSales = pe.getSale();
 					}
-					//if there's an alternative sale the condition is checked before doing any action, asking the player 
+					// if there's an alternative sale the condition is checked before doing any
+					// action, asking the player
 				}
 			}
 		}
