@@ -32,6 +32,7 @@ public class Family implements java.io.Serializable {
 		this.member1.setMember(dice.getDie1());
 		this.member2.setMember(dice.getDie2());
 		this.member3.setMember(dice.getDie3());
+		this.member4.setMemberValue(0);
 
 	}
 

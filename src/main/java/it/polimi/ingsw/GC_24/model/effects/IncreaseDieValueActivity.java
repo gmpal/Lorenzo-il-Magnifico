@@ -16,6 +16,9 @@ public class IncreaseDieValueActivity extends PermanentEffect {
 
 	@Override
 	public String toString() {
+		if (getName().equalsIgnoreCase("setDiceValue")) {
+			return "Your family members' value will be set at "+increaseDieValue;
+		}
 		return getName() +": " + " from now on you will have a starting die value of "+increaseDieValue+" when performing this activity";
 	}
 

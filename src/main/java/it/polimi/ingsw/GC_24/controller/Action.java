@@ -3,12 +3,9 @@ package it.polimi.ingsw.GC_24.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
-
 import it.polimi.ingsw.GC_24.model.*;
 import it.polimi.ingsw.GC_24.model.board.Area;
-import it.polimi.ingsw.GC_24.model.cards.Leader;
 import it.polimi.ingsw.GC_24.model.effects.ChangeServantsValue;
-import it.polimi.ingsw.GC_24.model.effects.CustomizedPermanentEffect;
 import it.polimi.ingsw.GC_24.model.effects.ImmediateEffect;
 import it.polimi.ingsw.GC_24.model.places.Place;
 import it.polimi.ingsw.GC_24.model.values.Value;

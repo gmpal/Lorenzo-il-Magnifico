@@ -36,6 +36,7 @@ public class ActionTower extends Action {
 
 	@Override
 	public String verify() {
+		System.out.println(player.getMyValues());
 		String answerToPlayer = "Answer: \n";
 		answerToPlayer = verifyIfEnoughServants(answerToPlayer);
 

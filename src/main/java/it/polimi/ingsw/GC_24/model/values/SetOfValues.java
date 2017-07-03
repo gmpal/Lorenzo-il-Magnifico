@@ -27,6 +27,17 @@ public class SetOfValues implements Serializable {
 		this.victoryPoints = new VictoryPoint(0);
 	}
 
+	/** this constructor creates a copy of the SetOfValues passed as parameter */
+	public SetOfValues(SetOfValues set) {
+		this.woods = new Wood(set.getWoods().getQuantity());
+		this.stones = new Stone(set.getStones().getQuantity());
+		this.servants = new Servant(set.getServants().getQuantity());
+		this.coins = new Coin(set.getCoins().getQuantity());
+		this.faithPoints = new FaithPoint(set.getFaithPoints().getQuantity());
+		this.militaryPoints = new MilitaryPoint(set.getMilitaryPoints().getQuantity());
+		this.victoryPoints = new VictoryPoint(set.getVictoryPoints().getQuantity());
+	}
+
 	// useful methods
 
 	/** method to set a SetOfValue from a numPlayer */
@@ -72,7 +83,8 @@ public class SetOfValues implements Serializable {
 
 	/** Returns true if my SetOfValues contains the cost Set */
 	public boolean doIHaveThisSet(SetOfValues cost) {
-		return cost.subTwoSetsOfValues(this).isAcceptable();
+		SetOfValues tempSet = new SetOfValues(this);
+		return cost.subTwoSetsOfValues(tempSet).isAcceptable();
 		// this-cost >=0;
 	}
 

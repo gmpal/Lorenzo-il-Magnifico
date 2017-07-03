@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.polimi.ingsw.GC_24.model.cards.Leader;
 import it.polimi.ingsw.GC_24.model.effects.PermanentEffect;
 import it.polimi.ingsw.GC_24.model.personalboard.PersonalBoard;
 import it.polimi.ingsw.GC_24.model.places.Place;
@@ -23,6 +24,7 @@ public class Player implements Serializable {
 	private int playerNumber;
 	public boolean autoCompleted = false;
 	private List<PermanentEffect> activePermanentEffects = new ArrayList<>();
+	private List<Leader> leaderOneTimePerTurn = new ArrayList<>();
 	private boolean lastExcommunication=false;
 
 	// Constructor
@@ -174,6 +176,13 @@ public class Player implements Serializable {
 	public void setActivePermanentEffects(List<PermanentEffect> activePermanentEffects) {
 		this.activePermanentEffects = activePermanentEffects;
 	}
+
+	public List<Leader> getLeaderOneTimePerTurn() {
+		return leaderOneTimePerTurn;
+	}
+
+	public void setLeaderOneTimePerTurn(List<Leader> leaderOneTimePerTurn) {
+		this.leaderOneTimePerTurn = leaderOneTimePerTurn;
 
 	public boolean hasLastExcommunication() {
 		return lastExcommunication;

@@ -22,7 +22,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	private int controllerNumber = 0;
 	private List<Player> councilTurnArray;
 	private List<Player> playerTurn;
-	private List<Leader> leaderOneTimePerTurn = new ArrayList<>();
 	private Player currentPlayer;
 	private int cardsIndex = 0;
 	private SetOfValues saleForPermanentEffect = new SetOfValues();
@@ -562,6 +561,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				CouncilPrivilege leaderDiscardCouncilPrivilege = new CouncilPrivilege("council", 1);
 				askAndWaitForParameters(leaderDiscardCouncilPrivilege);
 				leaderDiscardCouncilPrivilege.giveImmediateEffect(currentPlayer);
+				currentPlayer.getMyBoard().getPersonalLeader().remove(index);
 				game.sendModel();
 				awakenSleepingClient();
 			}
@@ -578,8 +578,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	private String verifyRequirementsLeader(int index, String feedback) {
 		Requirements requirements = currentPlayer.getMyBoard().getPersonalLeader().get(index).getRequirements();
-		if (!leaderOneTimePerTurn.isEmpty()) {
-			for (Leader card : leaderOneTimePerTurn) {
+		if (!currentPlayer.getLeaderOneTimePerTurn().isEmpty()) {
+			for (Leader card : currentPlayer.getLeaderOneTimePerTurn()) {
 				if (currentPlayer.getMyBoard().getPersonalLeader().get(index).getName().equals(card.getName())) {
 					return feedback;
 				}
@@ -729,6 +729,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	private String verifyAction(Action action2) {
+		System.out.println(currentPlayer.getMyValues());
 		System.out.println("Controller --> Sto verificando ed eseguendo un'azione ");
 		String responseToActionVerify = action.verify();
 		return responseToActionVerify;
@@ -785,8 +786,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		if (card.getPermanentEffectLeader() != null) {
 			currentPlayer.getActivePermanentEffects().add(card.getPermanentEffectLeader());
 		}
-		if (card.isOneTimePerTurn() && !leaderOneTimePerTurn.contains(card)) {
-			leaderOneTimePerTurn.add(card);
+		if (card.isOneTimePerTurn() && !currentPlayer.getLeaderOneTimePerTurn().contains(card)) {
+			currentPlayer.getLeaderOneTimePerTurn().add(card);
 		}
 		game.changeInDieValue(currentPlayer);
 		game.sendModel();
@@ -992,7 +993,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	// increase.getAlternativeSale()
 
 	private IncreaseDieValueCard PermanentEffectWithAlternativeSale(IncreaseDieValueCard pe) {
-		if (pe.getAlternativeSale() != null) {
+		if (pe != null && pe.getAlternativeSale() != null) {
 			return pe;
 		}
 		return null;

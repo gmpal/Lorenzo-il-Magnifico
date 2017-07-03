@@ -39,7 +39,6 @@ public class Model extends MyObservable implements Serializable {
 	private Deck cards;
 	private List<Excommunication> excommunicationDeck = new ArrayList<>();
 	private List<SetOfValues> correspondingValue = new ArrayList<>();
-	private List<Leader> leaderDeck = new ArrayList<>();
 
 	private int modelNumber;
 
@@ -165,7 +164,7 @@ public class Model extends MyObservable implements Serializable {
 		this.dice.reset();
 		for (Player p : players) {
 			p.getMyFamily().setFamily(this.dice);
-			changeInDieValue(p);
+		//	changeInDieValue(p);
 		}
 	}
 
@@ -174,20 +173,20 @@ public class Model extends MyObservable implements Serializable {
 	 * value are active in the player, and in that case changes them
 	 */
 	public void changeInDieValue(Player player) {
+		
+		for (PermanentEffect p:player.getPermanentEffectList("increaseDieValueFamiliar")) {
+			IncreaseDieValueActivity pe1 = (IncreaseDieValueActivity) p;
+			int value = pe1.getIncreaseDieValue();
+			player.getMyFamily().getMember1().setMemberValue(player.getMyFamily().getMember1().getMemberValue() + value);
+			player.getMyFamily().getMember2().setMemberValue(player.getMyFamily().getMember2().getMemberValue() + value);
+			player.getMyFamily().getMember3().setMemberValue(player.getMyFamily().getMember3().getMemberValue() + value);
+		}
 		if (player.getPermanentEffect("setDiceValue") != null) {
 			IncreaseDieValueActivity pe = (IncreaseDieValueActivity) player.getPermanentEffect("setDieValue");
 			int value = pe.getIncreaseDieValue();
 			player.getMyFamily().getMember1().setMemberValue(value);
 			player.getMyFamily().getMember2().setMemberValue(value);
 			player.getMyFamily().getMember3().setMemberValue(value);
-		}
-		
-		if (player.getPermanentEffect("increaseValueFamilyMember") != null) {
-			IncreaseDieValueActivity pe1 = (IncreaseDieValueActivity) player.getPermanentEffect("increaseValue");
-			int value = pe1.getIncreaseDieValue();
-			player.getMyFamily().getMember1().setMemberValue(player.getMyFamily().getMember1().getMemberValue() + value);
-			player.getMyFamily().getMember2().setMemberValue(player.getMyFamily().getMember2().getMemberValue() + value);
-			player.getMyFamily().getMember3().setMemberValue(player.getMyFamily().getMember3().getMemberValue() + value);
 		}
 		if (player.getPermanentEffect("setValueFamilyMember") != null) {
 			List<Integer> dieValues = new ArrayList<>();
@@ -244,9 +243,9 @@ public class Model extends MyObservable implements Serializable {
 
 	private void dealLeaders(List<Leader> leaderDeck, List<Player> players) {
 		Random random = new Random();
-		int num = (leaderDeck.size() / players.size());
+	//	int num = (leaderDeck.size() / players.size());
 		for (Player p : players) {
-			for (int i = 0; i < num; i++) {
+			for (int i = 0; i < 4; i++) {
 				int position = random.nextInt(leaderDeck.size());
 				p.getMyBoard().getPersonalLeader().add(leaderDeck.get(position));
 				leaderDeck.remove(position);
