@@ -313,6 +313,10 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			player.getMyValues().getVictoryPoints()
 					.addQuantity(player.getMyValues().convertSetToVictoryPoints().getQuantity());
 			finalMilitaryPoints.add(player.getMyValues().getMilitaryPoints().getQuantity());
+			if (player.hasLastExcommunication() && finalExcommunication.equalsIgnoreCase("subMilitaryPoints")) {
+				player.getMyValues().getVictoryPoints()
+						.subQuantity(player.getMyValues().getMilitaryPoints().getQuantity());
+			}
 
 		}
 		for (int i = 0; i < finalMilitaryPoints.size() - 1; i++) {
@@ -325,6 +329,20 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		Collections.sort(finalMilitaryPoints);
 		Collections.reverse(finalMilitaryPoints);
 		convertMilitaryPointsToVictoryPoints(finalMilitaryPoints);
+		for (int i = 0; i < game.getPlayers().size(); i++) {
+			player = game.getPlayers().get(i);
+
+			if (player.hasLastExcommunication() && finalExcommunication.equalsIgnoreCase("subVictoryPoints")) {
+				SubVicrotyPointsFromSetOfValue eff = (SubVicrotyPointsFromSetOfValue) game.getExcommunicationDeck()
+						.get(2).getEffect();
+				int subValue = (player.getMyValues().getVictoryPoints().getQuantity())
+						/ (eff.getSetForSub().getVictoryPoints().getQuantity());
+				player.getMyValues().getVictoryPoints().subQuantity(subValue);
+			}
+			if (player.hasLastExcommunication() && finalExcommunication.equalsIgnoreCase("subResourcesPoints")) {
+				player.getMyValues().getVictoryPoints().subQuantity(player.getMyValues().numberResorces());
+			}
+		}
 	}
 
 	/**
