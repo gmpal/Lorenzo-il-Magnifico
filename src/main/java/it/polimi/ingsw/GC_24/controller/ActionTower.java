@@ -7,6 +7,8 @@ import it.polimi.ingsw.GC_24.model.cards.Characters;
 import it.polimi.ingsw.GC_24.model.cards.Ventures;
 import it.polimi.ingsw.GC_24.model.effects.ImmediateEffect;
 import it.polimi.ingsw.GC_24.model.effects.IncreaseDieValueCard;
+import it.polimi.ingsw.GC_24.model.effects.NoValueEffectFromTowerPlace;
+import it.polimi.ingsw.GC_24.model.effects.PermanentEffect;
 import it.polimi.ingsw.GC_24.model.effects.SubSetOfValues;
 import it.polimi.ingsw.GC_24.model.places.TowerPlace;
 import it.polimi.ingsw.GC_24.model.values.*;
@@ -85,13 +87,10 @@ public class ActionTower extends Action {
 	 * @return true if player have this effect, false otherwise.
 	 */
 	private boolean isThereNoValueEffect() {
-		Characters c;
-		for (int i = 0; i < player.getMyBoard().getPersonalCharacters().getCards().size(); i++) {
-			c = (Characters) player.getMyBoard().getPersonalCharacters().getCards().get(i);
-			if (c.getPermanentEffects() != null
-					&& c.getPermanentEffects().getName().equals("noValueEffectFromTowerPlace")) {
-				return true;
-			}
+		NoValueEffectFromTowerPlace pe = (NoValueEffectFromTowerPlace) player
+				.getPermanentEffect("noValueEffectFromTowerPlace");
+		if (pe != null) {
+			return true;
 		}
 		return false;
 	}
@@ -243,31 +242,22 @@ public class ActionTower extends Action {
 	/**
 	 * ##PERMANENT EFFECT CHECK HERE: Increase Die Value Card## This method checks
 	 * in Personal Board the Permanent Effect of Characters and if there is
-	 * IncreaseDieValueCard Effect gives to player the increment
+	 * IncreaseDieValueCard Effect gives to player the increment. The increase is
+	 * given to the player only if the selected zone to place the family member is
+	 * the same as the one specify on the card. If the effect have an alternative
+	 * sale it is checked before doing any action.
 	 * 
-	 * @return int
+	 * @return increment die value.
 	 */
 	public int getIncrementDieValueFromPermanentEffect() {
 		int incrementDieValueFromPermanentEffect = 0;
-		// checks the personalCharacters
-		for (int i = 0; i < player.getMyBoard().getPersonalCharacters().getCards().size(); i++) {
-			Characters c = (Characters) player.getMyBoard().getPersonalCharacters().getCards().get(i);
-			// for each character, checks if there's a permanent Effect of type "Increase
-			// Die Value Card"
-			if (c.getPermanentEffects() != null && c.getPermanentEffects().getName().equals("increaseDieValueCard")) {
-				IncreaseDieValueCard pe = (IncreaseDieValueCard) c.getPermanentEffects();
-				// if this effect is for a specific card (not null) and the type is similar to
-				// the card I'm trying to take..
-				if (pe.getPersonalCards() != null && (pe.getPersonalCards().getType() == zoneString)) {
-					// ... I add the increment
-					incrementDieValueFromPermanentEffect += pe.getIncreaseDieValue();
-					// if there's no alternative cost in the card
-					if (pe.getAlternativeSale() == null) {
-						// i simply get the sale for the card I take
-						setOfSales = pe.getSale();
-					}
-					// if there's an alternative sale the condition is checked before doing any
-					// action, asking the player
+		List<PermanentEffect> peList = player.getPermanentEffectList("increaseDieValueCard");
+		for (int i = 0; i < peList.size(); i++) {
+			IncreaseDieValueCard pe = (IncreaseDieValueCard) peList.get(i);
+			if (pe.getPersonalCards() != null && (pe.getPersonalCards().getType() == zoneString)) {
+				incrementDieValueFromPermanentEffect += pe.getIncreaseDieValue();
+				if (pe.getAlternativeSale() == null) {
+					setOfSales = pe.getSale();
 				}
 			}
 		}

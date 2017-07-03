@@ -58,7 +58,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	@Override
 	public void run() {
-
 		waitAndAutocomplete();
 
 		// WAITING FOR AUTOCOMPLETING
@@ -416,7 +415,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 		System.out.println("Controller --> ricevuto una richiesta dal client");
 
-
 		Set<String> command = request.keySet();
 		System.out.println(command);
 
@@ -655,7 +653,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		 * Sees if there's an interactive permanent effect WITH DOUBLE SALE before doing
 		 * an action, because this particular effect requires user interaction
 		 */
-		IncreaseDieValueCard pe = PermanentEffectWithAlternativeSale();
+		IncreaseDieValueCard pe = PermanentEffectWithAlternativeSale(
+				(IncreaseDieValueCard) currentPlayer.getPermanentEffect("increaseDieValueCard"));
 
 		if (pe != null && pe.getPersonalCards().getType().equals(tempZone)) {
 
@@ -941,16 +940,9 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	// "Choose sale: (1,2)\n" + "1." + increase.getSale() + "\n2." +
 	// increase.getAlternativeSale()
 
-	private IncreaseDieValueCard PermanentEffectWithAlternativeSale() {
-		Characters c;
-		for (Development d : currentPlayer.getMyBoard().getPersonalCharacters().getCards()) {
-			c = (Characters) d;
-			if (c.getPermanentEffects() != null && c.getPermanentEffects().getName().equals("increaseDieValueCard")) {
-				IncreaseDieValueCard pe = (IncreaseDieValueCard) c.getPermanentEffects();
-				if (pe.getAlternativeSale() != null) {
-					return pe;
-				}
-			}
+	private IncreaseDieValueCard PermanentEffectWithAlternativeSale(IncreaseDieValueCard pe) {
+		if (pe.getAlternativeSale() != null) {
+			return pe;
 		}
 		return null;
 	}

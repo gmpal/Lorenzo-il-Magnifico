@@ -3,8 +3,6 @@ package it.polimi.ingsw.GC_24.controller;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This class contains timers to start the game when there are already more than
@@ -12,12 +10,12 @@ import java.util.List;
  * anything.
  */
 public class Timers {
-	private int timeToStartGame;
-	private int timeToDisconnectPlayer;
+	private static int timeToStartGame;
+	private static int timeToDisconnectPlayer;
 	
 	public Timers() {
-		this.timeToStartGame = takeTimer("src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/timerToStart.json");
-		this.timeToDisconnectPlayer = takeTimer("src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/timerToDisconnectPlayer.json");		
+		Timers.timeToStartGame = takeTimer("src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/timerToStart.json");
+		Timers.timeToDisconnectPlayer = takeTimer("src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/timerToDisconnectPlayer.json");		
 	}
 
 	/**
@@ -50,11 +48,11 @@ public class Timers {
 	}
 
 	public void setTimeToStartGame(int timeToStartGame) {
-		this.timeToStartGame = timeToStartGame;
+		Timers.timeToStartGame = timeToStartGame;
 	}
 
 	public void setTimeToDisconnectPlayer(int timeToDisconnectPlayer) {
-		this.timeToDisconnectPlayer = timeToDisconnectPlayer;
+		Timers.timeToDisconnectPlayer = timeToDisconnectPlayer;
 	}
 
 	public int getTimeToDisconnectPlayer() {
