@@ -85,7 +85,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			game.getBoard().clear();
 
 			game.getCards().dealCards(game.getBoard(), cardsIndex / 2 + 1);
-			
+
 			game.updateModel();
 
 			game.sendModel();
@@ -276,22 +276,46 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	/**
-	 * This method calculates the final victory points for each player. based on the
+	 * This method calculates the final victory points for each player. Based on the
 	 * final rules of the game
 	 */
 	public void giveVictoryPoints() {
 		Player player;
 		List<Integer> finalMilitaryPoints = new ArrayList<>();
+		String finalExcommunication = game.getExcommunicationDeck().get(2).getEffect().getName();
 
 		for (int i = 0; i < game.getPlayers().size(); i++) {
 			player = game.getPlayers().get(i);
 			player.getMyValues().getFaithPoints().convertToValue(game.getCorrespondingValue())
 					.addTwoSetsOfValues(player.getMyValues());
-			player.getMyValues().getVictoryPoints()
-					.addQuantity(player.getMyBoard().convertToVictoryPoints().getQuantity());
+			if (!player.hasLastExcommunication()) {
+				player.getMyValues().getVictoryPoints()
+						.addQuantity(player.getMyBoard().convertToVictoryPoints().getQuantity());
+			} else {
+				if (finalExcommunication.equals("noVictoryPointsFromTerritories")) {
+					player.getMyValues().getVictoryPoints().addQuantity(
+							player.getMyBoard().getPersonalCharacters().convertCardToVictoryPoints().getQuantity());
+					player.getMyValues().getVictoryPoints().addQuantity(
+							player.getMyBoard().getPersonalVentures().convertCardToVictoryPoints().getQuantity());
+				} else if (finalExcommunication.equals("noVictoryPointsFromCharacters")) {
+					player.getMyValues().getVictoryPoints().addQuantity(
+							player.getMyBoard().getPersonalTerritories().convertCardToVictoryPoints().getQuantity());
+					player.getMyValues().getVictoryPoints().addQuantity(
+							player.getMyBoard().getPersonalVentures().convertCardToVictoryPoints().getQuantity());
+				} else if (finalExcommunication.equals("noVictoryPointsFromVentures")) {
+					player.getMyValues().getVictoryPoints().addQuantity(
+							player.getMyBoard().getPersonalTerritories().convertCardToVictoryPoints().getQuantity());
+					player.getMyValues().getVictoryPoints().addQuantity(
+							player.getMyBoard().getPersonalCharacters().convertCardToVictoryPoints().getQuantity());
+				}
+			}
 			player.getMyValues().getVictoryPoints()
 					.addQuantity(player.getMyValues().convertSetToVictoryPoints().getQuantity());
 			finalMilitaryPoints.add(player.getMyValues().getMilitaryPoints().getQuantity());
+			if (player.hasLastExcommunication() && finalExcommunication.equalsIgnoreCase("subMilitaryPoints")) {
+				player.getMyValues().getVictoryPoints()
+						.subQuantity(player.getMyValues().getMilitaryPoints().getQuantity());
+			}
 
 		}
 		for (int i = 0; i < finalMilitaryPoints.size() - 1; i++) {
@@ -304,6 +328,20 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		Collections.sort(finalMilitaryPoints);
 		Collections.reverse(finalMilitaryPoints);
 		convertMilitaryPointsToVictoryPoints(finalMilitaryPoints);
+		for (int i = 0; i < game.getPlayers().size(); i++) {
+			player = game.getPlayers().get(i);
+
+			if (player.hasLastExcommunication() && finalExcommunication.equalsIgnoreCase("subVictoryPoints")) {
+				SubVicrotyPointsFromSetOfValue eff = (SubVicrotyPointsFromSetOfValue) game.getExcommunicationDeck()
+						.get(2).getEffect();
+				int subValue = (player.getMyValues().getVictoryPoints().getQuantity())
+						/ (eff.getSetForSub().getVictoryPoints().getQuantity());
+				player.getMyValues().getVictoryPoints().subQuantity(subValue);
+			}
+			if (player.hasLastExcommunication() && finalExcommunication.equalsIgnoreCase("subResourcesPoints")) {
+				player.getMyValues().getVictoryPoints().subQuantity(player.getMyValues().numberResorces());
+			}
+		}
 	}
 
 	/**
@@ -672,7 +710,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			}
 
 		}
-		
+
 		if (tempZone.equalsIgnoreCase("ventures")) {
 
 			handleVentures(tempZone, tempFloor);
@@ -702,7 +740,20 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		List<ImmediateEffect> interactiveEffects = action.run();
 		this.handleInteractiveEffects(interactiveEffects);
 		System.out.println("Controller --> Conclusa gestione dei costi interattivi ");
+		checkForExcommunication();
+		notifyToProceedWithTurns();
+		game.sendModel();
+		awakenSleepingClient();
+		System.out.println("Controller --> Richiesta di risveglio inviata");
 
+	}
+
+	/**
+	 * This method ask to the player if they want to support the Vatican. If it's
+	 * the last turn the Excommunication is automatically assigned according to the
+	 * requirements.
+	 */
+	public void checkForExcommunication() {
 		if ((cardsIndex == 1 || cardsIndex == 3) && (currentPlayer.getMyFamily().isEmpty())) {
 			if (verifyRequiremetsExcommunication()) {
 				askForSupportVatican();
@@ -712,11 +763,11 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 						.add(game.getExcommunicationDeck().get(cardsIndex / 2).getPermanentEffect());
 			}
 		}
-		notifyToProceedWithTurns();
-		game.sendModel();
-		awakenSleepingClient();
-		System.out.println("Controller --> Richiesta di risveglio inviata");
 
+		if ((cardsIndex == 5) && (!verifyRequiremetsExcommunication()) && (currentPlayer.getMyFamily().isEmpty())) {
+			currentPlayer.setLastExcommunication(true);
+			sendProblemsToCurrentPlayer("You don't have enough faith points so you have been excommunicated.");
+		}
 	}
 
 	private void assignLeaderEffects(int index) {
