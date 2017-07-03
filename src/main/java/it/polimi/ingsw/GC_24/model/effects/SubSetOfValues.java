@@ -15,6 +15,15 @@ public class SubSetOfValues extends PermanentEffect {
 		this.subSet = subSet;
 	}
 
+	
+	
+	@Override
+	public String toString() {
+		return name + ": subtracts "+subSet;
+	}
+
+
+
 	// getters and setters
 	public SetOfValues getSubSet() {
 		return subSet;

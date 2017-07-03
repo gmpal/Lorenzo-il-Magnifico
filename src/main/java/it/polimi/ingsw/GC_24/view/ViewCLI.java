@@ -2,13 +2,11 @@ package it.polimi.ingsw.GC_24.view;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
-
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.effects.*;
 import it.polimi.ingsw.GC_24.model.values.*;
 import it.polimi.ingsw.GC_24.observers.MyObservable;
-import it.polimi.ingsw.GC_24.observers.MyObserver;
 
 public class ViewCLI extends MyObservable implements ViewInterface {
 
@@ -116,9 +114,9 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 
 	public void showAndGetOption() {
 
-		System.out.println("Choose action:\n" + "a)Show board\n" + "b)Show personal board\n" + "c)Show family members\n"
-				+ "d)Show my resources\n" + "e)Place family member\n" + "f)Activate a leader card\n"
-				+ "g)Discard a leader card\n" + "h)End turn\n" + "i)Exit");
+		System.out.println("\nChoose Action:\n" + "a)Show Board\n" + "b)Show Personal Board\n" + "c)Show Family Members\n"
+				+ "d)Show my Resources\n" + "e)Show Leader Cards\n" + "f)Show Active Effects\n" + "g)Place Family Member\n" + "h)Activate a Leader Card\n"
+				+ "i)Discard a Leader Card\n" + "j)End Turn\n" + "k)Exit");
 
 		String command = scanner.nextLine();
 
@@ -138,8 +136,17 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 		} else if (command.equalsIgnoreCase("d")) {
 
 			System.out.println(myself.getMyValues());
-
+			
 		} else if (command.equalsIgnoreCase("e")) {
+
+			System.out.println(myself.getMyBoard().getPersonalLeader());
+			
+		} else if (command.equalsIgnoreCase("f")) {
+
+			System.out.println("Permanent Effects --> "+myself.getActivePermanentEffects());
+			System.out.println("\nImmediate Effects --> "+myself.getLeaderOneTimePerTurn());
+
+		} else if (command.equalsIgnoreCase("g")) {
 
 			if (myTurn) {
 				System.out.println(myself.getMyFamily());
@@ -159,7 +166,7 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 				System.out.println("Not your turn. You can't do any action.\n");
 			}
 
-		} else if (command.equalsIgnoreCase("f")) {
+		} else if (command.equalsIgnoreCase("h")) {
 
 			if (myTurn) {
 				System.out.println(myself.getMyBoard().getPersonalLeader());
@@ -174,7 +181,7 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 				System.out.println("Not your turn. You can't do any action.\n");
 			}
 
-		} else if (command.equalsIgnoreCase("g")) {
+		} else if (command.equalsIgnoreCase("i")) {
 
 			if (myTurn) {
 				System.out.println(myself.getMyBoard().getPersonalLeader());
@@ -189,11 +196,11 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 				System.out.println("Not your turn. You can't do any action.\n");
 			}
 
-		} else if (command.equalsIgnoreCase("h")) {
+		} else if (command.equalsIgnoreCase("j")) {
 			command = "end";
 			System.out.println("This function is not been implemented yet");
 			// TODO: gestione della fine del turno
-		} else if (command.equalsIgnoreCase("i")) {
+		} else if (command.equalsIgnoreCase("k")) {
 			System.out.println("This function is not been implemented yet");
 			// break;
 			// TODO:gestire la disconnessione;

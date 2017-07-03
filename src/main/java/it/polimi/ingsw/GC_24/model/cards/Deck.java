@@ -244,10 +244,10 @@ public class Deck implements Serializable {
 		Excommunication ex=new Excommunication(null, new SubVicrotyPointsFromSetOfValue("subVicrotyPointsFromSetOfValue", new SetOfValues(), new VictoryPoint(1)) , 3, new FaithPoint(3));
 		Gson gson=GsonBuilders.getGsonWithTypeAdapters();
 	//	System.out.println(gson.toJson(ex));
-		CustomizedPermanentEffect cp = new CustomizedPermanentEffect("noMilitaryPointsForTerritories");
+		CustomizedPermanentEffect cp = new CustomizedPermanentEffect("noMilitaryPointsForTerritories", "jjjjjjjjj");
 		IncreaseDieValueActivity in = new IncreaseDieValueActivity("setDiceValue", 5);
 		SubSetOfValues ss = new SubSetOfValues("discountCoins", new SetOfValues());
-		Leader card = new Leader("Ludovico il Moro", null, null, null, ss, false);
+		Leader card = new Leader("Ludovico il Moro", null, null, null, cp, false);
 		
 		System.out.println(gson.toJson(card));
 		/*List<SetOfValues> sett=new ArrayList<>();
