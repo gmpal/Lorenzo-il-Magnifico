@@ -1,8 +1,9 @@
 package it.polimi.ingsw.GC_24.model.values;
 
+import java.io.Serializable;
 import it.polimi.ingsw.GC_24.model.Player;
 
-public abstract class Value {
+public abstract class Value implements Serializable{
 
 	
 	/**

@@ -49,6 +49,7 @@ public class GsonBuilders {
 				.registerSubtype(ChangeServantsValue.class, "changeServantsValue")
 				.registerSubtype(FirstPlacementAtTheEnd.class, "firstPlacementAtTheEnd")
 				.registerSubtype(NoMarketAvailability.class, "noMarketAvailability")
+				.registerSubtype(CustomizedPermanentEffect.class, "customizedPermanentEffect")
 				.registerSubtype(SubSetOfValues.class, "subSetOfValues");
 	}
 
