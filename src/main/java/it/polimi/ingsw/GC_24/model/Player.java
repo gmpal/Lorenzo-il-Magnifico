@@ -174,4 +174,11 @@ public class Player implements Serializable {
 		this.activePermanentEffects = activePermanentEffects;
 	}
 
+	public List<PermanentEffect> getActivePermanentEffects() {
+		return activePermanentEffects;
+	}
+
+	public void setActivePermanentEffects(List<PermanentEffect> activePermanentEffects) {
+		this.activePermanentEffects = activePermanentEffects;
+	}
 }

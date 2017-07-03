@@ -14,6 +14,8 @@ import it.polimi.ingsw.GC_24.model.cards.Deck;
 import it.polimi.ingsw.GC_24.model.cards.Excommunication;
 import it.polimi.ingsw.GC_24.model.cards.Leader;
 import it.polimi.ingsw.GC_24.model.dice.SetOfDice;
+import it.polimi.ingsw.GC_24.model.effects.IncreaseDieValueActivity;
+import it.polimi.ingsw.GC_24.model.effects.PermanentEffect;
 import it.polimi.ingsw.GC_24.model.values.SetOfValues;
 import it.polimi.ingsw.GC_24.network.Server;
 import it.polimi.ingsw.GC_24.observers.MyObservable;
@@ -61,14 +63,12 @@ public class Model extends MyObservable implements Serializable {
 		this.cards = null;
 	}
 
-
 	/**
-	 * This method create the Excommunication Cards' deck from a configuration
-	 * file named "excommunicationCards.json". All cards are put in an
-	 * ArrayList, then it will take three random cards and it put them in
-	 * another ArrayList, one per round. This final ArrayList contains the
-	 * possible excommunication card the player can take when it will choose to
-	 * not support the Vatican.
+	 * This method create the Excommunication Cards' deck from a configuration file
+	 * named "excommunicationCards.json". All cards are put in an ArrayList, then it
+	 * will take three random cards and it put them in another ArrayList, one per
+	 * round. This final ArrayList contains the possible excommunication card the
+	 * player can take when it will choose to not support the Vatican.
 	 */
 	private void createExcommunicationDeck() {
 		BufferedReader br;
@@ -133,8 +133,8 @@ public class Model extends MyObservable implements Serializable {
 	}
 
 	/**
-	 * After a Model is created and the players are get, this method sets the
-	 * model so the game could start
+	 * After a Model is created and the players are get, this method sets the model
+	 * so the game could start
 	 */
 	public void setModel(List<Player> players) {
 
@@ -146,7 +146,7 @@ public class Model extends MyObservable implements Serializable {
 		this.dice = new SetOfDice();
 
 		this.dice.reset();
-		dealLeaders(cards.getDeckLeaders(),players);
+		dealLeaders(cards.getDeckLeaders(), players);
 		getCorrespondingValueFromFile();
 		createExcommunicationDeck();
 
@@ -159,7 +159,55 @@ public class Model extends MyObservable implements Serializable {
 			rankings.add(new Ranking(p));
 		}
 
+	}
 
+	public void updateModel() {
+		this.dice.reset();
+		for (Player p : players) {
+			p.getMyFamily().setFamily(this.dice);
+			changeInDieValue(p);
+		}
+	}
+
+	/**
+	 * This method checks if some leader cards that change the family members' die
+	 * value are active in the player, and in that case changes them
+	 */
+	public void changeInDieValue(Player player) {
+		if (player.getPermanentEffect("setDiceValue") != null) {
+			IncreaseDieValueActivity pe = (IncreaseDieValueActivity) player.getPermanentEffect("setDieValue");
+			int value = pe.getIncreaseDieValue();
+			player.getMyFamily().getMember1().setMemberValue(value);
+			player.getMyFamily().getMember2().setMemberValue(value);
+			player.getMyFamily().getMember3().setMemberValue(value);
+		}
+		
+		if (player.getPermanentEffect("increaseValueFamilyMember") != null) {
+			IncreaseDieValueActivity pe1 = (IncreaseDieValueActivity) player.getPermanentEffect("increaseValue");
+			int value = pe1.getIncreaseDieValue();
+			player.getMyFamily().getMember1().setMemberValue(player.getMyFamily().getMember1().getMemberValue() + value);
+			player.getMyFamily().getMember2().setMemberValue(player.getMyFamily().getMember2().getMemberValue() + value);
+			player.getMyFamily().getMember3().setMemberValue(player.getMyFamily().getMember3().getMemberValue() + value);
+		}
+		if (player.getPermanentEffect("setValueFamilyMember") != null) {
+			List<Integer> dieValues = new ArrayList<>();
+			dieValues.add(player.getMyFamily().getMember1().getMemberValue());
+			dieValues.add(player.getMyFamily().getMember2().getMemberValue());
+			dieValues.add(player.getMyFamily().getMember3().getMemberValue());
+			Collections.sort(dieValues);
+			Collections.reverse(dieValues);
+			if (player.getMyFamily().getMember1().getMemberValue() == dieValues.get(0)) {
+				player.getMyFamily().getMember1().setMemberValue(6);
+			} else if (player.getMyFamily().getMember2().getMemberValue() == dieValues.get(0)) {
+				player.getMyFamily().getMember1().setMemberValue(6);
+			} else if (player.getMyFamily().getMember3().getMemberValue() == dieValues.get(0)) {
+				player.getMyFamily().getMember1().setMemberValue(6);
+			}
+		}
+		if (player.getPermanentEffect("increaseValueNeutralFamilyMember") != null) {
+			player.getMyFamily().getMember4().setMemberValue(player.getMyFamily().getMember4().getMemberValue() + 3);
+		}
+		
 	}
 
 	public void incrementState() {
@@ -183,7 +231,7 @@ public class Model extends MyObservable implements Serializable {
 		hm.put("clientNumber", counter);
 		hm.put("modelNumber", modelNumber);
 		notifyMyObservers(hm);
-System.out.println("Numero inviato");
+		System.out.println("Numero inviato");
 	}
 
 	public Player getPlayerfromColour(PlayerColour colour) {
@@ -205,7 +253,6 @@ System.out.println("Numero inviato");
 			}
 		}
 	}
-
 
 	// getters and setters
 	public int getModelNumber() {
@@ -272,16 +319,15 @@ System.out.println("Numero inviato");
 		this.cards = cards;
 	}
 
-
 	@Override
 	public String toString() {
 		return "Model [players=" + players + ", gameState=" + gameState + ", modelNumber=" + modelNumber + "]";
 	}
 
 	/**
-	 * This method converts Faith Points in Values specified in a configuration
-	 * file named "convertFaithPoints.json". Every line of file corresponds to a
-	 * score. All Values are entered in a List of SetOfValues
+	 * This method converts Faith Points in Values specified in a configuration file
+	 * named "convertFaithPoints.json". Every line of file corresponds to a score.
+	 * All Values are entered in a List of SetOfValues
 	 */
 	public void getCorrespondingValueFromFile() {
 		Gson gson = GsonBuilders.getGsonWithTypeAdapters();
@@ -312,8 +358,5 @@ System.out.println("Numero inviato");
 	public void setExcommunicationDeck(List<Excommunication> excommunicationDeck) {
 		this.excommunicationDeck = excommunicationDeck;
 	}
-	
-	
-
 
 }

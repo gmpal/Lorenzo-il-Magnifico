@@ -2,8 +2,6 @@ package it.polimi.ingsw.GC_24.model.effects;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.StringTokenizer;
-
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.places.TowerPlace;
 import it.polimi.ingsw.GC_24.model.values.SetOfValues;

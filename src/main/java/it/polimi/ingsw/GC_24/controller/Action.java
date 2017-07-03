@@ -68,6 +68,9 @@ public abstract class Action {
 			nameEffect = immediateEffects.get(i).getName();
 			if (nameEffect.equals("value")) {
 				immediateEffects.get(i).giveImmediateEffect(player);
+				if (player.getPermanentEffect("duplicateValueEffectCard") != null) {
+					immediateEffects.get(i).giveImmediateEffect(player);
+				}
 				immediateEffects.remove(immediateEffects.get(i));
 				i--;
 			}

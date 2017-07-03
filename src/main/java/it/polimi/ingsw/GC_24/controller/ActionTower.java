@@ -2,7 +2,6 @@ package it.polimi.ingsw.GC_24.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.cards.Characters;
 import it.polimi.ingsw.GC_24.model.cards.Ventures;
@@ -10,6 +9,7 @@ import it.polimi.ingsw.GC_24.model.effects.ImmediateEffect;
 import it.polimi.ingsw.GC_24.model.effects.IncreaseDieValueCard;
 import it.polimi.ingsw.GC_24.model.effects.NoValueEffectFromTowerPlace;
 import it.polimi.ingsw.GC_24.model.effects.PermanentEffect;
+import it.polimi.ingsw.GC_24.model.effects.SubSetOfValues;
 import it.polimi.ingsw.GC_24.model.places.TowerPlace;
 import it.polimi.ingsw.GC_24.model.values.*;
 
@@ -96,8 +96,10 @@ public class ActionTower extends Action {
 	}
 
 	private void payCoinsforOccupiedTower() {
-		if (zone.isOccupied())
-			this.payValue(new Coin(3));
+		if (player.getPermanentEffect("noCoinsForOccupiedTower") == null) {
+			if (zone.isOccupied())
+				this.payValue(new Coin(3));
+		}
 	}
 
 	private void takeEffectsAndRemoveCard() {
@@ -116,7 +118,7 @@ public class ActionTower extends Action {
 		// Mine - cost --> Then set
 		setOfSales.subTwoSetsOfValues(temporaryCardCost);
 		this.player.setMyValues(temporaryCardCost.subTwoSetsOfValues(this.player.getMyValues()));
-		if (towerPlace.getCorrespondingCard().getType().equalsIgnoreCase("Character")) {
+		if (towerPlace.getCorrespondingCard().getType().equalsIgnoreCase("character")) {
 			Characters c = (Characters) towerPlace.getCorrespondingCard();
 			if (c.getPermanentEffects() != null) {
 				player.getActivePermanentEffects().add(c.getPermanentEffects());
@@ -163,7 +165,13 @@ public class ActionTower extends Action {
 					return answerToPlayer + "You don't have the required value for this card! Choose another card \n";
 				}
 			}
-
+			if (player.getPermanentEffect("discountCoinsCard")!=null) {
+				SubSetOfValues pes = (SubSetOfValues)player.getPermanentEffect("discountCoinsCard");
+				temporaryCardCost.getCoins().subQuantity(pes.getSubSet().getCoins().getQuantity());
+				if (temporaryCardCost.getCoins().getQuantity()<0) {
+					temporaryCardCost.getCoins().setQuantity(0);
+				}
+			}
 			if (!player.getMyValues().doIHaveThisSet(temporaryCardCost)) {
 				return answerToPlayer + "You don't have enough resources to take this card! Choose another card \n";
 			}
@@ -176,6 +184,10 @@ public class ActionTower extends Action {
 		TowerPlace tempTowerPlace = (TowerPlace) this.place;
 		if (tempTowerPlace.getCorrespondingCard() != null) {
 			String typeOfCard = tempTowerPlace.getCorrespondingCard().getType();
+
+			if (player.getPermanentEffect("noMilitaryPointsForTerritories") != null) {
+				return answerToPlayer;
+			}
 
 			int militaryPoints = this.player.getMyValues().getMilitaryPoints().getQuantity();
 			int territorySize = this.player.getMyBoard().getPersonalTerritories().getCards().size();

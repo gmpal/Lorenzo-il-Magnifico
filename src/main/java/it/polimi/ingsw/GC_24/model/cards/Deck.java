@@ -11,6 +11,9 @@ import com.google.gson.Gson;
 
 import it.polimi.ingsw.GC_24.devCardJsonFile.GsonBuilders;
 import it.polimi.ingsw.GC_24.model.board.Board;
+import it.polimi.ingsw.GC_24.model.effects.CustomizedPermanentEffect;
+import it.polimi.ingsw.GC_24.model.effects.IncreaseDieValueActivity;
+import it.polimi.ingsw.GC_24.model.effects.SubSetOfValues;
 import it.polimi.ingsw.GC_24.model.effects.SubVicrotyPointsFromSetOfValue;
 import it.polimi.ingsw.GC_24.model.personalboard.PersonalBoard;
 import it.polimi.ingsw.GC_24.model.places.*;
@@ -240,7 +243,13 @@ public class Deck implements Serializable {
 
 		Excommunication ex=new Excommunication(null, new SubVicrotyPointsFromSetOfValue("subVicrotyPointsFromSetOfValue", new SetOfValues(), new VictoryPoint(1)) , 3, new FaithPoint(3));
 		Gson gson=GsonBuilders.getGsonWithTypeAdapters();
-		System.out.println(gson.toJson(ex));
+	//	System.out.println(gson.toJson(ex));
+		CustomizedPermanentEffect cp = new CustomizedPermanentEffect("noMilitaryPointsForTerritories");
+		IncreaseDieValueActivity in = new IncreaseDieValueActivity("setDiceValue", 5);
+		SubSetOfValues ss = new SubSetOfValues("discountCoins", new SetOfValues());
+		Leader card = new Leader("Ludovico il Moro", null, null, null, ss, false);
+		
+		System.out.println(gson.toJson(card));
 		/*List<SetOfValues> sett=new ArrayList<>();
 		BufferedReader br;
 		String line;

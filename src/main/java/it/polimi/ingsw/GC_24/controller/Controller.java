@@ -86,6 +86,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			game.getBoard().clear();
 
 			game.getCards().dealCards(game.getBoard(), cardsIndex / 2 + 1);
+			
+			game.updateModel();
 
 			game.sendModel();
 
@@ -545,6 +547,9 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				}
 			}
 		}
+		if (verifyLeaderExclusiveRequirement(index)) {
+			return feedback;
+		}
 		if (!requirements.getRequirementSetOfVaue().isEmpty()
 				&& !currentPlayer.getMyValues().doIHaveThisSet(requirements.getRequirementSetOfVaue())) {
 			feedback = feedback + "You don't have enough resources to activate this card!\n";
@@ -568,6 +573,23 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		return feedback;
 	}
 
+	public boolean verifyLeaderExclusiveRequirement(int index) {
+		Requirements requirements = currentPlayer.getMyBoard().getPersonalLeader().get(index).getRequirements();
+		if (currentPlayer.getMyBoard().getPersonalLeader().get(index).getName().equalsIgnoreCase("Lucrezia Borgia")) {
+			return (currentPlayer.getMyBoard().getPersonalTerritories().getCards().size() < requirements
+					.getRequirmentTerritories()
+					|| currentPlayer.getMyBoard().getPersonalCharacters().getCards().size() < requirements
+							.getRequirmentCharacters()
+					|| currentPlayer.getMyBoard().getPersonalBuildings().getCards().size() < requirements
+							.getRequirmentBuildings()
+					|| currentPlayer.getMyBoard().getPersonalVentures().getCards().size() < requirements
+							.getRequirmentVentures());
+
+		} else {
+			return false;
+		}
+	}
+
 	/**
 	 * This method gives an excommunication card to the player that either decides
 	 * not to give his support to the Vatican or doesn't have the faith
@@ -578,6 +600,9 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		if (answer.equalsIgnoreCase("y")) {
 			currentPlayer.setMyValues(currentPlayer.getMyValues().addTwoSetsOfValues(
 					currentPlayer.getMyValues().getFaithPoints().convertToValue(game.getCorrespondingValue())));
+			if (currentPlayer.getPermanentEffect("pointsForSupportVatican") != null) {
+				currentPlayer.getMyValues().getVictoryPoints().addQuantity(5);
+			}
 			currentPlayer.getMyValues().getFaithPoints().setQuantity(0);
 		} else {
 			currentPlayer.getActivePermanentEffects()
@@ -647,6 +672,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			}
 
 		}
+		
 		if (tempZone.equalsIgnoreCase("ventures")) {
 
 			handleVentures(tempZone, tempFloor);
@@ -711,6 +737,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		if (card.isOneTimePerTurn() && !leaderOneTimePerTurn.contains(card)) {
 			leaderOneTimePerTurn.add(card);
 		}
+		game.changeInDieValue(currentPlayer);
 		game.sendModel();
 		awakenSleepingClient();
 		System.out.println("Controller --> Richiesta di risveglio inviata");
@@ -981,7 +1008,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	// getters and setters
-
 	public Model getGame() {
 		return game;
 	}
