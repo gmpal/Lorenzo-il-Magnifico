@@ -1,11 +1,8 @@
 package it.polimi.ingsw.GC_24.model.values;
 
-
 import java.io.Serializable;
 
 public class SetOfValues implements Serializable {
-	
-
 
 	/**
 	 * 
@@ -32,7 +29,7 @@ public class SetOfValues implements Serializable {
 
 	// useful methods
 
-	/** method to set a SetOfValue from a numPlayer*/
+	/** method to set a SetOfValue from a numPlayer */
 	public void setInitialValues(int playerNumber) {
 		this.woods = new Wood(3);
 		this.stones = new Stone(3);
@@ -43,7 +40,7 @@ public class SetOfValues implements Serializable {
 		this.victoryPoints = new VictoryPoint(0);
 	}
 
-	/** method to sum two sets of values*/
+	/** method to sum two sets of values */
 	public SetOfValues addTwoSetsOfValues(SetOfValues v) {
 		v.setCoins(new Coin(this.coins.getQuantity() + v.getCoins().getQuantity()));
 		v.setWoods(new Wood(this.woods.getQuantity() + v.getWoods().getQuantity()));
@@ -52,11 +49,11 @@ public class SetOfValues implements Serializable {
 		v.setFaithPoints(new FaithPoint(this.faithPoints.getQuantity() + v.getFaithPoints().getQuantity()));
 		v.setMilitaryPoints(new MilitaryPoint(this.militaryPoints.getQuantity() + v.getMilitaryPoints().getQuantity()));
 		v.setVictoryPoints(new VictoryPoint(this.victoryPoints.getQuantity() + v.getVictoryPoints().getQuantity()));
-		SetOfValues c=v;
+		SetOfValues c = v;
 		return c;
 	}
 
-	/** method to subtract two sets of values [v- this]*/
+	/** method to subtract two sets of values [v- this] */
 	public SetOfValues subTwoSetsOfValues(SetOfValues v) {
 		v.setCoins(new Coin(v.getCoins().getQuantity() - this.coins.getQuantity()));
 		v.setWoods(new Wood(v.getWoods().getQuantity() - this.woods.getQuantity()));
@@ -79,22 +76,14 @@ public class SetOfValues implements Serializable {
 		// this-cost >=0;
 	}
 
-	/*public Value valueNotNullFromSet() {
-		if (this.coins.quantity != 0) {
-			return coins;
-		} else if (this.faithPoints.quantity != 0) {
-			return faithPoints;
-		} else if (this.militaryPoints.quantity != 0) {
-			return militaryPoints;
-		} else if (this.stones.quantity != 0) {
-			return stones;
-		} else if (this.victoryPoints.quantity != 0) {
-			return victoryPoints;
-		} else if (this.woods.quantity != 0) {
-			return woods;
-		} else
-			return null;
-	}*/
+	/*
+	 * public Value valueNotNullFromSet() { if (this.coins.quantity != 0) { return
+	 * coins; } else if (this.faithPoints.quantity != 0) { return faithPoints; }
+	 * else if (this.militaryPoints.quantity != 0) { return militaryPoints; } else
+	 * if (this.stones.quantity != 0) { return stones; } else if
+	 * (this.victoryPoints.quantity != 0) { return victoryPoints; } else if
+	 * (this.woods.quantity != 0) { return woods; } else return null; }
+	 */
 
 	/** Returns true if the Set does not contains negative quantity */
 	public boolean isAcceptable() {
@@ -105,14 +94,25 @@ public class SetOfValues implements Serializable {
 	}
 
 	public VictoryPoint convertSetToVictoryPoints() {
-		return new VictoryPoint((int)((this.coins.quantity+this.servants.quantity+this.stones.quantity+this.woods.quantity)/5));
+		return new VictoryPoint(
+				(int) ((this.coins.quantity + this.servants.quantity + this.stones.quantity + this.woods.quantity)
+						/ 5));
+	}
+
+	/**
+	 * 
+	 * @return Number of all resources.
+	 */
+	public int numberResorces() {
+		return this.coins.quantity + this.servants.quantity + this.stones.quantity + this.woods.quantity;
 	}
 
 	public boolean isEmpty() {
-		return (woods.getQuantity()==0 && stones.getQuantity()==0 && coins.getQuantity()==0 &&
-				servants.getQuantity()==0 && faithPoints.getQuantity()==0 &&
-				militaryPoints.getQuantity()==0 && victoryPoints.getQuantity()==0);
+		return (woods.getQuantity() == 0 && stones.getQuantity() == 0 && coins.getQuantity() == 0
+				&& servants.getQuantity() == 0 && faithPoints.getQuantity() == 0 && militaryPoints.getQuantity() == 0
+				&& victoryPoints.getQuantity() == 0);
 	}
+
 	// hashCode() redefined
 	@Override
 	public int hashCode() {
@@ -184,19 +184,19 @@ public class SetOfValues implements Serializable {
 		builder.append("[");
 
 		if (woods.getQuantity() != 0)
-			builder.append(" "+woods);
+			builder.append(" " + woods);
 		if (stones.getQuantity() != 0)
-			builder.append(" "+stones);
+			builder.append(" " + stones);
 		if (coins.getQuantity() != 0)
-			builder.append(" "+coins);
+			builder.append(" " + coins);
 		if (servants.getQuantity() != 0)
-			builder.append(" "+servants);
+			builder.append(" " + servants);
 		if (faithPoints.getQuantity() != 0)
-			builder.append(" "+faithPoints);
+			builder.append(" " + faithPoints);
 		if (militaryPoints.getQuantity() != 0)
-			builder.append(" "+militaryPoints);
+			builder.append(" " + militaryPoints);
 		if (victoryPoints.getQuantity() != 0)
-			builder.append(" "+victoryPoints);
+			builder.append(" " + victoryPoints);
 		builder.append(" ]");
 		return builder.toString();
 	}

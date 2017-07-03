@@ -23,6 +23,7 @@ public class Player implements Serializable {
 	private int playerNumber;
 	public boolean autoCompleted = false;
 	private List<PermanentEffect> activePermanentEffects = new ArrayList<>();
+	private boolean lastExcommunication=false;
 
 	// Constructor
 	public Player(int playerNumber) {
@@ -172,5 +173,13 @@ public class Player implements Serializable {
 
 	public void setActivePermanentEffects(List<PermanentEffect> activePermanentEffects) {
 		this.activePermanentEffects = activePermanentEffects;
+	}
+
+	public boolean hasLastExcommunication() {
+		return lastExcommunication;
+	}
+
+	public void setLastExcommunication(boolean lastExcommunication) {
+		this.lastExcommunication = lastExcommunication;
 	}
 }
