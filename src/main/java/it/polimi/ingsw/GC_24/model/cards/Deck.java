@@ -13,6 +13,7 @@ import it.polimi.ingsw.GC_24.devCardJsonFile.GsonBuilders;
 import it.polimi.ingsw.GC_24.model.board.Board;
 import it.polimi.ingsw.GC_24.model.effects.CustomizedPermanentEffect;
 import it.polimi.ingsw.GC_24.model.effects.IncreaseDieValueActivity;
+import it.polimi.ingsw.GC_24.model.effects.SubSetOfValues;
 import it.polimi.ingsw.GC_24.model.effects.SubVicrotyPointsFromSetOfValue;
 import it.polimi.ingsw.GC_24.model.personalboard.PersonalBoard;
 import it.polimi.ingsw.GC_24.model.places.*;
@@ -245,7 +246,8 @@ public class Deck implements Serializable {
 	//	System.out.println(gson.toJson(ex));
 		CustomizedPermanentEffect cp = new CustomizedPermanentEffect("noMilitaryPointsForTerritories");
 		IncreaseDieValueActivity in = new IncreaseDieValueActivity("setDiceValue", 5);
-		Leader card = new Leader("Ludovico il Moro", null, null, null, in, false);
+		SubSetOfValues ss = new SubSetOfValues("discountCoins", new SetOfValues());
+		Leader card = new Leader("Ludovico il Moro", null, null, null, ss, false);
 		
 		System.out.println(gson.toJson(card));
 		/*List<SetOfValues> sett=new ArrayList<>();
