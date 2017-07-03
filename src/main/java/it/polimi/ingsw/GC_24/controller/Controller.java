@@ -738,7 +738,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		if (card.isOneTimePerTurn() && !leaderOneTimePerTurn.contains(card)) {
 			leaderOneTimePerTurn.add(card);
 		}
-		game.leaderChangeInDieValue(currentPlayer);
+		game.changeInDieValue(currentPlayer);
 		game.sendModel();
 		awakenSleepingClient();
 		System.out.println("Controller --> Richiesta di risveglio inviata");
