@@ -34,6 +34,8 @@ public class TestHarvestAction {
 		character2 = new Characters("Character2", "Character", null, null, increaseValue, null, 2);
 		character.setCardOnPersonalBoard(player.getMyBoard());
 		character2.setCardOnPersonalBoard(player.getMyBoard());
+		player.getActivePermanentEffects().add(character.getPermanentEffects());
+		player.getActivePermanentEffects().add(character2.getPermanentEffects());
 		players.add(player);
 		players.add(player2);
 		game.setModel(players);
