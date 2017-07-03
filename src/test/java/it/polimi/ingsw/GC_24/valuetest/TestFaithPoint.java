@@ -39,7 +39,7 @@ public class TestFaithPoint {
 		values.setInitialValues(1);
 		valuesexpected.setInitialValues(1);
 		valuesexpected.getFaithPoints().subQuantity(3);
-		assertFalse(valuesexpected.equals(faithPoint.addValueToSet(values)));
+		assertTrue(valuesexpected.equals(faithPoint.addValueToSet(values)));
 	}
 	
 	@Test

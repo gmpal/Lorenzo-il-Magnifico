@@ -12,6 +12,7 @@ import org.junit.Test;
 import it.polimi.ingsw.GC_24.controller.Controller;
 import it.polimi.ingsw.GC_24.model.*;
 import it.polimi.ingsw.GC_24.model.cards.Characters;
+import it.polimi.ingsw.GC_24.model.cards.Excommunication;
 import it.polimi.ingsw.GC_24.model.cards.Leader;
 import it.polimi.ingsw.GC_24.model.cards.Ventures;
 import it.polimi.ingsw.GC_24.model.values.*;
@@ -27,6 +28,7 @@ public class TestController {
 	List<Player> temporaryTurnExpected;
 	List<Player> players;
 	List<Integer> militaryPoints;
+	List<Excommunication>excommunicationDeck;
 	VictoryPoint vc;
 	Characters character1;
 	Ventures venture1;
@@ -46,6 +48,7 @@ public class TestController {
 		players.add(player3);
 		game = new Model(1);
 		game.setPlayers(players);
+		game.createExcommunicationDeck();
 		game.getCorrespondingValueFromFile();
 		controller = new Controller(game);
 		controller.setPlayerTurn(players);
@@ -100,6 +103,7 @@ public class TestController {
 	
 	@Test
 	public void testGiveVictoryPoints() {
+		System.out.println(game.getExcommunicationDeck().get(2));
 		character1.setCardOnPersonalBoard(player.getMyBoard());
 		venture1.setCardOnPersonalBoard(player.getMyBoard());
 		venture2.setCardOnPersonalBoard(player.getMyBoard());

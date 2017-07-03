@@ -69,7 +69,7 @@ public class Model extends MyObservable implements Serializable {
 	 * round. This final ArrayList contains the possible excommunication card the
 	 * player can take when it will choose to not support the Vatican.
 	 */
-	private void createExcommunicationDeck() {
+	public void createExcommunicationDeck() {
 		BufferedReader br;
 		Gson gson = GsonBuilders.getGsonWithTypeAdapters();
 		String line;
@@ -148,6 +148,7 @@ public class Model extends MyObservable implements Serializable {
 		dealLeaders(cards.getDeckLeaders(), players);
 		getCorrespondingValueFromFile();
 		createExcommunicationDeck();
+		System.out.println(this.excommunicationDeck);
 
 		// Setting the players
 		for (Player p : players) {

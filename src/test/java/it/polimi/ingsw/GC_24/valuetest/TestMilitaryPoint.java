@@ -39,7 +39,7 @@ public class TestMilitaryPoint {
 		values.setInitialValues(1);
 		valuesexpected.setInitialValues(1);
 		valuesexpected.getMilitaryPoints().subQuantity(3);
-		assertFalse(valuesexpected.equals(militaryPoint.addValueToSet(values)));
+		assertTrue(valuesexpected.equals(militaryPoint.addValueToSet(values)));
 	}
 	
 	@Test
