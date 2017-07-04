@@ -87,7 +87,7 @@ public class ActionTower extends Action {
 	 * 
 	 * @return true if player have this effect, false otherwise.
 	 */
-	private boolean isThereNoValueEffect() {
+	public boolean isThereNoValueEffect() {
 		NoValueEffectFromTowerPlace pe = (NoValueEffectFromTowerPlace) player
 				.getPermanentEffect("noValueEffectFromTowerPlace");
 		if (pe != null) {
