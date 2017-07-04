@@ -174,15 +174,8 @@ public class Model extends MyObservable implements Serializable {
 	 */
 	public void changeInDieValue(Player player) {
 		
-		for (PermanentEffect p:player.getPermanentEffectList("increaseDieValueFamiliar")) {
-			IncreaseDieValueActivity pe1 = (IncreaseDieValueActivity) p;
-			int value = pe1.getIncreaseDieValue();
-			player.getMyFamily().getMember1().setMemberValue(player.getMyFamily().getMember1().getMemberValue() + value);
-			player.getMyFamily().getMember2().setMemberValue(player.getMyFamily().getMember2().getMemberValue() + value);
-			player.getMyFamily().getMember3().setMemberValue(player.getMyFamily().getMember3().getMemberValue() + value);
-		}
 		if (player.getPermanentEffect("setDiceValue") != null) {
-			IncreaseDieValueActivity pe = (IncreaseDieValueActivity) player.getPermanentEffect("setDieValue");
+			IncreaseDieValueActivity pe = (IncreaseDieValueActivity) player.getPermanentEffect("setDiceValue");
 			int value = pe.getIncreaseDieValue();
 			player.getMyFamily().getMember1().setMemberValue(value);
 			player.getMyFamily().getMember2().setMemberValue(value);
@@ -198,13 +191,21 @@ public class Model extends MyObservable implements Serializable {
 			if (player.getMyFamily().getMember1().getMemberValue() == dieValues.get(0)) {
 				player.getMyFamily().getMember1().setMemberValue(6);
 			} else if (player.getMyFamily().getMember2().getMemberValue() == dieValues.get(0)) {
-				player.getMyFamily().getMember1().setMemberValue(6);
+				player.getMyFamily().getMember2().setMemberValue(6);
 			} else if (player.getMyFamily().getMember3().getMemberValue() == dieValues.get(0)) {
-				player.getMyFamily().getMember1().setMemberValue(6);
+				player.getMyFamily().getMember3().setMemberValue(6);
 			}
 		}
 		if (player.getPermanentEffect("increaseValueNeutralFamilyMember") != null) {
 			player.getMyFamily().getMember4().setMemberValue(player.getMyFamily().getMember4().getMemberValue() + 3);
+		}
+		
+		for (PermanentEffect p:player.getPermanentEffectList("increaseDieValueFamiliar")) {
+			IncreaseDieValueActivity pe1 = (IncreaseDieValueActivity) p;
+			int value = pe1.getIncreaseDieValue();
+			player.getMyFamily().getMember1().setMemberValue(player.getMyFamily().getMember1().getMemberValue() + value);
+			player.getMyFamily().getMember2().setMemberValue(player.getMyFamily().getMember2().getMemberValue() + value);
+			player.getMyFamily().getMember3().setMemberValue(player.getMyFamily().getMember3().getMemberValue() + value);
 		}
 		
 	}

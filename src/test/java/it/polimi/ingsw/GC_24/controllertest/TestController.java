@@ -38,9 +38,9 @@ public class TestController {
 	@Before
 	public void setUp() {
 		players = new ArrayList<>();
-		player = new Player("Giorgia", PlayerColour.RED);
-		player2 = new Player("Carlo", PlayerColour.GREEN);
-		player3 = new Player("Gian Marco", PlayerColour.YELLOW);
+		player = new Player(1);
+		player2 = new Player(2);
+		player3 = new Player(3);
 		players.add(player);
 		players.add(player2);
 		players.add(player3);
@@ -58,7 +58,7 @@ public class TestController {
 		venture2 = new Ventures("Venture2", "Venture", null, null, new VictoryPoint(3), null, null, null, 3);
 		leader1 = new Leader("Leader1", null, null, null, null, true);
 		leader2 = new Leader("Leader2", null, null, null, null, true);
-		leader3 = new Leader("Leader1", null, null, null, null, false);
+		leader3 = new Leader("Leader3", null, null, null, null, false);
 	}
 	
 	@Test
@@ -70,6 +70,13 @@ public class TestController {
 		temporaryTurnExpected.add(player);
 		temporaryTurnExpected.add(player2);
 		assertEquals(temporaryTurnExpected, controller.getPlayerTurn());
+	}
+	
+	@Test
+	public void testAutoCompletePlayers() {
+		players.get(1).setMyName(null);
+		controller.autoCompletePlayers();
+		assertEquals("Player_2", controller.getGame().getPlayers().get(1).getMyName());
 	}
 	
 	@Test
@@ -132,5 +139,27 @@ public class TestController {
 		player.getMyBoard().getPersonalLeader().get(2).setInUse(false);
 		controller.checkToActivateLeader();
 		assertFalse(player.getMyBoard().getPersonalLeader().get(2).isInUse());
+	}
+	
+	@Test
+	public void testVerifyAvailabilityLeaderTrue() {
+		player.getMyBoard().getPersonalLeader().add(leader3);
+		player.getMyBoard().getPersonalLeader().add(leader1);
+		player.getMyBoard().getPersonalLeader().add(leader2);
+		player.getMyBoard().getPersonalLeader().get(1).setInUse(true);
+		player.getMyBoard().getPersonalLeader().get(2).setInUse(false);
+		controller.setCurrentPlayer(player);
+		assertEquals("ok", controller.verifyAvailabilityLeader(2, "ok"));
+	}
+	
+	@Test
+	public void testVerifyAvailabilityLeaderFalse() {
+		player.getMyBoard().getPersonalLeader().add(leader3);
+		player.getMyBoard().getPersonalLeader().add(leader1);
+		player.getMyBoard().getPersonalLeader().add(leader2);
+		player.getMyBoard().getPersonalLeader().get(1).setInUse(true);
+		player.getMyBoard().getPersonalLeader().get(2).setInUse(false);
+		controller.setCurrentPlayer(player);
+		assertEquals("okThis card is already in use\n", controller.verifyAvailabilityLeader(1, "ok"));
 	}
 }

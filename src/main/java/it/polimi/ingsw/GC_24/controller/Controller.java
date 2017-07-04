@@ -85,7 +85,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			game.getBoard().clear();
 
 			game.getCards().dealCards(game.getBoard(), cardsIndex / 2 + 1);
-			
+
 			game.updateModel();
 
 			game.sendModel();
@@ -531,14 +531,14 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	}
 
-	private String verifyAvailabilityLeader(int index, String feedback) {
+	public String verifyAvailabilityLeader(int index, String feedback) {
 		if (currentPlayer.getMyBoard().getPersonalLeader().get(index).isInUse()) {
 			return feedback + "This card is already in use\n";
 		}
 		return feedback;
 	}
 
-	private String verifyRequirementsLeader(int index, String feedback) {
+	public String verifyRequirementsLeader(int index, String feedback) {
 		Requirements requirements = currentPlayer.getMyBoard().getPersonalLeader().get(index).getRequirements();
 		if (!currentPlayer.getLeaderOneTimePerTurn().isEmpty()) {
 			for (Leader card : currentPlayer.getLeaderOneTimePerTurn()) {
@@ -672,7 +672,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			}
 
 		}
-		
+
 		if (tempZone.equalsIgnoreCase("ventures")) {
 
 			handleVentures(tempZone, tempFloor);
@@ -1027,6 +1027,10 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	public void setPlayerTurn(List<Player> playerTurn) {
 		this.playerTurn = playerTurn;
+	}
+	//only used in tests
+	public void setCurrentPlayer(Player currentPlayer) {
+		this.currentPlayer = currentPlayer;
 	}
 
 }

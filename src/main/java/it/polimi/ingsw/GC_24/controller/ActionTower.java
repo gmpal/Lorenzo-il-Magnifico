@@ -142,8 +142,8 @@ public class ActionTower extends Action {
 	 * tower occupied (3 coins)
 	 */
 	public String verifyMoneyForTowerOccupied(String answerToPlayer) {
-
-		if (this.zone.isOccupied() && this.player.getMyValues().getCoins().getQuantity() < 3) {
+		if (player.getPermanentEffect("noCoinsForOccupiedTower") == null && this.zone.isOccupied()
+				&& this.player.getMyValues().getCoins().getQuantity() < 3) {
 			return answerToPlayer
 					+ "You don't have enough coins to place your family member in a tower already occupied\n";
 		} else
