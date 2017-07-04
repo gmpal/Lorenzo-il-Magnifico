@@ -1,14 +1,11 @@
 package it.polimi.ingsw.GC_24.controllertest;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
-
 import it.polimi.ingsw.GC_24.controller.Controller;
 import it.polimi.ingsw.GC_24.model.*;
 import it.polimi.ingsw.GC_24.model.cards.*;
@@ -44,6 +41,7 @@ public class TestController {
 	Leader leader1;
 	Leader leader2;
 	Leader leader3;
+	Leader leader4;
 	Excommunication ex1, ex2, ex3, ex4, ex5, ex6, ex7;
 	SetOfValues setEx = new SetOfValues();
 	SetOfValues setEx5 = new SetOfValues();
@@ -93,8 +91,8 @@ public class TestController {
 				new SubVicrotyPointsFromSetOfValue("subCostBuildings", setEx7, new VictoryPoint(1)), 3,
 				new FaithPoint(5));
 		territory1 = new Territories("territory1", 1, null, null, null, null, null, 1);
-		territory2 = new Territories("territory1", 1, null, null, null, null, null, 2);
-		territory3 = new Territories("territory1", 1, null, null, null, null, null, 3);
+		territory2 = new Territories("territory2", 1, null, null, null, null, null, 2);
+		territory3 = new Territories("territory3", 1, null, null, null, null, null, 3);
 		building1 = new Buildings("building1", 1, null, costB1, null, null, null, null, 1);
 		building2 = new Buildings("building2", 1, null, costB2, null, null, null, null, 1);
 		players.add(player);
@@ -119,7 +117,8 @@ public class TestController {
 		building = new Buildings("Building", 0, "Building", null, null, null, null, null, 1);
 		leader1 = new Leader("Leader1", new Requirements(set, 2, 5, 3, 6), null, null, null, true);
 		leader2 = new Leader("Leader2", new Requirements(new SetOfValues(), 0, 1, 1, 2), null, null, null, true);
-		leader3 = new Leader("Leader3", null, null, null, null, false);
+		leader3 = new Leader("Leader3", null, null, null, null, true);
+		leader4 = new Leader("Lucrezia Borgia", new Requirements(new SetOfValues(), 1, 1, 1, 1), null, null, null, false);
 	}
 
 	@Test
@@ -418,5 +417,30 @@ public class TestController {
 		game.getExcommunicationDeck().set(0, ex1);
 		player.getMyValues().setFaithPoints(new FaithPoint(3));
 		assertTrue(controller.verifyRequiremetsExcommunication());
+	
+	@Test
+	public void testVerifyRequirementsLeaderOneTimePerTurn() {
+		player.getMyBoard().getPersonalLeader().add(leader3);
+		player.getLeaderOneTimePerTurn().add(leader3);
+		controller.setCurrentPlayer(player);
+		assertEquals("ok", controller.verifyRequirementsLeader(0, "ok"));
+	}
+	
+	@Test
+	public void testVerifyLeaderExclusiveRequirementTrue() {
+		character.setCardOnPersonalBoard(player.getMyBoard());
+		building.setCardOnPersonalBoard(player.getMyBoard());
+		player.getMyBoard().getPersonalLeader().add(leader3);
+		player.getMyBoard().getPersonalLeader().add(leader4);
+		controller.setCurrentPlayer(player);
+		assertTrue(controller.verifyLeaderExclusiveRequirement(1));
+	}
+	
+	@Test
+	public void testVerifyLeaderExclusiveRequirementFalse() {
+		player.getMyBoard().getPersonalLeader().add(leader3);
+		player.getMyBoard().getPersonalLeader().add(leader4);
+		controller.setCurrentPlayer(player);
+		assertFalse(controller.verifyLeaderExclusiveRequirement(1));
 	}
 }

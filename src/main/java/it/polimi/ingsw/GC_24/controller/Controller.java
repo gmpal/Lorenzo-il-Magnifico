@@ -636,13 +636,13 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	public boolean verifyLeaderExclusiveRequirement(int index) {
 		Requirements requirements = currentPlayer.getMyBoard().getPersonalLeader().get(index).getRequirements();
 		if (currentPlayer.getMyBoard().getPersonalLeader().get(index).getName().equalsIgnoreCase("Lucrezia Borgia")) {
-			return (currentPlayer.getMyBoard().getPersonalTerritories().getCards().size() < requirements
+			return (currentPlayer.getMyBoard().getPersonalTerritories().getCards().size() >= requirements
 					.getRequirmentTerritories()
-					|| currentPlayer.getMyBoard().getPersonalCharacters().getCards().size() < requirements
+					|| currentPlayer.getMyBoard().getPersonalCharacters().getCards().size() >= requirements
 							.getRequirmentCharacters()
-					|| currentPlayer.getMyBoard().getPersonalBuildings().getCards().size() < requirements
+					|| currentPlayer.getMyBoard().getPersonalBuildings().getCards().size() >= requirements
 							.getRequirmentBuildings()
-					|| currentPlayer.getMyBoard().getPersonalVentures().getCards().size() < requirements
+					|| currentPlayer.getMyBoard().getPersonalVentures().getCards().size() >= requirements
 							.getRequirmentVentures());
 
 		} else {

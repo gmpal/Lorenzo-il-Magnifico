@@ -238,93 +238,79 @@ public class Deck implements Serializable {
 		this.deckLeaders = deckLeaders;
 	}
 
-
 	public static void main(String args[]) throws IOException {
 
-		Excommunication ex=new Excommunication(null, new SubVicrotyPointsFromSetOfValue("subVicrotyPointsFromSetOfValue", new SetOfValues(), new VictoryPoint(1)) , 3, new FaithPoint(3));
-		Gson gson=GsonBuilders.getGsonWithTypeAdapters();
-	//	System.out.println(gson.toJson(ex));
+		Excommunication ex = new Excommunication(null, new SubVicrotyPointsFromSetOfValue(
+				"subVicrotyPointsFromSetOfValue", new SetOfValues(), new VictoryPoint(1)), 3, new FaithPoint(3));
+		Gson gson = GsonBuilders.getGsonWithTypeAdapters();
+		// System.out.println(gson.toJson(ex));
 		CustomizedPermanentEffect cp = new CustomizedPermanentEffect("noMilitaryPointsForTerritories", "jjjjjjjjj");
 		IncreaseDieValueActivity in = new IncreaseDieValueActivity("setDiceValue", 5);
 		SubSetOfValues ss = new SubSetOfValues("discountCoins", new SetOfValues());
 		Leader card = new Leader("Ludovico il Moro", null, null, null, cp, false);
-		
+
 		System.out.println(gson.toJson(card));
-		/*List<SetOfValues> sett=new ArrayList<>();
-		BufferedReader br;
-		String line;
-		try {
-			br = new BufferedReader(
-					new FileReader("src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/convertFaithPoints.json"));
-
-			while ((line = GsonBuilders.getLine(br)) != null) {
-				sett.add(gson.fromJson(line, SetOfValues.class));
-			}
-		} catch (IOException e) {
-			System.out.println("There is a problem with the configuration file");
-		}
-		for(int i=0; i<20;i++){
-			System.out.println(sett.get(i));
-		}
-		SetOfValues set1=new SetOfValues();
-		SetOfValues set2=new SetOfValues();
-		set2.setFaithPoints(new FaithPoint(1));
-		set1.setFaithPoints(new FaithPoint(1));
-		set1.addTwoSetsOfValues(set2);
-		System.out.println(	set2);
-
-		/*Player player1 = new Player(1);
-		Player player2 = new Player(2);
-		List<Player> lista = new ArrayList<>();
-		lista.add(player1);
-		lista.add(player2);
-		Model game = new Model(1);
-		game.setModel(lista);
-		
-		game.getCards().dealCards(game.getBoard(), 2);
-	
-	//	System.out.println(game.getCards().getTempListBuildings());
-		
-	//	System.out.println("CARTE DAL GAME\n");
-		
-		
-	//	System.out.println(game.getBoard().getTowerTerritories());
-	
-		
-	
-	/*	SetOfValues set = new SetOfValues();
-
-		SetOfValues set1 = new SetOfValues();
-		ValueEffect ve=new ValueEffect("value");
-		ve.setEffectValues(set);
-		set.setCoins(new Coin(6));
-		ValueEffect ve1=new ValueEffect("value");
-		ve1.setEffectValues(set);
-		set1.setVictoryPoints(new VictoryPoint(5));
-		NoValueEffectFromTowerPlace nvet = new NoValueEffectFromTowerPlace("NoValueEffectFromTowerPlace");
-		CouncilPrivilege privilege = new CouncilPrivilege("CouncilPrivilege", 1);
-		ChooseNewCard cnc = new ChooseNewCard("ChooseNewCard", null, 7, null);
-		IncreaseDieValueActivity increase = new IncreaseDieValueActivity("IncreaseDieValueHarvest", 2);
-		Buildings t=new Buildings("Mint", 5, "Building", set, ve1, null, new MoltiplicationCards("moltiplicationCard", new Coin(1), new PersonalBuildings()), null, 1);
-		PerformHarvest ph = new PerformHarvest("Perform Harvest", 1);
-		PerformProduction pp = new PerformProduction("Perform Production", 0);
-		PersonalTerritories pt = new PersonalTerritories();
-		MoltiplicationCards mc = new MoltiplicationCards("MoltiplicationCards", new VictoryPoint(2), pt);
-		MoltiplicationPoints mp = new MoltiplicationPoints("MoltiplicationPoints", new VictoryPoint(1), new MilitaryPoint(2));
-		IncreaseDieValueCard pe = new IncreaseDieValueCard("IncreaseDieValueCard", pt, 2, null, null);
-		Ventures v = new Ventures("Reparing the Cathedral", "Venture", set, null, new VictoryPoint(5), null, ve, cnc, 3);
-		Characters c = new Characters("preacher", "Character", set, ve, nvet, null, 1);
-		Requirements requirements = new Requirements(null, 2, 4, 0, 0);
-		Leader l = new Leader("Girolamo Savonarola", requirements, null, pp, null, true);
-		System.out.println(gson.toJson(l));
-	br = new BufferedReader(new
-		FileReader("src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/provaC.json"));
-		String string;
-		string = br.readLine();
-		Buildings t1=gson.fromJson(string, Buildings.class);
-		ArrayList<Buildings> tx=new ArrayList<>();
-		tx.add(t1);
-		System.out.println(tx);*/
+		/*
+		 * List<SetOfValues> sett=new ArrayList<>(); BufferedReader br; String line; try
+		 * { br = new BufferedReader( new FileReader(
+		 * "src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/convertFaithPoints.json"
+		 * ));
+		 * 
+		 * while ((line = GsonBuilders.getLine(br)) != null) {
+		 * sett.add(gson.fromJson(line, SetOfValues.class)); } } catch (IOException e) {
+		 * System.out.println("There is a problem with the configuration file"); }
+		 * for(int i=0; i<20;i++){ System.out.println(sett.get(i)); } SetOfValues
+		 * set1=new SetOfValues(); SetOfValues set2=new SetOfValues();
+		 * set2.setFaithPoints(new FaithPoint(1)); set1.setFaithPoints(new
+		 * FaithPoint(1)); set1.addTwoSetsOfValues(set2); System.out.println( set2);
+		 * 
+		 * /*Player player1 = new Player(1); Player player2 = new Player(2);
+		 * List<Player> lista = new ArrayList<>(); lista.add(player1);
+		 * lista.add(player2); Model game = new Model(1); game.setModel(lista);
+		 * 
+		 * game.getCards().dealCards(game.getBoard(), 2);
+		 * 
+		 * // System.out.println(game.getCards().getTempListBuildings());
+		 * 
+		 * // System.out.println("CARTE DAL GAME\n");
+		 * 
+		 * 
+		 * // System.out.println(game.getBoard().getTowerTerritories());
+		 * 
+		 * 
+		 * 
+		 * /* SetOfValues set = new SetOfValues();
+		 * 
+		 * SetOfValues set1 = new SetOfValues(); ValueEffect ve=new
+		 * ValueEffect("value"); ve.setEffectValues(set); set.setCoins(new Coin(6));
+		 * ValueEffect ve1=new ValueEffect("value"); ve1.setEffectValues(set);
+		 * set1.setVictoryPoints(new VictoryPoint(5)); NoValueEffectFromTowerPlace nvet
+		 * = new NoValueEffectFromTowerPlace("NoValueEffectFromTowerPlace");
+		 * CouncilPrivilege privilege = new CouncilPrivilege("CouncilPrivilege", 1);
+		 * ChooseNewCard cnc = new ChooseNewCard("ChooseNewCard", null, 7, null);
+		 * IncreaseDieValueActivity increase = new
+		 * IncreaseDieValueActivity("IncreaseDieValueHarvest", 2); Buildings t=new
+		 * Buildings("Mint", 5, "Building", set, ve1, null, new
+		 * MoltiplicationCards("moltiplicationCard", new Coin(1), new
+		 * PersonalBuildings()), null, 1); PerformHarvest ph = new
+		 * PerformHarvest("Perform Harvest", 1); PerformProduction pp = new
+		 * PerformProduction("Perform Production", 0); PersonalTerritories pt = new
+		 * PersonalTerritories(); MoltiplicationCards mc = new
+		 * MoltiplicationCards("MoltiplicationCards", new VictoryPoint(2), pt);
+		 * MoltiplicationPoints mp = new MoltiplicationPoints("MoltiplicationPoints",
+		 * new VictoryPoint(1), new MilitaryPoint(2)); IncreaseDieValueCard pe = new
+		 * IncreaseDieValueCard("IncreaseDieValueCard", pt, 2, null, null); Ventures v =
+		 * new Ventures("Reparing the Cathedral", "Venture", set, null, new
+		 * VictoryPoint(5), null, ve, cnc, 3); Characters c = new Characters("preacher",
+		 * "Character", set, ve, nvet, null, 1); Requirements requirements = new
+		 * Requirements(null, 2, 4, 0, 0); Leader l = new Leader("Girolamo Savonarola",
+		 * requirements, null, pp, null, true); System.out.println(gson.toJson(l)); br =
+		 * new BufferedReader(new
+		 * FileReader("src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/provaC.json")
+		 * ); String string; string = br.readLine(); Buildings t1=gson.fromJson(string,
+		 * Buildings.class); ArrayList<Buildings> tx=new ArrayList<>(); tx.add(t1);
+		 * System.out.println(tx);
+		 */
 
 		//PermanentEffect pe = new IncreaseDieValueActivity("production", 3);
 
