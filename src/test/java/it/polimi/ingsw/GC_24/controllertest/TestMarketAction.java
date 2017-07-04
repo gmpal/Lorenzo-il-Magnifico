@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import it.polimi.ingsw.GC_24.controller.MarketAction;
 import it.polimi.ingsw.GC_24.model.*;
+import it.polimi.ingsw.GC_24.model.cards.Deck;
 import it.polimi.ingsw.GC_24.model.effects.CouncilPrivilege;
 import it.polimi.ingsw.GC_24.model.effects.ImmediateEffect;
 
@@ -25,7 +26,7 @@ public class TestMarketAction {
 	List<ImmediateEffect> immediateEffects;
 	
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		game = new Model(1);
 		players = new ArrayList<>();
 		player = new Player("Giorgia", PlayerColour.RED);
@@ -36,21 +37,21 @@ public class TestMarketAction {
 		players.add(player2);
 		players.add(player3);
 		players.add(player4);
-		game.setModel(players);
+		game.setModel(players);		
 		market = new MarketAction(game, "1", "market", "4", "0");
 		market2 = new MarketAction(game, "1", "market", "2", "0");
 		immediateEffects = new ArrayList<>();
 	}
 	
 	@Test
-	public void testTakePrivilegeEffectFromMarketPlace() throws Exception {
+	public void testTakePrivilegeEffectFromMarketPlace() {
 		immediateEffects.add(new CouncilPrivilege("Council", 2));
 		market.takePrivilegeEffectFromMarketPlace();
 		assertEquals(immediateEffects, market.getImmediateEffects());
 	}
 	
 	@Test
-	public void testTakePrivilegeEffectFromMarketPlaceWrong() throws Exception {
+	public void testTakePrivilegeEffectFromMarketPlaceWrong() {
 		market2.takePrivilegeEffectFromMarketPlace();
 		assertEquals(immediateEffects, market2.getImmediateEffects());
 	}
