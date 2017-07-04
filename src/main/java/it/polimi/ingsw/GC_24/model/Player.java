@@ -183,7 +183,7 @@ public class Player implements Serializable {
 
 	public void setLeaderOneTimePerTurn(List<Leader> leaderOneTimePerTurn) {
 		this.leaderOneTimePerTurn = leaderOneTimePerTurn;
-
+	}
 	public boolean hasLastExcommunication() {
 		return lastExcommunication;
 	}
