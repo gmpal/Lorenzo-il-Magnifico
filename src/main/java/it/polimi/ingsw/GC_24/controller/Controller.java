@@ -588,8 +588,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		if (verifyLeaderExclusiveRequirement(index)) {
 			return feedback;
 		}
-		if (!requirements.getRequirementSetOfVaue().isEmpty()
-				&& !currentPlayer.getMyValues().doIHaveThisSet(requirements.getRequirementSetOfVaue())) {
+		if (!requirements.getRequirementSetOfValues().isEmpty()
+				&& !currentPlayer.getMyValues().doIHaveThisSet(requirements.getRequirementSetOfValues())) {
 			feedback = feedback + "You don't have enough resources to activate this card!\n";
 		}
 		if (requirements.getRequirmentTerritories() != 0 && currentPlayer.getMyBoard().getPersonalTerritories()
@@ -598,7 +598,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		}
 		if (requirements.getRequirmentCharacters() != 0 && currentPlayer.getMyBoard().getPersonalCharacters().getCards()
 				.size() < requirements.getRequirmentCharacters()) {
-			return feedback + "You don't have enough Characters to activate this card!\n";
+			feedback = feedback + "You don't have enough Characters to activate this card!\n";
 		}
 		if (requirements.getRequirmentBuildings() != 0 && currentPlayer.getMyBoard().getPersonalBuildings().getCards()
 				.size() < requirements.getRequirmentBuildings()) {
