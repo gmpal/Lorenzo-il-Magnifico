@@ -39,5 +39,6 @@ public class TestActionTower {
 		assertTrue(actionTower.isThereNoValueEffect());
 		p1.getActivePermanentEffects().remove(0);
 		assertFalse(actionTower.isThereNoValueEffect());
+		assertEquals((new NoValueEffectFromTowerPlace("noValueEffectFromTowerPlace")).toString(),"No Value Effect From Tower Place: when you place a family member on a tower place you won't get the values anymore ");
 	}
 }
