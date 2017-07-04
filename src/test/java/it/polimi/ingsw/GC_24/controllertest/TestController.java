@@ -49,6 +49,8 @@ public class TestController {
 	SetOfValues costB1 = new SetOfValues();
 	SetOfValues costB2 = new SetOfValues();
 	SetOfValues set;
+	List<Player> playerTurn = new ArrayList<>();
+	int cardIndex = 0;
 
 	@Before
 	public void setUp() {
@@ -64,9 +66,12 @@ public class TestController {
 		costB1.setWoods(new Wood(2));
 		costB2.setStones(new Stone(3));
 		costB2.setWoods(new Wood(1));
+		playerTurn.add(player);
+		playerTurn.add(player2);
+		playerTurn.add(player3);
 		ex1 = new Excommunication(null,
-				new NoVictoryPointsFromCard("noVictoryPointsFromTerritories", new PersonalTerritories()), 3,
-				new FaithPoint(5));
+				new NoVictoryPointsFromCard("noVictoryPointsFromTerritories", new PersonalTerritories()), 1,
+				new FaithPoint(3));
 		ex2 = new Excommunication(null,
 				new NoVictoryPointsFromCard("noVictoryPointsFromCharacters", new PersonalCharacters()), 3,
 				new FaithPoint(5));
@@ -378,6 +383,40 @@ public class TestController {
 				"okYou don't have enough resources to activate this card!\nYou don't have enough Territories to activate this card!\nYou don't have enough Characters to activate this card!\nYou don't have enough Buildings to activate this card!\nYou don't have enough Ventures to activate this card!\n",
 				controller.verifyRequirementsLeader(1, "ok"));
 	}
+
+	@Test
+	public void testWinnerOfTheGame() {
+		player.getMyValues().setVictoryPoints(new VictoryPoint(10));
+		player2.getMyValues().setVictoryPoints(new VictoryPoint(1));
+		player3.getMyValues().setVictoryPoints(new VictoryPoint(3));
+		controller.giveVictoryPoints();
+		Player winner = controller.winnerOfTheGame();
+		assertEquals(winner, player);
+	}
+
+	@Test
+	public void testWinnerOfTheGameTie() {
+		player.setMyName("carlo");
+		player2.setMyName("giorgia");
+		player3.setMyName("merco");
+		player.setMyColour(PlayerColour.BLUE);
+		player2.setMyColour(PlayerColour.RED);
+		player3.setMyColour(PlayerColour.YELLOW);
+		controller.setPlayerTurn(playerTurn);
+		player.getMyValues().setVictoryPoints(new VictoryPoint(10));
+		player2.getMyValues().setVictoryPoints(new VictoryPoint(10));
+		player3.getMyValues().setVictoryPoints(new VictoryPoint(1));
+		Player winner = controller.winnerOfTheGame();
+		assertEquals(player, winner);
+	}
+
+	@Test
+	public void testVerifyRequirementsExcommunication() {
+		controller.setCurrentPlayer(player);
+		cardIndex = 1;
+		game.getExcommunicationDeck().set(0, ex1);
+		player.getMyValues().setFaithPoints(new FaithPoint(3));
+		assertTrue(controller.verifyRequiremetsExcommunication());
 	
 	@Test
 	public void testVerifyRequirementsLeaderOneTimePerTurn() {

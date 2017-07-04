@@ -111,6 +111,7 @@ public class Player implements Serializable {
 	public String toString() {
 		return "Player [myName=" + myName + ", myColour=" + myColour + "]";
 	}
+	
 
 	// getters and setters
 	public String getMyName() {

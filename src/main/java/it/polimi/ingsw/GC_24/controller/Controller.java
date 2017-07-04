@@ -235,7 +235,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	 * Victory Points is the winner. In case of a tie, the player more advanced on
 	 * the Turn Order is the winner.
 	 */
-	private void gameEndHandler() {
+	public void gameEndHandler() {
 		giveVictoryPoints();
 		Player winner = winnerOfTheGame();
 
@@ -261,11 +261,9 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		}
 		if (winners.size() > 1) {
 			for (Player playert : playerTurn) {
-				for (Player p : winners) {
-					if (playert.equals(p)) {
-						winner = p;
-
-					}
+				if (winners.contains(playert)) {
+					winner = playert;
+					break;
 				}
 			}
 		} else {
@@ -678,7 +676,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	 * 
 	 * @return true if player have requirements, false otherwise.
 	 */
-	private boolean verifyRequiremetsExcommunication() {
+	public boolean verifyRequiremetsExcommunication() {
 		return game.getExcommunicationDeck().get(cardsIndex / 2).getRequiremetsForExcommunication()
 				.getQuantity() <= currentPlayer.getMyValues().getFaithPoints().getQuantity();
 	}
@@ -1103,7 +1101,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	public void setPlayerTurn(List<Player> playerTurn) {
 		this.playerTurn = playerTurn;
 	}
-	//only used in tests
+
+	// only used in tests
 	public void setCurrentPlayer(Player currentPlayer) {
 		this.currentPlayer = currentPlayer;
 	}
