@@ -7,27 +7,12 @@ import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.effects.*;
 import it.polimi.ingsw.GC_24.model.values.*;
-import it.polimi.ingsw.GC_24.observers.MyObservable;
-import it.polimi.ingsw.GC_24.observers.MyObserver;
 
-public class ViewCLI extends MyObservable implements ViewInterface {
+public class ViewCLI extends View {
 
 	private static Scanner scanner = new Scanner(System.in);
 
-	private volatile Model miniModel;
-	private String name = null;
 
-	private HashMap<String, Object> hm;
-	private Timer timer;
-
-	private Object waitingForNameUpdate = new Object();
-	private Object waitingForActionCompleted = new Object();
-
-	private boolean myTurn = false;
-	private List<Player> playersTurn;
-	private int playerNumber = 0;
-	private boolean actionDone = false;
-	private volatile Player myself = null;
 
 	@Override
 	public synchronized void run() {
@@ -48,14 +33,8 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 		if (myself.getMyName() == null) {
 			System.out.println("ENTRATO NELL IF");
 
-			try {
-				this.sendPlayerString(name);
-				System.out.println("NAME SENT");
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				Thread.currentThread().interrupt();
-			}
+			this.sendPlayerString(name);
+			System.out.println("NAME SENT");
 		} else {
 			System.out.println("You have exceeded the time limit to choose your name and colour");
 			System.out.println("They have been auto-completed, you are: " + myself.getMyName());
@@ -77,22 +56,6 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 
 	}
 
-	@Override
-	public void sendPlayerString(String name) throws InterruptedException {
-
-		String player = (playerNumber + " " + name);
-		hm = new HashMap<>();
-		hm.put("player", player);
-		this.notifyMyObservers(hm);
-		System.out.println("Your name has been sent");
-
-		synchronized (waitingForNameUpdate) {
-			while (!miniModel.getPlayers().get((playerNumber) - 1).getMyName().equalsIgnoreCase(name)) {
-				waitingForNameUpdate.wait();
-			}
-		}
-		System.out.println("Server received your name and updated it");
-	}
 
 	public void showTurnSituation() {
 		System.out.println("The players' turn for this round is:");
@@ -338,44 +301,12 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 		return commandZone + " " + choice;
 	}
 
-	@Override
-	public void sendAction(String command) {
-		actionDone = false;
+	
+	
 
-		hm = new HashMap<>();
-		hm.put("action", command);
-		notifyMyObservers(hm);
+	
 
-		waitForActionDone();
-
-	}
-
-	private void waitForActionDone() {
-		/* This block of code notifies the Server of the action */
-		actionDone = false;
-		synchronized (waitingForActionCompleted) {
-			System.out.println("----Waiting for your action to be completed----");
-			while (!actionDone) {
-				try {
-					System.out.println("----Waitin'----");
-					waitingForActionCompleted.wait();
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					Thread.currentThread().interrupt();
-				}
-			}
-			System.out.println("--------Action Completed");
-		}
-	}
-
-	private void sendLeader(String command) {
-		actionDone = false;
-		hm = new HashMap<>();
-		hm.put("leader", command);
-		this.notifyMyObservers(hm);
-		waitForActionDone();
-	}
+	
 
 	/**
 	 * this method lets the user choose between two alternative costs. It contains a
@@ -525,7 +456,6 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 	public String askForServantsForHarvestOrProduction(String request) {
 		System.out.println(request);
 		String choice;
-		int choiceInt = 0;
 		do {
 			choice = scanner.nextLine();
 
@@ -568,12 +498,7 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 			System.out.println("View CLI --> Non era un player number per me");
 		}
 	}
-
-	@Override
-	public void updateTurn(List<Player> playerTurn) {
-		setPlayersTurn(playerTurn);
-
-	}
+	
 
 	@Override
 	public void askForExcommunication() {
@@ -588,11 +513,7 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 		sendAnswerToVatican(answer);
 	}
 
-	private void sendAnswerToVatican(String answer) {
-		hm = new HashMap<>();
-		hm.put("answerForVatican", answer);
-		this.notifyMyObservers(hm);
-	}
+	
 
 	@Override
 	public void communicateActionDone() {
@@ -606,25 +527,9 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 	@Override
 	public void show(String message) {
 		System.out.println(message);
-
 	}
 
-	@Override
-	public void getInformationForReceivedModel(Model model) {
-		synchronized (getWaitingForAnswer()) {
-			setMiniModel(model);
 
-			setMyself(getMiniModel().getPlayers().get(playerNumber - 1));
-
-			setName(myself.getMyName());
-
-			// TODO: serve davvero questo? Che cosa fa?
-			setPlayersTurn(getMiniModel().getPlayers());
-
-			getWaitingForAnswer().notify();
-		}
-
-	}
 
 	@Override
 	public void showToSinglePlayer(Player currentPlayer, String message) {
@@ -634,88 +539,13 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 
 	}
 
-	// getters and setters
-	@Override
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Model getMiniModel() {
-		return miniModel;
-	}
-
-	public void setMiniModel(Model model) {
-		this.miniModel = model;
-	}
-
-	public boolean isMyTurn() {
-		return myTurn;
-	}
-
-	public List<Player> getPlayersTurn() {
-		return playersTurn;
-
-	}
-
-	public void setPlayersTurn(List<Player> playerTurn) {
-		this.playersTurn = playerTurn;
-	}
-
-	public Player getMyself() {
-		return myself;
-	}
-
-	public void setMyself(Player myself) {
-		this.myself = myself;
-	}
-
-	public int getPlayerNumber() {
-		return playerNumber;
-	}
-
-	public void setPlayerNumber(int playerNumber) {
-		this.playerNumber = playerNumber;
-	}
-
-	public Object getWaitingForAnswer() {
-		return waitingForNameUpdate;
-	}
-
-	public Object getWaitingForActionCompleted() {
-		return waitingForActionCompleted;
-	}
-
-	public boolean isActionDone() {
-		return actionDone;
-	}
-
-	public void setActionDone(boolean actionDone) {
-		this.actionDone = actionDone;
-	}
-
-	@Override
-	public void sendAnswerForParameters(String answer) {
-		hm = new HashMap<>();
-		hm.put("answerForParameters", answer);
-		notifyMyObservers(hm);
-	}
-
-	@Override
-	public void sendAlternativeCost(String response) {
-		hm = new HashMap<>();
-		hm.put("chosenCost", response);
-		notifyMyObservers(hm);
-
-	}
 
 	@Override
 	public <C> void update(C change) {
 		// TODO Auto-generated method stub
 
 	}
+
+	
 
 }

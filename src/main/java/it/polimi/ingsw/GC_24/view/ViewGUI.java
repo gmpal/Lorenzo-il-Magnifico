@@ -2,13 +2,20 @@ package it.polimi.ingsw.GC_24.view;
 
 import java.util.List;
 
+import it.polimi.ingsw.GC_24.gui.MainClass;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.effects.IncreaseDieValueCard;
 import it.polimi.ingsw.GC_24.model.values.SetOfValues;
 import it.polimi.ingsw.GC_24.observers.MyObservable;
 
-public class ViewGUI implements ViewInterface {
+public class ViewGUI extends View {
+
+	private MainClass mainClass;
+
+	public ViewGUI(MainClass mainClass) {
+	this.mainClass = mainClass;
+	}
 
 	@Override
 	public void run() {
@@ -35,18 +42,6 @@ public class ViewGUI implements ViewInterface {
 	}
 
 	@Override
-	public void sendPlayerString(String name) throws InterruptedException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void sendAction(String action) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public String chooseAlternativeCost(String request) {
 		// TODO Auto-generated method stub
 		return null;
@@ -59,7 +54,7 @@ public class ViewGUI implements ViewInterface {
 	}
 
 	@Override
-	public void sendAnswerForParameters(String answer) {
+	public void askForExcommunication() {
 		// TODO Auto-generated method stub
 		
 	}
@@ -107,39 +102,11 @@ public class ViewGUI implements ViewInterface {
 	}
 
 	@Override
-	public void updateTurn(List<Player> playerTurn) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void getInformationForReceivedModel(Model model) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void setMyTurn(Player currentPlayer) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
-	public void sendAlternativeCost(String response) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void askForExcommunication() {
-		// TODO Auto-generated method stub
-		
-	}
 
 }

@@ -1,6 +1,5 @@
 package it.polimi.ingsw.GC_24.network.RMI;
 
-import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,15 +11,16 @@ import it.polimi.ingsw.GC_24.model.effects.IncreaseDieValueCard;
 import it.polimi.ingsw.GC_24.model.values.SetOfValues;
 import it.polimi.ingsw.GC_24.observers.MyObservable;
 import it.polimi.ingsw.GC_24.observers.MyObserver;
-import it.polimi.ingsw.GC_24.view.ViewInterface;
+import it.polimi.ingsw.GC_24.view.View;
+
 
 public class ClientRMIView extends MyObservable implements ClientViewRemote, MyObserver {
 	
 	
-	private ViewInterface view;
+	private View view;
 	private ServerViewRemote serverStub;
 
-	public ClientRMIView(ServerViewRemote serverStub, ViewInterface view) throws RemoteException {
+	public ClientRMIView(ServerViewRemote serverStub, View view) {
 		this.view = view;
 		this.serverStub = serverStub;
 		}

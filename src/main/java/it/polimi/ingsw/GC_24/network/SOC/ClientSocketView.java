@@ -16,7 +16,7 @@ import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.effects.IncreaseDieValueCard;
 import it.polimi.ingsw.GC_24.observers.MyObservable;
 import it.polimi.ingsw.GC_24.observers.MyObserver;
-import it.polimi.ingsw.GC_24.view.ViewInterface;
+import it.polimi.ingsw.GC_24.view.View;
 
 //ClientInHandler is observed by the ViewPLayer,
 //whenever the server communicates something, ClientInHandler notifies ViewPLayer
@@ -25,9 +25,9 @@ public class ClientSocketView extends MyObservable implements Runnable, MyObserv
 	private ObjectInputStream objFromServer;
 	private ObjectOutputStream objToServer;
 	private ExecutorService executor = Executors.newCachedThreadPool();
-	private ViewInterface view;
+	private View view;
 
-	public ClientSocketView(ObjectInputStream objFromServer, ObjectOutputStream objToServer, ViewInterface view) {
+	public ClientSocketView(ObjectInputStream objFromServer, ObjectOutputStream objToServer, View view) {
 		this.objToServer = objToServer;
 		this.objFromServer = objFromServer;
 		this.view = view;
