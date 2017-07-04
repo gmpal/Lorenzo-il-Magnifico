@@ -35,6 +35,9 @@ public abstract class Value implements Serializable{
 	public void subQuantity(int quantity) {
 		if (quantity >= 0)
 			this.quantity -= quantity;
+		if(this.quantity<0) {
+			this.quantity=0;
+		}
 	}
 
 	/** finds a value in the SetOfValue of a player if you don't

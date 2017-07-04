@@ -111,6 +111,14 @@ public class SetOfValues implements Serializable {
 						/ 5));
 	}
 
+	/**
+	 * 
+	 * @return Number of all resources.
+	 */
+	public int numberResorces() {
+		return this.coins.quantity + this.servants.quantity + this.stones.quantity + this.woods.quantity;
+	}
+
 	public boolean isEmpty() {
 		return (woods.getQuantity() == 0 && stones.getQuantity() == 0 && coins.getQuantity() == 0
 				&& servants.getQuantity() == 0 && faithPoints.getQuantity() == 0 && militaryPoints.getQuantity() == 0
