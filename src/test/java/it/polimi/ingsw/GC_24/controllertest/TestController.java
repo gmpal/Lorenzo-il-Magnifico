@@ -417,6 +417,7 @@ public class TestController {
 		game.getExcommunicationDeck().set(0, ex1);
 		player.getMyValues().setFaithPoints(new FaithPoint(3));
 		assertTrue(controller.verifyRequiremetsExcommunication());
+	}
 	
 	@Test
 	public void testVerifyRequirementsLeaderOneTimePerTurn() {
