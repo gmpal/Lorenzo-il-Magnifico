@@ -289,34 +289,30 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			player = game.getPlayers().get(i);
 			player.getMyValues().getFaithPoints().convertToValue(game.getCorrespondingValue())
 					.addTwoSetsOfValues(player.getMyValues());
-			if (!player.hasLastExcommunication()) {
+
+			if (player.hasLastExcommunication() && finalExcommunication.equals("noVictoryPointsFromTerritories")) {
+				player.getMyValues().getVictoryPoints().addQuantity(
+						player.getMyBoard().getPersonalCharacters().convertCardToVictoryPoints().getQuantity());
+				player.getMyValues().getVictoryPoints().addQuantity(
+						player.getMyBoard().getPersonalVentures().convertCardToVictoryPoints().getQuantity());
+			} else if (player.hasLastExcommunication()
+					&& finalExcommunication.equals("noVictoryPointsFromCharacters")) {
+				player.getMyValues().getVictoryPoints().addQuantity(
+						player.getMyBoard().getPersonalTerritories().convertCardToVictoryPoints().getQuantity());
+				player.getMyValues().getVictoryPoints().addQuantity(
+						player.getMyBoard().getPersonalVentures().convertCardToVictoryPoints().getQuantity());
+			} else if (player.hasLastExcommunication() && finalExcommunication.equals("noVictoryPointsFromVentures")) {
+				player.getMyValues().getVictoryPoints().addQuantity(
+						player.getMyBoard().getPersonalTerritories().convertCardToVictoryPoints().getQuantity());
+				player.getMyValues().getVictoryPoints().addQuantity(
+						player.getMyBoard().getPersonalCharacters().convertCardToVictoryPoints().getQuantity());
+			} else {
 				player.getMyValues().getVictoryPoints()
 						.addQuantity(player.getMyBoard().convertToVictoryPoints().getQuantity());
-			} else {
-				if (finalExcommunication.equals("noVictoryPointsFromTerritories")) {
-					player.getMyValues().getVictoryPoints().addQuantity(
-							player.getMyBoard().getPersonalCharacters().convertCardToVictoryPoints().getQuantity());
-					player.getMyValues().getVictoryPoints().addQuantity(
-							player.getMyBoard().getPersonalVentures().convertCardToVictoryPoints().getQuantity());
-				} else if (finalExcommunication.equals("noVictoryPointsFromCharacters")) {
-					player.getMyValues().getVictoryPoints().addQuantity(
-							player.getMyBoard().getPersonalTerritories().convertCardToVictoryPoints().getQuantity());
-					player.getMyValues().getVictoryPoints().addQuantity(
-							player.getMyBoard().getPersonalVentures().convertCardToVictoryPoints().getQuantity());
-				} else if (finalExcommunication.equals("noVictoryPointsFromVentures")) {
-					player.getMyValues().getVictoryPoints().addQuantity(
-							player.getMyBoard().getPersonalTerritories().convertCardToVictoryPoints().getQuantity());
-					player.getMyValues().getVictoryPoints().addQuantity(
-							player.getMyBoard().getPersonalCharacters().convertCardToVictoryPoints().getQuantity());
-				}
 			}
 			player.getMyValues().getVictoryPoints()
 					.addQuantity(player.getMyValues().convertSetToVictoryPoints().getQuantity());
 			finalMilitaryPoints.add(player.getMyValues().getMilitaryPoints().getQuantity());
-			if (player.hasLastExcommunication() && finalExcommunication.equalsIgnoreCase("subMilitaryPoints")) {
-				player.getMyValues().getVictoryPoints()
-						.subQuantity(player.getMyValues().getMilitaryPoints().getQuantity());
-			}
 
 		}
 		for (int i = 0; i < finalMilitaryPoints.size() - 1; i++) {
@@ -364,6 +360,10 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					}
 				}
 				player.getMyValues().getVictoryPoints().subQuantity(quantityVictoryPoints);
+			}
+			if (player.hasLastExcommunication() && finalExcommunication.equalsIgnoreCase("subMilitaryPoints")) {
+				player.getMyValues().getVictoryPoints()
+						.subQuantity(player.getMyValues().getMilitaryPoints().getQuantity());
 			}
 		}
 	}

@@ -11,10 +11,10 @@ import org.junit.Test;
 
 import it.polimi.ingsw.GC_24.controller.Controller;
 import it.polimi.ingsw.GC_24.model.*;
-import it.polimi.ingsw.GC_24.model.cards.Characters;
-import it.polimi.ingsw.GC_24.model.cards.Excommunication;
-import it.polimi.ingsw.GC_24.model.cards.Leader;
-import it.polimi.ingsw.GC_24.model.cards.Ventures;
+import it.polimi.ingsw.GC_24.model.cards.*;
+import it.polimi.ingsw.GC_24.model.effects.NoVictoryPointsFromCard;
+import it.polimi.ingsw.GC_24.model.effects.SubVicrotyPointsFromSetOfValue;
+import it.polimi.ingsw.GC_24.model.personalboard.*;
 import it.polimi.ingsw.GC_24.model.values.*;
 
 public class TestController {
@@ -31,11 +31,16 @@ public class TestController {
 	List<Excommunication>excommunicationDeck;
 	VictoryPoint vc;
 	Characters character1;
+	Territories territory1;
+	Territories territory2;
+	Territories territory3;
 	Ventures venture1;
 	Ventures venture2;
 	Leader leader1;
 	Leader leader2;
 	Leader leader3;
+	Excommunication ex1, ex2, ex3, ex4;
+	SetOfValues setEx=new SetOfValues();
 
 	@Before
 	public void setUp() {
@@ -43,6 +48,14 @@ public class TestController {
 		player = new Player("Giorgia", PlayerColour.RED);
 		player2 = new Player("Carlo", PlayerColour.GREEN);
 		player3 = new Player("Gian Marco", PlayerColour.YELLOW);
+		setEx.setMilitaryPoints(new MilitaryPoint(1));
+		ex1=new Excommunication(null, new NoVictoryPointsFromCard("noVictoryPointsFromTerritories", new PersonalTerritories()), 3, new FaithPoint(5));
+		ex2=new Excommunication(null, new NoVictoryPointsFromCard("noVictoryPointsFromCharacters", new PersonalCharacters()), 3, new FaithPoint(5));
+		ex3=new Excommunication(null, new NoVictoryPointsFromCard("noVictoryPointsFromVentures", new PersonalVentures()), 3, new FaithPoint(5));
+		ex4=new Excommunication(null, new SubVicrotyPointsFromSetOfValue("subMilitaryPoints", setEx, new VictoryPoint(1)), 3, new FaithPoint(5));
+		territory1=new Territories("territory1", 1, null, null, null, null, null, 1);
+		territory2=new Territories("territory1", 1, null, null, null, null, null, 2);
+		territory3=new Territories("territory1", 1, null, null, null, null, null, 3);
 		players.add(player);
 		players.add(player2);
 		players.add(player3);
@@ -61,7 +74,7 @@ public class TestController {
 		venture2 = new Ventures("Venture2", "Venture", null, null, new VictoryPoint(3), null, null, null, 3);
 		leader1 = new Leader("Leader1", null, null, null, null, true);
 		leader2 = new Leader("Leader2", null, null, null, null, true);
-		leader3 = new Leader("Leader1", null, null, null, null, false);
+		leader3 = new Leader("Leader3", null, null, null, null, false);
 	}
 	
 	@Test
@@ -103,7 +116,6 @@ public class TestController {
 	
 	@Test
 	public void testGiveVictoryPoints() {
-		System.out.println(game.getExcommunicationDeck().get(2));
 		character1.setCardOnPersonalBoard(player.getMyBoard());
 		venture1.setCardOnPersonalBoard(player.getMyBoard());
 		venture2.setCardOnPersonalBoard(player.getMyBoard());
@@ -113,6 +125,82 @@ public class TestController {
 		player3.getMyValues().getMilitaryPoints().setQuantity(10);
 		controller.giveVictoryPoints();
 		vc.setQuantity(15);
+		assertEquals(vc, player.getMyValues().getVictoryPoints());
+	}
+	
+	@Test
+	public void testGiveVictoryPointsWithFinalExcommunicationTerritories() {
+		player.setMyValues(new SetOfValues());
+		player.getMyValues().setFaithPoints(new FaithPoint(4));
+		player.getMyBoard().getPersonalTerritories().setCards(territory1);
+		player.getMyBoard().getPersonalTerritories().setCards(territory2);
+		player.getMyBoard().getPersonalTerritories().setCards(territory3);
+		player.getMyBoard().getPersonalCharacters().setCards(character1);
+		player.getMyBoard().getPersonalVentures().setCards(venture1);
+		player.getMyBoard().getPersonalVentures().setCards(venture2);
+		player.getMyValues().setMilitaryPoints(new MilitaryPoint(3));
+		player2.getMyValues().setMilitaryPoints(new MilitaryPoint(6));
+		player.setLastExcommunication(true);
+		game.getExcommunicationDeck().set(2, ex1);
+		controller.giveVictoryPoints();
+		vc.setQuantity(15);
+		assertEquals(vc, player.getMyValues().getVictoryPoints());
+	}
+	
+	@Test
+	public void testGiveVictoryPointsWithFinalExcommunicationCharacters() {
+		player.setMyValues(new SetOfValues());
+		player.getMyValues().setFaithPoints(new FaithPoint(4));
+		player.getMyBoard().getPersonalTerritories().setCards(territory1);
+		player.getMyBoard().getPersonalTerritories().setCards(territory2);
+		player.getMyBoard().getPersonalTerritories().setCards(territory3);
+		player.getMyBoard().getPersonalCharacters().setCards(character1);
+		player.getMyBoard().getPersonalVentures().setCards(venture1);
+		player.getMyBoard().getPersonalVentures().setCards(venture2);
+		player.getMyValues().setMilitaryPoints(new MilitaryPoint(6));
+		player2.getMyValues().setMilitaryPoints(new MilitaryPoint(3));
+		player.setLastExcommunication(true);
+		game.getExcommunicationDeck().set(2, ex2);
+		controller.giveVictoryPoints();
+		vc.setQuantity(18);
+		assertEquals(vc, player.getMyValues().getVictoryPoints());	
+	}
+	
+	@Test
+	public void testGiveVictoryPointsWithFinalExcommunicationVentures() {
+		player.setMyValues(new SetOfValues());
+		player.getMyValues().setFaithPoints(new FaithPoint(4));
+		player.getMyBoard().getPersonalTerritories().setCards(territory1);
+		player.getMyBoard().getPersonalTerritories().setCards(territory2);
+		player.getMyBoard().getPersonalTerritories().setCards(territory3);
+		player.getMyBoard().getPersonalCharacters().setCards(character1);
+		player.getMyBoard().getPersonalVentures().setCards(venture1);
+		player.getMyBoard().getPersonalVentures().setCards(venture2);
+		player.getMyValues().setMilitaryPoints(new MilitaryPoint(3));
+		player2.getMyValues().setMilitaryPoints(new MilitaryPoint(3));
+		player.setLastExcommunication(true);
+		game.getExcommunicationDeck().set(2, ex3);
+		controller.giveVictoryPoints();
+		vc.setQuantity(11);
+		assertEquals(vc, player.getMyValues().getVictoryPoints());
+	}
+	
+	@Test
+	public void testGiveVictoryPointsWithFinalExcommunicationMilitary() {
+		player.setMyValues(new SetOfValues());
+		player.getMyValues().setFaithPoints(new FaithPoint(4));
+		player.getMyBoard().getPersonalTerritories().setCards(territory1);
+		player.getMyBoard().getPersonalTerritories().setCards(territory2);
+		player.getMyBoard().getPersonalTerritories().setCards(territory3);
+		player.getMyBoard().getPersonalCharacters().setCards(character1);
+		player.getMyBoard().getPersonalVentures().setCards(venture1);
+		player.getMyBoard().getPersonalVentures().setCards(venture2);
+		player.getMyValues().setMilitaryPoints(new MilitaryPoint(30));
+		player2.getMyValues().setMilitaryPoints(new MilitaryPoint(3));
+		player.setLastExcommunication(true);
+		game.getExcommunicationDeck().set(2, ex4);
+		controller.giveVictoryPoints();
+		vc.setQuantity(0);
 		assertEquals(vc, player.getMyValues().getVictoryPoints());
 	}
 
