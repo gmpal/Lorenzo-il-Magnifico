@@ -277,7 +277,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	/**
 	 * This method calculates the final victory points for each player. Based on the
-	 * final rules of the game
+	 * final rules of the game. It checks the permanent effect and the
+	 * excommunication effect that gives or takes victory points.
 	 */
 	public void giveVictoryPoints() {
 		Player player;
@@ -288,34 +289,30 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			player = game.getPlayers().get(i);
 			player.getMyValues().getFaithPoints().convertToValue(game.getCorrespondingValue())
 					.addTwoSetsOfValues(player.getMyValues());
-			if (!player.hasLastExcommunication()) {
+
+			if (player.hasLastExcommunication() && finalExcommunication.equals("noVictoryPointsFromTerritories")) {
+				player.getMyValues().getVictoryPoints().addQuantity(
+						player.getMyBoard().getPersonalCharacters().convertCardToVictoryPoints().getQuantity());
+				player.getMyValues().getVictoryPoints().addQuantity(
+						player.getMyBoard().getPersonalVentures().convertCardToVictoryPoints().getQuantity());
+			} else if (player.hasLastExcommunication()
+					&& finalExcommunication.equals("noVictoryPointsFromCharacters")) {
+				player.getMyValues().getVictoryPoints().addQuantity(
+						player.getMyBoard().getPersonalTerritories().convertCardToVictoryPoints().getQuantity());
+				player.getMyValues().getVictoryPoints().addQuantity(
+						player.getMyBoard().getPersonalVentures().convertCardToVictoryPoints().getQuantity());
+			} else if (player.hasLastExcommunication() && finalExcommunication.equals("noVictoryPointsFromVentures")) {
+				player.getMyValues().getVictoryPoints().addQuantity(
+						player.getMyBoard().getPersonalTerritories().convertCardToVictoryPoints().getQuantity());
+				player.getMyValues().getVictoryPoints().addQuantity(
+						player.getMyBoard().getPersonalCharacters().convertCardToVictoryPoints().getQuantity());
+			} else {
 				player.getMyValues().getVictoryPoints()
 						.addQuantity(player.getMyBoard().convertToVictoryPoints().getQuantity());
-			} else {
-				if (finalExcommunication.equals("noVictoryPointsFromTerritories")) {
-					player.getMyValues().getVictoryPoints().addQuantity(
-							player.getMyBoard().getPersonalCharacters().convertCardToVictoryPoints().getQuantity());
-					player.getMyValues().getVictoryPoints().addQuantity(
-							player.getMyBoard().getPersonalVentures().convertCardToVictoryPoints().getQuantity());
-				} else if (finalExcommunication.equals("noVictoryPointsFromCharacters")) {
-					player.getMyValues().getVictoryPoints().addQuantity(
-							player.getMyBoard().getPersonalTerritories().convertCardToVictoryPoints().getQuantity());
-					player.getMyValues().getVictoryPoints().addQuantity(
-							player.getMyBoard().getPersonalVentures().convertCardToVictoryPoints().getQuantity());
-				} else if (finalExcommunication.equals("noVictoryPointsFromVentures")) {
-					player.getMyValues().getVictoryPoints().addQuantity(
-							player.getMyBoard().getPersonalTerritories().convertCardToVictoryPoints().getQuantity());
-					player.getMyValues().getVictoryPoints().addQuantity(
-							player.getMyBoard().getPersonalCharacters().convertCardToVictoryPoints().getQuantity());
-				}
 			}
 			player.getMyValues().getVictoryPoints()
 					.addQuantity(player.getMyValues().convertSetToVictoryPoints().getQuantity());
 			finalMilitaryPoints.add(player.getMyValues().getMilitaryPoints().getQuantity());
-			if (player.hasLastExcommunication() && finalExcommunication.equalsIgnoreCase("subMilitaryPoints")) {
-				player.getMyValues().getVictoryPoints()
-						.subQuantity(player.getMyValues().getMilitaryPoints().getQuantity());
-			}
 
 		}
 		for (int i = 0; i < finalMilitaryPoints.size() - 1; i++) {
@@ -328,9 +325,9 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		Collections.sort(finalMilitaryPoints);
 		Collections.reverse(finalMilitaryPoints);
 		convertMilitaryPointsToVictoryPoints(finalMilitaryPoints);
+
 		for (int i = 0; i < game.getPlayers().size(); i++) {
 			player = game.getPlayers().get(i);
-
 			if (player.hasLastExcommunication() && finalExcommunication.equalsIgnoreCase("subVictoryPoints")) {
 				SubVicrotyPointsFromSetOfValue eff = (SubVicrotyPointsFromSetOfValue) game.getExcommunicationDeck()
 						.get(2).getEffect();
@@ -340,6 +337,33 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			}
 			if (player.hasLastExcommunication() && finalExcommunication.equalsIgnoreCase("subResourcesPoints")) {
 				player.getMyValues().getVictoryPoints().subQuantity(player.getMyValues().numberResorces());
+			}
+			if (player.hasLastExcommunication() && finalExcommunication.equalsIgnoreCase("subCostBuildings")) {
+				int quantityVictoryPoints = 0;
+				for (Development d : player.getMyBoard().getPersonalBuildings().getCards()) {
+					Buildings b = (Buildings) d;
+					if (game.getExcommunicationDeck().get(2).getEffect().getName().equals("subCostBuildings")) {
+						SubVicrotyPointsFromSetOfValue eff = (SubVicrotyPointsFromSetOfValue) game
+								.getExcommunicationDeck().get(2).getEffect();
+						if (eff.getSetForSub().getCoins().getQuantity() != 0) {
+							quantityVictoryPoints += b.getCost().getCoins().getQuantity();
+						}
+						if (eff.getSetForSub().getWoods().getQuantity() != 0) {
+							quantityVictoryPoints += b.getCost().getWoods().getQuantity();
+						}
+						if (eff.getSetForSub().getStones().getQuantity() != 0) {
+							quantityVictoryPoints += b.getCost().getStones().getQuantity();
+						}
+						if (eff.getSetForSub().getServants().getQuantity() != 0) {
+							quantityVictoryPoints += b.getCost().getServants().getQuantity();
+						}
+					}
+				}
+				player.getMyValues().getVictoryPoints().subQuantity(quantityVictoryPoints);
+			}
+			if (player.hasLastExcommunication() && finalExcommunication.equalsIgnoreCase("subMilitaryPoints")) {
+				player.getMyValues().getVictoryPoints()
+						.subQuantity(player.getMyValues().getMilitaryPoints().getQuantity());
 			}
 		}
 	}

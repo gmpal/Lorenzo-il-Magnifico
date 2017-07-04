@@ -26,7 +26,7 @@ public class Timers {
 	 *            fileName
 	 * @return int time
 	 */
-	public int takeTimer(String fileName) {
+	public static int takeTimer(String fileName) {
 		BufferedReader br;
 		int time = 0;
 		String line;
@@ -43,19 +43,19 @@ public class Timers {
 	}
 
 	// getters and setters
-	public int getTimeToStartGame() {
+	public static int getTimeToStartGame() {
 		return timeToStartGame;
 	}
 
-	public void setTimeToStartGame(int timeToStartGame) {
+	public static void setTimeToStartGame(int timeToStartGame) {
 		Timers.timeToStartGame = timeToStartGame;
 	}
 
-	public void setTimeToDisconnectPlayer(int timeToDisconnectPlayer) {
+	public static void setTimeToDisconnectPlayer(int timeToDisconnectPlayer) {
 		Timers.timeToDisconnectPlayer = timeToDisconnectPlayer;
 	}
 
-	public int getTimeToDisconnectPlayer() {
+	public static int getTimeToDisconnectPlayer() {
 		return timeToDisconnectPlayer;
 	}
 
