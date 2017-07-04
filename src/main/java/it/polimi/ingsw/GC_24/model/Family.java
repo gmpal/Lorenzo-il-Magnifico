@@ -82,6 +82,49 @@ public class Family implements java.io.Serializable {
 	public boolean isEmpty() {
 		return !member1.isAvailable() && !member2.isAvailable() && !member3.isAvailable() && !member4.isAvailable();
 	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((member1 == null) ? 0 : member1.hashCode());
+		result = prime * result + ((member2 == null) ? 0 : member2.hashCode());
+		result = prime * result + ((member3 == null) ? 0 : member3.hashCode());
+		result = prime * result + ((member4 == null) ? 0 : member4.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Family other = (Family) obj;
+		if (member1 == null) {
+			if (other.member1 != null)
+				return false;
+		} else if (!member1.equals(other.member1))
+			return false;
+		if (member2 == null) {
+			if (other.member2 != null)
+				return false;
+		} else if (!member2.equals(other.member2))
+			return false;
+		if (member3 == null) {
+			if (other.member3 != null)
+				return false;
+		} else if (!member3.equals(other.member3))
+			return false;
+		if (member4 == null) {
+			if (other.member4 != null)
+				return false;
+		} else if (!member4.equals(other.member4))
+			return false;
+		return true;
+	}
 
 	// getters and setters
 	public FamilyMember getMember1() {

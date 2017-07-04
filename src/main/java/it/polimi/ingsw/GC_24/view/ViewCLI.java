@@ -144,7 +144,7 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 		} else if (command.equalsIgnoreCase("f")) {
 
 			System.out.println("Permanent Effects --> "+myself.getActivePermanentEffects());
-			System.out.println("\nImmediate Effects --> "+myself.getLeaderOneTimePerTurn());
+			System.out.println("\nOneTimePerTurn Effects --> "+myself.getLeaderOneTimePerTurn());
 
 		} else if (command.equalsIgnoreCase("g")) {
 
@@ -290,15 +290,13 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 				break;
 			}
 			builder.append(i + ",");
-
 			string = string + i;
-
 		}
 		builder.append(")  0 --> Cancel ");
 		System.out.println(builder.toString());
 		String choice = scanner.nextLine();
 
-		while (!(string.contains(choice))) {
+		while (!(string.contains(choice)) || choice.isEmpty()) {
 			System.out.println("Wrong choice, try again");
 
 			choice = scanner.nextLine();

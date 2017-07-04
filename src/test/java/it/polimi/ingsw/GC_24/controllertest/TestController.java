@@ -36,6 +36,9 @@ public class TestController {
 	Territories territory1;
 	Territories territory2;
 	Territories territory3;
+	Characters character;
+	Buildings building;
+	Territories territory;
 	Ventures venture1;
 	Ventures venture2;
 	Leader leader1;
@@ -47,13 +50,14 @@ public class TestController {
 	SetOfValues setEx7 = new SetOfValues();
 	SetOfValues costB1 = new SetOfValues();
 	SetOfValues costB2 = new SetOfValues();
+	SetOfValues set;
 
 	@Before
 	public void setUp() {
 		players = new ArrayList<>();
-		player = new Player("Giorgia", PlayerColour.RED);
-		player2 = new Player("Carlo", PlayerColour.GREEN);
-		player3 = new Player("Gian Marco", PlayerColour.YELLOW);
+		player = new Player(1);
+		player2 = new Player(2);
+		player3 = new Player(3);
 		setEx.setMilitaryPoints(new MilitaryPoint(1));
 		setEx5.setVictoryPoints(new VictoryPoint(5));
 		setEx7.setWoods(new Wood(1));
@@ -101,11 +105,15 @@ public class TestController {
 		temporaryTurnExpected = new ArrayList<>();
 		militaryPoints = new ArrayList<>();
 		vc = new VictoryPoint(0);
-		character1 = new Characters("Character", "Character", null, null, null, null, 1);
+		set = new SetOfValues();
+		set.getCoins().setQuantity(2);
+		character = new Characters("Character", "Character", null, null, null, null, 1);
 		venture1 = new Ventures("Venture", "Venture", null, null, new VictoryPoint(5), null, null, null, 3);
 		venture2 = new Ventures("Venture2", "Venture", null, null, new VictoryPoint(3), null, null, null, 3);
-		leader1 = new Leader("Leader1", null, null, null, null, true);
-		leader2 = new Leader("Leader2", null, null, null, null, true);
+		territory = new Territories("Territory", 0, "Territory", null, null, null, null, 2);
+		building = new Buildings("Building", 0, "Building", null, null, null, null, null, 1);
+		leader1 = new Leader("Leader1", new Requirements(set, 2, 5, 3, 6), null, null, null, true);
+		leader2 = new Leader("Leader2", new Requirements(new SetOfValues(), 0, 1, 1, 2), null, null, null, true);
 		leader3 = new Leader("Leader3", null, null, null, null, false);
 	}
 
@@ -118,6 +126,13 @@ public class TestController {
 		temporaryTurnExpected.add(player);
 		temporaryTurnExpected.add(player2);
 		assertEquals(temporaryTurnExpected, controller.getPlayerTurn());
+	}
+
+	@Test
+	public void testAutoCompletePlayers() {
+		players.get(1).setMyName(null);
+		controller.autoCompletePlayers();
+		assertEquals("Player_2", controller.getGame().getPlayers().get(1).getMyName());
 	}
 
 	@Test
@@ -148,7 +163,7 @@ public class TestController {
 
 	@Test
 	public void testGiveVictoryPoints() {
-		character1.setCardOnPersonalBoard(player.getMyBoard());
+		character.setCardOnPersonalBoard(player.getMyBoard());
 		venture1.setCardOnPersonalBoard(player.getMyBoard());
 		venture2.setCardOnPersonalBoard(player.getMyBoard());
 		player.getMyValues().getFaithPoints().setQuantity(4);
@@ -309,5 +324,59 @@ public class TestController {
 		player.getMyBoard().getPersonalLeader().get(2).setInUse(false);
 		controller.checkToActivateLeader();
 		assertFalse(player.getMyBoard().getPersonalLeader().get(2).isInUse());
+	}
+
+	@Test
+	public void testVerifyAvailabilityLeader() {
+		player.getMyBoard().getPersonalLeader().add(leader3);
+		player.getMyBoard().getPersonalLeader().add(leader1);
+		player.getMyBoard().getPersonalLeader().add(leader2);
+		player.getMyBoard().getPersonalLeader().get(1).setInUse(true);
+		player.getMyBoard().getPersonalLeader().get(2).setInUse(false);
+		controller.setCurrentPlayer(player);
+		assertEquals("ok", controller.verifyAvailabilityLeader(2, "ok"));
+	}
+
+	@Test
+	public void testVerifyAvailabilityLeaderWrong() {
+		player.getMyBoard().getPersonalLeader().add(leader3);
+		player.getMyBoard().getPersonalLeader().add(leader1);
+		player.getMyBoard().getPersonalLeader().add(leader2);
+		player.getMyBoard().getPersonalLeader().get(1).setInUse(true);
+		player.getMyBoard().getPersonalLeader().get(2).setInUse(false);
+		controller.setCurrentPlayer(player);
+		assertEquals("okThis card is already in use\n", controller.verifyAvailabilityLeader(1, "ok"));
+	}
+
+	@Test
+	public void testVerifyRequirementsLeader() {
+		character.setCardOnPersonalBoard(player.getMyBoard());
+		building.setCardOnPersonalBoard(player.getMyBoard());
+		venture1.setCardOnPersonalBoard(player.getMyBoard());
+		venture2.setCardOnPersonalBoard(player.getMyBoard());
+		player.getMyBoard().getPersonalLeader().add(leader3);
+		player.getMyBoard().getPersonalLeader().add(leader1);
+		player.getMyBoard().getPersonalLeader().add(leader2);
+		player.getMyBoard().getPersonalLeader().get(1).setInUse(false);
+		player.getMyBoard().getPersonalLeader().get(2).setInUse(false);
+		controller.setCurrentPlayer(player);
+		assertEquals("ok", controller.verifyRequirementsLeader(2, "ok"));
+	}
+
+	@Test
+	public void testVerifyRequirementsLeaderWrong() {
+		character.setCardOnPersonalBoard(player.getMyBoard());
+		building.setCardOnPersonalBoard(player.getMyBoard());
+		venture1.setCardOnPersonalBoard(player.getMyBoard());
+		venture2.setCardOnPersonalBoard(player.getMyBoard());
+		player.getMyBoard().getPersonalLeader().add(leader3);
+		player.getMyBoard().getPersonalLeader().add(leader1);
+		player.getMyBoard().getPersonalLeader().add(leader2);
+		player.getMyBoard().getPersonalLeader().get(1).setInUse(false);
+		player.getMyBoard().getPersonalLeader().get(2).setInUse(false);
+		controller.setCurrentPlayer(player);
+		assertEquals(
+				"okYou don't have enough resources to activate this card!\nYou don't have enough Territories to activate this card!\nYou don't have enough Characters to activate this card!\nYou don't have enough Buildings to activate this card!\nYou don't have enough Ventures to activate this card!\n",
+				controller.verifyRequirementsLeader(1, "ok"));
 	}
 }

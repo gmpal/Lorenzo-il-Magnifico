@@ -593,14 +593,14 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	}
 
-	private String verifyAvailabilityLeader(int index, String feedback) {
+	public String verifyAvailabilityLeader(int index, String feedback) {
 		if (currentPlayer.getMyBoard().getPersonalLeader().get(index).isInUse()) {
 			return feedback + "This card is already in use\n";
 		}
 		return feedback;
 	}
 
-	private String verifyRequirementsLeader(int index, String feedback) {
+	public String verifyRequirementsLeader(int index, String feedback) {
 		Requirements requirements = currentPlayer.getMyBoard().getPersonalLeader().get(index).getRequirements();
 		if (!currentPlayer.getLeaderOneTimePerTurn().isEmpty()) {
 			for (Leader card : currentPlayer.getLeaderOneTimePerTurn()) {
@@ -612,8 +612,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		if (verifyLeaderExclusiveRequirement(index)) {
 			return feedback;
 		}
-		if (!requirements.getRequirementSetOfVaue().isEmpty()
-				&& !currentPlayer.getMyValues().doIHaveThisSet(requirements.getRequirementSetOfVaue())) {
+		if (!requirements.getRequirementSetOfValues().isEmpty()
+				&& !currentPlayer.getMyValues().doIHaveThisSet(requirements.getRequirementSetOfValues())) {
 			feedback = feedback + "You don't have enough resources to activate this card!\n";
 		}
 		if (requirements.getRequirmentTerritories() != 0 && currentPlayer.getMyBoard().getPersonalTerritories()
@@ -622,7 +622,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		}
 		if (requirements.getRequirmentCharacters() != 0 && currentPlayer.getMyBoard().getPersonalCharacters().getCards()
 				.size() < requirements.getRequirmentCharacters()) {
-			return feedback + "You don't have enough Characters to activate this card!\n";
+			feedback = feedback + "You don't have enough Characters to activate this card!\n";
 		}
 		if (requirements.getRequirmentBuildings() != 0 && currentPlayer.getMyBoard().getPersonalBuildings().getCards()
 				.size() < requirements.getRequirmentBuildings()) {
@@ -1102,6 +1102,10 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	public void setPlayerTurn(List<Player> playerTurn) {
 		this.playerTurn = playerTurn;
+	}
+	//only used in tests
+	public void setCurrentPlayer(Player currentPlayer) {
+		this.currentPlayer = currentPlayer;
 	}
 
 }
