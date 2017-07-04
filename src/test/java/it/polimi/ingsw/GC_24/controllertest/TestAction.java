@@ -101,6 +101,13 @@ public class TestAction {
 	}
 	
 	@Test
+	public void testVerifyZoneOccupiedByMeEffect() {
+		action2.getPlacementEverywhereLeaderEffect().add("harvest yellow");
+		action2.getZone().getFirstEmptyPlace().setFamMemberOnPlace(new FamilyMember(PlayerColour.BLUE));
+		assertEquals("answerToPlayerThis zone is already occupied by one of your family members. Choose another zone\n", action2.verifyZoneOccupiedByMe("answerToPlayer"));
+	}
+	
+	@Test
 	public void testVerifyIfEnoughServantsForThisPlace() throws Exception {
 		assertEquals("answerToPlayer", action2.verifyIfEnoughServantsForThisPlace("answerToPlayer"));
 	}
