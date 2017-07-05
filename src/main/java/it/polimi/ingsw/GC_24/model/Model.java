@@ -31,10 +31,10 @@ public class Model extends MyObservable implements Serializable {
 	private Board board;
 	private Player currentPlayer;
 	private State gameState;
+	private Ranking ranking;
 
 	private SetOfDice dice;
 
-	private List<Ranking> rankings;
 	private HashMap<String, Object> hm;
 	private Deck cards;
 	private List<Excommunication> excommunicationDeck = new ArrayList<>();
@@ -56,10 +56,10 @@ public class Model extends MyObservable implements Serializable {
 		this.currentPlayer = null;
 		this.gameState = State.WAITINGFORPLAYERONE;
 		this.dice = null;
-		this.rankings = new ArrayList<>();
 		this.counter = 0;
 		this.modelNumber = modelNumber;
 		this.cards = null;
+		this.ranking = null;
 	}
 
 	/**
@@ -156,9 +156,8 @@ public class Model extends MyObservable implements Serializable {
 			p.setMyColour(PlayerColour.valueOf(PlayerColour.getValues().get(players.indexOf(p))));
 			p.setMyFamily(new Family(p.getMyColour()));
 			p.getMyFamily().setFamily(this.dice);
-			rankings.add(new Ranking(p));
 		}
-
+		ranking = new Ranking(players);
 	}
 
 	public void updateModel() {
@@ -360,4 +359,11 @@ public class Model extends MyObservable implements Serializable {
 		this.excommunicationDeck = excommunicationDeck;
 	}
 
+	public Ranking getRanking() {
+		return ranking;
+	}
+
+	public void setRanking(Ranking ranking) {
+		this.ranking = ranking;
+	}
 }

@@ -6,7 +6,6 @@ import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.State;
 import it.polimi.ingsw.GC_24.model.cards.*;
-import it.polimi.ingsw.GC_24.model.effects.*;
 import it.polimi.ingsw.GC_24.model.effects.immediate.ChooseNewCard;
 import it.polimi.ingsw.GC_24.model.effects.immediate.CouncilPrivilege;
 import it.polimi.ingsw.GC_24.model.effects.immediate.ImmediateEffect;
