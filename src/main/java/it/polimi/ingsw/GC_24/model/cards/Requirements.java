@@ -9,17 +9,17 @@ public class Requirements implements java.io.Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -9126161293112185947L;
-	private SetOfValues requirementSetOfVaue;
+	private SetOfValues requirementSetOfValues;
 	private int requirementTerritories;
 	private int requirementCharacters;
 	private int requirementBuildings;
 	private int requirementVentures;
 
 	// constructor
-	public Requirements(SetOfValues requirementSetOfVaue, int requirmentTerritories, int requirmentCharacters,
+	public Requirements(SetOfValues requirementSetOfValues, int requirmentTerritories, int requirmentCharacters,
 			int requirmentBuildings, int requirmentVentures) {
 		super();
-		this.requirementSetOfVaue = requirementSetOfVaue;
+		this.requirementSetOfValues = requirementSetOfValues;
 		this.requirementTerritories = requirmentTerritories;
 		this.requirementCharacters = requirmentCharacters;
 		this.requirementBuildings = requirmentBuildings;
@@ -29,8 +29,8 @@ public class Requirements implements java.io.Serializable{
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		if (!requirementSetOfVaue.isEmpty()) {
-			sb.append(" "+requirementSetOfVaue.toString());
+		if (!requirementSetOfValues.isEmpty()) {
+			sb.append(" "+requirementSetOfValues.toString());
 		}
 		if (requirementTerritories != 0) {
 			sb.append(" -Territory cards required = " + requirementTerritories);
@@ -48,12 +48,12 @@ public class Requirements implements java.io.Serializable{
 	}
 
 	// getters and setters
-	public SetOfValues getRequirementSetOfVaue() {
-		return requirementSetOfVaue;
+	public SetOfValues getRequirementSetOfValues() {
+		return requirementSetOfValues;
 	}
 
 	public void setRequirementSetOfVaue(SetOfValues requirementSetOfVaue) {
-		this.requirementSetOfVaue = requirementSetOfVaue;
+		this.requirementSetOfValues = requirementSetOfVaue;
 	}
 
 	public int getRequirmentTerritories() {

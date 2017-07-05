@@ -32,20 +32,6 @@ public class TowerPlace extends Place {
 		this.correspondingCard = null;
 	}
 
-	/*@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		if (correspondingCard!=null){
-			builder.append(correspondingCard.toString());
-			if (!value.getEffectValues().isEmpty()){
-				builder.append("\n\tValue you get from place = "+value);
-			}
-		}else{
-			builder.append("Card already taken by the "+famMemberOnPlace.getPlayerColour()+" player");
-		}
-		return builder.toString();
-	}*/
-
 	public Development getCorrespondingCard() {
 		return correspondingCard;
 	}

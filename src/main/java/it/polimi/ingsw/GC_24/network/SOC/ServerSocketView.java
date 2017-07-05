@@ -18,8 +18,7 @@ public class ServerSocketView extends MyObservable implements Runnable, MyObserv
 	private Socket socket;
 	private ObjectOutputStream objToClient;
 	private ObjectInputStream objFromClient;
-	private boolean end;
-
+	
 	// constructor --> Receive a socket and creates Scanner and PrintWriter
 	public ServerSocketView(Socket socket) throws IOException {
 		this.socket = socket;

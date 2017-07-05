@@ -62,7 +62,40 @@ public class FamilyMember implements java.io.Serializable {
 
 	}
 	
-	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (available ? 1231 : 1237);
+		result = prime * result + ((memberColour == null) ? 0 : memberColour.hashCode());
+		result = prime * result + memberValue;
+		result = prime * result + (neutral ? 1231 : 1237);
+		result = prime * result + ((playerColour == null) ? 0 : playerColour.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		FamilyMember other = (FamilyMember) obj;
+		if (available != other.available)
+			return false;
+		if (memberColour != other.memberColour)
+			return false;
+		if (memberValue != other.memberValue)
+			return false;
+		if (neutral != other.neutral)
+			return false;
+		if (playerColour != other.playerColour)
+			return false;
+		return true;
+	}
+
 	//getters and setters
 	public int getMemberValue() {
 		return memberValue;

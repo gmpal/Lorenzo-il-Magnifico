@@ -13,6 +13,7 @@ import it.polimi.ingsw.GC_24.observers.MyObserver;
 
 //TODO: davvero con le hashMap?
 public class ServerRMIView extends MyObservable implements ServerViewRemote, MyObserver {
+	
 	/**
 	 * 
 	 */
