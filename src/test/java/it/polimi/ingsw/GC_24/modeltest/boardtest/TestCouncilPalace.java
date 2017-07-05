@@ -1,4 +1,4 @@
-package it.polimi.ingsw.GC_24.boardtest;
+package it.polimi.ingsw.GC_24.modeltest.boardtest;
 
 import static org.junit.Assert.assertEquals;
 import java.util.*;

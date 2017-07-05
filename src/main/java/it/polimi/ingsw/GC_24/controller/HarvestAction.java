@@ -2,9 +2,7 @@ package it.polimi.ingsw.GC_24.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import it.polimi.ingsw.GC_24.model.Model;
-import it.polimi.ingsw.GC_24.model.cards.Characters;
 import it.polimi.ingsw.GC_24.model.effects.ImmediateEffect;
 import it.polimi.ingsw.GC_24.model.effects.IncreaseDieValueActivity;
 import it.polimi.ingsw.GC_24.model.effects.PerformHarvest;

@@ -5,16 +5,17 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
-
-import it.polimi.ingsw.GC_24.controller.*;
-import it.polimi.ingsw.GC_24.model.*;
+import it.polimi.ingsw.GC_24.controller.CouncilPalaceAction;
+import it.polimi.ingsw.GC_24.model.FamilyMember;
+import it.polimi.ingsw.GC_24.model.Model;
+import it.polimi.ingsw.GC_24.model.Player;
+import it.polimi.ingsw.GC_24.model.PlayerColour;
 import it.polimi.ingsw.GC_24.model.cards.Characters;
 import it.polimi.ingsw.GC_24.model.effects.IncreaseDieValueActivity;
 
+public class TestCouncilPalaceAction {
 
-public class TestHarvestAction {
-	
-	HarvestAction action;
+	CouncilPalaceAction action;
 	Model game;
 	Player player;
 	Player player2;
@@ -39,7 +40,7 @@ public class TestHarvestAction {
 		players.add(player);
 		players.add(player2);
 		game.setModel(players);
-		action = new HarvestAction(game, "2", "harvest", "1", "0");
+		action = new CouncilPalaceAction(game, "1", "council", "1", "1");
 	}
 	
 	@Test
@@ -49,18 +50,12 @@ public class TestHarvestAction {
 	
 	@Test 
 	public void testVerifyWrong() {
-		player.getMyFamily().getMember2().setMemberValue(0);
-		player.getMyFamily().getMember2().setAvailable(false);
+		player.getMyValues().getServants().setQuantity(0);
+		player.getMyFamily().getMember1().setMemberValue(0);
+		player.getMyFamily().getMember1().setAvailable(false);
 		action.getPlace().setFamMemberOnPlace(new FamilyMember(PlayerColour.YELLOW));
-		assertEquals("Answer: \nYou have not used enough servants for this place. Please choose another place\n"
-				+ "Sorry, this familiar is not available! \nSorry, place not available!\n", action.verify());
+		assertEquals("Answer: \nYou don't have enough servants to use! \n"
+				+ "Sorry, this familiar is not available! \n", action.verify());
 	}
 	
-	@Test
-	public void testGetFinalActionValue() throws Exception {
-		action.getFinalActionValue();
-		int finalValue = action.getFamilyMember().getMemberValue() + 4;
-		assertEquals(finalValue,action.getFinalValue());
-	}
-
 }

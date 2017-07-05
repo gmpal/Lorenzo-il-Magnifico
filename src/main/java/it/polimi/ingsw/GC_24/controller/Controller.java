@@ -332,7 +332,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				player.getMyValues().getVictoryPoints().subQuantity(subValue);
 			}
 			if (player.hasLastExcommunication() && finalExcommunication.equalsIgnoreCase("subResourcesPoints")) {
-				player.getMyValues().getVictoryPoints().subQuantity(player.getMyValues().numberResorces());
+				player.getMyValues().getVictoryPoints().subQuantity(player.getMyValues().numberResources());
 			}
 			if (player.hasLastExcommunication() && finalExcommunication.equalsIgnoreCase("subCostBuildings")) {
 				int quantityVictoryPoints = 0;

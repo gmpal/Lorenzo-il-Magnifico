@@ -115,7 +115,7 @@ public class SetOfValues implements Serializable {
 	 * 
 	 * @return Number of all resources.
 	 */
-	public int numberResorces() {
+	public int numberResources() {
 		return this.coins.quantity + this.servants.quantity + this.stones.quantity + this.woods.quantity;
 	}
 

@@ -10,7 +10,6 @@ public abstract class Moltiplication extends ImmediateEffect{
 	private static final long serialVersionUID = 7186806258388556423L;
 	
 	private Value value;
-	private Player player;
 	
 	//constructor
 	public Moltiplication(String name, Value value) {
