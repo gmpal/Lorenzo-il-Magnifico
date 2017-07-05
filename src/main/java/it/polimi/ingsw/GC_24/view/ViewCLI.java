@@ -114,12 +114,12 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 
 	public void showAndGetOption() {
 
-		System.out.println("\nChoose Action:\n" + "a)Show Board\n" + "b)Show Personal Board\n" + "c)Show Family Members\n"
-				+ "d)Show my Resources\n" + "e)Show Leader Cards\n" + "f)Show Active Effects\n" + "g)Place Family Member\n" + "h)Activate a Leader Card\n"
+		System.out.println("\nChoose Action:\n" + "a)Show Board\n" + "b)Show Personal Board\n"
+				+ "c)Show Family Members\n" + "d)Show my Resources\n" + "e)Show Leader Cards\n"
+				+ "f)Show Active Effects\n" + "g)Place Family Member\n" + "h)Activate a Leader Card\n"
 				+ "i)Discard a Leader Card\n" + "j)End Turn\n" + "k)Exit");
 
 		String command = scanner.nextLine();
-
 
 		if (command.equalsIgnoreCase("a")) {
 
@@ -136,15 +136,15 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 		} else if (command.equalsIgnoreCase("d")) {
 
 			System.out.println(myself.getMyValues());
-			
+
 		} else if (command.equalsIgnoreCase("e")) {
 
 			System.out.println(myself.getMyBoard().getPersonalLeader());
-			
+
 		} else if (command.equalsIgnoreCase("f")) {
 
-			System.out.println("Permanent Effects --> "+myself.getActivePermanentEffects());
-			System.out.println("\nOneTimePerTurn Effects --> "+myself.getLeaderOneTimePerTurn());
+			System.out.println("Permanent Effects --> " + myself.getActivePermanentEffects());
+			System.out.println("\nOneTimePerTurn Effects --> " + myself.getLeaderOneTimePerTurn());
 
 		} else if (command.equalsIgnoreCase("g")) {
 
@@ -244,14 +244,14 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 				commandZone = "market " + cf + " ";
 
 			} else if (commandZone.equalsIgnoreCase("f")) {
-				System.out.println("My buildings:\n"+myself.getMyBoard().getPersonalBuildings().getCards());
+				System.out.println("My buildings:\n" + myself.getMyBoard().getPersonalBuildings().getCards());
 				System.out.println(miniModel.getBoard().getProduction());
-				commandZone = "production 0 ";
+				commandZone = "production 0 0 ";
 
 			} else if (commandZone.equalsIgnoreCase("g")) {
-				System.out.println("My territories:\n"+myself.getMyBoard().getPersonalTerritories().getCards());
+				System.out.println("My territories:\n" + myself.getMyBoard().getPersonalTerritories().getCards());
 				System.out.println(miniModel.getBoard().getHarvest());
-				commandZone = "harvest 0 ";
+				commandZone = "harvest 0 0 ";
 
 			} else if (commandZone.equalsIgnoreCase("h")) {
 				System.out.println(miniModel.getBoard().getCouncilPalace());
@@ -269,7 +269,9 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 			commandZone = "cancel";
 
 		} else {
-			commandZone = increaseDieValue(commandZone);
+			if (!commandZone.contains("production") && !commandZone.contains("harvest")) {
+				commandZone = increaseDieValue(commandZone);
+			}
 
 		}
 		return commandZone;
@@ -279,9 +281,7 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 		StringBuilder builder = new StringBuilder();
 		builder.append("\nChoose Leader Card (");
 
-
 		String string = "0";
-
 
 		for (int i = 1; i <= myself.getMyBoard().getPersonalLeader().size(); i++) {
 			if (i == myself.getMyBoard().getPersonalLeader().size()) {
@@ -303,7 +303,7 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 		}
 		if (choice.equals("0")) {
 			choice = "cancel";
-		} 
+		}
 		return choice;
 	}
 
@@ -345,14 +345,16 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 
 	@Override
 	public void sendAction(String command) {
-		actionDone = false;
-
-		hm = new HashMap<>();
-		hm.put("action", command);
-		notifyMyObservers(hm);
-
-		waitForActionDone();
-
+		if (myTurn) {
+			actionDone = false;
+			hm = new HashMap<>();
+			hm.put("action", command);
+			notifyMyObservers(hm);
+			waitForActionDone();
+		}
+		else {
+			System.out.println("Not your turn!");
+		}
 	}
 
 	private void waitForActionDone() {
@@ -415,7 +417,7 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 			try {
 
 				answer = scanner.nextLine();
-			
+
 			} catch (Exception e) {
 				finalIncrease = null;
 				answer = "";
@@ -492,7 +494,6 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 			String choice = "";
 			try {
 				choice = scanner.nextLine();
-			
 
 			} catch (IndexOutOfBoundsException e) {
 				System.out.println(" AYAYAYAY");
@@ -584,7 +585,7 @@ public class ViewCLI extends MyObservable implements ViewInterface {
 	public void askForExcommunication() {
 		System.out.println("Do you want to support the Vatican?(Y/N)");
 
-		String answer=scanner.nextLine();
+		String answer = scanner.nextLine();
 
 		while (!answer.equalsIgnoreCase("y") && !answer.equalsIgnoreCase("n")) {
 			answer = scanner.nextLine();

@@ -87,7 +87,7 @@ public class ActionTower extends Action {
 	 * 
 	 * @return true if player have this effect, false otherwise.
 	 */
-	private boolean isThereNoValueEffect() {
+	public boolean isThereNoValueEffect() {
 		NoValueEffectFromTowerPlace pe = (NoValueEffectFromTowerPlace) player
 				.getPermanentEffect("noValueEffectFromTowerPlace");
 		if (pe != null) {
@@ -96,14 +96,14 @@ public class ActionTower extends Action {
 		return false;
 	}
 
-	private void payCoinsforOccupiedTower() {
+	public void payCoinsforOccupiedTower() {
 		if (player.getPermanentEffect("noCoinsForOccupiedTower") == null) {
 			if (zone.isOccupied())
 				this.payValue(new Coin(3));
 		}
 	}
 
-	private void takeEffectsAndRemoveCard() {
+	public void takeEffectsAndRemoveCard() {
 		ImmediateEffect im = towerPlace.getCorrespondingCard().getImmediateEffect();
 		ImmediateEffect im1 = towerPlace.getCorrespondingCard().getImmediateEffect1();
 		if (im != null) {
@@ -115,7 +115,7 @@ public class ActionTower extends Action {
 		towerPlace.setCorrespondingCard(null);
 	}
 
-	private void takeCardAndPay() {
+	public void takeCardAndPay() {
 		// Mine - cost --> Then set
 		setOfSales.subTwoSetsOfValues(temporaryCardCost);
 		this.player.setMyValues(temporaryCardCost.subTwoSetsOfValues(this.player.getMyValues()));
@@ -271,5 +271,13 @@ public class ActionTower extends Action {
 
 	public void setValueOfFakeFamiliar(int valueOfFakeFamiliar) {
 		this.valueOfFakeFamiliar = valueOfFakeFamiliar;
+	}
+	
+	public List<ImmediateEffect> getImmediateEffects() {
+		return immediateEffects;
+	}
+
+	public void setImmediateEffects(List<ImmediateEffect> immediateEffects) {
+		this.immediateEffects = immediateEffects;
 	}
 }
