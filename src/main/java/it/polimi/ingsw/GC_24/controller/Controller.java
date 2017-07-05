@@ -26,13 +26,13 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	private int cardsIndex = 0;
 	private SetOfValues saleForPermanentEffect = new SetOfValues();
 	private String parametersAnswer;
-	private Timers timers = new Timers();
-
 	private boolean alreadyPlaying = false;
 	private boolean autocompleted;
 	private boolean parametersChosen = true;
 	private boolean vaticanChosen;
-
+	private Timers timers= new Timers();
+	private Timer t1;
+	
 	// locks
 	private Object tempCostWaiting = new Object();
 	private Object actionWaiting = new Object();
@@ -112,7 +112,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					 * This block waits for a player doing an action, because after an action the
 					 * game-currentPlayer is updated
 					 */
-					Timer t1 = new Timer();
+					t1=new Timer();
 					startTimerForPlayerAction(t1);
 
 					synchronized (actionWaiting) {
@@ -173,9 +173,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					actionWaiting.notify();
 				}
 			}
-
-		}, 750000);
-
+		},timers.getTimeToDisconnectPlayer());
 	}
 
 	/**
@@ -501,6 +499,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				incorrenctActionHandling(answer);
 
 			} else {
+				t1.cancel();
 				correctActionExecute();
 			}
 		}
@@ -1064,7 +1063,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 					}
 				}
-
 			}
 
 			if (this.tempCostString.equals("1")) {
