@@ -19,13 +19,12 @@ import it.polimi.ingsw.GC_24.network.RMI.ClientRMIView;
 import it.polimi.ingsw.GC_24.network.RMI.ClientViewRemote;
 import it.polimi.ingsw.GC_24.network.RMI.ServerViewRemote;
 import it.polimi.ingsw.GC_24.network.SOC.ClientSocketView;
+import it.polimi.ingsw.GC_24.view.View;
 import it.polimi.ingsw.GC_24.view.ViewCLI;
 import it.polimi.ingsw.GC_24.view.ViewGUI;
-import it.polimi.ingsw.GC_24.view.ViewInterface;
+
 
 public class Client {
-
-	private ViewInterface view = new ViewCLI();
 
 	private final static int SOCKETPORT = 19999;
 	private final static String IP = "127.0.0.1";
@@ -34,59 +33,13 @@ public class Client {
 
 	ExecutorService executor = Executors.newFixedThreadPool(2);
 
-	public Client() {
-	}
 
-	public static void main(String[] args) throws UnknownHostException, IOException {
-		Client client = new Client();
-		// createAndStartsInterface();
-//		String network = askForSocketOrRMI();
-//		if (network.equalsIgnoreCase("SOC")) {
-			client.startSocketClient();
-/*		} else {
-			try {
-				client.startRMIClient();
-			} catch (NotBoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-*/	}
 
-	private static String askForSocketOrRMI() {
-		Scanner scanner = new Scanner(System.in);
-		System.out.println("Welcome to Lorenzo il Magnifico.");
-		System.out.println("Do you want to connect via socket or via RMI? Make your choice (SOC/RMI)");
-		String choice = scanner.nextLine();
-		while (!(choice.equalsIgnoreCase("SOC") || choice.equalsIgnoreCase("RMI"))) {
-			System.out.println("Wrong choice, try again: (SOC/RMI)");
-			choice = scanner.nextLine();
-		}
-		return choice;
-	}
-
-	/* Shows an Option Dialog that lets the user choose between CLI and GUI */
-	public int createAndStartsInterface() {
-		String[] array = { "GUI", "CLI" };
-
-		int choice = JOptionPane.showOptionDialog(null, "GUI or CLI?", "Choose an option", JOptionPane.YES_NO_OPTION,
-				JOptionPane.QUESTION_MESSAGE, null, array, null);
-
-		if (choice == 0) {
-			view = new ViewGUI();
-			executor.submit(view);
-		} else {
-			view = new ViewCLI();
-			executor.submit(view);
-		}
-
-		return choice;
-
-	}
+	
 
 	// Crea un socket e un FixedThreadPool, poi lancia un nuovo ClientInHandler
 	// e un nuovo ClientOutHandler in parallelo
-	public void startSocketClient() throws IOException {
+	public void startSocketClient(View view) throws IOException {
 
 		Socket socket = new Socket(IP, SOCKETPORT);
 		System.out.println("CLIENT: Connection established");
@@ -101,17 +54,12 @@ public class Client {
 
 		clientSocketView.registerMyObserver(view);
 
-		// TODO: trovare un modo per sistemare casting
-		if (view instanceof ViewCLI) {
-			((ViewCLI) view).registerMyObserver(clientSocketView);
-		}
-
-		executor.submit(view);
+		view.registerMyObserver(clientSocketView);
 		// TODO:sistemare quando creiamo la GUI
 		// minimodel is created inside the view
 	}
 
-	public void startRMIClient() throws IOException, NotBoundException {
+	public void startRMIClient(View view) throws IOException, NotBoundException {
 
 		Registry registry = LocateRegistry.getRegistry(IP, RMIPORT);
 
@@ -124,11 +72,7 @@ public class Client {
 
 		serverStub.registerClient(viewRemote);
 
-		if (view instanceof ViewCLI) {
-			((ViewCLI) view).registerMyObserver(clientRMIView);
-		}
-
-		executor.submit(view);
+		view.registerMyObserver(clientRMIView);
 	}
 
 }

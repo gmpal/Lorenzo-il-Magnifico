@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="welcomePane" prefHeight="400.0" prefWidth="600.0" stylesheets="@../img/pane.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.GC_24.gui.IntroController">
+   <children>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label text="Welcome to Lorenzo il Magnifico" textFill="#f6ff00">
+               <font>
+                  <Font name="Algerian" size="33.0" />
+               </font></Label>
+            <Label alignment="CENTER" text="Insert your name" textFill="#00ffa5">
+               <font>
+                  <Font size="23.0" />
+               </font></Label>
+            <TextField fx:id="nameTextField" prefHeight="31.0" prefWidth="212.0" promptText="Insert your name here">
+               <VBox.margin>
+                  <Insets left="100.0" right="100.0" />
+               </VBox.margin></TextField>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="100.0">
+               <children>
+                  <VBox prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+                     <children>
+                        <RadioButton fx:id="networkSocket" mnemonicParsing="false" text="Socket" textFill="#00ff40">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="networkGroup" />
+                           </toggleGroup>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin></RadioButton>
+                        <RadioButton fx:id="networkRMI" mnemonicParsing="false" text="RMI" textFill="#00ff40" toggleGroup="$networkGroup" />
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+                     <children>
+                        <RadioButton fx:id="interfaceGUI" mnemonicParsing="false" text="GUI" textFill="#00ff40">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="interfaceGroup" />
+                           </toggleGroup></RadioButton>
+                        <RadioButton fx:id="interfaceCLI" mnemonicParsing="false" text="CLI" textFill="#00ff40" toggleGroup="$interfaceGroup" />
+                     </children>
+                  </VBox>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <VBox.margin>
+                  <Insets left="120.0" />
+               </VBox.margin>
+            </HBox>
+            <Button fx:id="sendInfoButton" mnemonicParsing="false" onAction="#handleSendInfoButton" text="Play!" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

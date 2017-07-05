@@ -120,7 +120,7 @@ public class Server {
 				System.out.println("Connection #" + i + " done");
 				createServerSocketView(socket);
 				registerObservers();
-				game.addPlayer();
+				
 
 			} catch (Exception e) {
 				e.printStackTrace();
