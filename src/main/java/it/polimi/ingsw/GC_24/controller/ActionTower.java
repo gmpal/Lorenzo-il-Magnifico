@@ -177,6 +177,8 @@ public class ActionTower extends Action {
 					temporaryCardCost.getCoins().setQuantity(0);
 				}
 			}
+
+
 			if (!player.getMyValues().doIHaveThisSet(temporaryCardCost)) {
 				return answerToPlayer + "You don't have enough resources to take this card! Choose another card \n";
 			}

@@ -151,10 +151,12 @@ System.out.println("**FLAG1**");
 		getCorrespondingValueFromFile();
 		System.out.println("**FLAG2C**");
 		createExcommunicationDeck();
+
 		System.out.println("**FLAG2D**");
 		System.out.println(this.excommunicationDeck);
 		System.out.println("**FLAG2E**");
 		System.out.println("**FLAG3**");
+
 		// Setting the players
 		for (Player p : players) {
 			p.getMyValues().setInitialValues(players.indexOf(p) + 1);
@@ -174,6 +176,7 @@ System.out.println("**FLAG1**");
 		//	changeInDieValue(p);
 		}
 	}
+
 
 	/**
 	 * This method checks if some leader cards that change the family members' die
@@ -272,6 +275,7 @@ System.out.println("**FLAG1**");
 
 	private void dealLeaders(List<Leader> leaderDeck, List<Player> players) {
 		Random random = new Random();
+
 		
 		System.out.println("##FLAG1##");
 	//	int num = (leaderDeck.size() / players.size());
@@ -279,6 +283,7 @@ System.out.println("**FLAG1**");
 			System.out.println("##FLAG2##");
 			for (int i = 0; i < 4; i++) {
 				System.out.println("##FLAG3##");
+
 				int position = random.nextInt(leaderDeck.size());
 				System.out.println("##FLAG4##");
 				p.getMyBoard().getPersonalLeader().add(leaderDeck.get(position));

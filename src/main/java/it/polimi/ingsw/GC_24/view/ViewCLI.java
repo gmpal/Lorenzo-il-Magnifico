@@ -4,6 +4,7 @@ import java.util.*;
 
 public class ViewCLI extends View {
 
+
 	public ViewCLI(String name) {
 		super(name);
 
@@ -54,12 +55,14 @@ public class ViewCLI extends View {
 
 		} else if (command.equalsIgnoreCase("e")) {
 
+
 			System.out.println(personalLeaders);
 
 		} else if (command.equalsIgnoreCase("f")) {
 
 			System.out.println("Permanent Effects --> " + permanentEffects);
 			System.out.println("\nOneTimePerTurn Effects --> " + oneTimePerTurnEffects);
+
 
 		} else if (command.equalsIgnoreCase("g")) {
 
@@ -180,14 +183,17 @@ public class ViewCLI extends View {
 				command += " market " + cf + " ";
 
 			} else if (commandZone.equalsIgnoreCase("f")) {
+
 				System.out.println("My buildings:\n" + personalBuildings);
 				System.out.println(production);
 				command += " production 0 ";
 
 			} else if (commandZone.equalsIgnoreCase("g")) {
 				System.out.println("My territories:\n" + personalTerritories);
+
 				System.out.println(harvest);
 				command += " harvest 0 ";
+
 
 			} else if (commandZone.equalsIgnoreCase("h")) {
 				System.out.println(council);
@@ -205,6 +211,7 @@ public class ViewCLI extends View {
 			command = "cancel";
 
 		} else {
+
 			// not production nor harvest
 			if (!command.contains("production") && !command.contains("harvest")) {
 				command = increaseDieValue(command);
@@ -218,6 +225,7 @@ public class ViewCLI extends View {
 				
 					command = command + "0";
 				}
+
 			}
 
 		}
@@ -229,6 +237,7 @@ public class ViewCLI extends View {
 		builder.append("\nChoose Leader Card (");
 
 		String string = "0";
+
 
 		for (int i = 1; i <= 4; i++) {
 			if (i == 4) {
@@ -290,7 +299,9 @@ public class ViewCLI extends View {
 		return commandZone + " " + choice;
 	}
 
+
 	// TODO: controllare gli override
+
 	@Override
 	public void sendAction(String command) {
 		if (myTurn) {
@@ -299,10 +310,13 @@ public class ViewCLI extends View {
 			hm.put("action", command);
 			notifyMyObservers(hm);
 			waitForActionDone();
+
 		} else {
+
 			System.out.println("Not your turn!");
 		}
 	}
+
 
 	/**
 	 * this method lets the user choose between two alternative costs. It contains a
@@ -337,6 +351,7 @@ public class ViewCLI extends View {
 		String answer = "";
 
 		answer = scanner.nextLine();
+
 
 		while (!(answer.equals("1") || answer.equals("2"))) {
 			System.out.println("Wrong choice, try again");

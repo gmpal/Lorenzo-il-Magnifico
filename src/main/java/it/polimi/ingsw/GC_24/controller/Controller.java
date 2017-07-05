@@ -1,4 +1,4 @@
-package it.polimi.ingsw.GC_24.controller;
+﻿package it.polimi.ingsw.GC_24.controller;
 
 import java.io.IOException;
 
@@ -30,11 +30,14 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	private SetOfValues saleForPermanentEffect = new SetOfValues();
 	private SetOfValues alternativeSale = new SetOfValues();
 
+
 	private String parametersAnswer;
+
 
 	private boolean alreadyPlaying = false;
 	private boolean parametersChosen = true;
 	private boolean vaticanChosen;
+
 	private Timers timers = new Timers();
 	private Timer t1;
 
@@ -82,8 +85,10 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 			game.getCards().dealCards(game.getBoard(), cardsIndex / 2 + 1);
 
+
 			sendBoardInformation();
 			sendPersonalInformationToEveryOne();
+
 
 			System.out.println("Controller: everything clear and model sent");
 			for (int j = 0; j < 4; j++) {
@@ -107,7 +112,9 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					 * This block waits for a player doing an action, because after an action the
 					 * game-currentPlayer is updated
 					 */
+
 					t1 = new Timer();
+
 					startTimerForPlayerAction(t1);
 
 					synchronized (actionWaiting) {
@@ -192,7 +199,9 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					actionWaiting.notify();
 				}
 			}
+
 		}, timers.getTimeToDisconnectPlayer());
+
 	}
 
 	/**
@@ -735,12 +744,14 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		System.out.println("Controller --> Conclusa gestione dei costi interattivi ");
 		checkForExcommunication();
 		notifyToProceedWithTurns();
+
 		sendBoardInformation();
 		sendPersonalInformationToEveryOne();
 		awakenSleepingClient();
 		System.out.println("Controller --> Richiesta di risveglio inviata");
 
 	}
+
 
 	/**
 	 * This method ask to the player if they want to support the Vatican. If it's
@@ -1036,8 +1047,10 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					}
 				}
 
+
 				if (this.tempCostString.equals("1")) {
 					tempCost = cost1;
+
 
 				} else {
 					tempCost = cost2;

@@ -182,11 +182,13 @@ public class Player implements Serializable {
 
 	public List<PermanentEffect> getActivePermanentEffects() {
 		return activePermanentEffects;
+
 	}
 
 	public void setActivePermanentEffects(List<PermanentEffect> activePermanentEffects) {
 		this.activePermanentEffects = activePermanentEffects;
 	}
+
 
 	public List<Leader> getLeaderOneTimePerTurn() {
 		return leaderOneTimePerTurn;
