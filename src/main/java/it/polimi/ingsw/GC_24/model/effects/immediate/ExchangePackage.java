@@ -15,6 +15,12 @@ public class ExchangePackage implements java.io.Serializable{
 		this.set = set;
 		this.immediateEffect = immediateEffect;
 	}
+	
+	@Override
+	public String toString() {
+		return "[" + set + ", for " + immediateEffect + "]";
+	}
+
 
 	// getters and setters
 	public SetOfValues getSet() {

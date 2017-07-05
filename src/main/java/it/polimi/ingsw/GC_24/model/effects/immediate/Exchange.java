@@ -48,6 +48,45 @@ public class Exchange extends ImmediateEffect {
 	}
 
 	@Override
+	public String generateParametersRequest() {
+		if (getExchangePackage1() != null) {
+			String request = "You have to choose between exchanging \n " + exchangePackage.toString() + "\nand\n "
+					+ exchangePackage1.toString();
+			return request;
+		} else
+			return null;
+
+	}
+
+	@Override
+	public HashMap<String, Object> generateHashMapToSend(String response) {
+		if (getExchangePackage1() != null) {
+			HashMap<String, Object> map = new HashMap<>();
+			map.put("exchangeParamRequest", response);
+			return map;
+		} else
+			return null;
+	}
+
+	@Override
+	public void assignParameters(String responseFromClient) {
+		if (getExchangePackage1() != null) {
+			if (responseFromClient.equals("1")) {
+				this.finalExchange = exchangePackage;
+
+			} else {
+				this.finalExchange = exchangePackage1;
+			}
+		}
+	}
+
+	@Override
+	public List<ImmediateEffect> addAllNewEffectsToThisSet(List<ImmediateEffect> secondaryInteractiveEffects) {
+		secondaryInteractiveEffects.addAll(getImmediateEffectsFromExchange());
+		return secondaryInteractiveEffects;
+	}
+	
+	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Exchange: you can exchange " + exchangePackage.getSet() + " for "
@@ -84,43 +123,12 @@ public class Exchange extends ImmediateEffect {
 		this.exchangePackage1 = exchangePackage1;
 	}
 
-	@Override
-	public String generateParametersRequest() {
-		if (getExchangePackage1() != null) {
-			String request = "You have to choose between \n " + exchangePackage.toString() + "\nand\n "
-					+ exchangePackage.toString();
-			return request;
-		} else
-			return null;
-
+	public ExchangePackage getFinalExchange() {
+		return finalExchange;
 	}
 
-	@Override
-	public HashMap<String, Object> generateHashMapToSend(String response) {
-		if (getExchangePackage1() != null) {
-			HashMap<String, Object> map = new HashMap<>();
-			map.put("exchangeParamRequest", response);
-			return map;
-		} else
-			return null;
-	}
-
-	@Override
-	public void assignParameters(String responseFromClient) {
-		if (getExchangePackage1() != null) {
-			if (responseFromClient.equals("1")) {
-				this.finalExchange = exchangePackage;
-
-			} else {
-				this.finalExchange = exchangePackage1;
-			}
-		}
-	}
-
-	@Override
-	public List<ImmediateEffect> addAllNewEffectsToThisSet(List<ImmediateEffect> secondaryInteractiveEffects) {
-		secondaryInteractiveEffects.addAll(getImmediateEffectsFromExchange());
-		return secondaryInteractiveEffects;
+	public void setFinalExchange(ExchangePackage finalExchange) {
+		this.finalExchange = finalExchange;
 	}
 
 }
