@@ -57,4 +57,12 @@ public class Excommunication implements Serializable {
 	public void setRequiremetsForExcommunication(FaithPoint requiremetsForExcommunication) {
 		this.requiremetsForExcommunication = requiremetsForExcommunication;
 	}
+
+	@Override
+	public String toString() {
+		return "Excommunication [permanentEffect=" + permanentEffect + ", effect=" + effect + ", round=" + round
+				+ ", requiremetsForExcommunication=" + requiremetsForExcommunication + "]";
+	}
+	
+	
 }
