@@ -128,7 +128,7 @@ public class ActionTower extends Action {
 		towerPlace.getCorrespondingCard().setCardOnPersonalBoard(player.getMyBoard());
 	}
 
-	private void takeRealCost() {
+	public void takeRealCost() {
 		if (temporaryCardCost.isEmpty()) {
 			TowerPlace towerPlace = (TowerPlace) this.place;
 			System.out.println(towerPlace.toString());
@@ -137,7 +137,7 @@ public class ActionTower extends Action {
 		System.out.println(temporaryCardCost);
 	}
 
-	/*
+	/**
 	 * This method checks if you have enough money to put the familyMember in a
 	 * tower occupied (3 coins)
 	 */
@@ -279,5 +279,13 @@ public class ActionTower extends Action {
 
 	public void setImmediateEffects(List<ImmediateEffect> immediateEffects) {
 		this.immediateEffects = immediateEffects;
+	}
+	
+	public SetOfValues getTemporaryCardCost() {
+		return temporaryCardCost;
+	}
+
+	public void setTemporaryCardCost(SetOfValues temporaryCardCost) {
+		this.temporaryCardCost = temporaryCardCost;
 	}
 }
