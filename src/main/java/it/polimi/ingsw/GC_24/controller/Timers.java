@@ -3,8 +3,6 @@ package it.polimi.ingsw.GC_24.controller;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This class contains timers to start the game when there are already more than
@@ -28,7 +26,7 @@ public class Timers {
 	 *            fileName
 	 * @return int time
 	 */
-	public int takeTimer(String fileName) {
+	public static int takeTimer(String fileName) {
 		BufferedReader br;
 		int time = 0;
 		String line;

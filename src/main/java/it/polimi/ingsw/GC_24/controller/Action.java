@@ -1,14 +1,14 @@
 package it.polimi.ingsw.GC_24.controller;
 
-
+import java.util.ArrayList;
 import java.util.List;
-
+import java.util.StringTokenizer;
 import it.polimi.ingsw.GC_24.model.*;
 import it.polimi.ingsw.GC_24.model.board.Area;
+import it.polimi.ingsw.GC_24.model.effects.ChangeServantsValue;
 import it.polimi.ingsw.GC_24.model.effects.ImmediateEffect;
 import it.polimi.ingsw.GC_24.model.places.Place;
 import it.polimi.ingsw.GC_24.model.values.Value;
-
 
 public abstract class Action {
 
@@ -18,28 +18,46 @@ public abstract class Action {
 	protected Place place;
 	protected int servants;
 	protected String zoneString;
-
+	private List<String> placementEverywhereLeaderEffect = new ArrayList<>();
 
 	// constructor
 	public Action(Model game, String familiar, String zone, String floor, String servants) {
 		this.player = game.getCurrentPlayer();
 
-		if (familiar.equals("fakeFamiliarForChooseNewCard")){
-			//ForChooseNewCard effect
+		if (familiar.equals("fakeFamiliarForChooseNewCard")) {
+			// ForChooseNewCard effect
 			this.familyMember = new FamilyMember(game.getCurrentPlayer().getMyColour());
-		} else {		
+		} else {
 			this.familyMember = player.getMyFamily().getMemberfromString(familiar);
-		}		
+		}
 		this.zone = game.getBoard().getZoneFromString(zone);
 		this.place = game.getBoard().getZoneFromString(zone).getPlaceFromStringOrFirstIfZero(floor);
 		this.servants = Integer.parseInt(servants);
-		this.zoneString = zone;	
+		if (changedServantsValue()) {
+			ChangeServantsValue pe = (ChangeServantsValue) player.getPermanentEffect("changeServantsValue");
+			this.servants /= pe.getServantsQuantity();
+		}
+		this.zoneString = zone;
 
 	}
 
 	/**
-	 * This method gives to player the cards' value effects and it removes them
-	 * from the list of immediate effects that needs interaction with client
+	 * This method checks if the player has the permanent effect
+	 * "ChangeServantsValue". If the players have this permanent effect the quantity
+	 * of die value's increase caused by the servants is different.
+	 * 
+	 * @return true if the player has this effect, false otherwise.
+	 */
+	public boolean changedServantsValue() {
+		if (player.getPermanentEffect("changeServantsValue") != null) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * This method gives to player the cards' value effects and it removes them from
+	 * the list of immediate effects that needs interaction with client
 	 */
 	public void giveValueEffect(List<ImmediateEffect> immediateEffects) {
 		String nameEffect;
@@ -47,6 +65,9 @@ public abstract class Action {
 			nameEffect = immediateEffects.get(i).getName();
 			if (nameEffect.equals("value")) {
 				immediateEffects.get(i).giveImmediateEffect(player);
+				if (player.getPermanentEffect("duplicateValueEffectCard") != null) {
+					immediateEffects.get(i).giveImmediateEffect(player);
+				}
 				immediateEffects.remove(immediateEffects.get(i));
 				i--;
 			}
@@ -54,16 +75,15 @@ public abstract class Action {
 	}
 
 	/**
-	 * The verify() methods checks if the current action is logically correct,
-	 * it returns "ok" if the action is correct, otherwise it returns the answer
-	 * for the player
+	 * The verify() methods checks if the current action is logically correct, it
+	 * returns "ok" if the action is correct, otherwise it returns the answer for
+	 * the player
 	 */
 	public abstract String verify();
 
 	/**
-	 * The run() method executes the action and gets the List of
-	 * ImmediateEffects that needs interaction with users. The Controller will
-	 * use this list,
+	 * The run() method executes the action and gets the List of ImmediateEffects
+	 * that needs interaction with users. The Controller will use this list,
 	 */
 	public abstract List<ImmediateEffect> run();
 
@@ -77,11 +97,35 @@ public abstract class Action {
 		return answerToPlayer;
 	}
 
+	/**
+	 * @param answerToPlayer
+	 *            (String)
+	 * @return String with the errors in case that the place is not available. If
+	 *         the player activates the Leader Card with the effect
+	 *         "PlaceEveryWhere" it can put his family member on places occupied.
+	 */
 	public String verifyPlaceAvailability(String answerToPlayer) {
 		if (!this.place.isAvailable()) {
+			if (placeEveryWhere() && (this.place.getFamMemberOnPlace() != null)) {
+				return answerToPlayer;
+			}
 			return answerToPlayer + "Sorry, place not available!\n";
 		} else
 			return answerToPlayer;
+	}
+
+	/**
+	 * This method checks if the player has a card with permanent effect
+	 * "placeEveryWhere" activated.
+	 * 
+	 * @return true if the player has the card and it's activated, false otherwise.
+	 */
+	public boolean placeEveryWhere() {
+		if (player.getPermanentEffect("placeEveryWhere") != null) {
+			return true;
+		}
+		return false;
+
 	}
 
 	public String verifyFamilyMemberAvailability(String answerToPlayer) {
@@ -93,23 +137,44 @@ public abstract class Action {
 
 	public String verifyZoneOccupiedByMe(String answerToPlayer) {
 		if (this.zone.isThereSameColour(this.familyMember)) {
-			return answerToPlayer + "This zone is already occupied by one of your family members. Choose another zone\n";
-		} else
-			return answerToPlayer;
+			return answerToPlayer
+					+ "This zone is already occupied by one of your family members. Choose another zone\n";
+		} else {
+			for (String s : placementEverywhereLeaderEffect) {
+				StringTokenizer tokenizer = new StringTokenizer((String) s);
+				String place = tokenizer.nextToken();
+				String playerColour = tokenizer.nextToken();
+				if (playerColour.equalsIgnoreCase(player.getMyColour().toString())
+						&& place.equalsIgnoreCase(zoneString)) {
+					return answerToPlayer
+							+ "This zone is already occupied by one of your family members. Choose another zone\n";
+				}
+			}
+		}
+		return answerToPlayer;
 	}
 
 	public String verifyIfEnoughServantsForThisPlace(String answerToPlayer) {
 		int placeCostRequired = this.place.getCostDice();
-		if (placeCostRequired > (this.familyMember.getMemberValue() + this.servants)){
+		if (placeCostRequired > (this.familyMember.getMemberValue() + this.servants)) {
 			return answerToPlayer + "You have not used enough servants for this place. Please choose another place\n";
 		}
 		return answerToPlayer;
 	}
 
-	
 	// shared run methods
+
+	/**
+	 * This method put a familiar on a place and set to false the availability of
+	 * the family member. If the player has activated a card with permanent effect
+	 * "placeEveryWhere" the family member will not put on place.
+	 */
 	public void placeFamiliar() {
-		place.setFamMemberOnPlace(familyMember);
+		if (!placeEveryWhere()) {
+			place.setFamMemberOnPlace(familyMember);
+		} else {
+			placementEverywhereLeaderEffect.add(zoneString + " " + player.getMyColour().toString());
+		}
 		familyMember.setAvailable(false);
 	}
 
@@ -199,12 +264,20 @@ public abstract class Action {
 	public Player getPlayer() {
 		return player;
 	}
-	
+
 	public void setZone(Area zone) {
 		this.zone = zone;
 	}
 
 	public Area getZone() {
 		return zone;
+	}
+
+	public List<String> getPlacementEverywhereLeaderEffect() {
+		return placementEverywhereLeaderEffect;
+	}
+
+	public void setPlacementEverywhereLeaderEffect(List<String> placementEverywhereLeaderEffect) {
+		this.placementEverywhereLeaderEffect = placementEverywhereLeaderEffect;
 	}
 }

@@ -1,7 +1,6 @@
 package it.polimi.ingsw.GC_24.model.places;
 
 import it.polimi.ingsw.GC_24.model.FamilyMember;
-import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.effects.ValueEffect;
 
 public abstract class Place implements java.io.Serializable {

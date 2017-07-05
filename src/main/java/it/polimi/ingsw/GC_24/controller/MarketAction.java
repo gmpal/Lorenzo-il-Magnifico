@@ -9,11 +9,9 @@ import it.polimi.ingsw.GC_24.model.places.MarketPlace;
 import it.polimi.ingsw.GC_24.model.values.Servant;
 
 public class MarketAction extends Action {
-	
+
 	private List<ImmediateEffect> immediateEffects = new ArrayList<>();
 	private MarketPlace marketPlace;
-	
-	
 
 	public MarketAction(Model game, String familiar, String zone, String floor, String servants) {
 		super(game, familiar, zone, floor, servants);
@@ -24,18 +22,36 @@ public class MarketAction extends Action {
 	public String verify() {
 		String answerToPlayer = "Answer: \n";
 		
-			System.out.println("## --> Dentro il while ");
-			answerToPlayer = verifyIfEnoughServants(answerToPlayer);
-			System.out.println("## --> Abbastanza servi");
-			answerToPlayer = verifyIfEnoughServantsForThisPlace(answerToPlayer);
-			System.out.println("## --> verifyIfEnoughServantsForThisPlace");
-			answerToPlayer = verifyFamilyMemberAvailability(answerToPlayer);
-			System.out.println("## --> verifyFamilyMemberAvailability ");
-			answerToPlayer = verifyPlaceAvailability(answerToPlayer);
-			System.out.println("## --> verifyPlaceAvailability ");
+		answerToPlayer = verifyIfEnoughServants(answerToPlayer);
 		
-		if (answerToPlayer.equals("Answer: \n")) return "ok";
-		else return answerToPlayer;
+		answerToPlayer = verifyIfEnoughServantsForThisPlace(answerToPlayer);
+		
+		answerToPlayer = verifyFamilyMemberAvailability(answerToPlayer);
+		
+		if (!noMarketAvailability()) {
+			answerToPlayer = verifyPlaceAvailability(answerToPlayer);
+		} else {
+			answerToPlayer += "Sorry, place not available!\n";
+		}
+
+		if (answerToPlayer.equals("Answer: \n"))
+			return "ok";
+		else
+			return answerToPlayer;
+	}
+
+	/**
+	 * This method checks if the player has a card with permanent effect
+	 * "NoMarketAvailability".
+	 * 
+	 * @return true if the player has "NoMarketAvailability" effect, false
+	 *         otherwise.
+	 */
+	public boolean noMarketAvailability() {
+		if ((player.getPermanentEffect("noMarketAvailability")) != null) {
+			return true;
+		}
+		return false;
 	}
 
 	@Override

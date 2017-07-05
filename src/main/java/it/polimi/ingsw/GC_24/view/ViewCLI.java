@@ -30,9 +30,10 @@ public class ViewCLI extends View {
 
 	public void showAndGetOption() {
 
-		System.out.println("Choose action:\n" + "a)Show board\n" + "b)Show personal board\n" + "c)Show family members\n"
-				+ "d)Show my resources\n" + "e)Place family member\n" + "f)Activate a leader card\n"
-				+ "g)Discard a leader card\n" + "h)End turn\n" + "i)Exit");
+		System.out.println("\nChoose Action:\n" + "a)Show Board\n" + "b)Show Personal Board\n"
+				+ "c)Show Family Members\n" + "d)Show my Resources\n" + "e)Show Leader Cards\n"
+				+ "f)Show Active Effects\n" + "g)Place Family Member\n" + "h)Activate a Leader Card\n"
+				+ "i)Discard a Leader Card\n" + "j)End Turn\n" + "k)Exit");
 
 		String command = scanner.nextLine();
 
@@ -53,6 +54,15 @@ public class ViewCLI extends View {
 
 		} else if (command.equalsIgnoreCase("e")) {
 
+			System.out.println(personalLeaders);
+
+		} else if (command.equalsIgnoreCase("f")) {
+
+			System.out.println("Permanent Effects --> " + permanentEffects);
+			System.out.println("\nOneTimePerTurn Effects --> " + oneTimePerTurnEffects);
+
+		} else if (command.equalsIgnoreCase("g")) {
+
 			if (myTurn) {
 				System.out.println(family);
 				command = fourChoice("family member");
@@ -60,7 +70,7 @@ public class ViewCLI extends View {
 					System.out.println("Action cancelled");
 
 				} else {
-					command += " " + choosePlace();
+					command = choosePlace(command);
 					if (command.contains("cancel")) {
 						System.out.println("Action cancelled");
 					} else {
@@ -71,7 +81,7 @@ public class ViewCLI extends View {
 				System.out.println("Not your turn. You can't do any action.\n");
 			}
 
-		} else if (command.equalsIgnoreCase("f")) {
+		} else if (command.equalsIgnoreCase("h")) {
 
 			if (myTurn) {
 				System.out.println(personalLeaders);
@@ -86,7 +96,7 @@ public class ViewCLI extends View {
 				System.out.println("Not your turn. You can't do any action.\n");
 			}
 
-		} else if (command.equalsIgnoreCase("g")) {
+		} else if (command.equalsIgnoreCase("i")) {
 
 			if (myTurn) {
 				System.out.println(personalLeaders);
@@ -101,11 +111,11 @@ public class ViewCLI extends View {
 				System.out.println("Not your turn. You can't do any action.\n");
 			}
 
-		} else if (command.equalsIgnoreCase("h")) {
+		} else if (command.equalsIgnoreCase("j")) {
 			command = "end";
 			System.out.println("This function is not been implemented yet");
 			// TODO: gestione della fine del turno
-		} else if (command.equalsIgnoreCase("i")) {
+		} else if (command.equalsIgnoreCase("k")) {
 			System.out.println("This function is not been implemented yet");
 			// break;
 			// TODO:gestire la disconnessione;
@@ -136,7 +146,7 @@ public class ViewCLI extends View {
 
 	}
 
-	private String choosePlace() {
+	private String choosePlace(String command) {
 		String commandZone;
 		String floor = "floor";
 		do {
@@ -148,56 +158,70 @@ public class ViewCLI extends View {
 			if (commandZone.equalsIgnoreCase("a")) {
 				System.out.println(towerTerritories);
 				cf = fourChoice(floor);
-				commandZone = "territories " + cf + " ";
+				command += " territories " + cf + " ";
 			} else if (commandZone.equalsIgnoreCase("b")) {
 				System.out.println(towerCharacters);
 				cf = fourChoice(floor);
-				commandZone = "characters " + cf + " ";
+				command += " characters " + cf + " ";
 
 			} else if (commandZone.equalsIgnoreCase("c")) {
 				System.out.println(towerBuildings);
 				cf = fourChoice(floor);
-				commandZone = "buildings " + cf + " ";
+				command += " buildings " + cf + " ";
 
 			} else if (commandZone.equalsIgnoreCase("d")) {
 				System.out.println(towerVentures);
 				cf = fourChoice(floor);
-				commandZone = "ventures " + cf + " ";
+				command += " ventures " + cf + " ";
 
 			} else if (commandZone.equalsIgnoreCase("e")) {
 				System.out.println(market);
 				cf = fourChoice("place");
-				commandZone = "market " + cf + " ";
+				command += " market " + cf + " ";
 
 			} else if (commandZone.equalsIgnoreCase("f")) {
+				System.out.println("My buildings:\n" + personalBuildings);
 				System.out.println(production);
-
-				commandZone = "production 0 ";
+				command += " production 0 ";
 
 			} else if (commandZone.equalsIgnoreCase("g")) {
+				System.out.println("My territories:\n" + personalTerritories);
 				System.out.println(harvest);
-				commandZone = "harvest 0 ";
+				command += " harvest 0 ";
 
 			} else if (commandZone.equalsIgnoreCase("h")) {
 				System.out.println(council);
-				commandZone = "council 0 ";
+				command += " council 0 ";
 
 			} else if (commandZone.equalsIgnoreCase("i")) {
-				commandZone = "cancel";
+				command = "cancel";
 			} else {
 				System.out.println("Wrong character");
 				commandZone = null;
 			}
 		} while (commandZone == null);
 
-		if (commandZone.contains("cancel")) {
-			commandZone = "cancel";
+		if (command.contains("cancel")) {
+			command = "cancel";
 
 		} else {
-			commandZone = increaseDieValue(commandZone);
+			// not production nor harvest
+			if (!command.contains("production") && !command.contains("harvest")) {
+				command = increaseDieValue(command);
+			} else {
+				// neutral chosen
+				if (command.contains("4")) {
+					
+					command = increaseDieValue(command);
+					// non neutral chosen
+				} else {
+				
+					command = command + "0";
+				}
+			}
 
 		}
-		return commandZone;
+		return command;
 	}
 
 	public String chooseLeader() {
@@ -213,15 +237,13 @@ public class ViewCLI extends View {
 				break;
 			}
 			builder.append(i + ",");
-
 			string = string + i;
-
 		}
 		builder.append(")  0 --> Cancel ");
 		System.out.println(builder.toString());
 		String choice = scanner.nextLine();
 
-		while (!(string.contains(choice))) {
+		while (!(string.contains(choice)) || choice.isEmpty()) {
 			System.out.println("Wrong choice, try again");
 
 			choice = scanner.nextLine();
@@ -266,6 +288,20 @@ public class ViewCLI extends View {
 		} while (choice == null);
 
 		return commandZone + " " + choice;
+	}
+
+	// TODO: controllare gli override
+	@Override
+	public void sendAction(String command) {
+		if (myTurn) {
+			actionDone = false;
+			hm = new HashMap<>();
+			hm.put("action", command);
+			notifyMyObservers(hm);
+			waitForActionDone();
+		} else {
+			System.out.println("Not your turn!");
+		}
 	}
 
 	/**

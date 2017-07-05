@@ -1,4 +1,4 @@
-package it.polimi.ingsw.GC_24.cardstest;
+package it.polimi.ingsw.GC_24.modeltest.cardstest;
 
 import static org.junit.Assert.*;
 import org.junit.Before;

@@ -33,8 +33,6 @@ public class MainClass extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		this.primaryStage = primaryStage;
 		this.client = new Client();
-
-		
 		initRootLayout();
 		
 

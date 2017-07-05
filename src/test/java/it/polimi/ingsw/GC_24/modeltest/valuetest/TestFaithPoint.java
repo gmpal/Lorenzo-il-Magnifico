@@ -1,4 +1,4 @@
-package it.polimi.ingsw.GC_24.valuetest;
+package it.polimi.ingsw.GC_24.modeltest.valuetest;
 
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -39,7 +39,7 @@ public class TestFaithPoint {
 		values.setInitialValues(1);
 		valuesexpected.setInitialValues(1);
 		valuesexpected.getFaithPoints().subQuantity(3);
-		assertFalse(valuesexpected.equals(faithPoint.addValueToSet(values)));
+		assertTrue(valuesexpected.equals(faithPoint.addValueToSet(values)));
 	}
 	
 	@Test

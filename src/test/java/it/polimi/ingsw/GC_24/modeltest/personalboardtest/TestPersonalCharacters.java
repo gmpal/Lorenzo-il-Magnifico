@@ -1,4 +1,4 @@
-package it.polimi.ingsw.GC_24.personalboardtest;
+package it.polimi.ingsw.GC_24.modeltest.personalboardtest;
 
 import static org.junit.Assert.*;
 import org.junit.Before;

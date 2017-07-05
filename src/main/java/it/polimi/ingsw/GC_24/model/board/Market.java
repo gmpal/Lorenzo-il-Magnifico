@@ -33,7 +33,6 @@ public class Market extends Area {
 	}
 
 	public ArrayList<Place> createMarket() throws IOException {
-		int numPlaces;
 		BufferedReader br;
 		int indexEffectMarket = 0; // Is an index to take two effect per place
 

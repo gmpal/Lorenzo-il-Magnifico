@@ -1,4 +1,4 @@
-package it.polimi.ingsw.GC_24.valuetest;
+package it.polimi.ingsw.GC_24.modeltest.valuetest;
 
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -38,7 +38,7 @@ public class TestVictoryPoint {
 		values.setInitialValues(1);
 		valuesexpected.setInitialValues(1);
 		valuesexpected.getVictoryPoints().subQuantity(3);
-		assertFalse(valuesexpected.equals(victoryPoint.addValueToSet(values)));
+		assertTrue(valuesexpected.equals(victoryPoint.addValueToSet(values)));
 	}
 	
 	@Test

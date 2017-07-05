@@ -24,9 +24,7 @@ public class CouncilPalaceAction extends Action {
 			answerToPlayer = verifyIfEnoughServants(answerToPlayer);
 			answerToPlayer = verifyIfEnoughServantsForThisPlace(answerToPlayer);
 			answerToPlayer = verifyFamilyMemberAvailability(answerToPlayer);
-		//	answerToPlayer = verifyPlaceAvailability(answerToPlayer);
-		//	answerToPlayer = verifyZoneOccupiedByMe(answerToPlayer);
-		
+	
 		if (answerToPlayer.equals("Answer: \n")) return "ok";
 		else return answerToPlayer;
 	}

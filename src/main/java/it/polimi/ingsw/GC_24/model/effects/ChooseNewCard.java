@@ -2,8 +2,6 @@ package it.polimi.ingsw.GC_24.model.effects;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.StringTokenizer;
-
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.places.TowerPlace;
 import it.polimi.ingsw.GC_24.model.values.SetOfValues;
@@ -32,7 +30,7 @@ public class ChooseNewCard extends ImmediateEffect {
 	//useful methods
 
 	public void assignParameters(TowerPlace towerPlace) {
-		this.towerPlace = towerPlace;
+		setTowerPlace(towerPlace);
 	}
 
 	@Override
@@ -53,6 +51,31 @@ public class ChooseNewCard extends ImmediateEffect {
 			builder.append(" and you have an extra discount on the card's price of " + setOfValue);
 		}
 		return builder.toString();
+	}
+
+	/*Not necessary methods, but better than choosing with if...
+	 * CHOOSE NEW CARD EFFECT IS HANDLED DIFFERENTLY*/
+	@Override
+	public String generateParametersRequest() {
+		if (type == null){
+			return "everyTower";
+		} else return type;
+	}
+
+	@Override
+	public HashMap<String, Object> generateHashMapToSend(String response) {
+		HashMap<String, Object> hashMap = new HashMap<>();
+		hashMap.put("chooseNewCard", response);
+		return hashMap;
+	}
+
+	@Override
+	public void assignParameters(String responseFromClient) {
+	}
+
+	@Override
+	public List<ImmediateEffect> addAllNewEffectsToThisSet(List<ImmediateEffect> secondaryInteractiveEffects) {
+		return secondaryInteractiveEffects;
 	}
 
 	// getters and setters
@@ -80,31 +103,11 @@ public class ChooseNewCard extends ImmediateEffect {
 		this.setOfValue = setOfValue;
 	}
 
-	/*Not necessary methods, but better than choosing with if...
-	 * CHOOSE NEW CARD EFFECT IS HANDLED DIFFERENTLY*/
-	@Override
-	public String generateParametersRequest() {
-		if (type == null){
-			return "everyTower";
-		} else return type;
+	public TowerPlace getTowerPlace() {
+		return towerPlace;
 	}
 
-	@Override
-	public HashMap<String, Object> generateHashMapToSend(String response) {
-		HashMap<String, Object> hashMap = new HashMap<>();
-		hashMap.put("chooseNewCard", response);
-		return hashMap;
+	public void setTowerPlace(TowerPlace towerPlace) {
+		this.towerPlace = towerPlace;
 	}
-
-	@Override
-	public void assignParameters(String responseFromClient) {
-		
-	}
-
-	@Override
-	public List<ImmediateEffect> addAllNewEffectsToThisSet(List<ImmediateEffect> secondaryInteractiveEffects) {
-		return secondaryInteractiveEffects;
-	}
-	
-	
 }

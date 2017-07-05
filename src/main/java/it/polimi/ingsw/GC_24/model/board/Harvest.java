@@ -17,8 +17,6 @@ public class Harvest extends Area {
 	private int numPlayers;
 	/**Max number of player's familyMember in Production*/
 	private static final int FACTOR=2; 			
-	/**Number of ProductionPlaces with 2 players*/
-	private static final int MINPLACES=1;	
 	/**Cost of first place*/
 	private static final int COSTDICE=1;	
 	/**Additional Cost dice on the first place*/

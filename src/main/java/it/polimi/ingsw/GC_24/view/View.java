@@ -38,6 +38,8 @@ public abstract class View extends MyObservable implements MyObserver {
 	protected String personalLeaders;
 	protected String family;
 	protected String values;
+	protected String permanentEffects;
+	protected String oneTimePerTurnEffects;
 	
 	
 	
@@ -130,6 +132,8 @@ public abstract class View extends MyObservable implements MyObserver {
 		this.family = personalInformation[5];
 		this.values =	personalInformation[6];	
 		this.colour = personalInformation[7];
+		this.permanentEffects =  personalInformation[8];
+		this.oneTimePerTurnEffects =  personalInformation[9];
 		
 	}
 	
