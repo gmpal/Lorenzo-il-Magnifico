@@ -1,4 +1,4 @@
-package it.polimi.ingsw.GC_24.placestest;
+package it.polimi.ingsw.GC_24.modeltest.placestest;
 
 import static org.junit.Assert.*;
 import org.junit.Before;

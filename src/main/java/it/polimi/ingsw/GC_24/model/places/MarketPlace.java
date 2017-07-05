@@ -1,6 +1,5 @@
 package it.polimi.ingsw.GC_24.model.places;
 
-import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.effects.ImmediateEffect;
 import it.polimi.ingsw.GC_24.model.effects.ValueEffect;
 
@@ -22,28 +21,6 @@ public class MarketPlace extends Place {
 		this.available = true;
 		this.famMemberOnPlace = null;
 	}
-/*
-	@Override
-	public void giveEffects(Player player) {
-		player.setMyValues(this.getValue().getEffectValues().addTwoSetsOfValues(player.getMyValues()));
-		player.setMyValues(this.value.getEffectValues().addTwoSetsOfValues(player.getMyValues()));
-	}
-*/
-/*	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append( "\n" );
-		if (isAvailable()){
-			builder.append("- You can get: ");
-			if (value != null)
-				builder.append(value);
-			if (privilegeEffect != null)
-				builder.append(privilegeEffect);
-		}else{
-			builder.append("Place occupied by the " + getFamMemberOnPlace().getPlayerColour() + " player");
-		}
-		return builder.toString();
-	}*/
 
 	// getters and setters
 
