@@ -20,5 +20,9 @@ public interface ServerViewRemote extends Remote {
 	
 	public abstract void sendAnswerForParameters(String answer) throws RemoteException;
 
-	public abstract void sendAlternativeSale(SetOfValues alternativeSale) throws RemoteException;
+	public abstract void sendAlternativeSale(String alternativeSale) throws RemoteException ;
+	
+	public abstract void sendLeader(String request) throws RemoteException;
+	
+	public abstract void sendAnswerVatican(String request) throws RemoteException;
 }

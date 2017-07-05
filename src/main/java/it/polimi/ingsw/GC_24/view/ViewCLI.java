@@ -1,76 +1,27 @@
 package it.polimi.ingsw.GC_24.view;
 
 import java.util.*;
-import java.util.concurrent.TimeUnit;
-
-import it.polimi.ingsw.GC_24.model.Model;
-import it.polimi.ingsw.GC_24.model.Player;
-import it.polimi.ingsw.GC_24.model.effects.*;
-import it.polimi.ingsw.GC_24.model.values.*;
 
 public class ViewCLI extends View {
 
+	public ViewCLI(String name) {
+		super(name);
+
+	}
+
 	private static Scanner scanner = new Scanner(System.in);
 
-
-
-	@Override
-	public synchronized void run() {
-
-		this.miniModel = new Model(0);
-
-		// SLEEP FOR TWO SECONDS
-		try {
-			TimeUnit.SECONDS.sleep(1);
-		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-			Thread.currentThread().interrupt();
-		}
-		name = setName();
-		System.out.println("SetName superato");
-		System.out.println(myself);
-		if (myself.getMyName() == null) {
-			System.out.println("ENTRATO NELL IF");
-
-			this.sendPlayerString(name);
-			System.out.println("NAME SENT");
-		} else {
-			System.out.println("You have exceeded the time limit to choose your name and colour");
-			System.out.println("They have been auto-completed, you are: " + myself.getMyName());
-		}
-
-		System.out.println("Waiting for other players");
-
-	}
-
-	public String setName() {
-		String sc = null;
-		System.out.println("Insert your name:");
-		if (scanner.hasNextLine()) {
-			sc = scanner.nextLine();
-			System.out.println("Nome letto");
-
-		}
-		return sc;
-
-	}
-
-
-	public void showTurnSituation() {
-		System.out.println("The players' turn for this round is:");
-		for (int i = 0, j = 1; i < miniModel.getPlayers().size(); i++, j++) {
-			System.out.println(j + ") " + miniModel.getPlayers().get(i).getMyName() + " is the "
-					+ miniModel.getPlayers().get(i).getMyColour() + " player \n");
-		}
-	}
+	/*
+	 * public void showTurnSituation() {
+	 * System.out.println("The players' turn for this round is:"); for (int i = 0, j
+	 * = 1; i < miniModel.getPlayers().size(); i++, j++) { System.out.println(j +
+	 * ") " + miniModel.getPlayers().get(i).getMyName() + " is the " +
+	 * miniModel.getPlayers().get(i).getMyColour() + " player \n"); } }
+	 */
 
 	@Override
 	public void play() {
-		System.out.println("Good luck " + myself.getMyName() + "!");
-		if (myself.getAutocompleted()) {
-			System.out.println("You were supposed to write your name! Press any key to start Playing");
-		}
+
 		while (true) {
 			showAndGetOption();
 		}
@@ -85,27 +36,25 @@ public class ViewCLI extends View {
 
 		String command = scanner.nextLine();
 
-
 		if (command.equalsIgnoreCase("a")) {
 
-			System.out.println(miniModel.getBoard());
+			printBoard();
 
 		} else if (command.equalsIgnoreCase("b")) {
 
-			System.out.println(myself.getMyBoard());
-
+			printPersonalBoard();
 		} else if (command.equalsIgnoreCase("c")) {
 
-			System.out.println(myself.getMyFamily());
+			System.out.println(family);
 
 		} else if (command.equalsIgnoreCase("d")) {
 
-			System.out.println(myself.getMyValues());
+			System.out.println(values);
 
 		} else if (command.equalsIgnoreCase("e")) {
 
 			if (myTurn) {
-				System.out.println(myself.getMyFamily());
+				System.out.println(family);
 				command = fourChoice("family member");
 				if (command.contains("cancel")) {
 					System.out.println("Action cancelled");
@@ -125,7 +74,7 @@ public class ViewCLI extends View {
 		} else if (command.equalsIgnoreCase("f")) {
 
 			if (myTurn) {
-				System.out.println(myself.getMyBoard().getPersonalLeader());
+				System.out.println(personalLeaders);
 				command = "activate " + chooseLeader();
 				if (command.contains("cancel")) {
 					System.out.println("Action cancelled");
@@ -140,7 +89,7 @@ public class ViewCLI extends View {
 		} else if (command.equalsIgnoreCase("g")) {
 
 			if (myTurn) {
-				System.out.println(myself.getMyBoard().getPersonalLeader());
+				System.out.println(personalLeaders);
 				command = "discard " + chooseLeader();
 				if (command.contains("cancel")) {
 					System.out.println("Action cancelled");
@@ -166,6 +115,27 @@ public class ViewCLI extends View {
 
 	}
 
+	private void printPersonalBoard() {
+		System.out.println(personalTerritories);
+		System.out.println(personalCharacters);
+		System.out.println(personalBuildings);
+		System.out.println(personalVentures);
+		System.out.println(personalLeaders);
+
+	}
+
+	private void printBoard() {
+		System.out.println(towerTerritories);
+		System.out.println(towerCharacters);
+		System.out.println(towerBuildings);
+		System.out.println(towerVentures);
+		System.out.println(market);
+		System.out.println(harvest);
+		System.out.println(production);
+		System.out.println(council);
+
+	}
+
 	private String choosePlace() {
 		String commandZone;
 		String floor = "floor";
@@ -176,41 +146,40 @@ public class ViewCLI extends View {
 			commandZone = scanner.nextLine();
 			String cf;
 			if (commandZone.equalsIgnoreCase("a")) {
-				System.out.println(miniModel.getBoard().getTowerTerritories());
+				System.out.println(towerTerritories);
 				cf = fourChoice(floor);
 				commandZone = "territories " + cf + " ";
 			} else if (commandZone.equalsIgnoreCase("b")) {
-				System.out.println(miniModel.getBoard().getTowerCharacters());
+				System.out.println(towerCharacters);
 				cf = fourChoice(floor);
 				commandZone = "characters " + cf + " ";
 
 			} else if (commandZone.equalsIgnoreCase("c")) {
-				System.out.println(miniModel.getBoard().getTowerBuildings());
+				System.out.println(towerBuildings);
 				cf = fourChoice(floor);
 				commandZone = "buildings " + cf + " ";
 
 			} else if (commandZone.equalsIgnoreCase("d")) {
-				System.out.println(miniModel.getBoard().getTowerVentures());
+				System.out.println(towerVentures);
 				cf = fourChoice(floor);
 				commandZone = "ventures " + cf + " ";
 
 			} else if (commandZone.equalsIgnoreCase("e")) {
-				System.out.println(miniModel.getBoard().getMarket());
+				System.out.println(market);
 				cf = fourChoice("place");
 				commandZone = "market " + cf + " ";
 
 			} else if (commandZone.equalsIgnoreCase("f")) {
-				System.out.println("My buildings:\n"+myself.getMyBoard().getPersonalBuildings().getCards());
-				System.out.println(miniModel.getBoard().getProduction());
+				System.out.println(production);
+
 				commandZone = "production 0 ";
 
 			} else if (commandZone.equalsIgnoreCase("g")) {
-				System.out.println("My territories:\n"+myself.getMyBoard().getPersonalTerritories().getCards());
-				System.out.println(miniModel.getBoard().getHarvest());
+				System.out.println(harvest);
 				commandZone = "harvest 0 ";
 
 			} else if (commandZone.equalsIgnoreCase("h")) {
-				System.out.println(miniModel.getBoard().getCouncilPalace());
+				System.out.println(council);
 				commandZone = "council 0 ";
 
 			} else if (commandZone.equalsIgnoreCase("i")) {
@@ -235,12 +204,10 @@ public class ViewCLI extends View {
 		StringBuilder builder = new StringBuilder();
 		builder.append("\nChoose Leader Card (");
 
-
 		String string = "0";
 
-
-		for (int i = 1; i <= myself.getMyBoard().getPersonalLeader().size(); i++) {
-			if (i == myself.getMyBoard().getPersonalLeader().size()) {
+		for (int i = 1; i <= 4; i++) {
+			if (i == 4) {
 				builder.append(i);
 				string = string + i;
 				break;
@@ -261,7 +228,7 @@ public class ViewCLI extends View {
 		}
 		if (choice.equals("0")) {
 			choice = "cancel";
-		} 
+		}
 		return choice;
 	}
 
@@ -301,13 +268,6 @@ public class ViewCLI extends View {
 		return commandZone + " " + choice;
 	}
 
-	
-	
-
-	
-
-	
-
 	/**
 	 * this method lets the user choose between two alternative costs. It contains a
 	 * Military Point value because the alternative values are always associated
@@ -332,31 +292,21 @@ public class ViewCLI extends View {
 	}
 
 	@Override
-	public SetOfValues chooseSale(IncreaseDieValueCard increase) {
+	public String chooseSale(String request) {
 
-		SetOfValues finalIncrease;
-		do {
-			System.out.println();
-			String answer = "";
-			try {
+		System.out.println("The card you have chosen can give you two different sales on the next activities.");
+		System.out.println("Here are the two costs\n" + request);
+		System.out.println("Choose what you want (1/2)");
 
-				answer = scanner.nextLine();
-			
-			} catch (Exception e) {
-				finalIncrease = null;
-				answer = "";
-			}
-			if (answer.equals(1)) {
-				finalIncrease = increase.getSale();
-			} else if (answer.equals(1)) {
-				finalIncrease = increase.getAlternativeSale();
-			} else {
-				System.out.println("Wrong number");
-				finalIncrease = null;
-			}
-		} while (finalIncrease == null);
+		String answer = "";
 
-		return finalIncrease;
+		answer = scanner.nextLine();
+
+		while (!(answer.equals("1") || answer.equals("2"))) {
+			System.out.println("Wrong choice, try again");
+			answer = scanner.nextLine();
+		}
+		return answer;
 
 	}
 
@@ -366,10 +316,10 @@ public class ViewCLI extends View {
 		String zone;
 		String floor;
 		if (request.equals("everyTower")) {
-			System.out.println(miniModel.getBoard().getTowerTerritories());
-			System.out.println(miniModel.getBoard().getTowerCharacters());
-			System.out.println(miniModel.getBoard().getTowerBuildings());
-			System.out.println(miniModel.getBoard().getTowerVentures());
+			System.out.println(towerTerritories);
+			System.out.println(towerCharacters);
+			System.out.println(towerBuildings);
+			System.out.println(towerVentures);
 
 			System.out.println("Write the tower you want to pick your card from");
 			System.out.println("Territories/Characters/Buildings/Ventures");
@@ -383,7 +333,14 @@ public class ViewCLI extends View {
 
 		} else {
 			zone = request;
-			System.out.println(miniModel.getBoard().getZoneFromString(zone));
+			if (zone.equalsIgnoreCase("territories"))
+				System.out.println(towerTerritories);
+			if (zone.equalsIgnoreCase("Characters"))
+				System.out.println(towerCharacters);
+			if (zone.equalsIgnoreCase("Buildings"))
+				System.out.println(towerBuildings);
+			if (zone.equalsIgnoreCase("Ventures"))
+				System.out.println(towerVentures);
 		}
 
 		System.out.println("Write the floor you want to pick your card from");
@@ -418,7 +375,6 @@ public class ViewCLI extends View {
 			String choice = "";
 			try {
 				choice = scanner.nextLine();
-			
 
 			} catch (IndexOutOfBoundsException e) {
 				System.out.println(" AYAYAYAY");
@@ -472,13 +428,11 @@ public class ViewCLI extends View {
 	}
 
 	@Override
-	public void setMyTurn(Player currentPlayer) {
-		if (currentPlayer.getPlayerNumber() == getMyself().getPlayerNumber()) {
-			System.out.println("Player #" + getMyself().getPlayerNumber() + " turn is TRUE  ");
+	public void setMyTurn(String currentPlayer) {
+		if (currentPlayer.equals(name)) {
 			myTurn = true;
 
 		} else {
-			System.out.println("Player #" + getMyself().getPlayerNumber() + " turn is FALSE  ");
 			myTurn = false;
 		}
 		if (myTurn) {
@@ -489,22 +443,10 @@ public class ViewCLI extends View {
 	}
 
 	@Override
-	public void updatePlayerNumber(int playerNumber2, int modelNumber) {
-		System.out.println("View CLI --> Ricevuto un player number");
-		if (getPlayerNumber() == 0) {
-			setPlayerNumber(playerNumber2);
-			System.out.println("You are the player #" + playerNumber2 + ", connected to game #" + modelNumber);
-		} else {
-			System.out.println("View CLI --> Non era un player number per me");
-		}
-	}
-	
-
-	@Override
 	public void askForExcommunication() {
 		System.out.println("Do you want to support the Vatican?(Y/N)");
 
-		String answer=scanner.nextLine();
+		String answer = scanner.nextLine();
 
 		while (!answer.equalsIgnoreCase("y") && !answer.equalsIgnoreCase("n")) {
 			answer = scanner.nextLine();
@@ -512,8 +454,6 @@ public class ViewCLI extends View {
 
 		sendAnswerToVatican(answer);
 	}
-
-	
 
 	@Override
 	public void communicateActionDone() {
@@ -529,23 +469,9 @@ public class ViewCLI extends View {
 		System.out.println(message);
 	}
 
-
-
-	@Override
-	public void showToSinglePlayer(Player currentPlayer, String message) {
-		if (currentPlayer.getMyName().equals(myself.getMyName())) {
-			System.out.println(message);
-		}
-
-	}
-
-
 	@Override
 	public <C> void update(C change) {
-		// TODO Auto-generated method stub
-
+		// TODO: staccare la view dal observable
 	}
-
-	
 
 }

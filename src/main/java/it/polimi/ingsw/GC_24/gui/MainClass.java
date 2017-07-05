@@ -34,6 +34,7 @@ public class MainClass extends Application {
 		this.primaryStage = primaryStage;
 		this.client = new Client();
 
+		
 		initRootLayout();
 		
 
@@ -41,10 +42,10 @@ public class MainClass extends Application {
 
 	public void createView() {
 		if (interfaceChosen.equals("CLI")) {
-			this.view = new ViewCLI();
+			this.view = new ViewCLI(nameChosen);
 			System.out.println("Creata CLI");
 		} else {
-			this.view = new ViewGUI(this);
+			this.view = new ViewGUI(nameChosen, this);
 			System.out.println("Creata GUI");
 		}
 	}

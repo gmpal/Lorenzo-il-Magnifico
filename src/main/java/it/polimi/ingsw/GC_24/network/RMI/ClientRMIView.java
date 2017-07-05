@@ -1,12 +1,11 @@
 package it.polimi.ingsw.GC_24.network.RMI;
 
 import java.rmi.RemoteException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
-import it.polimi.ingsw.GC_24.model.Model;
-import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.effects.IncreaseDieValueCard;
 import it.polimi.ingsw.GC_24.model.values.SetOfValues;
 import it.polimi.ingsw.GC_24.observers.MyObservable;
@@ -35,12 +34,6 @@ public class ClientRMIView extends MyObservable implements ClientViewRemote, MyO
 	}
 
 
-	@Override
-	public void updateModelAndRelatedFields(Model model) throws RemoteException {
-		System.out.println("RMI Client View --> updateModelAndRelatedFields ");
-		view.getInformationForReceivedModel(model);
-		
-	}
 
 
 	@Override
@@ -61,23 +54,18 @@ public class ClientRMIView extends MyObservable implements ClientViewRemote, MyO
 	}
 
 	@Override
-	public void updateTurn(ArrayList<Player> turn) throws RemoteException {
+	public void updateTurn(ArrayList<String> turn) throws RemoteException {
 		System.out.println("RMI Client View --> updateTurn ");
 		view.updateTurn(turn);
 	}
 
 	@Override
-	public void updateCurrentPlayerAndSetMyTurn(Player currentPlayer) throws RemoteException {
+	public void updateCurrentPlayerAndSetMyTurn(String currentPlayer) throws RemoteException {
 		System.out.println("RMI Client View --> updateCurrentPlayerAndSetMyTurn");
 		view.setMyTurn(currentPlayer);
 	}
 
-	@Override
-	public void setPlayerNumber(int playerNumber, int modelNumber) throws RemoteException {
-		System.out.println("RMI Client View --> setPlayerNumber ");
-		view.updatePlayerNumber(playerNumber, modelNumber);
-		
-	}
+
 
 
 
@@ -91,9 +79,9 @@ public class ClientRMIView extends MyObservable implements ClientViewRemote, MyO
 
 
 	@Override
-	public SetOfValues chooseAlternativeSale(IncreaseDieValueCard increase) throws RemoteException {
+	public String chooseAlternativeSale(String increase) throws RemoteException {
 		System.out.println("RMI Client View --> ChooseAlternativeSale ");
-		SetOfValues response = view.chooseSale(increase);
+		String response = view.chooseSale(increase);
 		return response;
 	}
 
@@ -132,7 +120,25 @@ public class ClientRMIView extends MyObservable implements ClientViewRemote, MyO
 		String response = view.askForChooseNewCard(request);
 		return response;
 	}
+	
+	@Override
+	public void askForVatican() {
+		view.askForExcommunication();
+	}
 
+
+	@Override
+	public void parseBoardInformations(String[] boardInformations) throws RemoteException {
+		System.out.println("RMI Client View --> parseBoardInformations ");
+		view.parseBoardInformation(boardInformations);
+		
+	}
+
+	@Override
+	public void parsePersonalInformations(String[] personalInformations) throws RemoteException {
+		System.out.println("RMI Client View --> parsePersonalInformations ");
+		view.parsePersonalInformations(personalInformations);
+	}
 
 
 	@Override
@@ -142,13 +148,13 @@ public class ClientRMIView extends MyObservable implements ClientViewRemote, MyO
 
 
 
+	
 	@Override
 	public <C> void update(C change) {
 		HashMap<String,Object> request = (HashMap<String,Object>) change;
 		try {
 			handleRequestFromClient(request);
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		}
@@ -167,12 +173,26 @@ public class ClientRMIView extends MyObservable implements ClientViewRemote, MyO
 		 		serverStub.sendPlayerString(playerRequest);
 		 	}
 			
-			if (command.contains("player")) {
-		 		String playerRequest = (String) request.get("player");
-		 		serverStub.sendPlayerString(playerRequest);
+			if (command.contains("leader")) {
+		 		String leaderRequest = (String) request.get("leader");
+		 		serverStub.sendLeader(leaderRequest);
 		 	}
+			
+			if (command.contains("answerForVatican")) {
+		 		String playerRequest = (String) request.get("answerForVatican");
+		 		serverStub.sendAnswerVatican(playerRequest);
+		 	}
+			
 		
 	}
+
+
+
+
+
+
+
+	
 
 	
 

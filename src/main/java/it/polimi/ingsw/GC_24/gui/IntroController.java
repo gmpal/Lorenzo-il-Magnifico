@@ -75,7 +75,7 @@ public class IntroController {
 				mainClass.createView();
 				mainClass.createNetwork();
 				mainClass.sendName();
-			//	stage.close();
+				stage.close();
 			
 			}
 			

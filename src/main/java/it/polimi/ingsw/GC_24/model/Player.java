@@ -23,9 +23,9 @@ public class Player implements Serializable {
 	public boolean autoCompleted = false;
 
 	// Constructor
-	public Player(int playerNumber){
+	public Player(String name, int playerNumber){
 		this.myColour = null;
-		this.myName = null;
+		this.myName = name;
 		this.myFamily = null;
 		this.myBoard = new PersonalBoard(playerNumber);
 		this.myValues = new SetOfValues();

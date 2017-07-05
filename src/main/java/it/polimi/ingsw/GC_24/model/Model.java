@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Serializable;
 import com.google.gson.Gson;
+import com.sun.xml.internal.bind.v2.runtime.Name;
 
 import java.util.*;
 
@@ -40,6 +41,8 @@ public class Model extends MyObservable implements Serializable {
 	private List<Leader> leaderDeck = new ArrayList<>();
 
 	private int modelNumber;
+	
+	private String tempName;
 
 	private boolean isAcceptingPlayers = true;
 
@@ -61,14 +64,12 @@ public class Model extends MyObservable implements Serializable {
 		this.cards = null;
 	}
 
-
 	/**
-	 * This method create the Excommunication Cards' deck from a configuration
-	 * file named "excommunicationCards.json". All cards are put in an
-	 * ArrayList, then it will take three random cards and it put them in
-	 * another ArrayList, one per round. This final ArrayList contains the
-	 * possible excommunication card the player can take when it will choose to
-	 * not support the Vatican.
+	 * This method create the Excommunication Cards' deck from a configuration file
+	 * named "excommunicationCards.json". All cards are put in an ArrayList, then it
+	 * will take three random cards and it put them in another ArrayList, one per
+	 * round. This final ArrayList contains the possible excommunication card the
+	 * player can take when it will choose to not support the Vatican.
 	 */
 	private void createExcommunicationDeck() {
 		BufferedReader br;
@@ -93,48 +94,49 @@ public class Model extends MyObservable implements Serializable {
 		}
 	}
 
-	public synchronized void addPlayer() {
+	public void addPlayer() {
+		
+			counter++;
+			System.out.println("Model --> Contatore incrementato");
+		
+			System.out.println("Model --> Numero inviato al client");
+			Player player = new Player(tempName, counter);
+			this.getPlayers().add(player);
+			System.out.println("Model: PLAYER " + player);
+			System.out.println("Model: Player #" + counter + "added to Game #" + getModelNumber());
 
-		counter++;
-		System.out.println("Model --> Contatore incrementato");
-		sendNumberToClient();
-		System.out.println("Model --> Numero inviato al client");
-		Player player = new Player(counter);
-		this.getPlayers().add(player);
-		System.out.println("Model: PLAYER " + player);
-		System.out.println("Model: Player #" + counter + "added to Game #" + getModelNumber());
+			incrementState();
+			System.out.println("Model --> stato incrementato");
+			System.out.println("Model --> model inviato");
 
-		incrementState();
-		System.out.println("Model --> stato incrementato");
-		sendModel();
-		System.out.println("Model --> model inviato");
+			if (getGameState().equals(State.WAITINGFORPLAYERTHREE)) {
+				System.out.println("Model: Timer Starting");
+				timer = new Timer();
+				timer.schedule(new TimerTask() {
+					@Override
+					public void run() {
+						System.out.println("Model: *TIME UP*");
 
-		if (getGameState().equals(State.WAITINGFORPLAYERTHREE)) {
-			System.out.println("Model: Timer Starting");
-			timer = new Timer();
-			timer.schedule(new TimerTask() {
-				@Override
-				public void run() {
-					System.out.println("Model: *TIME UP*");
+						Server.launchAndCreateNewGame();
+					}
 
-					Server.launchAndCreateNewGame();
-				}
+				}, 15000);
+			}
 
-			}, 15000);
-		}
+			if (getGameState().equals(State.RUNNING)) {
 
-		if (getGameState().equals(State.RUNNING)) {
+				timer.cancel();
+				Server.launchAndCreateNewGame();
 
-			timer.cancel();
-			Server.launchAndCreateNewGame();
-
-		}
-
+			}
+			
+		
+		
 	}
 
 	/**
-	 * After a Model is created and the players are get, this method sets the
-	 * model so the game could start
+	 * After a Model is created and the players are get, this method sets the model
+	 * so the game could start
 	 */
 	public void setModel(List<Player> players) {
 
@@ -146,7 +148,7 @@ public class Model extends MyObservable implements Serializable {
 		this.dice = new SetOfDice();
 
 		this.dice.reset();
-		dealLeaders(cards.getDeckLeaders(),players);
+		dealLeaders(cards.getDeckLeaders(), players);
 		getCorrespondingValueFromFile();
 		createExcommunicationDeck();
 
@@ -159,31 +161,48 @@ public class Model extends MyObservable implements Serializable {
 			rankings.add(new Ranking(p));
 		}
 
-
 	}
 
 	public void incrementState() {
 		this.setGameState(this.getGameState().nextState());
 	}
 
-	public void sendModel() {
-		countingModelSent++;
-		System.out.println("Model --> Invio del model #" + countingModelSent);
 
-		hm = new HashMap<>();
-		hm.put("model", this);
-		// System.out.println("FROM MODEL SENDING THIS
-		// "+this.getPlayers().get(0).getMyValues());
-		notifyMyObservers(hm);
+	/**
+	 * This methods prepare the board situation before sending it to the client -->
+	 * it only uses strings to avoid casting from client issues
+	 */
+	public String[] prepareBoardInformation() {
+		String[] boardInformation = new String[8];
+		boardInformation[0] = board.getTowerTerritories().toString();
+		boardInformation[1] = board.getTowerBuildings().toString();
+		boardInformation[2] = board.getTowerCharacters().toString();
+		boardInformation[3] = board.getTowerVentures().toString();
+		boardInformation[4] = board.getMarket().toString();
+		boardInformation[5] = board.getHarvest().toString();
+		boardInformation[6] = board.getProduction().toString();
+		boardInformation[7] = board.getCouncilPalace().toString();
+		return boardInformation;
 	}
+	
 
-	private void sendNumberToClient() {
-		System.out.println("Richiesta di invio numero");
-		hm = new HashMap<>();
-		hm.put("clientNumber", counter);
-		hm.put("modelNumber", modelNumber);
-		notifyMyObservers(hm);
-System.out.println("Numero inviato");
+
+	/**
+	 * This methods prepare the personal information situation before sending it to
+	 * the client --> it only uses strings to avoid casting from client issues
+	 */
+	public String[] preparePersonalInformation(Player p) {
+		String[] personalInformation = new String[8];
+		personalInformation[0] = p.getMyBoard().getPersonalTerritories().toString();
+		personalInformation[1] = p.getMyBoard().getPersonalBuildings().toString();
+		personalInformation[2] = p.getMyBoard().getPersonalCharacters().toString();
+		personalInformation[3] = p.getMyBoard().getPersonalVentures().toString();
+		personalInformation[4] = p.getMyBoard().getPersonalLeader().toString();
+		personalInformation[5] = p.getMyFamily().toString();
+		personalInformation[6] = p.getMyValues().toString();
+		personalInformation[7] = p.getMyColour().toString();
+
+		return personalInformation;
 	}
 
 	public Player getPlayerfromColour(PlayerColour colour) {
@@ -205,7 +224,6 @@ System.out.println("Numero inviato");
 			}
 		}
 	}
-
 
 	// getters and setters
 	public int getModelNumber() {
@@ -272,16 +290,15 @@ System.out.println("Numero inviato");
 		this.cards = cards;
 	}
 
-
 	@Override
 	public String toString() {
 		return "Model [players=" + players + ", gameState=" + gameState + ", modelNumber=" + modelNumber + "]";
 	}
 
 	/**
-	 * This method converts Faith Points in Values specified in a configuration
-	 * file named "convertFaithPoints.json". Every line of file corresponds to a
-	 * score. All Values are entered in a List of SetOfValues
+	 * This method converts Faith Points in Values specified in a configuration file
+	 * named "convertFaithPoints.json". Every line of file corresponds to a score.
+	 * All Values are entered in a List of SetOfValues
 	 */
 	public void getCorrespondingValueFromFile() {
 		Gson gson = GsonBuilders.getGsonWithTypeAdapters();
@@ -312,8 +329,13 @@ System.out.println("Numero inviato");
 	public void setExcommunicationDeck(List<Excommunication> excommunicationDeck) {
 		this.excommunicationDeck = excommunicationDeck;
 	}
-	
-	
 
+	public String getTempName() {
+		return tempName;
+	}
+
+	public void setTempName(String tempName) {
+		this.tempName = tempName;
+	}
 
 }

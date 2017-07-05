@@ -12,32 +12,55 @@ import it.polimi.ingsw.GC_24.model.values.SetOfValues;
 import it.polimi.ingsw.GC_24.observers.MyObservable;
 import it.polimi.ingsw.GC_24.observers.MyObserver;
 
-public abstract class View extends MyObservable implements Runnable, MyObserver {
+public abstract class View extends MyObservable implements MyObserver {
 	
-	protected volatile Model miniModel;
+	public View (String name ) {
+		this.name = name;
+	}
+	
 	protected String name = null;
 
+	
+	protected String towerTerritories;
+	protected String towerCharacters;
+	protected String towerBuildings;
+	protected String towerVentures;
+	protected String harvest;
+	protected String market;
+	protected String production;
+	protected String council;
+
+	protected String colour;
+	protected String personalTerritories;
+	protected String personalCharacters;
+	protected String personalBuildings;
+	protected String personalVentures;
+	protected String personalLeaders;
+	protected String family;
+	protected String values;
+	
+	
+	
+	
 	protected HashMap<String, Object> hm;
 	protected Timer timer;
 
-	protected Object waitingForNameUpdate = new Object();
 	protected Object waitingForActionCompleted = new Object();
 
 	protected boolean myTurn = false;
-	protected List<Player> playersTurn;
+	protected List<String> playersTurn;
 	protected int playerNumber = 0;
 	protected boolean actionDone = false;
-	protected volatile Player myself = null;
+	
 
 	//FROM SERVER TO CLIENT
 	
 	public abstract void show(String message);
-	
-	public abstract void showToSinglePlayer(Player currentPlayer, String message);
+
 		
 	public abstract String chooseAlternativeCost(String request);
 
-	public abstract SetOfValues chooseSale(IncreaseDieValueCard increase); 
+	public abstract String chooseSale(String increase); 
 	
 	public abstract void askForExcommunication();
 	
@@ -53,31 +76,14 @@ public abstract class View extends MyObservable implements Runnable, MyObserver 
 	
 	public abstract void play();
 
-	public abstract void updatePlayerNumber(int playerNumber2, int modelNumber);
-
 	public abstract void communicateActionDone();
 
-	public void updateTurn(List<Player> playerTurn) {
+	public void updateTurn(List<String> playerTurn) {
 		setPlayersTurn(playerTurn);
 
 	}
 
-	public void getInformationForReceivedModel(Model model) {
-		synchronized (waitingForNameUpdate) {
-			setMiniModel(model);
-
-			setMyself(getMiniModel().getPlayers().get(playerNumber - 1));
-
-			setName(myself.getMyName());
-
-			setPlayersTurn(getMiniModel().getPlayers());
-
-			waitingForNameUpdate.notify();
-		}
-
-	}
-
-	public abstract void setMyTurn(Player currentPlayer);
+	public abstract void setMyTurn(String currentPlayer);
 
 
 	
@@ -86,22 +92,10 @@ public abstract class View extends MyObservable implements Runnable, MyObserver 
 	
 	public void sendPlayerString(String name){
 
-		String player = (playerNumber + " " + name);
 		hm = new HashMap<>();
-		hm.put("player", player);
+		hm.put("player", name);
 		this.notifyMyObservers(hm);
 		System.out.println("Your name has been sent");
-
-		synchronized (waitingForNameUpdate) {
-			while (!miniModel.getPlayers().get((playerNumber) - 1).getMyName().equalsIgnoreCase(name)) {
-				try {
-					waitingForNameUpdate.wait();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		System.out.println("Server received your name and updated it");
 	}
 
 	public void sendAction(String command) {
@@ -115,6 +109,32 @@ public abstract class View extends MyObservable implements Runnable, MyObserver 
 
 	}
 	
+	public void parseBoardInformation(String[] boardInformation) {
+		this.towerTerritories = boardInformation[0];
+		this.towerBuildings = boardInformation[1];
+		this.towerCharacters = boardInformation[2];
+		this.towerVentures = boardInformation[3];
+		this.market = boardInformation[4];
+		this.harvest = 	boardInformation[5];
+		this.production = boardInformation[6];
+		this.council = boardInformation[7];
+		
+	}
+	
+	public void parsePersonalInformations(String[] personalInformation) {
+		this.personalTerritories = personalInformation[0];
+		this.personalBuildings = personalInformation[1];
+		this.personalCharacters = personalInformation[2];
+		this.personalVentures = personalInformation[3];
+		this.personalLeaders = personalInformation[4];
+		this.family = personalInformation[5];
+		this.values =	personalInformation[6];	
+		this.colour = personalInformation[7];
+		
+	}
+	
+	
+	
 	public void sendLeader(String command) {
 		actionDone = false;
 		hm = new HashMap<>();
@@ -122,6 +142,7 @@ public abstract class View extends MyObservable implements Runnable, MyObserver 
 		this.notifyMyObservers(hm);
 		waitForActionDone();
 	}
+	
 	
 	public void waitForActionDone() {
 		/* This block of code notifies the Server of the action */
@@ -161,15 +182,15 @@ public abstract class View extends MyObservable implements Runnable, MyObserver 
 		this.notifyMyObservers(hm);
 	}
 
+	public void sendAlternativeSale(String response) {
+		hm = new HashMap<>();
+		hm.put("answerForsale", response);
+		this.notifyMyObservers(hm);
+		
+	}
 	
 	//getters and setters
-	public Model getMiniModel() {
-		return miniModel;
-	}
 
-	public void setMiniModel(Model miniModel) {
-		this.miniModel = miniModel;
-	}
 
 	public HashMap<String, Object> getHm() {
 		return hm;
@@ -185,14 +206,6 @@ public abstract class View extends MyObservable implements Runnable, MyObserver 
 
 	public void setTimer(Timer timer) {
 		this.timer = timer;
-	}
-
-	public Object getWaitingForNameUpdate() {
-		return waitingForNameUpdate;
-	}
-
-	public void setWaitingForNameUpdate(Object waitingForNameUpdate) {
-		this.waitingForNameUpdate = waitingForNameUpdate;
 	}
 
 	public Object getWaitingForActionCompleted() {
@@ -211,11 +224,11 @@ public abstract class View extends MyObservable implements Runnable, MyObserver 
 		this.myTurn = myTurn;
 	}
 
-	public List<Player> getPlayersTurn() {
+	public List<String> getPlayersTurn() {
 		return playersTurn;
 	}
 
-	public void setPlayersTurn(List<Player> playersTurn) {
+	public void setPlayersTurn(List<String> playersTurn) {
 		this.playersTurn = playersTurn;
 	}
 
@@ -235,13 +248,6 @@ public abstract class View extends MyObservable implements Runnable, MyObserver 
 		this.actionDone = actionDone;
 	}
 
-	public Player getMyself() {
-		return myself;
-	}
-
-	public void setMyself(Player myself) {
-		this.myself = myself;
-	}
 	public String getName() {
 		return name;
 	}
@@ -249,5 +255,8 @@ public abstract class View extends MyObservable implements Runnable, MyObserver 
 	public void setName(String name) {
 		this.name = name;
 	}
+
+
+
 
 }
