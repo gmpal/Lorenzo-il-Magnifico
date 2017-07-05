@@ -1,4 +1,6 @@
-package it.polimi.ingsw.GC_24.model.effects;
+package it.polimi.ingsw.GC_24.model.effects.permanent;
+
+import it.polimi.ingsw.GC_24.model.effects.Effect;
 
 public abstract class PermanentEffect extends Effect{
 	/**

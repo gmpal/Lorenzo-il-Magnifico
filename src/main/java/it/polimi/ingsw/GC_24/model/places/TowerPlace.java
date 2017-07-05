@@ -1,8 +1,8 @@
 package it.polimi.ingsw.GC_24.model.places;
 
 import it.polimi.ingsw.GC_24.model.cards.Development;
-import it.polimi.ingsw.GC_24.model.effects.ImmediateEffect;
-import it.polimi.ingsw.GC_24.model.effects.ValueEffect;
+import it.polimi.ingsw.GC_24.model.effects.immediate.ImmediateEffect;
+import it.polimi.ingsw.GC_24.model.effects.immediate.ValueEffect;
 
 public class TowerPlace extends Place {
 

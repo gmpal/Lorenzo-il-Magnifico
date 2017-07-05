@@ -1,4 +1,4 @@
-package it.polimi.ingsw.GC_24.model.effects;
+package it.polimi.ingsw.GC_24.model.effects.immediate;
 
 import java.util.ArrayList;
 import java.util.HashMap;

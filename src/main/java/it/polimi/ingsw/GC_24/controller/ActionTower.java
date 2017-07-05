@@ -5,11 +5,11 @@ import java.util.List;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.cards.Characters;
 import it.polimi.ingsw.GC_24.model.cards.Ventures;
-import it.polimi.ingsw.GC_24.model.effects.ImmediateEffect;
-import it.polimi.ingsw.GC_24.model.effects.IncreaseDieValueCard;
-import it.polimi.ingsw.GC_24.model.effects.NoValueEffectFromTowerPlace;
-import it.polimi.ingsw.GC_24.model.effects.PermanentEffect;
-import it.polimi.ingsw.GC_24.model.effects.SubSetOfValues;
+import it.polimi.ingsw.GC_24.model.effects.immediate.ImmediateEffect;
+import it.polimi.ingsw.GC_24.model.effects.permanent.IncreaseDieValueCard;
+import it.polimi.ingsw.GC_24.model.effects.permanent.NoValueEffectFromTowerPlace;
+import it.polimi.ingsw.GC_24.model.effects.permanent.PermanentEffect;
+import it.polimi.ingsw.GC_24.model.effects.permanent.SubSetOfValues;
 import it.polimi.ingsw.GC_24.model.places.TowerPlace;
 import it.polimi.ingsw.GC_24.model.values.*;
 

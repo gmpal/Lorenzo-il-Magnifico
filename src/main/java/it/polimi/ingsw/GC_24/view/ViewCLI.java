@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.effects.*;
+import it.polimi.ingsw.GC_24.model.effects.permanent.IncreaseDieValueCard;
 import it.polimi.ingsw.GC_24.model.values.*;
 import it.polimi.ingsw.GC_24.observers.MyObservable;
 

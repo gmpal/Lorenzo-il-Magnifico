@@ -8,6 +8,9 @@ import org.junit.Test;
 import it.polimi.ingsw.GC_24.controller.*;
 import it.polimi.ingsw.GC_24.model.*;
 import it.polimi.ingsw.GC_24.model.effects.*;
+import it.polimi.ingsw.GC_24.model.effects.immediate.CouncilPrivilege;
+import it.polimi.ingsw.GC_24.model.effects.immediate.ImmediateEffect;
+import it.polimi.ingsw.GC_24.model.effects.immediate.ValueEffect;
 import it.polimi.ingsw.GC_24.model.values.*;
 
 public class TestAction {

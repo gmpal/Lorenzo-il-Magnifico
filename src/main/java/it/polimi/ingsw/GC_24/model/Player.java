@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.polimi.ingsw.GC_24.model.cards.Leader;
-import it.polimi.ingsw.GC_24.model.effects.PermanentEffect;
+import it.polimi.ingsw.GC_24.model.effects.permanent.PermanentEffect;
 import it.polimi.ingsw.GC_24.model.personalboard.PersonalBoard;
 import it.polimi.ingsw.GC_24.model.places.Place;
 import it.polimi.ingsw.GC_24.model.values.*;

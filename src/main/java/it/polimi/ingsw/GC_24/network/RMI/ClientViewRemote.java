@@ -5,7 +5,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
-import it.polimi.ingsw.GC_24.model.effects.IncreaseDieValueCard;
+import it.polimi.ingsw.GC_24.model.effects.permanent.IncreaseDieValueCard;
 import it.polimi.ingsw.GC_24.model.values.SetOfValues;
 
 

@@ -8,7 +8,7 @@ import java.util.Set;
 
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
-import it.polimi.ingsw.GC_24.model.effects.IncreaseDieValueCard;
+import it.polimi.ingsw.GC_24.model.effects.permanent.IncreaseDieValueCard;
 import it.polimi.ingsw.GC_24.model.values.SetOfValues;
 import it.polimi.ingsw.GC_24.observers.MyObservable;
 import it.polimi.ingsw.GC_24.observers.MyObserver;
