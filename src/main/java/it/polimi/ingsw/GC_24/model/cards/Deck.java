@@ -8,14 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import com.google.gson.Gson;
-
 import it.polimi.ingsw.GC_24.devCardJsonFile.GsonBuilders;
 import it.polimi.ingsw.GC_24.model.board.Board;
 import it.polimi.ingsw.GC_24.model.effects.CustomizedPermanentEffect;
 import it.polimi.ingsw.GC_24.model.effects.IncreaseDieValueActivity;
 import it.polimi.ingsw.GC_24.model.effects.SubSetOfValues;
 import it.polimi.ingsw.GC_24.model.effects.SubVicrotyPointsFromSetOfValue;
-import it.polimi.ingsw.GC_24.model.personalboard.PersonalBoard;
 import it.polimi.ingsw.GC_24.model.places.*;
 import it.polimi.ingsw.GC_24.model.values.*;
 
