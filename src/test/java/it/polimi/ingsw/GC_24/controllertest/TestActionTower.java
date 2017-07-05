@@ -32,7 +32,7 @@ import it.polimi.ingsw.GC_24.model.values.Wood;
 public class TestActionTower {
 
 	Player p1, p2;
-	ActionTower actionTower, actionTower1, actionTower2, actionTower3, actionTower4, actionTower5, actionTower6;
+	ActionTower actionTower, actionTower1, actionTower2, actionTower3, actionTower4, actionTower5, actionTower6, actionTower7;
 	Model game;
 	List<Player> players;
 	SetOfValues set1 = new SetOfValues();
@@ -106,6 +106,7 @@ public class TestActionTower {
 		actionTower4 = new ActionTower(game, "1", "buildings", "1", "0", set2, set3);
 		actionTower5 = new ActionTower(game, "1", "ventures", "1", "0", set2, set3);
 		actionTower6 = new ActionTower(game, "2", "buildings", "2", "0", set2, set3);
+		actionTower7 = new ActionTower(game, "4", "buildings", "2", "0", set2, set3);
 
 
 	}
@@ -380,7 +381,7 @@ public class TestActionTower {
 	}
 
 	@Test
-	public void verifyBoardSpaceAvailabilityTerritories() {
+	public void testVerifyBoardSpaceAvailabilityTerritories() {
 		for (int i = 0; i < 6; i++) {
 			actionTower1.getPlayer().getMyBoard().getPersonalTerritories().getCards().add(t1);
 		}
@@ -389,7 +390,7 @@ public class TestActionTower {
 	}
 
 	@Test
-	public void verifyBoardSpaceAvailabilityCharacters() {
+	public void testVerifyBoardSpaceAvailabilityCharacters() {
 		for (int i = 0; i < 6; i++) {
 			actionTower3.getPlayer().getMyBoard().getPersonalCharacters().getCards().add(c1);
 		}
@@ -407,11 +408,24 @@ public class TestActionTower {
 	}
 
 	@Test
-	public void verifyBoardSpaceAvailabilityVentures() {
+	public void testVerifyBoardSpaceAvailabilityVentures() {
 		for (int i = 0; i < 6; i++) {
 			actionTower5.getPlayer().getMyBoard().getPersonalVentures().getCards().add(v1);
 		}
 		String s = actionTower5.verifyBoardSpaceAvailability("ok");
 		assertEquals("okYou have already 6 Venture Cards, no more empty spaces \n", s);
+	}
+	
+	@Test
+	public void testVerifyOk() {
+		assertEquals("ok",actionTower.verify());
+	}
+	
+	@Test
+	public void testVerifyNoOk() {
+		assertEquals("Answer: \n" + 
+				"You have not used enough servants for this place. Please choose another place. \n" + 
+				"You don't have enough resources to take this card! Choose another card \n" + 
+				"",actionTower7.verify());
 	}
 }
