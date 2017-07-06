@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Serializable;
 import com.google.gson.Gson;
+import com.sun.xml.internal.bind.v2.runtime.Name;
 
 import java.util.*;
 
@@ -41,6 +42,8 @@ public class Model extends MyObservable implements Serializable {
 	private List<SetOfValues> correspondingValue = new ArrayList<>();
 
 	private int modelNumber;
+	
+	private String tempName;
 
 	private boolean isAcceptingPlayers = true;
 
@@ -92,43 +95,40 @@ public class Model extends MyObservable implements Serializable {
 		}
 	}
 
-	public synchronized void addPlayer() {
+	public void addPlayer() {
+		
+			counter++;
+			System.out.println("Model --> Contatore incrementato");
+			Player player = new Player(tempName, counter);
+			this.getPlayers().add(player);
+			System.out.println("Model: PLAYER " + player);
+			System.out.println("Model: Player #" + counter + "added to Game #" + getModelNumber());
 
-		counter++;
-		System.out.println("Model --> Contatore incrementato");
-		sendNumberToClient();
-		System.out.println("Model --> Numero inviato al client");
-		Player player = new Player(counter);
-		this.getPlayers().add(player);
-		System.out.println("Model: PLAYER " + player);
-		System.out.println("Model: Player #" + counter + "added to Game #" + getModelNumber());
+			incrementState();
+			System.out.println("Model --> stato incrementato");
+			System.out.println(getGameState());
+			System.out.println("Model --> model inviato");
 
-		incrementState();
-		System.out.println("Model --> stato incrementato");
-		sendModel();
-		System.out.println("Model --> model inviato");
+			if (getGameState().equals(State.WAITINGFORPLAYERTHREE)) {
+				System.out.println("Model: Timer Starting");
+				timer = new Timer();
+				timer.schedule(new TimerTask() {
+					@Override
+					public void run() {
+						System.out.println("Model: *TIME UP*");
 
-		if (getGameState().equals(State.WAITINGFORPLAYERTHREE)) {
-			System.out.println("Model: Timer Starting");
-			timer = new Timer();
-			timer.schedule(new TimerTask() {
-				@Override
-				public void run() {
-					System.out.println("Model: *TIME UP*");
+						Server.launchAndCreateNewGame();
+					}
 
-					Server.launchAndCreateNewGame();
-				}
+				}, 15000);
+			}
 
-			}, 15000);
-		}
+			if (getGameState().equals(State.RUNNING)) {
 
-		if (getGameState().equals(State.RUNNING)) {
+				timer.cancel();
+				Server.launchAndCreateNewGame();
 
-			timer.cancel();
-			Server.launchAndCreateNewGame();
-
-		}
-
+			}	
 	}
 
 	/**
@@ -136,19 +136,26 @@ public class Model extends MyObservable implements Serializable {
 	 * so the game could start
 	 */
 	public void setModel(List<Player> players) {
-
+System.out.println("**FLAG1**");
 		this.players = players;
 		this.board = new Board(players.size());
 		this.currentPlayer = players.get(0);
 		this.setGameState(State.RUNNING);
 		this.cards = new Deck();
 		this.dice = new SetOfDice();
-
+		System.out.println("**FLAG2**");
 		this.dice.reset();
+		System.out.println("**FLAG2A**");
 		dealLeaders(cards.getDeckLeaders(), players);
+		System.out.println("**FLAG2B**");
 		getCorrespondingValueFromFile();
+		System.out.println("**FLAG2C**");
 		createExcommunicationDeck();
+
+		System.out.println("**FLAG2D**");
 		System.out.println(this.excommunicationDeck);
+		System.out.println("**FLAG2E**");
+		System.out.println("**FLAG3**");
 
 		// Setting the players
 		for (Player p : players) {
@@ -167,6 +174,7 @@ public class Model extends MyObservable implements Serializable {
 		//	changeInDieValue(p);
 		}
 	}
+
 
 	/**
 	 * This method checks if some leader cards that change the family members' die
@@ -214,24 +222,45 @@ public class Model extends MyObservable implements Serializable {
 		this.setGameState(this.getGameState().nextState());
 	}
 
-	public void sendModel() {
-		countingModelSent++;
-		System.out.println("Model --> Invio del model #" + countingModelSent);
 
-		hm = new HashMap<>();
-		hm.put("model", this);
-		// System.out.println("FROM MODEL SENDING THIS
-		// "+this.getPlayers().get(0).getMyValues());
-		notifyMyObservers(hm);
+	/**
+	 * This methods prepare the board situation before sending it to the client -->
+	 * it only uses strings to avoid casting from client issues
+	 */
+	public String[] prepareBoardInformation() {
+		String[] boardInformation = new String[8];
+		boardInformation[0] = board.getTowerTerritories().toString();
+		boardInformation[1] = board.getTowerBuildings().toString();
+		boardInformation[2] = board.getTowerCharacters().toString();
+		boardInformation[3] = board.getTowerVentures().toString();
+		boardInformation[4] = board.getMarket().toString();
+		boardInformation[5] = board.getHarvest().toString();
+		boardInformation[6] = board.getProduction().toString();
+		boardInformation[7] = board.getCouncilPalace().toString();
+		return boardInformation;
 	}
+	
 
-	private void sendNumberToClient() {
-		System.out.println("Richiesta di invio numero");
-		hm = new HashMap<>();
-		hm.put("clientNumber", counter);
-		hm.put("modelNumber", modelNumber);
-		notifyMyObservers(hm);
-		System.out.println("Numero inviato");
+
+	/**
+	 * This methods prepare the personal information situation before sending it to
+	 * the client --> it only uses strings to avoid casting from client issues
+	 */
+	public String[] preparePersonalInformation(Player p) {
+		String[] personalInformation = new String[10];
+		personalInformation[0] = p.getMyBoard().getPersonalTerritories().toString();
+		personalInformation[1] = p.getMyBoard().getPersonalBuildings().toString();
+		personalInformation[2] = p.getMyBoard().getPersonalCharacters().toString();
+		personalInformation[3] = p.getMyBoard().getPersonalVentures().toString();
+		personalInformation[4] = p.getMyBoard().getPersonalLeader().toString();
+		personalInformation[5] = p.getMyFamily().toString();
+		personalInformation[6] = p.getMyValues().toString();
+		personalInformation[7] = p.getMyColour().toString();
+		personalInformation[8] = p.getActivePermanentEffects().toString();
+		personalInformation[9] = p.getLeaderOneTimePerTurn().toString();
+
+		return personalInformation;
+
 	}
 
 	public Player getPlayerfromColour(PlayerColour colour) {
@@ -244,12 +273,21 @@ public class Model extends MyObservable implements Serializable {
 
 	private void dealLeaders(List<Leader> leaderDeck, List<Player> players) {
 		Random random = new Random();
+
+		
+		System.out.println("##FLAG1##");
 	//	int num = (leaderDeck.size() / players.size());
 		for (Player p : players) {
+			System.out.println("##FLAG2##");
 			for (int i = 0; i < 4; i++) {
+				System.out.println("##FLAG3##");
+
 				int position = random.nextInt(leaderDeck.size());
+				System.out.println("##FLAG4##");
 				p.getMyBoard().getPersonalLeader().add(leaderDeck.get(position));
+				System.out.println("##FLAG5##");
 				leaderDeck.remove(position);
+				System.out.println("##FLAG6##");
 			}
 		}
 	}

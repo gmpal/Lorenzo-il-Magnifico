@@ -58,6 +58,9 @@ public class ProductionAction extends Action {
 			this.finalActionValue += pe.getIncreaseDieValue();
 		}
 		this.finalActionValue += familyMember.getMemberValue() - productionPlace.getAdditionalCostDice() + servants;
+		if (this.finalActionValue < 0) {
+			finalActionValue=0;
+		}
 	}
 
 	private void createProductionEffect() {

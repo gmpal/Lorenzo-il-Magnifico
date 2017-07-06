@@ -5,11 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
-
-import it.polimi.ingsw.GC_24.model.Model;
-import it.polimi.ingsw.GC_24.model.Player;
-import it.polimi.ingsw.GC_24.model.effects.permanent.IncreaseDieValueCard;
-import it.polimi.ingsw.GC_24.model.values.SetOfValues;
 import it.polimi.ingsw.GC_24.observers.MyObservable;
 import it.polimi.ingsw.GC_24.observers.MyObserver;
 
@@ -35,25 +30,23 @@ public class ServerRMIView extends MyObservable implements ServerViewRemote, MyO
 		i++;
 		System.out.println("CLIENT #" + i + " REGISTRATO");
 		this.clients.add(clientStub);
-		hm = new HashMap<>();
-		hm.put("addPlayer", null);
-		notifyMyObservers(hm);
 
 	}
 
 	@Override
 	public <C> void update(C change) {
-		HashMap<String,Object> request = (HashMap<String,Object>) change;
-		System.out.println("*******************RMI SERVER VIEW***************************\n \t \t RECEIVED THIS "+change);
-		
+		HashMap<String, Object> request = (HashMap<String, Object>) change;
+		System.out.println(
+				"*******************RMI SERVER VIEW***************************\n \t \t RECEIVED THIS " + change);
+
 		try {
 			this.handleRequestFromServer(request);
-			
+
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		
-		
+		}
+
 	}
 
 	private void handleRequestFromServer(HashMap<String, Object> request) throws RemoteException {
@@ -104,23 +97,28 @@ public class ServerRMIView extends MyObservable implements ServerViewRemote, MyO
 						System.out.println("RMI Server View ---> Ricevuti problemi");
 						clientstub.show((String) request.get("problems"));
 					}
-					
 
+					if (command.contains("personalInformation")) {
+						clientstub.parsePersonalInformations((String[]) request.get("personalInformation"));
+					}
+					if (command.contains("sale")) {
+						System.out.println("RMI Server View ---> Ricevuta richiesta sconto multiplo");
+						String alternativeSale = clientstub.chooseAlternativeSale((String) request.get(command));
+						sendAlternativeSale(alternativeSale);
+					}
+
+					if (command.contains("vatican")) {
+						System.out.println("RMI Server View ---> Ricevuta richiesta vaticano");
+						clientstub.askForVatican();
+					}
 				}
+
 			}
 
 			/* IN THIS CASE the request is handled by the viewCLI */
-			if (command.contains("clientNumber")) {
-				System.out.println("RMI Server View ---> Ricevuto numero client");
-				int playerNumber = (int) request.get("clientNumber");
-				int modelNumber = (int) request.get("modelNumber");
-				clientstub.setPlayerNumber(playerNumber, modelNumber);
 
-			}
-			
-			if (command.contains("model")) {
-				System.out.println("RMI Server View ---> Ricevuto Model");
-				clientstub.updateModelAndRelatedFields((Model) request.get("model"));
+			if (command.contains("boardInformation")) {
+				clientstub.parseBoardInformations((String[]) request.get("boardInformation"));
 			}
 
 			if (command.contains("actionDone")) {
@@ -142,22 +140,15 @@ public class ServerRMIView extends MyObservable implements ServerViewRemote, MyO
 			}
 			if (command.contains("Turns")) {
 				System.out.println("RMI Server View ---> Ricevuti turni ");
-				ArrayList<Player> playerTurn = (ArrayList<Player>) request.get("Turns");
+				ArrayList<String> playerTurn = (ArrayList<String>) request.get("Turns");
 				clientstub.updateTurn(playerTurn);
 
 			}
 			if (command.contains("currentPlayer")) {
 				System.out.println("RMI Server View ---> Ricevuto giocatore corrente ");
-				Player currentPlayer = (Player) request.get("currentPlayer");
+				String currentPlayer = (String) request.get("currentPlayer");
 				clientstub.updateCurrentPlayerAndSetMyTurn(currentPlayer);
 
-			}
-
-			if (command.contains("sale")) {
-				System.out.println("RMI Server View ---> Ricevuta richiesta sconto multiplo");
-				SetOfValues alternativeSale = clientstub
-						.chooseAlternativeSale((IncreaseDieValueCard) request.get(command));
-				sendAlternativeSale(alternativeSale);
 			}
 
 		}
@@ -197,11 +188,25 @@ public class ServerRMIView extends MyObservable implements ServerViewRemote, MyO
 	}
 
 	@Override
-	public void sendAlternativeSale(SetOfValues alternativeSale) throws RemoteException {
+	public void sendAlternativeSale(String alternativeSale) throws RemoteException {
 		hm = new HashMap<>();
-		hm.put("sale", alternativeSale);
+		hm.put("answerForsale", alternativeSale);
 		notifyMyObservers(hm);
 
+	}
+
+	@Override
+	public void sendLeader(String request) {
+		hm = new HashMap<>();
+		hm.put("leader", request);
+		notifyMyObservers(hm);
+	}
+
+	@Override
+	public void sendAnswerVatican(String request) {
+		hm = new HashMap<>();
+		hm.put("answerForVatican", request);
+		notifyMyObservers(hm);
 	}
 
 }

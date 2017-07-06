@@ -58,6 +58,9 @@ public class HarvestAction extends Action {
 			this.finalActionValue += pe.getIncreaseDieValue();
 		}
 		this.finalActionValue += familyMember.getMemberValue() - harvestPlace.getAdditionalCostDice() + servants;
+		if (this.finalActionValue < 0) {
+			finalActionValue=0;
+		}
 	}
 
 	private void createHarvestEffect() {

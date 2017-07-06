@@ -28,9 +28,10 @@ public class Player implements Serializable {
 	private boolean lastExcommunication=false;
 
 	// Constructor
-	public Player(int playerNumber) {
+
+	public Player(String name, int playerNumber){
 		this.myColour = null;
-		this.myName = null;
+		this.myName = name;
 		this.myFamily = null;
 		this.myBoard = new PersonalBoard(playerNumber);
 		this.myValues = new SetOfValues();
@@ -38,6 +39,15 @@ public class Player implements Serializable {
 	}
 
 	// constructor for tests
+	
+	public Player(int playerNumber){
+		this.myColour = null;
+		this.myName = null;
+		this.myFamily = null;
+		this.myBoard = new PersonalBoard(playerNumber);
+		this.myValues = new SetOfValues();
+		this.playerNumber = playerNumber;
+	}
 	public Player(String name, PlayerColour colour) {
 		this.myColour = colour;
 		this.myName = name;
@@ -172,11 +182,13 @@ public class Player implements Serializable {
 
 	public List<PermanentEffect> getActivePermanentEffects() {
 		return activePermanentEffects;
+
 	}
 
 	public void setActivePermanentEffects(List<PermanentEffect> activePermanentEffects) {
 		this.activePermanentEffects = activePermanentEffects;
 	}
+
 
 	public List<Leader> getLeaderOneTimePerTurn() {
 		return leaderOneTimePerTurn;

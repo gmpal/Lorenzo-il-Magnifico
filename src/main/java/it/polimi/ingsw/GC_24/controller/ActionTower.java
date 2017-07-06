@@ -162,8 +162,12 @@ public class ActionTower extends Action {
 			if (typeOfCard.equalsIgnoreCase("Venture")) {
 				Ventures specificCard = (Ventures) towerPlace.getCorrespondingCard();
 				Value requirement = specificCard.getRequiredMilitaryPoints();
-				if (!this.player.getMyValues().doIHaveEnoughOfThis(requirement)) {
-					return answerToPlayer + "You don't have the required value for this card! Choose another card \n";
+				SetOfValues cost1 = specificCard.getCost();
+				SetOfValues cost2 = specificCard.getAlternativeCost();
+				if (temporaryCardCost.equals(cost2) &&!this.player.getMyValues().doIHaveEnoughOfThis(requirement) ) {
+					return answerToPlayer + "You don't have the EXTRA REQUIREMENTS for this card! Choose another card \n";
+				}else if (temporaryCardCost.equals(cost1) && !this.player.getMyValues().doIHaveThisSet(cost1) ) {
+					return answerToPlayer + "You don't have the VALUES for this card! Choose another card \n";
 				}
 			}
 			if (player.getPermanentEffect("discountCoinsCard")!=null) {
@@ -173,6 +177,8 @@ public class ActionTower extends Action {
 					temporaryCardCost.getCoins().setQuantity(0);
 				}
 			}
+
+
 			if (!player.getMyValues().doIHaveThisSet(temporaryCardCost)) {
 				return answerToPlayer + "You don't have enough resources to take this card! Choose another card \n";
 			}

@@ -132,12 +132,6 @@ public class TestController {
 		assertEquals(temporaryTurnExpected, controller.getPlayerTurn());
 	}
 
-	@Test
-	public void testAutoCompletePlayers() {
-		players.get(1).setMyName(null);
-		controller.autoCompletePlayers();
-		assertEquals("Player_2", controller.getGame().getPlayers().get(1).getMyName());
-	}
 
 	@Test
 	public void testConvertMilitaryPointsToVictoryPointsPlayer1() {
