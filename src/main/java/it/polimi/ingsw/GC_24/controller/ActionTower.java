@@ -265,7 +265,7 @@ public class ActionTower extends Action {
 		List<PermanentEffect> peList = player.getPermanentEffectList("increaseDieValueCard");
 		for (int i = 0; i < peList.size(); i++) {
 			IncreaseDieValueCard pe = (IncreaseDieValueCard) peList.get(i);
-			if (pe.getPersonalCards() != null && (pe.getPersonalCards().getType() == zoneString)) {
+			if ((pe.getPersonalCards() != null && (pe.getPersonalCards().getType().equalsIgnoreCase(zoneString)))||pe.getPersonalCards()==null) {
 				incrementDieValueFromPermanentEffect += pe.getIncreaseDieValue();
 				if (pe.getAlternativeSale() == null) {
 					setOfSales = pe.getSale();

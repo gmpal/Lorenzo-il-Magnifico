@@ -21,6 +21,8 @@ import it.polimi.ingsw.GC_24.model.effects.MoltiplicationPoints;
 import it.polimi.ingsw.GC_24.model.effects.NoValueEffectFromTowerPlace;
 import it.polimi.ingsw.GC_24.model.effects.SubSetOfValues;
 import it.polimi.ingsw.GC_24.model.effects.ValueEffect;
+import it.polimi.ingsw.GC_24.model.personalboard.PersonalBuildings;
+import it.polimi.ingsw.GC_24.model.personalboard.PersonalTerritories;
 import it.polimi.ingsw.GC_24.model.places.TowerPlace;
 import it.polimi.ingsw.GC_24.model.values.Coin;
 import it.polimi.ingsw.GC_24.model.values.FaithPoint;
@@ -32,7 +34,8 @@ import it.polimi.ingsw.GC_24.model.values.Wood;
 public class TestActionTower {
 
 	Player p1, p2;
-	ActionTower actionTower, actionTower1, actionTower2, actionTower3, actionTower4, actionTower5, actionTower6, actionTower7;
+	ActionTower actionTower, actionTower1, actionTower2, actionTower3, actionTower4, actionTower5, actionTower6,
+			actionTower7;
 	Model game;
 	List<Player> players;
 	SetOfValues set1 = new SetOfValues();
@@ -87,7 +90,6 @@ public class TestActionTower {
 		game.getBoard().getTowerVentures().getPlacesArray().set(0, towerPlace6);
 		game.getBoard().getTowerBuildings().getPlacesArray().set(1, towerPlace7);
 
-
 		set3 = new SetOfValues();
 		set2 = new SetOfValues();
 		set4 = new SetOfValues();
@@ -107,7 +109,6 @@ public class TestActionTower {
 		actionTower5 = new ActionTower(game, "1", "ventures", "1", "0", set2, set3);
 		actionTower6 = new ActionTower(game, "2", "buildings", "2", "0", set2, set3);
 		actionTower7 = new ActionTower(game, "4", "buildings", "2", "0", set2, set3);
-
 
 	}
 
@@ -397,7 +398,7 @@ public class TestActionTower {
 		String s = actionTower3.verifyBoardSpaceAvailability("ok");
 		assertEquals("okYou have already 6 Character Cards, no more empty spaces \n", s);
 	}
-	
+
 	@Test
 	public void verifyBoardSpaceAvailabilityBuildings() {
 		for (int i = 0; i < 6; i++) {
@@ -415,17 +416,52 @@ public class TestActionTower {
 		String s = actionTower5.verifyBoardSpaceAvailability("ok");
 		assertEquals("okYou have already 6 Venture Cards, no more empty spaces \n", s);
 	}
-	
+
 	@Test
 	public void testVerifyOk() {
-		assertEquals("ok",actionTower.verify());
+		assertEquals("ok", actionTower.verify());
 	}
-	
+
 	@Test
 	public void testVerifyNoOk() {
-		assertEquals("Answer: \n" + 
-				"You have not used enough servants for this place. Please choose another place. \n" + 
-				"You don't have enough resources to take this card! Choose another card \n" + 
-				"",actionTower7.verify());
+		assertEquals(
+				"Answer: \n" + "You have not used enough servants for this place. Please choose another place. \n"
+						+ "You don't have enough resources to take this card! Choose another card \n" + "",
+				actionTower7.verify());
+	}
+
+	@Test
+	public void testGetIncrementDieValueFromPermanentEffect() {
+		actionTower.getPlayer().getActivePermanentEffects().add(new IncreaseDieValueCard("increaseDieValueCard",
+				new PersonalTerritories(), 2, new SetOfValues(), new SetOfValues()));
+		actionTower.getPlayer().getActivePermanentEffects().add(new IncreaseDieValueCard("increaseDieValueCard",
+				new PersonalTerritories(), 3, new SetOfValues(), new SetOfValues()));
+		actionTower.getPlayer().getActivePermanentEffects().add(new IncreaseDieValueCard("increaseDieValueCard",
+				new PersonalBuildings(), 3, new SetOfValues(), new SetOfValues()));
+		actionTower.getPlayer().getActivePermanentEffects()
+				.add(new IncreaseDieValueCard("increaseDieValueCard", null, 2, new SetOfValues(), new SetOfValues()));
+		int increment = actionTower.getIncrementDieValueFromPermanentEffect();
+		assertEquals(7, increment);
+	}
+
+	/**
+	 * This test checks the methos when the permanent effect "IncreaseDieValueCard"
+	 * has not an alternative sale.
+	 */
+	@Test
+	public void testGetIncrementDieValueFromPermanentEffect1() {
+		actionTower.getPlayer().getActivePermanentEffects()
+				.add(new IncreaseDieValueCard("increaseDieValueCard", new PersonalTerritories(), 2, set1, null));
+		actionTower.getIncrementDieValueFromPermanentEffect();
+		IncreaseDieValueCard pe = (IncreaseDieValueCard) actionTower.getPlayer().getActivePermanentEffects().get(0);
+		assertEquals(set1, pe.getSale());
+	}
+
+	@Test
+	public void testRun() {
+		List<ImmediateEffect> effects = actionTower.run();
+		List<ImmediateEffect> effects1 = new ArrayList<>();
+		effects1.add(new MoltiplicationPoints("molt", new Wood(3), new FaithPoint(3)));
+		assertEquals(effects, effects1);
 	}
 }
