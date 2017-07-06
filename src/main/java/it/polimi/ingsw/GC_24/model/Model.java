@@ -5,10 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Serializable;
 import com.google.gson.Gson;
-import com.sun.xml.internal.bind.v2.runtime.Name;
-
 import java.util.*;
-
 import it.polimi.ingsw.GC_24.devCardJsonFile.GsonBuilders;
 import it.polimi.ingsw.GC_24.model.board.Board;
 import it.polimi.ingsw.GC_24.model.cards.Deck;
@@ -403,5 +400,13 @@ System.out.println("**FLAG1**");
 
 	public void setRanking(Ranking ranking) {
 		this.ranking = ranking;
+	}
+
+	public String getTempName() {
+		return tempName;
+	}
+
+	public void setTempName(String tempName) {
+		this.tempName = tempName;
 	}
 }

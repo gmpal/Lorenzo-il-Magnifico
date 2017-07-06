@@ -1,25 +1,17 @@
 package it.polimi.ingsw.GC_24.controllertest;
 
 import static org.junit.Assert.*;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import it.polimi.ingsw.GC_24.controller.ActionTower;
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.PlayerColour;
 import it.polimi.ingsw.GC_24.model.cards.*;
-import it.polimi.ingsw.GC_24.model.effects.*;
 import it.polimi.ingsw.GC_24.model.effects.immediate.*;
-import it.polimi.ingsw.GC_24.model.effects.immediate.ValueEffect;
-import it.polimi.ingsw.GC_24.model.effects.permanent.CustomizedPermanentEffect;
-import it.polimi.ingsw.GC_24.model.effects.permanent.IncreaseDieValueCard;
-import it.polimi.ingsw.GC_24.model.effects.permanent.NoValueEffectFromTowerPlace;
-import it.polimi.ingsw.GC_24.model.effects.permanent.SubSetOfValues;
+import it.polimi.ingsw.GC_24.model.effects.permanent.*;
 import it.polimi.ingsw.GC_24.model.personalboard.PersonalBuildings;
 import it.polimi.ingsw.GC_24.model.personalboard.PersonalTerritories;
 import it.polimi.ingsw.GC_24.model.places.TowerPlace;

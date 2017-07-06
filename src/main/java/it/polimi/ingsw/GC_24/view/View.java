@@ -1,14 +1,8 @@
 package it.polimi.ingsw.GC_24.view;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
-
-import it.polimi.ingsw.GC_24.model.Model;
-import it.polimi.ingsw.GC_24.model.Player;
-import it.polimi.ingsw.GC_24.model.effects.IncreaseDieValueCard;
-import it.polimi.ingsw.GC_24.model.values.SetOfValues;
 import it.polimi.ingsw.GC_24.observers.MyObservable;
 import it.polimi.ingsw.GC_24.observers.MyObserver;
 
