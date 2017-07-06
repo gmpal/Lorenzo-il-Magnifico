@@ -128,7 +128,7 @@ public class ActionTower extends Action {
 		towerPlace.getCorrespondingCard().setCardOnPersonalBoard(player.getMyBoard());
 	}
 
-	private void takeRealCost() {
+	public void takeRealCost() {
 		if (temporaryCardCost.isEmpty()) {
 			TowerPlace towerPlace = (TowerPlace) this.place;
 			System.out.println(towerPlace.toString());
@@ -137,7 +137,7 @@ public class ActionTower extends Action {
 		System.out.println(temporaryCardCost);
 	}
 
-	/*
+	/**
 	 * This method checks if you have enough money to put the familyMember in a
 	 * tower occupied (3 coins)
 	 */
@@ -170,10 +170,10 @@ public class ActionTower extends Action {
 					return answerToPlayer + "You don't have the VALUES for this card! Choose another card \n";
 				}
 			}
-			if (player.getPermanentEffect("discountCoinsCard")!=null) {
-				SubSetOfValues pes = (SubSetOfValues)player.getPermanentEffect("discountCoinsCard");
+			if (player.getPermanentEffect("discountCoinsCard") != null) {
+				SubSetOfValues pes = (SubSetOfValues) player.getPermanentEffect("discountCoinsCard");
 				temporaryCardCost.getCoins().subQuantity(pes.getSubSet().getCoins().getQuantity());
-				if (temporaryCardCost.getCoins().getQuantity()<0) {
+				if (temporaryCardCost.getCoins().getQuantity() < 0) {
 					temporaryCardCost.getCoins().setQuantity(0);
 				}
 			}
@@ -199,7 +199,7 @@ public class ActionTower extends Action {
 			int militaryPoints = this.player.getMyValues().getMilitaryPoints().getQuantity();
 			int territorySize = this.player.getMyBoard().getPersonalTerritories().getCards().size();
 
-			if (typeOfCard.equals("Territory")) {
+			if (typeOfCard.equalsIgnoreCase("Territory")) {
 				if (territorySize == 2 && militaryPoints < 3) {
 					return answerToPlayer + "Sorry, you need 3 Military Points to unlock the next Territory Space\n";
 				}
@@ -224,12 +224,22 @@ public class ActionTower extends Action {
 			String typeOfCard = tempTowerPlace.getCorrespondingCard().getType();
 			if (typeOfCard.equalsIgnoreCase("Territory")) {
 				if (this.player.getMyBoard().getPersonalTerritories().getCards().size() >= 6) {
-					return answerToPlayer + "You have already 6 Territory Cards, no more empty spaces \n ";
+					return answerToPlayer + "You have already 6 Territory Cards, no more empty spaces \n";
 				}
 			}
 			if (typeOfCard.equalsIgnoreCase("Building")) {
 				if (this.player.getMyBoard().getPersonalBuildings().getCards().size() >= 6) {
-					return answerToPlayer + "You have already 6 Buildings Cards, no more empty spaces \n";
+					return answerToPlayer + "You have already 6 Building Cards, no more empty spaces \n";
+				}
+			}
+			if (typeOfCard.equalsIgnoreCase("Character")) {
+				if (this.player.getMyBoard().getPersonalCharacters().getCards().size() >= 6) {
+					return answerToPlayer + "You have already 6 Character Cards, no more empty spaces \n";
+				}
+			}
+			if (typeOfCard.equalsIgnoreCase("Venture")) {
+				if (this.player.getMyBoard().getPersonalVentures().getCards().size() >= 6) {
+					return answerToPlayer + "You have already 6 Venture Cards, no more empty spaces \n";
 				}
 			}
 		}
@@ -261,7 +271,7 @@ public class ActionTower extends Action {
 		List<PermanentEffect> peList = player.getPermanentEffectList("increaseDieValueCard");
 		for (int i = 0; i < peList.size(); i++) {
 			IncreaseDieValueCard pe = (IncreaseDieValueCard) peList.get(i);
-			if (pe.getPersonalCards() != null && (pe.getPersonalCards().getType() == zoneString)) {
+			if ((pe.getPersonalCards() != null && (pe.getPersonalCards().getType().equalsIgnoreCase(zoneString)))||pe.getPersonalCards()==null) {
 				incrementDieValueFromPermanentEffect += pe.getIncreaseDieValue();
 				if (pe.getAlternativeSale() == null) {
 					setOfSales = pe.getSale();
@@ -278,12 +288,20 @@ public class ActionTower extends Action {
 	public void setValueOfFakeFamiliar(int valueOfFakeFamiliar) {
 		this.valueOfFakeFamiliar = valueOfFakeFamiliar;
 	}
-	
+
 	public List<ImmediateEffect> getImmediateEffects() {
 		return immediateEffects;
 	}
 
 	public void setImmediateEffects(List<ImmediateEffect> immediateEffects) {
 		this.immediateEffects = immediateEffects;
+	}
+
+	public SetOfValues getTemporaryCardCost() {
+		return temporaryCardCost;
+	}
+
+	public void setTemporaryCardCost(SetOfValues temporaryCardCost) {
+		this.temporaryCardCost = temporaryCardCost;
 	}
 }
