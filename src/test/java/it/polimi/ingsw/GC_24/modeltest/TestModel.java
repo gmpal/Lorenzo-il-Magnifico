@@ -7,8 +7,8 @@ import org.junit.Before;
 import org.junit.Test;
 import it.polimi.ingsw.GC_24.model.*;
 import it.polimi.ingsw.GC_24.model.dice.SetOfDice;
-import it.polimi.ingsw.GC_24.model.effects.CustomizedPermanentEffect;
-import it.polimi.ingsw.GC_24.model.effects.IncreaseDieValueActivity;
+import it.polimi.ingsw.GC_24.model.effects.permanent.CustomizedPermanentEffect;
+import it.polimi.ingsw.GC_24.model.effects.permanent.IncreaseDieValueActivity;
 
 public class TestModel {
 	

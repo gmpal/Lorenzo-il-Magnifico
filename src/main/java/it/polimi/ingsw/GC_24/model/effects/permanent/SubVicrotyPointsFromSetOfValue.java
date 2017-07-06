@@ -1,5 +1,6 @@
-package it.polimi.ingsw.GC_24.model.effects;
+package it.polimi.ingsw.GC_24.model.effects.permanent;
 
+import it.polimi.ingsw.GC_24.model.effects.Effect;
 import it.polimi.ingsw.GC_24.model.values.SetOfValues;
 import it.polimi.ingsw.GC_24.model.values.Value;
 

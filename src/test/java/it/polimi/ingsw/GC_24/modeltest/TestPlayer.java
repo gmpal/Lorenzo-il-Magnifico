@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.PlayerColour;
-import it.polimi.ingsw.GC_24.model.effects.ValueEffect;
+import it.polimi.ingsw.GC_24.model.effects.immediate.ValueEffect;
 import it.polimi.ingsw.GC_24.model.places.*;
 import it.polimi.ingsw.GC_24.model.values.*;
 

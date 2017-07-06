@@ -10,6 +10,9 @@ import com.google.gson.Gson;
 import it.polimi.ingsw.GC_24.devCardJsonFile.GsonBuilders;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.effects.*;
+import it.polimi.ingsw.GC_24.model.effects.immediate.CouncilPrivilege;
+import it.polimi.ingsw.GC_24.model.effects.immediate.ImmediateEffect;
+import it.polimi.ingsw.GC_24.model.effects.immediate.ValueEffect;
 import it.polimi.ingsw.GC_24.model.places.CouncilPlace;
 import it.polimi.ingsw.GC_24.model.places.Place;
 

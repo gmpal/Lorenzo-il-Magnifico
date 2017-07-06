@@ -9,8 +9,8 @@ import org.junit.Test;
 import it.polimi.ingsw.GC_24.controller.Controller;
 import it.polimi.ingsw.GC_24.model.*;
 import it.polimi.ingsw.GC_24.model.cards.*;
-import it.polimi.ingsw.GC_24.model.effects.NoVictoryPointsFromCard;
-import it.polimi.ingsw.GC_24.model.effects.SubVicrotyPointsFromSetOfValue;
+import it.polimi.ingsw.GC_24.model.effects.permanent.NoVictoryPointsFromCard;
+import it.polimi.ingsw.GC_24.model.effects.permanent.SubVicrotyPointsFromSetOfValue;
 import it.polimi.ingsw.GC_24.model.personalboard.*;
 import it.polimi.ingsw.GC_24.model.values.*;
 

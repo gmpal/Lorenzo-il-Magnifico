@@ -1,4 +1,4 @@
-package it.polimi.ingsw.GC_24.model.effects;
+package it.polimi.ingsw.GC_24.model.effects.permanent;
 
 import it.polimi.ingsw.GC_24.model.values.SetOfValues;
 
@@ -16,13 +16,10 @@ public class SubSetOfValues extends PermanentEffect {
 	}
 
 	
-	
 	@Override
 	public String toString() {
 		return name + ": subtracts "+subSet;
 	}
-
-
 
 	// getters and setters
 	public SetOfValues getSubSet() {

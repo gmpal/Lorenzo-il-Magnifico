@@ -8,7 +8,11 @@ import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.State;
 import it.polimi.ingsw.GC_24.model.cards.*;
-import it.polimi.ingsw.GC_24.model.effects.*;
+import it.polimi.ingsw.GC_24.model.effects.immediate.ChooseNewCard;
+import it.polimi.ingsw.GC_24.model.effects.immediate.CouncilPrivilege;
+import it.polimi.ingsw.GC_24.model.effects.immediate.ImmediateEffect;
+import it.polimi.ingsw.GC_24.model.effects.permanent.IncreaseDieValueCard;
+import it.polimi.ingsw.GC_24.model.effects.permanent.SubVicrotyPointsFromSetOfValue;
 import it.polimi.ingsw.GC_24.model.places.TowerPlace;
 import it.polimi.ingsw.GC_24.model.values.*;
 import it.polimi.ingsw.GC_24.observers.MyObservable;
@@ -124,6 +128,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 								actionWaiting.wait();
 							} catch (InterruptedException e) {
 								e.printStackTrace();
+								Thread.currentThread().interrupt();
 
 							}
 						}
@@ -700,7 +705,9 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					try {
 						waitingForSalesChoice.wait();
 					} catch (InterruptedException e) {
+
 						e.printStackTrace();
+						Thread.currentThread().interrupt();
 
 					}
 				}
@@ -813,6 +820,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					waitingForVaticanChoice.wait();
 				} catch (InterruptedException e) {
 					e.printStackTrace();
+					Thread.currentThread().interrupt();
 				}
 			}
 		}
@@ -976,6 +984,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 						waitingForParametersChoose.wait();
 					} catch (InterruptedException e) {
 						e.printStackTrace();
+						Thread.currentThread().interrupt();
 					}
 				}
 
@@ -1046,7 +1055,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 						}
 					}
 				}
-
 
 				if (this.tempCostString.equals("1")) {
 					tempCost = cost1;

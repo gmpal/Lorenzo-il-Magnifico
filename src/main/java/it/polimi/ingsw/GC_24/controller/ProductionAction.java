@@ -3,10 +3,10 @@ package it.polimi.ingsw.GC_24.controller;
 import java.util.ArrayList;
 import java.util.List;
 import it.polimi.ingsw.GC_24.model.Model;
-import it.polimi.ingsw.GC_24.model.effects.ImmediateEffect;
-import it.polimi.ingsw.GC_24.model.effects.IncreaseDieValueActivity;
-import it.polimi.ingsw.GC_24.model.effects.PerformProduction;
-import it.polimi.ingsw.GC_24.model.effects.PermanentEffect;
+import it.polimi.ingsw.GC_24.model.effects.immediate.ImmediateEffect;
+import it.polimi.ingsw.GC_24.model.effects.immediate.PerformProduction;
+import it.polimi.ingsw.GC_24.model.effects.permanent.IncreaseDieValueActivity;
+import it.polimi.ingsw.GC_24.model.effects.permanent.PermanentEffect;
 import it.polimi.ingsw.GC_24.model.places.ProductionPlace;
 import it.polimi.ingsw.GC_24.model.values.Servant;
 

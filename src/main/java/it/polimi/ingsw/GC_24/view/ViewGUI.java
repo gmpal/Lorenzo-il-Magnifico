@@ -1,8 +1,6 @@
 package it.polimi.ingsw.GC_24.view;
 
-
 import it.polimi.ingsw.GC_24.gui.MainClass;
-
 
 public class ViewGUI extends View {
 
@@ -84,12 +82,4 @@ public class ViewGUI extends View {
 		// TODO Auto-generated method stub
 		
 	}
-
-
-
-
-	
-
-
-
 }
