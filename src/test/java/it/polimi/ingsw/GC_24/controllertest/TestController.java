@@ -55,9 +55,9 @@ public class TestController {
 	@Before
 	public void setUp() {
 		players = new ArrayList<>();
-		player = new Player(1);
-		player2 = new Player(2);
-		player3 = new Player(3);
+		player = new Player("Giorgia", PlayerColour.YELLOW);
+		player2 = new Player("Carlo", PlayerColour.RED);
+		player3 = new Player("Gian Marco", PlayerColour.GREEN);
 		setEx.setMilitaryPoints(new MilitaryPoint(1));
 		setEx5.setVictoryPoints(new VictoryPoint(5));
 		setEx7.setWoods(new Wood(1));
