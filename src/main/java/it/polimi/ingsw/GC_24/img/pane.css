@@ -1,0 +1,28 @@
+#pane{
+        -fx-background-image: url("gameboard.jpeg");
+   	-fx-background-size: cover;
+    }
+#personalBoard{
+        -fx-background-image: url("pb.jpg");
+   	-fx-background-size: cover;
+    }
+
+#extraPersonalBoard{
+        -fx-background-image: url("pb2.jpg");
+   	-fx-background-size: cover;
+    }
+#backPanel {
+	-fx-background-color: transparent;
+	-fx-background-image: url("sfondo.jpg");
+	-fx-background-size: cover;
+}
+
+#welcomePane {
+	-fx-background-color: transparent;
+	-fx-background-image: url("sfondo.jpg");
+	-fx-background-size: cover;
+}
+
+
+
+

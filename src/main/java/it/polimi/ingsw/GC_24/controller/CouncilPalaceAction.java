@@ -5,7 +5,7 @@ import java.util.List;
 
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.board.CouncilPalace;
-import it.polimi.ingsw.GC_24.model.effects.ImmediateEffect;
+import it.polimi.ingsw.GC_24.model.effects.immediate.ImmediateEffect;
 import it.polimi.ingsw.GC_24.model.places.CouncilPlace;
 
 public class CouncilPalaceAction extends Action {

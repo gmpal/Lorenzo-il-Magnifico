@@ -7,9 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 import it.polimi.ingsw.GC_24.controller.MarketAction;
 import it.polimi.ingsw.GC_24.model.*;
-import it.polimi.ingsw.GC_24.model.effects.CouncilPrivilege;
-import it.polimi.ingsw.GC_24.model.effects.ImmediateEffect;
-import it.polimi.ingsw.GC_24.model.effects.NoMarketAvailability;
+import it.polimi.ingsw.GC_24.model.effects.immediate.CouncilPrivilege;
+import it.polimi.ingsw.GC_24.model.effects.immediate.ImmediateEffect;
+import it.polimi.ingsw.GC_24.model.effects.permanent.NoMarketAvailability;
 
 public class TestMarketAction {
 	

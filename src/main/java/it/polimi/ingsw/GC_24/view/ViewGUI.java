@@ -1,18 +1,19 @@
 package it.polimi.ingsw.GC_24.view;
 
-import java.util.List;
+import it.polimi.ingsw.GC_24.gui.MainClass;
 
-import it.polimi.ingsw.GC_24.model.Model;
-import it.polimi.ingsw.GC_24.model.Player;
-import it.polimi.ingsw.GC_24.model.effects.IncreaseDieValueCard;
-import it.polimi.ingsw.GC_24.model.values.SetOfValues;
-import it.polimi.ingsw.GC_24.observers.MyObservable;
+public class ViewGUI extends View {
 
-public class ViewGUI implements ViewInterface {
+	private MainClass mainClass;
+
+	public ViewGUI(String name, MainClass mainClass) {
+		super (name);
+	this.mainClass = mainClass;
+	}
 
 	@Override
-	public void run() {
-		// TODO Auto-generated method stub
+	public void play() {
+		mainClass.showGameBoard();
 		
 	}
 
@@ -29,37 +30,19 @@ public class ViewGUI implements ViewInterface {
 	}
 
 	@Override
-	public void showToSinglePlayer(Player currentPlayer, String message) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void sendPlayerString(String name) throws InterruptedException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void sendAction(String action) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public String chooseAlternativeCost(String request) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public SetOfValues chooseSale(IncreaseDieValueCard increase) {
+	public String chooseSale(String increase) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void sendAnswerForParameters(String answer) {
+	public void askForExcommunication() {
 		// TODO Auto-generated method stub
 		
 	}
@@ -89,57 +72,14 @@ public class ViewGUI implements ViewInterface {
 	}
 
 	@Override
-	public void play() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void updatePlayerNumber(int playerNumber2, int modelNumber) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void communicateActionDone() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateTurn(List<Player> playerTurn) {
+	public void setMyTurn(String currentPlayer) {
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	public void getInformationForReceivedModel(Model model) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setMyTurn(Player currentPlayer) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void sendAlternativeCost(String response) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void askForExcommunication() {
-		// TODO Auto-generated method stub
-		
-	}
-
 }
