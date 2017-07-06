@@ -126,6 +126,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 								actionWaiting.wait();
 							} catch (InterruptedException e) {
 								e.printStackTrace();
+								Thread.currentThread().interrupt();
 
 							}
 						}
