@@ -2,7 +2,7 @@ package it.polimi.ingsw.GC_24.model.effects.immediate;
 
 import it.polimi.ingsw.GC_24.model.values.SetOfValues;
 
-public class ExchangePackage implements java.io.Serializable{
+public class ExchangePackage implements java.io.Serializable {
 
 	/**
 	 * 
@@ -15,12 +15,11 @@ public class ExchangePackage implements java.io.Serializable{
 		this.set = set;
 		this.immediateEffect = immediateEffect;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "[" + set + ", for " + immediateEffect + "]";
 	}
-
 
 	// getters and setters
 	public SetOfValues getSet() {

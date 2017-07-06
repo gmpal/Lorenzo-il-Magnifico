@@ -20,9 +20,9 @@ public class CouncilPrivilege extends ImmediateEffect {
 		this.numberOfPrivileges = numberOfPrivileges;
 	}
 
-	// useful methods
-
-	// SETS THE COUNCIL ARRAY WITH THE CORRECT ELEMENTS
+	/**
+	 * @return List<SetOfValues> of the effect one can take with a council privilege
+	 */
 	public List<SetOfValues> CreateCouncil() {
 		List<SetOfValues> al = new ArrayList<>();
 
@@ -51,27 +51,29 @@ public class CouncilPrivilege extends ImmediateEffect {
 
 	}
 
-	/**This method receives a String that contains 1/2/3 number from 1 to 5,
-	 * they represent the position on the councilPrivileges the user wants to take
-	 * --> this input is parsed and saved. THEN giveImmediateEffect should be called */
+	/**
+	 * This method receives a String that contains 1/2/3 number from 1 to 5, they
+	 * represent the position on the councilPrivileges the user wants to take -->
+	 * this input is parsed and saved. THEN giveImmediateEffect should be called
+	 */
 	@Override
 	public void assignParameters(String string) {
 		this.set = new SetOfValues();
 		StringTokenizer reader = new StringTokenizer(string);
-		while (reader.hasMoreTokens()){
-			
+		while (reader.hasMoreTokens()) {
+
 			int value = Integer.parseInt(reader.nextToken());
-		
-			(councilPrivileges.get(value-1)).addTwoSetsOfValues(set);
-		
+
+			(councilPrivileges.get(value - 1)).addTwoSetsOfValues(set);
+
 		}
 	}
 
 	@Override
 	public void giveImmediateEffect(Player player) {
-		System.out.println("Before"+player.getMyValues());
+		System.out.println("Before" + player.getMyValues());
 		set.addTwoSetsOfValues(player.getMyValues());
-		System.out.println("After"+player.getMyValues());
+		System.out.println("After" + player.getMyValues());
 	}
 
 	// Prints the composition of the Council
@@ -80,15 +82,14 @@ public class CouncilPrivilege extends ImmediateEffect {
 		if (this.councilPrivileges != null) {
 			List<SetOfValues> array = this.getCouncilPrivileges();
 			StringBuilder builder = new StringBuilder();
-			builder.append("Council Privilege (Choose "+numberOfPrivileges+"): ");
+			builder.append("Council Privilege (Choose " + numberOfPrivileges + "): ");
 			for (int i = 0; i < array.size(); i++) {
-				builder.append(" "+(i + 1) + ") " + array.get(i));
+				builder.append(" " + (i + 1) + ") " + array.get(i));
 			}
 			return builder.toString();
 		} else {
 			return "noEffect";
 		}
-
 	}
 
 	// getters and setters
@@ -110,7 +111,8 @@ public class CouncilPrivilege extends ImmediateEffect {
 
 	@Override
 	public String generateParametersRequest() {
-		String response = numberOfPrivileges+" council privileges needs to be chosen" +councilPrivileges +"\n Choose: (1/2/3/4/5)";
+		String response = numberOfPrivileges + " council privileges needs to be chosen" + councilPrivileges
+				+ "\n Choose: (1/2/3/4/5)";
 		return response;
 	}
 

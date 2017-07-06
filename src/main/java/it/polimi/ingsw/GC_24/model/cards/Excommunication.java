@@ -7,6 +7,7 @@ import it.polimi.ingsw.GC_24.model.effects.permanent.PermanentEffect;
 import it.polimi.ingsw.GC_24.model.values.FaithPoint;
 
 public class Excommunication implements Serializable {
+
 	/**
 	 * 
 	 */
@@ -23,6 +24,12 @@ public class Excommunication implements Serializable {
 		this.effect = effect;
 		this.round = round;
 		this.setRequiremetsForExcommunication(requiremetsForExcommunication);
+	}
+
+	@Override
+	public String toString() {
+		return "Excommunication [permanentEffect=" + permanentEffect + ", effect=" + effect + ", round=" + round
+				+ ", requiremetsForExcommunication=" + requiremetsForExcommunication + "]";
 	}
 
 	// getters and setters
@@ -57,12 +64,4 @@ public class Excommunication implements Serializable {
 	public void setRequiremetsForExcommunication(FaithPoint requiremetsForExcommunication) {
 		this.requiremetsForExcommunication = requiremetsForExcommunication;
 	}
-
-	@Override
-	public String toString() {
-		return "Excommunication [permanentEffect=" + permanentEffect + ", effect=" + effect + ", round=" + round
-				+ ", requiremetsForExcommunication=" + requiremetsForExcommunication + "]";
-	}
-	
-	
 }

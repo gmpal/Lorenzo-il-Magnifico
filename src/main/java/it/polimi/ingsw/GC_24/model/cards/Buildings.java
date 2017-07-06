@@ -1,12 +1,10 @@
 package it.polimi.ingsw.GC_24.model.cards;
 
-import it.polimi.ingsw.GC_24.model.effects.*;
 import it.polimi.ingsw.GC_24.model.effects.immediate.ImmediateEffect;
 import it.polimi.ingsw.GC_24.model.personalboard.PersonalBoard;
 import it.polimi.ingsw.GC_24.model.values.SetOfValues;
 
 public class Buildings extends Development {
-	
 
 	/**
 	 * 
@@ -33,15 +31,16 @@ public class Buildings extends Development {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append( "\n[Name = " + name + ", Cost = " + getCost());
-		if (getImmediateEffect()!=null){
+		builder.append("\n[Name = " + name + ", Cost = " + getCost());
+		if (getImmediateEffect() != null) {
 			builder.append(", Immediate Effects = " + getImmediateEffect());
-			if (getImmediateEffect1()!=null)
+			if (getImmediateEffect1() != null)
 				builder.append(" and " + getImmediateEffect1());
 		}
-		if (productionEffect!=null){
-			builder.append("\n\tDie Value For Production = "+dieValueProduction +", Production Effects = "+productionEffect);
-			if (productionEffect1!=null)
+		if (productionEffect != null) {
+			builder.append("\n\tDie Value For Production = " + dieValueProduction + ", Production Effects = "
+					+ productionEffect);
+			if (productionEffect1 != null)
 				builder.append(" and " + productionEffect1);
 		}
 		builder.append("]");
@@ -72,5 +71,4 @@ public class Buildings extends Development {
 	public void setProductionEffect1(ImmediateEffect productionEffect1) {
 		this.productionEffect1 = productionEffect1;
 	}
-
 }

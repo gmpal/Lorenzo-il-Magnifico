@@ -13,15 +13,29 @@
 
 <AnchorPane id="welcomePane" prefHeight="400.0" prefWidth="600.0" stylesheets="@../img/pane.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.GC_24.gui.IntroController">
    <children>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox alignment="CENTER" layoutX="7.0" prefHeight="200.0" prefWidth="100.0" spacing="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="-7.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label text="Welcome to Lorenzo il Magnifico" textFill="#f6ff00">
+            <Label contentDisplay="CENTER" prefHeight="38.0" prefWidth="198.0" text="Welcome to" textFill="WHITE">
                <font>
                   <Font name="Algerian" size="33.0" />
-               </font></Label>
-            <Label alignment="CENTER" text="Insert your name" textFill="#00ffa5">
+               </font>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <padding>
+                  <Insets top="20.0" />
+               </padding></Label>
+            <Label layoutX="26.0" layoutY="33.0" prefHeight="38.0" prefWidth="365.0" text="Lorenzo il Magnifico" textFill="WHITE">
                <font>
-                  <Font size="23.0" />
+                  <Font name="Algerian" size="33.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="-10.0" />
+               </VBox.margin>
+            </Label>
+            <Label alignment="CENTER" text="Insert your name" textFill="#ffebb7">
+               <font>
+                  <Font name="System Bold" size="23.0" />
                </font></Label>
             <TextField fx:id="nameTextField" prefHeight="31.0" prefWidth="212.0" promptText="Insert your name here">
                <VBox.margin>
@@ -31,23 +45,35 @@
                <children>
                   <VBox prefHeight="100.0" prefWidth="200.0" spacing="30.0">
                      <children>
-                        <RadioButton fx:id="networkSocket" mnemonicParsing="false" text="Socket" textFill="#00ff40">
+                        <RadioButton fx:id="networkSocket" mnemonicParsing="false" text="SOCKET" textFill="#fbe3b3">
                            <toggleGroup>
                               <ToggleGroup fx:id="networkGroup" />
                            </toggleGroup>
                            <VBox.margin>
                               <Insets />
-                           </VBox.margin></RadioButton>
-                        <RadioButton fx:id="networkRMI" mnemonicParsing="false" text="RMI" textFill="#00ff40" toggleGroup="$networkGroup" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="Arial Black" size="16.0" />
+                           </font></RadioButton>
+                        <RadioButton fx:id="networkRMI" mnemonicParsing="false" text="RMI" textFill="#fbe3b3" toggleGroup="$networkGroup">
+                           <font>
+                              <Font name="Arial Black" size="16.0" />
+                           </font></RadioButton>
                      </children>
                   </VBox>
-                  <VBox prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+                  <VBox prefHeight="78.0" prefWidth="98.0" spacing="30.0">
                      <children>
-                        <RadioButton fx:id="interfaceGUI" mnemonicParsing="false" text="GUI" textFill="#00ff40">
+                        <RadioButton fx:id="interfaceGUI" mnemonicParsing="false" prefWidth="78.0" text="GUI" textFill="#fbe3b3">
                            <toggleGroup>
                               <ToggleGroup fx:id="interfaceGroup" />
-                           </toggleGroup></RadioButton>
-                        <RadioButton fx:id="interfaceCLI" mnemonicParsing="false" text="CLI" textFill="#00ff40" toggleGroup="$interfaceGroup" />
+                           </toggleGroup>
+                           <font>
+                              <Font name="Arial Black" size="16.0" />
+                           </font></RadioButton>
+                        <RadioButton fx:id="interfaceCLI" mnemonicParsing="false" text="CLI" textFill="#fbe3b3" toggleGroup="$interfaceGroup">
+                           <font>
+                              <Font name="Arial Black" size="16.0" />
+                           </font></RadioButton>
                      </children>
                   </VBox>
                </children>
@@ -58,7 +84,10 @@
                   <Insets left="120.0" />
                </VBox.margin>
             </HBox>
-            <Button fx:id="sendInfoButton" mnemonicParsing="false" onAction="#handleSendInfoButton" text="Play!" />
+            <Button fx:id="sendInfoButton" mnemonicParsing="false" onAction="#handleSendInfoButton" prefHeight="131.0" prefWidth="52.0" text="Play!">
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin></Button>
          </children>
       </VBox>
    </children>

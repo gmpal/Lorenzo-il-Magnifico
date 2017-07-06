@@ -1,23 +1,16 @@
 package it.polimi.ingsw.GC_24.model.effects;
 
 public abstract class Effect implements java.io.Serializable {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 7308486560393380862L;
-	
+
 	protected String name;
-	
-	//constructor
-	public Effect(String name){
-		this.name = name;
-	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
+	// constructor
+	public Effect(String name) {
 		this.name = name;
 	}
 
@@ -45,5 +38,13 @@ public abstract class Effect implements java.io.Serializable {
 			return false;
 		return true;
 	}
-	
+
+	// getter and setter
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 }
