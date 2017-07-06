@@ -13,23 +13,11 @@ import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.PlayerColour;
 import it.polimi.ingsw.GC_24.model.cards.*;
-import it.polimi.ingsw.GC_24.model.effects.ChooseNewCard;
-import it.polimi.ingsw.GC_24.model.effects.CustomizedPermanentEffect;
-import it.polimi.ingsw.GC_24.model.effects.ImmediateEffect;
-import it.polimi.ingsw.GC_24.model.effects.IncreaseDieValueCard;
-import it.polimi.ingsw.GC_24.model.effects.MoltiplicationPoints;
-import it.polimi.ingsw.GC_24.model.effects.NoValueEffectFromTowerPlace;
-import it.polimi.ingsw.GC_24.model.effects.SubSetOfValues;
-import it.polimi.ingsw.GC_24.model.effects.ValueEffect;
+import it.polimi.ingsw.GC_24.model.effects.*;
 import it.polimi.ingsw.GC_24.model.personalboard.PersonalBuildings;
 import it.polimi.ingsw.GC_24.model.personalboard.PersonalTerritories;
 import it.polimi.ingsw.GC_24.model.places.TowerPlace;
-import it.polimi.ingsw.GC_24.model.values.Coin;
-import it.polimi.ingsw.GC_24.model.values.FaithPoint;
-import it.polimi.ingsw.GC_24.model.values.MilitaryPoint;
-import it.polimi.ingsw.GC_24.model.values.SetOfValues;
-import it.polimi.ingsw.GC_24.model.values.VictoryPoint;
-import it.polimi.ingsw.GC_24.model.values.Wood;
+import it.polimi.ingsw.GC_24.model.values.*;
 
 public class TestActionTower {
 
@@ -445,7 +433,7 @@ public class TestActionTower {
 	}
 
 	/**
-	 * This test checks the methos when the permanent effect "IncreaseDieValueCard"
+	 * This test checks the methods when the permanent effect "IncreaseDieValueCard"
 	 * has not an alternative sale.
 	 */
 	@Test
