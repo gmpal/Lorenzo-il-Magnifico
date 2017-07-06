@@ -69,8 +69,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				try {
 					waitingForAutocompleting.wait();
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
+					Thread.currentThread().interrupt();
 				}
 			}
 		}
@@ -727,7 +727,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					try {
 						waitingForSalesChoice.wait();
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
+						Thread.currentThread().interrupt();
 						e.printStackTrace();
 
 					}
@@ -831,8 +831,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				try {
 					waitingForVaticanChoice.wait();
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
+					Thread.currentThread().interrupt();
 				}
 			}
 		}
@@ -995,8 +995,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					try {
 						waitingForParametersChoose.wait();
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
+						Thread.currentThread().interrupt();
 					}
 				}
 
@@ -1060,7 +1060,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					try {
 						tempCostWaiting.wait();
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 
 						Thread.currentThread().interrupt();
