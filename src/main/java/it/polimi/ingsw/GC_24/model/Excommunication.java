@@ -16,14 +16,16 @@ public class Excommunication implements Serializable {
 	private Effect effect;
 	private int round;
 	private FaithPoint requiremetsForExcommunication;
+	private String url;
 
 	// constructor
 	public Excommunication(PermanentEffect permanentEffect, Effect effect, int round,
-			FaithPoint requiremetsForExcommunication) {
+			FaithPoint requiremetsForExcommunication, String url) {
 		this.permanentEffect = permanentEffect;
 		this.effect = effect;
 		this.round = round;
 		this.setRequiremetsForExcommunication(requiremetsForExcommunication);
+		this.setUrl(url);
 	}
 
 	@Override
@@ -63,5 +65,13 @@ public class Excommunication implements Serializable {
 
 	public void setRequiremetsForExcommunication(FaithPoint requiremetsForExcommunication) {
 		this.requiremetsForExcommunication = requiremetsForExcommunication;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
 }

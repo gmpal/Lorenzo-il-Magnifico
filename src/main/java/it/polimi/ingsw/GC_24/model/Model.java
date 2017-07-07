@@ -47,6 +47,7 @@ public class Model extends MyObservable implements Serializable {
 
 	private static Timer timer;
 	private int countingModelSent = 0;
+	private List<String> urlExcommunication = new ArrayList<>();
 
 	public Model(int modelNumber) {
 
@@ -88,6 +89,7 @@ public class Model extends MyObservable implements Serializable {
 		for (int i = 0; i < 3; i++) {
 			randomInt = randomExcommunication.nextInt(7) + (i * 7);
 			this.excommunicationDeck.add(completeDeck.get(randomInt));
+			urlExcommunication.add(this.excommunicationDeck.get(i).getUrl());
 		}
 	}
 
@@ -250,7 +252,6 @@ public class Model extends MyObservable implements Serializable {
 		personalInformation[7] = p.getMyColour().toString();
 		personalInformation[8] = p.getActivePermanentEffects().toString();
 		personalInformation[9] = p.getLeaderOneTimePerTurn().toString();
-
 		return personalInformation;
 
 	}
@@ -400,5 +401,13 @@ public class Model extends MyObservable implements Serializable {
 
 	public void setTempName(String tempName) {
 		this.tempName = tempName;
+	}
+
+	public List<String> getUrlExcommunication() {
+		return urlExcommunication;
+	}
+
+	public void setUrlExcommunication(List<String> urlExcommunication) {
+		this.urlExcommunication = urlExcommunication;
 	}
 }

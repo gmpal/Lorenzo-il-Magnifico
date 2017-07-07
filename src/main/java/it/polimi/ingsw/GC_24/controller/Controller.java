@@ -34,9 +34,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	private SetOfValues saleForPermanentEffect = new SetOfValues();
 	private SetOfValues alternativeSale = new SetOfValues();
 
-
 	private String parametersAnswer;
-
 
 	private boolean alreadyPlaying = false;
 	private boolean parametersChosen = true;
@@ -88,7 +86,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			game.getBoard().clear();
 
 			game.getCards().dealCards(game.getBoard(), cardsIndex / 2 + 1);
-
 
 			sendBoardInformation();
 			sendPersonalInformationToEveryOne();
@@ -457,6 +454,36 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	/**
+	 * This method send the list of image urls of cards on the Tower, it is useful
+	 * for the GUI
+	 */
+	public void sendUrlBoard(List<String> urls) {
+		hashMap = new HashMap<>();
+		hashMap.put("urlBoard", urls);
+		notifyMyObservers(hashMap);
+	}
+
+	/**
+	 * This method send the list of image urls of cards on the PersonalBoard, it is
+	 * useful for the GUI
+	 */
+	public void sendUrlPersonalBoard(List<String> urls) {
+		hashMap = new HashMap<>();
+		hashMap.put("urlPersonalBoard", urls);
+		notifyMyObservers(hashMap);
+	}
+
+	/**
+	 * This method send the list of image urls of excommunication tile, it is useful
+	 * for the GUI
+	 */
+	public void sendUrlExcommunication() {
+		hashMap = new HashMap<>();
+		hashMap.put("urlExcommunication", game.getUrlExcommunication());
+		notifyMyObservers(hashMap);
+	}
+
+	/**
 	 * This method analyzes the incoming HashMap. If it finds specific keywords in
 	 * the keySet, it does different things with different objects
 	 * 
@@ -758,7 +785,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	}
 
-
 	/**
 	 * This method ask to the player if they want to support the Vatican. If it's
 	 * the last turn the Excommunication is automatically assigned according to the
@@ -1057,7 +1083,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 				if (this.tempCostString.equals("1")) {
 					tempCost = cost1;
-
 
 				} else {
 					tempCost = cost2;

@@ -1,6 +1,11 @@
 package it.polimi.ingsw.GC_24.model.board;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import it.polimi.ingsw.GC_24.model.cards.Development;
+import it.polimi.ingsw.GC_24.model.places.TowerPlace;
 
 public class Board implements java.io.Serializable {
 
@@ -20,6 +25,7 @@ public class Board implements java.io.Serializable {
 	private Production production;
 	private Market market;
 	private CouncilPalace councilPalace;
+	private List<String> urlList = new ArrayList<>();
 
 	// constructor
 	public Board(int numPlayers) {
@@ -117,6 +123,34 @@ public class Board implements java.io.Serializable {
 			return this.councilPalace;
 		} else
 			return null;
+	}
+
+	/**
+	 * This method take the image url of the cards and set it in an ArrayList, if
+	 * there is not a card in a place it add the url of a blank image.
+	 */
+	public void urlCards(Tower tower) {
+		for (int i = 0; i < 4; i++) {
+			TowerPlace t = (TowerPlace) tower.getPlacesArray().get(i);
+			if (t.getCorrespondingCard() != null) {
+				urlList.add(t.getCorrespondingCard().getUrl());
+			} else {
+				urlList.add("src/main/java/it/polimi/ingsw/GC_24/img/cards/blank.png");
+			}
+		}
+	}
+
+	/**
+	 * This method put into an ArraList all the urls of the cards.
+	 * 
+	 * @return the ArraList of String with the urls.
+	 */
+	public List<String> allUrl() {
+		urlCards(towerTerritories);
+		urlCards(towerCharacters);
+		urlCards(towerBuildings);
+		urlCards(towerVentures);
+		return urlList;
 	}
 
 	// getters and setters
