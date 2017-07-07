@@ -1,11 +1,12 @@
 package it.polimi.ingsw.GC_24.model.cards;
 
-import it.polimi.ingsw.GC_24.model.effects.*;
+import it.polimi.ingsw.GC_24.model.effects.immediate.ImmediateEffect;
+import it.polimi.ingsw.GC_24.model.effects.permanent.PermanentEffect;
 import it.polimi.ingsw.GC_24.model.personalboard.PersonalBoard;
 import it.polimi.ingsw.GC_24.model.values.SetOfValues;
 
 public class Characters extends Development {
-	
+
 	/**
 	 * 
 	 */
@@ -13,9 +14,9 @@ public class Characters extends Development {
 	private PermanentEffect permanentEffects;
 
 	// constructor
-	public Characters(String name, String type, SetOfValues cost, ImmediateEffect immediateEffects,
+	public Characters(String name, String url, String type, SetOfValues cost, ImmediateEffect immediateEffects,
 			PermanentEffect permanentEffects, ImmediateEffect immediateEffects1, int round) {
-		super(name, type, cost, immediateEffects, immediateEffects1, round);
+		super(name, url, type, cost, immediateEffects, immediateEffects1, round);
 		this.permanentEffects = permanentEffects;
 	}
 
@@ -27,14 +28,14 @@ public class Characters extends Development {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append( "\n[Name = " + name + ", Cost = " + getCost());
-		if (getImmediateEffect()!=null){
+		builder.append("\n[Name = " + name + ", Cost = " + getCost());
+		if (getImmediateEffect() != null) {
 			builder.append(", Immediate Effects = " + getImmediateEffect());
-			if (getImmediateEffect1()!=null)
+			if (getImmediateEffect1() != null)
 				builder.append(" and " + getImmediateEffect1());
 		}
-		if (permanentEffects!=null){
-			builder.append(", Permanent Effect = "+permanentEffects);
+		if (permanentEffects != null) {
+			builder.append(", Permanent Effect = " + permanentEffects);
 		}
 		builder.append("]");
 		return builder.toString();
@@ -47,5 +48,4 @@ public class Characters extends Development {
 	public void setPermanentEffects(PermanentEffect permanentEffects) {
 		this.permanentEffects = permanentEffects;
 	}
-
 }

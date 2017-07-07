@@ -5,7 +5,7 @@ import java.util.List;
 
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.board.CouncilPalace;
-import it.polimi.ingsw.GC_24.model.effects.ImmediateEffect;
+import it.polimi.ingsw.GC_24.model.effects.immediate.ImmediateEffect;
 import it.polimi.ingsw.GC_24.model.places.CouncilPlace;
 
 public class CouncilPalaceAction extends Action {
@@ -24,9 +24,7 @@ public class CouncilPalaceAction extends Action {
 			answerToPlayer = verifyIfEnoughServants(answerToPlayer);
 			answerToPlayer = verifyIfEnoughServantsForThisPlace(answerToPlayer);
 			answerToPlayer = verifyFamilyMemberAvailability(answerToPlayer);
-		//	answerToPlayer = verifyPlaceAvailability(answerToPlayer);
-		//	answerToPlayer = verifyZoneOccupiedByMe(answerToPlayer);
-		
+	
 		if (answerToPlayer.equals("Answer: \n")) return "ok";
 		else return answerToPlayer;
 	}

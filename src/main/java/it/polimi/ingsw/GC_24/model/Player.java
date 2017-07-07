@@ -4,7 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.polimi.ingsw.GC_24.model.effects.PermanentEffect;
+import it.polimi.ingsw.GC_24.model.cards.Leader;
+import it.polimi.ingsw.GC_24.model.effects.permanent.PermanentEffect;
 import it.polimi.ingsw.GC_24.model.personalboard.PersonalBoard;
 import it.polimi.ingsw.GC_24.model.places.Place;
 import it.polimi.ingsw.GC_24.model.values.*;
@@ -23,11 +24,14 @@ public class Player implements Serializable {
 	private int playerNumber;
 	public boolean autoCompleted = false;
 	private List<PermanentEffect> activePermanentEffects = new ArrayList<>();
+	private List<Leader> leaderOneTimePerTurn = new ArrayList<>();
+	private boolean lastExcommunication=false;
 
 	// Constructor
-	public Player(int playerNumber) {
+
+	public Player(String name, int playerNumber){
 		this.myColour = null;
-		this.myName = null;
+		this.myName = name;
 		this.myFamily = null;
 		this.myBoard = new PersonalBoard(playerNumber);
 		this.myValues = new SetOfValues();
@@ -35,6 +39,15 @@ public class Player implements Serializable {
 	}
 
 	// constructor for tests
+	
+	public Player(int playerNumber){
+		this.myColour = null;
+		this.myName = null;
+		this.myFamily = null;
+		this.myBoard = new PersonalBoard(playerNumber);
+		this.myValues = new SetOfValues();
+		this.playerNumber = playerNumber;
+	}
 	public Player(String name, PlayerColour colour) {
 		this.myColour = colour;
 		this.myName = name;
@@ -106,8 +119,9 @@ public class Player implements Serializable {
 	// Prints name of a Player
 	@Override
 	public String toString() {
-		return "Player [myName=" + myName + ", myColour=" + myColour + "]";
+		return myName.toUpperCase() + "---->" + myColour;
 	}
+	
 
 	// getters and setters
 	public String getMyName() {
@@ -168,9 +182,26 @@ public class Player implements Serializable {
 
 	public List<PermanentEffect> getActivePermanentEffects() {
 		return activePermanentEffects;
+
 	}
 
 	public void setActivePermanentEffects(List<PermanentEffect> activePermanentEffects) {
 		this.activePermanentEffects = activePermanentEffects;
+	}
+
+
+	public List<Leader> getLeaderOneTimePerTurn() {
+		return leaderOneTimePerTurn;
+	}
+
+	public void setLeaderOneTimePerTurn(List<Leader> leaderOneTimePerTurn) {
+		this.leaderOneTimePerTurn = leaderOneTimePerTurn;
+	}
+	public boolean hasLastExcommunication() {
+		return lastExcommunication;
+	}
+
+	public void setLastExcommunication(boolean lastExcommunication) {
+		this.lastExcommunication = lastExcommunication;
 	}
 }

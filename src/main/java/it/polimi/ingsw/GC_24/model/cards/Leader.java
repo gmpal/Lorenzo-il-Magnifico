@@ -1,9 +1,11 @@
 package it.polimi.ingsw.GC_24.model.cards;
 
-import it.polimi.ingsw.GC_24.model.effects.*;
+import it.polimi.ingsw.GC_24.model.effects.immediate.ImmediateEffect;
+import it.polimi.ingsw.GC_24.model.effects.immediate.ValueEffect;
+import it.polimi.ingsw.GC_24.model.effects.permanent.PermanentEffect;
 
-public class Leader extends Card{
-	
+public class Leader extends Card {
+
 	/**
 	 * 
 	 */
@@ -12,16 +14,17 @@ public class Leader extends Card{
 	private ValueEffect valueEffectLeader;
 	private ImmediateEffect immediateEffectLeader;
 	private PermanentEffect permanentEffectLeader;
-	/** true if the card is already in use*/
-	private boolean inUse; 
-	/** true if you can use it one time per turn,
-	* false if the effect is permanent*/
-	private boolean oneTimePerTurn; 
+	/** true if the card is already in use */
+	private boolean inUse;
+	/**
+	 * true if you can use it one time per turn, false if the effect is permanent
+	 */
+	private boolean oneTimePerTurn;
 
 	// constructor
-	public Leader(String name, Requirements requirements, ValueEffect valueEffectLeader,
+	public Leader(String name, String url, Requirements requirements, ValueEffect valueEffectLeader,
 			ImmediateEffect immediateEffectLeader, PermanentEffect permanentEffectLeader, boolean oneTimePerTurn) {
-		super(name);
+		super(name, url);
 		this.requirements = requirements;
 		this.valueEffectLeader = valueEffectLeader;
 		this.immediateEffectLeader = immediateEffectLeader;
@@ -29,12 +32,12 @@ public class Leader extends Card{
 		this.inUse = false;
 		this.oneTimePerTurn = oneTimePerTurn;
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append( "\n[Name = " + name + ", Requirements: " + requirements);
-		if (immediateEffectLeader!=null){
+		builder.append("\n[Name = " + name + ", Requirements: " + requirements);
+		if (immediateEffectLeader != null) {
 			builder.append(", Immediate Effect: " + immediateEffectLeader);
 		}
 		if (valueEffectLeader != null) {
@@ -45,7 +48,7 @@ public class Leader extends Card{
 		}
 		if (this.oneTimePerTurn) {
 			builder.append("\n\tYou can activate this card only one time per turn");
-		}else {
+		} else {
 			builder.append("\n\tThe card's effect is permanent");
 		}
 		builder.append("]");
@@ -100,5 +103,4 @@ public class Leader extends Card{
 	public void setInUse(boolean inUse) {
 		this.inUse = inUse;
 	}
-
 }

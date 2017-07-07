@@ -1,8 +1,7 @@
 package it.polimi.ingsw.GC_24.model.places;
 
-import it.polimi.ingsw.GC_24.model.Player;
-import it.polimi.ingsw.GC_24.model.effects.ImmediateEffect;
-import it.polimi.ingsw.GC_24.model.effects.ValueEffect;
+import it.polimi.ingsw.GC_24.model.effects.immediate.ImmediateEffect;
+import it.polimi.ingsw.GC_24.model.effects.immediate.ValueEffect;
 
 public class CouncilPlace extends Place {
 
@@ -19,19 +18,7 @@ public class CouncilPlace extends Place {
 		this.value=value;
 		this.privilegeEffect = privilegeEffect;
 	}
-
-/*	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("\n");
-		if (isAvailable()){
-			builder.append("- You get: " + getValue() + " and a Council Privilege");
-		}else{
-			builder.append("Place occupied by the " + getFamMemberOnPlace().getPlayerColour() + " player");
-		}
-		return builder.toString();
-	}*/
-
+	
 	// getter and setter
 	public ImmediateEffect getPrivilegeEffect() {
 		return privilegeEffect;

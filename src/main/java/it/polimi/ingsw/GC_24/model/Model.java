@@ -5,17 +5,14 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Serializable;
 import com.google.gson.Gson;
-
 import java.util.*;
-
 import it.polimi.ingsw.GC_24.devCardJsonFile.GsonBuilders;
 import it.polimi.ingsw.GC_24.model.board.Board;
 import it.polimi.ingsw.GC_24.model.cards.Deck;
-import it.polimi.ingsw.GC_24.model.cards.Excommunication;
 import it.polimi.ingsw.GC_24.model.cards.Leader;
 import it.polimi.ingsw.GC_24.model.dice.SetOfDice;
-import it.polimi.ingsw.GC_24.model.effects.IncreaseDieValueActivity;
-import it.polimi.ingsw.GC_24.model.effects.PermanentEffect;
+import it.polimi.ingsw.GC_24.model.effects.permanent.IncreaseDieValueActivity;
+import it.polimi.ingsw.GC_24.model.effects.permanent.PermanentEffect;
 import it.polimi.ingsw.GC_24.model.values.SetOfValues;
 import it.polimi.ingsw.GC_24.network.Server;
 import it.polimi.ingsw.GC_24.observers.MyObservable;
@@ -31,17 +28,18 @@ public class Model extends MyObservable implements Serializable {
 	private Board board;
 	private Player currentPlayer;
 	private State gameState;
+	private Ranking ranking;
 
 	private SetOfDice dice;
 
-	private List<Ranking> rankings;
 	private HashMap<String, Object> hm;
 	private Deck cards;
 	private List<Excommunication> excommunicationDeck = new ArrayList<>();
 	private List<SetOfValues> correspondingValue = new ArrayList<>();
-	private List<Leader> leaderDeck = new ArrayList<>();
 
 	private int modelNumber;
+
+	private String tempName;
 
 	private boolean isAcceptingPlayers = true;
 
@@ -57,10 +55,10 @@ public class Model extends MyObservable implements Serializable {
 		this.currentPlayer = null;
 		this.gameState = State.WAITINGFORPLAYERONE;
 		this.dice = null;
-		this.rankings = new ArrayList<>();
 		this.counter = 0;
 		this.modelNumber = modelNumber;
 		this.cards = null;
+		this.ranking = null;
 	}
 
 	/**
@@ -70,7 +68,7 @@ public class Model extends MyObservable implements Serializable {
 	 * round. This final ArrayList contains the possible excommunication card the
 	 * player can take when it will choose to not support the Vatican.
 	 */
-	private void createExcommunicationDeck() {
+	public void createExcommunicationDeck() {
 		BufferedReader br;
 		Gson gson = GsonBuilders.getGsonWithTypeAdapters();
 		String line;
@@ -93,20 +91,18 @@ public class Model extends MyObservable implements Serializable {
 		}
 	}
 
-	public synchronized void addPlayer() {
+	public void addPlayer() {
 
 		counter++;
 		System.out.println("Model --> Contatore incrementato");
-		sendNumberToClient();
-		System.out.println("Model --> Numero inviato al client");
-		Player player = new Player(counter);
+		Player player = new Player(tempName, counter);
 		this.getPlayers().add(player);
 		System.out.println("Model: PLAYER " + player);
 		System.out.println("Model: Player #" + counter + "added to Game #" + getModelNumber());
 
 		incrementState();
 		System.out.println("Model --> stato incrementato");
-		sendModel();
+		System.out.println(getGameState());
 		System.out.println("Model --> model inviato");
 
 		if (getGameState().equals(State.WAITINGFORPLAYERTHREE)) {
@@ -129,7 +125,6 @@ public class Model extends MyObservable implements Serializable {
 			Server.launchAndCreateNewGame();
 
 		}
-
 	}
 
 	/**
@@ -146,9 +141,14 @@ public class Model extends MyObservable implements Serializable {
 		this.dice = new SetOfDice();
 
 		this.dice.reset();
+
 		dealLeaders(cards.getDeckLeaders(), players);
+
 		getCorrespondingValueFromFile();
+
 		createExcommunicationDeck();
+
+		System.out.println(this.excommunicationDeck);
 
 		// Setting the players
 		for (Player p : players) {
@@ -156,16 +156,15 @@ public class Model extends MyObservable implements Serializable {
 			p.setMyColour(PlayerColour.valueOf(PlayerColour.getValues().get(players.indexOf(p))));
 			p.setMyFamily(new Family(p.getMyColour()));
 			p.getMyFamily().setFamily(this.dice);
-			rankings.add(new Ranking(p));
 		}
-
+		ranking = new Ranking(players);
 	}
 
 	public void updateModel() {
 		this.dice.reset();
 		for (Player p : players) {
 			p.getMyFamily().setFamily(this.dice);
-			changeInDieValue(p);
+			// changeInDieValue(p);
 		}
 	}
 
@@ -174,20 +173,13 @@ public class Model extends MyObservable implements Serializable {
 	 * value are active in the player, and in that case changes them
 	 */
 	public void changeInDieValue(Player player) {
+
 		if (player.getPermanentEffect("setDiceValue") != null) {
-			IncreaseDieValueActivity pe = (IncreaseDieValueActivity) player.getPermanentEffect("setDieValue");
+			IncreaseDieValueActivity pe = (IncreaseDieValueActivity) player.getPermanentEffect("setDiceValue");
 			int value = pe.getIncreaseDieValue();
 			player.getMyFamily().getMember1().setMemberValue(value);
 			player.getMyFamily().getMember2().setMemberValue(value);
 			player.getMyFamily().getMember3().setMemberValue(value);
-		}
-		
-		if (player.getPermanentEffect("increaseValueFamilyMember") != null) {
-			IncreaseDieValueActivity pe1 = (IncreaseDieValueActivity) player.getPermanentEffect("increaseValue");
-			int value = pe1.getIncreaseDieValue();
-			player.getMyFamily().getMember1().setMemberValue(player.getMyFamily().getMember1().getMemberValue() + value);
-			player.getMyFamily().getMember2().setMemberValue(player.getMyFamily().getMember2().getMemberValue() + value);
-			player.getMyFamily().getMember3().setMemberValue(player.getMyFamily().getMember3().getMemberValue() + value);
 		}
 		if (player.getPermanentEffect("setValueFamilyMember") != null) {
 			List<Integer> dieValues = new ArrayList<>();
@@ -199,39 +191,68 @@ public class Model extends MyObservable implements Serializable {
 			if (player.getMyFamily().getMember1().getMemberValue() == dieValues.get(0)) {
 				player.getMyFamily().getMember1().setMemberValue(6);
 			} else if (player.getMyFamily().getMember2().getMemberValue() == dieValues.get(0)) {
-				player.getMyFamily().getMember1().setMemberValue(6);
+				player.getMyFamily().getMember2().setMemberValue(6);
 			} else if (player.getMyFamily().getMember3().getMemberValue() == dieValues.get(0)) {
-				player.getMyFamily().getMember1().setMemberValue(6);
+				player.getMyFamily().getMember3().setMemberValue(6);
 			}
 		}
 		if (player.getPermanentEffect("increaseValueNeutralFamilyMember") != null) {
 			player.getMyFamily().getMember4().setMemberValue(player.getMyFamily().getMember4().getMemberValue() + 3);
 		}
-		
+
+		for (PermanentEffect p : player.getPermanentEffectList("increaseDieValueFamiliar")) {
+			IncreaseDieValueActivity pe1 = (IncreaseDieValueActivity) p;
+			int value = pe1.getIncreaseDieValue();
+			player.getMyFamily().getMember1()
+					.setMemberValue(player.getMyFamily().getMember1().getMemberValue() + value);
+			player.getMyFamily().getMember2()
+					.setMemberValue(player.getMyFamily().getMember2().getMemberValue() + value);
+			player.getMyFamily().getMember3()
+					.setMemberValue(player.getMyFamily().getMember3().getMemberValue() + value);
+		}
+
 	}
 
 	public void incrementState() {
 		this.setGameState(this.getGameState().nextState());
 	}
 
-	public void sendModel() {
-		countingModelSent++;
-		System.out.println("Model --> Invio del model #" + countingModelSent);
-
-		hm = new HashMap<>();
-		hm.put("model", this);
-		// System.out.println("FROM MODEL SENDING THIS
-		// "+this.getPlayers().get(0).getMyValues());
-		notifyMyObservers(hm);
+	/**
+	 * This methods prepare the board situation before sending it to the client -->
+	 * it only uses strings to avoid casting from client issues
+	 */
+	public String[] prepareBoardInformation() {
+		String[] boardInformation = new String[8];
+		boardInformation[0] = board.getTowerTerritories().toString();
+		boardInformation[1] = board.getTowerBuildings().toString();
+		boardInformation[2] = board.getTowerCharacters().toString();
+		boardInformation[3] = board.getTowerVentures().toString();
+		boardInformation[4] = board.getMarket().toString();
+		boardInformation[5] = board.getHarvest().toString();
+		boardInformation[6] = board.getProduction().toString();
+		boardInformation[7] = board.getCouncilPalace().toString();
+		return boardInformation;
 	}
 
-	private void sendNumberToClient() {
-		System.out.println("Richiesta di invio numero");
-		hm = new HashMap<>();
-		hm.put("clientNumber", counter);
-		hm.put("modelNumber", modelNumber);
-		notifyMyObservers(hm);
-		System.out.println("Numero inviato");
+	/**
+	 * This methods prepare the personal information situation before sending it to
+	 * the client --> it only uses strings to avoid casting from client issues
+	 */
+	public String[] preparePersonalInformation(Player p) {
+		String[] personalInformation = new String[10];
+		personalInformation[0] = p.getMyBoard().getPersonalTerritories().toString();
+		personalInformation[1] = p.getMyBoard().getPersonalBuildings().toString();
+		personalInformation[2] = p.getMyBoard().getPersonalCharacters().toString();
+		personalInformation[3] = p.getMyBoard().getPersonalVentures().toString();
+		personalInformation[4] = p.getMyBoard().getPersonalLeader().toString();
+		personalInformation[5] = p.getMyFamily().toString();
+		personalInformation[6] = p.getMyValues().toString();
+		personalInformation[7] = p.getMyColour().toString();
+		personalInformation[8] = p.getActivePermanentEffects().toString();
+		personalInformation[9] = p.getLeaderOneTimePerTurn().toString();
+
+		return personalInformation;
+
 	}
 
 	public Player getPlayerfromColour(PlayerColour colour) {
@@ -244,12 +265,18 @@ public class Model extends MyObservable implements Serializable {
 
 	private void dealLeaders(List<Leader> leaderDeck, List<Player> players) {
 		Random random = new Random();
-		int num = (leaderDeck.size() / players.size());
+
+		// int num = (leaderDeck.size() / players.size());
 		for (Player p : players) {
-			for (int i = 0; i < num; i++) {
+
+			for (int i = 0; i < 4; i++) {
+
 				int position = random.nextInt(leaderDeck.size());
+
 				p.getMyBoard().getPersonalLeader().add(leaderDeck.get(position));
+
 				leaderDeck.remove(position);
+
 			}
 		}
 	}
@@ -359,4 +386,19 @@ public class Model extends MyObservable implements Serializable {
 		this.excommunicationDeck = excommunicationDeck;
 	}
 
+	public Ranking getRanking() {
+		return ranking;
+	}
+
+	public void setRanking(Ranking ranking) {
+		this.ranking = ranking;
+	}
+
+	public String getTempName() {
+		return tempName;
+	}
+
+	public void setTempName(String tempName) {
+		this.tempName = tempName;
+	}
 }

@@ -1,11 +1,10 @@
 package it.polimi.ingsw.GC_24.model.cards;
 
-import it.polimi.ingsw.GC_24.model.effects.*;
+import it.polimi.ingsw.GC_24.model.effects.immediate.ImmediateEffect;
 import it.polimi.ingsw.GC_24.model.personalboard.PersonalBoard;
 import it.polimi.ingsw.GC_24.model.values.SetOfValues;
 
 public class Buildings extends Development {
-	
 
 	/**
 	 * 
@@ -15,10 +14,10 @@ public class Buildings extends Development {
 	private ImmediateEffect productionEffect, productionEffect1;
 
 	// constructor
-	public Buildings(String name, int dieValueProduction, String type, SetOfValues cost,
+	public Buildings(String name, String url, int dieValueProduction, String type, SetOfValues cost,
 			ImmediateEffect immediateEffects, ImmediateEffect immediateEffects1, ImmediateEffect productionEffect,
 			ImmediateEffect productionEffect1, int round) {
-		super(name, type, cost, immediateEffects, immediateEffects1, round);
+		super(name, url, type, cost, immediateEffects, immediateEffects1, round);
 		this.productionEffect = productionEffect;
 		this.productionEffect1 = productionEffect1;
 		this.dieValueProduction = dieValueProduction;
@@ -32,15 +31,16 @@ public class Buildings extends Development {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append( "\n[Name = " + name + ", Cost = " + getCost());
-		if (getImmediateEffect()!=null){
+		builder.append("\n[Name = " + name + ", Cost = " + getCost());
+		if (getImmediateEffect() != null) {
 			builder.append(", Immediate Effects = " + getImmediateEffect());
-			if (getImmediateEffect1()!=null)
+			if (getImmediateEffect1() != null)
 				builder.append(" and " + getImmediateEffect1());
 		}
-		if (productionEffect!=null){
-			builder.append("\n\tDie Value For Production = "+dieValueProduction +", Production Effects = "+productionEffect);
-			if (productionEffect1!=null)
+		if (productionEffect != null) {
+			builder.append("\n\tDie Value For Production = " + dieValueProduction + ", Production Effects = "
+					+ productionEffect);
+			if (productionEffect1 != null)
 				builder.append(" and " + productionEffect1);
 		}
 		builder.append("]");
@@ -71,5 +71,4 @@ public class Buildings extends Development {
 	public void setProductionEffect1(ImmediateEffect productionEffect1) {
 		this.productionEffect1 = productionEffect1;
 	}
-
 }

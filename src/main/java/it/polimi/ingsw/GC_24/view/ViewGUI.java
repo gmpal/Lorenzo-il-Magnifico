@@ -1,49 +1,35 @@
 package it.polimi.ingsw.GC_24.view;
 
+
 import java.util.List;
 
-import it.polimi.ingsw.GC_24.model.Model;
-import it.polimi.ingsw.GC_24.model.Player;
-import it.polimi.ingsw.GC_24.model.effects.IncreaseDieValueCard;
-import it.polimi.ingsw.GC_24.model.values.SetOfValues;
-import it.polimi.ingsw.GC_24.observers.MyObservable;
+import it.polimi.ingsw.GC_24.gui.MainClass;
+import javafx.application.Platform;
 
-public class ViewGUI implements ViewInterface {
+public class ViewGUI extends View {
+
+	private MainClass mainClass;
+
+	public ViewGUI(String name, MainClass mainClass) {
+		super(name);
+		this.mainClass = mainClass;
+	}
 
 	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		
+	public void play() {
+		Platform.runLater(() -> mainClass.showGameBoard());
 	}
 
 	@Override
 	public <C> void update(C change) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void show(String message) {
-		// TODO Auto-generated method stub
-		
-	}
+		Platform.runLater(() -> mainClass.showMessage(message));
 
-	@Override
-	public void showToSinglePlayer(Player currentPlayer, String message) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void sendPlayerString(String name) throws InterruptedException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void sendAction(String action) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -53,15 +39,15 @@ public class ViewGUI implements ViewInterface {
 	}
 
 	@Override
-	public SetOfValues chooseSale(IncreaseDieValueCard increase) {
+	public String chooseSale(String increase) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void sendAnswerForParameters(String answer) {
+	public void askForExcommunication() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -89,57 +75,40 @@ public class ViewGUI implements ViewInterface {
 	}
 
 	@Override
-	public void play() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void updatePlayerNumber(int playerNumber2, int modelNumber) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void communicateActionDone() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-	public void updateTurn(List<Player> playerTurn) {
-		// TODO Auto-generated method stub
+	public void setMyTurn(String currentPlayer) {
+		if (currentPlayer.equals(name)) {
+			myTurn = true;
+
+		} else {
+			myTurn = false;
+		}
 		
+		Platform.runLater(() -> mainClass.getCurrentPlayer().set(currentPlayer));
+		
+		if (myTurn) {
+			Platform.runLater(() -> mainClass.showMessage("It's your turn!"));
+		} else {
+			Platform.runLater(() -> mainClass.showMessage("Not your turn!"));
+		}
+		
+		Platform.runLater(() -> {
+			mainClass.getCurrentPlayer().set(currentPlayer);
+				System.out.println("*********************");
+		});
 	}
 
-	@Override
-	public void getInformationForReceivedModel(Model model) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
-	public void setMyTurn(Player currentPlayer) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void updateTurn(List<String> playerTurn) {
+		this.playersTurn = playerTurn;
+		Platform.runLater(() -> mainClass.updateTurnProperties(playerTurn));
 
-	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void sendAlternativeCost(String response) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void askForExcommunication() {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

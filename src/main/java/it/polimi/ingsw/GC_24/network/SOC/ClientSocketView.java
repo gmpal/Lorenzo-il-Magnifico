@@ -4,19 +4,15 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-import it.polimi.ingsw.GC_24.model.Model;
-import it.polimi.ingsw.GC_24.model.Player;
-import it.polimi.ingsw.GC_24.model.effects.IncreaseDieValueCard;
 import it.polimi.ingsw.GC_24.observers.MyObservable;
 import it.polimi.ingsw.GC_24.observers.MyObserver;
-import it.polimi.ingsw.GC_24.view.ViewInterface;
+import it.polimi.ingsw.GC_24.view.View;
 
 //ClientInHandler is observed by the ViewPLayer,
 //whenever the server communicates something, ClientInHandler notifies ViewPLayer
@@ -25,9 +21,9 @@ public class ClientSocketView extends MyObservable implements Runnable, MyObserv
 	private ObjectInputStream objFromServer;
 	private ObjectOutputStream objToServer;
 	private ExecutorService executor = Executors.newCachedThreadPool();
-	private ViewInterface view;
+	private View view;
 
-	public ClientSocketView(ObjectInputStream objFromServer, ObjectOutputStream objToServer, ViewInterface view) {
+	public ClientSocketView(ObjectInputStream objFromServer, ObjectOutputStream objToServer, View view) {
 		this.objToServer = objToServer;
 		this.objFromServer = objFromServer;
 		this.view = view;
@@ -125,75 +121,74 @@ public class ClientSocketView extends MyObservable implements Runnable, MyObserv
 					view.sendAlternativeCost(response);
 
 				}
-
+				
+				if (command.contains("sale")) {
+					System.out.println("CSV ---> Ricevuta richiesta sconto multiplo");
+					String response = view.chooseSale((String) request.get(command));
+					view.sendAlternativeSale(response);
+				}
 				if (command.contains("problems")) {
 					System.out.println("CSV ---> Ricevuti problemi");
 					view.show((String) request.get("problems"));
 				}
 
+				if (command.contains("personalInformation")) {
+					view.parsePersonalInformations((String[]) request.get("personalInformation"));
+				}
 			}
 		}
+			if (command.contains("boardInformation")) {
+				System.out.println("CSV ---> Ricevute information board");
+				view.parseBoardInformation((String[]) request.get("boardInformation"));
 
-		/* IN THIS CASE the request is handled by the viewCLI */
+			}
 
-		if (command.contains("model")) {
-			System.out.println("CSV ---> Ricevuto Model");
-			view.getInformationForReceivedModel((Model) request.get("model"));
+			if (command.contains("actionDone")) {
+				System.out.println("CSV ---> Ricevuta segnalazione di azione completata ");
+				view.communicateActionDone();
 
-		}
+			}
 
-		if (command.contains("actionDone")) {
-			System.out.println("CSV ---> Ricevuta segnalazione di azione completata ");
-			view.communicateActionDone();
+			if (command.contains("info")) {
+				System.out.println("CSV ---> Ricevute informazioni da mostrare a video");
+				view.show((String) request.get("info"));
 
-		}
+			}
 
-		if (command.contains("info")) {
-			System.out.println("CSV ---> Ricevute informazioni da mostrare a video");
-			view.show((String) request.get("info"));
+			if (command.contains("startPlaying")) {
+				System.out.println("CSV ---> Ricevuta richiesta di avviamento partita");
+				new Thread(new Runnable() {
+					public void run() {
+						view.play();
+					}
+				}).start();
 
-		}
+			}
+			if (command.contains("Turns")) {
+				System.out.println("CSV ---> Ricevuti turni ");
+				ArrayList<String> playerTurn = (ArrayList<String>) request.get("Turns");
+				view.updateTurn(playerTurn);
 
-		if (command.contains("startPlaying")) {
-			System.out.println("CSV ---> Ricevuta richiesta di avviamento partita");
-			new Thread(new Runnable() {
-				public void run() {
-					view.play();
-				}
-			}).start();
+			}
+			if (command.contains("currentPlayer")) {
+				System.out.println("CSV ---> Ricevuto giocatore corrente ");
+				String currentPlayer = (String) request.get("currentPlayer");
+				view.setMyTurn(currentPlayer);
 
-		}
-		if (command.contains("Turns")) {
-			System.out.println("CSV ---> Ricevuti turni ");
-			List<Player> playerTurn = (List<Player>) request.get("Turns");
-			view.updateTurn(playerTurn);
+			}
 
-		}
-		if (command.contains("currentPlayer")) {
-			System.out.println("CSV ---> Ricevuto giocatore corrente ");
-			Player currentPlayer = (Player) request.get("currentPlayer");
-			view.setMyTurn(currentPlayer);
+			if (command.contains("clientNumber")) {
+				System.out.println("CSV ---> Ricevuto numero client");
+				System.out.println(request);
+				int playerNumber = (int) request.get("clientNumber");
+				System.out.println(playerNumber);
+				int modelNumber = (int) request.get("modelNumber");
 
-		}
-
-		if (command.contains("clientNumber")) {
-			System.out.println("CSV ---> Ricevuto numero client");
-			System.out.println(request);
-			int playerNumber = (int) request.get("clientNumber");
-			System.out.println(playerNumber);
-			int modelNumber = (int) request.get("modelNumber");
-			view.updatePlayerNumber(playerNumber, modelNumber);
-
-		}
-		if (command.contains("sale")) {
-			System.out.println("CSV ---> Ricevuta richiesta sconto multiplo");
-			view.chooseSale((IncreaseDieValueCard) request.get(command));
-
-		}
-		if (command.contains("vatican")) {
-			System.out.println("CSV ---> Ricevuta richiesta scomunica");
-			view.askForExcommunication();
+			}
+			
+			if (command.contains("vatican")) {
+				System.out.println("CSV ---> Ricevuta richiesta scomunica");
+				view.askForExcommunication();
+			}
 		}
 	}
-
-}

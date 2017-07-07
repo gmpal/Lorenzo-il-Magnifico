@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.polimi.ingsw.GC_24.model.Model;
-import it.polimi.ingsw.GC_24.model.effects.ImmediateEffect;
+import it.polimi.ingsw.GC_24.model.effects.immediate.ImmediateEffect;
 import it.polimi.ingsw.GC_24.model.places.MarketPlace;
 import it.polimi.ingsw.GC_24.model.values.Servant;
 
@@ -21,20 +21,18 @@ public class MarketAction extends Action {
 	@Override
 	public String verify() {
 		String answerToPlayer = "Answer: \n";
-
-		System.out.println("## --> Dentro il while ");
+		
 		answerToPlayer = verifyIfEnoughServants(answerToPlayer);
-		System.out.println("## --> Abbastanza servi");
+		
 		answerToPlayer = verifyIfEnoughServantsForThisPlace(answerToPlayer);
-		System.out.println("## --> verifyIfEnoughServantsForThisPlace");
+		
 		answerToPlayer = verifyFamilyMemberAvailability(answerToPlayer);
-		System.out.println("## --> verifyFamilyMemberAvailability ");
+		
 		if (!noMarketAvailability()) {
 			answerToPlayer = verifyPlaceAvailability(answerToPlayer);
 		} else {
 			answerToPlayer += "Sorry, place not available!\n";
 		}
-		System.out.println("## --> verifyPlaceAvailability ");
 
 		if (answerToPlayer.equals("Answer: \n"))
 			return "ok";

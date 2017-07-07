@@ -8,9 +8,32 @@ import com.google.gson.GsonBuilder;
 
 import it.polimi.ingsw.GC_24.devCardJsonFile.RuntimeTypeAdapterFactory;
 import it.polimi.ingsw.GC_24.model.effects.*;
+import it.polimi.ingsw.GC_24.model.effects.immediate.ChooseNewCard;
+import it.polimi.ingsw.GC_24.model.effects.immediate.CouncilPrivilege;
+import it.polimi.ingsw.GC_24.model.effects.immediate.Exchange;
+import it.polimi.ingsw.GC_24.model.effects.immediate.ImmediateEffect;
+import it.polimi.ingsw.GC_24.model.effects.immediate.MoltiplicationCards;
+import it.polimi.ingsw.GC_24.model.effects.immediate.MoltiplicationPoints;
+import it.polimi.ingsw.GC_24.model.effects.immediate.PerformHarvest;
+import it.polimi.ingsw.GC_24.model.effects.immediate.PerformProduction;
+import it.polimi.ingsw.GC_24.model.effects.immediate.ValueEffect;
+import it.polimi.ingsw.GC_24.model.effects.permanent.ChangeServantsValue;
+import it.polimi.ingsw.GC_24.model.effects.permanent.CustomizedPermanentEffect;
+import it.polimi.ingsw.GC_24.model.effects.permanent.IncreaseDieValueActivity;
+import it.polimi.ingsw.GC_24.model.effects.permanent.IncreaseDieValueCard;
+import it.polimi.ingsw.GC_24.model.effects.permanent.NoMarketAvailability;
+import it.polimi.ingsw.GC_24.model.effects.permanent.NoValueEffectFromTowerPlace;
+import it.polimi.ingsw.GC_24.model.effects.permanent.NoVictoryPointsFromCard;
+import it.polimi.ingsw.GC_24.model.effects.permanent.PermanentEffect;
+import it.polimi.ingsw.GC_24.model.effects.permanent.SubSetOfValues;
+import it.polimi.ingsw.GC_24.model.effects.permanent.SubVicrotyPointsFromSetOfValue;
 import it.polimi.ingsw.GC_24.model.personalboard.*;
 import it.polimi.ingsw.GC_24.model.values.*;
 
+/**
+ * This class set the serialization and the deserialization of abstract class.
+ * The subclasses are registered with "RuntimeTypeAdapterFactory"
+ */
 public class GsonBuilders {
 	public GsonBuilders() {
 		getGsonWithTypeAdapters();
@@ -47,7 +70,6 @@ public class GsonBuilders {
 				.registerSubtype(IncreaseDieValueCard.class, "increaseDieValueCard")
 				.registerSubtype(NoValueEffectFromTowerPlace.class, "noValueEffectFromTowerPlace")
 				.registerSubtype(ChangeServantsValue.class, "changeServantsValue")
-				.registerSubtype(FirstPlacementAtTheEnd.class, "firstPlacementAtTheEnd")
 				.registerSubtype(NoMarketAvailability.class, "noMarketAvailability")
 				.registerSubtype(CustomizedPermanentEffect.class, "customizedPermanentEffect")
 				.registerSubtype(SubSetOfValues.class, "subSetOfValues");

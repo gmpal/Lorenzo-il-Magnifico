@@ -1,5 +1,8 @@
 package it.polimi.ingsw.GC_24.model;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import it.polimi.ingsw.GC_24.model.values.*;
 
 public class Ranking implements java.io.Serializable {
@@ -9,34 +12,75 @@ public class Ranking implements java.io.Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -2248100702854353172L;
-	private Player player;
-	private FaithPoint faithPoints;
-	private MilitaryPoint militaryPoints;
-	private VictoryPoint victoryPoints;
+	private List<Player> players;
+	private List<String> victoryPoints;
+	private List<String> militaryPoints;
+	private List<String> faithPoints;
 	
 	//constructor
-	public Ranking(Player player) {
-		this.player = player;
-		this.militaryPoints = player.getMyValues().getMilitaryPoints();
-		this.faithPoints = player.getMyValues().getFaithPoints();
-		this.victoryPoints = player.getMyValues().getVictoryPoints();
+	public Ranking(List<Player> players) {
+		this.setPlayers(players);
+		this.victoryPoints = createList(new VictoryPoint(0));
+		this.militaryPoints = createList(new MilitaryPoint(0));
+		this.faithPoints = createList(new FaithPoint(0));
 	}
 	
-	@Override
-	public String toString() {
-		return player + "'s ranking ( player " + player.getMyColour() +" ):" +
-				"\nfaithPoints=" + faithPoints.getQuantity() + 
-				", militaryPoints=" + militaryPoints.getQuantity()
-				+ ", victoryPoints=" + victoryPoints.getQuantity() + "]";
+	public List<String> createList(Value point) {
+		List<Integer> points = sortPoints(point);
+		List<String> stringPoints = new ArrayList<>();
+		if (!sortPoints(point).isEmpty()) {
+			for (int i=0;i<points.size();i++) {
+				for (Player p:players) {
+					if (point.findValueInPlayer(p).getQuantity() == points.get(i)) {
+						stringPoints.add(p.getMyColour()+" player --> "+point.findValueInPlayer(p).getQuantity());
+					}
+			}	
+			}
+		}
+		return stringPoints;
+	}
+	
+	public List<Integer> sortPoints(Value point) {
+		List<Integer> points = new ArrayList<>();
+		for (Player p:players)  {
+			points.add(point.findValueInPlayer(p).getQuantity());
+		}
+		Collections.sort(points);
+		Collections.reverse(points);
+		return points;
 	}
 
 	//getters and setters
-	public Player getPlayer() {
-		return player;
+	public List<Player> getPlayers() {
+		return players;
 	}
 
-	public void setPlayer(Player player) {
-		this.player = player;
+	public void setPlayers(List<Player> players) {
+		this.players = players;
+	}
+
+	public List<String> getVictoryPoints() {
+		return victoryPoints;
+	}
+
+	public void setVictoryPoints(List<String> victoryPoints) {
+		this.victoryPoints = victoryPoints;
+	}
+
+	public List<String> getMilitaryPoints() {
+		return militaryPoints;
+	}
+
+	public void setMilitaryPoints(List<String> militaryPoints) {
+		this.militaryPoints = militaryPoints;
+	}
+
+	public List<String> getFaithPoints() {
+		return faithPoints;
+	}
+
+	public void setFaithPoints(List<String> faithPoints) {
+		this.faithPoints = faithPoints;
 	}
 	
 }

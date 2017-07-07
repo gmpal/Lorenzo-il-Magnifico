@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="backPanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1200.0" prefWidth="1800.0" stylesheets="@../img/pane.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.GC_24.gui.GameBoardController">
+   <children>
+      <VBox alignment="TOP_RIGHT" prefHeight="806.0" prefWidth="646.0" spacing="5.0" AnchorPane.bottomAnchor="359.0" AnchorPane.rightAnchor="51.0" AnchorPane.topAnchor="35.0">
+         <children>
+            <AnchorPane id="extraPersonalBoard" prefHeight="320.0" prefWidth="655.0" stylesheets="@../img/pane.css" VBox.vgrow="NEVER">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <children>
+                  <ImageView fx:id="personalVentures01" fitHeight="139.0" fitWidth="95.0" layoutX="20.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/cards/devcards_f_en_c_76.png" />
+                     </image></ImageView>
+                  <ImageView fx:id="personalVentures02" fitHeight="139.0" fitWidth="95.0" layoutX="125.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="personalVentures03" fitHeight="139.0" fitWidth="95.0" layoutX="235.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="personalVentures04" fitHeight="139.0" fitWidth="95.0" layoutX="340.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="personalVentures05" fitHeight="139.0" fitWidth="95.0" layoutX="444.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="personalVentures06" fitHeight="139.0" fitWidth="95.0" layoutX="551.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="personalBuildings01" fitHeight="139.0" fitWidth="95.0" layoutX="17.0" layoutY="160.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="personalBuildings02" fitHeight="139.0" fitWidth="95.0" layoutX="122.0" layoutY="160.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="personalBuildings03" fitHeight="139.0" fitWidth="95.0" layoutX="232.0" layoutY="160.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="personalBuildings04" fitHeight="139.0" fitWidth="95.0" layoutX="337.0" layoutY="160.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="personalBuildings05" fitHeight="139.0" fitWidth="95.0" layoutX="441.0" layoutY="160.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="personalBuildings06" fitHeight="139.0" fitWidth="95.0" layoutX="548.0" layoutY="160.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </AnchorPane>
+            <AnchorPane id="personalBoard" prefHeight="450.0" prefWidth="660.0" stylesheets="@../img/pane.css" VBox.vgrow="NEVER">
+               <children>
+                  <Label fx:id="coinsLabel" layoutX="40.0" layoutY="437.0" text="COINS" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="woodsLabel" layoutX="143.0" layoutY="437.0" text="WOODS" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="stonesLabel" layoutX="251.0" layoutY="437.0" text="STONES" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="servantsLabel" layoutX="351.0" layoutY="437.0" text="SERVANTS" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <ImageView fx:id="personalCharacters01" fitHeight="139.0" fitWidth="95.0" layoutX="13.0" layoutY="18.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="personalCharacters02" fitHeight="139.0" fitWidth="95.0" layoutX="118.0" layoutY="18.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="personalCharacters03" fitHeight="139.0" fitWidth="95.0" layoutX="228.0" layoutY="18.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="personalCharacters04" fitHeight="139.0" fitWidth="95.0" layoutX="351.0" layoutY="18.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="personalCharacters05" fitHeight="139.0" fitWidth="95.0" layoutX="453.0" layoutY="18.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="personalCharacters06" fitHeight="139.0" fitWidth="95.0" layoutX="551.0" layoutY="18.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="personalTerritories01" fitHeight="139.0" fitWidth="95.0" layoutX="17.0" layoutY="210.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="personalTerritories02" fitHeight="139.0" fitWidth="95.0" layoutX="122.0" layoutY="210.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="personalTerritories03" fitHeight="139.0" fitWidth="95.0" layoutX="232.0" layoutY="210.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="personalTerritories04" fitHeight="139.0" fitWidth="95.0" layoutX="351.0" layoutY="210.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="personalTerritories05" fitHeight="139.0" fitWidth="95.0" layoutX="441.0" layoutY="210.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="personalTerritories06" fitHeight="139.0" fitWidth="95.0" layoutX="551.0" layoutY="210.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </AnchorPane>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <VBox prefHeight="139.0" prefWidth="281.0">
+                     <children>
+                        <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                           <children>
+                              <Label text="1)" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="21.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="player1label" textFill="WHITE">
+                                 <font>
+                                    <Font size="21.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                           <children>
+                              <Label text="2)" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="21.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="player2label" textFill="WHITE">
+                                 <font>
+                                    <Font size="21.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                           <children>
+                              <Label text="3)" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="21.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="player3label" textFill="WHITE">
+                                 <font>
+                                    <Font size="21.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                           <children>
+                              <Label text="4)" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="21.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="player4label" textFill="WHITE">
+                                 <font>
+                                    <Font size="21.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <ImageView fx:id="leader01" fitHeight="139.0" fitWidth="95.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/leaders/leaders_f_c_20.jpg" />
+                     </image></ImageView>
+                  <ImageView fx:id="leader02" fitHeight="139.0" fitWidth="95.0" layoutX="10.0" layoutY="10.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/leaders/leaders_f_c_10.jpg" />
+                     </image></ImageView>
+                  <ImageView fx:id="leader03" fitHeight="139.0" fitWidth="95.0" layoutX="105.0" layoutY="10.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/leaders/leaders_f_c_06.jpg" />
+                     </image></ImageView>
+                  <ImageView fx:id="leader04" fitHeight="139.0" fitWidth="95.0" layoutX="200.0" layoutY="10.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" HBox.hgrow="NEVER">
+                     <image>
+                        <Image url="@../img/leaders/leaders_f_c_01.jpg" />
+                     </image></ImageView>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER">
+               <children>
+                  <Label text="You are --&gt; " textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="21.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="thisPlayerLabel" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="21.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="50.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label text="Current Player is --&gt;" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="21.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="currentPlayerLabel" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="21.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <ScrollPane hbarPolicy="NEVER" layoutX="35.0" layoutY="35.0" prefHeight="830.0" prefWidth="920.0" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="35.0" AnchorPane.topAnchor="35.0">
+         <content>
+            <AnchorPane id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1500.0" prefWidth="901.0" stylesheets="@../img/pane.css">
+               <children>
+                  <ImageView fx:id="territories04" fitHeight="193.0" fitWidth="120.0" layoutX="14.0" layoutY="28.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="territories03" fitHeight="193.0" fitWidth="120.0" layoutX="14.0" layoutY="230.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="territories02" fitHeight="193.0" fitWidth="120.0" layoutX="14.0" layoutY="436.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="territories01" fitHeight="193.0" fitWidth="120.0" layoutX="14.0" layoutY="638.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="characters04" fitHeight="193.0" fitWidth="120.0" layoutX="236.0" layoutY="35.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="characters03" fitHeight="193.0" fitWidth="120.0" layoutX="236.0" layoutY="237.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="characters02" fitHeight="193.0" fitWidth="120.0" layoutX="236.0" layoutY="443.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="characters01" fitHeight="193.0" fitWidth="120.0" layoutX="236.0" layoutY="645.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="buildings04" fitHeight="193.0" fitWidth="120.0" layoutX="451.0" layoutY="29.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="buildings03" fitHeight="193.0" fitWidth="120.0" layoutX="451.0" layoutY="231.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="buildings02" fitHeight="193.0" fitWidth="120.0" layoutX="451.0" layoutY="437.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="buildings01" fitHeight="193.0" fitWidth="120.0" layoutX="451.0" layoutY="639.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="ventures04" fitHeight="195.0" fitWidth="135.0" layoutX="664.0" layoutY="27.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/cards/devcards_f_en_c_73.png" />
+                     </image></ImageView>
+                  <ImageView fx:id="ventures03" fitHeight="193.0" fitWidth="120.0" layoutX="670.0" layoutY="231.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="ventures02" fitHeight="193.0" fitWidth="120.0" layoutX="670.0" layoutY="437.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="ventures01" fitHeight="193.0" fitWidth="120.0" layoutX="670.0" layoutY="639.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <Button fx:id="buttonTerritory04" layoutX="134.0" layoutY="82.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="70.0" prefWidth="85.0" text="Button" />
+                  <Button fx:id="buttonCharacters04" layoutX="356.0" layoutY="82.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="70.0" prefWidth="85.0" text="Button" />
+                  <Button fx:id="buttonBuildings04" layoutX="571.0" layoutY="82.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="70.0" prefWidth="85.0" text="Button" />
+                  <Button fx:id="buttonVentures04" layoutX="790.0" layoutY="82.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="70.0" prefWidth="85.0" text="Button" />
+                  <Button fx:id="buttonTerritory03" layoutX="134.0" layoutY="285.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="70.0" prefWidth="85.0" text="Button" />
+                  <Button fx:id="buttonCharacters03" layoutX="356.0" layoutY="285.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="70.0" prefWidth="85.0" text="Button" />
+                  <Button fx:id="buttonBuildings03" layoutX="571.0" layoutY="285.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="70.0" prefWidth="85.0" text="Button" />
+                  <Button fx:id="buttonVentures03" layoutX="790.0" layoutY="285.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="70.0" prefWidth="85.0" text="Button" />
+                  <Button fx:id="buttonTerritory02" layoutX="134.0" layoutY="491.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="70.0" prefWidth="85.0" text="Button" />
+                  <Button fx:id="buttonCharacters02" layoutX="356.0" layoutY="491.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="70.0" prefWidth="85.0" text="Button" />
+                  <Button fx:id="buttonBuildings02" layoutX="571.0" layoutY="491.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="70.0" prefWidth="85.0" text="Button" />
+                  <Button fx:id="buttonVentures02" layoutX="790.0" layoutY="491.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="70.0" prefWidth="85.0" text="Button" />
+                  <Button fx:id="buttonTerritory01" layoutX="134.0" layoutY="700.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="70.0" prefWidth="85.0" text="Button" />
+                  <Button fx:id="buttonCharacters01" layoutX="356.0" layoutY="700.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="70.0" prefWidth="85.0" text="Button" />
+                  <Button fx:id="buttonBuildings01" layoutX="571.0" layoutY="700.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="70.0" prefWidth="85.0" text="Button" />
+                  <Button fx:id="buttonVentures01" layoutX="790.0" layoutY="700.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="70.0" prefWidth="85.0" text="Button" />
+                  <Button fx:id="buttonHarvest" layoutX="14.0" layoutY="1260.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="71.0" prefWidth="333.0" text="Button" />
+                  <Button fx:id="buttonProduction" layoutX="14.0" layoutY="1389.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="79.0" prefWidth="333.0" text="Button" />
+                  <Button fx:id="buttonCouncil" layoutX="469.0" layoutY="848.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="95.0" prefWidth="278.0" text="Button" />
+                  <Button fx:id="buttonMarket01" layoutX="542.0" layoutY="1232.0" mnemonicParsing="false" onAction="#towerClickHandler" prefHeight="70.0" prefWidth="85.0" text="Button" />
+                  <Button fx:id="buttonMarket02" layoutX="645.0" layoutY="1232.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="70.0" prefWidth="85.0" text="Button" />
+                  <Button fx:id="buttonMarket03" layoutX="748.0" layoutY="1261.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="70.0" prefWidth="85.0" text="Button" />
+                  <Button fx:id="buttonMarket04" layoutX="816.0" layoutY="1338.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="70.0" prefWidth="85.0" text="Button" />
+                  <Label fx:id="blackDie" alignment="CENTER" layoutX="525.0" layoutY="1408.0" prefHeight="71.0" prefWidth="76.0" text="1" textAlignment="CENTER" textFill="#088632">
+                     <font>
+                        <Font name="System Bold" size="48.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="whiteDie" alignment="CENTER" layoutX="632.0" layoutY="1408.0" prefHeight="71.0" prefWidth="76.0" text="2" textAlignment="CENTER" textFill="#088632">
+                     <font>
+                        <Font name="System Bold" size="48.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="orangeDie" alignment="CENTER" layoutX="740.0" layoutY="1408.0" prefHeight="71.0" prefWidth="76.0" text="3" textFill="#088632">
+                     <font>
+                        <Font name="System Bold" size="48.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>

@@ -10,12 +10,12 @@ import java.io.IOException;
  * anything.
  */
 public class Timers {
-	private static int timeToStartGame;
-	private static int timeToDisconnectPlayer;
+	private int timeToStartGame;
+	private int timeToDisconnectPlayer;
 	
 	public Timers() {
-		Timers.timeToStartGame = takeTimer("src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/timerToStart.json");
-		Timers.timeToDisconnectPlayer = takeTimer("src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/timerToDisconnectPlayer.json");		
+		this.timeToStartGame = takeTimer("src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/timerToStart.json");
+		this.timeToDisconnectPlayer = takeTimer("src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/timerToDisconnectPlayer.json");		
 	}
 
 	/**
@@ -26,7 +26,7 @@ public class Timers {
 	 *            fileName
 	 * @return int time
 	 */
-	public int takeTimer(String fileName) {
+	public static int takeTimer(String fileName) {
 		BufferedReader br;
 		int time = 0;
 		String line;
@@ -48,11 +48,11 @@ public class Timers {
 	}
 
 	public void setTimeToStartGame(int timeToStartGame) {
-		Timers.timeToStartGame = timeToStartGame;
+		this.timeToStartGame = timeToStartGame;
 	}
 
 	public void setTimeToDisconnectPlayer(int timeToDisconnectPlayer) {
-		Timers.timeToDisconnectPlayer = timeToDisconnectPlayer;
+		this.timeToDisconnectPlayer = timeToDisconnectPlayer;
 	}
 
 	public int getTimeToDisconnectPlayer() {

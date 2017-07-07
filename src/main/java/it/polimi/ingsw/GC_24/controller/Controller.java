@@ -1,12 +1,18 @@
 package it.polimi.ingsw.GC_24.controller;
 
 import java.io.IOException;
+
 import java.util.*;
+
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.State;
 import it.polimi.ingsw.GC_24.model.cards.*;
-import it.polimi.ingsw.GC_24.model.effects.*;
+import it.polimi.ingsw.GC_24.model.effects.immediate.ChooseNewCard;
+import it.polimi.ingsw.GC_24.model.effects.immediate.CouncilPrivilege;
+import it.polimi.ingsw.GC_24.model.effects.immediate.ImmediateEffect;
+import it.polimi.ingsw.GC_24.model.effects.permanent.IncreaseDieValueCard;
+import it.polimi.ingsw.GC_24.model.effects.permanent.SubVicrotyPointsFromSetOfValue;
 import it.polimi.ingsw.GC_24.model.places.TowerPlace;
 import it.polimi.ingsw.GC_24.model.values.*;
 import it.polimi.ingsw.GC_24.observers.MyObservable;
@@ -22,26 +28,32 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	private int controllerNumber = 0;
 	private List<Player> councilTurnArray;
 	private List<Player> playerTurn;
-	private List<Leader> leaderOneTimePerTurn = new ArrayList<>();
 	private Player currentPlayer;
 	private int cardsIndex = 0;
+
 	private SetOfValues saleForPermanentEffect = new SetOfValues();
+	private SetOfValues alternativeSale = new SetOfValues();
+
+
 	private String parametersAnswer;
-	private Timers timers = new Timers();
+
 
 	private boolean alreadyPlaying = false;
-	private boolean autocompleted;
 	private boolean parametersChosen = true;
 	private boolean vaticanChosen;
+
+	private Timers timers = new Timers();
+	private Timer t1;
 
 	// locks
 	private Object tempCostWaiting = new Object();
 	private Object actionWaiting = new Object();
-	private Object waitingForAutocompleting = new Object();
 	private Object waitingForSalesChoice = new Object();
 	private Object waitingForParametersChoose = new Object();
 	private Object waitingForVaticanChoice = new Object();
 	private String tempCostString = new String();
+
+	private boolean saleChosen;
 
 	// constructor
 
@@ -58,26 +70,16 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	@Override
 	public void run() {
-		waitAndAutocomplete();
 
-		// WAITING FOR AUTOCOMPLETING
-		synchronized (waitingForAutocompleting) {
-			while (!autocompleted) {
-				try {
-					waitingForAutocompleting.wait();
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
-
+		System.out.println("Controller partito!!!");
 		game.setModel(game.getPlayers());
-		game.setCurrentPlayer(game.getPlayers().get(0));
-		game.sendModel();
+		System.out.println("model settato!!!");
 		this.currentPlayer = game.getCurrentPlayer();
-
+		System.out.println("Current PLayer settato!!!");
+		sendPersonalInformationToEveryOne();
+		System.out.println("Informazioni inviate!!!");
 		playerTurn = game.getPlayers();
+		System.out.println("turni presi!!!");
 		game.setGameState(State.PERIOD1_ROUND1);
 
 		while (!game.getGameState().equals(State.ENDED)) {
@@ -86,10 +88,11 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			game.getBoard().clear();
 
 			game.getCards().dealCards(game.getBoard(), cardsIndex / 2 + 1);
-			
-			game.updateModel();
 
-			game.sendModel();
+
+			sendBoardInformation();
+			sendPersonalInformationToEveryOne();
+			sendTurnArray(playerTurn);
 
 			System.out.println("Controller: everything clear and model sent");
 			for (int j = 0; j < 4; j++) {
@@ -113,7 +116,9 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					 * This block waits for a player doing an action, because after an action the
 					 * game-currentPlayer is updated
 					 */
-					Timer t1 = new Timer();
+
+					t1 = new Timer();
+
 					startTimerForPlayerAction(t1);
 
 					synchronized (actionWaiting) {
@@ -123,6 +128,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 								actionWaiting.wait();
 							} catch (InterruptedException e) {
 								e.printStackTrace();
+								Thread.currentThread().interrupt();
 
 							}
 						}
@@ -148,6 +154,30 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	}
 
+	public void sendBoardInformation() {
+		String[] boardInformation = game.prepareBoardInformation();
+		hashMap = new HashMap<>();
+		hashMap.put("boardInformation", boardInformation);
+		notifyMyObservers(hashMap);
+	}
+
+	public void sendPersonalInformationToEveryOne() {
+		Player actualCurrentPlayer = currentPlayer;
+		for (Player p : game.getPlayers()) {
+
+			currentPlayer = p;
+			sendPersonalInformation();
+		}
+		currentPlayer = actualCurrentPlayer;
+	}
+
+	public void sendPersonalInformation() {
+		String[] personalInformation = game.preparePersonalInformation(currentPlayer);
+		hashMap = new HashMap<>();
+		hashMap.put("personalInformation", personalInformation);
+		sendToCurrentPlayer(hashMap);
+	}
+
 	/**
 	 * checks if in the player's personalLeader there are some activated cards that
 	 * are oneTimePerTurn and in that case the method sets this boolean to false
@@ -160,7 +190,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				}
 			}
 		}
-		game.sendModel();
+		sendPersonalInformationToEveryOne();
 	}
 
 	private void startTimerForPlayerAction(Timer t1) {
@@ -175,51 +205,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				}
 			}
 
-		}, 750000);
-
-	}
-
-	/**
-	 * This method starts a timer and then calls another method that autocompletes
-	 * the players
-	 */
-	private void waitAndAutocomplete() {
-		Timer timer = new Timer();
-		timer.schedule(new TimerTask() {
-			public void run() {
-				System.out.println("*****PLAYER NAME INSERTION TIME UP*****");
-				autoCompletePlayers();
-			}
-
-		}, 1000);
-
-	}
-
-	/**
-	 * This method automatically completes the players name and colours, waking up
-	 * the run() thread and notifying the clients
-	 */
-	public void autoCompletePlayers() {
-
-		for (Player p : game.getPlayers()) {
-
-			if (p.getMyName() == null) {
-				int index = game.getPlayers().indexOf(p) + 1;
-
-				p.setMyName("Player_" + index);
-				p.setAutocompleted(true);
-				System.out.println("Player" + index + "autocompleted with name: " + p.getMyName());
-
-				System.out.println("STO INVIANDO: " + game);
-				game.sendModel();
-
-			}
-
-		}
-		synchronized (waitingForAutocompleting) {
-			autocompleted = true;
-			waitingForAutocompleting.notify();
-		}
+		}, timers.getTimeToDisconnectPlayer());
 
 	}
 
@@ -236,7 +222,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	 * Victory Points is the winner. In case of a tie, the player more advanced on
 	 * the Turn Order is the winner.
 	 */
-	private void gameEndHandler() {
+	public void gameEndHandler() {
 		giveVictoryPoints();
 		Player winner = winnerOfTheGame();
 
@@ -262,11 +248,9 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		}
 		if (winners.size() > 1) {
 			for (Player playert : playerTurn) {
-				for (Player p : winners) {
-					if (playert.equals(p)) {
-						winner = p;
-
-					}
+				if (winners.contains(playert)) {
+					winner = playert;
+					break;
 				}
 			}
 		} else {
@@ -277,19 +261,40 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	/**
-	 * This method calculates the final victory points for each player. based on the
-	 * final rules of the game
+	 * This method calculates the final victory points for each player. Based on the
+	 * final rules of the game. It checks the permanent effect and the
+	 * excommunication effect that gives or takes victory points.
 	 */
 	public void giveVictoryPoints() {
 		Player player;
 		List<Integer> finalMilitaryPoints = new ArrayList<>();
+		String finalExcommunication = game.getExcommunicationDeck().get(2).getEffect().getName();
 
 		for (int i = 0; i < game.getPlayers().size(); i++) {
 			player = game.getPlayers().get(i);
 			player.getMyValues().getFaithPoints().convertToValue(game.getCorrespondingValue())
 					.addTwoSetsOfValues(player.getMyValues());
-			player.getMyValues().getVictoryPoints()
-					.addQuantity(player.getMyBoard().convertToVictoryPoints().getQuantity());
+
+			if (player.hasLastExcommunication() && finalExcommunication.equals("noVictoryPointsFromTerritories")) {
+				player.getMyValues().getVictoryPoints().addQuantity(
+						player.getMyBoard().getPersonalCharacters().convertCardToVictoryPoints().getQuantity());
+				player.getMyValues().getVictoryPoints().addQuantity(
+						player.getMyBoard().getPersonalVentures().convertCardToVictoryPoints().getQuantity());
+			} else if (player.hasLastExcommunication()
+					&& finalExcommunication.equals("noVictoryPointsFromCharacters")) {
+				player.getMyValues().getVictoryPoints().addQuantity(
+						player.getMyBoard().getPersonalTerritories().convertCardToVictoryPoints().getQuantity());
+				player.getMyValues().getVictoryPoints().addQuantity(
+						player.getMyBoard().getPersonalVentures().convertCardToVictoryPoints().getQuantity());
+			} else if (player.hasLastExcommunication() && finalExcommunication.equals("noVictoryPointsFromVentures")) {
+				player.getMyValues().getVictoryPoints().addQuantity(
+						player.getMyBoard().getPersonalTerritories().convertCardToVictoryPoints().getQuantity());
+				player.getMyValues().getVictoryPoints().addQuantity(
+						player.getMyBoard().getPersonalCharacters().convertCardToVictoryPoints().getQuantity());
+			} else {
+				player.getMyValues().getVictoryPoints()
+						.addQuantity(player.getMyBoard().convertToVictoryPoints().getQuantity());
+			}
 			player.getMyValues().getVictoryPoints()
 					.addQuantity(player.getMyValues().convertSetToVictoryPoints().getQuantity());
 			finalMilitaryPoints.add(player.getMyValues().getMilitaryPoints().getQuantity());
@@ -305,6 +310,47 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		Collections.sort(finalMilitaryPoints);
 		Collections.reverse(finalMilitaryPoints);
 		convertMilitaryPointsToVictoryPoints(finalMilitaryPoints);
+
+		for (int i = 0; i < game.getPlayers().size(); i++) {
+			player = game.getPlayers().get(i);
+			if (player.hasLastExcommunication() && finalExcommunication.equalsIgnoreCase("subVictoryPoints")) {
+				SubVicrotyPointsFromSetOfValue eff = (SubVicrotyPointsFromSetOfValue) game.getExcommunicationDeck()
+						.get(2).getEffect();
+				int subValue = (player.getMyValues().getVictoryPoints().getQuantity())
+						/ (eff.getSetForSub().getVictoryPoints().getQuantity());
+				player.getMyValues().getVictoryPoints().subQuantity(subValue);
+			}
+			if (player.hasLastExcommunication() && finalExcommunication.equalsIgnoreCase("subResourcesPoints")) {
+				player.getMyValues().getVictoryPoints().subQuantity(player.getMyValues().numberResources());
+			}
+			if (player.hasLastExcommunication() && finalExcommunication.equalsIgnoreCase("subCostBuildings")) {
+				int quantityVictoryPoints = 0;
+				for (Development d : player.getMyBoard().getPersonalBuildings().getCards()) {
+					Buildings b = (Buildings) d;
+					if (game.getExcommunicationDeck().get(2).getEffect().getName().equals("subCostBuildings")) {
+						SubVicrotyPointsFromSetOfValue eff = (SubVicrotyPointsFromSetOfValue) game
+								.getExcommunicationDeck().get(2).getEffect();
+						if (eff.getSetForSub().getCoins().getQuantity() != 0) {
+							quantityVictoryPoints += b.getCost().getCoins().getQuantity();
+						}
+						if (eff.getSetForSub().getWoods().getQuantity() != 0) {
+							quantityVictoryPoints += b.getCost().getWoods().getQuantity();
+						}
+						if (eff.getSetForSub().getStones().getQuantity() != 0) {
+							quantityVictoryPoints += b.getCost().getStones().getQuantity();
+						}
+						if (eff.getSetForSub().getServants().getQuantity() != 0) {
+							quantityVictoryPoints += b.getCost().getServants().getQuantity();
+						}
+					}
+				}
+				player.getMyValues().getVictoryPoints().subQuantity(quantityVictoryPoints);
+			}
+			if (player.hasLastExcommunication() && finalExcommunication.equalsIgnoreCase("subMilitaryPoints")) {
+				player.getMyValues().getVictoryPoints()
+						.subQuantity(player.getMyValues().getMilitaryPoints().getQuantity());
+			}
+		}
 	}
 
 	/**
@@ -357,8 +403,14 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	// SEND METHODS
 	/** This method sends to the clients the turn array to be updated */
 	private void sendTurnArray(List<Player> turnArray) {
+		List<String> turnNames = new ArrayList<String>();
+
+		for (Player p : turnArray) {
+			turnNames.add(p.getMyName());
+		}
+
 		hashMap = new HashMap<>();
-		hashMap.put("Turns", turnArray);
+		hashMap.put("Turns", turnNames);
 		notifyMyObservers(hashMap);
 	}
 
@@ -366,7 +418,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 		hashMap = new HashMap<>();
 
-		hashMap.put("currentPlayer", this.currentPlayer);
+		hashMap.put("currentPlayer", this.currentPlayer.getMyName());
 
 		notifyMyObservers(hashMap);
 
@@ -395,7 +447,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					answer = handleRequestFromClient((Map<String, Object>) change);
 					System.out.println("--------------" + answer);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
@@ -420,7 +471,10 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 		if (command.contains("player")) {
 			System.out.println("Controller --> Ricevuto un giocatore");
-			return handlePlayer(request);
+			String name = (String) request.get("player");
+			game.setTempName(name);
+			game.addPlayer();
+			return "player connected";
 
 		}
 
@@ -442,6 +496,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				incorrenctActionHandling(answer);
 
 			} else {
+				t1.cancel();
 				correctActionExecute();
 			}
 		}
@@ -455,11 +510,14 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			}
 			return "parameters updated";
 
-		} else if (command.contains("sale")) {
+		} else if (command.contains("answerForsale")) {
 			System.out.println("Controller --> Ricevuta la scelta di uno dei due sconti sul prezzo ");
-			SetOfValues setOfSales = (SetOfValues) request.get("sale");
+			String setOfSales = (String) request.get("answerForsale");
 			synchronized (waitingForSalesChoice) {
-				this.saleForPermanentEffect = setOfSales;
+				if (setOfSales.equals("2")) {
+					this.saleForPermanentEffect = alternativeSale;
+				}
+				saleChosen = true;
 				waitingForSalesChoice.notify();
 			}
 			return "sale chosen";
@@ -524,24 +582,25 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				CouncilPrivilege leaderDiscardCouncilPrivilege = new CouncilPrivilege("council", 1);
 				askAndWaitForParameters(leaderDiscardCouncilPrivilege);
 				leaderDiscardCouncilPrivilege.giveImmediateEffect(currentPlayer);
-				game.sendModel();
+				currentPlayer.getMyBoard().getPersonalLeader().remove(index);
+				sendPersonalInformation();
 				awakenSleepingClient();
 			}
 		}
 
 	}
 
-	private String verifyAvailabilityLeader(int index, String feedback) {
+	public String verifyAvailabilityLeader(int index, String feedback) {
 		if (currentPlayer.getMyBoard().getPersonalLeader().get(index).isInUse()) {
 			return feedback + "This card is already in use\n";
 		}
 		return feedback;
 	}
 
-	private String verifyRequirementsLeader(int index, String feedback) {
+	public String verifyRequirementsLeader(int index, String feedback) {
 		Requirements requirements = currentPlayer.getMyBoard().getPersonalLeader().get(index).getRequirements();
-		if (!leaderOneTimePerTurn.isEmpty()) {
-			for (Leader card : leaderOneTimePerTurn) {
+		if (!currentPlayer.getLeaderOneTimePerTurn().isEmpty()) {
+			for (Leader card : currentPlayer.getLeaderOneTimePerTurn()) {
 				if (currentPlayer.getMyBoard().getPersonalLeader().get(index).getName().equals(card.getName())) {
 					return feedback;
 				}
@@ -550,8 +609,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		if (verifyLeaderExclusiveRequirement(index)) {
 			return feedback;
 		}
-		if (!requirements.getRequirementSetOfVaue().isEmpty()
-				&& !currentPlayer.getMyValues().doIHaveThisSet(requirements.getRequirementSetOfVaue())) {
+		if (!requirements.getRequirementSetOfValues().isEmpty()
+				&& !currentPlayer.getMyValues().doIHaveThisSet(requirements.getRequirementSetOfValues())) {
 			feedback = feedback + "You don't have enough resources to activate this card!\n";
 		}
 		if (requirements.getRequirmentTerritories() != 0 && currentPlayer.getMyBoard().getPersonalTerritories()
@@ -560,7 +619,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		}
 		if (requirements.getRequirmentCharacters() != 0 && currentPlayer.getMyBoard().getPersonalCharacters().getCards()
 				.size() < requirements.getRequirmentCharacters()) {
-			return feedback + "You don't have enough Characters to activate this card!\n";
+			feedback = feedback + "You don't have enough Characters to activate this card!\n";
 		}
 		if (requirements.getRequirmentBuildings() != 0 && currentPlayer.getMyBoard().getPersonalBuildings().getCards()
 				.size() < requirements.getRequirmentBuildings()) {
@@ -576,13 +635,13 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	public boolean verifyLeaderExclusiveRequirement(int index) {
 		Requirements requirements = currentPlayer.getMyBoard().getPersonalLeader().get(index).getRequirements();
 		if (currentPlayer.getMyBoard().getPersonalLeader().get(index).getName().equalsIgnoreCase("Lucrezia Borgia")) {
-			return (currentPlayer.getMyBoard().getPersonalTerritories().getCards().size() < requirements
+			return (currentPlayer.getMyBoard().getPersonalTerritories().getCards().size() >= requirements
 					.getRequirmentTerritories()
-					|| currentPlayer.getMyBoard().getPersonalCharacters().getCards().size() < requirements
+					|| currentPlayer.getMyBoard().getPersonalCharacters().getCards().size() >= requirements
 							.getRequirmentCharacters()
-					|| currentPlayer.getMyBoard().getPersonalBuildings().getCards().size() < requirements
+					|| currentPlayer.getMyBoard().getPersonalBuildings().getCards().size() >= requirements
 							.getRequirmentBuildings()
-					|| currentPlayer.getMyBoard().getPersonalVentures().getCards().size() < requirements
+					|| currentPlayer.getMyBoard().getPersonalVentures().getCards().size() >= requirements
 							.getRequirmentVentures());
 
 		} else {
@@ -616,28 +675,9 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	 * 
 	 * @return true if player have requirements, false otherwise.
 	 */
-	private boolean verifyRequiremetsExcommunication() {
+	public boolean verifyRequiremetsExcommunication() {
 		return game.getExcommunicationDeck().get(cardsIndex / 2).getRequiremetsForExcommunication()
 				.getQuantity() <= currentPlayer.getMyValues().getFaithPoints().getQuantity();
-	}
-
-	private String handlePlayer(Map<String, Object> request) {
-		System.out.println("Controller --> Sto gestendo un giocatore");
-		String playerString = (String) request.get("player");
-		System.out.println(playerString);
-		StringTokenizer tokenizer = new StringTokenizer(playerString);
-		String clientNumber = tokenizer.nextToken();
-		String name = tokenizer.nextToken();
-		int indexOfPlayer = Integer.parseInt(clientNumber) - 1;
-
-		Player tempPlayer = game.getPlayers().get(indexOfPlayer);
-
-		tempPlayer.setMyName(name);
-
-		game.sendModel();
-		System.out.println("player " + clientNumber + " updated");
-		return "player " + clientNumber + " updated";
-
 	}
 
 	private void handleAction(Map<String, Object> request) {
@@ -660,19 +700,20 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 			askForSale(pe);
 			synchronized (waitingForSalesChoice) {
-				while (saleForPermanentEffect.equals(new SetOfValues())) {
+				saleChosen = false;
+				while (!saleChosen) {
 					try {
 						waitingForSalesChoice.wait();
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
+						Thread.currentThread().interrupt();
 
 					}
 				}
 			}
 
 		}
-		
+
 		if (tempZone.equalsIgnoreCase("ventures")) {
 
 			handleVentures(tempZone, tempFloor);
@@ -684,13 +725,19 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	private void askForSale(IncreaseDieValueCard pe) {
+		saleForPermanentEffect = pe.getSale();
+		alternativeSale = pe.getAlternativeSale();
+		String sale1 = pe.getSale().toString();
+		String sale2 = pe.getAlternativeSale().toString();
+		String request = sale1 + "\n" + sale2;
 		hashMap = new HashMap<>();
-		hashMap.put("sale", pe);
-		notifyMyObservers(hashMap);
+		hashMap.put("sale", request);
+		sendToCurrentPlayer(hashMap);
 
 	}
 
 	private String verifyAction(Action action2) {
+		System.out.println(currentPlayer.getMyValues());
 		System.out.println("Controller --> Sto verificando ed eseguendo un'azione ");
 		String responseToActionVerify = action.verify();
 		return responseToActionVerify;
@@ -701,7 +748,23 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		List<ImmediateEffect> interactiveEffects = action.run();
 		this.handleInteractiveEffects(interactiveEffects);
 		System.out.println("Controller --> Conclusa gestione dei costi interattivi ");
+		checkForExcommunication();
+		notifyToProceedWithTurns();
 
+		sendBoardInformation();
+		sendPersonalInformationToEveryOne();
+		awakenSleepingClient();
+		System.out.println("Controller --> Richiesta di risveglio inviata");
+
+	}
+
+
+	/**
+	 * This method ask to the player if they want to support the Vatican. If it's
+	 * the last turn the Excommunication is automatically assigned according to the
+	 * requirements.
+	 */
+	public void checkForExcommunication() {
 		if ((cardsIndex == 1 || cardsIndex == 3) && (currentPlayer.getMyFamily().isEmpty())) {
 			if (verifyRequiremetsExcommunication()) {
 				askForSupportVatican();
@@ -711,11 +774,11 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 						.add(game.getExcommunicationDeck().get(cardsIndex / 2).getPermanentEffect());
 			}
 		}
-		notifyToProceedWithTurns();
-		game.sendModel();
-		awakenSleepingClient();
-		System.out.println("Controller --> Richiesta di risveglio inviata");
 
+		if ((cardsIndex == 5) && (!verifyRequiremetsExcommunication()) && (currentPlayer.getMyFamily().isEmpty())) {
+			currentPlayer.setLastExcommunication(true);
+			sendProblemsToCurrentPlayer("You don't have enough faith points so you have been excommunicated.");
+		}
 	}
 
 	private void assignLeaderEffects(int index) {
@@ -734,11 +797,12 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		if (card.getPermanentEffectLeader() != null) {
 			currentPlayer.getActivePermanentEffects().add(card.getPermanentEffectLeader());
 		}
-		if (card.isOneTimePerTurn() && !leaderOneTimePerTurn.contains(card)) {
-			leaderOneTimePerTurn.add(card);
+
+		if (card.isOneTimePerTurn() && !currentPlayer.getLeaderOneTimePerTurn().contains(card)) {
+			currentPlayer.getLeaderOneTimePerTurn().add(card);
 		}
 		game.changeInDieValue(currentPlayer);
-		game.sendModel();
+		sendPersonalInformation();
 		awakenSleepingClient();
 		System.out.println("Controller --> Richiesta di risveglio inviata");
 	}
@@ -746,7 +810,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	private void askForSupportVatican() {
 		hashMap = new HashMap<>();
 		hashMap.put("vatican", null);
-		notifyMyObservers(hashMap);
+		sendToCurrentPlayer(hashMap);
 
 		vaticanChosen = false;
 		synchronized (waitingForVaticanChoice) {
@@ -754,8 +818,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				try {
 					waitingForVaticanChoice.wait();
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
+					Thread.currentThread().interrupt();
 				}
 			}
 		}
@@ -768,9 +832,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		List<ImmediateEffect> interactiveEffects = action.run();
 		this.handleInteractiveEffects(interactiveEffects);
 		System.out.println("Controller --> Conclusa gestione dei costi interattivi ");
-		game.sendModel();
-		// awakenSleepingClient();
-		// System.out.println("Controller --> Richiesta di risveglio inviata");
+		sendBoardInformation();
+		sendPersonalInformation();
 
 	}
 
@@ -825,7 +888,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			int i = 0;
 
 			for (ImmediateEffect effect : interactiveEffects) {
-				game.sendModel();
+				sendBoardInformation();
+				sendPersonalInformationToEveryOne();
 				i++;
 				System.out.println("Controller --> Gestendo l'effetto specifico #" + i + "of "
 						+ interactiveEffects.size() + ": " + effect);
@@ -918,8 +982,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					try {
 						waitingForParametersChoose.wait();
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
+						Thread.currentThread().interrupt();
 					}
 				}
 
@@ -941,7 +1005,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	// increase.getAlternativeSale()
 
 	private IncreaseDieValueCard PermanentEffectWithAlternativeSale(IncreaseDieValueCard pe) {
-		if (pe.getAlternativeSale() != null) {
+		if (pe != null && pe.getAlternativeSale() != null) {
 			return pe;
 		}
 		return null;
@@ -963,46 +1027,46 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		TowerPlace placeRequested = (TowerPlace) this.game.getBoard().getZoneFromString(tempZone)
 				.getPlaceFromStringOrFirstIfZero(tempFloor);
 		Ventures cardRequested = (Ventures) placeRequested.getCorrespondingCard();
-		SetOfValues cost1 = cardRequested.getCost();
-		SetOfValues cost2 = cardRequested.getAlternativeCost();
-		if (cost1 != null && cost2 != null) {
-			System.out.println("Controller --> C'è un doppio costo, invio l'interazione ");
-			MilitaryPoint requirements = cardRequested.getRequiredMilitaryPoints();
-			String request = "Cost1: " + cost1.toString() + "\nCost2: " + cost2.toString() + "\nRequest for cost2 :"
-					+ requirements.toString();
-			hashMap = new HashMap<>();
-			hashMap.put("doubleCost", request);
+		if (cardRequested != null) {
+			SetOfValues cost1 = cardRequested.getCost();
+			SetOfValues cost2 = cardRequested.getAlternativeCost();
+			if (cost1 != null && cost2 != null) {
+				System.out.println("Controller --> C'è un doppio costo, invio l'interazione ");
+				MilitaryPoint requirements = cardRequested.getRequiredMilitaryPoints();
+				String request = "Cost1: " + cost1.toString() + "\nCost2: " + cost2.toString() + "\nRequest for cost2 :"
+						+ requirements.toString();
+				hashMap = new HashMap<>();
+				hashMap.put("doubleCost", request);
 
-			sendToCurrentPlayer(hashMap);
-			System.out.println(
-					"Controller --> Inviando la richiesta di scelta costo, mi metto in attesa della risposta  ");
+				sendToCurrentPlayer(hashMap);
+				System.out.println(
+						"Controller --> Inviando la richiesta di scelta costo, mi metto in attesa della risposta  ");
 
-			this.tempCostString = new String();
-			synchronized (tempCostWaiting) {
-				while (this.tempCostString.equals(new String())) {
-					try {
-						tempCostWaiting.wait();
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+				this.tempCostString = new String();
+				synchronized (tempCostWaiting) {
+					while (this.tempCostString.equals(new String())) {
+						try {
+							tempCostWaiting.wait();
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+							Thread.currentThread().interrupt();
 
-						Thread.currentThread().interrupt();
-
+						}
 					}
 				}
 
+				if (this.tempCostString.equals("1")) {
+					tempCost = cost1;
+
+
+				} else {
+					tempCost = cost2;
+				}
+
+				System.out.println("Controller --> L'utente ha scelto, mi sono risvegliato ");
+				System.out.println("Controller --> SCELTA DELL UTENTE: " + tempCost);
+
 			}
-
-			if (this.tempCostString.equals("1")) {
-				tempCost = cost1;
-
-			} else {
-				tempCost = cost2;
-			}
-
-			System.out.println("Controller --> L'utente ha scelto, mi sono risvegliato ");
-			System.out.println("Controller --> SCELTA DELL UTENTE: " + tempCost);
-
 		}
 		System.out.println("Controller --> Fine gestione carta Venture ");
 	}
@@ -1026,6 +1090,11 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	public void setPlayerTurn(List<Player> playerTurn) {
 		this.playerTurn = playerTurn;
+	}
+
+	// only used in tests
+	public void setCurrentPlayer(Player currentPlayer) {
+		this.currentPlayer = currentPlayer;
 	}
 
 }

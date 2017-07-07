@@ -8,20 +8,20 @@ import java.util.*;
 import com.google.gson.Gson;
 
 import it.polimi.ingsw.GC_24.devCardJsonFile.GsonBuilders;
-import it.polimi.ingsw.GC_24.model.effects.CouncilPrivilege;
-import it.polimi.ingsw.GC_24.model.effects.ImmediateEffect;
-import it.polimi.ingsw.GC_24.model.effects.ValueEffect;
+import it.polimi.ingsw.GC_24.model.effects.immediate.CouncilPrivilege;
+import it.polimi.ingsw.GC_24.model.effects.immediate.ImmediateEffect;
+import it.polimi.ingsw.GC_24.model.effects.immediate.ValueEffect;
 import it.polimi.ingsw.GC_24.model.places.MarketPlace;
 import it.polimi.ingsw.GC_24.model.places.Place;
 
 public class Market extends Area {
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2905959753632826514L;
 	private boolean placesLocked;
-	/** Place from 3 players*/
+	/** Place from 3 players */
 	private static final int MAXPLACES = 4;
 	private static final int COSTDICE = 1;
 	private List<ImmediateEffect> valueListMarket = new ArrayList<>();
@@ -32,8 +32,10 @@ public class Market extends Area {
 		this.placesArray = createMarket();
 	}
 
+	/**
+	 * @return arrayList of empty MarketPlaces needed for Market
+	 */
 	public ArrayList<Place> createMarket() throws IOException {
-		int numPlaces;
 		BufferedReader br;
 		int indexEffectMarket = 0; // Is an index to take two effect per place
 
@@ -59,7 +61,7 @@ public class Market extends Area {
 		for (int num = 0; num < MAXPLACES; num++) {
 			placesArray.add(new MarketPlace((ValueEffect) valueListMarket.get(indexEffectMarket++),
 					valueListMarket.get(indexEffectMarket++), COSTDICE));
-			if (placesLocked && num>1){
+			if (placesLocked && num > 1) {
 				placesArray.get(num).setAvailable(false);
 			}
 		}
@@ -91,5 +93,4 @@ public class Market extends Area {
 		}
 		return builder.toString();
 	}
-
 }
