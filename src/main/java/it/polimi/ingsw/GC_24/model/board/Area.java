@@ -15,9 +15,9 @@ public abstract class Area implements java.io.Serializable {
 
 	/**
 	 * @param familyMember
-	 * @return true if in the zone you're trying to put your family
-	 * member in there's already a family member of the same Player. It returns directly false if you're
-	 * trying to put a neutral family member
+	 * @return true if in the zone you're trying to put your family member in
+	 *         there's already a family member of the same Player. It returns
+	 *         directly false if you're trying to put a neutral family member
 	 */
 	public boolean isThereSameColour(FamilyMember familyMember) {
 		PlayerColour colour = familyMember.getPlayerColour();
@@ -64,29 +64,18 @@ public abstract class Area implements java.io.Serializable {
 	 *         than zero, else it returns the first empty space available
 	 */
 	public Place getPlaceFromStringOrFirstIfZero(String place) {
-		System.out.println(
-				"Controller --> (Dentro getPlaceFromStringOrFirstIfZero) Controllo il place che mi hai inviato ");
+
 		if (!place.equals("0")) {
 
-			System.out.println("Controller --> (Dentro getPlaceFromStringOrFirstIfZero) Il place è diverso da 0");
-
 			int i = Integer.parseInt(place);
-			System.out
-					.println("Controller --> (Dentro getPlaceFromStringOrFirstIfZero) Place trasformato in un intero");
 			if (placesArray.size() < i) {
 
-				System.out.println(
-						"Controller --> (Dentro getPlaceFromStringOrFirstIfZero) l'array non è abbastanza grande per il posto scelto da te ");
 				return null;
 			} else {
-				System.out.println(
-						"Controller --> (Dentro getPlaceFromStringOrFirstIfZero) La tua richiesta è adeguata, ritorno il posto corrispondente");
 
 				return placesArray.get(i - 1);
 			}
 		} else {
-			System.out.println(
-					"Controller -->(Dentro getPlaceFromStringOrFirstIfZero) Ricevuto un posto nullo, quindi vuoi il primo posto libero");
 			return this.getFirstEmptyPlace();
 		}
 
