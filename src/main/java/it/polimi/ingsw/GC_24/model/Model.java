@@ -38,7 +38,7 @@ public class Model extends MyObservable implements Serializable {
 	private List<SetOfValues> correspondingValue = new ArrayList<>();
 
 	private int modelNumber;
-	
+
 	private String tempName;
 
 	private boolean isAcceptingPlayers = true;
@@ -92,39 +92,39 @@ public class Model extends MyObservable implements Serializable {
 	}
 
 	public void addPlayer() {
-		
-			counter++;
-			System.out.println("Model --> Contatore incrementato");
-			Player player = new Player(tempName, counter);
-			this.getPlayers().add(player);
-			System.out.println("Model: PLAYER " + player);
-			System.out.println("Model: Player #" + counter + "added to Game #" + getModelNumber());
 
-			incrementState();
-			System.out.println("Model --> stato incrementato");
-			System.out.println(getGameState());
-			System.out.println("Model --> model inviato");
+		counter++;
+		System.out.println("Model --> Contatore incrementato");
+		Player player = new Player(tempName, counter);
+		this.getPlayers().add(player);
+		System.out.println("Model: PLAYER " + player);
+		System.out.println("Model: Player #" + counter + "added to Game #" + getModelNumber());
 
-			if (getGameState().equals(State.WAITINGFORPLAYERTHREE)) {
-				System.out.println("Model: Timer Starting");
-				timer = new Timer();
-				timer.schedule(new TimerTask() {
-					@Override
-					public void run() {
-						System.out.println("Model: *TIME UP*");
+		incrementState();
+		System.out.println("Model --> stato incrementato");
+		System.out.println(getGameState());
+		System.out.println("Model --> model inviato");
 
-						Server.launchAndCreateNewGame();
-					}
+		if (getGameState().equals(State.WAITINGFORPLAYERTHREE)) {
+			System.out.println("Model: Timer Starting");
+			timer = new Timer();
+			timer.schedule(new TimerTask() {
+				@Override
+				public void run() {
+					System.out.println("Model: *TIME UP*");
 
-				}, 15000);
-			}
+					Server.launchAndCreateNewGame();
+				}
 
-			if (getGameState().equals(State.RUNNING)) {
+			}, 15000);
+		}
 
-				timer.cancel();
-				Server.launchAndCreateNewGame();
+		if (getGameState().equals(State.RUNNING)) {
 
-			}	
+			timer.cancel();
+			Server.launchAndCreateNewGame();
+
+		}
 	}
 
 	/**
@@ -132,26 +132,23 @@ public class Model extends MyObservable implements Serializable {
 	 * so the game could start
 	 */
 	public void setModel(List<Player> players) {
-System.out.println("**FLAG1**");
+
 		this.players = players;
 		this.board = new Board(players.size());
 		this.currentPlayer = players.get(0);
 		this.setGameState(State.RUNNING);
 		this.cards = new Deck();
 		this.dice = new SetOfDice();
-		System.out.println("**FLAG2**");
+
 		this.dice.reset();
-		System.out.println("**FLAG2A**");
+
 		dealLeaders(cards.getDeckLeaders(), players);
-		System.out.println("**FLAG2B**");
+
 		getCorrespondingValueFromFile();
-		System.out.println("**FLAG2C**");
+
 		createExcommunicationDeck();
 
-		System.out.println("**FLAG2D**");
 		System.out.println(this.excommunicationDeck);
-		System.out.println("**FLAG2E**");
-		System.out.println("**FLAG3**");
 
 		// Setting the players
 		for (Player p : players) {
@@ -167,17 +164,16 @@ System.out.println("**FLAG1**");
 		this.dice.reset();
 		for (Player p : players) {
 			p.getMyFamily().setFamily(this.dice);
-		//	changeInDieValue(p);
+			// changeInDieValue(p);
 		}
 	}
-
 
 	/**
 	 * This method checks if some leader cards that change the family members' die
 	 * value are active in the player, and in that case changes them
 	 */
 	public void changeInDieValue(Player player) {
-		
+
 		if (player.getPermanentEffect("setDiceValue") != null) {
 			IncreaseDieValueActivity pe = (IncreaseDieValueActivity) player.getPermanentEffect("setDiceValue");
 			int value = pe.getIncreaseDieValue();
@@ -203,21 +199,23 @@ System.out.println("**FLAG1**");
 		if (player.getPermanentEffect("increaseValueNeutralFamilyMember") != null) {
 			player.getMyFamily().getMember4().setMemberValue(player.getMyFamily().getMember4().getMemberValue() + 3);
 		}
-		
-		for (PermanentEffect p:player.getPermanentEffectList("increaseDieValueFamiliar")) {
+
+		for (PermanentEffect p : player.getPermanentEffectList("increaseDieValueFamiliar")) {
 			IncreaseDieValueActivity pe1 = (IncreaseDieValueActivity) p;
 			int value = pe1.getIncreaseDieValue();
-			player.getMyFamily().getMember1().setMemberValue(player.getMyFamily().getMember1().getMemberValue() + value);
-			player.getMyFamily().getMember2().setMemberValue(player.getMyFamily().getMember2().getMemberValue() + value);
-			player.getMyFamily().getMember3().setMemberValue(player.getMyFamily().getMember3().getMemberValue() + value);
+			player.getMyFamily().getMember1()
+					.setMemberValue(player.getMyFamily().getMember1().getMemberValue() + value);
+			player.getMyFamily().getMember2()
+					.setMemberValue(player.getMyFamily().getMember2().getMemberValue() + value);
+			player.getMyFamily().getMember3()
+					.setMemberValue(player.getMyFamily().getMember3().getMemberValue() + value);
 		}
-		
+
 	}
 
 	public void incrementState() {
 		this.setGameState(this.getGameState().nextState());
 	}
-
 
 	/**
 	 * This methods prepare the board situation before sending it to the client -->
@@ -235,8 +233,6 @@ System.out.println("**FLAG1**");
 		boardInformation[7] = board.getCouncilPalace().toString();
 		return boardInformation;
 	}
-	
-
 
 	/**
 	 * This methods prepare the personal information situation before sending it to
@@ -270,20 +266,17 @@ System.out.println("**FLAG1**");
 	private void dealLeaders(List<Leader> leaderDeck, List<Player> players) {
 		Random random = new Random();
 
-		
-		System.out.println("##FLAG1##");
-	//	int num = (leaderDeck.size() / players.size());
+		// int num = (leaderDeck.size() / players.size());
 		for (Player p : players) {
-			System.out.println("##FLAG2##");
+
 			for (int i = 0; i < 4; i++) {
-				System.out.println("##FLAG3##");
 
 				int position = random.nextInt(leaderDeck.size());
-				System.out.println("##FLAG4##");
+
 				p.getMyBoard().getPersonalLeader().add(leaderDeck.get(position));
-				System.out.println("##FLAG5##");
+
 				leaderDeck.remove(position);
-				System.out.println("##FLAG6##");
+
 			}
 		}
 	}
