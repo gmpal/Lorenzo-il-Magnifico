@@ -1,6 +1,7 @@
 package it.polimi.ingsw.GC_24.modeltest.effectstest;
 
 import static org.junit.Assert.assertEquals;
+
 import org.junit.Before;
 import org.junit.Test;
 import it.polimi.ingsw.GC_24.model.Player;
