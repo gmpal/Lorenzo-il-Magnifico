@@ -18,10 +18,13 @@
             <Label text="Lorenzo il Magnifico" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="Algerian" size="33.0" />
-               </font></Label>
+               </font>
+               <padding>
+                  <Insets top="20.0" />
+               </padding></Label>
             <Label alignment="CENTER" text="Insert your name" textFill="#ffebb7">
                <font>
-                  <Font name="System Bold" size="16.0" />
+                  <Font name="System Bold" size="23.0" />
                </font></Label>
             <TextField fx:id="nameTextField" prefHeight="31.0" prefWidth="212.0" promptText="Insert your name here">
                <VBox.margin>
@@ -34,7 +37,7 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <Label fx:id="nameLabel" textFill="#00ffe1">
+                  <Label fx:id="nameLabel" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -50,7 +53,7 @@
                <children>
                   <VBox prefHeight="100.0" prefWidth="200.0" spacing="30.0">
                      <children>
-                        <RadioButton fx:id="networkSocket" mnemonicParsing="false" text="Socket" textFill="#ffebb7">
+                        <RadioButton fx:id="networkSocket" mnemonicParsing="false" text="SOCKET" textFill="#ffebb7">
                            <toggleGroup>
                               <ToggleGroup fx:id="networkGroup" />
                            </toggleGroup>
