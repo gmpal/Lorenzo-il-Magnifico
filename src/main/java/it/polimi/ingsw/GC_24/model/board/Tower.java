@@ -19,8 +19,7 @@ import it.polimi.ingsw.GC_24.model.places.Place;
 import it.polimi.ingsw.GC_24.model.places.TowerPlace;
 
 public class Tower extends Area {
-	
-	
+
 	/**
 	 * 
 	 */
@@ -35,10 +34,9 @@ public class Tower extends Area {
 
 	/**
 	 * Inserts empty TowerPlaces in Tower from the bottom to the top. In every
-	 * TowerPlaces there are a ValueEffect and a CouncilPrivilegeEffect,
-	 * eventually set to null. These effects are loading from a configuration
-	 * file named actionValueTower that contains a ValueEffect and a
-	 * ImmediateEffect per place.
+	 * TowerPlaces there are a ValueEffect and a CouncilPrivilegeEffect, eventually
+	 * set to null. These effects are loading from a configuration file named
+	 * actionValueTower that contains a ValueEffect and a ImmediateEffect per place.
 	 * 
 	 * @param string
 	 */
@@ -73,6 +71,11 @@ public class Tower extends Area {
 		return placesArray;
 	}
 
+	/**
+	 * puts the card in the first empty space of the tower's arrayList
+	 * 
+	 * @param card
+	 */
 	public void putCardInFirstEmptyPlace(Development card) {
 		for (Place p : this.getPlacesArray()) {
 			TowerPlace tempPlace = (TowerPlace) p;
@@ -92,7 +95,8 @@ public class Tower extends Area {
 					builder.append("\n\tValue you get from place = " + p.getValue());
 				}
 			} else {
-				builder.append("\n[Card already taken by the " + p.getFamMemberOnPlace().getPlayerColour() + " player]");
+				builder.append(
+						"\n[Card already taken by the " + p.getFamMemberOnPlace().getPlayerColour() + " player]");
 			}
 			builder.append("\n");
 		}

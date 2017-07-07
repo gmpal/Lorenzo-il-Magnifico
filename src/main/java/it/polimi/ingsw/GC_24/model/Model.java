@@ -9,7 +9,6 @@ import java.util.*;
 import it.polimi.ingsw.GC_24.devCardJsonFile.GsonBuilders;
 import it.polimi.ingsw.GC_24.model.board.Board;
 import it.polimi.ingsw.GC_24.model.cards.Deck;
-import it.polimi.ingsw.GC_24.model.cards.Excommunication;
 import it.polimi.ingsw.GC_24.model.cards.Leader;
 import it.polimi.ingsw.GC_24.model.dice.SetOfDice;
 import it.polimi.ingsw.GC_24.model.effects.permanent.IncreaseDieValueActivity;

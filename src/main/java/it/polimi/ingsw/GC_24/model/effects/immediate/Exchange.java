@@ -85,7 +85,7 @@ public class Exchange extends ImmediateEffect {
 		secondaryInteractiveEffects.addAll(getImmediateEffectsFromExchange());
 		return secondaryInteractiveEffects;
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -130,5 +130,4 @@ public class Exchange extends ImmediateEffect {
 	public void setFinalExchange(ExchangePackage finalExchange) {
 		this.finalExchange = finalExchange;
 	}
-
 }

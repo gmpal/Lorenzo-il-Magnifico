@@ -19,7 +19,7 @@ public class TestDeck {
 	Player p1, p2;
 	Model game;
 	List<Player> players;
-	
+
 	@Before
 	public void setUp() {
 		players = new ArrayList<>();
@@ -29,14 +29,14 @@ public class TestDeck {
 		players.add(p2);
 		game = new Model(1);
 		game.setModel(players);
-		d=new Deck();
+		d = new Deck();
 	}
-	
+
 	@Test
 	public void testDealCards() {
 		d.dealCards(game.getBoard(), 1);
-		TowerPlace t=(TowerPlace) game.getBoard().getTowerTerritories().getPlacesArray().get(0);
-		assertTrue(t.getCorrespondingCard()!=null);
+		TowerPlace t = (TowerPlace) game.getBoard().getTowerTerritories().getPlacesArray().get(0);
+		assertTrue(t.getCorrespondingCard() != null);
 	}
 
 }

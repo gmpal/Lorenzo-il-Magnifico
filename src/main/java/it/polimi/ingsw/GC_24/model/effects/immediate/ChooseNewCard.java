@@ -1,15 +1,18 @@
 package it.polimi.ingsw.GC_24.model.effects.immediate;
 
 import java.util.HashMap;
-import java.util.List;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.places.TowerPlace;
 import it.polimi.ingsw.GC_24.model.values.SetOfValues;
 
-/**This effects lets the player choose another card of ONE or MULTI colours, with a specific minimum value.
- * It's exactly like putting a familyMember: the player has to pay 3 coins if the tower is occupied,
- * receives the immediateEffect if the place has it, can increase the value with servants */
+/**
+ * This effects lets the player choose another card of ONE or MULTI colours,
+ * with a specific minimum value. It's exactly like putting a familyMember: the
+ * player has to pay 3 coins if the tower is occupied, receives the
+ * immediateEffect if the place has it, can increase the value with servants
+ */
 public class ChooseNewCard extends ImmediateEffect {
+
 	/**
 	 * 
 	 */
@@ -26,8 +29,8 @@ public class ChooseNewCard extends ImmediateEffect {
 		this.dieValue = dieValue;
 		this.setSetOfValue(setOfValue);
 	}
-	
-	//useful methods
+
+	// useful methods
 
 	public void assignParameters(TowerPlace towerPlace) {
 		setTowerPlace(towerPlace);
@@ -35,31 +38,34 @@ public class ChooseNewCard extends ImmediateEffect {
 
 	@Override
 	public void giveImmediateEffect(Player player) {
-	//This method is handled differently and doesn't do anything 
+		// This method is handled differently and doesn't do anything
 		System.out.println("No immediate effect to give here");
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append( "Choose New Card:" );
-		if (type!=null){
+		builder.append("Choose New Card:");
+		if (type != null) {
 			builder.append(" You can take a " + type + " card with die value " + dieValue);
-		}else
+		} else
 			builder.append(" You can take a card of any type with die value " + dieValue);
-		if (setOfValue!=null){
+		if (setOfValue != null) {
 			builder.append(" and you have an extra discount on the card's price of " + setOfValue);
 		}
 		return builder.toString();
 	}
 
-	/*Not necessary methods, but better than choosing with if...
-	 * CHOOSE NEW CARD EFFECT IS HANDLED DIFFERENTLY*/
+	/*
+	 * Not necessary methods, but better than choosing with if... CHOOSE NEW CARD
+	 * EFFECT IS HANDLED DIFFERENTLY
+	 */
 	@Override
 	public String generateParametersRequest() {
-		if (type == null){
+		if (type == null) {
 			return "everyTower";
-		} else return type;
+		} else
+			return type;
 	}
 
 	@Override

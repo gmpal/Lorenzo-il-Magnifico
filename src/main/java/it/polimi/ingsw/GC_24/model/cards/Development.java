@@ -1,12 +1,10 @@
 package it.polimi.ingsw.GC_24.model.cards;
 
-import it.polimi.ingsw.GC_24.model.effects.*;
 import it.polimi.ingsw.GC_24.model.effects.immediate.ImmediateEffect;
 import it.polimi.ingsw.GC_24.model.personalboard.PersonalBoard;
 import it.polimi.ingsw.GC_24.model.values.SetOfValues;
 
 public abstract class Development extends Card {
-
 
 	/**
 	 * 
@@ -19,9 +17,9 @@ public abstract class Development extends Card {
 	private int round;
 
 	// constructor
-	public Development(String name, String type, SetOfValues cost, ImmediateEffect immediateEffects,
+	public Development(String name, String url, String type, SetOfValues cost, ImmediateEffect immediateEffects,
 			ImmediateEffect immediateEffects1, int round) {
-		super(name);
+		super(name, url);
 		this.type = type;
 		this.cost = cost;
 		this.immediateEffects = immediateEffects;
@@ -29,12 +27,13 @@ public abstract class Development extends Card {
 		this.setImmediateEffect1(immediateEffects1);
 	}
 
-	/** add the card to the right ArrayList on the personal board*/
-	public abstract void setCardOnPersonalBoard(PersonalBoard personalBoard); // redefined
-																				// in
-																				// every
-																				// subclass
-	
+	/**
+	 * adds the card to the right ArrayList on the personal board
+	 * 
+	 * @param personalBoard
+	 */
+	public abstract void setCardOnPersonalBoard(PersonalBoard personalBoard);
+
 	// getter and setters
 	public SetOfValues getCost() {
 		return cost;

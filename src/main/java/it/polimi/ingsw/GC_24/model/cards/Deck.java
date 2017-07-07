@@ -10,7 +10,8 @@ import java.util.Random;
 import com.google.gson.Gson;
 import it.polimi.ingsw.GC_24.devCardJsonFile.GsonBuilders;
 import it.polimi.ingsw.GC_24.model.board.Board;
-import it.polimi.ingsw.GC_24.model.places.*;;
+import it.polimi.ingsw.GC_24.model.places.*;
+import it.polimi.ingsw.GC_24.model.values.SetOfValues;;
 
 public class Deck implements Serializable {
 
@@ -42,7 +43,11 @@ public class Deck implements Serializable {
 		}
 	}
 
-	/** creates 4 deck arrayList from 4 different file with Json */
+	/**
+	 * creates 4 deck arrayList from 4 different file with Json
+	 * 
+	 * @throws IOException
+	 */
 	public void createDeck() throws IOException {
 		BufferedReader br;
 		Gson gson = GsonBuilders.getGsonWithTypeAdapters();
@@ -74,7 +79,11 @@ public class Deck implements Serializable {
 		}
 	}
 
-	// return a line of the file in buffer
+	/**
+	 * @param BufferedReader
+	 * @return a line of the file in buffer
+	 * @throws IOException
+	 */
 	public String getLine(BufferedReader br) throws IOException {
 		String line;
 		line = br.readLine();
@@ -82,10 +91,13 @@ public class Deck implements Serializable {
 	}
 
 	/**
-	 * This method deals the cards isolating the current period cards and randomly
+	 * this method deals the cards isolating the current period cards and randomly
 	 * choosing between them
+	 * 
+	 * @param board
+	 * @param int
+	 *            cardsIndex
 	 */
-	// TODO: valutare se è possibile usare meglio il polimorfismo
 	public void dealCards(Board board, int cardsIndex) {
 
 		dealTerritories(board, cardsIndex);
@@ -253,5 +265,4 @@ public class Deck implements Serializable {
 	public void setTempListVentures(List<Ventures> tempListVentures) {
 		this.tempListVentures = tempListVentures;
 	}
-
 }

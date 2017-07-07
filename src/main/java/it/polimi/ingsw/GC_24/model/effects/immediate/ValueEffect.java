@@ -1,8 +1,5 @@
 package it.polimi.ingsw.GC_24.model.effects.immediate;
 
-import java.util.HashMap;
-import java.util.List;
-
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.values.SetOfValues;
 
@@ -21,21 +18,23 @@ public class ValueEffect extends ImmediateEffect {
 		this.setOfValue = new SetOfValues();
 	}
 
-	/** adds the immediate effect related set of values to the player's set
-	* (given as parameter)
-	*/
+	/**
+	 * gives the resources to the player
+	 * 
+	 * @param player
+	 */
 	@Override
 	public void giveImmediateEffect(Player player) {
-		System.out.println("Values before"+ player.getMyValues());
+		System.out.println("Values before" + player.getMyValues());
 		if (this.setOfValue != null) {
 			this.setOfValue.addTwoSetsOfValues(player.getMyValues());
 		}
-		System.out.println("Values after"+ player.getMyValues());
+		System.out.println("Values after" + player.getMyValues());
 	}
 
 	@Override
 	public String toString() {
-			return "Values: "+setOfValue;
+		return "Values: " + setOfValue;
 	}
 
 	// getters and setters
@@ -46,6 +45,4 @@ public class ValueEffect extends ImmediateEffect {
 	public void setEffectValues(SetOfValues effectValues) {
 		this.setOfValue = effectValues;
 	}
-
-
 }

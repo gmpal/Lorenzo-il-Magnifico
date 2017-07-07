@@ -4,8 +4,6 @@ import java.io.IOException;
 
 public class Board implements java.io.Serializable {
 
-
-
 	/**
 	 * 
 	 */
@@ -46,7 +44,13 @@ public class Board implements java.io.Serializable {
 		}
 	}
 
-	/** tells if the places needs to be locked*/
+	/**
+	 * tells if the places needs to be locked because there are not enough players
+	 * in the game
+	 * 
+	 * @param numPlayers
+	 * @return true if the numPlayers is less than maxNumPlayerToLock
+	 */
 	public boolean lockPlaces(int numPlayers) {
 		return numPlayers < maxNumPlayerToLock;
 	}
@@ -55,7 +59,7 @@ public class Board implements java.io.Serializable {
 	public void clear() {
 
 		this.towerTerritories.clearPlaces();
-	
+
 		this.towerCharacters.clearPlaces();
 
 		this.towerBuildings.clearPlaces();
@@ -63,13 +67,13 @@ public class Board implements java.io.Serializable {
 		this.towerVentures.clearPlaces();
 
 		this.harvest.clearPlaces();
-		
+
 		this.production.clearPlaces();
-		
+
 		this.market.clearPlaces();
-		
+
 		this.councilPalace.clearPlaces();
-	
+
 	}
 
 	@Override
@@ -79,6 +83,11 @@ public class Board implements java.io.Serializable {
 				+ production + "\n\nMARKET\n" + market + "\n\nCOUNCIL PALACE\n" + councilPalace + "\n";
 	}
 
+	/**
+	 * @param string
+	 *            zone
+	 * @return the area asked for in the string parameter
+	 */
 	public Area getZoneFromString(String zone) {
 		if (zone.equalsIgnoreCase("territories") || zone.equalsIgnoreCase("territory")) {
 			return this.towerTerritories;
@@ -89,7 +98,7 @@ public class Board implements java.io.Serializable {
 		if (zone.equalsIgnoreCase("buildings") || zone.equalsIgnoreCase("building")) {
 			return this.towerBuildings;
 		}
-		if (zone.equalsIgnoreCase("ventures")|| zone.equalsIgnoreCase("venture")) {
+		if (zone.equalsIgnoreCase("ventures") || zone.equalsIgnoreCase("venture")) {
 			return this.towerVentures;
 		}
 		if (zone.equals("harvest")) {
@@ -108,7 +117,6 @@ public class Board implements java.io.Serializable {
 			return this.councilPalace;
 		} else
 			return null;
-
 	}
 
 	// getters and setters
@@ -187,5 +195,4 @@ public class Board implements java.io.Serializable {
 	public static int getMaxnumplayertolock() {
 		return maxNumPlayerToLock;
 	}
-
 }

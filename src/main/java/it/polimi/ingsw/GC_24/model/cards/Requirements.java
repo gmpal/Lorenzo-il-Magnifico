@@ -2,9 +2,8 @@ package it.polimi.ingsw.GC_24.model.cards;
 
 import it.polimi.ingsw.GC_24.model.values.SetOfValues;
 
-public class Requirements implements java.io.Serializable{
+public class Requirements implements java.io.Serializable {
 
-	
 	/**
 	 * 
 	 */
@@ -30,7 +29,7 @@ public class Requirements implements java.io.Serializable{
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		if (!requirementSetOfValues.isEmpty()) {
-			sb.append(" "+requirementSetOfValues.toString());
+			sb.append(" " + requirementSetOfValues.toString());
 		}
 		if (requirementTerritories != 0) {
 			sb.append(" -Territory cards required = " + requirementTerritories);
@@ -87,5 +86,4 @@ public class Requirements implements java.io.Serializable{
 	public void setRequirmentVentures(int requirmentVentures) {
 		this.requirementVentures = requirmentVentures;
 	}
-
 }

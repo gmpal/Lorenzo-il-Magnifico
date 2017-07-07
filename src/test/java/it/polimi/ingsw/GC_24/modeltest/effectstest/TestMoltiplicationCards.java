@@ -21,8 +21,8 @@ public class TestMoltiplicationCards {
 		player = new Player(1);
 		faithPoints = new FaithPoint(0);
 		mc = new MoltiplicationCards("moltiplicationCards", new FaithPoint(2), new PersonalTerritories());
-		territory = new Territories("Territory", 0, "Territory", null, null, null, null, 2);
-		territory2 = new Territories("Territory2", 0, "Territory", null, null, null, null, 1);
+		territory = new Territories("Territory", null, 0, "Territory", null, null, null, null, 2);
+		territory2 = new Territories("Territory2", null, 0, "Territory", null, null, null, null, 1);
 	}
 
 	@Test
