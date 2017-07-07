@@ -20,8 +20,8 @@ public class TestTower {
 	public void setUp() throws Exception {
 		tower = new Tower("src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/actionValueTowerTerritories.json");
 		tower2 = new Tower("src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/actionValueTowerTerritories.json");
-		territory = new Territories("Territory", 0, "Territory", null, null, null, null, 2);
-		territory2 = new Territories("Territory", 1, "Territory", null, null, null, null, 3);
+		territory = new Territories("Territory", null, 0, "Territory", null, null, null, null, 2);
+		territory2 = new Territories("Territory", null, 1, "Territory", null, null, null, null, 3);
 	}
 
 	@Test

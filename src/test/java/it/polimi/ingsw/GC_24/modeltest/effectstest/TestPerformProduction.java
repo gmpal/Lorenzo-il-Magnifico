@@ -32,8 +32,8 @@ public class TestPerformProduction {
 		ve = new ValueEffect("value");
 		ve.getEffectValues().getVictoryPoints().setQuantity(3);
 		ph = new PerformHarvest("harvest", 5);
-		building = new Buildings("Building", 3, "Building", null, null, null, ve, ph, 2);
-		building2 = new Buildings("Building2", 4, "Building", null, null, null, ph, null, 1);
+		building = new Buildings("Building", null, 3, "Building", null, null, null, ve, ph, 2);
+		building2 = new Buildings("Building2", null, 4, "Building", null, null, null, ph, null, 1);
 		player.getMyBoard().getPersonalBuildings().getCards().add(building);
 		player.getMyBoard().getPersonalBuildings().getCards().add(building2);
 		pp = new PerformProduction("production", 4);

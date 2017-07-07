@@ -10,7 +10,8 @@ import java.util.Random;
 import com.google.gson.Gson;
 import it.polimi.ingsw.GC_24.devCardJsonFile.GsonBuilders;
 import it.polimi.ingsw.GC_24.model.board.Board;
-import it.polimi.ingsw.GC_24.model.places.*;;
+import it.polimi.ingsw.GC_24.model.places.*;
+import it.polimi.ingsw.GC_24.model.values.SetOfValues;;
 
 public class Deck implements Serializable {
 
@@ -253,5 +254,10 @@ public class Deck implements Serializable {
 	public void setTempListVentures(List<Ventures> tempListVentures) {
 		this.tempListVentures = tempListVentures;
 	}
-
+	
+	public static void main(String args[]) {
+		Gson gson = GsonBuilders.getGsonWithTypeAdapters();
+		String line="ciao";
+		System.out.println(gson.toJson(line));
+	}
 }

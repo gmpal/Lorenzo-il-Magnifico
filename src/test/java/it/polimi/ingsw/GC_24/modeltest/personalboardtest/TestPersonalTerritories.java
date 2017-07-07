@@ -23,9 +23,9 @@ public class TestPersonalTerritories {
 	@Before
 	public void setUp() throws Exception {
 		player = new Player("Giorgia", PlayerColour.RED);
-		territory1 = new Territories("Territory", 0, "Territory", null, null, null, null, 2);
-		territory2 = new Territories("Territory2", 0, "Territory", null, null, null, null, 1);
-		territory3 = new Territories("Territory3", 0, "Territory", null, null, null, null, 3);
+		territory1 = new Territories("Territory", null, 0, "Territory", null, null, null, null, 2);
+		territory2 = new Territories("Territory2", null, 0, "Territory", null, null, null, null, 1);
+		territory3 = new Territories("Territory3", null, 0, "Territory", null, null, null, null, 3);
 		territories = new PersonalTerritories();
 		territoriesexpected = new PersonalTerritories();
 		victoryPoints = new VictoryPoint(0);

@@ -90,11 +90,11 @@ public class TestController {
 		ex7 = new Excommunication(null,
 				new SubVicrotyPointsFromSetOfValue("subCostBuildings", setEx7, new VictoryPoint(1)), 3,
 				new FaithPoint(5));
-		territory1 = new Territories("territory1", 1, null, null, null, null, null, 1);
-		territory2 = new Territories("territory2", 1, null, null, null, null, null, 2);
-		territory3 = new Territories("territory3", 1, null, null, null, null, null, 3);
-		building1 = new Buildings("building1", 1, null, costB1, null, null, null, null, 1);
-		building2 = new Buildings("building2", 1, null, costB2, null, null, null, null, 1);
+		territory1 = new Territories("territory1", null, 1, null, null, null, null, null, 1);
+		territory2 = new Territories("territory2", null, 1, null, null, null, null, null, 2);
+		territory3 = new Territories("territory3", null, 1, null, null, null, null, null, 3);
+		building1 = new Buildings("building1", null, 1, null, costB1, null, null, null, null, 1);
+		building2 = new Buildings("building2", null, 1, null, costB2, null, null, null, null, 1);
 		players.add(player);
 		players.add(player2);
 		players.add(player3);
@@ -110,15 +110,15 @@ public class TestController {
 		vc = new VictoryPoint(0);
 		set = new SetOfValues();
 		set.getCoins().setQuantity(2);
-		character = new Characters("Character", "Character", null, null, null, null, 1);
-		venture1 = new Ventures("Venture", "Venture", null, null, new VictoryPoint(5), null, null, null, 3);
-		venture2 = new Ventures("Venture2", "Venture", null, null, new VictoryPoint(3), null, null, null, 3);
-		territory = new Territories("Territory", 0, "Territory", null, null, null, null, 2);
-		building = new Buildings("Building", 0, "Building", null, null, null, null, null, 1);
-		leader1 = new Leader("Leader1", new Requirements(set, 2, 5, 3, 6), null, null, null, true);
-		leader2 = new Leader("Leader2", new Requirements(new SetOfValues(), 0, 1, 1, 2), null, null, null, true);
-		leader3 = new Leader("Leader3", null, null, null, null, true);
-		leader4 = new Leader("Lucrezia Borgia", new Requirements(new SetOfValues(), 1, 1, 1, 1), null, null, null, false);
+		character = new Characters("Character", null, "Character", null, null, null, null, 1);
+		venture1 = new Ventures("Venture", null, "Venture", null, null, new VictoryPoint(5), null, null, null, 3);
+		venture2 = new Ventures("Venture2", null, "Venture", null, null, new VictoryPoint(3), null, null, null, 3);
+		territory = new Territories("Territory", null, 0, "Territory", null, null, null, null, 2);
+		building = new Buildings("Building", null, 0, "Building", null, null, null, null, null, 1);
+		leader1 = new Leader("Leader1", null, new Requirements(set, 2, 5, 3, 6), null, null, null, true);
+		leader2 = new Leader("Leader2", null, new Requirements(new SetOfValues(), 0, 1, 1, 2), null, null, null, true);
+		leader3 = new Leader("Leader3", null, null, null, null, null, true);
+		leader4 = new Leader("Lucrezia Borgia", null, new Requirements(new SetOfValues(), 1, 1, 1, 1), null, null, null, false);
 	}
 
 	@Test

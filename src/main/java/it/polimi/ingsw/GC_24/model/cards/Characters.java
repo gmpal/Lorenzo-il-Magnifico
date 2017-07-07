@@ -1,6 +1,5 @@
 package it.polimi.ingsw.GC_24.model.cards;
 
-import it.polimi.ingsw.GC_24.model.effects.*;
 import it.polimi.ingsw.GC_24.model.effects.immediate.ImmediateEffect;
 import it.polimi.ingsw.GC_24.model.effects.permanent.PermanentEffect;
 import it.polimi.ingsw.GC_24.model.personalboard.PersonalBoard;
@@ -15,9 +14,9 @@ public class Characters extends Development {
 	private PermanentEffect permanentEffects;
 
 	// constructor
-	public Characters(String name, String type, SetOfValues cost, ImmediateEffect immediateEffects,
+	public Characters(String name, String url, String type, SetOfValues cost, ImmediateEffect immediateEffects,
 			PermanentEffect permanentEffects, ImmediateEffect immediateEffects1, int round) {
-		super(name, type, cost, immediateEffects, immediateEffects1, round);
+		super(name, url, type, cost, immediateEffects, immediateEffects1, round);
 		this.permanentEffects = permanentEffects;
 	}
 

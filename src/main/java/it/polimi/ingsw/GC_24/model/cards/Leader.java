@@ -22,9 +22,9 @@ public class Leader extends Card{
 	private boolean oneTimePerTurn; 
 
 	// constructor
-	public Leader(String name, Requirements requirements, ValueEffect valueEffectLeader,
+	public Leader(String name, String url, Requirements requirements, ValueEffect valueEffectLeader,
 			ImmediateEffect immediateEffectLeader, PermanentEffect permanentEffectLeader, boolean oneTimePerTurn) {
-		super(name);
+		super(name, url);
 		this.requirements = requirements;
 		this.valueEffectLeader = valueEffectLeader;
 		this.immediateEffectLeader = immediateEffectLeader;

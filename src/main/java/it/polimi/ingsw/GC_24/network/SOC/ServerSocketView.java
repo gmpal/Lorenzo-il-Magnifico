@@ -53,7 +53,7 @@ public class ServerSocketView extends MyObservable implements Runnable, MyObserv
 		} catch (EOFException eof) {
 			System.out.println("SERVERIn: end of file reached");
 		} catch ( SocketException e ) {
-			System.out.println("Player disconnesso");
+			System.out.println("Player disconnected");
 			try {
 				this.socket.close();
 			} catch (IOException e1) {

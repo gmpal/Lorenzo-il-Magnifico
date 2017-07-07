@@ -33,8 +33,8 @@ public class TestPerformHarvest {
 		ve = new ValueEffect("valueEffect");
 		ve.getEffectValues().getCoins().setQuantity(3);
 		cnc = new ChooseNewCard("choose", "Character", 2, null);
-		territory = new Territories("Territory", 3, "Territory", null, null, null, ve, 2);
-		territory2 = new Territories("Territory2", 4, "Territory", null, null, null, cnc, 1);
+		territory = new Territories("Territory", null, 3, "Territory", null, null, null, ve, 2);
+		territory2 = new Territories("Territory2", null, 4, "Territory", null, null, null, cnc, 1);
 		player.getMyBoard().getPersonalTerritories().getCards().add(territory);
 		player.getMyBoard().getPersonalTerritories().getCards().add(territory2);
 		ph = new PerformHarvest("harvest", 5);
