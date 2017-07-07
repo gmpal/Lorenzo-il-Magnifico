@@ -10,7 +10,7 @@ import it.polimi.ingsw.GC_24.model.effects.permanent.PermanentEffect;
 import it.polimi.ingsw.GC_24.model.places.ProductionPlace;
 import it.polimi.ingsw.GC_24.model.values.Servant;
 
-public class ProductionAction extends Action {
+public class ProductionAction extends ActivityAction {
 	private List<ImmediateEffect> immediateEffects = new ArrayList<>();
 	private ProductionPlace productionPlace;
 	private int finalActionValue = 0;
@@ -20,7 +20,7 @@ public class ProductionAction extends Action {
 		this.productionPlace = (ProductionPlace) place;
 	}
 
-	@Override
+	/*@Override
 	public String verify() {
 		String answerToPlayer = "Answer: \n";
 
@@ -34,7 +34,7 @@ public class ProductionAction extends Action {
 			return "ok";
 		else
 			return answerToPlayer;
-	}
+	}*/
 
 	@Override
 	public List<ImmediateEffect> run() {

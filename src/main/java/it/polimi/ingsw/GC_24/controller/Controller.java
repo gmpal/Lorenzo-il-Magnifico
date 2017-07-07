@@ -79,6 +79,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		playerTurn = game.getPlayers();
 		System.out.println("turni presi!!!");
 		game.setGameState(State.PERIOD1_ROUND1);
+		sendUrlExcommunication();
 
 		while (!game.getGameState().equals(State.ENDED)) {
 			System.out.println("GAME STATE: " + game.getGameState());
@@ -86,7 +87,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			game.getBoard().clear();
 
 			game.getCards().dealCards(game.getBoard(), cardsIndex / 2 + 1);
-
 			sendBoardInformation();
 			sendPersonalInformationToEveryOne();
 			sendTurnArray(playerTurn);
@@ -96,7 +96,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 				for (int i = 0; i < playerTurn.size(); i++) {
 					// one familar gone for each player
-
+					sendUrlBoard(game.getBoard().allUrl());
+					sendUrlPersonalBoard(game.getCurrentPlayer().getMyBoard().urlPersonalBoard());
 					// reset the current player
 					this.currentPlayer = game.getCurrentPlayer();
 					System.out.println("Current Player is ---> " + this.currentPlayer.getMyName());
