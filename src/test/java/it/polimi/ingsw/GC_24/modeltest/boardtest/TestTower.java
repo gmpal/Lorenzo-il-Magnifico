@@ -64,7 +64,8 @@ public class TestTower {
 
 	@Test
 	public void testAllUrl() {
-		game.getBoard().getTowerTerritories().getPlacesArray().get(0).setFamMemberOnPlace(player.getMyFamily().getMember1());
+		TowerPlace t= (TowerPlace) game.getBoard().getTowerTerritories().getPlacesArray().get(0);
+		t.setCorrespondingCard(null);
 		assertEquals(game.getBoard().allUrl().size(), 16);
 	}
 }
