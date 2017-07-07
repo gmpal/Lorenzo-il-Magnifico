@@ -3,7 +3,7 @@ package it.polimi.ingsw.GC_24.model.personalboard;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.polimi.ingsw.GC_24.model.cards.Excommunication;
+import it.polimi.ingsw.GC_24.model.Excommunication;
 import it.polimi.ingsw.GC_24.model.cards.Leader;
 import it.polimi.ingsw.GC_24.model.values.VictoryPoint;
 
