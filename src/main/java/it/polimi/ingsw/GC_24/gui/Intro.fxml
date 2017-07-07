@@ -15,13 +15,13 @@
    <children>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label text="Lorenzo il Magnifico" textFill="#f6ff00">
+            <Label text="Lorenzo il Magnifico" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="Algerian" size="33.0" />
                </font></Label>
-            <Label alignment="CENTER" text="Insert your name" textFill="#00ffa5">
+            <Label alignment="CENTER" text="Insert your name" textFill="#ffebb7">
                <font>
-                  <Font size="23.0" />
+                  <Font name="System Bold" size="16.0" />
                </font></Label>
             <TextField fx:id="nameTextField" prefHeight="31.0" prefWidth="212.0" promptText="Insert your name here">
                <VBox.margin>
@@ -29,19 +29,19 @@
                </VBox.margin></TextField>
             <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label text="Welcome " textFill="#00ffe1">
+                  <Label text="Welcome " textFill="WHITE">
                      <font>
-                        <Font name="AR JULIAN" size="15.0" />
+                        <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
                   <Label fx:id="nameLabel" textFill="#00ffe1">
                      <font>
-                        <Font name="AR JULIAN" size="15.0" />
+                        <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <Label text=", choose your connection and your interface" textFill="#00ffe1">
+                  <Label text=", choose your connection and your interface" textFill="WHITE">
                      <font>
-                        <Font name="AR JULIAN" size="15.0" />
+                        <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
                </children>
@@ -50,23 +50,35 @@
                <children>
                   <VBox prefHeight="100.0" prefWidth="200.0" spacing="30.0">
                      <children>
-                        <RadioButton fx:id="networkSocket" mnemonicParsing="false" text="Socket" textFill="#00ff40">
+                        <RadioButton fx:id="networkSocket" mnemonicParsing="false" text="Socket" textFill="#ffebb7">
                            <toggleGroup>
                               <ToggleGroup fx:id="networkGroup" />
                            </toggleGroup>
                            <VBox.margin>
                               <Insets />
-                           </VBox.margin></RadioButton>
-                        <RadioButton fx:id="networkRMI" mnemonicParsing="false" text="RMI" textFill="#00ff40" toggleGroup="$networkGroup" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font></RadioButton>
+                        <RadioButton fx:id="networkRMI" mnemonicParsing="false" text="RMI" textFill="#ffebb7" toggleGroup="$networkGroup">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font></RadioButton>
                      </children>
                   </VBox>
                   <VBox prefHeight="100.0" prefWidth="200.0" spacing="30.0">
                      <children>
-                        <RadioButton fx:id="interfaceGUI" mnemonicParsing="false" text="GUI" textFill="#00ff40">
+                        <RadioButton fx:id="interfaceGUI" mnemonicParsing="false" text="GUI" textFill="#ffebb7">
                            <toggleGroup>
                               <ToggleGroup fx:id="interfaceGroup" />
-                           </toggleGroup></RadioButton>
-                        <RadioButton fx:id="interfaceCLI" mnemonicParsing="false" text="CLI" textFill="#00ff40" toggleGroup="$interfaceGroup" />
+                           </toggleGroup>
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font></RadioButton>
+                        <RadioButton fx:id="interfaceCLI" mnemonicParsing="false" text="CLI" textFill="#ffebb7" toggleGroup="$interfaceGroup">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font></RadioButton>
                      </children>
                   </VBox>
                </children>
@@ -78,9 +90,9 @@
                </VBox.margin>
             </HBox>
             <Button fx:id="sendInfoButton" mnemonicParsing="false" onAction="#handleSendInfoButton" text="Play!" />
-            <Label fx:id="waitingLabel" textFill="#00ffe1">
+            <Label fx:id="waitingLabel" textFill="WHITE">
                <font>
-                  <Font size="17.0" />
+                  <Font name="System Bold" size="16.0" />
                </font></Label>
          </children>
       </VBox>
