@@ -143,6 +143,11 @@ public class ClientRMIView extends MyObservable implements ClientViewRemote, MyO
 	}
 
 
+	@Override
+	public void updateRankings(String rankings) throws RemoteException{
+		view.setRankings(rankings);	
+	}
+
 
 	
 	@Override
@@ -180,5 +185,8 @@ public class ClientRMIView extends MyObservable implements ClientViewRemote, MyO
 		 	}
 			
 	}
+
+
+
 	
 }

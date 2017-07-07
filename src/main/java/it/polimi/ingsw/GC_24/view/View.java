@@ -35,6 +35,8 @@ public abstract class View extends MyObservable implements MyObserver {
 	protected String permanentEffects;
 	protected String oneTimePerTurnEffects;
 	
+	protected String rankings;
+	
 	
 	
 	
@@ -74,7 +76,7 @@ public abstract class View extends MyObservable implements MyObserver {
 
 	public abstract void communicateActionDone();
 
-
+	public abstract void setRankings(String rankings);
 
 	public abstract void setMyTurn(String currentPlayer);
 
@@ -97,7 +99,6 @@ public abstract class View extends MyObservable implements MyObserver {
 		hm = new HashMap<>();
 		hm.put("action", command);
 		notifyMyObservers(hm);
-
 		waitForActionDone();
 
 	}
@@ -250,6 +251,12 @@ public abstract class View extends MyObservable implements MyObserver {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+
+	public String getRankings() {
+		return rankings;
+	}
+
 
 
 	

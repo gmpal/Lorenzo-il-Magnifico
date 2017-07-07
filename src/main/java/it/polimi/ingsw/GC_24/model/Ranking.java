@@ -6,8 +6,7 @@ import java.util.List;
 import it.polimi.ingsw.GC_24.model.values.*;
 
 public class Ranking implements java.io.Serializable {
-	
-	
+
 	/**
 	 * 
 	 */
@@ -16,33 +15,37 @@ public class Ranking implements java.io.Serializable {
 	private List<String> victoryPoints;
 	private List<String> militaryPoints;
 	private List<String> faithPoints;
-	
-	//constructor
+
+	// constructor
 	public Ranking(List<Player> players) {
 		this.setPlayers(players);
 		this.victoryPoints = createList(new VictoryPoint(0));
 		this.militaryPoints = createList(new MilitaryPoint(0));
 		this.faithPoints = createList(new FaithPoint(0));
 	}
-	
+
 	public List<String> createList(Value point) {
 		List<Integer> points = sortPoints(point);
 		List<String> stringPoints = new ArrayList<>();
 		if (!sortPoints(point).isEmpty()) {
-			for (int i=0;i<points.size();i++) {
-				for (Player p:players) {
+			for (int i = 0; i < points.size(); i++) {
+				for (Player p : players) {
 					if (point.findValueInPlayer(p).getQuantity() == points.get(i)) {
-						stringPoints.add(p.getMyColour()+" player --> "+point.findValueInPlayer(p).getQuantity());
+									stringPoints.add(p.getMyName().toString() + ", " + p.getMyColour().toString()
+										+ " player \t--> " + Integer.toString(point.findValueInPlayer(p).getQuantity())
+										+ "\r\t\t\t");
+							
+						
 					}
-			}	
+				}
 			}
 		}
 		return stringPoints;
 	}
-	
+
 	public List<Integer> sortPoints(Value point) {
 		List<Integer> points = new ArrayList<>();
-		for (Player p:players)  {
+		for (Player p : players) {
 			points.add(point.findValueInPlayer(p).getQuantity());
 		}
 		Collections.sort(points);
@@ -50,7 +53,13 @@ public class Ranking implements java.io.Serializable {
 		return points;
 	}
 
-	//getters and setters
+	@Override
+	public String toString() {
+		return "Victory Points= \t" + victoryPoints + "\nMilitary Points= \t" + militaryPoints + "\nFaith Points= \t\t"
+				+ faithPoints + "]";
+	}
+
+	// getters and setters
 	public List<Player> getPlayers() {
 		return players;
 	}
@@ -82,5 +91,35 @@ public class Ranking implements java.io.Serializable {
 	public void setFaithPoints(List<String> faithPoints) {
 		this.faithPoints = faithPoints;
 	}
-	
+
+	public static void main(String[] args) {
+
+		Player player;
+		Player player2;
+		Player player3;
+		List<Player> players;
+		Ranking ranking;
+		List<String> points;
+		players = new ArrayList<>();
+		player = new Player("luca", PlayerColour.BLUE);
+		player2 = new Player("andrea", PlayerColour.RED);
+		player3 = new Player("anna", PlayerColour.YELLOW);
+		player.getMyValues().getFaithPoints().setQuantity(6);
+		player2.getMyValues().getFaithPoints().setQuantity(0);
+		player3.getMyValues().getFaithPoints().setQuantity(0);
+		player.getMyValues().getMilitaryPoints().setQuantity(9);
+		player2.getMyValues().getMilitaryPoints().setQuantity(20);
+		player3.getMyValues().getMilitaryPoints().setQuantity(4);
+		player.getMyValues().getVictoryPoints().setQuantity(10);
+		player2.getMyValues().getVictoryPoints().setQuantity(15);
+		player3.getMyValues().getVictoryPoints().setQuantity(7);
+		players.add(player);
+		players.add(player2);
+		players.add(player3);
+		ranking = new Ranking(players);
+		points = new ArrayList<>();
+
+		System.out.println(ranking);
+	}
+
 }

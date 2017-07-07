@@ -148,6 +148,12 @@ public class ClientSocketView extends MyObservable implements Runnable, MyObserv
 				view.communicateActionDone();
 
 			}
+			
+			if (command.contains("rankings")) {
+				System.out.println("CSV ---> Ricevuta rankings");
+				view.setRankings((String) request.get("rankings"));
+
+			}
 
 			if (command.contains("info")) {
 				System.out.println("CSV ---> Ricevute informazioni da mostrare a video");

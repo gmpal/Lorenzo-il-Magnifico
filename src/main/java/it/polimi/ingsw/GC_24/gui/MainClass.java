@@ -1,5 +1,6 @@
 package it.polimi.ingsw.GC_24.gui;
 
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,11 +19,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class MainClass extends Application {
@@ -30,6 +31,7 @@ public class MainClass extends Application {
 	private View view;
 	private static List<StringProperty> turnList = new ArrayList<StringProperty>();
 	private static StringProperty currentPlayer = new SimpleStringProperty();
+	private static StringProperty rankings = new SimpleStringProperty();
 	private static List<ImageView> imagesToTake = new ArrayList<ImageView>();
 	private Client client;
 	private Stage primaryStage;
@@ -127,24 +129,32 @@ public class MainClass extends Application {
 			primaryStage = new Stage();
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainClass.class.getResource("GameBoard.fxml"));
-			AnchorPane gameBoard = (AnchorPane) loader.load();
+			TabPane gameBoard = (TabPane) loader.load();
 
 			GameBoardController gameBoardController = loader.getController();
 			gameBoardController.setMainApp(this);
 			initializeTurnListAndSetBindings(gameBoardController);
-/*
-			String url = new File("src/main/java/it/polimi/ingsw/GC_24/img/cards/devcards_f_en_c_1.png").toURI()
+
+			String url = new File("src/main/java/it/polimi/ingsw/GC_24/img/cards/a.png").toURI()
 					.toURL().toString();
 
-			Image image = new Image(url);
-			
+			String url2 = new File("src/main/java/it/polimi/ingsw/GC_24/img/cards/devcards_f_en_c_12.png").toURI()
+					.toURL().toString();
+			Image image1 = new Image(url);
+			Image image2 = new Image(url2);
 				Timer t1 = new Timer();
 				t1.schedule(new TimerTask() {
 
 					@Override
 					public void run() {
-						for (int i=0; i<30; i++) {
-							imagesToTake.get(i).imageProperty().set(image);
+						for (int i=0; i<15; i++) {
+							imagesToTake.get(i).imageProperty().set(image1);
+						}
+						for (int i=15; i<30; i++) {
+							imagesToTake.get(i).imageProperty().set(image2);
+						}
+						for (int i=30; i<44; i++) {
+							imagesToTake.get(i).imageProperty().set(image1);
 						}
 						
 					}
@@ -153,7 +163,7 @@ public class MainClass extends Application {
 				
 				
 			
-*/
+
 			Scene gameScene = new Scene(gameBoard);
 			primaryStage.setScene(gameScene);
 			primaryStage.show();
@@ -183,15 +193,19 @@ public class MainClass extends Application {
 
 		// Setting the bindings for urls
 		//initialinizg arraylist imagesToTake
-		for (int i=0; i<45; i++) {
+		for (int i=0; i<44; i++) {
 			imagesToTake.add(new ImageView());
 		}
 		
-		//binding
+		//binding the cards to the imagesToTake array
 		for (int i = 0; i < imagesToTake.size(); i++) {
 				gameBoardController.getAllTheImages().get(i).imageProperty().bind(imagesToTake.get(i).imageProperty());
 		}
 
+		gameBoardController.getRankings().textProperty().bind(rankings);
+		
+		//bindings rankings
+		
 	}
 
 	public void showSelectPlayer() {
@@ -274,5 +288,9 @@ public class MainClass extends Application {
 
 	public void setCurrentPlayer(StringProperty currentPlayer) {
 		this.currentPlayer = currentPlayer;
+	}
+
+	public void updateRankings(String rankings) {
+		this.rankings.setValue(rankings);
 	}
 }

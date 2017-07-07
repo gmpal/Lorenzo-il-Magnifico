@@ -126,6 +126,12 @@ public class ServerRMIView extends MyObservable implements ServerViewRemote, MyO
 				clientstub.signalCompletedAction();
 
 			}
+			
+			if (command.contains("rankings")) {
+				System.out.println("RMI Server View ---> Ricevuta rankings ");
+				clientstub.updateRankings((String) request.get("rankings"));
+
+			}
 
 			if (command.contains("info")) {
 				System.out.println("RMI Server View ---> Ricevute informazioni da mostrare a video");

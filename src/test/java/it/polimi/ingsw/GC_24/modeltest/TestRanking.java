@@ -37,6 +37,7 @@ public class TestRanking {
 		players.add(player3);
 		ranking = new Ranking(players);
 		points = new ArrayList<>();
+		
 	}
 	
 	@Test

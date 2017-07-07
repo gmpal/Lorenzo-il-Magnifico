@@ -52,6 +52,10 @@ public interface ClientViewRemote extends Remote {
 
 
 
+	public abstract void updateRankings(String string) throws RemoteException;
+
+
+
 	
 
 }
