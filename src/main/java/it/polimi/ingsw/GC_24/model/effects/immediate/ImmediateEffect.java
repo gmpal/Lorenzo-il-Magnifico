@@ -34,7 +34,9 @@ public abstract class ImmediateEffect extends Effect {
 	 * this method generates the string that must be shown to the player in order to
 	 * ask the parameter for the effect
 	 */
-	public abstract String generateParametersRequest();
+	public String generateParametersRequest() {
+		return null;
+	}
 
 	/**
 	 * this method creates the hashMap to be sent to the player for the request for
@@ -43,7 +45,9 @@ public abstract class ImmediateEffect extends Effect {
 	 * @param string
 	 *            answer
 	 */
-	public abstract HashMap<String, Object> generateHashMapToSend(String answer);
+	public HashMap<String, Object> generateHashMapToSend(String answer){
+		return null;
+	}
 
 	/**
 	 * this method receives the player's answer and gets the right effect
@@ -51,7 +55,9 @@ public abstract class ImmediateEffect extends Effect {
 	 * @param string
 	 *            responseFromClient
 	 */
-	public abstract void assignParameters(String responseFromClient);
+	public void assignParameters(String responseFromClient) {}
 
-	public abstract List<ImmediateEffect> addAllNewEffectsToThisSet(List<ImmediateEffect> secondaryInteractiveEffects);
+	public List<ImmediateEffect> addAllNewEffectsToThisSet(List<ImmediateEffect> secondaryInteractiveEffects){
+		return null;
+	}
 }
