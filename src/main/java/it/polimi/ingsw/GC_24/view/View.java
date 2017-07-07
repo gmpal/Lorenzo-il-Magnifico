@@ -74,16 +74,13 @@ public abstract class View extends MyObservable implements MyObserver {
 	
 	public abstract String askForChooseNewCard(String request);
 	
-	
+	public abstract void updateTurn(List<String> playerTurn);
 	
 	public abstract void play();
 
 	public abstract void communicateActionDone();
 
-	public void updateTurn(List<String> playerTurn) {
-		setPlayersTurn(playerTurn);
 
-	}
 
 	public abstract void setMyTurn(String currentPlayer);
 
@@ -259,6 +256,9 @@ public abstract class View extends MyObservable implements MyObserver {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+
+	
 
 
 

@@ -15,7 +15,7 @@
    <children>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label text="Welcome to Lorenzo il Magnifico" textFill="#f6ff00">
+            <Label text="Lorenzo il Magnifico" textFill="#f6ff00">
                <font>
                   <Font name="Algerian" size="33.0" />
                </font></Label>
@@ -27,6 +27,25 @@
                <VBox.margin>
                   <Insets left="100.0" right="100.0" />
                </VBox.margin></TextField>
+            <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label text="Welcome " textFill="#00ffe1">
+                     <font>
+                        <Font name="AR JULIAN" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="nameLabel" textFill="#00ffe1">
+                     <font>
+                        <Font name="AR JULIAN" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label text=", choose your connection and your interface" textFill="#00ffe1">
+                     <font>
+                        <Font name="AR JULIAN" size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0" spacing="100.0">
                <children>
                   <VBox prefHeight="100.0" prefWidth="200.0" spacing="30.0">
@@ -59,6 +78,10 @@
                </VBox.margin>
             </HBox>
             <Button fx:id="sendInfoButton" mnemonicParsing="false" onAction="#handleSendInfoButton" text="Play!" />
+            <Label fx:id="waitingLabel" textFill="#00ffe1">
+               <font>
+                  <Font size="17.0" />
+               </font></Label>
          </children>
       </VBox>
    </children>

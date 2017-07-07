@@ -3,138 +3,255 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="backPanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1400.0" stylesheets="@../img/pane.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.GC_24.gui.GameBoardController">
+<AnchorPane id="backPanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1200.0" prefWidth="1800.0" stylesheets="@../img/pane.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.GC_24.gui.GameBoardController">
    <children>
-      <VBox alignment="TOP_RIGHT" prefHeight="685.0" prefWidth="574.0" AnchorPane.bottomAnchor="180.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="35.0">
+      <VBox alignment="TOP_RIGHT" prefHeight="806.0" prefWidth="646.0" spacing="5.0" AnchorPane.bottomAnchor="359.0" AnchorPane.rightAnchor="51.0" AnchorPane.topAnchor="35.0">
          <children>
-            <AnchorPane id="extraPersonalBoard" fx:id="persCharacters06" prefHeight="265.0" prefWidth="500.0" stylesheets="@../img/pane.css">
+            <AnchorPane id="extraPersonalBoard" prefHeight="320.0" prefWidth="655.0" stylesheets="@../img/pane.css" VBox.vgrow="NEVER">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
                <children>
-                  <ImageView fx:id="persVentures01" fitHeight="102.0" fitWidth="60.0" layoutX="31.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="14.0" />
-                  <ImageView fx:id="persVentures02" fitHeight="102.0" fitWidth="60.0" layoutX="126.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="persVentures03" fitHeight="102.0" fitWidth="60.0" layoutX="215.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="persVentures04" fitHeight="102.0" fitWidth="60.0" layoutX="309.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="persVentures05" fitHeight="102.0" fitWidth="60.0" layoutX="405.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="persVentures06" fitHeight="102.0" fitWidth="60.0" layoutX="484.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="persCharacters01" fitHeight="102.0" fitWidth="60.0" layoutX="31.0" layoutY="149.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="persCharacters02" fitHeight="102.0" fitWidth="60.0" layoutX="126.0" layoutY="139.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="persCharacters03" fitHeight="102.0" fitWidth="60.0" layoutX="215.0" layoutY="153.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="persCharacters04" fitHeight="102.0" fitWidth="60.0" layoutX="309.0" layoutY="153.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="persCharacters05" fitHeight="102.0" fitWidth="60.0" layoutX="398.0" layoutY="149.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="persCharacters06" fitHeight="102.0" fitWidth="60.0" layoutX="484.0" layoutY="149.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="personalVentures01" fitHeight="139.0" fitWidth="95.0" layoutX="20.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/cards/devcards_f_en_c_76.png" />
+                     </image></ImageView>
+                  <ImageView fx:id="personalVentures02" fitHeight="139.0" fitWidth="95.0" layoutX="125.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="personalVentures03" fitHeight="139.0" fitWidth="95.0" layoutX="235.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="personalVentures04" fitHeight="139.0" fitWidth="95.0" layoutX="340.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="personalVentures05" fitHeight="139.0" fitWidth="95.0" layoutX="444.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="personalVentures06" fitHeight="139.0" fitWidth="95.0" layoutX="551.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="personalBuildings01" fitHeight="139.0" fitWidth="95.0" layoutX="17.0" layoutY="160.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="personalBuildings02" fitHeight="139.0" fitWidth="95.0" layoutX="122.0" layoutY="160.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="personalBuildings03" fitHeight="139.0" fitWidth="95.0" layoutX="232.0" layoutY="160.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="personalBuildings04" fitHeight="139.0" fitWidth="95.0" layoutX="337.0" layoutY="160.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="personalBuildings05" fitHeight="139.0" fitWidth="95.0" layoutX="441.0" layoutY="160.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="personalBuildings06" fitHeight="139.0" fitWidth="95.0" layoutX="548.0" layoutY="160.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </AnchorPane>
+            <AnchorPane id="personalBoard" prefHeight="450.0" prefWidth="660.0" stylesheets="@../img/pane.css" VBox.vgrow="NEVER">
+               <children>
+                  <Label fx:id="coinsLabel" layoutX="40.0" layoutY="437.0" text="COINS" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="woodsLabel" layoutX="143.0" layoutY="437.0" text="WOODS" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="stonesLabel" layoutX="251.0" layoutY="437.0" text="STONES" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="servantsLabel" layoutX="351.0" layoutY="437.0" text="SERVANTS" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <ImageView fx:id="personalCharacters01" fitHeight="139.0" fitWidth="95.0" layoutX="13.0" layoutY="18.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="personalCharacters02" fitHeight="139.0" fitWidth="95.0" layoutX="118.0" layoutY="18.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="personalCharacters03" fitHeight="139.0" fitWidth="95.0" layoutX="228.0" layoutY="18.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="personalCharacters04" fitHeight="139.0" fitWidth="95.0" layoutX="351.0" layoutY="18.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="personalCharacters05" fitHeight="139.0" fitWidth="95.0" layoutX="453.0" layoutY="18.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="personalCharacters06" fitHeight="139.0" fitWidth="95.0" layoutX="551.0" layoutY="18.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="personalTerritories01" fitHeight="139.0" fitWidth="95.0" layoutX="17.0" layoutY="210.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="personalTerritories02" fitHeight="139.0" fitWidth="95.0" layoutX="122.0" layoutY="210.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="personalTerritories03" fitHeight="139.0" fitWidth="95.0" layoutX="232.0" layoutY="210.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="personalTerritories04" fitHeight="139.0" fitWidth="95.0" layoutX="351.0" layoutY="210.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="personalTerritories05" fitHeight="139.0" fitWidth="95.0" layoutX="441.0" layoutY="210.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="personalTerritories06" fitHeight="139.0" fitWidth="95.0" layoutX="551.0" layoutY="210.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
                </children>
                <VBox.margin>
-                  <Insets right="5.0" />
+                  <Insets />
                </VBox.margin>
             </AnchorPane>
-            <AnchorPane id="personalBoard" prefHeight="419.0" prefWidth="478.0" stylesheets="@../img/pane.css">
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <ImageView fx:id="persBuildings06" fitHeight="102.0" fitWidth="60.0" layoutX="483.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="persBuildings05" fitHeight="102.0" fitWidth="60.0" layoutX="411.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="persBuildings04" fitHeight="102.0" fitWidth="60.0" layoutX="316.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="persBuildings03" fitHeight="102.0" fitWidth="60.0" layoutX="221.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="persBuildings02" fitHeight="102.0" fitWidth="60.0" layoutX="122.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="persBuildings01" fitHeight="102.0" fitWidth="60.0" layoutX="30.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="persTerritories01" fitHeight="102.0" fitWidth="60.0" layoutX="30.0" layoutY="191.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="persTerritories02" fitHeight="102.0" fitWidth="60.0" layoutX="122.0" layoutY="188.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="persTerritories03" fitHeight="102.0" fitWidth="60.0" layoutX="221.0" layoutY="188.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="persTerritories05" fitHeight="102.0" fitWidth="60.0" layoutX="397.0" layoutY="191.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="persTerritories06" fitHeight="102.0" fitWidth="60.0" layoutX="483.0" layoutY="191.0" pickOnBounds="true" preserveRatio="true" />
-                  <Label fx:id="coinsLabel" layoutX="30.0" layoutY="405.0" text="COINS" textAlignment="CENTER" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="woodsLabel" layoutX="124.0" layoutY="405.0" text="WOODS" textAlignment="CENTER" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="stonesLabel" layoutX="216.0" layoutY="402.0" text="STONES" textAlignment="CENTER" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="servantsLabel" layoutX="308.0" layoutY="402.0" text="SERVANTS" textAlignment="CENTER" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-                  <ImageView fx:id="persTerritories04" fitHeight="102.0" fitWidth="60.0" layoutX="308.0" layoutY="191.0" pickOnBounds="true" preserveRatio="true" />
+                  <VBox prefHeight="139.0" prefWidth="281.0">
+                     <children>
+                        <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                           <children>
+                              <Label text="1)" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="21.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="player1label" textFill="WHITE">
+                                 <font>
+                                    <Font size="21.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                           <children>
+                              <Label text="2)" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="21.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="player2label" textFill="WHITE">
+                                 <font>
+                                    <Font size="21.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                           <children>
+                              <Label text="3)" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="21.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="player3label" textFill="WHITE">
+                                 <font>
+                                    <Font size="21.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                           <children>
+                              <Label text="4)" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="21.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="player4label" textFill="WHITE">
+                                 <font>
+                                    <Font size="21.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <ImageView fx:id="leader01" fitHeight="139.0" fitWidth="95.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/leaders/leaders_f_c_20.jpg" />
+                     </image></ImageView>
+                  <ImageView fx:id="leader02" fitHeight="139.0" fitWidth="95.0" layoutX="10.0" layoutY="10.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/leaders/leaders_f_c_10.jpg" />
+                     </image></ImageView>
+                  <ImageView fx:id="leader03" fitHeight="139.0" fitWidth="95.0" layoutX="105.0" layoutY="10.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/leaders/leaders_f_c_06.jpg" />
+                     </image></ImageView>
+                  <ImageView fx:id="leader04" fitHeight="139.0" fitWidth="95.0" layoutX="200.0" layoutY="10.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" HBox.hgrow="NEVER">
+                     <image>
+                        <Image url="@../img/leaders/leaders_f_c_01.jpg" />
+                     </image></ImageView>
                </children>
-               <VBox.margin>
-                  <Insets right="5.0" />
-               </VBox.margin>
-            </AnchorPane>
+            </HBox>
+            <HBox alignment="CENTER">
+               <children>
+                  <Label text="You are --&gt; " textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="21.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="thisPlayerLabel" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="21.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="50.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label text="Current Player is --&gt;" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="21.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="currentPlayerLabel" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="21.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
          </children>
       </VBox>
-      <MenuBar layoutX="14.0" layoutY="8.0" prefHeight="35.0" prefWidth="1207.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <menus>
-          <Menu mnemonicParsing="false" text="Game">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
-      <AnchorPane id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="866.0" prefWidth="523.0" stylesheets="@../img/pane.css" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="35.0">
-         <children>
-            <ImageView fx:id="territories04" fitHeight="102.0" fitWidth="60.0" layoutX="68.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="territories03" fitHeight="102.0" fitWidth="60.0" layoutX="68.0" layoutY="170.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="territories02" fitHeight="102.0" fitWidth="60.0" layoutX="68.0" layoutY="272.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="territories01" fitHeight="102.0" fitWidth="60.0" layoutX="68.0" layoutY="374.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="characters04" fitHeight="102.0" fitWidth="60.0" layoutX="177.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="characters03" fitHeight="102.0" fitWidth="60.0" layoutX="177.0" layoutY="170.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="characters02" fitHeight="102.0" fitWidth="60.0" layoutX="177.0" layoutY="272.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="characters01" fitHeight="102.0" fitWidth="60.0" layoutX="177.0" layoutY="374.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="buildings04" fitHeight="102.0" fitWidth="60.0" layoutX="285.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="buildings03" fitHeight="102.0" fitWidth="60.0" layoutX="285.0" layoutY="170.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="buildings02" fitHeight="102.0" fitWidth="60.0" layoutX="285.0" layoutY="272.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="buildings01" fitHeight="102.0" fitWidth="60.0" layoutX="285.0" layoutY="374.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="ventures04" fitHeight="102.0" fitWidth="60.0" layoutX="398.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="ventures03" fitHeight="102.0" fitWidth="60.0" layoutX="398.0" layoutY="170.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="ventures02" fitHeight="102.0" fitWidth="60.0" layoutX="398.0" layoutY="272.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="ventures01" fitHeight="102.0" fitWidth="60.0" layoutX="398.0" layoutY="374.0" pickOnBounds="true" preserveRatio="true" />
-            <Button fx:id="buttonTerritory01" layoutX="141.0" layoutY="410.0" mnemonicParsing="false" opacity="0.18" prefHeight="15.0" prefWidth="18.0" />
-            <Button fx:id="buttonTerritory02" layoutX="141.0" layoutY="308.0" mnemonicParsing="false" opacity="0.18" prefHeight="15.0" prefWidth="18.0" />
-            <Button fx:id="buttonTerritory03" layoutX="141.0" layoutY="206.0" mnemonicParsing="false" opacity="0.18" prefHeight="15.0" prefWidth="18.0" />
-            <Button fx:id="buttonTerritory04" layoutX="141.0" layoutY="104.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.18" prefHeight="15.0" prefWidth="18.0" />
-            <Button fx:id="buttonCharacters01" layoutX="253.0" layoutY="410.0" mnemonicParsing="false" opacity="0.18" prefHeight="15.0" prefWidth="18.0" />
-            <Button fx:id="buttonCharacters02" layoutX="253.0" layoutY="308.0" mnemonicParsing="false" opacity="0.18" prefHeight="15.0" prefWidth="18.0" />
-            <Button fx:id="buttonCharacters03" layoutX="253.0" layoutY="206.0" mnemonicParsing="false" opacity="0.18" prefHeight="15.0" prefWidth="18.0" />
-            <Button fx:id="buttonCharacters04" layoutX="253.0" layoutY="104.0" mnemonicParsing="false" opacity="0.18" prefHeight="15.0" prefWidth="18.0" />
-            <Button fx:id="buttonBuildings01" layoutX="361.0" layoutY="410.0" mnemonicParsing="false" opacity="0.18" prefHeight="15.0" prefWidth="18.0" />
-            <Button fx:id="buttonBuildings02" layoutX="361.0" layoutY="308.0" mnemonicParsing="false" opacity="0.18" prefHeight="15.0" prefWidth="18.0" />
-            <Button fx:id="buttonBuildings03" layoutX="361.0" layoutY="206.0" mnemonicParsing="false" opacity="0.18" prefHeight="15.0" prefWidth="18.0" />
-            <Button fx:id="buttonBuildings04" layoutX="361.0" layoutY="104.0" mnemonicParsing="false" opacity="0.18" prefHeight="15.0" prefWidth="18.0" />
-            <Button fx:id="buttonVentures01" layoutX="468.0" layoutY="410.0" mnemonicParsing="false" opacity="0.18" prefHeight="15.0" prefWidth="18.0" />
-            <Button fx:id="buttonVentures02" layoutX="468.0" layoutY="308.0" mnemonicParsing="false" opacity="0.18" prefHeight="15.0" prefWidth="18.0" />
-            <Button fx:id="buttonVentures03" layoutX="468.0" layoutY="206.0" mnemonicParsing="false" opacity="0.18" prefHeight="15.0" prefWidth="18.0" />
-            <Button fx:id="buttonVentures04" layoutX="468.0" layoutY="104.0" mnemonicParsing="false" opacity="0.18" prefHeight="15.0" prefWidth="18.0" />
-            <Button fx:id="buttonCouncil" layoutX="296.0" layoutY="484.0" mnemonicParsing="false" opacity="0.0" prefHeight="46.0" prefWidth="134.0" text="Button" />
-            <Button fx:id="buttonProduction" layoutX="68.0" layoutY="692.0" mnemonicParsing="false" opacity="0.18" prefHeight="31.0" prefWidth="163.0" />
-            <Button fx:id="buttonHarvest" layoutX="78.0" layoutY="758.0" mnemonicParsing="false" opacity="0.18" prefHeight="31.0" prefWidth="155.0" />
-            <Button fx:id="buttonMarket01" layoutX="345.0" layoutY="677.0" mnemonicParsing="false" opacity="0.18" prefHeight="15.0" prefWidth="18.0" />
-            <Button fx:id="buttonMarket02" layoutX="398.0" layoutY="677.0" mnemonicParsing="false" opacity="0.18" prefHeight="15.0" prefWidth="18.0" />
-            <Button fx:id="buttonMarket03" layoutX="448.0" layoutY="693.0" mnemonicParsing="false" opacity="0.18" prefHeight="15.0" prefWidth="18.0" />
-            <Button fx:id="buttonMarket04" layoutX="478.0" layoutY="727.0" mnemonicParsing="false" opacity="0.18" prefHeight="15.0" prefWidth="18.0" />
-            <ImageView fx:id="blackDie" fitHeight="35.0" fitWidth="34.0" layoutX="323.0" layoutY="764.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="whiteDie" fitHeight="35.0" fitWidth="34.0" layoutX="375.0" layoutY="762.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="OrangeDie" fitHeight="35.0" fitWidth="34.0" layoutX="433.0" layoutY="764.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="persTerritories011" fitHeight="102.0" fitWidth="60.0" layoutX="79.0" layoutY="173.0" pickOnBounds="true" preserveRatio="true" />
-         </children>
-      </AnchorPane>
-      <ImageView fx:id="leader04" fitHeight="102.0" fitWidth="60.0" layoutX="940.0" layoutY="772.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="leader03" fitHeight="102.0" fitWidth="60.0" layoutX="1000.0" layoutY="772.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="leader02" fitHeight="102.0" fitWidth="60.0" layoutX="1060.0" layoutY="772.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="leader01" fitHeight="102.0" fitWidth="60.0" layoutX="1284.0" layoutY="772.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="BonusTile" fitHeight="450.0" fitWidth="86.0" layoutX="738.0" layoutY="300.0" pickOnBounds="true" preserveRatio="true" />
+      <ScrollPane hbarPolicy="NEVER" layoutX="35.0" layoutY="35.0" prefHeight="830.0" prefWidth="920.0" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="35.0" AnchorPane.topAnchor="35.0">
+         <content>
+            <AnchorPane id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1500.0" prefWidth="901.0" stylesheets="@../img/pane.css">
+               <children>
+                  <ImageView fx:id="territories04" fitHeight="193.0" fitWidth="120.0" layoutX="14.0" layoutY="28.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="territories03" fitHeight="193.0" fitWidth="120.0" layoutX="14.0" layoutY="230.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="territories02" fitHeight="193.0" fitWidth="120.0" layoutX="14.0" layoutY="436.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="territories01" fitHeight="193.0" fitWidth="120.0" layoutX="14.0" layoutY="638.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="characters04" fitHeight="193.0" fitWidth="120.0" layoutX="236.0" layoutY="35.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="characters03" fitHeight="193.0" fitWidth="120.0" layoutX="236.0" layoutY="237.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="characters02" fitHeight="193.0" fitWidth="120.0" layoutX="236.0" layoutY="443.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="characters01" fitHeight="193.0" fitWidth="120.0" layoutX="236.0" layoutY="645.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="buildings04" fitHeight="193.0" fitWidth="120.0" layoutX="451.0" layoutY="29.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="buildings03" fitHeight="193.0" fitWidth="120.0" layoutX="451.0" layoutY="231.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="buildings02" fitHeight="193.0" fitWidth="120.0" layoutX="451.0" layoutY="437.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="buildings01" fitHeight="193.0" fitWidth="120.0" layoutX="451.0" layoutY="639.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="ventures04" fitHeight="195.0" fitWidth="135.0" layoutX="664.0" layoutY="27.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/cards/devcards_f_en_c_73.png" />
+                     </image></ImageView>
+                  <ImageView fx:id="ventures03" fitHeight="193.0" fitWidth="120.0" layoutX="670.0" layoutY="231.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="ventures02" fitHeight="193.0" fitWidth="120.0" layoutX="670.0" layoutY="437.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="ventures01" fitHeight="193.0" fitWidth="120.0" layoutX="670.0" layoutY="639.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                  <Button fx:id="buttonTerritory04" layoutX="134.0" layoutY="82.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="70.0" prefWidth="85.0" text="Button" />
+                  <Button fx:id="buttonCharacters04" layoutX="356.0" layoutY="82.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="70.0" prefWidth="85.0" text="Button" />
+                  <Button fx:id="buttonBuildings04" layoutX="571.0" layoutY="82.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="70.0" prefWidth="85.0" text="Button" />
+                  <Button fx:id="buttonVentures04" layoutX="790.0" layoutY="82.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="70.0" prefWidth="85.0" text="Button" />
+                  <Button fx:id="buttonTerritory03" layoutX="134.0" layoutY="285.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="70.0" prefWidth="85.0" text="Button" />
+                  <Button fx:id="buttonCharacters03" layoutX="356.0" layoutY="285.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="70.0" prefWidth="85.0" text="Button" />
+                  <Button fx:id="buttonBuildings03" layoutX="571.0" layoutY="285.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="70.0" prefWidth="85.0" text="Button" />
+                  <Button fx:id="buttonVentures03" layoutX="790.0" layoutY="285.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="70.0" prefWidth="85.0" text="Button" />
+                  <Button fx:id="buttonTerritory02" layoutX="134.0" layoutY="491.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="70.0" prefWidth="85.0" text="Button" />
+                  <Button fx:id="buttonCharacters02" layoutX="356.0" layoutY="491.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="70.0" prefWidth="85.0" text="Button" />
+                  <Button fx:id="buttonBuildings02" layoutX="571.0" layoutY="491.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="70.0" prefWidth="85.0" text="Button" />
+                  <Button fx:id="buttonVentures02" layoutX="790.0" layoutY="491.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="70.0" prefWidth="85.0" text="Button" />
+                  <Button fx:id="buttonTerritory01" layoutX="134.0" layoutY="700.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="70.0" prefWidth="85.0" text="Button" />
+                  <Button fx:id="buttonCharacters01" layoutX="356.0" layoutY="700.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="70.0" prefWidth="85.0" text="Button" />
+                  <Button fx:id="buttonBuildings01" layoutX="571.0" layoutY="700.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="70.0" prefWidth="85.0" text="Button" />
+                  <Button fx:id="buttonVentures01" layoutX="790.0" layoutY="700.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="70.0" prefWidth="85.0" text="Button" />
+                  <Button fx:id="buttonHarvest" layoutX="14.0" layoutY="1260.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="71.0" prefWidth="333.0" text="Button" />
+                  <Button fx:id="buttonProduction" layoutX="14.0" layoutY="1389.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="79.0" prefWidth="333.0" text="Button" />
+                  <Button fx:id="buttonCouncil" layoutX="469.0" layoutY="848.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="95.0" prefWidth="278.0" text="Button" />
+                  <Button fx:id="buttonMarket01" layoutX="542.0" layoutY="1232.0" mnemonicParsing="false" onAction="#towerClickHandler" prefHeight="70.0" prefWidth="85.0" text="Button" />
+                  <Button fx:id="buttonMarket02" layoutX="645.0" layoutY="1232.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="70.0" prefWidth="85.0" text="Button" />
+                  <Button fx:id="buttonMarket03" layoutX="748.0" layoutY="1261.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="70.0" prefWidth="85.0" text="Button" />
+                  <Button fx:id="buttonMarket04" layoutX="816.0" layoutY="1338.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="70.0" prefWidth="85.0" text="Button" />
+                  <Label fx:id="blackDie" alignment="CENTER" layoutX="525.0" layoutY="1408.0" prefHeight="71.0" prefWidth="76.0" text="1" textAlignment="CENTER" textFill="#088632">
+                     <font>
+                        <Font name="System Bold" size="48.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="whiteDie" alignment="CENTER" layoutX="632.0" layoutY="1408.0" prefHeight="71.0" prefWidth="76.0" text="2" textAlignment="CENTER" textFill="#088632">
+                     <font>
+                        <Font name="System Bold" size="48.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="orangeDie" alignment="CENTER" layoutX="740.0" layoutY="1408.0" prefHeight="71.0" prefWidth="76.0" text="3" textFill="#088632">
+                     <font>
+                        <Font name="System Bold" size="48.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </content>
+      </ScrollPane>
    </children>
 </AnchorPane>

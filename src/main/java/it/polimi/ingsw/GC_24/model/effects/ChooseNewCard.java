@@ -69,15 +69,6 @@ public class ChooseNewCard extends ImmediateEffect {
 		return hashMap;
 	}
 
-	@Override
-	public void assignParameters(String responseFromClient) {
-	}
-
-	@Override
-	public List<ImmediateEffect> addAllNewEffectsToThisSet(List<ImmediateEffect> secondaryInteractiveEffects) {
-		return secondaryInteractiveEffects;
-	}
-
 	// getters and setters
 	public int getDieValue() {
 		return dieValue;

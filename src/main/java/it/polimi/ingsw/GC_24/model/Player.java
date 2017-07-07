@@ -119,7 +119,7 @@ public class Player implements Serializable {
 	// Prints name of a Player
 	@Override
 	public String toString() {
-		return "Player [myName=" + myName + ", myColour=" + myColour + "]";
+		return myName.toUpperCase() + "---->" + myColour;
 	}
 	
 
