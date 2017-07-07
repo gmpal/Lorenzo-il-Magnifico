@@ -1,12 +1,10 @@
 package it.polimi.ingsw.GC_24.model.cards;
 
-import it.polimi.ingsw.GC_24.model.effects.*;
 import it.polimi.ingsw.GC_24.model.effects.immediate.ImmediateEffect;
 import it.polimi.ingsw.GC_24.model.personalboard.PersonalBoard;
 import it.polimi.ingsw.GC_24.model.values.SetOfValues;
 
 public class Territories extends Development {
-
 
 	/**
 	 * 
@@ -28,23 +26,23 @@ public class Territories extends Development {
 	public void setCardOnPersonalBoard(PersonalBoard personalBoard) {
 		personalBoard.getPersonalTerritories().setCards(this);
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append( "\n[Name = " + name );
-		if (getImmediateEffect()!=null){
+		builder.append("\n[Name = " + name);
+		if (getImmediateEffect() != null) {
 			builder.append(", Immediate Effects = " + getImmediateEffect());
-			if (getImmediateEffect1()!=null)
+			if (getImmediateEffect1() != null)
 				builder.append(" and " + getImmediateEffect1());
 		}
-		if (effectForHarvest!=null){
-			builder.append(", Die Value For Harvest = "+dieValueHarvest +", Harvest Effect = "+effectForHarvest);
+		if (effectForHarvest != null) {
+			builder.append(", Die Value For Harvest = " + dieValueHarvest + ", Harvest Effect = " + effectForHarvest);
 		}
 		builder.append("]");
 		return builder.toString();
 	}
-  
+
 	// getter and setter
 	public int getDieValueHarvest() {
 		return dieValueHarvest;
@@ -61,5 +59,4 @@ public class Territories extends Development {
 	public void setEffectForHarvest(ImmediateEffect effectForHarvest) {
 		this.effectForHarvest = effectForHarvest;
 	}
-
 }

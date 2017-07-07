@@ -4,12 +4,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
-
 import com.google.gson.Gson;
-
 import it.polimi.ingsw.GC_24.devCardJsonFile.GsonBuilders;
 import it.polimi.ingsw.GC_24.model.Player;
-import it.polimi.ingsw.GC_24.model.effects.*;
 import it.polimi.ingsw.GC_24.model.effects.immediate.CouncilPrivilege;
 import it.polimi.ingsw.GC_24.model.effects.immediate.ImmediateEffect;
 import it.polimi.ingsw.GC_24.model.effects.immediate.ValueEffect;
@@ -18,23 +15,21 @@ import it.polimi.ingsw.GC_24.model.places.Place;
 
 public class CouncilPalace extends Area {
 
-
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -4971262420188796920L;
 	private int numPlayers;
 	private static final int COSTDICE = 1;
-	/** max familyMember per player*/
-	private static final int MAXFAM = 4; 
+	/** max familyMember per player */
+	private static final int MAXFAM = 4;
 	private List<Player> temporaryTurn = new ArrayList<>();
-
 	private List<ImmediateEffect> valueListCouncil = new ArrayList<>();
 
 	// constructor
 	public CouncilPalace(int numPlayers) {
 		this.numPlayers = numPlayers;
-    
+
 		try {
 			this.placesArray = createCouncil();
 		} catch (IOException e) {
@@ -43,8 +38,10 @@ public class CouncilPalace extends Area {
 		}
 	}
 
-	// useful methods
-	public ArrayList<Place> createCouncil() throws IOException   {
+	/**
+	 * @return arrayList of empty CouncilPlaces needed for CouncilPalace
+	 */
+	public ArrayList<Place> createCouncil() throws IOException {
 		Gson gson = GsonBuilders.getGsonWithTypeAdapters();
 		String line;
 		BufferedReader br = new BufferedReader(
@@ -70,7 +67,13 @@ public class CouncilPalace extends Area {
 		return placesArray;
 	}
 
-	/** returns the updated list of players' turn*/
+	/**
+	 * checks if a player is already in the players' turn arrayList when placing a
+	 * family member in the Council Palace, and in thet case they won't be added
+	 * 
+	 * @param player
+	 * @return list of players' turn
+	 */
 	public List<Player> updateTurn(Player player) {
 		if (!temporaryTurn.contains(player))
 			temporaryTurn.add(player);
@@ -81,7 +84,7 @@ public class CouncilPalace extends Area {
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("\n");
-		for (Place p : placesArray){
+		for (Place p : placesArray) {
 			if (!p.isAvailable()) {
 				builder.append("[Place occupied by the " + p.getFamMemberOnPlace().getPlayerColour() + " player]");
 			} else {
@@ -92,7 +95,7 @@ public class CouncilPalace extends Area {
 		}
 		return builder.toString();
 	}
-	
+
 	public List<Player> getTemporaryTurn() {
 		return temporaryTurn;
 	}

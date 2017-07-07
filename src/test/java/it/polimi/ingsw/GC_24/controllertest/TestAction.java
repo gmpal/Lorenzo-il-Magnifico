@@ -13,7 +13,7 @@ import it.polimi.ingsw.GC_24.model.effects.immediate.ValueEffect;
 import it.polimi.ingsw.GC_24.model.values.*;
 
 public class TestAction {
-	
+
 	List<ImmediateEffect> immediateEffects;
 	List<ImmediateEffect> immediateEffectsExpected;
 	List<Player> players;
@@ -30,7 +30,7 @@ public class TestAction {
 	SetOfValues values;
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		immediateEffects = new ArrayList<>();
 		immediateEffectsExpected = new ArrayList<>();
 		players = new ArrayList<>();
@@ -44,97 +44,110 @@ public class TestAction {
 		action2 = new HarvestAction(game, "2", "harvest", "1", "4");
 		action3 = new ProductionAction(game, "4", "production", "1", "0");
 		privilege = new CouncilPrivilege("CouncilPrivilege", 1);
-		valueEffect = new ValueEffect("value");		
+		valueEffect = new ValueEffect("value");
 		value = new Coin(0);
 		values = new SetOfValues();
 	}
-	
+
 	@Test
-	public void testGiveValueEffect() throws Exception {
+	public void testGiveValueEffect() {
 		immediateEffects.add(privilege);
 		immediateEffects.add(valueEffect);
 		immediateEffectsExpected.add(privilege);
 		action.giveValueEffect(immediateEffects);
 		assertEquals(immediateEffectsExpected, immediateEffects);
 	}
-	
+
+	/**
+	 * two assertions to verify if verifyIfEnoughServants() works right both in case
+	 * the player have enough servants to perform the action and if they don't
+	 */
 	@Test
-	public void testVerifyIfEnoughServants() throws Exception {
+	public void testVerifyIfEnoughServants() {
 		assertEquals("answerToPlayer", action.verifyIfEnoughServants("answerToPlayer"));
 	}
-	
+
 	@Test
-	public void testVerifyIfEnoughServantsWrong() throws Exception {
-		assertEquals("answerToPlayerYou don't have enough servants to use! \n", action2.verifyIfEnoughServants("answerToPlayer"));
+	public void testVerifyIfEnoughServantsWrong() {
+		assertEquals("answerToPlayerYou don't have enough servants to use! \n",
+				action2.verifyIfEnoughServants("answerToPlayer"));
 	}
-	
+
+	/**
+	 * two assertions to verify if verifyPlaceAvailability() works right both in case
+	 * the place is available and if it isn't
+	 */
 	@Test
-	public void testVerifyPlaceAvailability() throws Exception {
+	public void testVerifyPlaceAvailability() {
 		assertEquals("answerToPlayer", action.verifyPlaceAvailability("answerToPlayer"));
 	}
-	
+
 	@Test
-	public void testVerifyPlaceAvailabilityWrong() throws Exception {
+	public void testVerifyPlaceAvailabilityWrong() {
 		action.getPlace().setFamMemberOnPlace(new FamilyMember(PlayerColour.BLUE));
 		assertEquals("answerToPlayerSorry, place not available!\n", action.verifyPlaceAvailability("answerToPlayer"));
 	}
-	
+
 	@Test
-	public void testVerifyFamilyMemberAvailability() throws Exception {
+	public void testVerifyFamilyMemberAvailability() {
 		assertEquals("answerToPlayer", action.verifyFamilyMemberAvailability("answerToPlayer"));
 	}
-	
+
 	@Test
-	public void testVerifyFamilyMemberAvailabilityWrong() throws Exception {
+	public void testVerifyFamilyMemberAvailabilityWrong() {
 		action2.getPlayer().getMyFamily().getMember1().setAvailable(false);
-		assertEquals("answerToPlayerSorry, this familiar is not available! \n", action.verifyFamilyMemberAvailability("answerToPlayer"));
+		assertEquals("answerToPlayerSorry, this familiar is not available! \n",
+				action.verifyFamilyMemberAvailability("answerToPlayer"));
 	}
-	
+
 	@Test
-	public void testVerifyZoneOccupiedByMe() throws Exception {
+	public void testVerifyZoneOccupiedByMe() {
 		action2.getZone().getFirstEmptyPlace().setFamMemberOnPlace(new FamilyMember(PlayerColour.BLUE));
 		assertEquals("answerToPlayer", action2.verifyZoneOccupiedByMe("answerToPlayer"));
 	}
-	
+
 	@Test
-	public void testVerifyZoneOccupiedByMeWrong() throws Exception {
+	public void testVerifyZoneOccupiedByMeWrong() {
 		action.getZone().getPlacesArray().get(3).setFamMemberOnPlace(player.getMyFamily().getMember2());
-		assertEquals("answerToPlayerThis zone is already occupied by one of your family members. Choose another zone\n", action.verifyZoneOccupiedByMe("answerToPlayer"));
+		assertEquals("answerToPlayerThis zone is already occupied by one of your family members. Choose another zone\n",
+				action.verifyZoneOccupiedByMe("answerToPlayer"));
 	}
-	
+
 	@Test
 	public void testVerifyZoneOccupiedByMeEffect() {
 		action2.getPlacementEverywhereLeaderEffect().add("harvest yellow");
 		action2.getZone().getFirstEmptyPlace().setFamMemberOnPlace(new FamilyMember(PlayerColour.BLUE));
-		assertEquals("answerToPlayerThis zone is already occupied by one of your family members. Choose another zone\n", action2.verifyZoneOccupiedByMe("answerToPlayer"));
+		assertEquals("answerToPlayerThis zone is already occupied by one of your family members. Choose another zone\n",
+				action2.verifyZoneOccupiedByMe("answerToPlayer"));
 	}
-	
+
 	@Test
-	public void testVerifyIfEnoughServantsForThisPlace() throws Exception {
+	public void testVerifyIfEnoughServantsForThisPlace() {
 		assertEquals("answerToPlayer", action2.verifyIfEnoughServantsForThisPlace("answerToPlayer"));
 	}
-	
+
 	@Test
-	public void testVerifyIfEnoughServantsForThisPlaceWrong() throws Exception {
-		assertEquals("answerToPlayerYou have not used enough servants for this place. Please choose another place\n", action3.verifyIfEnoughServantsForThisPlace("answerToPlayer"));
+	public void testVerifyIfEnoughServantsForThisPlaceWrong() {
+		assertEquals("answerToPlayerYou have not used enough servants for this place. Please choose another place\n",
+				action3.verifyIfEnoughServantsForThisPlace("answerToPlayer"));
 	}
-	
+
 	@Test
-	public void testPlaceFamiliar() throws Exception {
+	public void testPlaceFamiliar() {
 		action2.placeFamiliar();
 		assertFalse(action2.getFamilyMember().isAvailable());
 	}
-	
+
 	@Test
-	public void testPayValue() throws Exception {
+	public void testPayValue() {
 		value.setQuantity(3);
 		action2.payValue(value);
 		value.setQuantity(2);
 		assertEquals(value, action2.getPlayer().getMyValues().getCoins());
 	}
-	
+
 	@Test
-	public void testTakeValueFromPlace() throws Exception {
+	public void testTakeValueFromPlace() {
 		action.takeValueFromPlace();
 		values.setInitialValues(1);
 		values.getCoins().addQuantity(1);

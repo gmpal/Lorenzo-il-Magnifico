@@ -5,6 +5,7 @@ import it.polimi.ingsw.GC_24.model.values.SetOfValues;
 import it.polimi.ingsw.GC_24.model.values.Value;
 
 public class SubVicrotyPointsFromSetOfValue extends Effect {
+	
 	/**
 	 * 
 	 */

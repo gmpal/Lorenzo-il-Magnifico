@@ -8,6 +8,7 @@ import it.polimi.ingsw.GC_24.model.personalboard.PersonalCards;
 import it.polimi.ingsw.GC_24.model.values.*;
 
 public class MoltiplicationCards extends Moltiplication {
+
 	/**
 	 * 
 	 */
@@ -23,7 +24,7 @@ public class MoltiplicationCards extends Moltiplication {
 
 	@Override
 	public void moltiplicationEffect(Player player) {
-		System.out.println("Values before:" +player.getMyValues());
+		System.out.println("Values before:" + player.getMyValues());
 		int valueQuantity = this.getValue().getQuantity();
 		PersonalCards correspondingArrayList = this.personalCards.findCardsInPersonalBoard(player.getMyBoard());
 		int sizeOfArray = correspondingArrayList.getCards().size();
@@ -31,7 +32,7 @@ public class MoltiplicationCards extends Moltiplication {
 		getValue().setQuantity(newQuantity);
 		SetOfValues setOfValues = player.getMyValues();
 		getValue().addValueToSet(setOfValues);
-		System.out.println("Values after:" +player.getMyValues());
+		System.out.println("Values after:" + player.getMyValues());
 	}
 
 	@Override
@@ -46,7 +47,6 @@ public class MoltiplicationCards extends Moltiplication {
 		return "Moltiplication Cards: for your every " + personalCards.getType() + " card you will receive "
 				+ getValue().toString();
 	}
-
 
 	// getters and setters
 	public PersonalCards getPersonalCards() {

@@ -1,9 +1,7 @@
 package it.polimi.ingsw.GC_24.model.cards;
 
+public class Card implements java.io.Serializable {
 
-public class Card implements java.io.Serializable{	
-	
-	
 	/**
 	 * 
 	 */
@@ -13,6 +11,7 @@ public class Card implements java.io.Serializable{
 
 
 	public Card(String name, String url) {
+
 		this.name = name;
 		this.url=url;
 	}

@@ -7,6 +7,7 @@ import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.values.*;
 
 public class MoltiplicationPoints extends Moltiplication {
+
 	/**
 	 * 
 	 */
@@ -19,10 +20,6 @@ public class MoltiplicationPoints extends Moltiplication {
 		this.value2 = value2;
 	}
 
-	/**
-	 * the player will receive the quantity of value for every quantity of value2 in
-	 * his possession
-	 */
 	@Override
 	public void moltiplicationEffect(Player player) {
 		int factor1 = getValue().getQuantity();
@@ -39,7 +36,6 @@ public class MoltiplicationPoints extends Moltiplication {
 	public void giveImmediateEffect(Player player) {
 		moltiplicationEffect(player);
 	}
-	
 
 	@Override
 	public String toString() {

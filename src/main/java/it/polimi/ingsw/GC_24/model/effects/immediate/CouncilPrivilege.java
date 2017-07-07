@@ -20,9 +20,9 @@ public class CouncilPrivilege extends ImmediateEffect {
 		this.numberOfPrivileges = numberOfPrivileges;
 	}
 
-	// useful methods
-
-	// SETS THE COUNCIL ARRAY WITH THE CORRECT ELEMENTS
+	/**
+	 * @return List<SetOfValues> of the effect one can take with a council privilege
+	 */
 	public List<SetOfValues> CreateCouncil() {
 		List<SetOfValues> al = new ArrayList<>();
 
@@ -90,7 +90,6 @@ public class CouncilPrivilege extends ImmediateEffect {
 		} else {
 			return "noEffect";
 		}
-
 	}
 
 	// getters and setters
@@ -131,5 +130,4 @@ public class CouncilPrivilege extends ImmediateEffect {
 	public void setSet(SetOfValues set) {
 		this.set = set;
 	}
-
 }
