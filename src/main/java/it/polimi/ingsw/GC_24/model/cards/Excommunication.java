@@ -3,7 +3,7 @@ package it.polimi.ingsw.GC_24.model.cards;
 import java.io.Serializable;
 
 import it.polimi.ingsw.GC_24.model.effects.Effect;
-import it.polimi.ingsw.GC_24.model.effects.PermanentEffect;
+import it.polimi.ingsw.GC_24.model.effects.permanent.PermanentEffect;
 import it.polimi.ingsw.GC_24.model.values.FaithPoint;
 
 public class Excommunication implements Serializable {
@@ -57,4 +57,12 @@ public class Excommunication implements Serializable {
 	public void setRequiremetsForExcommunication(FaithPoint requiremetsForExcommunication) {
 		this.requiremetsForExcommunication = requiremetsForExcommunication;
 	}
+
+	@Override
+	public String toString() {
+		return "Excommunication [permanentEffect=" + permanentEffect + ", effect=" + effect + ", round=" + round
+				+ ", requiremetsForExcommunication=" + requiremetsForExcommunication + "]";
+	}
+	
+	
 }

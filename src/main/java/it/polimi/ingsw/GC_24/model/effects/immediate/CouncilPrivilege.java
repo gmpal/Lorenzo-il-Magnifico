@@ -1,4 +1,4 @@
-package it.polimi.ingsw.GC_24.model.effects;
+package it.polimi.ingsw.GC_24.model.effects.immediate;
 
 import java.util.*;
 import it.polimi.ingsw.GC_24.model.Player;
@@ -71,7 +71,6 @@ public class CouncilPrivilege extends ImmediateEffect {
 	public void giveImmediateEffect(Player player) {
 		System.out.println("Before"+player.getMyValues());
 		set.addTwoSetsOfValues(player.getMyValues());
-	
 		System.out.println("After"+player.getMyValues());
 	}
 
@@ -122,10 +121,7 @@ public class CouncilPrivilege extends ImmediateEffect {
 		return map;
 	}
 
-
-	
-	
-
-	
-	
+	public void setSet(SetOfValues set) {
+		this.set = set;
+	}
 }

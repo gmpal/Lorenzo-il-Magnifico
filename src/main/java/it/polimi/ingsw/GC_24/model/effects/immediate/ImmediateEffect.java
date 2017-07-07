@@ -1,9 +1,10 @@
-package it.polimi.ingsw.GC_24.model.effects;
+package it.polimi.ingsw.GC_24.model.effects.immediate;
 
 import java.util.HashMap;
 import java.util.List;
 
 import it.polimi.ingsw.GC_24.model.Player;
+import it.polimi.ingsw.GC_24.model.effects.Effect;
 
 public abstract class ImmediateEffect extends Effect {
 	/**

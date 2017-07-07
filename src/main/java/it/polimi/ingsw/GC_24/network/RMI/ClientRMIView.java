@@ -1,7 +1,6 @@
 package it.polimi.ingsw.GC_24.network.RMI;
 
 import java.rmi.RemoteException;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
@@ -180,17 +179,6 @@ public class ClientRMIView extends MyObservable implements ClientViewRemote, MyO
 		 		serverStub.sendAnswerVatican(playerRequest);
 		 	}
 			
-		
 	}
-
-
-
-
-
-
-
 	
-
-	
-
 }

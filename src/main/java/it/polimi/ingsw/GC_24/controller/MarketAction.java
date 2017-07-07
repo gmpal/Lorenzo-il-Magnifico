@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.polimi.ingsw.GC_24.model.Model;
-import it.polimi.ingsw.GC_24.model.effects.ImmediateEffect;
+import it.polimi.ingsw.GC_24.model.effects.immediate.ImmediateEffect;
 import it.polimi.ingsw.GC_24.model.places.MarketPlace;
 import it.polimi.ingsw.GC_24.model.values.Servant;
 

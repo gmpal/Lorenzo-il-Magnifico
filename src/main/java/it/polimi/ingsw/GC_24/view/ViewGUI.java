@@ -1,5 +1,6 @@
 package it.polimi.ingsw.GC_24.view;
 
+
 import java.util.List;
 
 import it.polimi.ingsw.GC_24.gui.MainClass;
@@ -101,6 +102,7 @@ public class ViewGUI extends View {
 				System.out.println("*********************");
 		});
 	}
+
 
 	@Override
 	public void updateTurn(List<String> playerTurn) {

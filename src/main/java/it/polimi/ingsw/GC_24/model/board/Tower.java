@@ -12,9 +12,9 @@ import com.google.gson.Gson;
 
 import it.polimi.ingsw.GC_24.devCardJsonFile.GsonBuilders;
 import it.polimi.ingsw.GC_24.model.cards.Development;
-import it.polimi.ingsw.GC_24.model.effects.CouncilPrivilege;
-import it.polimi.ingsw.GC_24.model.effects.ImmediateEffect;
-import it.polimi.ingsw.GC_24.model.effects.ValueEffect;
+import it.polimi.ingsw.GC_24.model.effects.immediate.CouncilPrivilege;
+import it.polimi.ingsw.GC_24.model.effects.immediate.ImmediateEffect;
+import it.polimi.ingsw.GC_24.model.effects.immediate.ValueEffect;
 import it.polimi.ingsw.GC_24.model.places.Place;
 import it.polimi.ingsw.GC_24.model.places.TowerPlace;
 

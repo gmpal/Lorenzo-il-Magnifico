@@ -1,4 +1,4 @@
-package it.polimi.ingsw.GC_24.model.effects;
+package it.polimi.ingsw.GC_24.model.effects.immediate;
 
 import java.util.*;
 
@@ -11,7 +11,7 @@ public class PerformProduction extends PerformActivity {
 	 * 
 	 */
 	private static final long serialVersionUID = 4975317837362387770L;
-	private List<ImmediateEffect> immediateEffectsProduction  = new ArrayList<>();;
+	private List<ImmediateEffect> immediateEffectsProduction  = new ArrayList<>();
 
 	// constructor
 	public PerformProduction(String name, int dieValue) {
@@ -35,10 +35,10 @@ public class PerformProduction extends PerformActivity {
 			}
 			
 			if (b.getDieValueProduction() <= dieValue) {
-				if (im != null) {
+				if (im != null && !(im instanceof ValueEffect)) {
 					immediateEffectsProduction.add(im);
 				}
-				if (im1 != null) {
+				if (im1 != null && !(im1 instanceof ValueEffect)) {
 					immediateEffectsProduction.add(im1);
 				}
 			}

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.GC_24.model.effects;
+package it.polimi.ingsw.GC_24.model.effects.permanent;
 
 import it.polimi.ingsw.GC_24.model.personalboard.PersonalCards;
 import it.polimi.ingsw.GC_24.model.values.SetOfValues;

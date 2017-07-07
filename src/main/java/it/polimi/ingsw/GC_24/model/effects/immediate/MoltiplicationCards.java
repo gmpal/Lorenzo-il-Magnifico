@@ -1,4 +1,4 @@
-package it.polimi.ingsw.GC_24.model.effects;
+package it.polimi.ingsw.GC_24.model.effects.immediate;
 
 import java.util.HashMap;
 import java.util.List;
@@ -40,13 +40,15 @@ public class MoltiplicationCards extends Moltiplication {
 		moltiplicationEffect(player);
 		System.out.println("Moltiplication effect given");
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Moltiplication Cards: for your every " + personalCards.getType() + " card you will receive " + getValue().toString();
+		return "Moltiplication Cards: for your every " + personalCards.getType() + " card you will receive "
+				+ getValue().toString();
 	}
 
-	//getters and setters
+
+	// getters and setters
 	public PersonalCards getPersonalCards() {
 		return personalCards;
 	}
@@ -54,9 +56,4 @@ public class MoltiplicationCards extends Moltiplication {
 	public void setPersonalCards(PersonalCards personalCards) {
 		this.personalCards = personalCards;
 	}
-
-	
-
-
-	
 }

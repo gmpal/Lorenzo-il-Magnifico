@@ -5,18 +5,15 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Serializable;
 import com.google.gson.Gson;
-import com.sun.xml.internal.bind.v2.runtime.Name;
-
 import java.util.*;
-
 import it.polimi.ingsw.GC_24.devCardJsonFile.GsonBuilders;
 import it.polimi.ingsw.GC_24.model.board.Board;
 import it.polimi.ingsw.GC_24.model.cards.Deck;
 import it.polimi.ingsw.GC_24.model.cards.Excommunication;
 import it.polimi.ingsw.GC_24.model.cards.Leader;
 import it.polimi.ingsw.GC_24.model.dice.SetOfDice;
-import it.polimi.ingsw.GC_24.model.effects.IncreaseDieValueActivity;
-import it.polimi.ingsw.GC_24.model.effects.PermanentEffect;
+import it.polimi.ingsw.GC_24.model.effects.permanent.IncreaseDieValueActivity;
+import it.polimi.ingsw.GC_24.model.effects.permanent.PermanentEffect;
 import it.polimi.ingsw.GC_24.model.values.SetOfValues;
 import it.polimi.ingsw.GC_24.network.Server;
 import it.polimi.ingsw.GC_24.observers.MyObservable;
@@ -32,10 +29,10 @@ public class Model extends MyObservable implements Serializable {
 	private Board board;
 	private Player currentPlayer;
 	private State gameState;
+	private Ranking ranking;
 
 	private SetOfDice dice;
 
-	private List<Ranking> rankings;
 	private HashMap<String, Object> hm;
 	private Deck cards;
 	private List<Excommunication> excommunicationDeck = new ArrayList<>();
@@ -59,10 +56,10 @@ public class Model extends MyObservable implements Serializable {
 		this.currentPlayer = null;
 		this.gameState = State.WAITINGFORPLAYERONE;
 		this.dice = null;
-		this.rankings = new ArrayList<>();
 		this.counter = 0;
 		this.modelNumber = modelNumber;
 		this.cards = null;
+		this.ranking = null;
 	}
 
 	/**
@@ -163,10 +160,8 @@ System.out.println("**FLAG1**");
 			p.setMyColour(PlayerColour.valueOf(PlayerColour.getValues().get(players.indexOf(p))));
 			p.setMyFamily(new Family(p.getMyColour()));
 			p.getMyFamily().setFamily(this.dice);
-			rankings.add(new Ranking(p));
-			
 		}
-		System.out.println("**FLAG4**");
+		ranking = new Ranking(players);
 	}
 
 	public void updateModel() {
@@ -399,6 +394,13 @@ System.out.println("**FLAG1**");
 		this.excommunicationDeck = excommunicationDeck;
 	}
 
+	public Ranking getRanking() {
+		return ranking;
+	}
+
+	public void setRanking(Ranking ranking) {
+		this.ranking = ranking;
+	}
 
 	public String getTempName() {
 		return tempName;
@@ -407,6 +409,4 @@ System.out.println("**FLAG1**");
 	public void setTempName(String tempName) {
 		this.tempName = tempName;
 	}
-
-
 }
