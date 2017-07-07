@@ -16,10 +16,10 @@ public class Buildings extends Development {
 	private ImmediateEffect productionEffect, productionEffect1;
 
 	// constructor
-	public Buildings(String name, int dieValueProduction, String type, SetOfValues cost,
+	public Buildings(String name, String url, int dieValueProduction, String type, SetOfValues cost,
 			ImmediateEffect immediateEffects, ImmediateEffect immediateEffects1, ImmediateEffect productionEffect,
 			ImmediateEffect productionEffect1, int round) {
-		super(name, type, cost, immediateEffects, immediateEffects1, round);
+		super(name, url, type, cost, immediateEffects, immediateEffects1, round);
 		this.productionEffect = productionEffect;
 		this.productionEffect1 = productionEffect1;
 		this.dieValueProduction = dieValueProduction;

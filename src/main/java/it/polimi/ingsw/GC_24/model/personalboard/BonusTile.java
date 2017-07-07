@@ -9,7 +9,6 @@ import it.polimi.ingsw.GC_24.devCardJsonFile.GsonBuilders;
 import it.polimi.ingsw.GC_24.model.values.SetOfValues;
 
 public class BonusTile implements java.io.Serializable {
-	
 
 	/**
 	 * 
@@ -29,24 +28,25 @@ public class BonusTile implements java.io.Serializable {
 	}
 
 	/**
-	 * This method create a bonus tile from a file named "bonusTiles". The
-	 * attribute advanceRules is false if you want play without advanced rules,
-	 * it is true otherwise. The attribute index is the player's number, it is
-	 * useful to give a different Bonus Tile to players. If are not selected the
-	 * advanced rules all player receive the same Bonus Tile. The file contains
-	 * 5 couple of lines, one for the setOfValues given when you do harvest, one
-	 * for the setOfValues given when you do production, the first couple is
-	 * used when you play with the simple rules, the other couples when you play
-	 * with the advanced rules
-	 * @throws IOException 
+	 * This method create a bonus tile from a file named "bonusTiles". The attribute
+	 * advanceRules is false if you want play without advanced rules, it is true
+	 * otherwise. The attribute index is the player's number, it is useful to give a
+	 * different Bonus Tile to players. If are not selected the advanced rules all
+	 * player receive the same Bonus Tile. The file contains 5 pair of lines, one
+	 * for the setOfValues given when you do harvest, one for the setOfValues given
+	 * when you do production, the first pair is used when the players play with the
+	 * simple rules, the other triplets when the players play with the advanced
+	 * rules.
+	 * 
+	 * @throws IOException
 	 */
-	private void createBonusTile(boolean advancedRules, int index) throws IOException{
+	private void createBonusTile(boolean advancedRules, int index) throws IOException {
 		BufferedReader br;
 		Gson gson = GsonBuilders.getGsonWithTypeAdapters();
 		String line;
 		br = new BufferedReader(new FileReader("src/main/java/it/polimi/ingsw/GC_24/devCardJsonFile/bonusTiles.json"));
 		if (advancedRules) {
-			for (int i = 0; i < 2 + (index-1) * 2; i++) {
+			for (int i = 0; i < 2 + (index - 1) * 2; i++) {
 				line = GsonBuilders.getLine(br);
 			}
 		}
@@ -57,12 +57,12 @@ public class BonusTile implements java.io.Serializable {
 
 	}
 
-	/** adds the harvestValues to the parameter*/
+	/** adds the harvestValues to the parameter */
 	public void giveHarvestValues(SetOfValues v) {
 		harvestValues.addTwoSetsOfValues(v);
 	}
 
-	/** adds the productionValues to the parameter*/
+	/** adds the productionValues to the parameter */
 	public void giveProductionValues(SetOfValues v) {
 		productionValues.addTwoSetsOfValues(v);
 	}

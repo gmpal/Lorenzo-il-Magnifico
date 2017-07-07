@@ -51,15 +51,15 @@ public class TestActionTower {
 		towerPlace6 = new TowerPlace(1, new ValueEffect("value"), null);
 		towerPlace7 = new TowerPlace(1, new ValueEffect("value"), null);
 
-		t1 = new Territories("caio", 1, "territory", new SetOfValues(), null,
+		t1 = new Territories("caio", null, 1, "territory", new SetOfValues(), null,
 				new MoltiplicationPoints("molt", new Wood(3), new FaithPoint(3)), null, 1);
-		t2 = new Territories("caio", 1, "territory", new SetOfValues(),
+		t2 = new Territories("caio", null, 1, "territory", new SetOfValues(),
 				new MoltiplicationPoints("molt", new Wood(3), new FaithPoint(1)), null, null, 1);
-		c1 = new Characters("character", "character", set1, null,
+		c1 = new Characters("character", null, "character", set1, null,
 				new IncreaseDieValueCard("increase", null, 2, set3, new SetOfValues()), null, 1);
-		c2 = new Characters("character", "character", set1, null, null, null, 1);
-		v1 = new Ventures("ciao", "venture", null, null, new VictoryPoint(3), new MilitaryPoint(0), null, null, 1);
-		b1 = new Buildings("building", 1, "building", new SetOfValues(), null, null, null, null, 1);
+		c2 = new Characters("character", null, "character", set1, null, null, null, 1);
+		v1 = new Ventures("ciao", null, "venture", null, null, new VictoryPoint(3), new MilitaryPoint(0), null, null, 1);
+		b1 = new Buildings("building", null, 1, "building", new SetOfValues(), null, null, null, null, 1);
 
 		towerPlace1.setCorrespondingCard(t1);
 		towerPlace2.setCorrespondingCard(t2);
