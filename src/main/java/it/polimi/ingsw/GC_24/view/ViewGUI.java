@@ -1,6 +1,5 @@
 package it.polimi.ingsw.GC_24.view;
 
-
 import java.util.List;
 
 import it.polimi.ingsw.GC_24.gui.MainClass;
@@ -88,21 +87,19 @@ public class ViewGUI extends View {
 		} else {
 			myTurn = false;
 		}
-		
+
 		Platform.runLater(() -> mainClass.getCurrentPlayer().set(currentPlayer));
-		
+
 		if (myTurn) {
 			Platform.runLater(() -> mainClass.showMessage("It's your turn!"));
 		} else {
 			Platform.runLater(() -> mainClass.showMessage("Not your turn!"));
 		}
-		
+
 		Platform.runLater(() -> {
 			mainClass.getCurrentPlayer().set(currentPlayer);
-				System.out.println("*********************");
 		});
 	}
-
 
 	@Override
 	public void updateTurn(List<String> playerTurn) {
@@ -112,9 +109,10 @@ public class ViewGUI extends View {
 	}
 
 	@Override
-	public void setRankings() {
-		// TODO Auto-generated method stub
-		
+	public void setRankings(String rankings) {
+		this.rankings = rankings;
+		Platform.runLater(() -> mainClass.updateRankings(rankings));
+
 	}
 
 }

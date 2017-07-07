@@ -546,9 +546,8 @@ public class ViewCLI extends View {
 		// TODO: staccare la view dal observable
 	}
 
-	@Override
-	public void setRankings() {
-		// TODO Auto-generated method stub
-		
-	}
+  @Override
+	public void setRankings(String rankings) {
+		this.rankings = rankings;
+  }
 }

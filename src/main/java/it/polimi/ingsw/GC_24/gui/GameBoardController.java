@@ -122,20 +122,9 @@ public class GameBoardController implements Initializable {
 
 
 	@FXML
-	private Label whiteDie;
-	@FXML
-	private Label blackDie;
-	@FXML
-	private Label orangeDie;
+	private Label rankings = new Label();
 
-	@FXML
-	private Label coinsLabel;
-	@FXML
-	private Label woodsLabel;
-	@FXML
-	private Label stonesLabel;
-	@FXML
-	private Label servantsLabel;
+
 
 	@FXML
 	private Label player1label = new Label();
@@ -244,15 +233,16 @@ public class GameBoardController implements Initializable {
 		allTheImages.add(characters03);
 		allTheImages.add(characters04);
 
+		allTheImages.add(buildings01);
+		allTheImages.add(buildings02);
+		allTheImages.add(buildings03);
+		allTheImages.add(buildings04);
+		
 		allTheImages.add(ventures01);
 		allTheImages.add(ventures02);
 		allTheImages.add(ventures03);
 		allTheImages.add(ventures04);
 
-		allTheImages.add(buildings01);
-		allTheImages.add(buildings02);
-		allTheImages.add(buildings03);
-		allTheImages.add(buildings04);
 
 		allTheImages.add(personalTerritories01);
 		allTheImages.add(personalTerritories02);
@@ -287,7 +277,6 @@ public class GameBoardController implements Initializable {
 		allTheImages.add(leader03);
 		allTheImages.add(leader04);
 		
-		allTheImages.add(personalTile);
 
 	}
 
@@ -508,6 +497,14 @@ public class GameBoardController implements Initializable {
 
 	public void setAllTheImages(ArrayList<ImageView> allTheImages) {
 		this.allTheImages = allTheImages;
+	}
+
+	public Label getRankings() {
+		return rankings;
+	}
+
+	public void setRankings(Label rankings) {
+		this.rankings = rankings;
 	}
 
 }

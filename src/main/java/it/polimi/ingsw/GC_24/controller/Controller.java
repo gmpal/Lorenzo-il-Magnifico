@@ -1,20 +1,34 @@
 package it.polimi.ingsw.GC_24.controller;
 
 import java.io.IOException;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.StringTokenizer;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
+import it.polimi.ingsw.GC_24.model.Ranking;
 import it.polimi.ingsw.GC_24.model.State;
-import it.polimi.ingsw.GC_24.model.cards.*;
+import it.polimi.ingsw.GC_24.model.cards.Buildings;
+import it.polimi.ingsw.GC_24.model.cards.Development;
+import it.polimi.ingsw.GC_24.model.cards.Leader;
+import it.polimi.ingsw.GC_24.model.cards.Requirements;
+import it.polimi.ingsw.GC_24.model.cards.Ventures;
 import it.polimi.ingsw.GC_24.model.effects.immediate.ChooseNewCard;
 import it.polimi.ingsw.GC_24.model.effects.immediate.CouncilPrivilege;
 import it.polimi.ingsw.GC_24.model.effects.immediate.ImmediateEffect;
 import it.polimi.ingsw.GC_24.model.effects.permanent.IncreaseDieValueCard;
 import it.polimi.ingsw.GC_24.model.effects.permanent.SubVicrotyPointsFromSetOfValue;
 import it.polimi.ingsw.GC_24.model.places.TowerPlace;
-import it.polimi.ingsw.GC_24.model.values.*;
+import it.polimi.ingsw.GC_24.model.values.MilitaryPoint;
+import it.polimi.ingsw.GC_24.model.values.SetOfValues;
+import it.polimi.ingsw.GC_24.model.values.VictoryPoint;
 import it.polimi.ingsw.GC_24.observers.MyObservable;
 import it.polimi.ingsw.GC_24.observers.MyObserver;
 
@@ -152,11 +166,25 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	}
 
+	public void sendRankings() {
+		String rankings = game.getRanking().toString();
+		hashMap = new HashMap<>();
+		hashMap.put("rankings", rankings);
+		notifyMyObservers(hashMap);
+	}
+	
 	public void sendBoardInformation() {
+		
 		String[] boardInformation = game.prepareBoardInformation();
 		hashMap = new HashMap<>();
 		hashMap.put("boardInformation", boardInformation);
 		notifyMyObservers(hashMap);
+		
+		game.setRanking( new Ranking(playerTurn));
+		sendRankings();
+		System.out.println(game.getRanking());
+		System.out.println(playerTurn);
+		
 	}
 
 	public void sendPersonalInformationToEveryOne() {
