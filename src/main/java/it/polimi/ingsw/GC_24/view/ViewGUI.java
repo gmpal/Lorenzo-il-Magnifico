@@ -112,6 +112,7 @@ public class ViewGUI extends View {
 	public void setRankings(String rankings) {
 		this.rankings = rankings;
 		Platform.runLater(() -> mainClass.updateRankings(rankings));
+
 	}
 
 }

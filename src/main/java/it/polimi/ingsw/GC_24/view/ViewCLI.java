@@ -33,8 +33,8 @@ public class ViewCLI extends View {
 
 		System.out.println("\nChoose Action:\n" + "a)Show Board\n" + "b)Show Personal Board\n"
 				+ "c)Show Family Members\n" + "d)Show my Resources\n" + "e)Show Leader Cards\n"
-				+ "f)Show Active Effects\n" + "g)Place Family Member\n" + "h)Activate a Leader Card\n"
-				+ "i)Discard a Leader Card\n" + "j)End Turn\n" + "k)Exit");
+				+ "f)Show Active Effects\n" + "g)Show Rankings\n" + "h)Place Family Member\n" + "i)Activate a Leader Card\n"
+				+ "j)Discard a Leader Card\n" + "k)Exit");
 
 		String command = scanner.nextLine();
 
@@ -64,7 +64,11 @@ public class ViewCLI extends View {
 			System.out.println("\nOneTimePerTurn Effects --> " + oneTimePerTurnEffects);
 
 
-		} else if (command.equalsIgnoreCase("g")) {
+		}  else if (command.equalsIgnoreCase("g")) {
+
+			System.out.println(rankings);
+
+		}else if (command.equalsIgnoreCase("h")) {
 
 			if (myTurn) {
 				System.out.println(family);
@@ -84,7 +88,7 @@ public class ViewCLI extends View {
 				System.out.println("Not your turn. You can't do any action.\n");
 			}
 
-		} else if (command.equalsIgnoreCase("h")) {
+		} else if (command.equalsIgnoreCase("i")) {
 
 			if (myTurn) {
 				System.out.println(personalLeaders);
@@ -99,7 +103,7 @@ public class ViewCLI extends View {
 				System.out.println("Not your turn. You can't do any action.\n");
 			}
 
-		} else if (command.equalsIgnoreCase("i")) {
+		} else if (command.equalsIgnoreCase("j")) {
 
 			if (myTurn) {
 				System.out.println(personalLeaders);
@@ -113,15 +117,11 @@ public class ViewCLI extends View {
 			} else {
 				System.out.println("Not your turn. You can't do any action.\n");
 			}
-
-		} else if (command.equalsIgnoreCase("j")) {
-			command = "end";
-			System.out.println("This function is not been implemented yet");
-			// TODO: gestione della fine del turno
 		} else if (command.equalsIgnoreCase("k")) {
-			System.out.println("This function is not been implemented yet");
-			// break;
-			// TODO:gestire la disconnessione;
+			disconnection();
+			if (command.contains("cancel")) {
+				System.out.println("Action cancelled");
+			}
 		} else {
 			System.out.println("Wrong character");
 		}
@@ -148,7 +148,24 @@ public class ViewCLI extends View {
 		System.out.println(council);
 
 	}
-
+	
+	private String disconnection() {
+		String commandExit;
+		System.out.println("Are you sure you want to quit the game? (Y/N)");
+		commandExit = scanner.nextLine();
+		while (!commandExit.equalsIgnoreCase("Y") || commandExit.equalsIgnoreCase("N")) {
+			
+			System.out.println("Wrong choice, try again");
+			commandExit = scanner.nextLine();
+		}
+		if (commandExit.equalsIgnoreCase("N")) {
+			commandExit = "cancel";
+		} else {
+			commandExit = "disconnect";
+		}
+		return commandExit;
+	}
+	
 	private String choosePlace(String command) {
 		String commandZone;
 		String floor = "floor";
@@ -316,8 +333,7 @@ public class ViewCLI extends View {
 			System.out.println("Not your turn!");
 		}
 	}
-
-
+	
 	/**
 	 * this method lets the user choose between two alternative costs. It contains a
 	 * Military Point value because the alternative values are always associated
@@ -530,10 +546,8 @@ public class ViewCLI extends View {
 		// TODO: staccare la view dal observable
 	}
 
-	@Override
+  @Override
 	public void setRankings(String rankings) {
 		this.rankings = rankings;
-		
-	}
-
+  }
 }

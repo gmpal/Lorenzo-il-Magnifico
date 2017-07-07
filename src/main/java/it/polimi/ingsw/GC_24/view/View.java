@@ -252,16 +252,7 @@ public abstract class View extends MyObservable implements MyObserver {
 		this.name = name;
 	}
 
-
 	public String getRankings() {
 		return rankings;
 	}
-
-
-
-	
-
-
-
-
 }

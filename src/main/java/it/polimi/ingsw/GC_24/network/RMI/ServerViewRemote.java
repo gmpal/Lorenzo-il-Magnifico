@@ -2,9 +2,6 @@ package it.polimi.ingsw.GC_24.network.RMI;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import it.polimi.ingsw.GC_24.model.values.SetOfValues;
-
-
 
 public interface ServerViewRemote extends Remote {
 

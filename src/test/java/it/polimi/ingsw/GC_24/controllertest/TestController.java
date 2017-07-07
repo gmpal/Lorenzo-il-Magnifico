@@ -71,25 +71,25 @@ public class TestController {
 		playerTurn.add(player3);
 		ex1 = new Excommunication(null,
 				new NoVictoryPointsFromCard("noVictoryPointsFromTerritories", new PersonalTerritories()), 1,
-				new FaithPoint(3));
+				new FaithPoint(3), null);
 		ex2 = new Excommunication(null,
 				new NoVictoryPointsFromCard("noVictoryPointsFromCharacters", new PersonalCharacters()), 3,
-				new FaithPoint(5));
+				new FaithPoint(5), null);
 		ex3 = new Excommunication(null,
 				new NoVictoryPointsFromCard("noVictoryPointsFromVentures", new PersonalVentures()), 3,
-				new FaithPoint(5));
+				new FaithPoint(5), null);
 		ex4 = new Excommunication(null,
 				new SubVicrotyPointsFromSetOfValue("subMilitaryPoints", setEx, new VictoryPoint(1)), 3,
-				new FaithPoint(5));
+				new FaithPoint(5), null);
 		ex5 = new Excommunication(null,
 				new SubVicrotyPointsFromSetOfValue("subVictoryPoints", setEx5, new VictoryPoint(1)), 3,
-				new FaithPoint(5));
+				new FaithPoint(5), null);
 		ex6 = new Excommunication(null,
 				new SubVicrotyPointsFromSetOfValue("subResourcesPoints", null, new VictoryPoint(1)), 3,
-				new FaithPoint(5));
+				new FaithPoint(5), null);
 		ex7 = new Excommunication(null,
 				new SubVicrotyPointsFromSetOfValue("subCostBuildings", setEx7, new VictoryPoint(1)), 3,
-				new FaithPoint(5));
+				new FaithPoint(5), null);
 		territory1 = new Territories("territory1", null, 1, null, null, null, null, null, 1);
 		territory2 = new Territories("territory2", null, 1, null, null, null, null, null, 2);
 		territory3 = new Territories("territory3", null, 1, null, null, null, null, null, 3);
