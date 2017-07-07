@@ -10,7 +10,7 @@ import it.polimi.ingsw.GC_24.model.effects.permanent.PermanentEffect;
 import it.polimi.ingsw.GC_24.model.places.HarvestPlace;
 import it.polimi.ingsw.GC_24.model.values.Servant;
 
-public class HarvestAction extends Action {
+public class HarvestAction extends ActivityAction {
 	private List<ImmediateEffect> immediateEffects = new ArrayList<>();
 	private HarvestPlace harvestPlace;
 	private int finalActionValue = 0;
@@ -20,7 +20,7 @@ public class HarvestAction extends Action {
 		this.harvestPlace = (HarvestPlace) place;
 	}
 
-	@Override
+	/*@Override
 	public String verify() {
 		String answerToPlayer = "Answer: \n";
 
@@ -34,7 +34,7 @@ public class HarvestAction extends Action {
 			return "ok";
 		else
 			return answerToPlayer;
-	}
+	}*/
 
 	@Override
 	public List<ImmediateEffect> run() {
