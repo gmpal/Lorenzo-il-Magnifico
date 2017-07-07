@@ -14,10 +14,10 @@ public class Territories extends Development {
 	private ImmediateEffect effectForHarvest;
 
 	// constructor
-	public Territories(String name, int dieValueHarvest, String type, SetOfValues cost,
+	public Territories(String name, String url, int dieValueHarvest, String type, SetOfValues cost,
 			ImmediateEffect immediateEffects, ImmediateEffect immediateEffects1, ImmediateEffect effectForHarvest,
 			int round) {
-		super(name, type, cost, immediateEffects, immediateEffects1, round);
+		super(name, url, type, cost, immediateEffects, immediateEffects1, round);
 		this.effectForHarvest = effectForHarvest;
 		this.dieValueHarvest = dieValueHarvest;
 	}

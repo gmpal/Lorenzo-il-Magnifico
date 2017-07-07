@@ -37,26 +37,6 @@ public class MoltiplicationPoints extends Moltiplication {
 		moltiplicationEffect(player);
 	}
 
-	// Not necessary methods, but better than choosing with if...
-	@Override
-	public String generateParametersRequest() {
-		return null;
-	}
-
-	@Override
-	public HashMap<String, Object> generateHashMapToSend(String response) {
-		return null;
-	}
-
-	@Override
-	public void assignParameters(String responseFromClient) {
-	}
-
-	@Override
-	public List<ImmediateEffect> addAllNewEffectsToThisSet(List<ImmediateEffect> secondaryInteractiveEffects) {
-		return secondaryInteractiveEffects;
-	}
-
 	@Override
 	public String toString() {
 		return "Moltiplication Points: for your every " + getValue() + " you will receive " + value2;

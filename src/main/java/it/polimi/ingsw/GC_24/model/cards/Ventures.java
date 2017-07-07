@@ -15,10 +15,10 @@ public class Ventures extends Development {
 	private Value pointsAtTheEnd;
 
 	// constructor
-	public Ventures(String name, String type, SetOfValues cost, SetOfValues alternativeCost, Value pointsAtTheEnd,
+	public Ventures(String name, String url, String type, SetOfValues cost, SetOfValues alternativeCost, Value pointsAtTheEnd,
 			MilitaryPoint requiredMilitaryPoints, ImmediateEffect immediateEffects, ImmediateEffect immediateEffects1,
 			int round) {
-		super(name, type, cost, immediateEffects, immediateEffects1, round);
+		super(name, url, type, cost, immediateEffects, immediateEffects1, round);
 		this.alternativeCost = alternativeCost;
 		this.pointsAtTheEnd = pointsAtTheEnd;
 		this.requiredMilitaryPoints = requiredMilitaryPoints;

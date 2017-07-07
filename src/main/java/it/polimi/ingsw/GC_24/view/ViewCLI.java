@@ -477,7 +477,12 @@ public class ViewCLI extends View {
 		return choice;
 
 	}
+	@Override
+	public void updateTurn(List<String> playerTurn) {
+		setPlayersTurn(playerTurn);
 
+	}
+	
 	@Override
 	public void setMyTurn(String currentPlayer) {
 		if (currentPlayer.equals(name)) {

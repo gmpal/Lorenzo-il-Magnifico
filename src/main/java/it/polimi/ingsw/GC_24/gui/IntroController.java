@@ -1,13 +1,16 @@
 package it.polimi.ingsw.GC_24.gui;
 
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class IntroController {
@@ -36,10 +39,12 @@ public class IntroController {
 	private RadioButton networkSocket;
 	@FXML
 	private RadioButton networkRMI;
+	@FXML
+	private Label nameLabel;
+	@FXML
+	private Label waitingLabel;
 
-	public void setPrevStage(Stage stage) {
-		this.prevStage = stage;
-	}
+	
 
 	@FXML
 	public void handleSendInfoButton(ActionEvent event) {
@@ -48,20 +53,16 @@ public class IntroController {
 			mainClass.setNameChosen(name);
 			if (networkGroup.getSelectedToggle() == networkSocket) {
 				mainClass.setNetworkChosen("SOC");
-				System.out.println("+++++++"+mainClass.getNetworkChosen());
-			}
+				}
 			if (networkGroup.getSelectedToggle() == networkRMI) {
 				mainClass.setNetworkChosen("RMI");
-				System.out.println("+++++++"+mainClass.getNetworkChosen());
-			}
+				}
 			if (interfaceGroup.getSelectedToggle() == interfaceCLI) {
 				mainClass.setInterfaceChosen("CLI");
-				System.out.println("+++++++"+mainClass.getInterfaceChosen());
-			}
+				}
 			if (interfaceGroup.getSelectedToggle() == interfaceGUI) {
 				mainClass.setInterfaceChosen("GUI");
-				System.out.println("+++++++"+mainClass.getInterfaceChosen());
-			}
+				}
 
 			
 			
@@ -69,14 +70,16 @@ public class IntroController {
 			if (interfaceGroup.getSelectedToggle()==null || networkGroup.getSelectedToggle() == null || name.equals("")) {
 				showWarning();
 			} else {
-				System.out.println("Your name is " + name);
-				System.out.println(mainClass.getInterfaceChosen() + " " + mainClass.getNetworkChosen());
-				Stage stage = (Stage) sendInfoButton.getScene().getWindow();
 				mainClass.createView();
 				mainClass.createNetwork();
 				mainClass.sendName();
-				stage.close();
-			
+				waitingLabel.setText("Waiting for other players...");
+				sendInfoButton.setDisable(true);
+				if (mainClass.getInterfaceChosen().equals("CLI")) {
+					mainClass.getPrimaryStage().close();
+					System.out.println("Waiting for other players...");
+					
+				}
 			}
 			
 			
@@ -87,7 +90,7 @@ public class IntroController {
 
 	public void showWarning() {
 		Alert alert = new Alert(AlertType.WARNING);
-		alert.setTitle("Warning Dialog");
+		alert.setTitle("Field missing");
 		alert.setHeaderText(null);
 		alert.setContentText("Please, fill ALL the required fields");
 
@@ -102,5 +105,25 @@ public class IntroController {
 	public void setMainApp(MainClass mainClass) {
 		this.mainClass = mainClass;
 
+	}
+	
+	public TextField getNameTextField() {
+		return nameTextField;
+	}
+
+	public void setNameTextField(TextField nameTextField) {
+		this.nameTextField = nameTextField;
+	}
+
+	public Label getNameLabel() {
+		return nameLabel;
+	}
+
+	public void setNameLabel(Label nameLabel) {
+		this.nameLabel = nameLabel;
+	}
+
+	public void setPrevStage(Stage stage) {
+		this.prevStage = stage;
 	}
 }

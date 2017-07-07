@@ -19,7 +19,6 @@ import it.polimi.ingsw.GC_24.model.effects.immediate.PerformProduction;
 import it.polimi.ingsw.GC_24.model.effects.immediate.ValueEffect;
 import it.polimi.ingsw.GC_24.model.effects.permanent.ChangeServantsValue;
 import it.polimi.ingsw.GC_24.model.effects.permanent.CustomizedPermanentEffect;
-import it.polimi.ingsw.GC_24.model.effects.permanent.FirstPlacementAtTheEnd;
 import it.polimi.ingsw.GC_24.model.effects.permanent.IncreaseDieValueActivity;
 import it.polimi.ingsw.GC_24.model.effects.permanent.IncreaseDieValueCard;
 import it.polimi.ingsw.GC_24.model.effects.permanent.NoMarketAvailability;
@@ -71,7 +70,6 @@ public class GsonBuilders {
 				.registerSubtype(IncreaseDieValueCard.class, "increaseDieValueCard")
 				.registerSubtype(NoValueEffectFromTowerPlace.class, "noValueEffectFromTowerPlace")
 				.registerSubtype(ChangeServantsValue.class, "changeServantsValue")
-				.registerSubtype(FirstPlacementAtTheEnd.class, "firstPlacementAtTheEnd")
 				.registerSubtype(NoMarketAvailability.class, "noMarketAvailability")
 				.registerSubtype(CustomizedPermanentEffect.class, "customizedPermanentEffect")
 				.registerSubtype(SubSetOfValues.class, "subSetOfValues");

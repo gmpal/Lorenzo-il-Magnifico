@@ -17,9 +17,9 @@ public abstract class Development extends Card {
 	private int round;
 
 	// constructor
-	public Development(String name, String type, SetOfValues cost, ImmediateEffect immediateEffects,
+	public Development(String name, String url, String type, SetOfValues cost, ImmediateEffect immediateEffects,
 			ImmediateEffect immediateEffects1, int round) {
-		super(name);
+		super(name, url);
 		this.type = type;
 		this.cost = cost;
 		this.immediateEffects = immediateEffects;
