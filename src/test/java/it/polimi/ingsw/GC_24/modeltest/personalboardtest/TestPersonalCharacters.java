@@ -23,8 +23,8 @@ public class TestPersonalCharacters {
 	@Before
 	public void setUp() throws Exception {
 		player = new Player("Giorgia", PlayerColour.RED);
-		character1 = new Characters("Character", "Character", null, null, null, null, 1);
-		character2 = new Characters("Character2", "Character", null, null, null, null, 2);
+		character1 = new Characters("Character", null, "Character", null, null, null, null, 1);
+		character2 = new Characters("Character2", null, "Character", null, null, null, null, 2);
 		characters = new PersonalCharacters();
 		charactersexpected = new PersonalCharacters();
 		victoryPoints = new VictoryPoint(0);
