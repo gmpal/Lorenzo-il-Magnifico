@@ -92,7 +92,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 			sendBoardInformation();
 			sendPersonalInformationToEveryOne();
-
+			sendTurnArray(playerTurn);
 
 			System.out.println("Controller: everything clear and model sent");
 			for (int j = 0; j < 4; j++) {

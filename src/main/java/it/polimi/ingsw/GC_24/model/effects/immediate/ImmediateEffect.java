@@ -25,12 +25,21 @@ public abstract class ImmediateEffect extends Effect {
 	 */
 	public abstract void giveImmediateEffect(Player player);
 	
-	public abstract String generateParametersRequest();
 	
-	public abstract HashMap<String,Object> generateHashMapToSend(String response);
+	public String generateParametersRequest() {
+		return null;
+	}
 	
-	public abstract void assignParameters(String responseFromClient);
+	public HashMap<String,Object> generateHashMapToSend(String response){
+	return null;
+	}
+	
+	public void assignParameters(String responseFromClient) {
+		
+	}
 
-	public abstract List<ImmediateEffect> addAllNewEffectsToThisSet(List<ImmediateEffect> secondaryInteractiveEffects);
+	public List<ImmediateEffect> addAllNewEffectsToThisSet(List<ImmediateEffect> secondaryInteractiveEffects){
+		return secondaryInteractiveEffects;
+	}
 
 }

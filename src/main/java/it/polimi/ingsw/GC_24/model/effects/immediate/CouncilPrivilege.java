@@ -121,15 +121,6 @@ public class CouncilPrivilege extends ImmediateEffect {
 		return map;
 	}
 
-	@Override
-	public List<ImmediateEffect> addAllNewEffectsToThisSet(List<ImmediateEffect> secondaryInteractiveEffects) {
-		return secondaryInteractiveEffects;
-	}
-
-	public SetOfValues getSet() {
-		return set;
-	}
-
 	public void setSet(SetOfValues set) {
 		this.set = set;
 	}
