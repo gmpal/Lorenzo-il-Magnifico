@@ -177,8 +177,7 @@ public class ClientRMIView extends MyObservable implements ClientViewRemote, MyO
 			if (command.contains("answerForVatican")) {
 		 		String playerRequest = (String) request.get("answerForVatican");
 		 		serverStub.sendAnswerVatican(playerRequest);
-		 	}
-			
+		 	}			
 	}
 	
 }

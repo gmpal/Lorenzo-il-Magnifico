@@ -111,4 +111,10 @@ public class ViewGUI extends View {
 
 	}
 
+	@Override
+	public void setRankings() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

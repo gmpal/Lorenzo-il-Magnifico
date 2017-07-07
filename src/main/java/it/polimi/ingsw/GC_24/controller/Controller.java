@@ -921,7 +921,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				secondaryInteractiveEffects = effect.addAllNewEffectsToThisSet(secondaryInteractiveEffects);
 
 			}
-			if (!secondaryInteractiveEffects.isEmpty()) {
+			if (secondaryInteractiveEffects != null) {
 				System.out.println("Controller --> la lista non è vuota");
 				System.out.println("Controller --> ecco la lista: " + secondaryInteractiveEffects);
 				System.out.println("Controller --> la sto gestendo ");

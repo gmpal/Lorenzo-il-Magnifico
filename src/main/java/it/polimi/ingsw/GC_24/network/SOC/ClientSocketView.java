@@ -67,7 +67,6 @@ public class ClientSocketView extends MyObservable implements Runnable, MyObserv
 			objToServer.writeObject(change);
 			objToServer.flush();
 			objToServer.reset();
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

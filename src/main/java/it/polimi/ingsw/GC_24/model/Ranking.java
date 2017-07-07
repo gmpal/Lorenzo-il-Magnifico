@@ -7,7 +7,6 @@ import it.polimi.ingsw.GC_24.model.values.*;
 
 public class Ranking implements java.io.Serializable {
 	
-	
 	/**
 	 * 
 	 */
@@ -24,17 +23,20 @@ public class Ranking implements java.io.Serializable {
 		this.militaryPoints = createList(new MilitaryPoint(0));
 		this.faithPoints = createList(new FaithPoint(0));
 	}
-	
+
 	public List<String> createList(Value point) {
 		List<Integer> points = sortPoints(point);
 		List<String> stringPoints = new ArrayList<>();
 		if (!sortPoints(point).isEmpty()) {
-			for (int i=0;i<points.size();i++) {
-				for (Player p:players) {
-					if (point.findValueInPlayer(p).getQuantity() == points.get(i)) {
-						stringPoints.add(p.getMyColour()+" player --> "+point.findValueInPlayer(p).getQuantity());
+			List<Player> tempPlayers = new ArrayList<>();
+			for (int i = 0; i < points.size(); i++) {
+				for (Player p : players) {
+					if (!tempPlayers.contains(p) && point.findValueInPlayer(p).getQuantity() == points.get(i)) {
+						stringPoints.add(p.getMyName().toString() + ", " + p.getMyColour().toString() + " player \t--> "
+								+ Integer.toString(point.findValueInPlayer(p).getQuantity()) + "\r\t\t\t");
+						tempPlayers.add(p);
 					}
-			}	
+				}
 			}
 		}
 		return stringPoints;

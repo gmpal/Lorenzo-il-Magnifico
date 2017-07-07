@@ -208,5 +208,4 @@ public class ServerRMIView extends MyObservable implements ServerViewRemote, MyO
 		hm.put("answerForVatican", request);
 		notifyMyObservers(hm);
 	}
-
 }

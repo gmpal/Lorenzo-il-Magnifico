@@ -58,6 +58,5 @@ public interface ViewInterface extends Runnable, MyObserver {
 
 	public abstract void sendAction(String action);
 	
-	public abstract void sendAnswerForParameters(String answer);
-	
+	public abstract void sendAnswerForParameters(String answer);	
 }
