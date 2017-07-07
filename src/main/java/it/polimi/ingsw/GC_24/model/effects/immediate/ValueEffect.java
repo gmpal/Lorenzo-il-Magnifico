@@ -3,6 +3,7 @@ package it.polimi.ingsw.GC_24.model.effects.immediate;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.values.SetOfValues;
 
+/** this effect will give its resource to the player every time it's called */
 public class ValueEffect extends ImmediateEffect {
 
 	/**

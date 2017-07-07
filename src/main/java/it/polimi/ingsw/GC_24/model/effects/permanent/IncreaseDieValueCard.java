@@ -3,6 +3,10 @@ package it.polimi.ingsw.GC_24.model.effects.permanent;
 import it.polimi.ingsw.GC_24.model.personalboard.PersonalCards;
 import it.polimi.ingsw.GC_24.model.values.SetOfValues;
 
+/**
+ * with this effect the player will have a fixed starting die value when
+ * placing a family member on a certain tower
+ */
 public class IncreaseDieValueCard extends IncreaseDieValueActivity {
 	/**
 	 * 

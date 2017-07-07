@@ -3,6 +3,11 @@ package it.polimi.ingsw.GC_24.model.effects.immediate;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.values.*;
 
+/**
+ * this effect will give the player a certain amount of a resource either for
+ * every fixed quantity of another resource or for the number of a said type of
+ * card
+ */
 public abstract class Moltiplication extends ImmediateEffect {
 
 	/**
