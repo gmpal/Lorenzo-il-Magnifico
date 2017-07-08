@@ -103,6 +103,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			game.getCards().dealCards(game.getBoard(), cardsIndex / 2 + 1);
 			sendBoardInformation();
 			sendPersonalInformationToEveryOne();
+			sendUrlPersonalBoard(game.getCurrentPlayer().getMyBoard().urlPersonalBoard());
 			sendTurnArray(playerTurn);
 
 			System.out.println("Controller: everything clear and model sent");
