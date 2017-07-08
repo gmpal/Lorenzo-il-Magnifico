@@ -4,21 +4,20 @@ import it.polimi.ingsw.GC_24.model.cards.Development;
 import it.polimi.ingsw.GC_24.model.cards.Ventures;
 import it.polimi.ingsw.GC_24.model.values.VictoryPoint;
 
-public class PersonalVentures extends PersonalCards{
-	
+public class PersonalVentures extends PersonalCards {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 473515650189053083L;
 
-	//constructor
+	// constructor
 	public PersonalVentures() {
 		super();
 	}
-	
+
 	@Override
-	public PersonalCards findCardsInPersonalBoard(PersonalBoard playersBoard){
+	public PersonalCards findCardsInPersonalBoard(PersonalBoard playersBoard) {
 		return playersBoard.getPersonalVentures();
 	}
 
@@ -27,6 +26,12 @@ public class PersonalVentures extends PersonalCards{
 		return "Ventures " + getCards();
 	}
 
+	/**
+	 * this conversion to victory points is taken from the points one can get at the
+	 * end of the game written directly on the card. As a result, this method will
+	 * return the sum of the victory points of the venture cards the player got
+	 * during the game
+	 */
 	@Override
 	public VictoryPoint convertCardToVictoryPoints() {
 		Ventures v;
@@ -42,6 +47,5 @@ public class PersonalVentures extends PersonalCards{
 	public String getType() {
 		return "Ventures";
 	}
-	
-	
+
 }

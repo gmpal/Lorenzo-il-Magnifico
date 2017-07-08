@@ -3,7 +3,6 @@ package it.polimi.ingsw.GC_24.model.personalboard;
 import it.polimi.ingsw.GC_24.model.values.VictoryPoint;
 
 public class PersonalCharacters extends PersonalCards {
-	
 
 	/**
 	 * 
@@ -25,6 +24,10 @@ public class PersonalCharacters extends PersonalCards {
 		return "Characters " + getCards();
 	}
 
+	/**
+	 * the player will receive an amount of victory points that equals the number of
+	 * characters they have
+	 */
 	@Override
 	public VictoryPoint convertCardToVictoryPoints() {
 		int numCharacters = this.getCards().size();
