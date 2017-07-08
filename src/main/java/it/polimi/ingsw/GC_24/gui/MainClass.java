@@ -4,10 +4,8 @@ package it.polimi.ingsw.GC_24.gui;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
 
 import it.polimi.ingsw.GC_24.network.Client;
 import it.polimi.ingsw.GC_24.view.View;
@@ -20,10 +18,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -34,6 +35,8 @@ public class MainClass extends Application {
 	private static StringProperty currentPlayer = new SimpleStringProperty();
 	private static StringProperty rankings = new SimpleStringProperty();
 	private static List<ImageView> imagesToTake = new ArrayList<ImageView>();
+	private static List<Button> buttonstoTake = new ArrayList<Button>();
+	
 	private Client client;
 	private Stage primaryStage;
 	private Pane rootLayout;
@@ -52,9 +55,20 @@ public class MainClass extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		
+		StringProperty s = new SimpleStringProperty();
+		s.set("");
+		for (int i = 0; i < 4; i++) {
+			turnList.add(s);
+		}
+		
 		for (int i=0; i<47; i++) {
 			imagesToTake.add(new ImageView());
 }
+		for (int i=0; i<41; i++) {
+			buttonstoTake.add(new Button());
+}
+
 		this.primaryStage = primaryStage;
 		this.client = new Client();
 		initRootLayout();
@@ -112,6 +126,14 @@ public class MainClass extends Application {
 		}
 	}
 
+	public void updateBackgroundButtons(List<String> buttonBackUrls) throws MalformedURLException {
+		for (int i = 0; i<buttonstoTake.size(); i++) {
+			String url = new File(buttonBackUrls.get(i)).toURI()
+					.toURL().toString();
+			buttonstoTake.get(i).backgroundProperty().setValue(new Background(new BackgroundImage(new Image(url),null,null,null,null)));
+		}
+	}
+	
 	public void updateTurnProperties(List<String> playerTurn) {
 		turnList.clear();
 		for (String player : playerTurn) {
@@ -135,7 +157,7 @@ public class MainClass extends Application {
 
 			GameBoardController gameBoardController = loader.getController();
 			gameBoardController.setMainApp(this);
-			initializeTurnListAndSetBindings(gameBoardController);
+			setBindings(gameBoardController);
 
 			Scene gameScene = new Scene(gameBoard);
 			primaryStage.setScene(gameScene);
@@ -145,14 +167,7 @@ public class MainClass extends Application {
 		}
 	}
 
-	private  void initializeTurnListAndSetBindings(GameBoardController gameBoardController) {
-
-		// Initializing the turnList
-		StringProperty s = new SimpleStringProperty();
-		s.set("");
-		for (int i = 0; i < 4; i++) {
-			turnList.add(s);
-		}
+	private  void setBindings(GameBoardController gameBoardController) {
 
 		// Setting the bindings for players labels
 		gameBoardController.getPlayer1label().textProperty().bind(turnList.get(0));
@@ -175,7 +190,10 @@ public class MainClass extends Application {
 		gameBoardController.getRankings().textProperty().bind(rankings);
 		
 		//bindings rankings
-		
+		for ( int i = 0 ; i< buttonstoTake.size(); i++) {
+			gameBoardController.getAllTheButtons().get(i).backgroundProperty().bind(buttonstoTake.get(i).backgroundProperty());
+			
+		}
 	}
 
 	public void showSelectPlayer() {
