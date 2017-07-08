@@ -142,6 +142,16 @@ public class GameBoardController implements Initializable {
 	@FXML
 	private Label currentPlayerLabel = new Label();
 
+	
+	@FXML
+	private Label coinsLabel = new Label();
+	@FXML
+	private Label woodsLabel = new Label();
+	@FXML
+	private Label servantsLabel = new Label();
+	@FXML
+	private Label stonesLabel = new Label();
+	
 	@FXML
 	private Button buttonTerritory01 = new Button();
 	@FXML
@@ -244,13 +254,13 @@ public class GameBoardController implements Initializable {
 	private ImageView familiar4= new ImageView();
 
 	@FXML
-	private Label familiar1Value;
+	private Label familiar1v= new Label();
 	@FXML
-	private Label familiar2Value;
+	private Label familiar2v= new Label();
 	@FXML
-	private Label familiar3Value;
+	private Label familiar3v= new Label();
 	@FXML
-	private Label familiar4Value;
+	private Label familiar4v= new Label();
 	
 	@FXML
 	private ImageView blackDie = new ImageView();
@@ -389,6 +399,10 @@ public class GameBoardController implements Initializable {
 		allTheImages.add(excommunication01);
 		allTheImages.add(excommunication02);
 		allTheImages.add(excommunication03);
+		
+		allTheImages.add(blackDie);
+		allTheImages.add(orangeDie);
+		allTheImages.add(whiteDie);
 
 	}
 
@@ -576,6 +590,32 @@ public class GameBoardController implements Initializable {
 		}
 	}
 
+	
+	public void chooseFamiliar(MouseEvent clickOnFamiliar) {
+		if (clickOnFamiliar.getSource()==familiar1) {
+			familiar2.setVisible(false);
+			familiar3.setVisible(false);
+			familiar4.setVisible(false);
+			
+		}
+		if (clickOnFamiliar.getSource()==familiar2) {
+			familiar1.setVisible(false);
+			familiar3.setVisible(false);
+			familiar4.setVisible(false);
+		}
+		if (clickOnFamiliar.getSource()==familiar3) {
+			familiar2.setVisible(false);
+			familiar1.setVisible(false);
+			familiar4.setVisible(false);
+		}
+		if (clickOnFamiliar.getSource()==familiar4) {
+			familiar2.setVisible(false);
+			familiar3.setVisible(false);
+			familiar1.setVisible(false);
+		}
+	
+	//	TODO:continuare??
+	}
 	public void setMainApp(MainClass mainClass) {
 		this.mainClass = mainClass;
 
@@ -631,6 +671,38 @@ public class GameBoardController implements Initializable {
 
 	public ArrayList<Button> getAllTheButtons() {
 		return allTheButtons;
+	}
+
+	public Label getCoinsLabel() {
+		return coinsLabel;
+	}
+
+	public Label getWoodsLabel() {
+		return woodsLabel;
+	}
+
+	public Label getServantsLabel() {
+		return servantsLabel;
+	}
+
+	public Label getStonesLabel() {
+		return stonesLabel;
+	}
+	
+	public Label getFamiliar1v() {
+		return familiar1v;
+	}
+
+	public Label getFamiliar2v() {
+		return familiar2v;
+	}
+
+	public Label getFamiliar3v() {
+		return familiar3v;
+	}
+
+	public Label getFamiliar4v() {
+		return familiar4v;
 	}
 
 }

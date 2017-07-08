@@ -15,7 +15,7 @@
    <children>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="35.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label text="Choose the familiar you want to use:">
+            <Label text="Choose the family member:">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
@@ -23,24 +23,27 @@
                   <Font size="37.0" />
                </font>
             </Label>
-            <HBox prefHeight="40.0" prefWidth="456.0" spacing="20.0">
+            <HBox alignment="CENTER" prefHeight="40.0" prefWidth="456.0" spacing="20.0">
                <children>
                   <ImageView fx:id="familiar1" fitHeight="100.0" fitWidth="100.0" onMouseClicked="#chosenFamiliar" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../img/blackFamilyMember.PNG" />
                      </image>
                   </ImageView>
-                  <Label fx:id="familiar1Value" text="Label">
+                  <Label fx:id="familiar1v">
                      <padding>
                         <Insets top="40.0" />
                      </padding>
+                     <font>
+                        <Font size="35.0" />
+                     </font>
                   </Label>
                   <ImageView fx:id="familiar2" fitHeight="100.0" fitWidth="66.0" onMouseClicked="#chosenFamiliar" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../img/whiteFamilyMember.PNG" />
                      </image>
                   </ImageView>
-                  <Label fx:id="familiar2Value" text="Label">
+                  <Label fx:id="familiar2v">
                      <padding>
                         <Insets top="40.0" />
                      </padding>
@@ -50,7 +53,7 @@
                         <Image url="@../img/orangeFamilyMember.PNG" />
                      </image>
                   </ImageView>
-                  <Label fx:id="familiar3Value" text="Label">
+                  <Label fx:id="familiar3v">
                      <padding>
                         <Insets top="40.0" />
                      </padding>
@@ -60,7 +63,7 @@
                         <Image url="@../img/neutralFamiliar.PNG" />
                      </image>
                   </ImageView>
-                  <Label fx:id="familiar4Value" text="Label">
+                  <Label fx:id="familiar4v">
                      <padding>
                         <Insets top="40.0" />
                      </padding>

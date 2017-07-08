@@ -187,5 +187,24 @@ public class ViewGUI extends View {
 		});
 
 	}
+	
+	@Override
+	public void parsePersonalInformations(String[] personalInformation) {
+		this.personalTerritories = personalInformation[0];
+		this.personalBuildings = personalInformation[1];
+		this.personalCharacters = personalInformation[2];
+		this.personalVentures = personalInformation[3];
+		this.personalLeaders = personalInformation[4];
+		this.family = personalInformation[5];
+		this.values =	personalInformation[6];	
+		this.colour = personalInformation[7];
+		this.permanentEffects =  personalInformation[8];
+		this.oneTimePerTurnEffects =  personalInformation[9];
+		
+		Platform.runLater(() -> mainClass.parseValuesString(values));
+		Platform.runLater(() -> mainClass.perseFamilyString(family));
+		
+	}
+	
 
 }
