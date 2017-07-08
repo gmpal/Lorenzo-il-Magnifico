@@ -2,6 +2,11 @@ package it.polimi.ingsw.GC_24.model.effects.immediate;
 
 import it.polimi.ingsw.GC_24.model.values.SetOfValues;
 
+/**
+ * this class has been made as a part of the Exchange effect. It represents a
+ * set of resources that can be exchanged for an immediate effect. Sometimes the
+ * Exchange effect will require two of these exchange packages
+ */
 public class ExchangePackage implements java.io.Serializable {
 
 	/**

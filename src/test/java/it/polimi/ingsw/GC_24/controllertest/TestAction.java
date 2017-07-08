@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import it.polimi.ingsw.GC_24.controller.*;
 import it.polimi.ingsw.GC_24.model.*;
+import it.polimi.ingsw.GC_24.model.effects.immediate.ChooseNewCard;
 import it.polimi.ingsw.GC_24.model.effects.immediate.CouncilPrivilege;
 import it.polimi.ingsw.GC_24.model.effects.immediate.ImmediateEffect;
 import it.polimi.ingsw.GC_24.model.effects.immediate.ValueEffect;
@@ -45,6 +46,7 @@ public class TestAction {
 		action3 = new ProductionAction(game, "4", "production", "1", "0");
 		privilege = new CouncilPrivilege("CouncilPrivilege", 1);
 		valueEffect = new ValueEffect("value");
+		chooseNewCard = new ChooseNewCard("chooseNewCard", "Territory", 3, null);
 		value = new Coin(0);
 		values = new SetOfValues();
 	}
@@ -53,7 +55,9 @@ public class TestAction {
 	public void testGiveValueEffect() {
 		immediateEffects.add(privilege);
 		immediateEffects.add(valueEffect);
+		immediateEffects.add(chooseNewCard);
 		immediateEffectsExpected.add(privilege);
+		immediateEffectsExpected.add(chooseNewCard);
 		action.giveValueEffect(immediateEffects);
 		assertEquals(immediateEffectsExpected, immediateEffects);
 	}
@@ -74,8 +78,8 @@ public class TestAction {
 	}
 
 	/**
-	 * two assertions to verify if verifyPlaceAvailability() works right both in case
-	 * the place is available and if it isn't
+	 * two assertions to verify if verifyPlaceAvailability() works right both in
+	 * case the place is available and if it isn't
 	 */
 	@Test
 	public void testVerifyPlaceAvailability() {
@@ -88,6 +92,10 @@ public class TestAction {
 		assertEquals("answerToPlayerSorry, place not available!\n", action.verifyPlaceAvailability("answerToPlayer"));
 	}
 
+	/**
+	 * two assertions to verify if verifyFamilyMemberAvailability() works right both
+	 * in case the family member is available and if it isn't
+	 */
 	@Test
 	public void testVerifyFamilyMemberAvailability() {
 		assertEquals("answerToPlayer", action.verifyFamilyMemberAvailability("answerToPlayer"));
@@ -100,6 +108,13 @@ public class TestAction {
 				action.verifyFamilyMemberAvailability("answerToPlayer"));
 	}
 
+	/**
+	 * three assertions to verify if verifyZoneOccupiedByMe() works right in case
+	 * the player hasn't already placed a coloured family member in the same area,
+	 * the player already positioned in the same place a coloured family member and
+	 * if the Permanent Leader Effect "PlaceEverywhere" saves the colour of the
+	 * player even if they positioned in a place already occupied by another player
+	 */
 	@Test
 	public void testVerifyZoneOccupiedByMe() {
 		action2.getZone().getFirstEmptyPlace().setFamMemberOnPlace(new FamilyMember(PlayerColour.BLUE));
@@ -121,6 +136,10 @@ public class TestAction {
 				action2.verifyZoneOccupiedByMe("answerToPlayer"));
 	}
 
+	/**
+	 * two assertions to verify if verifyIfEnoughServantsForThisPlace() works right both
+	 * in case the player has chosen enough servants to place his family member or not
+	 */
 	@Test
 	public void testVerifyIfEnoughServantsForThisPlace() {
 		assertEquals("answerToPlayer", action2.verifyIfEnoughServantsForThisPlace("answerToPlayer"));
