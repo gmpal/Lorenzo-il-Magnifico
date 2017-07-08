@@ -118,7 +118,12 @@ public class GameBoardController implements Initializable {
 	private ImageView leader04 = new ImageView();
 	@FXML
 	private ImageView personalTile = new ImageView();
-
+	@FXML
+	private ImageView excommunication01 = new ImageView();
+	@FXML
+	private ImageView excommunication02 = new ImageView();
+	@FXML
+	private ImageView excommunication03 = new ImageView();
 
 
 	@FXML
@@ -277,7 +282,11 @@ public class GameBoardController implements Initializable {
 		allTheImages.add(leader03);
 		allTheImages.add(leader04);
 		
-
+		allTheImages.add(excommunication01);
+		allTheImages.add(excommunication02);
+		allTheImages.add(excommunication03);
+		
+	
 	}
 
 	public void chosenFamiliar(MouseEvent clickOnFamiliar) {

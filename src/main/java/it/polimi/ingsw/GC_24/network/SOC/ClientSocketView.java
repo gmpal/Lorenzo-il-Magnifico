@@ -113,6 +113,12 @@ public class ClientSocketView extends MyObservable implements Runnable, MyObserv
 					String answer = view.askForChooseNewCard(question);
 					view.sendAnswerForParameters(answer);
 				}
+				
+				if (command.contains("urlPersonalBoard")) {
+					System.out.println("CSV ---> Ricevuta urlPersonalBoard");
+					ArrayList<String> urlPersonalBoard = (ArrayList<String>) request.get("urlPersonalBoard");
+					view.setUrlPersonalBoard(urlPersonalBoard);
+				}
 
 				if (command.contains("doubleCost")) {
 					System.out.println("CSV --> Ricevuto un costo alternativo");
@@ -151,6 +157,18 @@ public class ClientSocketView extends MyObservable implements Runnable, MyObserv
 			if (command.contains("rankings")) {
 				System.out.println("CSV ---> Ricevuta rankings");
 				view.setRankings((String) request.get("rankings"));
+
+			}
+			
+			if (command.contains("urlExcommunication")) {
+				System.out.println("CSV ---> Ricevuta rankings");
+				view.setUrlExcommunication((ArrayList<String>) request.get("urlExcommunication"));
+
+			}
+			
+			if (command.contains("urlBoard")) {
+				System.out.println("CSV ---> Ricevuta rankings");
+				view.setUrlBoard((ArrayList<String>) request.get("urlBoard"));
 
 			}
 

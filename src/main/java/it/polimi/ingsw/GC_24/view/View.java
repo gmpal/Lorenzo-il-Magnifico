@@ -1,5 +1,6 @@
 package it.polimi.ingsw.GC_24.view;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
@@ -80,7 +81,7 @@ public abstract class View extends MyObservable implements MyObserver {
 
 	public abstract void setMyTurn(String currentPlayer);
 
-
+	
 	
 	
 	//FROM CLIENT TO SERVER
@@ -255,4 +256,23 @@ public abstract class View extends MyObservable implements MyObserver {
 	public String getRankings() {
 		return rankings;
 	}
+
+
+	public void setUrlExcommunication(ArrayList<String> arrayList) {
+		//Overridden in viewGUI
+	}
+	
+	public void setUrlPersonalBoard(ArrayList<String> urlPersonalBoard) {
+		//Overridden in viewGUI
+		
+	}
+	public void setUrlBoard(ArrayList<String> urlBoard) {
+		//Overridden in viewGUI
+		
+	}
+
+
+
+
+	
 }

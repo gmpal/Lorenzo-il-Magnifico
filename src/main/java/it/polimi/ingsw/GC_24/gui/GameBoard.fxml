@@ -6,13 +6,11 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-
 
 <TabPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.GC_24.gui.GameBoardController">
    <tabs>
@@ -27,11 +25,7 @@
                               <Insets />
                            </VBox.margin>
                            <children>
-                              <ImageView fx:id="personalVentures01" fitHeight="139.0" fitWidth="95.0" layoutX="20.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/cards/devcards_f_en_c_76.png" />
-                                 </image>
-                              </ImageView>
+                              <ImageView fx:id="personalVentures01" fitHeight="139.0" fitWidth="95.0" layoutX="20.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
                               <ImageView fx:id="personalVentures02" fitHeight="139.0" fitWidth="95.0" layoutX="125.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
                               <ImageView fx:id="personalVentures03" fitHeight="139.0" fitWidth="95.0" layoutX="235.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
                               <ImageView fx:id="personalVentures04" fitHeight="139.0" fitWidth="95.0" layoutX="340.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
@@ -146,26 +140,10 @@
                                     </HBox>
                                  </children>
                               </VBox>
-                              <ImageView fx:id="leader01" fitHeight="139.0" fitWidth="95.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/leaders/leaders_f_c_20.jpg" />
-                                 </image>
-                              </ImageView>
-                              <ImageView fx:id="leader02" fitHeight="139.0" fitWidth="95.0" layoutX="10.0" layoutY="10.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/leaders/leaders_f_c_10.jpg" />
-                                 </image>
-                              </ImageView>
-                              <ImageView fx:id="leader03" fitHeight="139.0" fitWidth="95.0" layoutX="105.0" layoutY="10.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/leaders/leaders_f_c_06.jpg" />
-                                 </image>
-                              </ImageView>
-                              <ImageView fx:id="leader04" fitHeight="139.0" fitWidth="95.0" layoutX="200.0" layoutY="10.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" HBox.hgrow="NEVER">
-                                 <image>
-                                    <Image url="@../img/leaders/leaders_f_c_01.jpg" />
-                                 </image>
-                              </ImageView>
+                              <ImageView fx:id="leader01" fitHeight="139.0" fitWidth="95.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="leader02" fitHeight="139.0" fitWidth="95.0" layoutX="10.0" layoutY="10.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="leader03" fitHeight="139.0" fitWidth="95.0" layoutX="105.0" layoutY="10.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="leader04" fitHeight="139.0" fitWidth="95.0" layoutX="200.0" layoutY="10.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" HBox.hgrow="NEVER" />
                            </children>
                         </HBox>
                         <HBox alignment="CENTER">
@@ -216,11 +194,7 @@
                               <ImageView fx:id="buildings03" fitHeight="193.0" fitWidth="120.0" layoutX="451.0" layoutY="231.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
                               <ImageView fx:id="buildings02" fitHeight="193.0" fitWidth="120.0" layoutX="451.0" layoutY="437.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
                               <ImageView fx:id="buildings01" fitHeight="193.0" fitWidth="120.0" layoutX="451.0" layoutY="639.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
-                              <ImageView fx:id="ventures04" fitHeight="195.0" fitWidth="135.0" layoutX="664.0" layoutY="27.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/cards/devcards_f_en_c_73.png" />
-                                 </image>
-                              </ImageView>
+                              <ImageView fx:id="ventures04" fitHeight="195.0" fitWidth="120.0" layoutX="671.0" layoutY="42.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
                               <ImageView fx:id="ventures03" fitHeight="193.0" fitWidth="120.0" layoutX="670.0" layoutY="231.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
                               <ImageView fx:id="ventures02" fitHeight="193.0" fitWidth="120.0" layoutX="670.0" layoutY="437.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
                               <ImageView fx:id="ventures01" fitHeight="193.0" fitWidth="120.0" layoutX="670.0" layoutY="639.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
@@ -243,7 +217,7 @@
                               <Button fx:id="buttonHarvest" layoutX="14.0" layoutY="1260.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="71.0" prefWidth="333.0" text="Button" />
                               <Button fx:id="buttonProduction" layoutX="14.0" layoutY="1389.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="79.0" prefWidth="333.0" text="Button" />
                               <Button fx:id="buttonCouncil" layoutX="469.0" layoutY="848.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="95.0" prefWidth="278.0" text="Button" />
-                              <Button fx:id="buttonMarket01" layoutX="542.0" layoutY="1232.0" mnemonicParsing="false" onAction="#towerClickHandler" prefHeight="70.0" prefWidth="85.0" text="Button" />
+                              <Button fx:id="buttonMarket01" layoutX="542.0" layoutY="1232.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="70.0" prefWidth="85.0" text="Button" />
                               <Button fx:id="buttonMarket02" layoutX="645.0" layoutY="1232.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="70.0" prefWidth="85.0" text="Button" />
                               <Button fx:id="buttonMarket03" layoutX="748.0" layoutY="1261.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="70.0" prefWidth="85.0" text="Button" />
                               <Button fx:id="buttonMarket04" layoutX="816.0" layoutY="1338.0" mnemonicParsing="false" onAction="#towerClickHandler" opacity="0.0" prefHeight="70.0" prefWidth="85.0" text="Button" />
@@ -262,6 +236,9 @@
                                     <Font name="System Bold" size="48.0" />
                                  </font>
                               </Label>
+                              <ImageView fx:id="excommunication01" fitHeight="154.0" fitWidth="78.0" layoutX="156.0" layoutY="928.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="excommunication02" fitHeight="154.0" fitWidth="85.0" layoutX="236.0" layoutY="936.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="excommunication03" fitHeight="154.0" fitWidth="85.0" layoutX="321.0" layoutY="928.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
                            </children>
                         </AnchorPane>
                      </content>
