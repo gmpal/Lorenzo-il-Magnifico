@@ -148,6 +148,11 @@ public class ServerRMIView extends MyObservable implements ServerViewRemote, MyO
 				clientstub.updateUrlBoard(urlBoard);
 			}
 			
+			if (command.contains("urlColour")) {
+				ArrayList<String> urlColour = (ArrayList<String>) request.get("urlColour");
+				clientstub.updateUrlColour(urlColour);
+			}
+			
 			if (command.contains("info")) {
 				System.out.println("RMI Server View ---> Ricevute informazioni da mostrare a video");
 				clientstub.show((String) request.get("info"));

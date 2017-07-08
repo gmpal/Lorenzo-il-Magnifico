@@ -16,6 +16,11 @@
 	-fx-background-image: url("sfondo.jpg");
 	-fx-background-size: cover;
 }
+#button1{
+	-fx-background-color: transparent;
+	-fx-background-image: url("blank.png");
+	-fx-background-size: cover;
+}
 
 #welcomePane {
 	-fx-background-color: transparent;

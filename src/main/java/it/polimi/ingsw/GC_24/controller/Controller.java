@@ -29,6 +29,8 @@ import it.polimi.ingsw.GC_24.model.places.TowerPlace;
 import it.polimi.ingsw.GC_24.model.values.MilitaryPoint;
 import it.polimi.ingsw.GC_24.model.values.SetOfValues;
 import it.polimi.ingsw.GC_24.model.values.VictoryPoint;
+import it.polimi.ingsw.GC_24.network.RMI.ServerRMIView;
+import it.polimi.ingsw.GC_24.network.SOC.ServerSocketView;
 import it.polimi.ingsw.GC_24.observers.MyObservable;
 import it.polimi.ingsw.GC_24.observers.MyObserver;
 
@@ -89,7 +91,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		this.currentPlayer = game.getCurrentPlayer();
 		System.out.println("Current PLayer settato!!!");
 		sendPersonalInformationToEveryOne();
-		sendUrlPersonalBoard(game.getCurrentPlayer().getMyBoard().urlPersonalBoard());
+
 		System.out.println("Informazioni inviate!!!");
 		playerTurn = game.getPlayers();
 		System.out.println("turni presi!!!");
@@ -104,6 +106,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			game.getCards().dealCards(game.getBoard(), cardsIndex / 2 + 1);
 			sendBoardInformation();
 			sendPersonalInformationToEveryOne();
+			sendUrlPersonalBoard(game.getCurrentPlayer().getMyBoard().urlPersonalBoard());
 			sendTurnArray(playerTurn);
 
 			System.out.println("Controller: everything clear and model sent");
@@ -112,13 +115,14 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				for (int i = 0; i < playerTurn.size(); i++) {
 					// one familar gone for each player
 					sendUrlBoard(game.getBoard().allUrl());
-					
+					sendUrlPersonalBoard(game.getCurrentPlayer().getMyBoard().urlPersonalBoard());
+          
 					// reset the current player
 					this.currentPlayer = game.getCurrentPlayer();
 					System.out.println("Current Player is ---> " + this.currentPlayer.getMyName());
 
 					sendCurrentPlayer();
-					
+
 					System.out.println("Controller --> Current Player Sent");
 					System.out.println("Controller --> Are  they already playing? " + alreadyPlaying);
 					if (!alreadyPlaying) {
@@ -174,19 +178,19 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		hashMap.put("rankings", rankings);
 		notifyMyObservers(hashMap);
 	}
-	
+
 	public void sendBoardInformation() {
-		
+
 		String[] boardInformation = game.prepareBoardInformation();
 		hashMap = new HashMap<>();
 		hashMap.put("boardInformation", boardInformation);
 		notifyMyObservers(hashMap);
-		
-		game.setRanking( new Ranking(playerTurn));
+
+		game.setRanking(new Ranking(playerTurn));
 		sendRankings();
 		System.out.println(game.getRanking());
 		System.out.println(playerTurn);
-		
+
 	}
 
 	public void sendPersonalInformationToEveryOne() {
@@ -485,8 +489,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	/**
-	 * This method send the list of image urls of cards on the Tower, it is useful
-	 * for the GUI
+	 * This method sends the list of image urls of cards on the Tower, it is useful
+	 * for the GUI.
 	 */
 	public void sendUrlBoard(List<String> urls) {
 		hashMap = new HashMap<>();
@@ -495,8 +499,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	/**
-	 * This method send the list of image urls of cards on the PersonalBoard, it is
-	 * useful for the GUI
+	 * This method sends the list of image urls of cards on the PersonalBoard, it is
+	 * useful for the GUI.
 	 */
 	public void sendUrlPersonalBoard(List<String> urls) {
 		hashMap = new HashMap<>();
@@ -506,11 +510,21 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	/**
 	 * This method send the list of image urls of excommunication tile, it is useful
-	 * for the GUI
+	 * for the GUI.
 	 */
 	public void sendUrlExcommunication() {
 		hashMap = new HashMap<>();
 		hashMap.put("urlExcommunication", game.getUrlExcommunication());
+		notifyMyObservers(hashMap);
+	}
+
+	/**
+	 * This method sends the list of url of image of the player that occupy the
+	 * places, it is useful for GUI.
+	 */
+	public void sendUrlColor(List<String> urls) {
+		hashMap = new HashMap<>();
+		hashMap.put("urlColour", urls);
 		notifyMyObservers(hashMap);
 	}
 
@@ -581,8 +595,57 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			return "sale chosen";
 
 		}
-		
-		else if (command.contains("addPlayer")) {
+
+		else if (command.contains("clientClosed")) {
+			for (int i = 0; i < this.getMyObservers().size(); i++) {
+				if (!(this.getMyObservers().get(i) instanceof ServerRMIView)) {
+					ServerSocketView serverSocketView = (ServerSocketView) this.getMyObservers().get(i);
+					if (serverSocketView.getSocket().isClosed()) {
+						this.unregisterMyObserver(serverSocketView);
+						i--;
+					}
+				}
+			}
+
+			int indexOfCurrentPlayer = 0;
+			// saving actual current PlayerIndex
+			for (int j = 0; j < playerTurn.size(); j++) {
+				if (currentPlayer.equals(playerTurn.get(j))) {
+					indexOfCurrentPlayer = j;
+				}
+				String name = "";
+				String colour = "";
+				int indexRemoved = 0;
+				for (int i = 0; i < playerTurn.size(); i++) {
+					currentPlayer = playerTurn.get(i);
+					try {
+						System.out.println("Trying to send to "+currentPlayer);
+						sendPersonalInformation();
+					} catch (Exception e) {
+						System.out.println("EXCEPTIONAL");
+						name = playerTurn.get(i).getMyName();
+						colour = playerTurn.get(i).getMyColour().toString();
+						indexRemoved = i;
+						playerTurn.remove(i);
+						break;
+					}
+				}
+				if (indexRemoved < indexOfCurrentPlayer) {
+					currentPlayer = playerTurn.get(indexOfCurrentPlayer-1);
+				} else if (indexRemoved > indexOfCurrentPlayer) {
+					currentPlayer = playerTurn.get(indexOfCurrentPlayer);
+				} else {
+					if (indexOfCurrentPlayer == playerTurn.size()) {
+						currentPlayer = playerTurn.get(0);
+					}else {
+						currentPlayer = playerTurn.get(indexOfCurrentPlayer);
+					}
+				}
+				sendInfo(name + ", player #" + indexOfCurrentPlayer + ", colour " + colour + ", disconnected");
+				sendCurrentPlayer();
+			}
+
+		} else if (command.contains("addPlayer")){
 			game.addPlayer();
 
 		} else if (command.contains("leader")) {
@@ -819,6 +882,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		sendBoardInformation();
 		sendPersonalInformationToEveryOne();
 		sendUrlPersonalBoard(game.getCurrentPlayer().getMyBoard().urlPersonalBoard());
+		sendUrlColor(game.getBoard().urlPlayerColour());
 		awakenSleepingClient();
 		System.out.println("Controller --> Richiesta di risveglio inviata");
 

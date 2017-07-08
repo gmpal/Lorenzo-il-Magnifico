@@ -170,6 +170,12 @@ public class ClientSocketView extends MyObservable implements Runnable, MyObserv
 				view.setUrlBoard((ArrayList<String>) request.get("urlBoard"));
 
 			}
+			
+			if (command.contains("urlColour")) {
+				System.out.println("CSV ---> Ricevuta urlColour");
+				view.setUrlColour((ArrayList<String>) request.get("urlColour"));
+
+			}
 
 			if (command.contains("info")) {
 				System.out.println("CSV ---> Ricevute informazioni da mostrare a video");
