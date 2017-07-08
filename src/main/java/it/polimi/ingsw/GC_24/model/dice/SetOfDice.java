@@ -1,5 +1,7 @@
 package it.polimi.ingsw.GC_24.model.dice;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class SetOfDice implements java.io.Serializable {
@@ -11,6 +13,7 @@ public class SetOfDice implements java.io.Serializable {
 	private Die die1;
 	private Die die2;
 	private Die die3;
+	private List<String> urlDice = new ArrayList<>();
 
 	Random rnd = new Random();
 
@@ -30,7 +33,49 @@ public class SetOfDice implements java.io.Serializable {
 		this.die3 = new Die(rnd.nextInt(6) + 1, DieColour.ORANGE);
 	}
 
+	/**
+	 * This method take the image urls of the dice and set they in an ArrayList.
+	 */
+	public List<String> urlDice() {
+		getUrlDie(this.die1);
+		getUrlDie(this.die2);
+		getUrlDie(this.die3);
+		return urlDice;
+	}
+
+	/**
+	 * This method take the image url of one die and set it in an ArrayList.
+	 * 
+	 * @param Die
+	 */
+	public void getUrlDie(Die die) {
+		if (die.getValue() == 1) {
+			urlDice.add("src/main/java/it/polimi/ingsw/GC_24/img/dice/die1.png");
+		} else if (die.getValue() == 2) {
+			urlDice.add("src/main/java/it/polimi/ingsw/GC_24/img/dice/die2.png");
+		} else if (die.getValue() == 3) {
+			urlDice.add("src/main/java/it/polimi/ingsw/GC_24/img/dice/die3.png");
+		} else if (die.getValue() == 4) {
+			urlDice.add("src/main/java/it/polimi/ingsw/GC_24/img/dice/die4.png");
+		} else if (die.getValue() == 5) {
+			urlDice.add("src/main/java/it/polimi/ingsw/GC_24/img/dice/die5.png");
+		} else if (die.getValue() == 6) {
+			urlDice.add("src/main/java/it/polimi/ingsw/GC_24/img/dice/die6.png");
+		}else {
+			urlDice.add("src/main/java/it/polimi/ingsw/GC_24/img/familiar/blank.png");
+		}
+
+	}
+
 	// getters and setters
+	public List<String> getUrlDice() {
+		return urlDice;
+	}
+
+	public void setUrlDice(List<String> urlDice) {
+		this.urlDice = urlDice;
+	}
+
 	public Die getDie1() {
 		return die1;
 	}

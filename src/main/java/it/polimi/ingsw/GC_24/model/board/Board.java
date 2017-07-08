@@ -175,14 +175,18 @@ public class Board implements java.io.Serializable {
 
 	/**
 	 * This method takes the url of image of players in councilPalace, harvest and
-	 * production
+	 * production. Are taken only the first seven place for reason of space in GUI.
 	 */
 	public void urlPlayer(Area areaToUrl) {
-		for (int i = 0; i < areaToUrl.getPlacesArray().size(); i++) {
+		int finalIndex = areaToUrl.getPlacesArray().size();
+		if (finalIndex > 7) {
+			finalIndex = 7;
+		}
+		for (int i = 0; i < finalIndex; i++) {
 			checkurl(areaToUrl.getPlacesArray().get(i));
 		}
-		if (areaToUrl.getPlacesArray().size() < 7) {
-			for (int i = areaToUrl.getPlacesArray().size(); i < 16; i++) {
+		if (finalIndex < 7) {
+			for (int i = areaToUrl.getPlacesArray().size(); i < 7; i++) {
 				urlPlayerColourList.add("src/main/java/it/polimi/ingsw/GC_24/img/familiar/blank.png");
 			}
 		}
@@ -307,5 +311,21 @@ public class Board implements java.io.Serializable {
 
 	public static int getMaxnumplayertolock() {
 		return maxNumPlayerToLock;
+	}
+
+	public List<String> getUrlList() {
+		return urlList;
+	}
+
+	public void setUrlList(List<String> urlList) {
+		this.urlList = urlList;
+	}
+
+	public List<String> getUrlPlayerColourList() {
+		return urlPlayerColourList;
+	}
+
+	public void setUrlPlayerColourList(List<String> urlPlayerColourList) {
+		this.urlPlayerColourList = urlPlayerColourList;
 	}
 }

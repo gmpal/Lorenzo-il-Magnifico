@@ -522,10 +522,12 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	/**
-	 * This method sends the list of url of image of the player that occupy the
-	 * places, it is useful for GUI.
+	 * This method sends the list of urls of image of the player that occupy the
+	 * places. At the end of the list there are the urls of image of the dice, it is
+	 * useful for GUI.
 	 */
 	public void sendUrlColor(List<String> urls) {
+		urls.addAll(game.getDice().urlDice());
 		hashMap = new HashMap<>();
 		hashMap.put("urlColour", urls);
 		notifyMyObservers(hashMap);
@@ -649,7 +651,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			 * indexOfCurrentPlayer + ", colour " + colour + ", disconnected");
 			 * sendCurrentPlayer(); }
 			 */
-
 		} else if (command.contains("addPlayer")) {
 			game.addPlayer();
 
