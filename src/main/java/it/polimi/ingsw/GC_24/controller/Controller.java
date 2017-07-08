@@ -29,6 +29,8 @@ import it.polimi.ingsw.GC_24.model.places.TowerPlace;
 import it.polimi.ingsw.GC_24.model.values.MilitaryPoint;
 import it.polimi.ingsw.GC_24.model.values.SetOfValues;
 import it.polimi.ingsw.GC_24.model.values.VictoryPoint;
+import it.polimi.ingsw.GC_24.network.RMI.ServerRMIView;
+import it.polimi.ingsw.GC_24.network.SOC.ServerSocketView;
 import it.polimi.ingsw.GC_24.observers.MyObservable;
 import it.polimi.ingsw.GC_24.observers.MyObserver;
 
@@ -89,6 +91,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		this.currentPlayer = game.getCurrentPlayer();
 		System.out.println("Current PLayer settato!!!");
 		sendPersonalInformationToEveryOne();
+
 		System.out.println("Informazioni inviate!!!");
 		playerTurn = game.getPlayers();
 		System.out.println("turni presi!!!");
@@ -112,7 +115,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				for (int i = 0; i < playerTurn.size(); i++) {
 					// one familar gone for each player
 					sendUrlBoard(game.getBoard().allUrl());
-
+					sendUrlPersonalBoard(game.getCurrentPlayer().getMyBoard().urlPersonalBoard());
+          
 					// reset the current player
 					this.currentPlayer = game.getCurrentPlayer();
 					System.out.println("Current Player is ---> " + this.currentPlayer.getMyName());
@@ -591,9 +595,57 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			return "sale chosen";
 
 		}
-		/* RMI COMMANDS */
 
-		else if (command.contains("addPlayer")) {
+		else if (command.contains("clientClosed")) {
+			for (int i = 0; i < this.getMyObservers().size(); i++) {
+				if (!(this.getMyObservers().get(i) instanceof ServerRMIView)) {
+					ServerSocketView serverSocketView = (ServerSocketView) this.getMyObservers().get(i);
+					if (serverSocketView.getSocket().isClosed()) {
+						this.unregisterMyObserver(serverSocketView);
+						i--;
+					}
+				}
+			}
+
+			int indexOfCurrentPlayer = 0;
+			// saving actual current PlayerIndex
+			for (int j = 0; j < playerTurn.size(); j++) {
+				if (currentPlayer.equals(playerTurn.get(j))) {
+					indexOfCurrentPlayer = j;
+				}
+				String name = "";
+				String colour = "";
+				int indexRemoved = 0;
+				for (int i = 0; i < playerTurn.size(); i++) {
+					currentPlayer = playerTurn.get(i);
+					try {
+						System.out.println("Trying to send to "+currentPlayer);
+						sendPersonalInformation();
+					} catch (Exception e) {
+						System.out.println("EXCEPTIONAL");
+						name = playerTurn.get(i).getMyName();
+						colour = playerTurn.get(i).getMyColour().toString();
+						indexRemoved = i;
+						playerTurn.remove(i);
+						break;
+					}
+				}
+				if (indexRemoved < indexOfCurrentPlayer) {
+					currentPlayer = playerTurn.get(indexOfCurrentPlayer-1);
+				} else if (indexRemoved > indexOfCurrentPlayer) {
+					currentPlayer = playerTurn.get(indexOfCurrentPlayer);
+				} else {
+					if (indexOfCurrentPlayer == playerTurn.size()) {
+						currentPlayer = playerTurn.get(0);
+					}else {
+						currentPlayer = playerTurn.get(indexOfCurrentPlayer);
+					}
+				}
+				sendInfo(name + ", player #" + indexOfCurrentPlayer + ", colour " + colour + ", disconnected");
+				sendCurrentPlayer();
+			}
+
+		} else if (command.contains("addPlayer")){
 			game.addPlayer();
 
 		} else if (command.contains("leader")) {

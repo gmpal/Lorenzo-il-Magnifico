@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -25,7 +26,7 @@ public class GameBoardController implements Initializable {
 	private static String action;
 
 	private ArrayList<ImageView> allTheImages = new ArrayList<>();
-
+	private ArrayList<Button> allTheButtons = new ArrayList<>();
 
 	@FXML
 	private ImageView territories01 = new ImageView();
@@ -125,11 +126,8 @@ public class GameBoardController implements Initializable {
 	@FXML
 	private ImageView excommunication03 = new ImageView();
 
-
 	@FXML
 	private Label rankings = new Label();
-
-
 
 	@FXML
 	private Label player1label = new Label();
@@ -144,64 +142,106 @@ public class GameBoardController implements Initializable {
 	@FXML
 	private Label currentPlayerLabel = new Label();
 
+	@FXML
+	private Button buttonTerritory01 = new Button();
+	@FXML
+	private Button buttonTerritory02 = new Button();
+	@FXML
+	private Button buttonTerritory03 = new Button();
+	@FXML
+	private Button buttonTerritory04 = new Button();
+	@FXML
+	private Button buttonVentures01 = new Button();
+	@FXML
+	private Button buttonVentures02 = new Button();
+	@FXML
+	private Button buttonVentures03 = new Button();
+	@FXML
+	private Button buttonVentures04 = new Button();
+	@FXML
+	private Button buttonCharacters01 = new Button();
+	@FXML
+	private Button buttonCharacters02 = new Button();
+	@FXML
+	private Button buttonCharacters03 = new Button();
+	@FXML
+	private Button buttonCharacters04 = new Button();
+	@FXML
+	private Button buttonBuildings01 = new Button();
+	@FXML
+	private Button buttonBuildings02 = new Button();
+	@FXML
+	private Button buttonBuildings03 = new Button();
+	@FXML
+	private Button buttonBuildings04 = new Button();
+	@FXML
+	private Button buttonMarket01 = new Button();
+	@FXML
+	private Button buttonMarket02 = new Button();
+	@FXML
+	private Button buttonMarket03 = new Button();
+	@FXML
+	private Button buttonMarket04 = new Button();
+	@FXML
+	private Button buttonCouncil01 = new Button();
+	@FXML
+	private Button buttonCouncil02 = new Button();
+	@FXML
+	private Button buttonCouncil03 = new Button();
+	@FXML
+	private Button buttonCouncil04 = new Button();
+	@FXML
+	private Button buttonCouncil05 = new Button();
+	@FXML
+	private Button buttonCouncil06 = new Button();
+	@FXML
+	private Button buttonCouncil07 = new Button();
 
-	
 	@FXML
-	private Button buttonTerritory01;
+	private Button buttonProduction01 = new Button();
 	@FXML
-	private Button buttonTerritory02;
+	private Button buttonProduction02 = new Button();
 	@FXML
-	private Button buttonTerritory03;
+	private Button buttonProduction03 = new Button();
 	@FXML
-	private Button buttonTerritory04;
+	private Button buttonProduction04 = new Button();
 	@FXML
-	private Button buttonVentures01;
+	private Button buttonProduction05 = new Button();
 	@FXML
-	private Button buttonVentures02;
+	private Button buttonProduction06 = new Button();
 	@FXML
-	private Button buttonVentures03;
-	@FXML
-	private Button buttonVentures04;
-	@FXML
-	private Button buttonCharacters01;
-	@FXML
-	private Button buttonCharacters02;
-	@FXML
-	private Button buttonCharacters03;
-	@FXML
-	private Button buttonCharacters04;
-	@FXML
-	private Button buttonBuildings01;
-	@FXML
-	private Button buttonBuildings02;
-	@FXML
-	private Button buttonBuildings03;
-	@FXML
-	private Button buttonBuildings04;
-	@FXML
-	private Button buttonMarket01;
-	@FXML
-	private Button buttonMarket02;
-	@FXML
-	private Button buttonMarket03;
-	@FXML
-	private Button buttonMarket04;
-	@FXML
-	private Button buttonCouncil;
-	@FXML
-	private Button buttonProduction;
-	@FXML
-	private Button buttonHarvest;
+	private Button buttonProduction07 = new Button();
 
 	@FXML
-	private ImageView familiar1;
+	private Button buttonHarvest01 = new Button();
 	@FXML
-	private ImageView familiar2;
+	private Button buttonHarvest02 = new Button();
 	@FXML
-	private ImageView familiar3;
+	private Button buttonHarvest03 = new Button();
 	@FXML
-	private ImageView familiar4;
+	private Button buttonHarvest04 = new Button();
+	@FXML
+	private Button buttonHarvest05 = new Button();
+	@FXML
+	private Button buttonHarvest06 = new Button();
+	@FXML
+	private Button buttonHarvest07 = new Button();
 
+	@FXML
+	private GridPane councilGridPane;
+	@FXML
+	private GridPane harvestGridPane;
+	@FXML
+	private GridPane produtionGridPane;
+
+	@FXML
+	private ImageView familiar1= new ImageView();
+	@FXML
+	private ImageView familiar2= new ImageView();
+	@FXML
+	private ImageView familiar3= new ImageView();
+	@FXML
+	private ImageView familiar4= new ImageView();
 
 	@FXML
 	private Label familiar1Value;
@@ -211,6 +251,14 @@ public class GameBoardController implements Initializable {
 	private Label familiar3Value;
 	@FXML
 	private Label familiar4Value;
+	
+	@FXML
+	private ImageView blackDie = new ImageView();
+	@FXML
+	private ImageView whiteDie= new ImageView();
+	@FXML
+	private ImageView orangeDie= new ImageView();
+
 
 	@FXML
 	private TextField servantsTextField;
@@ -223,11 +271,68 @@ public class GameBoardController implements Initializable {
 	private Button submitFamiliarButton;
 	@FXML
 	private Button cancelFamiliarButton;
-	
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
+
+		initializeAllTheImages();
+		initializeAllTheButtons();
+
+	}
+
+	private void initializeAllTheButtons() {
+		allTheButtons.add(buttonTerritory01);
+		allTheButtons.add(buttonTerritory02);
+		allTheButtons.add(buttonTerritory03);
+		allTheButtons.add(buttonTerritory04);
+
+		allTheButtons.add(buttonCharacters01);
+		allTheButtons.add(buttonCharacters02);
+		allTheButtons.add(buttonCharacters03);
+		allTheButtons.add(buttonCharacters04);
+
+		allTheButtons.add(buttonBuildings01);
+		allTheButtons.add(buttonBuildings02);
+		allTheButtons.add(buttonBuildings03);
+		allTheButtons.add(buttonBuildings04);
+
+		allTheButtons.add(buttonVentures01);
+		allTheButtons.add(buttonVentures02);
+		allTheButtons.add(buttonVentures03);
+		allTheButtons.add(buttonVentures04);
+
+		allTheButtons.add(buttonCouncil01);
+		allTheButtons.add(buttonCouncil02);
+		allTheButtons.add(buttonCouncil03);
+		allTheButtons.add(buttonCouncil04);
+		allTheButtons.add(buttonCouncil05);
+		allTheButtons.add(buttonCouncil06);
+		allTheButtons.add(buttonCouncil07);
+
+		allTheButtons.add(buttonHarvest01);
+		allTheButtons.add(buttonHarvest02);
+		allTheButtons.add(buttonHarvest03);
+		allTheButtons.add(buttonHarvest04);
+		allTheButtons.add(buttonHarvest05);
+		allTheButtons.add(buttonHarvest06);
+		allTheButtons.add(buttonHarvest07);
+
+		allTheButtons.add(buttonProduction01);
+		allTheButtons.add(buttonProduction02);
+		allTheButtons.add(buttonProduction03);
+		allTheButtons.add(buttonProduction04);
+		allTheButtons.add(buttonProduction05);
+		allTheButtons.add(buttonProduction06);
+		allTheButtons.add(buttonProduction07);
+
+		allTheButtons.add(buttonMarket01);
+		allTheButtons.add(buttonMarket02);
+		allTheButtons.add(buttonMarket03);
+		allTheButtons.add(buttonMarket04);
+
+	}
+
+	private void initializeAllTheImages() {
 		allTheImages.add(territories01);
 		allTheImages.add(territories02);
 		allTheImages.add(territories03);
@@ -242,12 +347,11 @@ public class GameBoardController implements Initializable {
 		allTheImages.add(buildings02);
 		allTheImages.add(buildings03);
 		allTheImages.add(buildings04);
-		
+
 		allTheImages.add(ventures01);
 		allTheImages.add(ventures02);
 		allTheImages.add(ventures03);
 		allTheImages.add(ventures04);
-
 
 		allTheImages.add(personalTerritories01);
 		allTheImages.add(personalTerritories02);
@@ -276,17 +380,16 @@ public class GameBoardController implements Initializable {
 		allTheImages.add(personalVentures04);
 		allTheImages.add(personalVentures05);
 		allTheImages.add(personalVentures06);
-		
+
 		allTheImages.add(leader01);
 		allTheImages.add(leader02);
 		allTheImages.add(leader03);
 		allTheImages.add(leader04);
-		
+
 		allTheImages.add(excommunication01);
 		allTheImages.add(excommunication02);
 		allTheImages.add(excommunication03);
-		
-	
+
 	}
 
 	public void chosenFamiliar(MouseEvent clickOnFamiliar) {
@@ -419,15 +522,24 @@ public class GameBoardController implements Initializable {
 				action = "market 4";
 			}
 
-			if (buttonClick.getSource() == buttonHarvest) {
+			if (buttonClick.getSource() == buttonHarvest01 || buttonClick.getSource() == buttonHarvest02
+					|| buttonClick.getSource() == buttonHarvest03 || buttonClick.getSource() == buttonHarvest04
+					|| buttonClick.getSource() == buttonHarvest05 || buttonClick.getSource() == buttonHarvest06
+					|| buttonClick.getSource() == buttonHarvest07) {
 				action = "harvest 0";
 			}
 
-			if (buttonClick.getSource() == buttonProduction) {
+			if (buttonClick.getSource() == buttonProduction01 || buttonClick.getSource() == buttonProduction02
+					|| buttonClick.getSource() == buttonProduction03 || buttonClick.getSource() == buttonProduction04
+					|| buttonClick.getSource() == buttonProduction05 || buttonClick.getSource() == buttonProduction06
+					|| buttonClick.getSource() == buttonProduction07) {
 				action = "production 0";
 			}
 
-			if (buttonClick.getSource() == buttonCouncil) {
+			if (buttonClick.getSource() == buttonCouncil01 || buttonClick.getSource() == buttonCouncil02
+					|| buttonClick.getSource() == buttonCouncil03 || buttonClick.getSource() == buttonCouncil04
+					|| buttonClick.getSource() == buttonCouncil05 || buttonClick.getSource() == buttonCouncil06
+					|| buttonClick.getSource() == buttonCouncil07) {
 				action = "council 0";
 			}
 		} else {
@@ -515,6 +627,10 @@ public class GameBoardController implements Initializable {
 
 	public void setRankings(Label rankings) {
 		this.rankings = rankings;
+	}
+
+	public ArrayList<Button> getAllTheButtons() {
+		return allTheButtons;
 	}
 
 }

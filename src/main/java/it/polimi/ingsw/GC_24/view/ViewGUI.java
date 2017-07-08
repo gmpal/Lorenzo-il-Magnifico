@@ -13,6 +13,7 @@ public class ViewGUI extends View {
 	private List<String> urlExcommunication = new ArrayList<>();
 	private List<String> urlPersonalBoard = new ArrayList<>();
 	private List<String> urlBoard = new ArrayList<>();
+	private ArrayList<String> urlColour;
 
 	public ViewGUI(String name, MainClass mainClass) {
 		super(name);
@@ -127,12 +128,12 @@ public class ViewGUI extends View {
 	public List<String> getUrlPersonalBoard() {
 		return urlPersonalBoard;
 	}
-	
+
 	public List<String> getUrlBoard() {
 		return urlBoard;
-		
+
 	}
-	
+
 	@Override
 	public void setUrlPersonalBoard(ArrayList<String> urlPersonalBoard) {
 		this.urlPersonalBoard = urlPersonalBoard;
@@ -144,6 +145,20 @@ public class ViewGUI extends View {
 				e.printStackTrace();
 			}
 		});
+	}
+
+	@Override
+	public void setUrlColour(ArrayList<String> urlColour) {
+		this.urlColour = urlColour;
+		Platform.runLater(() -> {
+			try {
+				mainClass.updateBackgroundButtons(urlColour);
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+
 	}
 
 	@Override
@@ -161,7 +176,7 @@ public class ViewGUI extends View {
 
 	@Override
 	public void setUrlBoard(ArrayList<String> urlBoard) {
-		this.urlBoard=urlBoard;
+		this.urlBoard = urlBoard;
 		Platform.runLater(() -> {
 			try {
 				mainClass.updateUrlBoard(urlBoard);
@@ -170,7 +185,7 @@ public class ViewGUI extends View {
 				e.printStackTrace();
 			}
 		});
-		
+
 	}
 
 }
