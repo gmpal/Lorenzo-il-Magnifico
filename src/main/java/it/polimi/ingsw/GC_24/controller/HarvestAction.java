@@ -20,22 +20,6 @@ public class HarvestAction extends ActivityAction {
 		this.harvestPlace = (HarvestPlace) place;
 	}
 
-	/*@Override
-	public String verify() {
-		String answerToPlayer = "Answer: \n";
-
-		answerToPlayer = verifyIfEnoughServants(answerToPlayer);
-		answerToPlayer = verifyIfEnoughServantsForThisPlace(answerToPlayer);
-		answerToPlayer = verifyFamilyMemberAvailability(answerToPlayer);
-		answerToPlayer = verifyPlaceAvailability(answerToPlayer);
-		answerToPlayer = verifyZoneOccupiedByMe(answerToPlayer);
-
-		if (answerToPlayer.equals("Answer: \n"))
-			return "ok";
-		else
-			return answerToPlayer;
-	}*/
-
 	@Override
 	public List<ImmediateEffect> run() {
 		this.placeFamiliar();
