@@ -1,5 +1,7 @@
 package it.polimi.ingsw.GC_24.view;
 
+import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import it.polimi.ingsw.GC_24.gui.MainClass;
@@ -8,6 +10,9 @@ import javafx.application.Platform;
 public class ViewGUI extends View {
 
 	private MainClass mainClass;
+	private List<String> urlExcommunication = new ArrayList<>();
+	private List<String> urlPersonalBoard = new ArrayList<>();
+	private List<String> urlBoard = new ArrayList<>();
 
 	public ViewGUI(String name, MainClass mainClass) {
 		super(name);
@@ -113,6 +118,59 @@ public class ViewGUI extends View {
 		this.rankings = rankings;
 		Platform.runLater(() -> mainClass.updateRankings(rankings));
 
+	}
+
+	public List<String> getUrlExcommunication() {
+		return urlExcommunication;
+	}
+
+	public List<String> getUrlPersonalBoard() {
+		return urlPersonalBoard;
+	}
+	
+	public List<String> getUrlBoard() {
+		return urlBoard;
+		
+	}
+	
+	@Override
+	public void setUrlPersonalBoard(ArrayList<String> urlPersonalBoard) {
+		this.urlPersonalBoard = urlPersonalBoard;
+		Platform.runLater(() -> {
+			try {
+				mainClass.updateUrlPersonalBoard(urlPersonalBoard);
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+	}
+
+	@Override
+	public void setUrlExcommunication(ArrayList<String> urlExcommunication) {
+		this.urlExcommunication = urlExcommunication;
+		Platform.runLater(() -> {
+			try {
+				mainClass.updateUrlExcommunication(urlExcommunication);
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+	}
+
+	@Override
+	public void setUrlBoard(ArrayList<String> urlBoard) {
+		this.urlBoard=urlBoard;
+		Platform.runLater(() -> {
+			try {
+				mainClass.updateUrlBoard(urlBoard);
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+		
 	}
 
 }

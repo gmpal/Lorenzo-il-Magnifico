@@ -3,10 +3,11 @@ package it.polimi.ingsw.GC_24.gui;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.ResourceBundle;
 
 import it.polimi.ingsw.GC_24.network.Client;
 import it.polimi.ingsw.GC_24.view.View;
@@ -16,6 +17,7 @@ import javafx.application.Application;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -26,7 +28,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class MainClass extends Application {
+public class MainClass extends Application implements Initializable {
 
 	private View view;
 	private static List<StringProperty> turnList = new ArrayList<StringProperty>();
@@ -47,7 +49,9 @@ public class MainClass extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-
+		for (int i=0; i<47; i++) {
+			imagesToTake.add(new ImageView());
+}
 		this.primaryStage = primaryStage;
 		this.client = new Client();
 		initRootLayout();
@@ -116,11 +120,6 @@ public class MainClass extends Application {
 		System.out.println("Turni aggiornati nella mainClass");
 	}
 
-	public void updateImageViewUrls(String[] urls) {
-		for (int i = 0; i < urls.length; i++) {
-			imagesToTake.add(new ImageView(urls[i]));
-		}
-	}
 
 	public void showGameBoard() {
 		try {
@@ -135,35 +134,6 @@ public class MainClass extends Application {
 			gameBoardController.setMainApp(this);
 			initializeTurnListAndSetBindings(gameBoardController);
 
-			String url = new File("src/main/java/it/polimi/ingsw/GC_24/img/cards/a.png").toURI()
-					.toURL().toString();
-
-			String url2 = new File("src/main/java/it/polimi/ingsw/GC_24/img/cards/devcards_f_en_c_12.png").toURI()
-					.toURL().toString();
-			Image image1 = new Image(url);
-			Image image2 = new Image(url2);
-				Timer t1 = new Timer();
-				t1.schedule(new TimerTask() {
-
-					@Override
-					public void run() {
-						for (int i=0; i<15; i++) {
-							imagesToTake.get(i).imageProperty().set(image1);
-						}
-						for (int i=15; i<30; i++) {
-							imagesToTake.get(i).imageProperty().set(image2);
-						}
-						for (int i=30; i<44; i++) {
-							imagesToTake.get(i).imageProperty().set(image1);
-						}
-						
-					}
-					
-				}, 5000);
-				
-				
-			
-
 			Scene gameScene = new Scene(gameBoard);
 			primaryStage.setScene(gameScene);
 			primaryStage.show();
@@ -172,7 +142,7 @@ public class MainClass extends Application {
 		}
 	}
 
-	private void initializeTurnListAndSetBindings(GameBoardController gameBoardController) {
+	private  void initializeTurnListAndSetBindings(GameBoardController gameBoardController) {
 
 		// Initializing the turnList
 		StringProperty s = new SimpleStringProperty();
@@ -193,10 +163,7 @@ public class MainClass extends Application {
 
 		// Setting the bindings for urls
 		//initialinizg arraylist imagesToTake
-		for (int i=0; i<44; i++) {
-			imagesToTake.add(new ImageView());
-		}
-		
+			
 		//binding the cards to the imagesToTake array
 		for (int i = 0; i < imagesToTake.size(); i++) {
 				gameBoardController.getAllTheImages().get(i).imageProperty().bind(imagesToTake.get(i).imageProperty());
@@ -292,5 +259,41 @@ public class MainClass extends Application {
 
 	public void updateRankings(String rankings) {
 		this.rankings.setValue(rankings);
+	}
+
+	public  void updateUrlBoard(ArrayList<String> urlBoard) throws MalformedURLException {
+		System.out.println(urlBoard);
+		for (int i= 0; i<16;i++) {
+			String url = new File(urlBoard.get(i)).toURI()
+					.toURL().toString();
+			System.out.println("#####"+this.imagesToTake.get(i));
+			this.imagesToTake.get(i).imageProperty().set(new Image(url));
+		}
+	}
+
+	public  void updateUrlPersonalBoard(ArrayList<String> urlPersonalBoard) throws MalformedURLException {
+		System.out.println(urlPersonalBoard);
+		for (int i= 16; i<44;i++) {
+			String url = new File(urlPersonalBoard.get(i-16)).toURI()
+					.toURL().toString();
+			System.out.println("#####"+this.imagesToTake.get(i));
+			this.imagesToTake.get(i).imageProperty().set(new Image(url));
+		}
+	}
+
+	public  void updateUrlExcommunication(ArrayList<String> urlExcommunication) throws MalformedURLException {
+		System.out.println(urlExcommunication);
+		for (int i=44; i<47;i++) {
+			String url = new File(urlExcommunication.get(i-44)).toURI()
+					.toURL().toString();
+			System.out.println("#####"+this.imagesToTake.get(i));
+			this.imagesToTake.get(i).imageProperty().set(new Image(url));
+		}
+	}
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		
+		
 	}
 }

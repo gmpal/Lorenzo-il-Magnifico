@@ -550,4 +550,5 @@ public class ViewCLI extends View {
 	public void setRankings(String rankings) {
 		this.rankings = rankings;
   }
+
 }

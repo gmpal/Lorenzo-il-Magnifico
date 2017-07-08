@@ -111,12 +111,13 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				for (int i = 0; i < playerTurn.size(); i++) {
 					// one familar gone for each player
 					sendUrlBoard(game.getBoard().allUrl());
-					sendUrlPersonalBoard(game.getCurrentPlayer().getMyBoard().urlPersonalBoard());
+					
 					// reset the current player
 					this.currentPlayer = game.getCurrentPlayer();
 					System.out.println("Current Player is ---> " + this.currentPlayer.getMyName());
 
 					sendCurrentPlayer();
+					
 					System.out.println("Controller --> Current Player Sent");
 					System.out.println("Controller --> Are  they already playing? " + alreadyPlaying);
 					if (!alreadyPlaying) {
@@ -499,7 +500,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	public void sendUrlPersonalBoard(List<String> urls) {
 		hashMap = new HashMap<>();
 		hashMap.put("urlPersonalBoard", urls);
-		notifyMyObservers(hashMap);
+		sendToCurrentPlayer(hashMap);
 	}
 
 	/**
@@ -640,6 +641,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				leaderDiscardCouncilPrivilege.giveImmediateEffect(currentPlayer);
 				currentPlayer.getMyBoard().getPersonalLeader().remove(index);
 				sendPersonalInformation();
+				sendUrlPersonalBoard(game.getCurrentPlayer().getMyBoard().urlPersonalBoard());
 				awakenSleepingClient();
 			}
 		}
@@ -809,6 +811,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 		sendBoardInformation();
 		sendPersonalInformationToEveryOne();
+		sendUrlPersonalBoard(game.getCurrentPlayer().getMyBoard().urlPersonalBoard());
 		awakenSleepingClient();
 		System.out.println("Controller --> Richiesta di risveglio inviata");
 
@@ -858,6 +861,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		}
 		game.changeInDieValue(currentPlayer);
 		sendPersonalInformation();
+		sendUrlPersonalBoard(game.getCurrentPlayer().getMyBoard().urlPersonalBoard());
 		awakenSleepingClient();
 		System.out.println("Controller --> Richiesta di risveglio inviata");
 	}
@@ -889,6 +893,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		System.out.println("Controller --> Conclusa gestione dei costi interattivi ");
 		sendBoardInformation();
 		sendPersonalInformation();
+		sendUrlPersonalBoard(game.getCurrentPlayer().getMyBoard().urlPersonalBoard());
 
 	}
 
@@ -945,6 +950,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			for (ImmediateEffect effect : interactiveEffects) {
 				sendBoardInformation();
 				sendPersonalInformationToEveryOne();
+				sendUrlPersonalBoard(game.getCurrentPlayer().getMyBoard().urlPersonalBoard());
 				i++;
 				System.out.println("Controller --> Gestendo l'effetto specifico #" + i + "of "
 						+ interactiveEffects.size() + ": " + effect);

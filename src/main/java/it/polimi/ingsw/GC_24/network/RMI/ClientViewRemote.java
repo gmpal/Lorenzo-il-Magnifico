@@ -53,6 +53,12 @@ public interface ClientViewRemote extends Remote {
 
 
 	public abstract void updateRankings(String string) throws RemoteException;
+	
+	public abstract void updateUrlPersonalBoard(ArrayList<String> urlPersonalBoard) throws RemoteException;
+	
+	public abstract void updateUrlBoard(ArrayList<String> urlBoard) throws RemoteException;
+	
+	public abstract void updateUrlExcommunication(ArrayList<String> urlExcommunication) throws RemoteException;
 
 
 

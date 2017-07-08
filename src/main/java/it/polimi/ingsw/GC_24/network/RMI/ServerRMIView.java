@@ -92,6 +92,11 @@ public class ServerRMIView extends MyObservable implements ServerViewRemote, MyO
 						sendAlternativeCost(response);
 
 					}
+					
+					if (command.contains("urlExcommunication")) {
+						ArrayList<String> urlExcommunication = (ArrayList<String>) request.get("urlExcommunication");
+						clientstub.updateUrlExcommunication(urlExcommunication);
+					}
 
 					if (command.contains("problems")) {
 						System.out.println("RMI Server View ---> Ricevuti problemi");
@@ -132,7 +137,17 @@ public class ServerRMIView extends MyObservable implements ServerViewRemote, MyO
 				clientstub.updateRankings((String) request.get("rankings"));
 
 			}
-
+			
+			if (command.contains("urlExcommunication")) {
+				ArrayList<String> urlExcommunication = (ArrayList<String>) request.get("urlExcommunication");
+				clientstub.updateUrlExcommunication(urlExcommunication);
+			}
+			
+			if (command.contains("urlBoard")) {
+				ArrayList<String> urlBoard = (ArrayList<String>) request.get("urlBoard");
+				clientstub.updateUrlBoard(urlBoard);
+			}
+			
 			if (command.contains("info")) {
 				System.out.println("RMI Server View ---> Ricevute informazioni da mostrare a video");
 				clientstub.show((String) request.get("info"));
