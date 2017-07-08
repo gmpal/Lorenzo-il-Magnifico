@@ -89,6 +89,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		this.currentPlayer = game.getCurrentPlayer();
 		System.out.println("Current PLayer settato!!!");
 		sendPersonalInformationToEveryOne();
+		sendUrlPersonalBoard(game.getCurrentPlayer().getMyBoard().urlPersonalBoard());
 		System.out.println("Informazioni inviate!!!");
 		playerTurn = game.getPlayers();
 		System.out.println("turni presi!!!");

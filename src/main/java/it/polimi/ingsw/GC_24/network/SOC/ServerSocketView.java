@@ -6,7 +6,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import it.polimi.ingsw.GC_24.observers.MyObservable;
 import it.polimi.ingsw.GC_24.observers.MyObserver;
@@ -18,14 +20,14 @@ public class ServerSocketView extends MyObservable implements Runnable, MyObserv
 	private Socket socket;
 	private ObjectOutputStream objToClient;
 	private ObjectInputStream objFromClient;
-	
+
 	// constructor --> Receive a socket and creates Scanner and PrintWriter
 	public ServerSocketView(Socket socket) throws IOException {
 		this.socket = socket;
 		this.objToClient = new ObjectOutputStream(socket.getOutputStream());
 		objToClient.flush();
 		this.objFromClient = new ObjectInputStream(socket.getInputStream());
-		
+
 	}
 
 	/**
@@ -39,49 +41,61 @@ public class ServerSocketView extends MyObservable implements Runnable, MyObserv
 		try {
 
 			while (true) {
-				
-				
-				
+
 				Map<String, Object> request = (Map<String, Object>) objFromClient.readObject();
 				System.out.println("ServerIn: received from client: " + request);
-				this.notifyMyObservers(request);
-				
+
+				Set<String> command = request.keySet();
+				if (!command.contains("disconnect")) {
+					this.notifyMyObservers(request);
+				} else {
+					//socket.close();
+				}
+
 			}
 
 		} catch (ClassNotFoundException ioe) {
 			ioe.printStackTrace();
 		} catch (EOFException eof) {
 			System.out.println("SERVERIn: end of file reached");
-		} catch ( SocketException e ) {
+		} catch (SocketException e) {
 			System.out.println("Player disconnected");
 			try {
 				this.socket.close();
+				System.out.println();
+
+				sendDisconnectionRequest();
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
+
 				e1.printStackTrace();
 			}
-			
-		} catch (IOException e){
+
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 	}
 
+	private void sendDisconnectionRequest() {
+		HashMap<String, Object> disconnectionHashmap = new HashMap<>();
+		disconnectionHashmap.put("disconnect", null);
+		this.notifyMyObservers(disconnectionHashmap);
 
-	
-	
+	}
+
 	@Override
 	public synchronized <C> void update(C change) {
-	//	System.out.println("ServerOut: I have been notified by " + o.getClass().getSimpleName());
+		// System.out.println("ServerOut: I have been notified by " +
+		// o.getClass().getSimpleName());
 
 		try {
-			
+
 			objToClient.writeObject(change);
 			objToClient.flush();
 			objToClient.reset();
-			
-			System.out.println("ServerOut: I have sent"+change);
-			
+
+			System.out.println("ServerOut: I have sent" + change);
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
