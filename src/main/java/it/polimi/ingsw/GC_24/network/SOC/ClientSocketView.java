@@ -50,7 +50,6 @@ public class ClientSocketView extends MyObservable implements Runnable, MyObserv
 						handleRequestFromServer(requestFromServer);
 					}
 				}));
-
 			}
 		} catch (EOFException e) {
 			System.out.println("End Of File reached");
