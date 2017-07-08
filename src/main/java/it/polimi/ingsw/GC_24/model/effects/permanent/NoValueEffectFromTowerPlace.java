@@ -1,6 +1,11 @@
 package it.polimi.ingsw.GC_24.model.effects.permanent;
 
-public class NoValueEffectFromTowerPlace extends PermanentEffect{
+/**
+ * this effect is a malus that can be activated after the Vatican
+ * excommunication. The player won't receive the place's immediate effect when
+ * placing his family member on a tower any longer
+ */
+public class NoValueEffectFromTowerPlace extends PermanentEffect {
 
 	/**
 	 * 

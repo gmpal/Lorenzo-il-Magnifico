@@ -118,9 +118,12 @@ public class ViewCLI extends View {
 				System.out.println("Not your turn. You can't do any action.\n");
 			}
 		} else if (command.equalsIgnoreCase("k")) {
-			disconnection();
+			command = disconnection();
 			if (command.contains("cancel")) {
 				System.out.println("Action cancelled");
+			} else {
+				command = command + " "+ colour;
+				sendDisconnection(command);
 			}
 		} else {
 			System.out.println("Wrong character");

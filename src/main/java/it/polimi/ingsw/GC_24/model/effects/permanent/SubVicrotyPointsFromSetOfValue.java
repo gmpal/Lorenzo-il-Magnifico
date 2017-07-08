@@ -1,5 +1,9 @@
 package it.polimi.ingsw.GC_24.model.effects.permanent;
 
+/**
+ * this effect is a malus that can be activated after the Vatican
+ * excommunication. 
+ */
 import it.polimi.ingsw.GC_24.model.effects.Effect;
 import it.polimi.ingsw.GC_24.model.values.SetOfValues;
 import it.polimi.ingsw.GC_24.model.values.Value;

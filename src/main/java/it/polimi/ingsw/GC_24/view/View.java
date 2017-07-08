@@ -140,6 +140,13 @@ public abstract class View extends MyObservable implements MyObserver {
 		waitForActionDone();
 	}
 	
+	public void sendDisconnection(String command) {
+		hm = new HashMap<>();
+		hm.put("diconnection", command);
+		this.notifyMyObservers(hm);
+		System.exit(0);
+	}
+	
 	
 	public void waitForActionDone() {
 		/* This block of code notifies the Server of the action */

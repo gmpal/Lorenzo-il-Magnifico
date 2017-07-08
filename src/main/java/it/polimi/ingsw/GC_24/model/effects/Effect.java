@@ -1,5 +1,6 @@
 package it.polimi.ingsw.GC_24.model.effects;
 
+/**abstract class for all types of effects, both immediate and permanent*/
 public abstract class Effect implements java.io.Serializable {
 
 	/**

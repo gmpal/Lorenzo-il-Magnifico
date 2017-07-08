@@ -47,6 +47,7 @@ public class ServerSocketView extends MyObservable implements Runnable, MyObserv
 				System.out.println("ServerIn: received from client: " + request);
 
 				Set<String> command = request.keySet();
+
 				if (!command.contains("disconnection")) {
 					this.notifyMyObservers(request);
 				} else {
@@ -69,7 +70,6 @@ public class ServerSocketView extends MyObservable implements Runnable, MyObserv
 				this.objToClient.close();
 				this.objFromClient.close();
 				System.out.println("TUTTO CHIUSO");
-
 				sendDisconnectionRequest();
 			} catch (IOException e1) {
 

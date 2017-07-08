@@ -2,13 +2,14 @@ package it.polimi.ingsw.GC_24.model.personalboard;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import it.polimi.ingsw.GC_24.model.Excommunication;
-import it.polimi.ingsw.GC_24.model.board.Tower;
 import it.polimi.ingsw.GC_24.model.cards.Leader;
-import it.polimi.ingsw.GC_24.model.places.TowerPlace;
 import it.polimi.ingsw.GC_24.model.values.VictoryPoint;
 
+/**
+ * this class gathers all the cards possessed by the player into arrayLists and
+ * the bonus tile assigned to the player
+ */
 public class PersonalBoard implements java.io.Serializable {
 
 	/**
@@ -44,6 +45,9 @@ public class PersonalBoard implements java.io.Serializable {
 				+ personalExcommunication + "\n\nBONUS TILE\n" + mybonusTile + "\n";
 	}
 
+	/**
+	 * @return VictoryPoints gained at the end of the game from the Character, Territory and Venture cards
+	 */
 	public VictoryPoint convertToVictoryPoints() {
 		return new VictoryPoint(this.personalCharacters.convertCardToVictoryPoints().getQuantity()
 				+ this.personalTerritories.convertCardToVictoryPoints().getQuantity()

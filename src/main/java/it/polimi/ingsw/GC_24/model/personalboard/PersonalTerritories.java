@@ -4,19 +4,18 @@ import it.polimi.ingsw.GC_24.model.values.VictoryPoint;
 
 public class PersonalTerritories extends PersonalCards {
 
-
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -9186662745127500426L;
 
-	//constructor
+	// constructor
 	public PersonalTerritories() {
 		super();
 	}
-	
+
 	@Override
-	public PersonalCards findCardsInPersonalBoard(PersonalBoard playersBoard){
+	public PersonalCards findCardsInPersonalBoard(PersonalBoard playersBoard) {
 		return playersBoard.getPersonalTerritories();
 	}
 
@@ -24,7 +23,13 @@ public class PersonalTerritories extends PersonalCards {
 	public String toString() {
 		return "Territories " + getCards();
 	}
-	
+
+	/**
+	 * this conversion to victory points is based on the amount of territories one
+	 * get during the game. There are some quantity steps until reaching the maximum
+	 * points that's 20. For instance, with 3 cards the player gets 1 victory point,
+	 * but with 6 (the maximum they can get) they receive 20.
+	 */
 	@Override
 	public VictoryPoint convertCardToVictoryPoints() {
 		int numTerritories = this.getCards().size();

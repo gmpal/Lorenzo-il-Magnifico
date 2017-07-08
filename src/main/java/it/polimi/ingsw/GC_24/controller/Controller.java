@@ -660,6 +660,9 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				vaticanChosen = true;
 				waitingForVaticanChoice.notify();
 			}
+		} else if (command.contains("disconnection")) {
+			System.out.println("Controller --> Request to disconnect received ");
+			handleDisconnection();
 		}
 
 		else {
@@ -669,6 +672,10 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 		return null;
 
+	}
+
+	private void handleDisconnection() {
+		
 	}
 
 	/**
