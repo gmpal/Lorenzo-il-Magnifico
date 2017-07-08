@@ -430,8 +430,9 @@ public class GameBoardController implements Initializable {
 		action = action + " " + servantsTextField.getText();
 		System.out.println("Action ready: " + action);
 		Stage actualScene = (Stage) submitFamiliarButton.getScene().getWindow();
+		this.mainClass.getView().sendAction(action);
 		actualScene.close();
-
+		
 	}
 
 	public void cancelAction(ActionEvent buttonClick) {

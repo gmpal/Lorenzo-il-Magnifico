@@ -116,6 +116,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					// one familar gone for each player
 					sendUrlBoard(game.getBoard().allUrl());
 					sendUrlPersonalBoard(game.getCurrentPlayer().getMyBoard().urlPersonalBoard());
+          
 					// reset the current player
 					this.currentPlayer = game.getCurrentPlayer();
 					System.out.println("Current Player is ---> " + this.currentPlayer.getMyName());
@@ -488,8 +489,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	/**
-	 * This method send the list of image urls of cards on the Tower, it is useful
-	 * for the GUI
+	 * This method sends the list of image urls of cards on the Tower, it is useful
+	 * for the GUI.
 	 */
 	public void sendUrlBoard(List<String> urls) {
 		hashMap = new HashMap<>();
@@ -498,8 +499,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	/**
-	 * This method send the list of image urls of cards on the PersonalBoard, it is
-	 * useful for the GUI
+	 * This method sends the list of image urls of cards on the PersonalBoard, it is
+	 * useful for the GUI.
 	 */
 	public void sendUrlPersonalBoard(List<String> urls) {
 		hashMap = new HashMap<>();
@@ -509,11 +510,21 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	/**
 	 * This method send the list of image urls of excommunication tile, it is useful
-	 * for the GUI
+	 * for the GUI.
 	 */
 	public void sendUrlExcommunication() {
 		hashMap = new HashMap<>();
 		hashMap.put("urlExcommunication", game.getUrlExcommunication());
+		notifyMyObservers(hashMap);
+	}
+
+	/**
+	 * This method sends the list of url of image of the player that occupy the
+	 * places, it is useful for GUI.
+	 */
+	public void sendUrlColor(List<String> urls) {
+		hashMap = new HashMap<>();
+		hashMap.put("urlColour", urls);
 		notifyMyObservers(hashMap);
 	}
 
@@ -864,6 +875,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		sendBoardInformation();
 		sendPersonalInformationToEveryOne();
 		sendUrlPersonalBoard(game.getCurrentPlayer().getMyBoard().urlPersonalBoard());
+		sendUrlColor(game.getBoard().urlPlayerColour());
 		awakenSleepingClient();
 		System.out.println("Controller --> Richiesta di risveglio inviata");
 

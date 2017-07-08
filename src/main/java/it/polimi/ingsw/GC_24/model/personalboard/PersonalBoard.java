@@ -67,7 +67,8 @@ public class PersonalBoard implements java.io.Serializable {
 
 	/**
 	 * This method put into an ArraList all the urls of the cards of the
-	 * personalBoard.
+	 * personalBoard. If there is not a card "blank" image is sent. If a leader
+	 * cards is in use will be sent the back image of card.
 	 * 
 	 * @return the ArraList of String with the urls.
 	 */
@@ -77,7 +78,15 @@ public class PersonalBoard implements java.io.Serializable {
 		urlCardsPersonalBoard(personalBuildings);
 		urlCardsPersonalBoard(personalVentures);
 		for (int i = 0; i < 4; i++) {
-			urlList.add(personalLeader.get(i).getUrl());
+			try {
+				if (personalLeader.get(i).isInUse()) {
+					urlList.add("src/main/java/it/polimi/ingsw/GC_24/img/leader/Leaders_BACK.jpg");
+				} else {
+					urlList.add(personalLeader.get(i).getUrl());
+				}
+			} catch (IndexOutOfBoundsException e) {
+				urlList.add("src/main/java/it/polimi/ingsw/GC_24/img/cards/blank.png");
+			}
 		}
 		return urlList;
 	}
