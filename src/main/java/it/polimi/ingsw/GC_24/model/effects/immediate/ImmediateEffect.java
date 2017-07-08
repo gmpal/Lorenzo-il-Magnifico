@@ -58,6 +58,6 @@ public abstract class ImmediateEffect extends Effect {
 	public void assignParameters(String responseFromClient) {}
 
 	public List<ImmediateEffect> addAllNewEffectsToThisSet(List<ImmediateEffect> secondaryInteractiveEffects){
-		return null;
+		return secondaryInteractiveEffects;
 	}
 }

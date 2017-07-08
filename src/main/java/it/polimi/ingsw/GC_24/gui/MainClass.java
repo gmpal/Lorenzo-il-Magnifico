@@ -28,7 +28,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class MainClass extends Application implements Initializable {
+public class MainClass extends Application {
 
 	private View view;
 	private static List<StringProperty> turnList = new ArrayList<StringProperty>();
@@ -42,6 +42,10 @@ public class MainClass extends Application implements Initializable {
 	private String networkChosen;
 	private String interfaceChosen;
 	private StringProperty nameChosen = new SimpleStringProperty();
+	private StringProperty myCoins = new SimpleStringProperty();
+	private StringProperty myWoods = new SimpleStringProperty();
+	private StringProperty myServants = new SimpleStringProperty();
+	private StringProperty myStones = new SimpleStringProperty();
 
 	public static void main(String[] args) {
 		launch(args);
@@ -291,9 +295,36 @@ public class MainClass extends Application implements Initializable {
 		}
 	}
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		
-		
+
+	public StringProperty getMyCoins() {
+		return myCoins;
+	}
+
+	public void setMyCoins(StringProperty myCoins) {
+		this.myCoins = myCoins;
+	}
+
+	public StringProperty getMyWoods() {
+		return myWoods;
+	}
+
+	public void setMyWoods(StringProperty myWoods) {
+		this.myWoods = myWoods;
+	}
+
+	public StringProperty getMyServants() {
+		return myServants;
+	}
+
+	public void setMyServants(StringProperty myServants) {
+		this.myServants = myServants;
+	}
+
+	public StringProperty getMyStones() {
+		return myStones;
+	}
+
+	public void setMyStones(StringProperty myStones) {
+		this.myStones = myStones;
 	}
 }
