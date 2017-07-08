@@ -116,7 +116,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					// one familar gone for each player
 					sendUrlBoard(game.getBoard().allUrl());
 					sendUrlPersonalBoard(game.getCurrentPlayer().getMyBoard().urlPersonalBoard());
-          
+
 					// reset the current player
 					this.currentPlayer = game.getCurrentPlayer();
 					System.out.println("Current Player is ---> " + this.currentPlayer.getMyName());
@@ -519,10 +519,12 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	/**
-	 * This method sends the list of url of image of the player that occupy the
-	 * places, it is useful for GUI.
+	 * This method sends the list of urls of image of the player that occupy the
+	 * places. At the end of the list there are the urls of image of the dice, it is
+	 * useful for GUI.
 	 */
 	public void sendUrlColor(List<String> urls) {
+		urls.addAll(game.getDice().urlDice());
 		hashMap = new HashMap<>();
 		hashMap.put("urlColour", urls);
 		notifyMyObservers(hashMap);
@@ -619,7 +621,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				for (int i = 0; i < playerTurn.size(); i++) {
 					currentPlayer = playerTurn.get(i);
 					try {
-						System.out.println("Trying to send to "+currentPlayer);
+						System.out.println("Trying to send to " + currentPlayer);
 						sendPersonalInformation();
 					} catch (Exception e) {
 						System.out.println("EXCEPTIONAL");
@@ -631,13 +633,13 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					}
 				}
 				if (indexRemoved < indexOfCurrentPlayer) {
-					currentPlayer = playerTurn.get(indexOfCurrentPlayer-1);
+					currentPlayer = playerTurn.get(indexOfCurrentPlayer - 1);
 				} else if (indexRemoved > indexOfCurrentPlayer) {
 					currentPlayer = playerTurn.get(indexOfCurrentPlayer);
 				} else {
 					if (indexOfCurrentPlayer == playerTurn.size()) {
 						currentPlayer = playerTurn.get(0);
-					}else {
+					} else {
 						currentPlayer = playerTurn.get(indexOfCurrentPlayer);
 					}
 				}
@@ -645,7 +647,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				sendCurrentPlayer();
 			}
 
-		} else if (command.contains("addPlayer")){
+		} else if (command.contains("addPlayer")) {
 			game.addPlayer();
 
 		} else if (command.contains("leader")) {
@@ -675,7 +677,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	private void handleDisconnection() {
-		
+
 	}
 
 	/**

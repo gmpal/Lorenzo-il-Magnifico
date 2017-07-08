@@ -68,4 +68,10 @@ public class TestTower {
 		t.setCorrespondingCard(null);
 		assertEquals(game.getBoard().allUrl().size(), 16);
 	}
+	
+	@Test
+	public void testUrlPlayerColour() {
+		List<String> colour=game.getBoard().urlPlayerColour();
+		assertEquals(41,colour.size());
+	}
 }
