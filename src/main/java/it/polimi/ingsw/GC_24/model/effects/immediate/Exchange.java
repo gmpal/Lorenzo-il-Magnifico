@@ -6,6 +6,11 @@ import java.util.List;
 
 import it.polimi.ingsw.GC_24.model.Player;
 
+/**
+ * this effect lets the player exchange a certain quantity of a resource for a
+ * fixed amount of another resource. Sometimes they will be asked to decide
+ * among more possibilities of exchange
+ */
 public class Exchange extends ImmediateEffect {
 
 	/**

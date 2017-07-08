@@ -4,7 +4,12 @@ import java.util.*;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.values.SetOfValues;
 
+/**
+ * when the player get this effect, they will be able to decide which value
+ * effect to receive among a list of them
+ */
 public class CouncilPrivilege extends ImmediateEffect {
+	
 	/**
 	 * 
 	 */
