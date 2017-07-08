@@ -53,19 +53,29 @@ public class SetOfDice implements java.io.Serializable {
 			urlDice.add("src/main/java/it/polimi/ingsw/GC_24/img/dice/die1.png");
 		} else if (die.getValue() == 2) {
 			urlDice.add("src/main/java/it/polimi/ingsw/GC_24/img/dice/die2.png");
-		} else if (die.getValue() == 2) {
+		} else if (die.getValue() == 3) {
 			urlDice.add("src/main/java/it/polimi/ingsw/GC_24/img/dice/die3.png");
-		} else if (die.getValue() == 2) {
+		} else if (die.getValue() == 4) {
 			urlDice.add("src/main/java/it/polimi/ingsw/GC_24/img/dice/die4.png");
-		} else if (die.getValue() == 2) {
+		} else if (die.getValue() == 5) {
 			urlDice.add("src/main/java/it/polimi/ingsw/GC_24/img/dice/die5.png");
-		} else if (die.getValue() == 2) {
+		} else if (die.getValue() == 6) {
 			urlDice.add("src/main/java/it/polimi/ingsw/GC_24/img/dice/die6.png");
+		}else {
+			urlDice.add("src/main/java/it/polimi/ingsw/GC_24/img/familiar/blank.png");
 		}
 
 	}
 
 	// getters and setters
+	public List<String> getUrlDice() {
+		return urlDice;
+	}
+
+	public void setUrlDice(List<String> urlDice) {
+		this.urlDice = urlDice;
+	}
+
 	public Die getDie1() {
 		return die1;
 	}

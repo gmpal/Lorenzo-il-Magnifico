@@ -16,12 +16,13 @@ import it.polimi.ingsw.GC_24.model.board.Tower;
 import it.polimi.ingsw.GC_24.model.cards.Territories;
 import it.polimi.ingsw.GC_24.model.places.TowerPlace;
 
-public class TestTower {
+public class TestBoard {
 
 	Model game;
 	Player player;
 	Player player2;
 	Player player3;
+	Player player4;
 	List<Player> players;
 
 	Tower tower;
@@ -37,9 +38,11 @@ public class TestTower {
 		player = new Player("Giorgia", PlayerColour.YELLOW);
 		player2 = new Player("Carlo", PlayerColour.RED);
 		player3 = new Player("Gian Marco", PlayerColour.GREEN);
+		player4 = new Player("Lorenzo", PlayerColour.BLUE);
 		players.add(player);
 		players.add(player2);
 		players.add(player3);
+		players.add(player4);
 		game = new Model(1);
 		game.setModel(players);
 		game.getCards().dealCards(game.getBoard(), 1);
@@ -64,14 +67,51 @@ public class TestTower {
 
 	@Test
 	public void testAllUrl() {
-		TowerPlace t= (TowerPlace) game.getBoard().getTowerTerritories().getPlacesArray().get(0);
+		TowerPlace t = (TowerPlace) game.getBoard().getTowerTerritories().getPlacesArray().get(0);
 		t.setCorrespondingCard(null);
 		assertEquals(game.getBoard().allUrl().size(), 16);
 	}
-	
+
+	/**
+	 * This test checks the method "urlPlayerColour" when there are not family
+	 * members placed on the board.
+	 */
 	@Test
 	public void testUrlPlayerColour() {
-		List<String> colour=game.getBoard().urlPlayerColour();
-		assertEquals(41,colour.size());
+		List<String> colour = game.getBoard().urlPlayerColour();
+		assertEquals(41, colour.size());
+	}
+
+	/**
+	 * This test checks the method "urlPlayerColour" when there are family members
+	 * placed on the board.
+	 */
+	@Test
+	public void testUrlPlayerColour1() {
+		game.getBoard().getTowerTerritories().getPlacesArray().get(0)
+				.setFamMemberOnPlace(game.getPlayers().get(0).getMyFamily().getMember1());
+		game.getBoard().getTowerTerritories().getPlacesArray().get(1)
+				.setFamMemberOnPlace(game.getPlayers().get(0).getMyFamily().getMember4());
+		game.getBoard().getTowerTerritories().getPlacesArray().get(2)
+				.setFamMemberOnPlace(game.getPlayers().get(1).getMyFamily().getMember2());
+		game.getBoard().getTowerTerritories().getPlacesArray().get(3)
+				.setFamMemberOnPlace(game.getPlayers().get(1).getMyFamily().getMember4());
+		game.getBoard().getTowerBuildings().getPlacesArray().get(0)
+				.setFamMemberOnPlace(game.getPlayers().get(2).getMyFamily().getMember3());
+		game.getBoard().getTowerBuildings().getPlacesArray().get(1)
+				.setFamMemberOnPlace(game.getPlayers().get(2).getMyFamily().getMember4());
+		game.getBoard().getTowerBuildings().getPlacesArray().get(2)
+				.setFamMemberOnPlace(game.getPlayers().get(3).getMyFamily().getMember2());
+		game.getBoard().getTowerBuildings().getPlacesArray().get(3)
+				.setFamMemberOnPlace(game.getPlayers().get(3).getMyFamily().getMember4());
+
+		List<String> colour = game.getBoard().urlPlayerColour();
+		assertEquals(41, colour.size());
+	}
+
+	@Test
+	public void testUrlDice() {
+		List<String> colourDice = game.getDice().urlDice();
+		assertEquals(3, colourDice.size());
 	}
 }
