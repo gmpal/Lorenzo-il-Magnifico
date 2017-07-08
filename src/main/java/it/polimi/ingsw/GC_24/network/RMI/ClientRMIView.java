@@ -131,6 +131,12 @@ public class ClientRMIView extends MyObservable implements ClientViewRemote, MyO
 	}
 	
 	@Override
+	public void updateUrlColour(ArrayList<String> urlColour) throws RemoteException {
+		view.setUrlColour(urlColour);
+		
+	}
+	
+	@Override
 	public String getPlayerName() throws RemoteException {
 		return view.getName();
 	}
@@ -172,6 +178,8 @@ public class ClientRMIView extends MyObservable implements ClientViewRemote, MyO
 			serverStub.sendAnswerVatican(playerRequest);
 		}
 	}
+
+
 
 
 }

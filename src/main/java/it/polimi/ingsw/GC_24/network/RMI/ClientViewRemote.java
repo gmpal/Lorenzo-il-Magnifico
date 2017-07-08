@@ -62,6 +62,10 @@ public interface ClientViewRemote extends Remote {
 
 
 
+	public abstract void updateUrlColour(ArrayList<String> urlColour)  throws RemoteException;
+
+
+
 	
 
 }

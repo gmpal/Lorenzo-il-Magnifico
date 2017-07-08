@@ -20,6 +20,7 @@ public class ServerSocketView extends MyObservable implements Runnable, MyObserv
 	private Socket socket;
 	private ObjectOutputStream objToClient;
 	private ObjectInputStream objFromClient;
+	private boolean stop= false;
 
 	// constructor --> Receive a socket and creates Scanner and PrintWriter
 	public ServerSocketView(Socket socket) throws IOException {
@@ -40,16 +41,17 @@ public class ServerSocketView extends MyObservable implements Runnable, MyObserv
 
 		try {
 
-			while (true) {
+			while (!stop) {
 
 				Map<String, Object> request = (Map<String, Object>) objFromClient.readObject();
 				System.out.println("ServerIn: received from client: " + request);
 
 				Set<String> command = request.keySet();
-				if (!command.contains("disconnect")) {
+				if (!command.contains("disconnection")) {
 					this.notifyMyObservers(request);
 				} else {
-					//socket.close();
+					socket.close();
+					this.notifyMyObservers(request);
 				}
 
 			}
@@ -60,9 +62,13 @@ public class ServerSocketView extends MyObservable implements Runnable, MyObserv
 			System.out.println("SERVERIn: end of file reached");
 		} catch (SocketException e) {
 			System.out.println("Player disconnected");
+			
+			stop = true;
 			try {
 				this.socket.close();
-				System.out.println();
+				this.objToClient.close();
+				this.objFromClient.close();
+				System.out.println("TUTTO CHIUSO");
 
 				sendDisconnectionRequest();
 			} catch (IOException e1) {
@@ -78,28 +84,35 @@ public class ServerSocketView extends MyObservable implements Runnable, MyObserv
 
 	private void sendDisconnectionRequest() {
 		HashMap<String, Object> disconnectionHashmap = new HashMap<>();
-		disconnectionHashmap.put("disconnect", null);
+		disconnectionHashmap.put("clientClosed", null);
 		this.notifyMyObservers(disconnectionHashmap);
-
 	}
 
 	@Override
-	public synchronized <C> void update(C change) {
+	public synchronized <C> void update(C change){
 		// System.out.println("ServerOut: I have been notified by " +
 		// o.getClass().getSimpleName());
 
 		try {
-
+			System.out.println("--------------------------------------------------------------------");
 			objToClient.writeObject(change);
 			objToClient.flush();
 			objToClient.reset();
 
 			System.out.println("ServerOut: I have sent" + change);
 
-		} catch (IOException e) {
+		} catch (Exception e) {
+			System.out.println("§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§");
+			System.out.println("§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§");
+			System.out.println("§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§");
+			System.out.println("§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§");
 			e.printStackTrace();
 		}
 
+	}
+
+	public Socket getSocket() {
+		return socket;
 	}
 
 }
