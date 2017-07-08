@@ -2,7 +2,11 @@ package it.polimi.ingsw.GC_24.model.effects.permanent;
 
 import it.polimi.ingsw.GC_24.model.values.SetOfValues;
 
+/**
+ * this effect subtracts the resources as parameter from the player's resources
+ */
 public class SubSetOfValues extends PermanentEffect {
+
 	/**
 	 * 
 	 */
@@ -15,10 +19,9 @@ public class SubSetOfValues extends PermanentEffect {
 		this.subSet = subSet;
 	}
 
-	
 	@Override
 	public String toString() {
-		return name + ": subtracts "+subSet;
+		return name + ": subtracts " + subSet;
 	}
 
 	// getters and setters
