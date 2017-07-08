@@ -67,8 +67,6 @@ public class ServerSocketView extends MyObservable implements Runnable, MyObserv
 			stop = true;
 			try {
 				this.socket.close();
-				this.objToClient.close();
-				this.objFromClient.close();
 				System.out.println("TUTTO CHIUSO");
 				sendDisconnectionRequest();
 			} catch (IOException e1) {
@@ -94,18 +92,14 @@ public class ServerSocketView extends MyObservable implements Runnable, MyObserv
 		// o.getClass().getSimpleName());
 
 		try {
-			System.out.println("--------------------------------------------------------------------");
+
 			objToClient.writeObject(change);
 			objToClient.flush();
 			objToClient.reset();
 
 			System.out.println("ServerOut: I have sent" + change);
 
-		} catch (Exception e) {
-			System.out.println("§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§");
-			System.out.println("§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§");
-			System.out.println("§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§");
-			System.out.println("§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§");
+		}catch(IOException e) {
 			e.printStackTrace();
 		}
 

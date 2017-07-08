@@ -122,8 +122,8 @@ public class ViewCLI extends View {
 			if (command.contains("cancel")) {
 				System.out.println("Action cancelled");
 			} else {
-				command = command + " "+ colour;
-				sendDisconnection(command);
+				System.out.println("You're out");
+				System.exit(0);
 			}
 		} else {
 			System.out.println("Wrong character");

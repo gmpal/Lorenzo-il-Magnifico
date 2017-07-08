@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import it.polimi.ingsw.GC_24.network.Client;
 import it.polimi.ingsw.GC_24.view.View;
@@ -19,12 +20,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.TabPane;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -48,6 +51,12 @@ public class MainClass extends Application {
 	private StringProperty myWoods = new SimpleStringProperty();
 	private StringProperty myServants = new SimpleStringProperty();
 	private StringProperty myStones = new SimpleStringProperty();
+	private StringProperty myColour = new SimpleStringProperty();
+	
+	private static StringProperty family1Value = new SimpleStringProperty();
+	private static StringProperty family2Value = new SimpleStringProperty();
+	private static StringProperty family3Value = new SimpleStringProperty();
+	private static StringProperty family4Value = new SimpleStringProperty();
 
 	public static void main(String[] args) {
 		launch(args);
@@ -62,7 +71,7 @@ public class MainClass extends Application {
 			turnList.add(s);
 		}
 		
-		for (int i=0; i<47; i++) {
+		for (int i=0; i<50; i++) {
 			imagesToTake.add(new ImageView());
 }
 		for (int i=0; i<41; i++) {
@@ -127,11 +136,102 @@ public class MainClass extends Application {
 	}
 
 	public void updateBackgroundButtons(List<String> buttonBackUrls) throws MalformedURLException {
-		for (int i = 0; i<buttonstoTake.size(); i++) {
+		for (int i = 0; i<buttonstoTake.size()-3; i++) {
 			String url = new File(buttonBackUrls.get(i)).toURI()
 					.toURL().toString();
-			buttonstoTake.get(i).backgroundProperty().setValue(new Background(new BackgroundImage(new Image(url),null,null,null,null)));
+			buttonstoTake.get(i).backgroundProperty().setValue(new Background(new BackgroundImage(new Image(url),BackgroundRepeat.NO_REPEAT,BackgroundRepeat.NO_REPEAT,BackgroundPosition.CENTER,null)));
 		}
+		for(int i=buttonstoTake.size()-3; i> buttonstoTake.size(); i++) {
+			String url = new File(buttonBackUrls.get(i)).toURI()
+					.toURL().toString();
+			imagesToTake.get(i).imageProperty().set(new Image(url));
+		}
+	}
+	
+	
+	public void parseValuesString(String values) {
+		StringTokenizer tokenizer = new StringTokenizer(values);
+		String token = "";
+		if (values.contains("woods")) {
+			while (!token.equals("woods")) {
+				System.out.println(tokenizer.nextToken());
+				token = tokenizer.nextToken();
+			}
+			tokenizer.nextToken();
+		this.myWoods.setValue(tokenizer.nextToken());
+			
+		}
+		if (values.contains("stones")) {
+			while (!token.equals("stones")) {
+				token = tokenizer.nextToken();
+			}
+			tokenizer.nextToken();
+			this.myStones.setValue(tokenizer.nextToken());
+			
+		}
+		if (values.contains("coins")) {
+			while (!token.equals("coins")) {
+				token = tokenizer.nextToken();
+			}
+			tokenizer.nextToken();
+			this.myCoins.setValue(tokenizer.nextToken());
+			
+		}
+		if (values.contains("servants")) {
+			while (!token.equals("servants")) {
+				token = tokenizer.nextToken();
+			}
+			tokenizer.nextToken();
+			this.myServants.setValue(tokenizer.nextToken());
+			
+		}
+	}
+	
+	
+	
+	public void perseFamilyString(String family) {
+		StringTokenizer tokenizer = new StringTokenizer(family);
+		String token = "";
+		if (family.contains("Member 1")) {
+			while (!token.equals("Value")) {
+				token = tokenizer.nextToken();
+			}
+			tokenizer.nextToken();
+			String valore = tokenizer.nextToken();
+			this.family1Value.setValue(valore);
+			
+		}
+		token = "";
+		if (family.contains("Member 2")) {
+			while (!token.equals("Value")) {
+				token = tokenizer.nextToken();
+			}
+			tokenizer.nextToken();
+			String valore = tokenizer.nextToken();
+			this.family2Value.setValue(valore);
+			
+		}
+		token = "";
+		if (family.contains("Member 3")) {
+			while (!token.equals("Value")) {
+				token = tokenizer.nextToken();
+			}
+			tokenizer.nextToken();
+			String valore = tokenizer.nextToken();
+			this.family3Value.setValue(valore);
+			
+		}
+		token = "";
+		if (family.contains("Member 4")) {
+			while (!token.equals("Value")) {
+				token = tokenizer.nextToken();
+			}
+			tokenizer.nextToken();
+			String valore = tokenizer.nextToken();
+			this.family4Value.setValue(valore);
+			
+		}
+		System.out.println(family1Value.getValue()+family2Value.getValue()+family3Value.getValue()+family4Value.getValue());
 	}
 	
 	public void updateTurnProperties(List<String> playerTurn) {
@@ -153,7 +253,7 @@ public class MainClass extends Application {
 			primaryStage = new Stage();
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainClass.class.getResource("GameBoard.fxml"));
-			TabPane gameBoard = (TabPane) loader.load();
+			ScrollPane gameBoard = (ScrollPane) loader.load();
 
 			GameBoardController gameBoardController = loader.getController();
 			gameBoardController.setMainApp(this);
@@ -167,6 +267,7 @@ public class MainClass extends Application {
 		}
 	}
 
+	
 	private  void setBindings(GameBoardController gameBoardController) {
 
 		// Setting the bindings for players labels
@@ -194,8 +295,22 @@ public class MainClass extends Application {
 			gameBoardController.getAllTheButtons().get(i).backgroundProperty().bind(buttonstoTake.get(i).backgroundProperty());
 			
 		}
+		
+		//binding values
+		gameBoardController.getCoinsLabel().textProperty().bind(this.getMyCoins());
+		gameBoardController.getServantsLabel().textProperty().bind(this.getMyServants());
+		gameBoardController.getWoodsLabel().textProperty().bind(this.getMyWoods());
+		gameBoardController.getStonesLabel().textProperty().bind(this.getMyStones());
+		
+		gameBoardController.getFamiliar1v().textProperty().bind(family1Value);
+		gameBoardController.getFamiliar2v().textProperty().bind(family2Value);
+		gameBoardController.getFamiliar3v().textProperty().bind(family3Value);
+		gameBoardController.getFamiliar4v().textProperty().bind(family4Value);
+		
+		System.out.println("Tutti i binding fatti!!");
+		
 	}
-
+/*
 	public void showSelectPlayer() {
 		try {
 			// Load person overview.
@@ -213,7 +328,7 @@ public class MainClass extends Application {
 			e.printStackTrace();
 		}
 	}
-
+*/
 	public void showMessage(String message) {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Information");
@@ -274,12 +389,12 @@ public class MainClass extends Application {
 		return currentPlayer;
 	}
 
-	public void setCurrentPlayer(StringProperty currentPlayer) {
-		this.currentPlayer = currentPlayer;
+	public void setCurrentPlayer(StringProperty currentPlayerProperty) {
+		currentPlayer = currentPlayerProperty;
 	}
 
-	public void updateRankings(String rankings) {
-		this.rankings.setValue(rankings);
+	public void updateRankings(String ranking) {
+		rankings.setValue(ranking);
 	}
 
 	public  void updateUrlBoard(ArrayList<String> urlBoard) throws MalformedURLException {
@@ -287,8 +402,8 @@ public class MainClass extends Application {
 		for (int i= 0; i<16;i++) {
 			String url = new File(urlBoard.get(i)).toURI()
 					.toURL().toString();
-			System.out.println("#####"+this.imagesToTake.get(i));
-			this.imagesToTake.get(i).imageProperty().set(new Image(url));
+			System.out.println("#####"+imagesToTake.get(i));
+			imagesToTake.get(i).imageProperty().set(new Image(url));
 		}
 	}
 
@@ -297,8 +412,8 @@ public class MainClass extends Application {
 		for (int i= 16; i<44;i++) {
 			String url = new File(urlPersonalBoard.get(i-16)).toURI()
 					.toURL().toString();
-			System.out.println("#####"+this.imagesToTake.get(i));
-			this.imagesToTake.get(i).imageProperty().set(new Image(url));
+			System.out.println("#####"+imagesToTake.get(i));
+			imagesToTake.get(i).imageProperty().set(new Image(url));
 		}
 	}
 
@@ -307,8 +422,8 @@ public class MainClass extends Application {
 		for (int i=44; i<47;i++) {
 			String url = new File(urlExcommunication.get(i-44)).toURI()
 					.toURL().toString();
-			System.out.println("#####"+this.imagesToTake.get(i));
-			this.imagesToTake.get(i).imageProperty().set(new Image(url));
+			System.out.println("#####"+imagesToTake.get(i));
+			imagesToTake.get(i).imageProperty().set(new Image(url));
 		}
 	}
 
@@ -344,4 +459,6 @@ public class MainClass extends Application {
 	public void setMyStones(StringProperty myStones) {
 		this.myStones = myStones;
 	}
+
+
 }

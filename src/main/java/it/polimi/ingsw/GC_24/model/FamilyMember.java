@@ -47,11 +47,11 @@ public class FamilyMember implements java.io.Serializable {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append( "Status = "+isAvailableString()+ ", Value = " + memberValue );
+		builder.append( "Status = "+isAvailableString()+ " , Value = " + memberValue );
 		if (memberColour!=null){
-			builder.append(", Colour = " + memberColour);
+			builder.append(" , Colour = " + memberColour);
 		}else {
-			builder.append(", Colour = NEUTRAL");
+			builder.append(" , Colour = NEUTRAL");
 		}
 		return builder.toString();
 	}

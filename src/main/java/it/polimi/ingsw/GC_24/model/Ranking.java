@@ -5,7 +5,13 @@ import java.util.Collections;
 import java.util.List;
 import it.polimi.ingsw.GC_24.model.values.*;
 
+/**
+ * this class creates three array lists with the rankings of the players in the
+ * game of the three types of points (victory, military, faith), and place the
+ * values in the arrayLists in descending order
+ */
 public class Ranking implements java.io.Serializable {
+
 	/**
 	 * 
 	 */
@@ -91,35 +97,4 @@ public class Ranking implements java.io.Serializable {
 	public void setFaithPoints(List<String> faithPoints) {
 		this.faithPoints = faithPoints;
 	}
-
-	public static void main(String[] args) {
-
-		Player player;
-		Player player2;
-		Player player3;
-		List<Player> players;
-		Ranking ranking;
-		List<String> points;
-		players = new ArrayList<>();
-		player = new Player("luca", PlayerColour.BLUE);
-		player2 = new Player("andrea", PlayerColour.RED);
-		player3 = new Player("anna", PlayerColour.YELLOW);
-		player.getMyValues().getFaithPoints().setQuantity(6);
-		player2.getMyValues().getFaithPoints().setQuantity(0);
-		player3.getMyValues().getFaithPoints().setQuantity(0);
-		player.getMyValues().getMilitaryPoints().setQuantity(9);
-		player2.getMyValues().getMilitaryPoints().setQuantity(20);
-		player3.getMyValues().getMilitaryPoints().setQuantity(4);
-		player.getMyValues().getVictoryPoints().setQuantity(10);
-		player2.getMyValues().getVictoryPoints().setQuantity(15);
-		player3.getMyValues().getVictoryPoints().setQuantity(7);
-		players.add(player);
-		players.add(player2);
-		players.add(player3);
-		ranking = new Ranking(players);
-		points = new ArrayList<>();
-
-		System.out.println(ranking);
-	}
-
 }

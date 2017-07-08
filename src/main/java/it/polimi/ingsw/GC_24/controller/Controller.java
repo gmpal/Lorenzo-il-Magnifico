@@ -11,6 +11,8 @@ import java.util.StringTokenizer;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
+
 import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.Ranking;
@@ -105,6 +107,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 			game.getCards().dealCards(game.getBoard(), cardsIndex / 2 + 1);
 			sendBoardInformation();
+			sendUrlColor(game.getBoard().urlPlayerColour());
 			sendPersonalInformationToEveryOne();
 			sendUrlPersonalBoard(game.getCurrentPlayer().getMyBoard().urlPersonalBoard());
 			sendTurnArray(playerTurn);
@@ -116,7 +119,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					// one familar gone for each player
 					sendUrlBoard(game.getBoard().allUrl());
 					sendUrlPersonalBoard(game.getCurrentPlayer().getMyBoard().urlPersonalBoard());
-
+					sendUrlColor(game.getBoard().urlPlayerColour());
 					// reset the current player
 					this.currentPlayer = game.getCurrentPlayer();
 					System.out.println("Current Player is ---> " + this.currentPlayer.getMyName());
@@ -599,54 +602,55 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		}
 
 		else if (command.contains("clientClosed")) {
+
+			int playerIndex = 0;
+			System.out.println(this.getMyObservers());
 			for (int i = 0; i < this.getMyObservers().size(); i++) {
 				if (!(this.getMyObservers().get(i) instanceof ServerRMIView)) {
 					ServerSocketView serverSocketView = (ServerSocketView) this.getMyObservers().get(i);
 					if (serverSocketView.getSocket().isClosed()) {
+						System.out.println("ENTRATO!!!");
+						
+						playerIndex = this.getMyObservers().indexOf(serverSocketView);
 						this.unregisterMyObserver(serverSocketView);
 						i--;
 					}
 				}
 			}
+			System.out.println(this.getMyObservers());
+			System.out.println("Indice del giocatore: " + playerIndex);
+			String name = "";
+			String colour = "";
 
-			int indexOfCurrentPlayer = 0;
-			// saving actual current PlayerIndex
-			for (int j = 0; j < playerTurn.size(); j++) {
-				if (currentPlayer.equals(playerTurn.get(j))) {
-					indexOfCurrentPlayer = j;
+			for (int i = 0; i < playerTurn.size(); i++) {
+				if (playerTurn.get(i).getPlayerNumber() == playerIndex) {
+					name = playerTurn.get(i).getMyName();
+					colour = playerTurn.get(i).getMyColour().toString();
+					playerTurn.remove(playerTurn.get(i));
 				}
-				String name = "";
-				String colour = "";
-				int indexRemoved = 0;
-				for (int i = 0; i < playerTurn.size(); i++) {
-					currentPlayer = playerTurn.get(i);
-					try {
-						System.out.println("Trying to send to " + currentPlayer);
-						sendPersonalInformation();
-					} catch (Exception e) {
-						System.out.println("EXCEPTIONAL");
-						name = playerTurn.get(i).getMyName();
-						colour = playerTurn.get(i).getMyColour().toString();
-						indexRemoved = i;
-						playerTurn.remove(i);
-						break;
-					}
-				}
-				if (indexRemoved < indexOfCurrentPlayer) {
-					currentPlayer = playerTurn.get(indexOfCurrentPlayer - 1);
-				} else if (indexRemoved > indexOfCurrentPlayer) {
-					currentPlayer = playerTurn.get(indexOfCurrentPlayer);
-				} else {
-					if (indexOfCurrentPlayer == playerTurn.size()) {
-						currentPlayer = playerTurn.get(0);
-					} else {
-						currentPlayer = playerTurn.get(indexOfCurrentPlayer);
-					}
-				}
-				sendInfo(name + ", player #" + indexOfCurrentPlayer + ", colour " + colour + ", disconnected");
-				sendCurrentPlayer();
 			}
 
+			sendInfo("Player " + name + ", colour " + colour + ", disconnected, you can just keep playing!");
+
+			/*
+			 * int indexOfCurrentPlayer = 0; // saving actual current PlayerIndex for (int j
+			 * = 0; j < playerTurn.size(); j++) { if
+			 * (currentPlayer.equals(playerTurn.get(j))) { indexOfCurrentPlayer = j; }
+			 * String name = ""; String colour = ""; int indexRemoved = 0; for (int i = 0; i
+			 * < playerTurn.size(); i++) { currentPlayer = playerTurn.get(i); try {
+			 * System.out.println("Trying to send to "+currentPlayer);
+			 * sendPersonalInformation(); } catch (Exception e) {
+			 * System.out.println("EXCEPTIONAL"); name = playerTurn.get(i).getMyName();
+			 * colour = playerTurn.get(i).getMyColour().toString(); indexRemoved = i;
+			 * playerTurn.remove(i); break; } } if (indexRemoved < indexOfCurrentPlayer) {
+			 * currentPlayer = playerTurn.get(indexOfCurrentPlayer-1); } else if
+			 * (indexRemoved > indexOfCurrentPlayer) { currentPlayer =
+			 * playerTurn.get(indexOfCurrentPlayer); } else { if (indexOfCurrentPlayer ==
+			 * playerTurn.size()) { currentPlayer = playerTurn.get(0); }else { currentPlayer
+			 * = playerTurn.get(indexOfCurrentPlayer); } } sendInfo(name + ", player #" +
+			 * indexOfCurrentPlayer + ", colour " + colour + ", disconnected");
+			 * sendCurrentPlayer(); }
+			 */
 		} else if (command.contains("addPlayer")) {
 			game.addPlayer();
 
