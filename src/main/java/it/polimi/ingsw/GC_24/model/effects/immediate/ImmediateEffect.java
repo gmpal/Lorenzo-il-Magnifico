@@ -6,6 +6,10 @@ import java.util.List;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.effects.Effect;
 
+/**
+ * this abstract class represents all the effects that are given to the player
+ * when placing a family member somewhere on the board or when taking a card
+ */
 public abstract class ImmediateEffect extends Effect {
 
 	/**
@@ -45,7 +49,7 @@ public abstract class ImmediateEffect extends Effect {
 	 * @param string
 	 *            answer
 	 */
-	public HashMap<String, Object> generateHashMapToSend(String answer){
+	public HashMap<String, Object> generateHashMapToSend(String answer) {
 		return null;
 	}
 
@@ -55,9 +59,12 @@ public abstract class ImmediateEffect extends Effect {
 	 * @param string
 	 *            responseFromClient
 	 */
-	public void assignParameters(String responseFromClient) {}
+	public void assignParameters(String responseFromClient) {
+	}
+
 
 	public List<ImmediateEffect> addAllNewEffectsToThisSet(List<ImmediateEffect> secondaryInteractiveEffects){
 		return secondaryInteractiveEffects;
+
 	}
 }
