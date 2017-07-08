@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.polimi.ingsw.GC_24.model.cards.Development;
+import it.polimi.ingsw.GC_24.model.places.Place;
 import it.polimi.ingsw.GC_24.model.places.TowerPlace;
 
 public class Board implements java.io.Serializable {
@@ -26,6 +27,7 @@ public class Board implements java.io.Serializable {
 	private Market market;
 	private CouncilPalace councilPalace;
 	private List<String> urlList = new ArrayList<>();
+	private List<String> urlPlayerColourList = new ArrayList<>();
 
 	// constructor
 	public Board(int numPlayers) {
@@ -51,7 +53,7 @@ public class Board implements java.io.Serializable {
 	}
 
 	/**
-	 * tells if the places needs to be locked because there are not enough players
+	 * Tells if the places needs to be locked because there are not enough players
 	 * in the game
 	 * 
 	 * @param numPlayers
@@ -151,6 +153,83 @@ public class Board implements java.io.Serializable {
 		urlCards(towerBuildings);
 		urlCards(towerVentures);
 		return urlList;
+	}
+
+	/**
+	 * This method put into an ArraList all the urls of the image of players that
+	 * occupy the places in the board.
+	 * 
+	 * @return the ArraList of String with the urls.
+	 */
+	public List<String> urlPlayerColour() {
+		urlPlayerMarketTower(towerTerritories);
+		urlPlayerMarketTower(towerCharacters);
+		urlPlayerMarketTower(towerBuildings);
+		urlPlayerMarketTower(towerVentures);
+		urlPlayer(councilPalace);
+		urlPlayer(harvest);
+		urlPlayer(production);
+		urlPlayerMarketTower(market);
+		return urlPlayerColourList;
+	}
+
+	/**
+	 * This method takes the url of image of players in councilPalace, harvest and
+	 * production
+	 */
+	public void urlPlayer(Area areaToUrl) {
+		for (int i = 0; i < areaToUrl.getPlacesArray().size(); i++) {
+			checkurl(areaToUrl.getPlacesArray().get(i));
+		}
+		if (areaToUrl.getPlacesArray().size() < 7) {
+			for (int i = areaToUrl.getPlacesArray().size(); i < 16; i++) {
+				urlPlayerColourList.add("src/main/java/it/polimi/ingsw/GC_24/img/familiar/blank.png");
+			}
+		}
+	}
+
+	/** This method takes the url of image of players in market and in the towers */
+	public void urlPlayerMarketTower(Area towerMarket) {
+		for (int i = 0; i < 4; i++) {
+			checkurl(towerMarket.getPlacesArray().get(i));
+		}
+	}
+
+	/**
+	 * This method takes the url of image of the players in places, if there is not
+	 * familiar placed it adds in ArrayList the "blank" image.
+	 */
+	public void checkurl(Place place) {
+		if (place.getFamMemberOnPlace() != null) {
+			String colour = place.getFamMemberOnPlace().getPlayerColour().toString();
+			if (colour.equalsIgnoreCase("blue")) {
+				if (place.getFamMemberOnPlace().isNeutral()) {
+					urlPlayerColourList.add("src/main/java/it/polimi/ingsw/GC_24/img/familiar/bluePlayerNeutral.png");
+				} else {
+					urlPlayerColourList.add("src/main/java/it/polimi/ingsw/GC_24/img/familiar/bluePlayer.png");
+				}
+			} else if (colour.equalsIgnoreCase("red")) {
+				if (place.getFamMemberOnPlace().isNeutral()) {
+					urlPlayerColourList.add("src/main/java/it/polimi/ingsw/GC_24/img/familiar/redPlayerNeutral.png");
+				} else {
+					urlPlayerColourList.add("src/main/java/it/polimi/ingsw/GC_24/img/familiar/redPlayer.png");
+				}
+			} else if (colour.equalsIgnoreCase("yellow")) {
+				if (place.getFamMemberOnPlace().isNeutral()) {
+					urlPlayerColourList.add("src/main/java/it/polimi/ingsw/GC_24/img/familiar/yellowPlayerNeutral.png");
+				} else {
+					urlPlayerColourList.add("src/main/java/it/polimi/ingsw/GC_24/img/familiar/yellowPlayer.png");
+				}
+			} else if (colour.equalsIgnoreCase("green")) {
+				if (place.getFamMemberOnPlace().isNeutral()) {
+					urlPlayerColourList.add("src/main/java/it/polimi/ingsw/GC_24/img/familiar/greenPlayerNeutral.png");
+				} else {
+					urlPlayerColourList.add("src/main/java/it/polimi/ingsw/GC_24/img/familiar/greenPlayer.png");
+				}
+			}
+		} else {
+			urlPlayerColourList.add("src/main/java/it/polimi/ingsw/GC_24/img/familiar/blank.png");
+		}
 	}
 
 	// getters and setters

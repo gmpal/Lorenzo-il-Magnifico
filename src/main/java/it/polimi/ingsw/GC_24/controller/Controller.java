@@ -112,13 +112,13 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				for (int i = 0; i < playerTurn.size(); i++) {
 					// one familar gone for each player
 					sendUrlBoard(game.getBoard().allUrl());
-					
+
 					// reset the current player
 					this.currentPlayer = game.getCurrentPlayer();
 					System.out.println("Current Player is ---> " + this.currentPlayer.getMyName());
 
 					sendCurrentPlayer();
-					
+
 					System.out.println("Controller --> Current Player Sent");
 					System.out.println("Controller --> Are  they already playing? " + alreadyPlaying);
 					if (!alreadyPlaying) {
@@ -174,19 +174,19 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		hashMap.put("rankings", rankings);
 		notifyMyObservers(hashMap);
 	}
-	
+
 	public void sendBoardInformation() {
-		
+
 		String[] boardInformation = game.prepareBoardInformation();
 		hashMap = new HashMap<>();
 		hashMap.put("boardInformation", boardInformation);
 		notifyMyObservers(hashMap);
-		
-		game.setRanking( new Ranking(playerTurn));
+
+		game.setRanking(new Ranking(playerTurn));
 		sendRankings();
 		System.out.println(game.getRanking());
 		System.out.println(playerTurn);
-		
+
 	}
 
 	public void sendPersonalInformationToEveryOne() {
@@ -485,8 +485,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	/**
-	 * This method send the list of image urls of cards on the Tower, it is useful
-	 * for the GUI
+	 * This method sends the list of image urls of cards on the Tower, it is useful
+	 * for the GUI.
 	 */
 	public void sendUrlBoard(List<String> urls) {
 		hashMap = new HashMap<>();
@@ -495,8 +495,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	/**
-	 * This method send the list of image urls of cards on the PersonalBoard, it is
-	 * useful for the GUI
+	 * This method sends the list of image urls of cards on the PersonalBoard, it is
+	 * useful for the GUI.
 	 */
 	public void sendUrlPersonalBoard(List<String> urls) {
 		hashMap = new HashMap<>();
@@ -506,11 +506,21 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	/**
 	 * This method send the list of image urls of excommunication tile, it is useful
-	 * for the GUI
+	 * for the GUI.
 	 */
 	public void sendUrlExcommunication() {
 		hashMap = new HashMap<>();
 		hashMap.put("urlExcommunication", game.getUrlExcommunication());
+		notifyMyObservers(hashMap);
+	}
+
+	/**
+	 * This method sends the list of url of image of the player that occupy the
+	 * places, it is useful for GUI.
+	 */
+	public void sendUrlColor(List<String> urls) {
+		hashMap = new HashMap<>();
+		hashMap.put("urlColour", urls);
 		notifyMyObservers(hashMap);
 	}
 
@@ -813,6 +823,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		sendBoardInformation();
 		sendPersonalInformationToEveryOne();
 		sendUrlPersonalBoard(game.getCurrentPlayer().getMyBoard().urlPersonalBoard());
+		sendUrlColor(game.getBoard().urlPlayerColour());
 		awakenSleepingClient();
 		System.out.println("Controller --> Richiesta di risveglio inviata");
 
