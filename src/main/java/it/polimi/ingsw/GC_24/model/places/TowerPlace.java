@@ -32,6 +32,7 @@ public class TowerPlace extends Place {
 		this.correspondingCard = null;
 	}
 
+	//getters and setters
 	public Development getCorrespondingCard() {
 		return correspondingCard;
 	}

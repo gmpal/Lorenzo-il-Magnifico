@@ -19,7 +19,7 @@ public class TestPlayer {
 	Place place;
 	
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		value = new ValueEffect("value");
 		value.getEffectValues().getCoins().setQuantity(2);
 		values = new SetOfValues();
@@ -28,21 +28,21 @@ public class TestPlayer {
 	}
 
 	@Test
-	public void testGetMyValuesFromColour() throws Exception {
+	public void testGetMyValuesFromColour() {
 		player.getMyValues().setInitialValues(1);
 		values.setInitialValues(1);
 		assertEquals(values, player.getMyValuesFromColour(PlayerColour.RED));
 	}
 	
 	@Test
-	public void testGetMyValuesFromColourTwoDifferentColours() throws Exception {
+	public void testGetMyValuesFromColourTwoDifferentColours() {
 		player.getMyValues().setInitialValues(1);
 		values.setInitialValues(1);
 		assertFalse(values.equals(player.getMyValuesFromColour(PlayerColour.GREEN)));
 	}
 
 	@Test
-	public void testTakeValuesFromPlace() throws Exception {
+	public void testTakeValuesFromPlace() {
 		player.getMyValues().setInitialValues(1);
 		values.setInitialValues(1);
 		values.getCoins().addQuantity(2);
@@ -51,21 +51,21 @@ public class TestPlayer {
 	}
 
 	@Test
-	public void testIsPossibleIncreaseDieValueTrue() throws Exception {
+	public void testIsPossibleIncreaseDieValueTrue() {
 		player.getMyValues().setInitialValues(1);
 		values.getCoins().setQuantity(4);
 		assertTrue(player.isPossibleIncreaseDieValue(2));
 	}
 	
 	@Test
-	public void testIsPossibleIncreaseDieValueFalse() throws Exception {
+	public void testIsPossibleIncreaseDieValueFalse() {
 		player.getMyValues().setInitialValues(1);
 		values.getCoins().setQuantity(4);
 		assertFalse(player.isPossibleIncreaseDieValue(5));
 	}
 	
 	@Test
-	public void testIsPossibleIncreaseDieValueNegative() throws Exception {
+	public void testIsPossibleIncreaseDieValueNegative() {
 		player.getMyValues().setInitialValues(1);
 		values.getCoins().setQuantity(4);
 		assertFalse(player.isPossibleIncreaseDieValue(-2));
