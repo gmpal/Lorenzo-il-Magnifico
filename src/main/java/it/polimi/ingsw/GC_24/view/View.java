@@ -75,8 +75,6 @@ public abstract class View extends MyObservable implements MyObserver {
 	
 	public abstract void play();
 
-	public abstract void communicateActionDone();
-
 	public abstract void setRankings(String rankings);
 
 	public abstract void setMyTurn(String currentPlayer);
@@ -103,6 +101,15 @@ public abstract class View extends MyObservable implements MyObserver {
 		hm.put("action", command);
 		notifyMyObservers(hm);
 		waitForActionDone();
+
+	}
+	
+	
+	public void communicateActionDone() {
+		synchronized (getWaitingForActionCompleted()) {
+			setActionDone(true);
+			getWaitingForActionCompleted().notify();
+		}
 
 	}
 	

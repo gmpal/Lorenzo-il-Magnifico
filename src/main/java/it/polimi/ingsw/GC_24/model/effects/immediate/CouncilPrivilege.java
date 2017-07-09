@@ -9,7 +9,7 @@ import it.polimi.ingsw.GC_24.model.values.SetOfValues;
  * effect to receive among a list of them
  */
 public class CouncilPrivilege extends ImmediateEffect {
-	
+
 	/**
 	 * 
 	 */

@@ -18,17 +18,15 @@ public class ViewGUI extends View {
 	private List<String> urlBoard = new ArrayList<>();
 	private ArrayList<String> urlColour;
 
-	
 	private String councilPrivilegeAnswer = "";
 	private String alternativeCostAnswer = "";
 	private String saleAnswer = "";
 	private String ExcommunicationAnswer = "";
 	private String ExchangeAnswer = "";
 	private String Servants = "";
-	
+
 	private Object waitingForParameters = new Object();
-	
-	
+
 	public ViewGUI(String name, MainClass mainClass) {
 		super(name);
 		this.mainClass = mainClass;
@@ -71,9 +69,9 @@ public class ViewGUI extends View {
 
 	@Override
 	public String askForCouncilPrivilege(String request) {
-	
-		return null;
-		
+
+		System.out.println("ciaohkuygytyreshtryuhijokiuytrewrtyuiytrewrtyuioytretyu");
+		return "1";
 	}
 
 	@Override
@@ -95,7 +93,6 @@ public class ViewGUI extends View {
 
 	@Override
 	public void communicateActionDone() {
-	
 
 	}
 
@@ -201,7 +198,7 @@ public class ViewGUI extends View {
 		});
 
 	}
-	
+
 	@Override
 	public void parsePersonalInformations(String[] personalInformation) {
 		this.personalTerritories = personalInformation[0];
@@ -210,21 +207,24 @@ public class ViewGUI extends View {
 		this.personalVentures = personalInformation[3];
 		this.personalLeaders = personalInformation[4];
 		this.family = personalInformation[5];
-		this.values =	personalInformation[6];	
+		this.values = personalInformation[6];
 		this.colour = personalInformation[7];
-		this.permanentEffects =  personalInformation[8];
-		this.oneTimePerTurnEffects =  personalInformation[9];
-		
+		this.permanentEffects = personalInformation[8];
+		this.oneTimePerTurnEffects = personalInformation[9];
+
 		Platform.runLater(() -> mainClass.parseValuesString(values));
 		Platform.runLater(() -> mainClass.perseFamilyString(family));
-		
+
 	}
 
 	@Override
 	public void disconnectClient() {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
+	public void setCouncilPrivilegeAnswer(String chosenPrivilege) {
+		this.councilPrivilegeAnswer = chosenPrivilege;
+	}
 
 }
