@@ -29,8 +29,8 @@ public class ActionTower extends Action {
 	public ActionTower(Model game, String familiar, String zone, String floor, String servants, SetOfValues cost,
 			SetOfValues setOfSale) {
 		super(game, familiar, zone, floor, servants);
-		this.temporaryCardCost = cost;
 		this.towerPlace = (TowerPlace) this.place;
+		this.temporaryCardCost = cost;
 		this.setOfSales = setOfSale;
 	}
 

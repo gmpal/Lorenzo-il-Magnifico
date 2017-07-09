@@ -517,6 +517,9 @@ public class MainClass extends Application {
 	}
 
 	public void setChoosenPrivilege(String chosenPrivilege) {
-		((ViewGUI)view).setCouncilPrivilegeAnswer(chosenPrivilege);
+		synchronized (((ViewGUI) view).getWaitingForParameters()) {
+			((ViewGUI) view).setCouncilPrivilegeAnswer(chosenPrivilege);
+			((ViewGUI) view).getWaitingForParameters().notify();
+		}
 	}
 }

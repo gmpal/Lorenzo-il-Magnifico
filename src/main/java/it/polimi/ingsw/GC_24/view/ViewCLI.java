@@ -417,9 +417,11 @@ public class ViewCLI extends View {
 		}
 
 		String answer = zone + " " + floor;
-		answer = increaseDieValue(answer);
-		System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" + answer);
-
+		if(!floor.equals("null")) {
+			answer = increaseDieValue(answer);
+		}else {
+			answer=answer+" 0";
+		}
 		return answer;
 	}
 

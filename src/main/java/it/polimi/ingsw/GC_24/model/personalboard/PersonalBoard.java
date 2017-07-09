@@ -77,10 +77,11 @@ public class PersonalBoard implements java.io.Serializable {
 	 * @return the ArraList of String with the urls.
 	 */
 	public List<String> urlPersonalBoard() {
-		urlCardsPersonalBoard(personalTerritories);
-		urlCardsPersonalBoard(personalCharacters);
-		urlCardsPersonalBoard(personalBuildings);
-		urlCardsPersonalBoard(personalVentures);
+		urlList.clear();
+		urlCardsPersonalBoard(this.personalTerritories);
+		urlCardsPersonalBoard(this.personalCharacters);
+		urlCardsPersonalBoard(this.personalBuildings);
+		urlCardsPersonalBoard(this.personalVentures);
 		for (int i = 0; i < 4; i++) {
 			try {
 				if (personalLeader.get(i).isInUse()) {
