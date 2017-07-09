@@ -82,6 +82,7 @@ public class PersonalBoard implements java.io.Serializable {
 		urlCardsPersonalBoard(this.personalCharacters);
 		urlCardsPersonalBoard(this.personalBuildings);
 		urlCardsPersonalBoard(this.personalVentures);
+
 		for (int i = 0; i < 4; i++) {
 			try {
 				if (personalLeader.get(i).isInUse()) {

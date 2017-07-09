@@ -3,6 +3,7 @@ package it.polimi.ingsw.GC_24.view;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import it.polimi.ingsw.GC_24.gui.MainClass;
@@ -49,14 +50,33 @@ public class ViewGUI extends View {
 	}
 
 	@Override
+	public void sendAction(String command) {
+		actionDone = false;
+
+		hm = new HashMap<>();
+		hm.put("action", command);
+		notifyMyObservers(hm);
+
+	}
+
+	@Override
+	public void communicateActionDone() {
+		setActionDone(true);
+	}
+
+	
+	@Override
 	public String chooseAlternativeCost(String request) {
+		System.out.println("GUI choosing alternative cost");
 
 		Platform.runLater(() -> mainClass.chooseAlternativeCost(request));
 
+		System.out.println("Metodo maincLass partito");
 		synchronized (waitingForParameters) {
 			alternativeCostAnswer = "";
 			while (alternativeCostAnswer.equals("")) {
 				try {
+					System.out.println("In attesa");
 					waitingForParameters.wait();
 				} catch (InterruptedException e) {
 					e.printStackTrace();
@@ -101,21 +121,14 @@ public class ViewGUI extends View {
 			}
 		}
 
-		return alternativeCostAnswer;
+		return excommunicationAnswer;
 
 	}
-
+	
 	@Override
 	public String askForCouncilPrivilege(String request) { 
 
-		Platform.runLater(() -> {
-			try {
-				mainClass.askForCouncilPrivilege(request);
-
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-		});
+		Platform.runLater(() -> mainClass.askForCouncilPrivilege(request));
 
 		synchronized (waitingForParameters) {
 			councilPrivilegeAnswer = "";
@@ -127,7 +140,6 @@ public class ViewGUI extends View {
 				}
 			}
 		}
-
 		return councilPrivilegeAnswer;
 
 	}
@@ -173,8 +185,8 @@ public class ViewGUI extends View {
 		Platform.runLater(() -> mainClass.askForChooseNewCard(request));
 
 		synchronized (waitingForParameters) {
-			servantsAnswer = "";
-			while (servantsAnswer.equals("")) {
+			chooseNewCardAnswer = "";
+			while (chooseNewCardAnswer.equals("")) {
 				try {
 					waitingForParameters.wait();
 				} catch (InterruptedException e) {
@@ -185,7 +197,6 @@ public class ViewGUI extends View {
 		return chooseNewCardAnswer;
 
 	}
-
 
 	@Override
 	public void setMyTurn(String currentPlayer) {
@@ -223,18 +234,6 @@ public class ViewGUI extends View {
 
 	}
 
-	public List<String> getUrlExcommunication() {
-		return urlExcommunication;
-	}
-
-	public List<String> getUrlPersonalBoard() {
-		return urlPersonalBoard;
-	}
-
-	public List<String> getUrlBoard() {
-		return urlBoard;
-
-	}
 
 	@Override
 	public void setUrlPersonalBoard(ArrayList<String> urlPersonalBoard) {
@@ -307,13 +306,35 @@ public class ViewGUI extends View {
 		Platform.runLater(() -> mainClass.perseFamilyString(family));
 
 	}
+	
+	@Override
+	public void communicateActionDone() {
+		synchronized (getWaitingForActionCompleted()) {
+			setActionDone(true);
+		}
+	}
+	
+	@Override
+	public void sendAction(String command) {
+		actionDone = false;
+
+		hm = new HashMap<>();
+		hm.put("action", command);
+		notifyMyObservers(hm);
+	}
+	
+	@Override
+	public void sendLeader(String command) {
+		hm = new HashMap<>();
+		hm.put("leader", command);
+		this.notifyMyObservers(hm);
+	}
 
 	@Override
 	public void disconnectClient() {
 		// TODO Auto-generated method stub
 
 	}
-
 
 	public Object getWaitingForParameters() {
 		return waitingForParameters;
@@ -323,4 +344,68 @@ public class ViewGUI extends View {
 		this.councilPrivilegeAnswer = chosenPrivilege;
 	}
 
+	public String getCouncilPrivilegeAnswer() {
+		return councilPrivilegeAnswer;
+	}
+
+	public String getAlternativeCostAnswer() {
+		return alternativeCostAnswer;
+	}
+
+	public String getSaleAnswer() {
+		return saleAnswer;
+	}
+
+	public String getExcommunicationAnswer() {
+		return excommunicationAnswer;
+	}
+
+	public String getExchangeAnswer() {
+		return exchangeAnswer;
+	}
+
+	public String getServantsAnswer() {
+		return servantsAnswer;
+	}
+
+	public String getChooseNewCardAnswer() {
+		return chooseNewCardAnswer;
+	}
+
+	public void setAlternativeCostAnswer(String alternativeCostAnswer) {
+		this.alternativeCostAnswer = alternativeCostAnswer;
+	}
+
+	public void setSaleAnswer(String saleAnswer) {
+		this.saleAnswer = saleAnswer;
+	}
+
+	public void setExcommunicationAnswer(String excommunicationAnswer) {
+		this.excommunicationAnswer = excommunicationAnswer;
+	}
+
+	public void setExchangeAnswer(String exchangeAnswer) {
+		this.exchangeAnswer = exchangeAnswer;
+	}
+
+	public void setServantsAnswer(String servantsAnswer) {
+		this.servantsAnswer = servantsAnswer;
+	}
+
+	public void setChooseNewCardAnswer(String chooseNewCardAnswer) {
+		this.chooseNewCardAnswer = chooseNewCardAnswer;
+	}
+
+	public List<String> getUrlExcommunication() {
+		return urlExcommunication;
+	}
+
+	public List<String> getUrlPersonalBoard() {
+		return urlPersonalBoard;
+	}
+
+	public List<String> getUrlBoard() {
+		return urlBoard;
+
+	}
 }

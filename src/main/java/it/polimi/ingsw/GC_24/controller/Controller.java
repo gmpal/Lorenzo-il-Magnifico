@@ -981,6 +981,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		this.handleInteractiveEffects(interactiveEffects);
 		System.out.println("Controller --> Conclusa gestione dei costi interattivi ");
 		sendBoardInformation();
+		sendUrlBoard(game.getBoard().getUrlList());
 		sendPersonalInformation();
 		sendUrlPersonalBoard(game.getCurrentPlayer().getMyBoard().urlPersonalBoard());
 

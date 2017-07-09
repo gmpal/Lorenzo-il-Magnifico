@@ -245,24 +245,7 @@ public class GameBoardController implements Initializable {
 	@FXML
 	private GridPane produtionGridPane;
 
-	@FXML
-	private ImageView familiar1= new ImageView();
-	@FXML
-	private ImageView familiar2= new ImageView();
-	@FXML
-	private ImageView familiar3= new ImageView();
-	@FXML
-	private ImageView familiar4= new ImageView();
 
-	@FXML
-	private Label familiar1v= new Label();
-	@FXML
-	private Label familiar2v= new Label();
-	@FXML
-	private Label familiar3v= new Label();
-	@FXML
-	private Label familiar4v= new Label();
-	
 	@FXML
 	private ImageView blackDie = new ImageView();
 	@FXML
@@ -271,17 +254,7 @@ public class GameBoardController implements Initializable {
 	private ImageView orangeDie= new ImageView();
 
 
-	@FXML
-	private TextField servantsTextField;
-	@FXML
-	private Button plusButton;
-	@FXML
-	private Button minusButton;
 
-	@FXML
-	private Button submitFamiliarButton;
-	@FXML
-	private Button cancelFamiliarButton;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -407,54 +380,7 @@ public class GameBoardController implements Initializable {
 
 	}
 
-	public void chosenFamiliar(MouseEvent clickOnFamiliar) {
 
-		if (clickOnFamiliar.getSource() == familiar1) {
-			familiar1.setDisable(true);
-			familiar2.setVisible(false);
-			familiar3.setVisible(false);
-			familiar4.setVisible(false);
-			action = "1 " + action;
-
-		}
-		if (clickOnFamiliar.getSource() == familiar2) {
-			familiar2.setDisable(true);
-			familiar1.setVisible(false);
-			familiar3.setVisible(false);
-			familiar4.setVisible(false);
-			action = "2 " + action;
-		}
-		if (clickOnFamiliar.getSource() == familiar3) {
-			familiar3.setDisable(true);
-			familiar2.setVisible(false);
-			familiar1.setVisible(false);
-			familiar4.setVisible(false);
-			action = "3 " + action;
-		}
-		if (clickOnFamiliar.getSource() == familiar4) {
-			familiar4.setDisable(true);
-			familiar2.setVisible(false);
-			familiar3.setVisible(false);
-			familiar1.setVisible(false);
-			action = "4 " + action;
-		}
-
-	}
-
-	public void submitAction(ActionEvent buttonClick) {
-		action = action + " " + servantsTextField.getText();
-		System.out.println("Action ready: " + action);
-		Stage actualScene = (Stage) submitFamiliarButton.getScene().getWindow();
-		mainClass.getView().sendAction(action);
-		actualScene.close();
-		
-	}
-
-	public void cancelAction(ActionEvent buttonClick) {
-		action = "";
-		Stage actualScene = (Stage) cancelFamiliarButton.getScene().getWindow();
-		actualScene.close();
-	}
 
 	public void towerClickHandler(ActionEvent buttonClick) throws IOException {
 		if (mainClass.getView().isMyTurn()) {
@@ -462,11 +388,31 @@ public class GameBoardController implements Initializable {
 			stage.setTitle("Choose Familiar");
 			stage.initModality(Modality.APPLICATION_MODAL);
 			Pane myPane = null;
-			myPane = FXMLLoader.load(getClass().getResource("SelectFamiliar.fxml"));
-			Scene scene = new Scene(myPane);
-			stage.setScene(scene);
-
-			stage.show();
+			FXMLLoader loader = new FXMLLoader(MainClass.class.getResource("SelectFamiliar.fxml"));
+			
+			myPane = loader.load();
+		
+			SelectFamiliarController controller = loader.getController();
+			
+			controller.setGameBoardController(this);
+			controller.setMainClass(this.mainClass);
+			
+			
+			
+			controller.getSubmitFamiliarButton().setVisible(false);
+			
+			
+			controller.getFamiliar1v().setText(mainClass.getFamily1Value().getValue());
+			controller.getFamiliar2v().setText(mainClass.getFamily2Value().getValue());
+			controller.getFamiliar3v().setText(mainClass.getFamily3Value().getValue());
+			controller.getFamiliar4v().setText(mainClass.getFamily4Value().getValue());
+			controller.getFamiliar1().setVisible(mainClass.isFamily1Available());
+			controller.getFamiliar2().setVisible(mainClass.isFamily2Available());
+			controller.getFamiliar3().setVisible(mainClass.isFamily3Available());
+			controller.getFamiliar4().setVisible(mainClass.isFamily4Available());
+			
+			
+	
 
 			if (buttonClick.getSource() == buttonTerritory01) {
 				action = "territories 1";
@@ -557,6 +503,11 @@ public class GameBoardController implements Initializable {
 					|| buttonClick.getSource() == buttonCouncil07) {
 				action = "council 0";
 			}
+			controller.setAction(action);
+			Scene scene = new Scene(myPane);
+			stage.setScene(scene);
+
+			stage.show();
 		} else {
 			// not my turn
 			mainClass.showMessage("Not your turn, you can't do this action");
@@ -580,43 +531,7 @@ public class GameBoardController implements Initializable {
 		stage.show();
 	}
 
-	public void servantsButtonPressed(ActionEvent buttonClick) {
-		if (buttonClick.getSource() == plusButton) {
-			servantsTextField.setText(Integer.toString(Integer.parseInt(servantsTextField.getText()) + 1));
-		}
-		if (buttonClick.getSource() == minusButton) {
-			if (!servantsTextField.getText().equals("0")) {
-				servantsTextField.setText(Integer.toString(Integer.parseInt(servantsTextField.getText()) - 1));
-			}
-		}
-	}
-
 	
-	public void chooseFamiliar(MouseEvent clickOnFamiliar) {
-		if (clickOnFamiliar.getSource()==familiar1) {
-			familiar2.setVisible(false);
-			familiar3.setVisible(false);
-			familiar4.setVisible(false);
-			
-		}
-		if (clickOnFamiliar.getSource()==familiar2) {
-			familiar1.setVisible(false);
-			familiar3.setVisible(false);
-			familiar4.setVisible(false);
-		}
-		if (clickOnFamiliar.getSource()==familiar3) {
-			familiar2.setVisible(false);
-			familiar1.setVisible(false);
-			familiar4.setVisible(false);
-		}
-		if (clickOnFamiliar.getSource()==familiar4) {
-			familiar2.setVisible(false);
-			familiar3.setVisible(false);
-			familiar1.setVisible(false);
-		}
-	
-	//	TODO:continuare??
-	}
 	
 	public void setMainApp(MainClass mainClass) {
 		this.mainClass = mainClass;
@@ -691,20 +606,6 @@ public class GameBoardController implements Initializable {
 		return stonesLabel;
 	}
 	
-	public Label getFamiliar1v() {
-		return familiar1v;
-	}
-
-	public Label getFamiliar2v() {
-		return familiar2v;
-	}
-
-	public Label getFamiliar3v() {
-		return familiar3v;
-	}
-
-	public Label getFamiliar4v() {
-		return familiar4v;
-	}
+	
 
 }
