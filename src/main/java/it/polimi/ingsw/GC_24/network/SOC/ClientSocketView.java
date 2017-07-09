@@ -135,7 +135,12 @@ public class ClientSocketView extends MyObservable implements Runnable, MyObserv
 					System.out.println("CSV ---> Ricevuti problemi");
 					view.show((String) request.get("problems"));
 				}
-
+				if (command.contains("vatican")) {
+					System.out.println("CSV ---> Ricevuta richiesta scomunica");
+					String response = view.askForExcommunication();
+					view.sendAnswerToVatican(response);
+				}
+				
 				if (command.contains("personalInformation")) {
 					view.parsePersonalInformations((String[]) request.get("personalInformation"));
 				}
@@ -217,9 +222,6 @@ public class ClientSocketView extends MyObservable implements Runnable, MyObserv
 			int modelNumber = (int) request.get("modelNumber");
 		}
 
-		if (command.contains("vatican")) {
-			System.out.println("CSV ---> Ricevuta richiesta scomunica");
-			view.askForExcommunication();
-		}
+
 	}
 }

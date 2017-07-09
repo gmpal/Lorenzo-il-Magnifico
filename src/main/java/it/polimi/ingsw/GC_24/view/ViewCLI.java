@@ -515,7 +515,7 @@ public class ViewCLI extends View {
 	}
 
 	@Override
-	public void askForExcommunication() {
+	public String askForExcommunication() {
 		System.out.println("Do you want to support the Vatican?(Y/N)");
 
 		String answer = scanner.nextLine();
@@ -524,7 +524,7 @@ public class ViewCLI extends View {
 			answer = scanner.nextLine();
 		}
 
-		sendAnswerToVatican(answer);
+		return answer;
 	}
 
 	@Override

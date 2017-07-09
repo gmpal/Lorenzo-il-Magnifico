@@ -3,9 +3,6 @@ package it.polimi.ingsw.GC_24.view;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.FutureTask;
 
 import it.polimi.ingsw.GC_24.gui.MainClass;
 import javafx.application.Platform;
@@ -21,9 +18,10 @@ public class ViewGUI extends View {
 	private String councilPrivilegeAnswer = "";
 	private String alternativeCostAnswer = "";
 	private String saleAnswer = "";
-	private String ExcommunicationAnswer = "";
-	private String ExchangeAnswer = "";
-	private String Servants = "";
+	private String excommunicationAnswer = "";
+	private String exchangeAnswer = "";
+	private String servantsAnswer = "";
+	private String chooseNewCardAnswer = "";
 
 	private Object waitingForParameters = new Object();
 
@@ -51,50 +49,137 @@ public class ViewGUI extends View {
 
 	@Override
 	public String chooseAlternativeCost(String request) {
-		// TODO Auto-generated method stub
-		return null;
+
+		Platform.runLater(() -> mainClass.chooseAlternativeCost(request));
+
+		synchronized (waitingForParameters) {
+			alternativeCostAnswer = "";
+			while (alternativeCostAnswer.equals("")) {
+				try {
+					waitingForParameters.wait();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		return alternativeCostAnswer;
 	}
 
 	@Override
 	public String chooseSale(String increase) {
-		// TODO Auto-generated method stub
-		return null;
+
+		Platform.runLater(() -> mainClass.chooseSale(increase));
+
+		synchronized (waitingForParameters) {
+			saleAnswer = "";
+			while (saleAnswer.equals("")) {
+				try {
+					waitingForParameters.wait();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		return saleAnswer;
 	}
 
 	@Override
-	public void askForExcommunication() {
-		// TODO Auto-generated method stub
+	public String askForExcommunication() {
+		Platform.runLater(() -> mainClass.chooseExcommunication());
+
+		synchronized (waitingForParameters) {
+			excommunicationAnswer = "";
+			while (excommunicationAnswer.equals("")) {
+				try {
+					waitingForParameters.wait();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		return alternativeCostAnswer;
 
 	}
 
 	@Override
 	public String askForCouncilPrivilege(String request) {
 
-		System.out.println("ciaohkuygytyreshtryuhijokiuytrewrtyuiytrewrtyuioytretyu");
-		return "1";
+
+	/*	Platform.runLater(() -> mainClass.askForCouncilPrivilege(request));
+
+		synchronized (waitingForParameters) {
+			councilPrivilegeAnswer = "";
+			while (councilPrivilegeAnswer.equals("")) {
+				try {
+					waitingForParameters.wait();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		return councilPrivilegeAnswer;
+*/  return "1";
+
 	}
 
 	@Override
 	public String askForExchange(String request) {
-		// TODO Auto-generated method stub
-		return null;
+		Platform.runLater(() -> mainClass.askForExchange(request));
+
+		synchronized (waitingForParameters) {
+			exchangeAnswer = "";
+			while (exchangeAnswer.equals("")) {
+				try {
+					waitingForParameters.wait();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		return exchangeAnswer;
 	}
 
 	@Override
 	public String askForServantsForHarvestOrProduction(String request) {
-		// TODO Auto-generated method stub
-		return null;
+		Platform.runLater(() -> mainClass.askForServantsForHarvestOrProduction(request));
+
+		synchronized (waitingForParameters) {
+			servantsAnswer = "";
+			while (servantsAnswer.equals("")) {
+				try {
+					waitingForParameters.wait();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		return servantsAnswer;
 	}
 
 	@Override
 	public String askForChooseNewCard(String request) {
-		return null;
+		Platform.runLater(() -> mainClass.askForChooseNewCard(request));
+
+		synchronized (waitingForParameters) {
+			servantsAnswer = "";
+			while (servantsAnswer.equals("")) {
+				try {
+					waitingForParameters.wait();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return chooseNewCardAnswer;
+
 	}
 
-	@Override
-	public void communicateActionDone() {
-
-	}
 
 	@Override
 	public void setMyTurn(String currentPlayer) {
@@ -222,6 +307,10 @@ public class ViewGUI extends View {
 		// TODO Auto-generated method stub
 
 	}
+
+
+	public Object getWaitingForParameters() {
+		return waitingForParameters;
 
 	public void setCouncilPrivilegeAnswer(String chosenPrivilege) {
 		this.councilPrivilegeAnswer = chosenPrivilege;

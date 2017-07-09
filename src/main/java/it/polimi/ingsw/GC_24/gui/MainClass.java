@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.StringTokenizer;
 
 import it.polimi.ingsw.GC_24.network.Client;
@@ -19,10 +20,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
@@ -338,17 +340,6 @@ public class MainClass extends Application {
 		alert.showAndWait();
 	}
 
-	public String askForChooseNewCard(String request) {
-		System.out.println("§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§");
-		System.out.println("§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§");
-		System.out.println("§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§");
-		System.out.println("§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§");
-		System.out.println("§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§");
-		System.out.println("§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§");
-		System.out.println("§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§");
-		System.out.println("§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§");
-		return request;
-	}
 
 	public Stage getPrimaryStage() {
 		return primaryStage;
@@ -469,7 +460,8 @@ public class MainClass extends Application {
 		this.myStones = myStones;
 	}
 
-	public void askForCouncil() throws IOException {
+
+	public void askForCouncilPrivilege(String request) {
 		Stage stage = new Stage();
 		stage.setTitle("Choose Privilege");
 		stage.initModality(Modality.APPLICATION_MODAL);
@@ -478,6 +470,50 @@ public class MainClass extends Application {
 		Scene scene = new Scene(myPane);
 		stage.setScene(scene);
 		stage.show();
+		
+	}
+
+	public void askForServantsForHarvestOrProduction(String request) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public void askForChooseNewCard(String request) {
+	
+	}
+
+	public void  askForExchange(String request) {
+		
+	}
+
+	public void chooseSale(String increase) {
+
+	}
+
+	public void chooseAlternativeCost(String request) {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Confirmation Dialog with Custom Actions");
+		alert.setHeaderText("Look, a Confirmation Dialog with Custom Actions");
+		alert.setContentText(request);
+
+		ButtonType buttonTypeOne = new ButtonType("One");
+		ButtonType buttonTypeTwo = new ButtonType("Two");
+		ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+
+		alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, buttonTypeCancel);
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == buttonTypeOne){
+		    // ... user chose "One"
+		} else if (result.get() == buttonTypeTwo) {
+		    // ... user chose "Two"
+		} else {
+		    // ... user chose CANCEL or closed the dialog
+		}
+	}
+
+	public void chooseExcommunication() {
+		
 	}
 
 	public void setChoosenPrivilege(String chosenPrivilege) {

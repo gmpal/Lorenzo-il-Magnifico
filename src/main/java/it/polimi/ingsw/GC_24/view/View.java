@@ -61,7 +61,7 @@ public abstract class View extends MyObservable implements MyObserver {
 
 	public abstract String chooseSale(String increase); 
 	
-	public abstract void askForExcommunication();
+	public abstract String askForExcommunication();
 	
 	public abstract String askForCouncilPrivilege(String request);
 	
@@ -74,6 +74,7 @@ public abstract class View extends MyObservable implements MyObserver {
 	public abstract void updateTurn(List<String> playerTurn);
 	
 	public abstract void play();
+
 
 	public abstract void setRankings(String rankings);
 
@@ -165,6 +166,13 @@ public abstract class View extends MyObservable implements MyObserver {
 				}
 			}
 			System.out.println("--------Action Completed");
+		}
+	}
+	
+	public void communicateActionDone() {
+		synchronized (getWaitingForActionCompleted()) {
+			setActionDone(true);
+			getWaitingForActionCompleted().notify();
 		}
 	}
 	

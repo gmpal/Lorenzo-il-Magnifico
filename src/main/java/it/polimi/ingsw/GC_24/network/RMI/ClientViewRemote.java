@@ -48,7 +48,7 @@ public interface ClientViewRemote extends Remote {
 
 
 
-	public abstract void askForVatican() throws RemoteException;
+	public abstract String askForVatican() throws RemoteException;
 
 
 

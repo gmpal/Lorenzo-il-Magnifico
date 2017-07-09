@@ -97,8 +97,9 @@ public class ClientRMIView extends MyObservable implements ClientViewRemote, MyO
 	}
 
 	@Override
-	public void askForVatican() {
-		view.askForExcommunication();
+	public String askForVatican() {
+		String response = view.askForExcommunication();
+		return response;
 	}
 
 	@Override
