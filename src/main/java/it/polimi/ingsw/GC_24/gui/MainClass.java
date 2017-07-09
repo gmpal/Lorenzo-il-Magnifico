@@ -354,8 +354,6 @@ public class MainClass extends Application {
 			String url = new File(urlPersonalBoard.get(i)).toURI().toURL().toString();
 			
 			imagesToTakePersonally.get(i).imageProperty().set(new Image(url));
-
-
 		}
 	}
 
