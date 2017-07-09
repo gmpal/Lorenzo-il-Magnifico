@@ -48,7 +48,7 @@ public class ActionTower extends Action {
 
 		answerToPlayer = verifyZoneOccupiedByMe(answerToPlayer);
 
-		answerToPlayer = verifyMoneyForTowerOccupied(answerToPlayer);
+	//	answerToPlayer = verifyMoneyForTowerOccupied(answerToPlayer);
 
 		answerToPlayer = verifyTerritorySpaceAvailability(answerToPlayer);
 
@@ -141,14 +141,13 @@ public class ActionTower extends Action {
 	 * This method checks if you have enough money to put the familyMember in a
 	 * tower occupied (3 coins)
 	 */
-	public String verifyMoneyForTowerOccupied(String answerToPlayer) {
+	/**public int verifyMoneyForTowerOccupied() {
 		if (player.getPermanentEffect("noCoinsForOccupiedTower") == null && this.zone.isOccupied()
 				&& this.player.getMyValues().getCoins().getQuantity() < 3) {
-			return answerToPlayer
-					+ "You don't have enough coins to place your family member in a tower already occupied\n";
+			return 3;
 		} else
 			return answerToPlayer;
-	}
+	}*/
 
 	/**
 	 * It checks if you have the resources for taking the card in the place you're
@@ -164,9 +163,10 @@ public class ActionTower extends Action {
 				Value requirement = specificCard.getRequiredMilitaryPoints();
 				SetOfValues cost1 = specificCard.getCost();
 				SetOfValues cost2 = specificCard.getAlternativeCost();
-				if (temporaryCardCost.equals(cost2) &&!this.player.getMyValues().doIHaveEnoughOfThis(requirement) ) {
-					return answerToPlayer + "You don't have the EXTRA REQUIREMENTS for this card! Choose another card \n";
-				}else if (temporaryCardCost.equals(cost1) && !this.player.getMyValues().doIHaveThisSet(cost1) ) {
+				if (temporaryCardCost.equals(cost2) && !this.player.getMyValues().doIHaveEnoughOfThis(requirement)) {
+					return answerToPlayer
+							+ "You don't have the EXTRA REQUIREMENTS for this card! Choose another card \n";
+				} else if (temporaryCardCost.equals(cost1) && !this.player.getMyValues().doIHaveThisSet(cost1)) {
 					return answerToPlayer + "You don't have the VALUES for this card! Choose another card \n";
 				}
 			}
@@ -178,10 +178,15 @@ public class ActionTower extends Action {
 				}
 			}
 
-
+			if ((player.getPermanentEffect("noCoinsForOccupiedTower") == null && this.zone.isOccupied())){
+				temporaryCardCost.getCoins().addQuantity(3);
+			}
+			
 			if (!player.getMyValues().doIHaveThisSet(temporaryCardCost)) {
 				return answerToPlayer + "You don't have enough resources to take this card! Choose another card \n";
 			}
+			
+			
 		}
 		return answerToPlayer;
 	}

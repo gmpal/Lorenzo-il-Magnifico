@@ -248,11 +248,9 @@ public class ViewCLI extends View {
 		for (int i = 1; i <= 4; i++) {
 			if (i == 4) {
 				builder.append(i);
-				string = string + i;
 				break;
 			}
 			builder.append(i + ",");
-			string = string + i;
 		}
 		builder.append(")  0 --> Cancel ");
 		System.out.println(builder.toString());

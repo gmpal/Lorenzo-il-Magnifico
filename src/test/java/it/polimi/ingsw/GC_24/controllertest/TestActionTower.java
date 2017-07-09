@@ -186,44 +186,6 @@ public class TestActionTower {
 	}
 
 	@Test
-	public void testVerifyMoneyForTowerOccupiedWithCoinZoneOccupiedNoPermanentEffect() {
-		game.getBoard().getTowerTerritories().getPlacesArray().get(2)
-				.setFamMemberOnPlace(p2.getMyFamily().getMember1());
-		p1.getMyValues().setCoins(new Coin(3));
-		String g = actionTower.verifyMoneyForTowerOccupied("ok");
-		assertEquals("ok", g);
-	}
-
-	@Test
-	public void testVerifyMoneyForTowerOccupiedWithCoinZoneOccupiedWithPermanentEffect() {
-		actionTower.getPlayer().getActivePermanentEffects()
-				.add(new CustomizedPermanentEffect("noCoinsForOccupiedTower", "ciao"));
-		game.getBoard().getTowerTerritories().getPlacesArray().get(2)
-				.setFamMemberOnPlace(p2.getMyFamily().getMember1());
-		actionTower.getPlayer().getMyValues().setCoins(new Coin(2));
-		String g = actionTower.verifyMoneyForTowerOccupied("ok");
-		assertEquals("ok", g);
-	}
-
-	@Test
-	public void testVerifyMoneyForTowerOccupiedNoCoinZoneOccupiedNoPermanentEffect() {
-		game.getBoard().getTowerTerritories().getPlacesArray().get(2)
-				.setFamMemberOnPlace(p2.getMyFamily().getMember1());
-		actionTower.getPlayer().getMyValues().setCoins(new Coin(2));
-		String g = actionTower.verifyMoneyForTowerOccupied("ok");
-		assertEquals("okYou don't have enough coins to place your family member in a tower already occupied\n", g);
-	}
-
-	@Test
-	public void testVerifyMoneyForTowerOccupiedZoneNotOccupied() {
-		actionTower.getPlayer().getActivePermanentEffects()
-				.add(new CustomizedPermanentEffect("noCoinsForOccupiedTower", "ciao"));
-		actionTower.getPlayer().getMyValues().setCoins(new Coin(2));
-		String g = actionTower.verifyMoneyForTowerOccupied("ok");
-		assertEquals("ok", g);
-	}
-
-	@Test
 	public void testVerifyCardResourcesWithoutCard() {
 		String s = actionTower4.verifyCardResources("ok");
 		assertEquals("ok", s);
