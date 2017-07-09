@@ -15,13 +15,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane maxWidth="1670.0" prefHeight="500.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.GC_24.gui.GameBoardController">
+<ScrollPane maxWidth="1670.0" prefHeight="1700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.GC_24.gui.GameBoardController">
    <content>
       <TabPane maxWidth="1670.0">
          <tabs>
             <Tab closable="false" text="GAME">
                <content>
-                  <AnchorPane id="backPanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1670.0" stylesheets="@../img/pane.css">
+                  <AnchorPane id="backPanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1700.0" prefWidth="1670.0" stylesheets="@../img/pane.css">
                      <children>
                         <VBox alignment="TOP_RIGHT" prefHeight="806.0" prefWidth="646.0" spacing="5.0" AnchorPane.bottomAnchor="359.0" AnchorPane.rightAnchor="51.0" AnchorPane.topAnchor="35.0">
                            <children>
@@ -183,7 +183,7 @@
                               </HBox>
                            </children>
                         </VBox>
-                        <ScrollPane hbarPolicy="NEVER" layoutX="35.0" layoutY="35.0" prefHeight="1200.0" prefWidth="920.0" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="35.0" AnchorPane.topAnchor="35.0">
+                        <ScrollPane hbarPolicy="NEVER" layoutX="35.0" layoutY="35.0" prefHeight="1700.0" prefWidth="920.0" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="35.0" AnchorPane.topAnchor="35.0">
                            <content>
                               <AnchorPane id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1500.0" prefWidth="900.0" stylesheets="@../img/pane.css">
                                  <children>
@@ -240,13 +240,13 @@
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                       </rowConstraints>
                                        <children>
-                                          <Button fx:id="buttonCouncil01" mnemonicParsing="false" text="           " />
-                                          <Button fx:id="buttonCouncil02" mnemonicParsing="false" text="           " GridPane.columnIndex="1" />
-                                          <Button fx:id="buttonCouncil03" mnemonicParsing="false" text="           " GridPane.columnIndex="2" />
-                                          <Button fx:id="buttonCouncil04" mnemonicParsing="false" text="           " GridPane.rowIndex="1" />
-                                          <Button fx:id="buttonCouncil05" mnemonicParsing="false" text="           " GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                          <Button fx:id="buttonCouncil06" mnemonicParsing="false" text="           " GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                          <Button fx:id="buttonCouncil07" mnemonicParsing="false" text="           " GridPane.rowIndex="2" />
+                                          <Button fx:id="buttonCouncil01" mnemonicParsing="false" onAction="#towerClickHandler" text="           " />
+                                          <Button fx:id="buttonCouncil02" mnemonicParsing="false" onAction="#towerClickHandler" text="           " GridPane.columnIndex="1" />
+                                          <Button fx:id="buttonCouncil03" mnemonicParsing="false" onAction="#towerClickHandler" text="           " GridPane.columnIndex="2" />
+                                          <Button fx:id="buttonCouncil04" mnemonicParsing="false" onAction="#towerClickHandler" text="           " GridPane.rowIndex="1" />
+                                          <Button fx:id="buttonCouncil05" mnemonicParsing="false" onAction="#towerClickHandler" text="           " GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <Button fx:id="buttonCouncil06" mnemonicParsing="false" onAction="#towerClickHandler" text="           " GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                          <Button fx:id="buttonCouncil07" mnemonicParsing="false" onAction="#towerClickHandler" text="           " GridPane.rowIndex="2" />
                                        </children>
                                     </GridPane>
                                     <GridPane fx:id="productionGridPane" alignment="CENTER" layoutX="139.0" layoutY="1260.0" prefHeight="65.0" prefWidth="210.0">
@@ -260,32 +260,32 @@
                                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                        </rowConstraints>
                                        <children>
-                                          <Button fx:id="buttonProduction02" mnemonicParsing="false" text="           ">
+                                          <Button fx:id="buttonProduction02" mnemonicParsing="false" onAction="#towerClickHandler" text="           ">
                                              <font>
                                                 <Font size="11.0" />
                                              </font>
                                           </Button>
-                                          <Button fx:id="buttonProduction03" mnemonicParsing="false" text="           " GridPane.columnIndex="1">
+                                          <Button fx:id="buttonProduction03" mnemonicParsing="false" onAction="#towerClickHandler" text="           " GridPane.columnIndex="1">
                                              <font>
                                                 <Font size="11.0" />
                                              </font>
                                           </Button>
-                                          <Button fx:id="buttonProduction04" mnemonicParsing="false" text="           " GridPane.columnIndex="2">
+                                          <Button fx:id="buttonProduction04" mnemonicParsing="false" onAction="#towerClickHandler" text="           " GridPane.columnIndex="2">
                                              <font>
                                                 <Font size="11.0" />
                                              </font>
                                           </Button>
-                                          <Button fx:id="buttonProduction05" mnemonicParsing="false" text="           " GridPane.rowIndex="1">
+                                          <Button fx:id="buttonProduction05" mnemonicParsing="false" onAction="#towerClickHandler" text="           " GridPane.rowIndex="1">
                                              <font>
                                                 <Font size="11.0" />
                                              </font>
                                           </Button>
-                                          <Button fx:id="buttonProduction06" mnemonicParsing="false" text="           " GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                          <Button fx:id="buttonProduction06" mnemonicParsing="false" onAction="#towerClickHandler" text="           " GridPane.columnIndex="1" GridPane.rowIndex="1">
                                              <font>
                                                 <Font size="11.0" />
                                              </font>
                                           </Button>
-                                          <Button fx:id="buttonProduction07" mnemonicParsing="false" text="           " GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                          <Button fx:id="buttonProduction07" mnemonicParsing="false" onAction="#towerClickHandler" text="           " GridPane.columnIndex="2" GridPane.rowIndex="1">
                                              <font>
                                                 <Font size="11.0" />
                                              </font>
@@ -303,32 +303,32 @@
                                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                        </rowConstraints>
                                        <children>
-                                          <Button fx:id="buttonHarvest02" mnemonicParsing="false" text="           ">
+                                          <Button fx:id="buttonHarvest02" mnemonicParsing="false" onAction="#towerClickHandler" text="           ">
                                              <font>
                                                 <Font size="11.0" />
                                              </font>
                                           </Button>
-                                          <Button fx:id="buttonHarvest03" mnemonicParsing="false" text="           " GridPane.columnIndex="1">
+                                          <Button fx:id="buttonHarvest03" mnemonicParsing="false" onAction="#towerClickHandler" text="           " GridPane.columnIndex="1">
                                              <font>
                                                 <Font size="11.0" />
                                              </font>
                                           </Button>
-                                          <Button fx:id="buttonHarvest04" mnemonicParsing="false" text="           " GridPane.columnIndex="2">
+                                          <Button fx:id="buttonHarvest04" mnemonicParsing="false" onAction="#towerClickHandler" text="           " GridPane.columnIndex="2">
                                              <font>
                                                 <Font size="11.0" />
                                              </font>
                                           </Button>
-                                          <Button fx:id="buttonHarvest05" mnemonicParsing="false" text="           " GridPane.rowIndex="1">
+                                          <Button fx:id="buttonHarvest05" mnemonicParsing="false" onAction="#towerClickHandler" text="           " GridPane.rowIndex="1">
                                              <font>
                                                 <Font size="11.0" />
                                              </font>
                                           </Button>
-                                          <Button fx:id="buttonHarvest06" mnemonicParsing="false" text="           " GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                          <Button fx:id="buttonHarvest06" mnemonicParsing="false" onAction="#towerClickHandler" text="           " GridPane.columnIndex="1" GridPane.rowIndex="1">
                                              <font>
                                                 <Font size="11.0" />
                                              </font>
                                           </Button>
-                                          <Button fx:id="buttonHarvest07" mnemonicParsing="false" text="           " GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                          <Button fx:id="buttonHarvest07" mnemonicParsing="false" onAction="#towerClickHandler" text="           " GridPane.columnIndex="2" GridPane.rowIndex="1">
                                              <font>
                                                 <Font size="11.0" />
                                              </font>
@@ -337,7 +337,7 @@
                                     </GridPane>
                                     <ImageView fx:id="blackDie" fitHeight="69.0" fitWidth="76.0" layoutX="527.0" layoutY="1411.0" pickOnBounds="true" preserveRatio="true" />
                                     <ImageView fx:id="whiteDie" fitHeight="69.0" fitWidth="76.0" layoutX="632.0" layoutY="1411.0" pickOnBounds="true" preserveRatio="true" />
-                                    <ImageView fx:id="orangeDie" fitHeight="69.0" fitWidth="76.0" layoutX="730.0" layoutY="1411.0" pickOnBounds="true" preserveRatio="true" />
+                                    <ImageView fx:id="orangeDie" fitHeight="69.0" fitWidth="76.0" layoutX="740.0" layoutY="1411.0" pickOnBounds="true" preserveRatio="true" />
                                  </children>
                               </AnchorPane>
                            </content>

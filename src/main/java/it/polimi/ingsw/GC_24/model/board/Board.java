@@ -148,6 +148,7 @@ public class Board implements java.io.Serializable {
 	 * @return the ArraList of String with the urls.
 	 */
 	public List<String> allUrl() {
+		urlList.clear();
 		urlCards(towerTerritories);
 		urlCards(towerCharacters);
 		urlCards(towerBuildings);
@@ -162,6 +163,7 @@ public class Board implements java.io.Serializable {
 	 * @return the ArraList of String with the urls.
 	 */
 	public List<String> urlPlayerColour() {
+		urlPlayerColourList.clear();
 		urlPlayerMarketTower(towerTerritories);
 		urlPlayerMarketTower(towerCharacters);
 		urlPlayerMarketTower(towerBuildings);
