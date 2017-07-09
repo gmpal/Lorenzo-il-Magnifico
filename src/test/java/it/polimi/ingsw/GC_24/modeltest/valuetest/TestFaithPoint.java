@@ -17,7 +17,7 @@ public class TestFaithPoint {
 	Player player;
 	
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		faithPoint = new FaithPoint(0);
 		values = new SetOfValues();
 		player = new Player("Giorgia", PlayerColour.RED);
@@ -25,7 +25,7 @@ public class TestFaithPoint {
 	}
 	
 	@Test
-	public void testAddValueToSetPositive() throws Exception {
+	public void testAddValueToSetPositive() {
 		faithPoint.setQuantity(3);
 		values.setInitialValues(1);
 		valuesexpected.setInitialValues(1);
@@ -34,7 +34,7 @@ public class TestFaithPoint {
 	}
 
 	@Test
-	public void testAddValueToSetNegative() throws Exception {
+	public void testAddValueToSetNegative() {
 		faithPoint.setQuantity(-3);
 		values.setInitialValues(1);
 		valuesexpected.setInitialValues(1);
@@ -43,7 +43,7 @@ public class TestFaithPoint {
 	}
 	
 	@Test
-	public void testAddValueToSetZero() throws Exception {
+	public void testAddValueToSetZero() {
 		faithPoint.setQuantity(0);
 		values.setInitialValues(1);
 		valuesexpected.setInitialValues(1);
@@ -52,21 +52,21 @@ public class TestFaithPoint {
 	}
 	
 	@Test
-	public void testFindValueInPlayer() throws Exception {
+	public void testFindValueInPlayer() {
 		faithPoint.setQuantity(5);
 		player.getMyValues().getFaithPoints().setQuantity(10);
 		assertEquals(player.getMyValues().getFaithPoints(), faithPoint.findValueInPlayer(player));
 	}
 	
 	@Test
-	public void testAmIPresentInThisSetFalse() throws Exception {
+	public void testAmIPresentInThisSetFalse() {
 		faithPoint.setQuantity(5);
 		values.getFaithPoints().setQuantity(3);
 		assertFalse(faithPoint.amIPresentInThisSet(values));
 	}
 	
 	@Test
-	public void testAmIPresentInThisSetTrue() throws Exception {
+	public void testAmIPresentInThisSetTrue() {
 		faithPoint.setQuantity(5);
 		values.getFaithPoints().setQuantity(9);
 		assertTrue(faithPoint.amIPresentInThisSet(values));

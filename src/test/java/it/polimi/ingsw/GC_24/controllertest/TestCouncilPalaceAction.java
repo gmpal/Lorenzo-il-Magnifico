@@ -25,7 +25,7 @@ public class TestCouncilPalaceAction {
 	IncreaseDieValueActivity increaseValue;
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		players = new ArrayList<>();
 		game = new Model(1);
 		player = new Player("Giorgia", PlayerColour.RED);

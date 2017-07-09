@@ -46,17 +46,8 @@ public class ServerSocketView extends MyObservable implements Runnable, MyObserv
 				Map<String, Object> request = (Map<String, Object>) objFromClient.readObject();
 				System.out.println("ServerIn: received from client: " + request);
 
-				Set<String> command = request.keySet();
-
-				if (!command.contains("disconnection")) {
-					this.notifyMyObservers(request);
-				} else {
-					socket.close();
-					this.notifyMyObservers(request);
-				}
-
+				this.notifyMyObservers(request);
 			}
-
 		} catch (ClassNotFoundException ioe) {
 			ioe.printStackTrace();
 		} catch (EOFException eof) {

@@ -24,7 +24,7 @@ public class TestHarvestAction {
 	IncreaseDieValueActivity increaseValue;
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		players = new ArrayList<>();
 		game = new Model(1);
 		player = new Player("Giorgia", PlayerColour.RED);
@@ -57,7 +57,7 @@ public class TestHarvestAction {
 	}
 	
 	@Test
-	public void testGetFinalActionValue() throws Exception {
+	public void testGetFinalActionValue() {
 		action.getFinalActionValue();
 		int finalValue = action.getFamilyMember().getMemberValue() + 4;
 		assertEquals(finalValue,action.getFinalValue());

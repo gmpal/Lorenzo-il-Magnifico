@@ -16,7 +16,7 @@ public class TestVictoryPoint {
 	Player player;
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		victoryPoint = new VictoryPoint(0);
 		values = new SetOfValues();
 		player = new Player("Giorgia", PlayerColour.RED);
@@ -24,7 +24,7 @@ public class TestVictoryPoint {
 	}
 	
 	@Test
-	public void testAddValueToSetPositive() throws Exception {
+	public void testAddValueToSetPositive() {
 		victoryPoint.setQuantity(3);
 		values.setInitialValues(1);
 		valuesexpected.setInitialValues(1);
@@ -33,7 +33,7 @@ public class TestVictoryPoint {
 	}
 
 	@Test
-	public void testAddValueToSetNegative() throws Exception {
+	public void testAddValueToSetNegative() {
 		victoryPoint.setQuantity(-3);
 		values.setInitialValues(1);
 		valuesexpected.setInitialValues(1);
@@ -42,7 +42,7 @@ public class TestVictoryPoint {
 	}
 	
 	@Test
-	public void testAddValueToSetZero() throws Exception {
+	public void testAddValueToSetZero() {
 		victoryPoint.setQuantity(0);
 		values.setInitialValues(1);
 		valuesexpected.setInitialValues(1);
@@ -51,21 +51,21 @@ public class TestVictoryPoint {
 	}
 	
 	@Test
-	public void testFindValueInPlayer() throws Exception {
+	public void testFindValueInPlayer() {
 		victoryPoint.setQuantity(5);
 		player.getMyValues().getVictoryPoints().setQuantity(10);
 		assertEquals(player.getMyValues().getVictoryPoints(), victoryPoint.findValueInPlayer(player));
 	}
 	
 	@Test
-	public void testAmIPresentInThisSetFalse() throws Exception {
+	public void testAmIPresentInThisSetFalse() {
 		victoryPoint.setQuantity(5);
 		values.getVictoryPoints().setQuantity(3);
 		assertFalse(victoryPoint.amIPresentInThisSet(values));
 	}
 	
 	@Test
-	public void testAmIPresentInThisSetTrue() throws Exception {
+	public void testAmIPresentInThisSetTrue() {
 		victoryPoint.setQuantity(5);
 		values.getVictoryPoints().setQuantity(9);
 		assertTrue(victoryPoint.amIPresentInThisSet(values));
