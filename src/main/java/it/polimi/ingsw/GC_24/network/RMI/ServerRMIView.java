@@ -85,12 +85,17 @@ public class ServerRMIView extends MyObservable implements ServerViewRemote, MyO
 						String answer = clientstub.askForChooseNewCard(question);
 						sendAnswerForParameters(answer);
 					}
+					
+					if (command.contains("vatican")) {
+						System.out.println("RMI Server View ---> Ricevuta richiesta vaticano");
+						String answer = clientstub.askForVatican();
+						sendAnswerVatican(answer);
+					}
 
 					if (command.contains("doubleCost")) {
 						System.out.println("RMI Server View --> Ricevuto un costo alternativo");
 						String response = clientstub.chooseAlternativeCost((String) request.get("doubleCost"));
 						sendAlternativeCost(response);
-
 					}
 					
 					if (command.contains("urlExcommunication")) {
@@ -112,10 +117,7 @@ public class ServerRMIView extends MyObservable implements ServerViewRemote, MyO
 						sendAlternativeSale(alternativeSale);
 					}
 
-					if (command.contains("vatican")) {
-						System.out.println("RMI Server View ---> Ricevuta richiesta vaticano");
-						clientstub.askForVatican();
-					}
+				
 				}
 
 			}
