@@ -77,6 +77,7 @@ public class PersonalBoard implements java.io.Serializable {
 	 * @return the ArraList of String with the urls.
 	 */
 	public List<String> urlPersonalBoard() {
+		urlList.clear();
 		urlCardsPersonalBoard(personalTerritories);
 		urlCardsPersonalBoard(personalCharacters);
 		urlCardsPersonalBoard(personalBuildings);
