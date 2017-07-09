@@ -71,8 +71,8 @@ public class ViewGUI extends View {
 
 	@Override
 	public String askForCouncilPrivilege(String request) {
-		Platform.runLater(() -> mainClass.askForCouncil());
-		
+	
+		return null;
 		
 	}
 
@@ -90,7 +90,7 @@ public class ViewGUI extends View {
 
 	@Override
 	public String askForChooseNewCard(String request) {
-		
+		return null;
 	}
 
 	@Override
