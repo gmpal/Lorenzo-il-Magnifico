@@ -308,22 +308,6 @@ public class ViewGUI extends View {
 	}
 	
 	@Override
-	public void communicateActionDone() {
-		synchronized (getWaitingForActionCompleted()) {
-			setActionDone(true);
-		}
-	}
-	
-	@Override
-	public void sendAction(String command) {
-		actionDone = false;
-
-		hm = new HashMap<>();
-		hm.put("action", command);
-		notifyMyObservers(hm);
-	}
-	
-	@Override
 	public void sendLeader(String command) {
 		hm = new HashMap<>();
 		hm.put("leader", command);
