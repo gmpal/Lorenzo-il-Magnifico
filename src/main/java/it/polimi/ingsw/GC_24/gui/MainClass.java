@@ -39,6 +39,7 @@ public class MainClass extends Application {
 	private static StringProperty currentPlayer = new SimpleStringProperty();
 	private static StringProperty rankings = new SimpleStringProperty();
 	private static List<ImageView> imagesToTake = new ArrayList<ImageView>();
+	private volatile List<ImageView> imagesToTakePersonally = new ArrayList<ImageView>();
 	private static List<Button> buttonstoTake = new ArrayList<Button>();
 
 	private Client client;
@@ -77,8 +78,12 @@ public class MainClass extends Application {
 			turnList.add(s);
 		}
 
-		for (int i = 0; i < 50; i++) {
+		for (int i = 0; i < 22; i++) {
 			imagesToTake.add(new ImageView());
+		}
+		
+		for (int i = 0; i < 28; i++) {
+			imagesToTakePersonally.add(new ImageView());
 		}
 		for (int i = 0; i < 44; i++) {
 			buttonstoTake.add(new Button());
@@ -141,17 +146,6 @@ public class MainClass extends Application {
 		}
 	}
 
-	public void updateBackgroundButtons(List<String> buttonBackUrls) throws MalformedURLException {
-		for (int i = 0; i < buttonBackUrls.size() - 3; i++) {
-			String url = new File(buttonBackUrls.get(i)).toURI().toURL().toString();
-			buttonstoTake.get(i).backgroundProperty().setValue(new Background(new BackgroundImage(new Image(url),
-					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, null)));
-		}
-		for (int i = buttonBackUrls.size() - 3; i < buttonBackUrls.size(); i++) {
-			String url = new File(buttonBackUrls.get(i)).toURI().toURL().toString();
-			imagesToTake.get(i + 6).imageProperty().set(new Image(url));
-		}
-	}
 
 	public void parseValuesString(String values) {
 		StringTokenizer tokenizer = new StringTokenizer(values);
@@ -298,8 +292,10 @@ public class MainClass extends Application {
 		// binding the cards to the imagesToTake array
 		for (int i = 0; i < imagesToTake.size(); i++) {
 			gameBoardController.getAllTheImages().get(i).imageProperty().bind(imagesToTake.get(i).imageProperty());
-			System.out.println(imagesToTake.get(i));
-			System.out.println(gameBoardController.getAllTheImages().get(i));
+		}
+		
+		for (int i = 0; i < imagesToTakePersonally.size(); i++) {
+			gameBoardController.getPersonalImages().get(i).imageProperty().bind(imagesToTakePersonally.get(i).imageProperty());
 		}
 
 		gameBoardController.getRankings().textProperty().bind(rankings);
@@ -330,9 +326,20 @@ public class MainClass extends Application {
 	}
 
 
+	public void updateBackgroundButtons(List<String> buttonBackUrls) throws MalformedURLException {
+		for (int i = 0; i < buttonBackUrls.size() - 3; i++) {
+			String url = new File(buttonBackUrls.get(i)).toURI().toURL().toString();
+			buttonstoTake.get(i).backgroundProperty().setValue(new Background(new BackgroundImage(new Image(url),
+					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, null)));
+		}
+		for (int i = buttonBackUrls.size() - 3; i < buttonBackUrls.size(); i++) {
+			String url = new File(buttonBackUrls.get(i)).toURI().toURL().toString();
+			imagesToTake.get(i-22).imageProperty().set(new Image(url));
+		}
+	}
 
 	public void updateUrlBoard(ArrayList<String> urlBoard) throws MalformedURLException {
-		System.out.println(urlBoard);
+	
 		for (int i = 0; i < 16; i++) {
 			String url = new File(urlBoard.get(i)).toURI().toURL().toString();
 		
@@ -342,17 +349,18 @@ public class MainClass extends Application {
 
 	public void updateUrlPersonalBoard(ArrayList<String> urlPersonalBoard) throws MalformedURLException {
 		System.out.println(urlPersonalBoard);
-		for (int i = 16; i < 44; i++) {
-			String url = new File(urlPersonalBoard.get(i - 16)).toURI().toURL().toString();
+
+		for (int i = 0; i < 28; i++) {
+			String url = new File(urlPersonalBoard.get(i)).toURI().toURL().toString();
 			
-			imagesToTake.get(i).imageProperty().set(new Image(url));
+			imagesToTakePersonally.get(i).imageProperty().set(new Image(url));
 		}
 	}
 
 	public void updateUrlExcommunication(ArrayList<String> urlExcommunication) throws MalformedURLException {
-		System.out.println(urlExcommunication);
-		for (int i = 44; i < 47; i++) {
-			String url = new File(urlExcommunication.get(i - 44)).toURI().toURL().toString();
+	
+		for (int i = 16; i < 19; i++) {
+			String url = new File(urlExcommunication.get(i - 16)).toURI().toURL().toString();
 			
 			imagesToTake.get(i).imageProperty().set(new Image(url));
 		}
@@ -418,7 +426,7 @@ public class MainClass extends Application {
 		ButtonType buttonTypeFive = new ButtonType("Five");
 		//ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
 
-		alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo);
+		alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo,buttonTypeThree,buttonTypeFour,buttonTypeFive);
 		
 		Optional<ButtonType> result = alert.showAndWait();
 		
@@ -544,6 +552,38 @@ public class MainClass extends Application {
 		}
 		
 		answer = answer + " " + floor;
+		
+		answer = chooseNewCardServants(answer);
+		return answer;
+	}
+	
+	private String chooseNewCardServants(String answer) {
+	
+		String servants = "";
+		List<String> choices = new ArrayList<>();
+		choices.add("0");
+		choices.add("1");
+		choices.add("2");
+		choices.add("3");
+		choices.add("4");
+		choices.add("5");
+		choices.add("6");
+		choices.add("7");
+		choices.add("8");
+		choices.add("9");
+		choices.add("10");
+
+		ChoiceDialog<String> dialog = new ChoiceDialog<>("0", choices);
+		dialog.setTitle("Number of servants you want to use ");
+		dialog.setContentText("Choose your number of servants:");
+
+		// Traditional way to get the response value.
+		Optional<String> result = dialog.showAndWait();
+		if (result.isPresent()){
+			servants =  result.get();
+		}
+		
+		answer = answer + " " + servants;
 		return answer;
 	}
 
@@ -792,5 +832,13 @@ public class MainClass extends Application {
 
 	public void updateRankings(String ranking) {
 		rankings.setValue(ranking);
+	}
+
+	public List<ImageView> getImagesToTakePersonally() {
+		return imagesToTakePersonally;
+	}
+
+	public void setImagesToTakePersonally(List<ImageView> imagesToTakePersonally) {
+		this.imagesToTakePersonally = imagesToTakePersonally;
 	}
 }
