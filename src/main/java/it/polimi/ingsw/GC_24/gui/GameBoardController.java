@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -444,9 +445,7 @@ public class GameBoardController implements Initializable {
 		action = action + " " + servantsTextField.getText();
 		System.out.println("Action ready: " + action);
 		Stage actualScene = (Stage) submitFamiliarButton.getScene().getWindow();
-		System.out.println(this.mainClass);
-		System.out.println(this.mainClass.getView());
-		this.mainClass.getView().sendAction(action);
+		mainClass.getView().sendAction(action);
 		actualScene.close();
 		
 	}
@@ -618,6 +617,7 @@ public class GameBoardController implements Initializable {
 	
 	//	TODO:continuare??
 	}
+	
 	public void setMainApp(MainClass mainClass) {
 		this.mainClass = mainClass;
 		System.out.println("------------------> MAIN CLASS SETTED:" +mainClass );
