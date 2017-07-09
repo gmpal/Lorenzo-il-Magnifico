@@ -168,13 +168,7 @@ public abstract class View extends MyObservable implements MyObserver {
 			System.out.println("--------Action Completed");
 		}
 	}
-	
-	public void communicateActionDone() {
-		synchronized (getWaitingForActionCompleted()) {
-			setActionDone(true);
-			getWaitingForActionCompleted().notify();
-		}
-	}
+
 	
 	public void sendAnswerForParameters(String answer) {
 		hm = new HashMap<>();

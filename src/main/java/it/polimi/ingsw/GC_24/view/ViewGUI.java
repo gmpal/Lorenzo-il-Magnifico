@@ -311,6 +311,7 @@ public class ViewGUI extends View {
 
 	public Object getWaitingForParameters() {
 		return waitingForParameters;
+	}
 
 	public void setCouncilPrivilegeAnswer(String chosenPrivilege) {
 		this.councilPrivilegeAnswer = chosenPrivilege;

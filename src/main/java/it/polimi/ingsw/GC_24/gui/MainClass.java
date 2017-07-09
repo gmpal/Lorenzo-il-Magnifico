@@ -461,7 +461,7 @@ public class MainClass extends Application {
 	}
 
 
-	public void askForCouncilPrivilege(String request) {
+	public void askForCouncilPrivilege(String request) throws IOException {
 		Stage stage = new Stage();
 		stage.setTitle("Choose Privilege");
 		stage.initModality(Modality.APPLICATION_MODAL);
