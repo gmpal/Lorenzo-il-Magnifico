@@ -62,7 +62,7 @@ public class SetOfDice implements java.io.Serializable {
 			urlDice.add("src/main/java/it/polimi/ingsw/GC_24/img/dice/die5.png");
 		} else if (die.getValue() == 6) {
 			urlDice.add("src/main/java/it/polimi/ingsw/GC_24/img/dice/die6.png");
-		}else {
+		} else {
 			urlDice.add("src/main/java/it/polimi/ingsw/GC_24/img/familiar/blank.png");
 		}
 
