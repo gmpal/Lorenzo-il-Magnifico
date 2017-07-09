@@ -306,7 +306,7 @@ public class ViewGUI extends View {
 		Platform.runLater(() -> mainClass.perseFamilyString(family));
 
 	}
-		
+
 	@Override
 	public void sendLeader(String command) {
 		hm = new HashMap<>();

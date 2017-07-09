@@ -115,14 +115,12 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				for (int i = 0; i < playerTurn.size(); i++) {
 					// one familar gone for each player
 					sendUrlBoard(game.getBoard().allUrl());
-					sendUrlPersonalBoard(game.getCurrentPlayer().getMyBoard().urlPersonalBoard());
 					sendUrlColor(game.getBoard().urlPlayerColour());
 					// reset the current player
 					this.currentPlayer = game.getCurrentPlayer();
 					System.out.println("Current Player is ---> " + this.currentPlayer.getMyName());
-
 					sendCurrentPlayer();
-
+					System.out.println(game.getCurrentPlayer().getMyBoard().urlPersonalBoard()+"387659827659287659823765928745692746592387569248375629876");
 					System.out.println("Controller --> Current Player Sent");
 					System.out.println("Controller --> Are  they already playing? " + alreadyPlaying);
 					if (!alreadyPlaying) {
@@ -151,7 +149,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 							}
 						}
 					}
-
+					sendUrlPersonalBoard(game.getCurrentPlayer().getMyBoard().urlPersonalBoard());
 					t1.cancel();
 
 					/* Repeats until the players are finished */

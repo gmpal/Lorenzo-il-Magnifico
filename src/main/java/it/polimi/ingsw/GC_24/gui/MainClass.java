@@ -349,10 +349,13 @@ public class MainClass extends Application {
 
 	public void updateUrlPersonalBoard(ArrayList<String> urlPersonalBoard) throws MalformedURLException {
 		System.out.println(urlPersonalBoard);
+
 		for (int i = 0; i < 28; i++) {
 			String url = new File(urlPersonalBoard.get(i)).toURI().toURL().toString();
 			
 			imagesToTakePersonally.get(i).imageProperty().set(new Image(url));
+
+
 		}
 	}
 
