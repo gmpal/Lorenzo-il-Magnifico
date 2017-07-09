@@ -4,21 +4,12 @@ import java.util.*;
 
 public class ViewCLI extends View {
 
-
 	public ViewCLI(String name) {
 		super(name);
 
 	}
 
 	private static Scanner scanner = new Scanner(System.in);
-
-	/*
-	 * public void showTurnSituation() {
-	 * System.out.println("The players' turn for this round is:"); for (int i = 0, j
-	 * = 1; i < miniModel.getPlayers().size(); i++, j++) { System.out.println(j +
-	 * ") " + miniModel.getPlayers().get(i).getMyName() + " is the " +
-	 * miniModel.getPlayers().get(i).getMyColour() + " player \n"); } }
-	 */
 
 	@Override
 	public void play() {
@@ -33,8 +24,8 @@ public class ViewCLI extends View {
 
 		System.out.println("\nChoose Action:\n" + "a)Show Board\n" + "b)Show Personal Board\n"
 				+ "c)Show Family Members\n" + "d)Show my Resources\n" + "e)Show Leader Cards\n"
-				+ "f)Show Active Effects\n" + "g)Show Rankings\n" + "h)Place Family Member\n" + "i)Activate a Leader Card\n"
-				+ "j)Discard a Leader Card\n" + "k)Exit");
+				+ "f)Show Active Effects\n" + "g)Show Rankings\n" + "h)Place Family Member\n"
+				+ "i)Activate a Leader Card\n" + "j)Discard a Leader Card\n" + "k)Exit");
 
 		String command = scanner.nextLine();
 
@@ -55,7 +46,6 @@ public class ViewCLI extends View {
 
 		} else if (command.equalsIgnoreCase("e")) {
 
-
 			System.out.println(personalLeaders);
 
 		} else if (command.equalsIgnoreCase("f")) {
@@ -63,12 +53,11 @@ public class ViewCLI extends View {
 			System.out.println("Permanent Effects --> " + permanentEffects);
 			System.out.println("\nOneTimePerTurn Effects --> " + oneTimePerTurnEffects);
 
-
-		}  else if (command.equalsIgnoreCase("g")) {
+		} else if (command.equalsIgnoreCase("g")) {
 
 			System.out.println(rankings);
 
-		}else if (command.equalsIgnoreCase("h")) {
+		} else if (command.equalsIgnoreCase("h")) {
 
 			if (myTurn) {
 				System.out.println(family);
@@ -123,7 +112,7 @@ public class ViewCLI extends View {
 				System.out.println("Action cancelled");
 			} else {
 				System.out.println("You're out");
-				System.exit(0);
+				disconnectClient();
 			}
 		} else {
 			System.out.println("Wrong character");
@@ -151,13 +140,12 @@ public class ViewCLI extends View {
 		System.out.println(council);
 
 	}
-	
+
 	private String disconnection() {
 		String commandExit;
 		System.out.println("Are you sure you want to quit the game? (Y/N)");
 		commandExit = scanner.nextLine();
-		while (!commandExit.equalsIgnoreCase("Y") || commandExit.equalsIgnoreCase("N")) {
-			
+		while (!commandExit.equalsIgnoreCase("Y") && !commandExit.equalsIgnoreCase("N")) {
 			System.out.println("Wrong choice, try again");
 			commandExit = scanner.nextLine();
 		}
@@ -168,7 +156,7 @@ public class ViewCLI extends View {
 		}
 		return commandExit;
 	}
-	
+
 	private String choosePlace(String command) {
 		String commandZone;
 		String floor = "floor";
@@ -214,7 +202,6 @@ public class ViewCLI extends View {
 				System.out.println(harvest);
 				command += " harvest 0 ";
 
-
 			} else if (commandZone.equalsIgnoreCase("h")) {
 				System.out.println(council);
 				command += " council 0 ";
@@ -238,11 +225,11 @@ public class ViewCLI extends View {
 			} else {
 				// neutral chosen
 				if (command.contains("4")) {
-					
+
 					command = increaseDieValue(command);
 					// non neutral chosen
 				} else {
-				
+
 					command = command + "0";
 				}
 
@@ -257,7 +244,6 @@ public class ViewCLI extends View {
 		builder.append("\nChoose Leader Card (");
 
 		String string = "0";
-
 
 		for (int i = 1; i <= 4; i++) {
 			if (i == 4) {
@@ -300,6 +286,13 @@ public class ViewCLI extends View {
 
 	}
 
+	public void showTurnSituation() {
+		System.out.println("\nThe players' turn for this round is:\n");
+		for (int i = 0, j = 1; i < playersTurn.size(); i++, j++) {
+			System.out.println(j + ") " + playersTurn.get(i).toString() + "\n");
+		}
+	}
+
 	public String increaseDieValue(String commandZone) {
 		System.out.println("Do you want to use some servants to increment the die value?");
 		System.out.println("Write the number of servants you want to use : ");
@@ -319,7 +312,6 @@ public class ViewCLI extends View {
 		return commandZone + " " + choice;
 	}
 
-
 	// TODO: controllare gli override
 
 	@Override
@@ -336,7 +328,7 @@ public class ViewCLI extends View {
 			System.out.println("Not your turn!");
 		}
 	}
-	
+
 	/**
 	 * this method lets the user choose between two alternative costs. It contains a
 	 * Military Point value because the alternative values are always associated
@@ -370,7 +362,6 @@ public class ViewCLI extends View {
 		String answer = "";
 
 		answer = scanner.nextLine();
-
 
 		while (!(answer.equals("1") || answer.equals("2"))) {
 			System.out.println("Wrong choice, try again");
@@ -496,12 +487,18 @@ public class ViewCLI extends View {
 		return choice;
 
 	}
+	
+	@Override
+	public void disconnectClient() {
+		System.exit(0);
+	}
+
 	@Override
 	public void updateTurn(List<String> playerTurn) {
 		setPlayersTurn(playerTurn);
-
+		showTurnSituation();
 	}
-	
+
 	@Override
 	public void setMyTurn(String currentPlayer) {
 		if (currentPlayer.equals(name)) {
@@ -549,9 +546,9 @@ public class ViewCLI extends View {
 		// TODO: staccare la view dal observable
 	}
 
-  @Override
+	@Override
 	public void setRankings(String rankings) {
 		this.rankings = rankings;
-  }
+	}
 
 }

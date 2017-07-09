@@ -17,7 +17,7 @@ public class TestMilitaryPoint {
 	Player player;
 	
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		militaryPoint = new MilitaryPoint(0);
 		values = new SetOfValues();
 		player = new Player("Giorgia", PlayerColour.RED);
@@ -25,7 +25,7 @@ public class TestMilitaryPoint {
 	}
 	
 	@Test
-	public void testAddValueToSetPositive() throws Exception {
+	public void testAddValueToSetPositive() {
 		militaryPoint.setQuantity(3);
 		values.setInitialValues(1);
 		valuesexpected.setInitialValues(1);
@@ -34,7 +34,7 @@ public class TestMilitaryPoint {
 	}
 
 	@Test
-	public void testAddValueToSetNegative() throws Exception {
+	public void testAddValueToSetNegative() {
 		militaryPoint.setQuantity(-3);
 		values.setInitialValues(1);
 		valuesexpected.setInitialValues(1);
@@ -43,7 +43,7 @@ public class TestMilitaryPoint {
 	}
 	
 	@Test
-	public void testAddValueToSetZero() throws Exception {
+	public void testAddValueToSetZero() {
 		militaryPoint.setQuantity(0);
 		values.setInitialValues(1);
 		valuesexpected.setInitialValues(1);
@@ -52,21 +52,21 @@ public class TestMilitaryPoint {
 	}
 	
 	@Test
-	public void testFindValueInPlayer() throws Exception {
+	public void testFindValueInPlayer() {
 		militaryPoint.setQuantity(5);
 		player.getMyValues().getMilitaryPoints().setQuantity(10);
 		assertEquals(player.getMyValues().getMilitaryPoints(), militaryPoint.findValueInPlayer(player));
 	}
 	
 	@Test
-	public void testAmIPresentInThisSetFalse() throws Exception {
+	public void testAmIPresentInThisSetFalse() {
 		militaryPoint.setQuantity(5);
 		values.getMilitaryPoints().setQuantity(3);
 		assertFalse(militaryPoint.amIPresentInThisSet(values));
 	}
 	
 	@Test
-	public void testAmIPresentInThisSetTrue() throws Exception {
+	public void testAmIPresentInThisSetTrue() {
 		militaryPoint.setQuantity(5);
 		values.getMilitaryPoints().setQuantity(9);
 		assertTrue(militaryPoint.amIPresentInThisSet(values));

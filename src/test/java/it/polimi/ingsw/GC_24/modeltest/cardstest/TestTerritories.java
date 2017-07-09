@@ -17,7 +17,7 @@ public class TestTerritories {
 	Player player;
 		
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		player = new Player("Giorgia", PlayerColour.RED);
 		territory = new Territories("Territory", null, 0, "Territory", null, null, null, null, 2);
 		territories = new PersonalTerritories();
@@ -25,14 +25,14 @@ public class TestTerritories {
 	}
 	
 	@Test
-	public void testSetCardOnPersonalBoard() throws Exception {
+	public void testSetCardOnPersonalBoard() {
 		territories.getCards().add(territory);
 		territory.setCardOnPersonalBoard(player.getMyBoard());
 		assertEquals(territories.getCards(), player.getMyBoard().getPersonalTerritories().getCards());
 	}
 	
 	@Test
-	public void testSetCardOnPersonalBoardFalse1() throws Exception {
+	public void testSetCardOnPersonalBoardFalse1() {
 		territories.getCards().add(territory);
 		territory.setCardOnPersonalBoard(player.getMyBoard());
 		territory2.setCardOnPersonalBoard(player.getMyBoard());
@@ -40,7 +40,7 @@ public class TestTerritories {
 	}
 	
 	@Test
-	public void testSetCardOnPersonalBoardFalse2() throws Exception {
+	public void testSetCardOnPersonalBoardFalse2() {
 		territories.getCards().add(territory);
 		territories.getCards().add(territory2);
 		territory.setCardOnPersonalBoard(player.getMyBoard());

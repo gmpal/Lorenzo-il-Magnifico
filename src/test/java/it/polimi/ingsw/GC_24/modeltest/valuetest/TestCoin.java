@@ -16,7 +16,7 @@ public class TestCoin {
 	Player player;
 	
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		coin = new Coin(0);
 		values = new SetOfValues();
 		player = new Player("Giorgia", PlayerColour.RED);
@@ -24,7 +24,7 @@ public class TestCoin {
 	}
 	
 	@Test
-	public void testAddValueToSetPositive() throws Exception {
+	public void testAddValueToSetPositive() {
 		coin.setQuantity(3);
 		values.setInitialValues(1);
 		valuesexpected.setInitialValues(1);
@@ -33,7 +33,7 @@ public class TestCoin {
 	}
 
 	@Test
-	public void testAddValueToSetNegative() throws Exception {
+	public void testAddValueToSetNegative() {
 		coin.setQuantity(-3);
 		values.setInitialValues(1);
 		valuesexpected.setInitialValues(1);
@@ -42,7 +42,7 @@ public class TestCoin {
 	}
 	
 	@Test
-	public void testAddValueToSetZero() throws Exception {
+	public void testAddValueToSetZero() {
 		coin.setQuantity(0);
 		values.setInitialValues(1);
 		valuesexpected.setInitialValues(1);
@@ -51,21 +51,21 @@ public class TestCoin {
 	}
 	
 	@Test
-	public void testFindValueInPlayer() throws Exception {
+	public void testFindValueInPlayer() {
 		coin.setQuantity(5);
 		player.getMyValues().getCoins().setQuantity(10);
 		assertEquals(player.getMyValues().getCoins(), coin.findValueInPlayer(player));
 	}
 	
 	@Test
-	public void testAmIPresentInThisSetFalse() throws Exception {
+	public void testAmIPresentInThisSetFalse() {
 		coin.setQuantity(5);
 		values.getCoins().setQuantity(3);
 		assertFalse(coin.amIPresentInThisSet(values));
 	}
 	
 	@Test
-	public void testAmIPresentInThisSetTrue() throws Exception {
+	public void testAmIPresentInThisSetTrue() {
 		coin.setQuantity(5);
 		values.getCoins().setQuantity(9);
 		assertTrue(coin.amIPresentInThisSet(values));

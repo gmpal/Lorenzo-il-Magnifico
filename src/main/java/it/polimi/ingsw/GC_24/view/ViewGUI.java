@@ -205,6 +205,12 @@ public class ViewGUI extends View {
 		Platform.runLater(() -> mainClass.perseFamilyString(family));
 		
 	}
+
+	@Override
+	public void disconnectClient() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 
 }

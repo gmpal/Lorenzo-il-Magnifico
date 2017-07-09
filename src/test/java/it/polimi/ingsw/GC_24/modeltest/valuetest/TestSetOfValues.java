@@ -18,7 +18,7 @@ public class TestSetOfValues {
 	Value victoryPoints;
 	
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		coin = new Coin(0);
 		values = new SetOfValues();
 		values2 = new SetOfValues();
@@ -27,7 +27,7 @@ public class TestSetOfValues {
 	}
 
 	@Test
-	public void testAddTwoSetsOfValues() throws Exception {
+	public void testAddTwoSetsOfValues() {
 		values.setInitialValues(1);
 		values2.getCoins().setQuantity(8);
 		values2.getMilitaryPoints().setQuantity(5);
@@ -38,7 +38,7 @@ public class TestSetOfValues {
 	}
 	
 	@Test
-	public void testSubTwoSetsOfValues() throws Exception {
+	public void testSubTwoSetsOfValues() {
 		values.setInitialValues(1);
 		values2.getCoins().setQuantity(2);
 		values2.getWoods().setQuantity(3);
@@ -49,21 +49,21 @@ public class TestSetOfValues {
 	}
 	
 	@Test
-	public void testDoIHaveEnoughOfThisFalse() throws Exception {
+	public void testDoIHaveEnoughOfThisFalse() {
 		coin.setQuantity(6);
 		values.setInitialValues(1);
 		assertFalse(values.doIHaveEnoughOfThis(coin));
 	}
 	
 	@Test
-	public void testDoIHaveEnoughOfThisTrue() throws Exception {
+	public void testDoIHaveEnoughOfThisTrue() {
 		coin.setQuantity(2);
 		values.setInitialValues(1);
 		assertTrue(values.doIHaveEnoughOfThis(coin));
 	}
 	
 	@Test
-	public void testDoIHaveThisSetFalse() throws Exception {
+	public void testDoIHaveThisSetFalse() {
 		values.setInitialValues(1);
 		values2.getMilitaryPoints().setQuantity(2);
 		values2.getStones().setQuantity(1);
@@ -71,7 +71,7 @@ public class TestSetOfValues {
 	}
 	
 	@Test
-	public void testDoIHaveThisSetTrue() throws Exception {
+	public void testDoIHaveThisSetTrue() {
 		values.setInitialValues(1);
 		values2.getCoins().setQuantity(4);
 		values2.getStones().setQuantity(1);
@@ -79,7 +79,7 @@ public class TestSetOfValues {
 	}
 
 	@Test
-	public void testIsAcceptableFalse() throws Exception {
+	public void testIsAcceptableFalse() {
 		values.setInitialValues(1);
 		values2.getMilitaryPoints().setQuantity(5);
 		values2.subTwoSetsOfValues(values);
@@ -87,24 +87,24 @@ public class TestSetOfValues {
 	}
 	
 	@Test
-	public void testIsAcceptableTrue() throws Exception {
+	public void testIsAcceptableTrue() {
 		values.setInitialValues(1);
 		assertTrue(values.isAcceptable());
 	}
 	
 	@Test
-	public void testIsEmptyFalse() throws Exception {
+	public void testIsEmptyFalse() {
 		values.setInitialValues(1);
 		assertFalse(values.isEmpty());
 	}
 	
 	@Test
-	public void testIsEmptyTrue() throws Exception {
+	public void testIsEmptyTrue() {
 		assertTrue(values.isEmpty());
 	}
 	
 	@Test
-	public void testConvertSetToVictoryPoints() throws Exception {
+	public void testConvertSetToVictoryPoints() {
 		values.setInitialValues(1);
 		victoryPoints.setQuantity(2);
 		assertEquals(victoryPoints, values.convertSetToVictoryPoints());

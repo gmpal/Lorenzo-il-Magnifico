@@ -18,7 +18,7 @@ public class TestPersonalBuildings {
 	Player player;
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		player = new Player("Giorgia", PlayerColour.RED);
 		building1 = new Buildings("Building1", null, 0, "Building", null, null, null, null, null, 1);
 		building2 = new Buildings("Building2", null, 0, "Building", null, null, null, null, null, 3);
@@ -27,7 +27,7 @@ public class TestPersonalBuildings {
 	}
 
 	@Test
-	public void testFindCardsInPersonalBoard() throws Exception {
+	public void testFindCardsInPersonalBoard() {
 		building1.setCardOnPersonalBoard(player.getMyBoard());
 		building2.setCardOnPersonalBoard(player.getMyBoard());
 		buildingsexpected.getCards().add(building1);
@@ -36,7 +36,7 @@ public class TestPersonalBuildings {
 	}
 	
 	@Test
-	public void testFindCardsInPersonalBoardFalse1() throws Exception {
+	public void testFindCardsInPersonalBoardFalse1() {
 		building1.setCardOnPersonalBoard(player.getMyBoard());
 		building2.setCardOnPersonalBoard(player.getMyBoard());
 		buildingsexpected.getCards().add(building1);
@@ -44,7 +44,7 @@ public class TestPersonalBuildings {
 	}
 	
 	@Test
-	public void testFindCardsInPersonalBoardFalse2() throws Exception {
+	public void testFindCardsInPersonalBoardFalse2() {
 		building1.setCardOnPersonalBoard(player.getMyBoard());
 		buildingsexpected.getCards().add(building1);
 		buildingsexpected.getCards().add(building2);

@@ -17,7 +17,7 @@ public class TestBuildings {
 	Player player;
 	
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		player = new Player("Giorgia", PlayerColour.RED);
 		building = new Buildings("Building", null, 0, "Building", null, null, null, null, null, 1);
 		buildings = new PersonalBuildings();
@@ -25,14 +25,14 @@ public class TestBuildings {
 	}
 	
 	@Test
-	public void testSetCardOnPersonalBoard() throws Exception {
+	public void testSetCardOnPersonalBoard() {
 		buildings.getCards().add(building);
 		building.setCardOnPersonalBoard(player.getMyBoard());
 		assertEquals(buildings.getCards(), player.getMyBoard().getPersonalBuildings().getCards());
 	}
 	
 	@Test
-	public void testSetCardOnPersonalBoardFalse1() throws Exception {
+	public void testSetCardOnPersonalBoardFalse1() {
 		buildings.getCards().add(building);
 		building.setCardOnPersonalBoard(player.getMyBoard());
 		building2.setCardOnPersonalBoard(player.getMyBoard());
@@ -40,7 +40,7 @@ public class TestBuildings {
 	}
 	
 	@Test
-	public void testSetCardOnPersonalBoardFalse2() throws Exception {
+	public void testSetCardOnPersonalBoardFalse2() {
 		buildings.getCards().add(building);
 		buildings.getCards().add(building2);
 		building.setCardOnPersonalBoard(player.getMyBoard());

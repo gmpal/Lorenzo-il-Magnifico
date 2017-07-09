@@ -23,7 +23,7 @@ public class TestPersonalBoard {
 	Territories territory;
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		players = new ArrayList<>();
 		player = new Player("Giorgia", PlayerColour.YELLOW);
 		player2 = new Player("Carlo", PlayerColour.RED);

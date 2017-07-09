@@ -21,7 +21,7 @@ public class TestPersonalTerritories {
 	VictoryPoint victoryPoints;
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		player = new Player("Giorgia", PlayerColour.RED);
 		territory1 = new Territories("Territory", null, 0, "Territory", null, null, null, null, 2);
 		territory2 = new Territories("Territory2", null, 0, "Territory", null, null, null, null, 1);
@@ -32,7 +32,7 @@ public class TestPersonalTerritories {
 	}
 
 	@Test
-	public void testFindCardsInPersonalBoard() throws Exception {
+	public void testFindCardsInPersonalBoard() {
 		territory1.setCardOnPersonalBoard(player.getMyBoard());
 		territory2.setCardOnPersonalBoard(player.getMyBoard());
 		territoriesexpected.getCards().add(territory1);
@@ -41,7 +41,7 @@ public class TestPersonalTerritories {
 	}
 	
 	@Test
-	public void testFindCardsInPersonalBoardFalse1() throws Exception {
+	public void testFindCardsInPersonalBoardFalse1() {
 		territory1.setCardOnPersonalBoard(player.getMyBoard());
 		territory2.setCardOnPersonalBoard(player.getMyBoard());
 		territoriesexpected.getCards().add(territory1);
@@ -49,7 +49,7 @@ public class TestPersonalTerritories {
 	}
 	
 	@Test
-	public void testFindCardsInPersonalBoardFalse2() throws Exception {
+	public void testFindCardsInPersonalBoardFalse2() {
 		territory1.setCardOnPersonalBoard(player.getMyBoard());
 		territoriesexpected.getCards().add(territory1);
 		territoriesexpected.getCards().add(territory2);
@@ -57,7 +57,7 @@ public class TestPersonalTerritories {
 	}
 	
 	@Test
-	public void testConvertCardToVictoryPoints() throws Exception {
+	public void testConvertCardToVictoryPoints() {
 		territory1.setCardOnPersonalBoard(player.getMyBoard());
 		territory2.setCardOnPersonalBoard(player.getMyBoard());
 		territory3.setCardOnPersonalBoard(player.getMyBoard());

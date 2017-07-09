@@ -2,6 +2,7 @@ package it.polimi.ingsw.GC_24.modeltest.boardtest;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class TestBoard {
 	List<String> urls;
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() throws IOException {
 		players = new ArrayList<>();
 		player = new Player("Giorgia", PlayerColour.YELLOW);
 		player2 = new Player("Carlo", PlayerColour.RED);
@@ -54,7 +55,7 @@ public class TestBoard {
 	}
 
 	@Test
-	public void testPutCardInFirstEmptyPlace() throws Exception {
+	public void testPutCardInFirstEmptyPlace() {
 		TowerPlace p = (TowerPlace) tower.getPlacesArray().get(0);
 		p.setCorrespondingCard(territory);
 		TowerPlace p1 = (TowerPlace) tower2.getPlacesArray().get(0);

@@ -80,6 +80,8 @@ public abstract class View extends MyObservable implements MyObserver {
 	public abstract void setRankings(String rankings);
 
 	public abstract void setMyTurn(String currentPlayer);
+	
+	public abstract void disconnectClient();
 
 	
 	

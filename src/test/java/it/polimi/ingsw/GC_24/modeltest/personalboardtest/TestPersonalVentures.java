@@ -20,7 +20,7 @@ public class TestPersonalVentures {
 	VictoryPoint victoryPoints;
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		player = new Player("Giorgia", PlayerColour.RED);
 		venture1 = new Ventures("Venture", "Venture", null, null, null, new VictoryPoint(5), null, null, null, 3);
 		venture2 = new Ventures("Venture2", "Venture", null, null, null, new VictoryPoint(3), null, null, null, 3);
@@ -30,7 +30,7 @@ public class TestPersonalVentures {
 	}
 
 	@Test
-	public void testFindCardsInPersonalBoard() throws Exception {
+	public void testFindCardsInPersonalBoard() {
 		venture1.setCardOnPersonalBoard(player.getMyBoard());
 		venture2.setCardOnPersonalBoard(player.getMyBoard());
 		venturesexpected.getCards().add(venture1);
@@ -39,7 +39,7 @@ public class TestPersonalVentures {
 	}
 	
 	@Test
-	public void testFindCardsInPersonalBoardFalse1() throws Exception {
+	public void testFindCardsInPersonalBoardFalse1() {
 		venture1.setCardOnPersonalBoard(player.getMyBoard());
 		venture2.setCardOnPersonalBoard(player.getMyBoard());
 		venturesexpected.getCards().add(venture1);
@@ -47,7 +47,7 @@ public class TestPersonalVentures {
 	}
 	
 	@Test
-	public void testFindCardsInPersonalBoardFalse2() throws Exception {
+	public void testFindCardsInPersonalBoardFalse2() {
 		venture1.setCardOnPersonalBoard(player.getMyBoard());
 		venturesexpected.getCards().add(venture1);
 		venturesexpected.getCards().add(venture2);
@@ -55,7 +55,7 @@ public class TestPersonalVentures {
 	}
 	
 	@Test
-	public void testConvertCardToVictoryPoints() throws Exception {
+	public void testConvertCardToVictoryPoints() {
 		venture1.setCardOnPersonalBoard(player.getMyBoard());
 		venture2.setCardOnPersonalBoard(player.getMyBoard());
 		victoryPoints.setQuantity(8);

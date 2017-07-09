@@ -17,7 +17,7 @@ public class TestServant {
 	
 	
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		servant = new Servant(0);
 		values = new SetOfValues();
 		player = new Player("Giorgia", PlayerColour.RED);
@@ -25,7 +25,7 @@ public class TestServant {
 	}
 	
 	@Test
-	public void testAddValueToSetPositive() throws Exception {
+	public void testAddValueToSetPositive() {
 		servant.setQuantity(3);
 		values.setInitialValues(1);
 		valuesexpected.setInitialValues(1);
@@ -34,7 +34,7 @@ public class TestServant {
 	}
 
 	@Test
-	public void testAddValueToSetNegative() throws Exception {
+	public void testAddValueToSetNegative() {
 		servant.setQuantity(-3);
 		values.setInitialValues(1);
 		valuesexpected.setInitialValues(1);
@@ -43,7 +43,7 @@ public class TestServant {
 	}
 	
 	@Test
-	public void testAddValueToSetZero() throws Exception {
+	public void testAddValueToSetZero() {
 		servant.setQuantity(0);
 		values.setInitialValues(1);
 		valuesexpected.setInitialValues(1);
@@ -52,21 +52,21 @@ public class TestServant {
 	}
 	
 	@Test
-	public void testFindValueInPlayer() throws Exception {
+	public void testFindValueInPlayer() {
 		servant.setQuantity(5);
 		player.getMyValues().getServants().setQuantity(10);
 		assertEquals(player.getMyValues().getServants(), servant.findValueInPlayer(player));
 	}
 	
 	@Test
-	public void testAmIPresentInThisSetFalse() throws Exception {
+	public void testAmIPresentInThisSetFalse() {
 		servant.setQuantity(5);
 		values.getServants().setQuantity(3);
 		assertFalse(servant.amIPresentInThisSet(values));
 	}
 	
 	@Test
-	public void testAmIPresentInThisSetTrue() throws Exception {
+	public void testAmIPresentInThisSetTrue() {
 		servant.setQuantity(5);
 		values.getServants().setQuantity(9);
 		assertTrue(servant.amIPresentInThisSet(values));
