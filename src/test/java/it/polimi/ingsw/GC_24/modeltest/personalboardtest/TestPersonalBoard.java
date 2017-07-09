@@ -42,4 +42,10 @@ public class TestPersonalBoard {
 		player.getMyBoard().getPersonalTerritories().setCards(territory);
 		assertEquals(player.getMyBoard().urlPersonalBoard().size(), 28);
 	}
+	
+	@Test
+	public void testUrlPersonalBoard1() {
+		player.getMyBoard().getPersonalTerritories().setCards(territory);
+		assertEquals(player.getMyBoard().urlPersonalBoard().size(), 28);
+	}
 }

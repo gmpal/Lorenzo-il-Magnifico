@@ -126,10 +126,9 @@ public class ViewGUI extends View {
 	}
 	
 	@Override
-	public String askForCouncilPrivilege(String request) {
+	public String askForCouncilPrivilege(String request) { 
 
 		Platform.runLater(() -> mainClass.askForCouncilPrivilege(request));
-
 
 		synchronized (waitingForParameters) {
 			councilPrivilegeAnswer = "";

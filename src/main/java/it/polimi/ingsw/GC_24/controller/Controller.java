@@ -567,6 +567,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				incorrenctActionHandling(answer);
 
 			} else {
+				System.out.println("sono rentrejsoilifghakygvukryeyyyyyyyyyyyyyyyyyy");
 				t1.cancel();
 				correctActionExecute();
 			}
@@ -855,8 +856,13 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		}
 
 		if (tempZone.equalsIgnoreCase("ventures")) {
-
 			handleVentures(tempZone, tempFloor);
+		} else if(tempZone.equalsIgnoreCase("characters")||tempZone.equalsIgnoreCase("territories")||tempZone.equalsIgnoreCase("buildings")) {
+			TowerPlace placeRequested = (TowerPlace) this.game.getBoard().getZoneFromString(tempZone)
+					.getPlaceFromStringOrFirstIfZero(tempFloor);
+			if (placeRequested.isAvailable()) {
+				tempCost = placeRequested.getCorrespondingCard().getCost();
+			}
 		}
 		System.out.println("Controller --> Inviando la richiesta di creazione azione in fabbrica...");
 		this.action = actionFactory.makeAction(game, tempFamiliar, tempZone, tempFloor, tempServants, tempCost,
@@ -1108,7 +1114,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	/**
 	 * This method handles the effect that needs interaction with user it sends the
-	 * effect to the client, it recognises them and asks the user to choose. Then he
+	 * effect to the client, it recognizes them and asks the user to choose. Then he
 	 * sends a specific answer and
 	 * 
 	 * @param o

@@ -785,13 +785,12 @@ public class MainClass extends Application {
 	public StringProperty getCurrentPlayer() {
 		return currentPlayer;
 	}
-
+  
 	public void setCurrentPlayer(StringProperty currentPlayerProperty) {
 		currentPlayer = currentPlayerProperty;
 	}
 
 	public void updateRankings(String ranking) {
 		rankings.setValue(ranking);
-
 	}
 }
