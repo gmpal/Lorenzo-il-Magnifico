@@ -18,7 +18,7 @@ public class TestArea {
 	Harvest emptyHarvest;
 	
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		die = new Die(3, DieColour.WHITE);
 		familyMember = new FamilyMember(PlayerColour.BLUE, die);
 		familyMemberOnPlace = new FamilyMember(null, die);
@@ -27,39 +27,39 @@ public class TestArea {
 	}
 
 	@Test
-	public void testIsThereSameColourFalse() throws Exception {
+	public void testIsThereSameColourFalse() {
 		familyMemberOnPlace.setPlayerColour(PlayerColour.GREEN);
 		harvest.getPlacesArray().get(1).setFamMemberOnPlace(familyMemberOnPlace);
 		assertFalse(harvest.isThereSameColour(familyMember));
 	}
 	
 	@Test
-	public void testIsThereSameColourTrue() throws Exception {
+	public void testIsThereSameColourTrue() {
 		familyMemberOnPlace.setPlayerColour(PlayerColour.BLUE);
 		harvest.getPlacesArray().get(1).setFamMemberOnPlace(familyMemberOnPlace);
 		assertTrue(harvest.isThereSameColour(familyMember));
 	}
 	
 	@Test
-	public void testClearPlaces() throws Exception {
+	public void testClearPlaces() {
 		harvest.getPlacesArray().get(1).setFamMemberOnPlace(familyMemberOnPlace);
 		harvest.clearPlaces();
 		assertEquals(harvest, emptyHarvest);
 	}
 	
 	@Test
-	public void testIsOccupiedFalse() throws Exception {
+	public void testIsOccupiedFalse() {
 		assertFalse(harvest.isOccupied());
 	}
 	
 	@Test
-	public void testIsOccupiedTrue() throws Exception {
+	public void testIsOccupiedTrue() {
 		harvest.getPlacesArray().get(1).setFamMemberOnPlace(familyMemberOnPlace);
 		assertTrue(harvest.isOccupied());
 	}
 	
 	@Test
-	public void testGetFirstEmptyPlace() throws Exception {
+	public void testGetFirstEmptyPlace() {
 		harvest.getPlacesArray().get(2).setFamMemberOnPlace(familyMemberOnPlace);
 		harvest.getPlacesArray().get(0).setFamMemberOnPlace(familyMember);
 		harvest.clearPlaces();
@@ -67,12 +67,12 @@ public class TestArea {
 	}
 	
 	@Test
-	public void testGetPlaceFromStringOrFirstIfZero() throws Exception {
+	public void testGetPlaceFromStringOrFirstIfZero() {
 		assertEquals(harvest.getPlaceFromStringOrFirstIfZero("0"), harvest.getPlacesArray().get(0));
 	}
 	
 	@Test
-	public void testGetPlaceFromStringOrFirstIfZeroNotZero() throws Exception {
+	public void testGetPlaceFromStringOrFirstIfZeroNotZero() {
 		assertEquals(harvest.getPlaceFromStringOrFirstIfZero("2"), harvest.getPlacesArray().get(2));
 	}
 }

@@ -25,7 +25,7 @@ public class TestActionFactory {
 	List<Player> players;
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		game = new Model(1);
 		players = new ArrayList<>();
 		player = new Player("Giorgia", PlayerColour.RED);
@@ -42,27 +42,27 @@ public class TestActionFactory {
 	}
 	
 	@Test
-	public void testMakeActionCouncil() throws Exception {
+	public void testMakeActionCouncil() {
 		assertEquals(council, actionFactory.makeAction(game, "1", "council", "1", "0", new SetOfValues(), new SetOfValues()));
 	}
 	
 	@Test
-	public void testMakeActionHarvest() throws Exception {
+	public void testMakeActionHarvest() {
 		assertEquals(harvest, actionFactory.makeAction(game, "2", "harvest", "1", "4", new SetOfValues(), new SetOfValues()));
 	}
 	
 	@Test
-	public void testMakeActionProduction() throws Exception {
+	public void testMakeActionProduction() {
 		assertEquals(production, actionFactory.makeAction(game, "1", "production", "1", "0", new SetOfValues(), new SetOfValues()));
 	}
 	
 	@Test
-	public void testMakeActionMarket() throws Exception {
+	public void testMakeActionMarket() {
 		assertEquals(market, actionFactory.makeAction(game, "1", "market", "1", "0", new SetOfValues(), new SetOfValues()));
 	}
 	
 	@Test
-	public void testMakeActionMarketTower() throws Exception {
+	public void testMakeActionMarketTower() {
 		assertEquals(tower, actionFactory.makeAction(game, "3", "characters", "1", "2", new SetOfValues(), new SetOfValues()));
 	}
 }

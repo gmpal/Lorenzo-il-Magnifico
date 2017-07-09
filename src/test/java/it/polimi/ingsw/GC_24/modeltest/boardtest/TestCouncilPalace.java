@@ -19,7 +19,7 @@ public class TestCouncilPalace {
 	Player player3;
 	
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		council = new CouncilPalace(3);
 		temporaryTurn = new ArrayList<>();
 		temporaryTurnExpected = new ArrayList<>();
@@ -29,7 +29,7 @@ public class TestCouncilPalace {
 	}
 	
 	@Test
-	public void testUpdateTurnNewPlayer() throws Exception {
+	public void testUpdateTurnNewPlayer() {
 		temporaryTurn.add(player);
 		temporaryTurn.add(player2);
 		temporaryTurnExpected.add(player);
@@ -40,7 +40,7 @@ public class TestCouncilPalace {
 	}
 	
 	@Test
-	public void testUpdateTurnPlayerAlreadyInArray() throws Exception {
+	public void testUpdateTurnPlayerAlreadyInArray() {
 		temporaryTurnExpected.add(player);
 		temporaryTurnExpected.add(player2);
 		temporaryTurnExpected.add(player3);

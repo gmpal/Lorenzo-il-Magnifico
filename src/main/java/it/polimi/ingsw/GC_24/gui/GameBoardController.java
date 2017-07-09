@@ -22,7 +22,7 @@ import javafx.stage.Stage;
 
 public class GameBoardController implements Initializable {
 	public Stage prevStage;
-	private MainClass mainClass;
+	private static MainClass mainClass;
 	private static String action;
 
 	private ArrayList<ImageView> allTheImages = new ArrayList<>();
@@ -444,6 +444,8 @@ public class GameBoardController implements Initializable {
 		action = action + " " + servantsTextField.getText();
 		System.out.println("Action ready: " + action);
 		Stage actualScene = (Stage) submitFamiliarButton.getScene().getWindow();
+		System.out.println(this.mainClass);
+		System.out.println(this.mainClass.getView());
 		this.mainClass.getView().sendAction(action);
 		actualScene.close();
 		
@@ -618,7 +620,7 @@ public class GameBoardController implements Initializable {
 	}
 	public void setMainApp(MainClass mainClass) {
 		this.mainClass = mainClass;
-
+		System.out.println("------------------> MAIN CLASS SETTED:" +mainClass );
 	}
 
 	public Label getPlayer1label() {

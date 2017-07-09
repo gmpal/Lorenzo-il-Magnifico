@@ -2,13 +2,6 @@ package it.polimi.ingsw.GC_24.model;
 
 public enum State {
 
-
-	STARTING {
-		@Override
-		public State nextState() {
-			return WAITINGFORPLAYERONE;
-		}
-	},
 	WAITINGFORPLAYERONE {
 		@Override
 		public State nextState() {
@@ -81,8 +74,7 @@ public enum State {
 			return null;
 		}
 	};
-	
-	
+
 	public abstract State nextState();
 
 }

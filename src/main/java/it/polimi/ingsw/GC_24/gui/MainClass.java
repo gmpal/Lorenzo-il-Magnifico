@@ -66,7 +66,7 @@ public class MainClass extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		
 		StringProperty s = new SimpleStringProperty();
-		s.set("");
+		s.set("fake");
 		for (int i = 0; i < 4; i++) {
 			turnList.add(s);
 		}
@@ -74,9 +74,9 @@ public class MainClass extends Application {
 		for (int i=0; i<50; i++) {
 			imagesToTake.add(new ImageView());
 }
-		for (int i=0; i<41; i++) {
+		for (int i=0; i<44; i++) {
 			buttonstoTake.add(new Button());
-}
+		}
 
 		this.primaryStage = primaryStage;
 		this.client = new Client();
@@ -136,15 +136,17 @@ public class MainClass extends Application {
 	}
 
 	public void updateBackgroundButtons(List<String> buttonBackUrls) throws MalformedURLException {
-		for (int i = 0; i<buttonstoTake.size()-3; i++) {
+		System.out.println("###############"+buttonBackUrls.size());
+		System.out.println("###############"+buttonstoTake.size());
+		for (int i = 0; i<buttonBackUrls.size()-3; i++) {
 			String url = new File(buttonBackUrls.get(i)).toURI()
 					.toURL().toString();
 			buttonstoTake.get(i).backgroundProperty().setValue(new Background(new BackgroundImage(new Image(url),BackgroundRepeat.NO_REPEAT,BackgroundRepeat.NO_REPEAT,BackgroundPosition.CENTER,null)));
 		}
-		for(int i=buttonstoTake.size()-3; i> buttonstoTake.size(); i++) {
+		for(int i=buttonBackUrls.size()-3; i< buttonBackUrls.size(); i++) {
 			String url = new File(buttonBackUrls.get(i)).toURI()
 					.toURL().toString();
-			imagesToTake.get(i).imageProperty().set(new Image(url));
+			imagesToTake.get(i+6).imageProperty().set(new Image(url));
 		}
 	}
 	
@@ -241,6 +243,11 @@ public class MainClass extends Application {
 			string.setValue(player);
 			turnList.add(string);
 		}
+		for ( int i = playerTurn.size(); i< 4; i++) {
+			StringProperty string = new SimpleStringProperty();
+			string.setValue("");
+			turnList.add(string);
+		}
 
 		System.out.println("Turni aggiornati nella mainClass");
 	}
@@ -258,7 +265,7 @@ public class MainClass extends Application {
 			GameBoardController gameBoardController = loader.getController();
 			gameBoardController.setMainApp(this);
 			setBindings(gameBoardController);
-
+			System.out.println("------------------> MAIN CLASS SETTED" );
 			Scene gameScene = new Scene(gameBoard);
 			primaryStage.setScene(gameScene);
 			primaryStage.show();
@@ -269,7 +276,7 @@ public class MainClass extends Application {
 
 	
 	private  void setBindings(GameBoardController gameBoardController) {
-
+		System.out.println(turnList);
 		// Setting the bindings for players labels
 		gameBoardController.getPlayer1label().textProperty().bind(turnList.get(0));
 		gameBoardController.getPlayer2label().textProperty().bind(turnList.get(1));
@@ -286,12 +293,14 @@ public class MainClass extends Application {
 		//binding the cards to the imagesToTake array
 		for (int i = 0; i < imagesToTake.size(); i++) {
 				gameBoardController.getAllTheImages().get(i).imageProperty().bind(imagesToTake.get(i).imageProperty());
+		System.out.println(imagesToTake.get(i));
+		System.out.println(gameBoardController.getAllTheImages().get(i));
 		}
 
 		gameBoardController.getRankings().textProperty().bind(rankings);
 		
 		//bindings rankings
-		for ( int i = 0 ; i< buttonstoTake.size(); i++) {
+		for ( int i = 0 ; i< buttonstoTake.size()-3; i++) {
 			gameBoardController.getAllTheButtons().get(i).backgroundProperty().bind(buttonstoTake.get(i).backgroundProperty());
 			
 		}
@@ -337,6 +346,18 @@ public class MainClass extends Application {
 		alert.showAndWait();
 	}
 
+	
+	public String askForChooseNewCard(String request) {
+		System.out.println("§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§");
+		System.out.println("§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§");
+		System.out.println("§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§");
+		System.out.println("§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§");
+		System.out.println("§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§");
+		System.out.println("§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§");
+		System.out.println("§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§");
+		System.out.println("§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§");
+		return request;
+	}
 	public Stage getPrimaryStage() {
 		return primaryStage;
 	}
@@ -458,6 +479,12 @@ public class MainClass extends Application {
 
 	public void setMyStones(StringProperty myStones) {
 		this.myStones = myStones;
+	}
+
+	public void askForCouncil() {
+	
+		
+		
 	}
 
 

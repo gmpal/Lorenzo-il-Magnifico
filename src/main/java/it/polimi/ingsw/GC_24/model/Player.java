@@ -121,7 +121,6 @@ public class Player implements Serializable {
 	public String toString() {
 		return myName.toUpperCase() + "---->" + myColour;
 	}
-	
 
 	// getters and setters
 	public String getMyName() {

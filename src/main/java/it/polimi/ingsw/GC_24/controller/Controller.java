@@ -238,7 +238,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			}
 
 		}, timers.getTimeToDisconnectPlayer());
-
 	}
 
 	/**
@@ -257,8 +256,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	public void gameEndHandler() {
 		giveVictoryPoints();
 		Player winner = winnerOfTheGame();
-
-		sendInfo("The winner of the game is" + winner);
+		sendInfo("The winner of the game is " + winner);
+		game.setGameState(State.ENDED);
 	}
 
 	/** This methods returns the winner of the game using victoryPoints */
@@ -435,14 +434,12 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	// SEND METHODS
 	/** This method sends to the clients the turn array to be updated */
 	private void sendTurnArray(List<Player> turnArray) {
-		List<String> turnNames = new ArrayList<String>();
-
+		List<String> turnString = new ArrayList<String>();
 		for (Player p : turnArray) {
-			turnNames.add(p.getMyName());
+			turnString.add(p.toString());
 		}
-
 		hashMap = new HashMap<>();
-		hashMap.put("Turns", turnNames);
+		hashMap.put("Turns", turnString);
 		notifyMyObservers(hashMap);
 	}
 
@@ -606,8 +603,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				if (!(this.getMyObservers().get(i) instanceof ServerRMIView)) {
 					ServerSocketView serverSocketView = (ServerSocketView) this.getMyObservers().get(i);
 					if (serverSocketView.getSocket().isClosed()) {
-						System.out.println("ENTRATO!!!");
-						
 						playerIndex = this.getMyObservers().indexOf(serverSocketView);
 						this.unregisterMyObserver(serverSocketView);
 						i--;
@@ -623,11 +618,25 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				if (playerTurn.get(i).getPlayerNumber() == playerIndex) {
 					name = playerTurn.get(i).getMyName();
 					colour = playerTurn.get(i).getMyColour().toString();
+					if (currentPlayer.equals(playerTurn.get(i))) {
+						if (i == playerTurn.size() - 1) {
+							game.setCurrentPlayer(playerTurn.get(0));
+						} else {
+							game.setCurrentPlayer(playerTurn.get(i + 1));
+						}
+						this.currentPlayer = game.getCurrentPlayer();
+					}
 					playerTurn.remove(playerTurn.get(i));
 				}
 			}
 
-			sendInfo("Player " + name + ", colour " + colour + ", disconnected, you can just keep playing!");
+			sendInfo("\nPlayer " + name + ", colour " + colour + ", disconnected, you can just keep playing!\n");
+			if (playerTurn.size() == 1) {
+				sendInfo("\nGame ended\n");
+				gameEndHandler();
+			} else {
+				sendCurrentPlayer();
+			}
 
 			/*
 			 * int indexOfCurrentPlayer = 0; // saving actual current PlayerIndex for (int j

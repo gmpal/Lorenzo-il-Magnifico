@@ -16,13 +16,13 @@ public class TestBonusTile {
 	SetOfValues productionValues;
 	
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		values = new SetOfValues();
 		valuesExpected = new SetOfValues();
 	}
 	
 	@Test
-	public void testGiveHarvestValuesBasic() throws Exception {
+	public void testGiveHarvestValuesBasic() {
 		bonusTile = new BonusTile(false, 0);
 		harvestValues = bonusTile.getHarvestValues();
 		values.setInitialValues(1);
@@ -35,7 +35,7 @@ public class TestBonusTile {
 	}
 
 	@Test
-	public void testGiveHarvestValuesAdvanced() throws Exception {
+	public void testGiveHarvestValuesAdvanced() {
 		bonusTile = new BonusTile(true, 1);
 		harvestValues = bonusTile.getHarvestValues();
 		values.setInitialValues(1);
@@ -48,7 +48,7 @@ public class TestBonusTile {
 	}
 	
 	@Test
-	public void testGiveProductiontValuesBasic() throws Exception {
+	public void testGiveProductiontValuesBasic() {
 		bonusTile = new BonusTile(false, 0);
 		productionValues = bonusTile.getProductionValues();
 		values.setInitialValues(1);
@@ -60,7 +60,7 @@ public class TestBonusTile {
 	}
 
 	@Test
-	public void testGiveProductiontValuesAdvanced() throws Exception {
+	public void testGiveProductiontValuesAdvanced() {
 		bonusTile = new BonusTile(true, 3);
 		productionValues = bonusTile.getProductionValues();
 		values.setInitialValues(1);

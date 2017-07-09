@@ -17,7 +17,7 @@ public class TestVentures {
 	Player player;
 	
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		player = new Player("Giorgia", PlayerColour.RED);
 		venture = new Ventures("Venture", null, "Venture", null, null, null, null, null, null, 3);
 		ventures = new PersonalVentures();
@@ -25,14 +25,14 @@ public class TestVentures {
 	}
 	
 	@Test
-	public void testSetCardOnPersonalBoard() throws Exception {
+	public void testSetCardOnPersonalBoard() {
 		ventures.getCards().add(venture);
 		venture.setCardOnPersonalBoard(player.getMyBoard());
 		assertEquals(ventures.getCards(), player.getMyBoard().getPersonalVentures().getCards());
 	}
 	
 	@Test
-	public void testSetCardOnPersonalBoardFalse1() throws Exception {
+	public void testSetCardOnPersonalBoardFalse1() {
 		ventures.getCards().add(venture);
 		venture.setCardOnPersonalBoard(player.getMyBoard());
 		ventures2.setCardOnPersonalBoard(player.getMyBoard());
@@ -40,7 +40,7 @@ public class TestVentures {
 	}
 	
 	@Test
-	public void testSetCardOnPersonalBoardFalse2() throws Exception {
+	public void testSetCardOnPersonalBoardFalse2() {
 		ventures.getCards().add(venture);
 		ventures.getCards().add(ventures2);
 		venture.setCardOnPersonalBoard(player.getMyBoard());

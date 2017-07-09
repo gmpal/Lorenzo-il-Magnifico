@@ -23,7 +23,7 @@ public class TestTowerPlace {
 
 	
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		player = new Player("Giorgia", PlayerColour.RED);
 		familyMember = new FamilyMember(player.getMyColour());
 		tower = new TowerPlace(0, null, null);
@@ -33,19 +33,19 @@ public class TestTowerPlace {
 	}
 	
 	@Test
-	public void testClearPlaceFamilyMember() throws Exception {
+	public void testClearPlaceFamilyMember() {
 		tower.clearPlace();
 		assertEquals(null, tower.getFamMemberOnPlace());
 	}
 	
 	@Test
-	public void testClearPlaceAvailable() throws Exception {
+	public void testClearPlaceAvailable() {
 		tower.clearPlace();
 		assertTrue(tower.isAvailable());
 	}
 	
 	@Test
-	public void testClearCorrespondingCard() throws Exception {
+	public void testClearCorrespondingCard() {
 		tower.clearPlace();
 		assertEquals(null, tower.getCorrespondingCard());
 	}

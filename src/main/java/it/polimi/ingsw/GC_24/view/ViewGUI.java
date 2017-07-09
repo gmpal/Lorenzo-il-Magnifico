@@ -3,6 +3,9 @@ package it.polimi.ingsw.GC_24.view;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 
 import it.polimi.ingsw.GC_24.gui.MainClass;
 import javafx.application.Platform;
@@ -15,6 +18,17 @@ public class ViewGUI extends View {
 	private List<String> urlBoard = new ArrayList<>();
 	private ArrayList<String> urlColour;
 
+	
+	private String councilPrivilegeAnswer = "";
+	private String alternativeCostAnswer = "";
+	private String saleAnswer = "";
+	private String ExcommunicationAnswer = "";
+	private String ExchangeAnswer = "";
+	private String Servants = "";
+	
+	private Object waitingForParameters = new Object();
+	
+	
 	public ViewGUI(String name, MainClass mainClass) {
 		super(name);
 		this.mainClass = mainClass;
@@ -57,8 +71,9 @@ public class ViewGUI extends View {
 
 	@Override
 	public String askForCouncilPrivilege(String request) {
-		// TODO Auto-generated method stub
-		return null;
+		Platform.runLater(() -> mainClass.askForCouncil());
+		
+		
 	}
 
 	@Override
@@ -75,13 +90,12 @@ public class ViewGUI extends View {
 
 	@Override
 	public String askForChooseNewCard(String request) {
-		// TODO Auto-generated method stub
-		return null;
+		
 	}
 
 	@Override
 	public void communicateActionDone() {
-		// TODO Auto-generated method stub
+	
 
 	}
 
@@ -203,6 +217,12 @@ public class ViewGUI extends View {
 		
 		Platform.runLater(() -> mainClass.parseValuesString(values));
 		Platform.runLater(() -> mainClass.perseFamilyString(family));
+		
+	}
+
+	@Override
+	public void disconnectClient() {
+		// TODO Auto-generated method stub
 		
 	}
 	
