@@ -33,29 +33,30 @@ public class PrivilegeController {
 	@FXML
 	private Button submitPrivilegeButton = new Button();
 	@FXML
-	private Button cancelPrivilegeButton = new Button();
-	@FXML
 	private ToggleGroup privilegeRadioButtons = new ToggleGroup();
 
 	public void chooseCouncilPrivilege(ActionEvent eventPrivilege) throws IOException {
 		if (eventPrivilege.getSource() == submitPrivilegeButton) {
 			if (privilegeRadioButtons.getSelectedToggle() == privilegeRadioButton1) {
-				mainClass.setChoosenPrivilege("1");
+				mainClass.setChosenPrivilege("1");
 			}
 			if (privilegeRadioButtons.getSelectedToggle() == privilegeRadioButton2) {
-				mainClass.setChoosenPrivilege("2");
+				mainClass.setChosenPrivilege("2");
 			}
 			if (privilegeRadioButtons.getSelectedToggle() == privilegeRadioButton3) {
-				mainClass.setChoosenPrivilege("3");
+				mainClass.setChosenPrivilege("3");
 			}
 			if (privilegeRadioButtons.getSelectedToggle() == privilegeRadioButton4) {
-				mainClass.setChoosenPrivilege("4");
+				mainClass.setChosenPrivilege("4");
 			}
 			if (privilegeRadioButtons.getSelectedToggle() == privilegeRadioButton5) {
-				mainClass.setChoosenPrivilege("5");
+				mainClass.setChosenPrivilege("5");
 			}
-		}
+			
+		}	
+		
 		Stage actualStage = (Stage) submitPrivilegeButton.getScene().getWindow();
 		actualStage.close();
 	}
+	
 }

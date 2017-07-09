@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.StringTokenizer;
-
 import it.polimi.ingsw.GC_24.network.Client;
 import it.polimi.ingsw.GC_24.view.View;
 import it.polimi.ingsw.GC_24.view.ViewCLI;
@@ -516,7 +515,10 @@ public class MainClass extends Application {
 		
 	}
 
-	public void setChoosenPrivilege(String chosenPrivilege) {
-		((ViewGUI)view).setCouncilPrivilegeAnswer(chosenPrivilege);
+	public void setChosenPrivilege(String chosenPrivilege) {
+		synchronized (((ViewGUI)view).getWaitingForParameters()) {
+			((ViewGUI)view).setCouncilPrivilegeAnswer(chosenPrivilege);
+			((ViewGUI)view).getWaitingForParameters().notify();
+		}
 	}
 }
