@@ -1,6 +1,5 @@
 package it.polimi.ingsw.GC_24.gui;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -31,6 +30,7 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class MainClass extends Application {
@@ -41,7 +41,7 @@ public class MainClass extends Application {
 	private static StringProperty rankings = new SimpleStringProperty();
 	private static List<ImageView> imagesToTake = new ArrayList<ImageView>();
 	private static List<Button> buttonstoTake = new ArrayList<Button>();
-	
+
 	private Client client;
 	private Stage primaryStage;
 	private Pane rootLayout;
@@ -54,7 +54,8 @@ public class MainClass extends Application {
 	private StringProperty myServants = new SimpleStringProperty();
 	private StringProperty myStones = new SimpleStringProperty();
 	private StringProperty myColour = new SimpleStringProperty();
-	
+	private String chosenPrivilege;
+
 	private static StringProperty family1Value = new SimpleStringProperty();
 	private static StringProperty family2Value = new SimpleStringProperty();
 	private static StringProperty family3Value = new SimpleStringProperty();
@@ -66,24 +67,24 @@ public class MainClass extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		
+
 		StringProperty s = new SimpleStringProperty();
 		s.set("fake");
 		for (int i = 0; i < 4; i++) {
 			turnList.add(s);
 		}
-		
-		for (int i=0; i<50; i++) {
+
+		for (int i = 0; i < 50; i++) {
 			imagesToTake.add(new ImageView());
-}
-		for (int i=0; i<44; i++) {
+		}
+		for (int i = 0; i < 44; i++) {
 			buttonstoTake.add(new Button());
 		}
 
 		this.primaryStage = primaryStage;
 		this.client = new Client();
 		initRootLayout();
-		//showGameBoard();
+		// showGameBoard();
 
 	}
 
@@ -138,21 +139,19 @@ public class MainClass extends Application {
 	}
 
 	public void updateBackgroundButtons(List<String> buttonBackUrls) throws MalformedURLException {
-		System.out.println("###############"+buttonBackUrls.size());
-		System.out.println("###############"+buttonstoTake.size());
-		for (int i = 0; i<buttonBackUrls.size()-3; i++) {
-			String url = new File(buttonBackUrls.get(i)).toURI()
-					.toURL().toString();
-			buttonstoTake.get(i).backgroundProperty().setValue(new Background(new BackgroundImage(new Image(url),BackgroundRepeat.NO_REPEAT,BackgroundRepeat.NO_REPEAT,BackgroundPosition.CENTER,null)));
+		System.out.println("###############" + buttonBackUrls.size());
+		System.out.println("###############" + buttonstoTake.size());
+		for (int i = 0; i < buttonBackUrls.size() - 3; i++) {
+			String url = new File(buttonBackUrls.get(i)).toURI().toURL().toString();
+			buttonstoTake.get(i).backgroundProperty().setValue(new Background(new BackgroundImage(new Image(url),
+					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, null)));
 		}
-		for(int i=buttonBackUrls.size()-3; i< buttonBackUrls.size(); i++) {
-			String url = new File(buttonBackUrls.get(i)).toURI()
-					.toURL().toString();
-			imagesToTake.get(i+6).imageProperty().set(new Image(url));
+		for (int i = buttonBackUrls.size() - 3; i < buttonBackUrls.size(); i++) {
+			String url = new File(buttonBackUrls.get(i)).toURI().toURL().toString();
+			imagesToTake.get(i + 6).imageProperty().set(new Image(url));
 		}
 	}
-	
-	
+
 	public void parseValuesString(String values) {
 		StringTokenizer tokenizer = new StringTokenizer(values);
 		String token = "";
@@ -162,8 +161,8 @@ public class MainClass extends Application {
 				token = tokenizer.nextToken();
 			}
 			tokenizer.nextToken();
-		this.myWoods.setValue(tokenizer.nextToken());
-			
+			this.myWoods.setValue(tokenizer.nextToken());
+
 		}
 		if (values.contains("stones")) {
 			while (!token.equals("stones")) {
@@ -171,7 +170,7 @@ public class MainClass extends Application {
 			}
 			tokenizer.nextToken();
 			this.myStones.setValue(tokenizer.nextToken());
-			
+
 		}
 		if (values.contains("coins")) {
 			while (!token.equals("coins")) {
@@ -179,7 +178,7 @@ public class MainClass extends Application {
 			}
 			tokenizer.nextToken();
 			this.myCoins.setValue(tokenizer.nextToken());
-			
+
 		}
 		if (values.contains("servants")) {
 			while (!token.equals("servants")) {
@@ -187,12 +186,10 @@ public class MainClass extends Application {
 			}
 			tokenizer.nextToken();
 			this.myServants.setValue(tokenizer.nextToken());
-			
+
 		}
 	}
-	
-	
-	
+
 	public void perseFamilyString(String family) {
 		StringTokenizer tokenizer = new StringTokenizer(family);
 		String token = "";
@@ -203,7 +200,7 @@ public class MainClass extends Application {
 			tokenizer.nextToken();
 			String valore = tokenizer.nextToken();
 			this.family1Value.setValue(valore);
-			
+
 		}
 		token = "";
 		if (family.contains("Member 2")) {
@@ -213,7 +210,7 @@ public class MainClass extends Application {
 			tokenizer.nextToken();
 			String valore = tokenizer.nextToken();
 			this.family2Value.setValue(valore);
-			
+
 		}
 		token = "";
 		if (family.contains("Member 3")) {
@@ -223,7 +220,7 @@ public class MainClass extends Application {
 			tokenizer.nextToken();
 			String valore = tokenizer.nextToken();
 			this.family3Value.setValue(valore);
-			
+
 		}
 		token = "";
 		if (family.contains("Member 4")) {
@@ -233,11 +230,12 @@ public class MainClass extends Application {
 			tokenizer.nextToken();
 			String valore = tokenizer.nextToken();
 			this.family4Value.setValue(valore);
-			
+
 		}
-		System.out.println(family1Value.getValue()+family2Value.getValue()+family3Value.getValue()+family4Value.getValue());
+		System.out.println(
+				family1Value.getValue() + family2Value.getValue() + family3Value.getValue() + family4Value.getValue());
 	}
-	
+
 	public void updateTurnProperties(List<String> playerTurn) {
 		turnList.clear();
 		for (String player : playerTurn) {
@@ -245,7 +243,7 @@ public class MainClass extends Application {
 			string.setValue(player);
 			turnList.add(string);
 		}
-		for ( int i = playerTurn.size(); i< 4; i++) {
+		for (int i = playerTurn.size(); i < 4; i++) {
 			StringProperty string = new SimpleStringProperty();
 			string.setValue("");
 			turnList.add(string);
@@ -253,7 +251,6 @@ public class MainClass extends Application {
 
 		System.out.println("Turni aggiornati nella mainClass");
 	}
-
 
 	public void showGameBoard() {
 		try {
@@ -267,7 +264,7 @@ public class MainClass extends Application {
 			GameBoardController gameBoardController = loader.getController();
 			gameBoardController.setMainApp(this);
 			setBindings(gameBoardController);
-			System.out.println("------------------> MAIN CLASS SETTED" );
+			System.out.println("------------------> MAIN CLASS SETTED");
 			Scene gameScene = new Scene(gameBoard);
 			primaryStage.setScene(gameScene);
 			primaryStage.show();
@@ -276,8 +273,7 @@ public class MainClass extends Application {
 		}
 	}
 
-	
-	private  void setBindings(GameBoardController gameBoardController) {
+	private void setBindings(GameBoardController gameBoardController) {
 		System.out.println(turnList);
 		// Setting the bindings for players labels
 		gameBoardController.getPlayer1label().textProperty().bind(turnList.get(0));
@@ -290,56 +286,52 @@ public class MainClass extends Application {
 		gameBoardController.getThisPlayerLabel().textProperty().bind(nameChosen);
 
 		// Setting the bindings for urls
-		//initialinizg arraylist imagesToTake
-			
-		//binding the cards to the imagesToTake array
+		// initialinizg arraylist imagesToTake
+
+		// binding the cards to the imagesToTake array
 		for (int i = 0; i < imagesToTake.size(); i++) {
-				gameBoardController.getAllTheImages().get(i).imageProperty().bind(imagesToTake.get(i).imageProperty());
-		System.out.println(imagesToTake.get(i));
-		System.out.println(gameBoardController.getAllTheImages().get(i));
+			gameBoardController.getAllTheImages().get(i).imageProperty().bind(imagesToTake.get(i).imageProperty());
+			System.out.println(imagesToTake.get(i));
+			System.out.println(gameBoardController.getAllTheImages().get(i));
 		}
 
 		gameBoardController.getRankings().textProperty().bind(rankings);
-		
-		//bindings rankings
-		for ( int i = 0 ; i< buttonstoTake.size()-3; i++) {
-			gameBoardController.getAllTheButtons().get(i).backgroundProperty().bind(buttonstoTake.get(i).backgroundProperty());
-			
+
+		// bindings rankings
+		for (int i = 0; i < buttonstoTake.size() - 3; i++) {
+			gameBoardController.getAllTheButtons().get(i).backgroundProperty()
+					.bind(buttonstoTake.get(i).backgroundProperty());
+
 		}
-		
-		//binding values
+
+		// binding values
 		gameBoardController.getCoinsLabel().textProperty().bind(this.getMyCoins());
 		gameBoardController.getServantsLabel().textProperty().bind(this.getMyServants());
 		gameBoardController.getWoodsLabel().textProperty().bind(this.getMyWoods());
 		gameBoardController.getStonesLabel().textProperty().bind(this.getMyStones());
-		
+
 		gameBoardController.getFamiliar1v().textProperty().bind(family1Value);
 		gameBoardController.getFamiliar2v().textProperty().bind(family2Value);
 		gameBoardController.getFamiliar3v().textProperty().bind(family3Value);
 		gameBoardController.getFamiliar4v().textProperty().bind(family4Value);
-		
+
 		System.out.println("Tutti i binding fatti!!");
-		
-	}
-/*
-	public void showSelectPlayer() {
-		try {
-			// Load person overview.
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainClass.class.getResource("SelectFamiliar.fxml"));
-			AnchorPane selectPlayerLayout = (AnchorPane) loader.load();
 
-			SelectFamiliarController selectFamiliarController = loader.getController();
-			selectFamiliarController.setMainApp(this);
-
-			Scene selectPlayerScene = new Scene(selectPlayerLayout);
-			primaryStage.setScene(selectPlayerScene);
-			primaryStage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
-*/
+
+	/*
+	 * public void showSelectPlayer() { try { // Load person overview. FXMLLoader
+	 * loader = new FXMLLoader();
+	 * loader.setLocation(MainClass.class.getResource("SelectFamiliar.fxml"));
+	 * AnchorPane selectPlayerLayout = (AnchorPane) loader.load();
+	 * 
+	 * SelectFamiliarController selectFamiliarController = loader.getController();
+	 * selectFamiliarController.setMainApp(this);
+	 * 
+	 * Scene selectPlayerScene = new Scene(selectPlayerLayout);
+	 * primaryStage.setScene(selectPlayerScene); primaryStage.show(); } catch
+	 * (IOException e) { e.printStackTrace(); } }
+	 */
 	public void showMessage(String message) {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Information");
@@ -348,8 +340,7 @@ public class MainClass extends Application {
 		alert.showAndWait();
 	}
 
-	
-	
+
 	public Stage getPrimaryStage() {
 		return primaryStage;
 	}
@@ -410,36 +401,32 @@ public class MainClass extends Application {
 		rankings.setValue(ranking);
 	}
 
-	public  void updateUrlBoard(ArrayList<String> urlBoard) throws MalformedURLException {
+	public void updateUrlBoard(ArrayList<String> urlBoard) throws MalformedURLException {
 		System.out.println(urlBoard);
-		for (int i= 0; i<16;i++) {
-			String url = new File(urlBoard.get(i)).toURI()
-					.toURL().toString();
-			System.out.println("#####"+imagesToTake.get(i));
+		for (int i = 0; i < 16; i++) {
+			String url = new File(urlBoard.get(i)).toURI().toURL().toString();
+			System.out.println("#####" + imagesToTake.get(i));
 			imagesToTake.get(i).imageProperty().set(new Image(url));
 		}
 	}
 
-	public  void updateUrlPersonalBoard(ArrayList<String> urlPersonalBoard) throws MalformedURLException {
+	public void updateUrlPersonalBoard(ArrayList<String> urlPersonalBoard) throws MalformedURLException {
 		System.out.println(urlPersonalBoard);
-		for (int i= 16; i<44;i++) {
-			String url = new File(urlPersonalBoard.get(i-16)).toURI()
-					.toURL().toString();
-			System.out.println("#####"+imagesToTake.get(i));
+		for (int i = 16; i < 44; i++) {
+			String url = new File(urlPersonalBoard.get(i - 16)).toURI().toURL().toString();
+			System.out.println("#####" + imagesToTake.get(i));
 			imagesToTake.get(i).imageProperty().set(new Image(url));
 		}
 	}
 
-	public  void updateUrlExcommunication(ArrayList<String> urlExcommunication) throws MalformedURLException {
+	public void updateUrlExcommunication(ArrayList<String> urlExcommunication) throws MalformedURLException {
 		System.out.println(urlExcommunication);
-		for (int i=44; i<47;i++) {
-			String url = new File(urlExcommunication.get(i-44)).toURI()
-					.toURL().toString();
-			System.out.println("#####"+imagesToTake.get(i));
+		for (int i = 44; i < 47; i++) {
+			String url = new File(urlExcommunication.get(i - 44)).toURI().toURL().toString();
+			System.out.println("#####" + imagesToTake.get(i));
 			imagesToTake.get(i).imageProperty().set(new Image(url));
 		}
 	}
-
 
 	public StringProperty getMyCoins() {
 		return myCoins;
@@ -473,16 +460,16 @@ public class MainClass extends Application {
 		this.myStones = myStones;
 	}
 
-	
-	
-	
-	
-	
-	
-
 
 	public void askForCouncilPrivilege(String request) {
-		// TODO Auto-generated method stub
+		Stage stage = new Stage();
+		stage.setTitle("Choose Privilege");
+		stage.initModality(Modality.APPLICATION_MODAL);
+		Pane myPane = null;
+		myPane = FXMLLoader.load(getClass().getResource("SelectPrivilege.fxml"));
+		Scene scene = new Scene(myPane);
+		stage.setScene(scene);
+		stage.show();
 		
 	}
 
@@ -529,5 +516,7 @@ public class MainClass extends Application {
 		
 	}
 
-
+	public void setChoosenPrivilege(String chosenPrivilege) {
+		((ViewGUI)view).setCouncilPrivilegeAnswer(chosenPrivilege);
+	}
 }

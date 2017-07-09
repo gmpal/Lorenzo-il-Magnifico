@@ -528,15 +528,6 @@ public class ViewCLI extends View {
 	}
 
 	@Override
-	public void communicateActionDone() {
-		synchronized (getWaitingForActionCompleted()) {
-			setActionDone(true);
-			getWaitingForActionCompleted().notify();
-		}
-
-	}
-
-	@Override
 	public void show(String message) {
 		System.out.println(message);
 	}

@@ -107,6 +107,7 @@ public class ViewGUI extends View {
 	@Override
 	public String askForCouncilPrivilege(String request) {
 
+
 	/*	Platform.runLater(() -> mainClass.askForCouncilPrivilege(request));
 
 		synchronized (waitingForParameters) {
@@ -122,6 +123,7 @@ public class ViewGUI extends View {
 
 		return councilPrivilegeAnswer;
 */  return "1";
+
 	}
 
 	@Override
@@ -162,7 +164,6 @@ public class ViewGUI extends View {
 
 	@Override
 	public String askForChooseNewCard(String request) {
-
 		Platform.runLater(() -> mainClass.askForChooseNewCard(request));
 
 		synchronized (waitingForParameters) {
@@ -307,8 +308,12 @@ public class ViewGUI extends View {
 
 	}
 
+
 	public Object getWaitingForParameters() {
 		return waitingForParameters;
+
+	public void setCouncilPrivilegeAnswer(String chosenPrivilege) {
+		this.councilPrivilegeAnswer = chosenPrivilege;
 	}
 
 }
