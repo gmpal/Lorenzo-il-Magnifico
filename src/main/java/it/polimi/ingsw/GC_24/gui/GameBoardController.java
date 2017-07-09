@@ -3,6 +3,7 @@ package it.polimi.ingsw.GC_24.gui;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -10,10 +11,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -27,6 +31,7 @@ public class GameBoardController implements Initializable {
 	private static String action;
 
 	private ArrayList<ImageView> allTheImages = new ArrayList<>();
+	private ArrayList<ImageView> personalImages = new ArrayList<>();
 	private ArrayList<Button> allTheButtons = new ArrayList<>();
 
 	@FXML
@@ -143,7 +148,6 @@ public class GameBoardController implements Initializable {
 	@FXML
 	private Label currentPlayerLabel = new Label();
 
-	
 	@FXML
 	private Label coinsLabel = new Label();
 	@FXML
@@ -152,7 +156,7 @@ public class GameBoardController implements Initializable {
 	private Label servantsLabel = new Label();
 	@FXML
 	private Label stonesLabel = new Label();
-	
+
 	@FXML
 	private Button buttonTerritory01 = new Button();
 	@FXML
@@ -245,17 +249,23 @@ public class GameBoardController implements Initializable {
 	@FXML
 	private GridPane produtionGridPane;
 
-
 	@FXML
 	private ImageView blackDie = new ImageView();
 	@FXML
-	private ImageView whiteDie= new ImageView();
+	private ImageView whiteDie = new ImageView();
 	@FXML
-	private ImageView orangeDie= new ImageView();
+	private ImageView orangeDie = new ImageView();
 
-
-
-
+	@FXML
+	private Button leaderButton01 = new Button();
+	@FXML
+	private Button leaderButton02 = new Button();
+	@FXML
+	private Button leaderButton03 = new Button();
+	@FXML
+	private Button leaderButton04 = new Button();
+	
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
@@ -337,50 +347,48 @@ public class GameBoardController implements Initializable {
 		allTheImages.add(ventures03);
 		allTheImages.add(ventures04);
 
-		allTheImages.add(personalTerritories01);
-		allTheImages.add(personalTerritories02);
-		allTheImages.add(personalTerritories03);
-		allTheImages.add(personalTerritories04);
-		allTheImages.add(personalTerritories05);
-		allTheImages.add(personalTerritories06);
-
-		allTheImages.add(personalCharacters01);
-		allTheImages.add(personalCharacters02);
-		allTheImages.add(personalCharacters03);
-		allTheImages.add(personalCharacters04);
-		allTheImages.add(personalCharacters05);
-		allTheImages.add(personalCharacters06);
-
-		allTheImages.add(personalBuildings01);
-		allTheImages.add(personalBuildings02);
-		allTheImages.add(personalBuildings03);
-		allTheImages.add(personalBuildings04);
-		allTheImages.add(personalBuildings05);
-		allTheImages.add(personalBuildings06);
-
-		allTheImages.add(personalVentures01);
-		allTheImages.add(personalVentures02);
-		allTheImages.add(personalVentures03);
-		allTheImages.add(personalVentures04);
-		allTheImages.add(personalVentures05);
-		allTheImages.add(personalVentures06);
-
-		allTheImages.add(leader01);
-		allTheImages.add(leader02);
-		allTheImages.add(leader03);
-		allTheImages.add(leader04);
-
 		allTheImages.add(excommunication01);
 		allTheImages.add(excommunication02);
 		allTheImages.add(excommunication03);
-		
+
 		allTheImages.add(blackDie);
 		allTheImages.add(orangeDie);
 		allTheImages.add(whiteDie);
 
+		personalImages.add(personalTerritories01);
+		personalImages.add(personalTerritories02);
+		personalImages.add(personalTerritories03);
+		personalImages.add(personalTerritories04);
+		personalImages.add(personalTerritories05);
+		personalImages.add(personalTerritories06);
+
+		personalImages.add(personalCharacters01);
+		personalImages.add(personalCharacters02);
+		personalImages.add(personalCharacters03);
+		personalImages.add(personalCharacters04);
+		personalImages.add(personalCharacters05);
+		personalImages.add(personalCharacters06);
+
+		personalImages.add(personalBuildings01);
+		personalImages.add(personalBuildings02);
+		personalImages.add(personalBuildings03);
+		personalImages.add(personalBuildings04);
+		personalImages.add(personalBuildings05);
+		personalImages.add(personalBuildings06);
+
+		personalImages.add(personalVentures01);
+		personalImages.add(personalVentures02);
+		personalImages.add(personalVentures03);
+		personalImages.add(personalVentures04);
+		personalImages.add(personalVentures05);
+		personalImages.add(personalVentures06);
+
+		personalImages.add(leader01);
+		personalImages.add(leader02);
+		personalImages.add(leader03);
+		personalImages.add(leader04);
+
 	}
-
-
 
 	public void towerClickHandler(ActionEvent buttonClick) throws IOException {
 		if (mainClass.getView().isMyTurn()) {
@@ -389,19 +397,16 @@ public class GameBoardController implements Initializable {
 			stage.initModality(Modality.APPLICATION_MODAL);
 			Pane myPane = null;
 			FXMLLoader loader = new FXMLLoader(MainClass.class.getResource("SelectFamiliar.fxml"));
-			
+
 			myPane = loader.load();
-		
+
 			SelectFamiliarController controller = loader.getController();
-			
+
 			controller.setGameBoardController(this);
 			controller.setMainClass(this.mainClass);
-			
-			
-			
+
 			controller.getSubmitFamiliarButton().setVisible(false);
-			
-			
+
 			controller.getFamiliar1v().setText(mainClass.getFamily1Value().getValue());
 			controller.getFamiliar2v().setText(mainClass.getFamily2Value().getValue());
 			controller.getFamiliar3v().setText(mainClass.getFamily3Value().getValue());
@@ -410,9 +415,6 @@ public class GameBoardController implements Initializable {
 			controller.getFamiliar2().setVisible(mainClass.isFamily2Available());
 			controller.getFamiliar3().setVisible(mainClass.isFamily3Available());
 			controller.getFamiliar4().setVisible(mainClass.isFamily4Available());
-			
-			
-	
 
 			if (buttonClick.getSource() == buttonTerritory01) {
 				action = "territories 1";
@@ -514,6 +516,52 @@ public class GameBoardController implements Initializable {
 		}
 	}
 
+	public void leaderMenu(ActionEvent rightClick) {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Leader Card Options");
+		alert.setHeaderText("What do you want to do with your leader card? :");
+		alert.initModality(Modality.APPLICATION_MODAL);
+		ButtonType buttonTypeOne = new ButtonType("Discard Leader");
+		ButtonType buttonTypeTwo = new ButtonType("Activate Leader");
+
+		// ButtonType buttonTypeCancel = new ButtonType("Cancel",
+		// ButtonData.CANCEL_CLOSE);
+
+		alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo);
+
+		Optional<ButtonType> result = alert.showAndWait();
+
+		if (result.get() == buttonTypeOne) {
+			if (rightClick.getSource() == leaderButton01) {
+				mainClass.getView().sendLeader("discard 1");
+			}
+			if (rightClick.getSource() == leaderButton02) {
+				mainClass.getView().sendLeader("discard 2");
+			}
+			if (rightClick.getSource() == leaderButton03) {
+				mainClass.getView().sendLeader("discard 3");
+			}
+			if (rightClick.getSource() == leaderButton04) {
+				mainClass.getView().sendLeader("discard 4");
+			}
+		} else if (result.get() == buttonTypeTwo) {
+			if (rightClick.getSource() == leaderButton01) {
+				mainClass.getView().sendLeader("activate 1");
+			}
+			if (rightClick.getSource() == leaderButton02) {
+				mainClass.getView().sendLeader("activate 2");
+			}
+			if (rightClick.getSource() == leaderButton03) {
+				mainClass.getView().sendLeader("activate 3");
+			}
+			if (rightClick.getSource() == leaderButton04) {
+				mainClass.getView().sendLeader("activate 4");
+			}
+		} else {
+			// nothing
+		}
+	}
+
 	public void cardZooming(MouseEvent mouseClick) throws IOException {
 		Stage stage = new Stage();
 		stage.setTitle("Here's your card");
@@ -531,11 +579,9 @@ public class GameBoardController implements Initializable {
 		stage.show();
 	}
 
-	
-	
 	public void setMainApp(MainClass mainClass) {
 		this.mainClass = mainClass;
-		System.out.println("------------------> MAIN CLASS SETTED:" +mainClass );
+		System.out.println("------------------> MAIN CLASS SETTED:" + mainClass);
 	}
 
 	public Label getPlayer1label() {
@@ -605,7 +651,13 @@ public class GameBoardController implements Initializable {
 	public Label getStonesLabel() {
 		return stonesLabel;
 	}
-	
-	
+
+	public ArrayList<ImageView> getPersonalImages() {
+		return personalImages;
+	}
+
+	public void setPersonalImages(ArrayList<ImageView> personalImages) {
+		this.personalImages = personalImages;
+	}
 
 }
