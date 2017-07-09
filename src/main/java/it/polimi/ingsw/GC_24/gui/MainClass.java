@@ -344,7 +344,7 @@ public class MainClass extends Application {
 		System.out.println(urlPersonalBoard);
 		for (int i = 16; i < 44; i++) {
 			String url = new File(urlPersonalBoard.get(i - 16)).toURI().toURL().toString();
-			
+			System.out.println(url+"22222228888222222222222287");
 			imagesToTake.get(i).imageProperty().set(new Image(url));
 		}
 	}
