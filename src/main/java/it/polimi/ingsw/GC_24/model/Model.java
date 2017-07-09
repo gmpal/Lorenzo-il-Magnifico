@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.Serializable;
 import com.google.gson.Gson;
 import java.util.*;
+
+import it.polimi.ingsw.GC_24.controller.Timers;
 import it.polimi.ingsw.GC_24.devCardJsonFile.GsonBuilders;
 import it.polimi.ingsw.GC_24.model.board.Board;
 import it.polimi.ingsw.GC_24.model.cards.Deck;
@@ -46,6 +48,7 @@ public class Model extends MyObservable implements Serializable {
 	private int counter;
 
 	private static Timer timer;
+	private Timers timers=new Timers();
 	private int countingModelSent = 0;
 	private List<String> urlExcommunication = new ArrayList<>();
 
@@ -118,7 +121,7 @@ public class Model extends MyObservable implements Serializable {
 					Server.launchAndCreateNewGame();
 				}
 
-			}, 15000);
+			}, timers.getTimeToStartGame());
 		}
 
 		if (getGameState().equals(State.RUNNING)) {

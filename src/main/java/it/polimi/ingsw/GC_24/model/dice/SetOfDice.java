@@ -37,6 +37,7 @@ public class SetOfDice implements java.io.Serializable {
 	 * This method take the image urls of the dice and set they in an ArrayList.
 	 */
 	public List<String> urlDice() {
+		urlDice.clear();
 		getUrlDie(this.die1);
 		getUrlDie(this.die2);
 		getUrlDie(this.die3);
@@ -61,7 +62,7 @@ public class SetOfDice implements java.io.Serializable {
 			urlDice.add("src/main/java/it/polimi/ingsw/GC_24/img/dice/die5.png");
 		} else if (die.getValue() == 6) {
 			urlDice.add("src/main/java/it/polimi/ingsw/GC_24/img/dice/die6.png");
-		}else {
+		} else {
 			urlDice.add("src/main/java/it/polimi/ingsw/GC_24/img/familiar/blank.png");
 		}
 
