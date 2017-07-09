@@ -306,23 +306,7 @@ public class ViewGUI extends View {
 		Platform.runLater(() -> mainClass.perseFamilyString(family));
 
 	}
-	
-	@Override
-	public void communicateActionDone() {
-		synchronized (getWaitingForActionCompleted()) {
-			setActionDone(true);
-		}
-	}
-	
-	@Override
-	public void sendAction(String command) {
-		actionDone = false;
-
-		hm = new HashMap<>();
-		hm.put("action", command);
-		notifyMyObservers(hm);
-	}
-	
+		
 	@Override
 	public void sendLeader(String command) {
 		hm = new HashMap<>();
