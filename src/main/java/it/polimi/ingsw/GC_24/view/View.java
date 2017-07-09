@@ -81,6 +81,12 @@ public abstract class View extends MyObservable implements MyObserver {
 	public abstract void setMyTurn(String currentPlayer);
 	
 	public abstract void disconnectClient();
+	
+	public abstract void sendAction(String command);
+	
+	public abstract void communicateActionDone();
+	
+	public abstract void sendLeader(String command);
 
 	
 	
@@ -93,25 +99,6 @@ public abstract class View extends MyObservable implements MyObserver {
 		hm.put("player", name);
 		this.notifyMyObservers(hm);
 		System.out.println("Your name has been sent");
-	}
-
-	public void sendAction(String command) {
-		actionDone = false;
-
-		hm = new HashMap<>();
-		hm.put("action", command);
-		notifyMyObservers(hm);
-		waitForActionDone();
-
-	}
-	
-	
-	public void communicateActionDone() {
-		synchronized (getWaitingForActionCompleted()) {
-			setActionDone(true);
-			getWaitingForActionCompleted().notify();
-		}
-
 	}
 	
 	public void parseBoardInformation(String[] boardInformation) {
@@ -139,36 +126,6 @@ public abstract class View extends MyObservable implements MyObserver {
 		this.oneTimePerTurnEffects =  personalInformation[9];
 		
 	}
-	
-	
-	
-	public void sendLeader(String command) {
-		actionDone = false;
-		hm = new HashMap<>();
-		hm.put("leader", command);
-		this.notifyMyObservers(hm);
-		waitForActionDone();
-	}
-	
-	public void waitForActionDone() {
-		/* This block of code notifies the Server of the action */
-		actionDone = false;
-		synchronized (waitingForActionCompleted) {
-			System.out.println("----Waiting for your action to be completed----");
-			while (!actionDone) {
-				try {
-					System.out.println("----Waitin'----");
-					waitingForActionCompleted.wait();
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					Thread.currentThread().interrupt();
-				}
-			}
-			System.out.println("--------Action Completed");
-		}
-	}
-
 	
 	public void sendAnswerForParameters(String answer) {
 		hm = new HashMap<>();
@@ -280,15 +237,8 @@ public abstract class View extends MyObservable implements MyObserver {
 		//Overridden in viewGUI
 		
 	}
-
-
+	
 	public void setUrlColour(ArrayList<String> urlColour) {
 		//Overridden in viewGUI
-		
 	}
-
-
-
-
-	
 }

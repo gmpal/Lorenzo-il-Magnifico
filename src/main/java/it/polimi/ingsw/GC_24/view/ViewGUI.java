@@ -1,5 +1,6 @@
 package it.polimi.ingsw.GC_24.view;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -60,7 +61,7 @@ public class ViewGUI extends View {
 
 	@Override
 	public void communicateActionDone() {
-			setActionDone(true);
+		setActionDone(true);
 	}
 
 	
@@ -129,6 +130,7 @@ public class ViewGUI extends View {
 
 		Platform.runLater(() -> mainClass.askForCouncilPrivilege(request));
 
+
 		synchronized (waitingForParameters) {
 			councilPrivilegeAnswer = "";
 			while (councilPrivilegeAnswer.equals("")) {
@@ -139,7 +141,6 @@ public class ViewGUI extends View {
 				}
 			}
 		}
-
 		return councilPrivilegeAnswer;
 
 	}
@@ -305,6 +306,29 @@ public class ViewGUI extends View {
 		Platform.runLater(() -> mainClass.parseValuesString(values));
 		Platform.runLater(() -> mainClass.perseFamilyString(family));
 
+	}
+	
+	@Override
+	public void communicateActionDone() {
+		synchronized (getWaitingForActionCompleted()) {
+			setActionDone(true);
+		}
+	}
+	
+	@Override
+	public void sendAction(String command) {
+		actionDone = false;
+
+		hm = new HashMap<>();
+		hm.put("action", command);
+		notifyMyObservers(hm);
+	}
+	
+	@Override
+	public void sendLeader(String command) {
+		hm = new HashMap<>();
+		hm.put("leader", command);
+		this.notifyMyObservers(hm);
 	}
 
 	@Override

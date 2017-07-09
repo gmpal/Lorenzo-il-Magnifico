@@ -328,6 +328,41 @@ public class ViewCLI extends View {
 			System.out.println("Not your turn!");
 		}
 	}
+	
+	@Override
+	public void communicateActionDone() {
+		synchronized (getWaitingForActionCompleted()) {
+			setActionDone(true);
+			getWaitingForActionCompleted().notify();
+		}
+	}
+	
+	public void waitForActionDone() {
+		/* This block of code notifies the Server of the action */
+		actionDone = false;
+		synchronized (waitingForActionCompleted) {
+			System.out.println("----Waiting for your action to be completed----");
+			while (!actionDone) {
+				try {
+					System.out.println("----Waitin'----");
+					waitingForActionCompleted.wait();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					Thread.currentThread().interrupt();
+				}
+			}
+			System.out.println("--------Action Completed");
+		}
+	}
+
+	public void sendLeader(String command) {
+		actionDone = false;
+		hm = new HashMap<>();
+		hm.put("leader", command);
+		this.notifyMyObservers(hm);
+		waitForActionDone();
+	}
 
 	/**
 	 * this method lets the user choose between two alternative costs. It contains a

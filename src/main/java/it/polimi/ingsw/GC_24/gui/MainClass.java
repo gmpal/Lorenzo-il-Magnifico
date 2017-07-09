@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.StringTokenizer;
-
 import it.polimi.ingsw.GC_24.network.Client;
 import it.polimi.ingsw.GC_24.view.View;
 import it.polimi.ingsw.GC_24.view.ViewCLI;
@@ -782,6 +781,7 @@ public class MainClass extends Application {
 		return turnList;
 	}
 
+
 	public StringProperty getCurrentPlayer() {
 		return currentPlayer;
 	}
@@ -792,5 +792,6 @@ public class MainClass extends Application {
 
 	public void updateRankings(String ranking) {
 		rankings.setValue(ranking);
+
 	}
 }
