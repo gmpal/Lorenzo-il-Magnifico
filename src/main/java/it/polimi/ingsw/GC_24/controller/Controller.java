@@ -113,7 +113,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			for (int j = 0; j < 4; j++) {
 
 				for (int i = 0; i < playerTurn.size(); i++) {
-					// one familar gone for each player
+					// one family member gone for each player
 					sendUrlBoard(game.getBoard().allUrl());
 					sendUrlColor(game.getBoard().urlPlayerColour());
 					// reset the current player
@@ -149,7 +149,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 							}
 						}
 					}
-					//sendUrlPersonalBoard(game.getCurrentPlayer().getMyBoard().urlPersonalBoard());
 					t1.cancel();
 
 					/* Repeats until the players are finished */
@@ -730,7 +729,9 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	public String verifyAvailabilityLeader(int index, String feedback) {
-		if (currentPlayer.getMyBoard().getPersonalLeader().get(index).isInUse()) {
+		if (index > (currentPlayer.getMyBoard().getPersonalLeader().size()-1)) {
+			return feedback + "This card has already been chosen\n";
+		} else if (currentPlayer.getMyBoard().getPersonalLeader().get(index).isInUse()) {
 			return feedback + "This card is already in use\n";
 		}
 		return feedback;
