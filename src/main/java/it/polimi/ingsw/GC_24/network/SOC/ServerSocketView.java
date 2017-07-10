@@ -21,7 +21,7 @@ public class ServerSocketView extends MyObservable implements Runnable, MyObserv
 	private ObjectOutputStream objToClient;
 	private ObjectInputStream objFromClient;
 	private boolean stop= false;
-
+	private String correspondingPlayerName = "";
 	// constructor --> Receive a socket and creates Scanner and PrintWriter
 	public ServerSocketView(Socket socket) throws IOException {
 		this.socket = socket;
@@ -45,7 +45,10 @@ public class ServerSocketView extends MyObservable implements Runnable, MyObserv
 
 				Map<String, Object> request = (Map<String, Object>) objFromClient.readObject();
 				System.out.println("ServerIn: received from client: " + request);
-
+				if (request.containsKey("player")) {
+					correspondingPlayerName = (String) request.get("player");
+					request.put("ServerSocketView", this);
+				}
 				this.notifyMyObservers(request);
 			}
 		} catch (ClassNotFoundException ioe) {
@@ -98,6 +101,10 @@ public class ServerSocketView extends MyObservable implements Runnable, MyObserv
 
 	public Socket getSocket() {
 		return socket;
+	}
+
+	public String getCorrespondingPlayerName() {
+		return correspondingPlayerName;
 	}
 
 }

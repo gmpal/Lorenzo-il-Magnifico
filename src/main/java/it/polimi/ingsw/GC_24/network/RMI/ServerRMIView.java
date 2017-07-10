@@ -192,6 +192,7 @@ public class ServerRMIView extends MyObservable implements ServerViewRemote, MyO
 	public void sendPlayerString(String clientNumberAndName) throws RemoteException {
 		hm = new HashMap<>();
 		hm.put("player", clientNumberAndName);
+		hm.put("ServerRMIView", this);
 		notifyMyObservers(hm);
 
 	}

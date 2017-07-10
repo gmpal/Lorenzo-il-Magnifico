@@ -106,7 +106,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			sendBoardInformation();
 			sendUrlColor(game.getBoard().urlPlayerColour());
 			sendPersonalInformationToEveryOne();
-			
+
 			sendTurnArray(playerTurn);
 
 			System.out.println("Controller: everything clear and model sent");
@@ -114,44 +114,45 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 				for (int i = 0; i < playerTurn.size(); i++) {
 					// one family member gone for each player
-					sendUrlBoard(game.getBoard().allUrl());
-					sendUrlColor(game.getBoard().urlPlayerColour());
-					// reset the current player
-					this.currentPlayer = game.getCurrentPlayer();
-					System.out.println("Current Player is ---> " + this.currentPlayer.getMyName());
-					sendCurrentPlayer();
-					System.out.println(game.getCurrentPlayer().getMyBoard().urlPersonalBoard()+"387659827659287659823765928745692746592387569248375629876");
-					System.out.println("Controller --> Current Player Sent");
-					System.out.println("Controller --> Are  they already playing? " + alreadyPlaying);
-					if (!alreadyPlaying) {
-						letThemPlay();
-						System.out.println("Controller --> Play request sent!");
-					}
+					if (!playerTurn.get(i).isSuspended()) {
+						sendUrlBoard(game.getBoard().allUrl());
+						sendUrlColor(game.getBoard().urlPlayerColour());
+						// reset the current player
+						this.currentPlayer = game.getCurrentPlayer();
+						System.out.println("Current Player is ---> " + this.currentPlayer.getMyName());
+						sendCurrentPlayer();
 
-					/*
-					 * This block waits for a player doing an action, because after an action the
-					 * game-currentPlayer is updated
-					 */
+						System.out.println("Controller --> Current Player Sent");
+						System.out.println("Controller --> Are  they already playing? " + alreadyPlaying);
+						if (!alreadyPlaying) {
+							letThemPlay();
+							System.out.println("Controller --> Play request sent!");
+						}
 
-					t1 = new Timer();
+						/*
+						 * This block waits for a player doing an action, because after an action the
+						 * game-currentPlayer is updated
+						 */
 
-					startTimerForPlayerAction(t1);
+						t1 = new Timer();
 
-					synchronized (actionWaiting) {
+						startTimerForPlayerAction(t1);
 
-						while (this.currentPlayer.equals(game.getCurrentPlayer())) {
-							try {
-								actionWaiting.wait();
-							} catch (InterruptedException e) {
-								e.printStackTrace();
-								Thread.currentThread().interrupt();
+						synchronized (actionWaiting) {
 
+							while (this.currentPlayer.equals(game.getCurrentPlayer())) {
+								try {
+									actionWaiting.wait();
+								} catch (InterruptedException e) {
+									e.printStackTrace();
+									Thread.currentThread().interrupt();
+
+								}
 							}
 						}
-					}
-					t1.cancel();
+						t1.cancel();
 
-					/* Repeats until the players are finished */
+					}else notifyToProceedWithTurns(); /* Repeats until the players are finished */
 				}
 
 			}
@@ -542,7 +543,15 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			System.out.println("Controller --> Ricevuto un giocatore");
 			String name = (String) request.get("player");
 			game.setTempName(name);
-			game.addPlayer();
+			if (command.contains("ServerSocketView")) {
+				ServerSocketView serverSocketView = (ServerSocketView) request.get("ServerSocketView");
+				game.addPlayer(serverSocketView, null);
+			}
+			if (command.contains("ServerRMIView")) {
+				ServerRMIView serverSocketView = (ServerRMIView) request.get("ServerRMIView");
+				game.addPlayer(null, serverSocketView);
+			}
+
 			return "player connected";
 
 		}
@@ -595,47 +604,26 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		}
 
 		else if (command.contains("clientClosed")) {
-
-			int playerIndex = 0;
-			System.out.println(this.getMyObservers());
+			System.out.println("ServerViews before disconnectioN = " + this.getMyObservers());
 			for (int i = 0; i < this.getMyObservers().size(); i++) {
 				if (!(this.getMyObservers().get(i) instanceof ServerRMIView)) {
 					ServerSocketView serverSocketView = (ServerSocketView) this.getMyObservers().get(i);
 					if (serverSocketView.getSocket().isClosed()) {
-						playerIndex = this.getMyObservers().indexOf(serverSocketView);
+
 						this.unregisterMyObserver(serverSocketView);
 						i--;
-					}
-				}
-			}
-			System.out.println(this.getMyObservers());
-			System.out.println("Indice del giocatore: " + playerIndex);
-			String name = "";
-			String colour = "";
-
-			for (int i = 0; i < playerTurn.size(); i++) {
-				if (playerTurn.get(i).getPlayerNumber() == playerIndex) {
-					name = playerTurn.get(i).getMyName();
-					colour = playerTurn.get(i).getMyColour().toString();
-					if (currentPlayer.equals(playerTurn.get(i))) {
-						if (i == playerTurn.size() - 1) {
-							game.setCurrentPlayer(playerTurn.get(0));
-						} else {
-							game.setCurrentPlayer(playerTurn.get(i + 1));
+						for (Player p : playerTurn) {
+							if (p.getMyName().equals(serverSocketView.getCorrespondingPlayerName())) {
+								p.setSuspended(true);
+								sendInfo("\nPlayer " + p.getMyName() + ", colour " + p.getMyColour()
+										+ ", disconnected, you can just keep playing!\n");
+							}
 						}
-						this.currentPlayer = game.getCurrentPlayer();
 					}
-					playerTurn.remove(playerTurn.get(i));
 				}
 			}
-
-			sendInfo("\nPlayer " + name + ", colour " + colour + ", disconnected, you can just keep playing!\n");
-			if (playerTurn.size() == 1) {
-				sendInfo("\nGame ended\n");
-				gameEndHandler();
-			} else {
-				sendCurrentPlayer();
-			}
+			System.out.println("ServerViews after disconnectioN = " + this.getMyObservers());
+			sendCurrentPlayer();
 
 			/*
 			 * int indexOfCurrentPlayer = 0; // saving actual current PlayerIndex for (int j
@@ -656,9 +644,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			 * indexOfCurrentPlayer + ", colour " + colour + ", disconnected");
 			 * sendCurrentPlayer(); }
 			 */
-		} else if (command.contains("addPlayer")) {
-			game.addPlayer();
-
 		} else if (command.contains("leader")) {
 			System.out.println("Controller --> Ricevuta un'azione leader");
 			handleAndVerifyLeader(request);
@@ -674,11 +659,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		} else if (command.contains("disconnection")) {
 			System.out.println("Controller --> Request to disconnect received ");
 			handleDisconnection();
-		}
-
-		else {
-			System.out.println("Controller --> COMANDO NON RICONOSCIUTO ");
-			return "bad command";
 		}
 
 		return null;
@@ -722,7 +702,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				leaderDiscardCouncilPrivilege.giveImmediateEffect(currentPlayer);
 				currentPlayer.getMyBoard().getPersonalLeader().remove(index);
 				sendPersonalInformationToEveryOne();
-			//	sendUrlPersonalBoard(game.getCurrentPlayer().getMyBoard().urlPersonalBoard());
+				// sendUrlPersonalBoard(game.getCurrentPlayer().getMyBoard().urlPersonalBoard());
 				awakenSleepingClient();
 			}
 		}
@@ -730,7 +710,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	public String verifyAvailabilityLeader(int index, String feedback) {
-		if (index > (currentPlayer.getMyBoard().getPersonalLeader().size()-1)) {
+		if (index > (currentPlayer.getMyBoard().getPersonalLeader().size() - 1)) {
 			return feedback + "This card has already been chosen\n";
 		} else if (currentPlayer.getMyBoard().getPersonalLeader().get(index).isInUse()) {
 			return feedback + "This card is already in use\n";
@@ -822,7 +802,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	private void handleAction(Map<String, Object> request) {
-		
+
 		System.out.println("Controller --> Sto gestendo un'azione");
 		StringTokenizer tokenizer = new StringTokenizer((String) request.get("action"));
 
@@ -858,14 +838,15 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 		if (tempZone.equalsIgnoreCase("ventures")) {
 			handleVentures(tempZone, tempFloor);
-		} else if(tempZone.equalsIgnoreCase("characters")||tempZone.equalsIgnoreCase("territories")||tempZone.equalsIgnoreCase("buildings")) {
+		} else if (tempZone.equalsIgnoreCase("characters") || tempZone.equalsIgnoreCase("territories")
+				|| tempZone.equalsIgnoreCase("buildings")) {
 			TowerPlace placeRequested = (TowerPlace) this.game.getBoard().getZoneFromString(tempZone)
 					.getPlaceFromStringOrFirstIfZero(tempFloor);
 			if (placeRequested.isAvailable()) {
 				tempCost = new SetOfValues(placeRequested.getCorrespondingCard().getCost());
-				System.out.println("SE place è available TEMPCOST prima di inizare l'azione"+tempCost);
-			}
-			else System.out.println("TEMP COST NON SETTATo"+tempCost);
+				System.out.println("SE place è available TEMPCOST prima di inizare l'azione" + tempCost);
+			} else
+				System.out.println("TEMP COST NON SETTATo" + tempCost);
 		}
 		System.out.println("Controller --> Inviando la richiesta di creazione azione in fabbrica...");
 		this.action = actionFactory.makeAction(game, tempFamiliar, tempZone, tempFloor, tempServants, tempCost,
@@ -897,10 +878,9 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		List<ImmediateEffect> interactiveEffects = action.run();
 		this.handleInteractiveEffects(interactiveEffects);
 		System.out.println("Controller --> Conclusa gestione dei costi interattivi ");
-	//	sendUrlPersonalBoard(game.getCurrentPlayer().getMyBoard().urlPersonalBoard());
+		// sendUrlPersonalBoard(game.getCurrentPlayer().getMyBoard().urlPersonalBoard());
 
 		checkForExcommunication();
-	
 
 		sendBoardInformation();
 		sendPersonalInformationToEveryOne();
@@ -955,7 +935,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		}
 		game.changeInDieValue(currentPlayer);
 		sendPersonalInformationToEveryOne();
-	//	sendUrlPersonalBoard(game.getCurrentPlayer().getMyBoard().urlPersonalBoard());
+		// sendUrlPersonalBoard(game.getCurrentPlayer().getMyBoard().urlPersonalBoard());
 		awakenSleepingClient();
 		System.out.println("Controller --> Richiesta di risveglio inviata");
 	}
@@ -988,7 +968,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		sendBoardInformation();
 		sendUrlBoard(game.getBoard().getUrlList());
 		sendPersonalInformationToEveryOne();
-	//	sendUrlPersonalBoard(game.getCurrentPlayer().getMyBoard().urlPersonalBoard());
+		// sendUrlPersonalBoard(game.getCurrentPlayer().getMyBoard().urlPersonalBoard());
 
 	}
 
@@ -1045,7 +1025,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			for (ImmediateEffect effect : interactiveEffects) {
 				sendBoardInformation();
 				sendPersonalInformationToEveryOne();
-		//		sendUrlPersonalBoard(game.getCurrentPlayer().getMyBoard().urlPersonalBoard());
+				// sendUrlPersonalBoard(game.getCurrentPlayer().getMyBoard().urlPersonalBoard());
 				i++;
 				System.out.println("Controller --> Gestendo l'effetto specifico #" + i + "of "
 						+ interactiveEffects.size() + ": " + effect);

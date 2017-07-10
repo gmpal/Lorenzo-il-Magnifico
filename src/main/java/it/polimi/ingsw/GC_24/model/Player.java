@@ -26,7 +26,8 @@ public class Player implements Serializable {
 	private List<PermanentEffect> activePermanentEffects = new ArrayList<>();
 	private List<Leader> leaderOneTimePerTurn = new ArrayList<>();
 	private boolean lastExcommunication=false;
-
+	
+	private boolean suspended=false;
 	// Constructor
 
 	public Player(String name, int playerNumber){
@@ -202,5 +203,13 @@ public class Player implements Serializable {
 
 	public void setLastExcommunication(boolean lastExcommunication) {
 		this.lastExcommunication = lastExcommunication;
+	}
+
+	public boolean isSuspended() {
+		return suspended;
+	}
+
+	public void setSuspended(boolean suspended) {
+		this.suspended = suspended;
 	}
 }

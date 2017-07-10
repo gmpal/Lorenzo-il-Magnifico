@@ -4,9 +4,17 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Serializable;
-import com.google.gson.Gson;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
+import com.google.gson.Gson;
+
+import it.polimi.ingsw.GC_24.controller.Controller;
 import it.polimi.ingsw.GC_24.controller.Timers;
 import it.polimi.ingsw.GC_24.devCardJsonFile.GsonBuilders;
 import it.polimi.ingsw.GC_24.model.board.Board;
@@ -17,6 +25,8 @@ import it.polimi.ingsw.GC_24.model.effects.permanent.IncreaseDieValueActivity;
 import it.polimi.ingsw.GC_24.model.effects.permanent.PermanentEffect;
 import it.polimi.ingsw.GC_24.model.values.SetOfValues;
 import it.polimi.ingsw.GC_24.network.Server;
+import it.polimi.ingsw.GC_24.network.RMI.ServerRMIView;
+import it.polimi.ingsw.GC_24.network.SOC.ServerSocketView;
 import it.polimi.ingsw.GC_24.observers.MyObservable;
 
 public class Model extends MyObservable implements Serializable {
@@ -48,7 +58,7 @@ public class Model extends MyObservable implements Serializable {
 	private int counter;
 
 	private static Timer timer;
-	private Timers timers=new Timers();
+	private Timers timers = new Timers();
 	private int countingModelSent = 0;
 	private List<String> urlExcommunication = new ArrayList<>();
 
@@ -96,40 +106,75 @@ public class Model extends MyObservable implements Serializable {
 		}
 	}
 
-	public void addPlayer() {
+	public void addPlayer(ServerSocketView serverSocketView, ServerRMIView serverRMIView) {
 
 		counter++;
 		System.out.println("Model --> Contatore incrementato");
-		Player player = new Player(tempName, counter);
-		this.getPlayers().add(player);
-		System.out.println("Model: PLAYER " + player);
-		System.out.println("Model: Player #" + counter + "added to Game #" + getModelNumber());
+		if (!checkIfAlreadyPresentAndSuspended(tempName, serverSocketView, serverRMIView)) {
+			Player player = new Player(tempName, counter);
+			this.getPlayers().add(player);
+			System.out.println("Model: PLAYER " + player);
+			System.out.println("Model: Player #" + counter + "added to Game #" + getModelNumber());
 
-		incrementState();
-		System.out.println("Model --> stato incrementato");
-		System.out.println(getGameState());
-		System.out.println("Model --> model inviato");
+			incrementState();
+			System.out.println("Model --> stato incrementato");
+			System.out.println(getGameState());
+			System.out.println("Model --> model inviato");
 
-		if (getGameState().equals(State.WAITINGFORPLAYERTHREE)) {
-			System.out.println("Model: Timer Starting");
-			timer = new Timer();
-			timer.schedule(new TimerTask() {
-				@Override
-				public void run() {
-					System.out.println("Model: *TIME UP*");
+			if (getGameState().equals(State.WAITINGFORPLAYERTHREE)) {
+				System.out.println("Model: Timer Starting");
+				timer = new Timer();
+				timer.schedule(new TimerTask() {
+					@Override
+					public void run() {
+						System.out.println("Model: *TIME UP*");
 
-					Server.launchAndCreateNewGame();
+						Server.launchAndCreateNewGame();
+					}
+
+				}, timers.getTimeToStartGame());
+			}
+
+			if (getGameState().equals(State.RUNNING)) {
+
+				timer.cancel();
+				Server.launchAndCreateNewGame();
+			}
+		}
+	}
+
+	private boolean checkIfAlreadyPresentAndSuspended(String tempName2, ServerSocketView serverSocketView, ServerRMIView serverRMIView) {
+	if (serverSocketView != null && serverRMIView == null) {
+		for (Controller controller : Server.getListOfControllers()) {
+			for (Player p : controller.getPlayerTurn()) {
+				if (p.getMyName().equals(tempName2) && p.isSuspended()) {
+					Server.getController().unregisterMyObserver(serverSocketView);
+					controller.registerMyObserver(serverSocketView);
+					serverSocketView.unregisterAllMyObserver();
+					serverSocketView.registerMyObserver(controller);
+					p.setSuspended(false);
+					return true;
 				}
-
-			}, timers.getTimeToStartGame());
+			}
+		}
+	
+	}
+	else if (serverSocketView == null && serverRMIView != null) {
+		for (Controller controller : Server.getListOfControllers()) {
+			for (Player p : controller.getPlayerTurn()) {
+				if (p.getMyName().equals(tempName2) && p.isSuspended()) {
+					Server.getController().unregisterMyObserver(serverRMIView);
+					controller.registerMyObserver(serverRMIView);
+					serverRMIView.unregisterAllMyObserver();
+					serverRMIView.registerMyObserver(controller);
+					p.setSuspended(false);
+					return true;
+				}
+			}
 		}
 
-		if (getGameState().equals(State.RUNNING)) {
-
-			timer.cancel();
-			Server.launchAndCreateNewGame();
-
-		}
+	}
+	return false;
 	}
 
 	/**

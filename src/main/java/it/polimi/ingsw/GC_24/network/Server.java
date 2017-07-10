@@ -8,7 +8,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-
+import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -27,6 +27,8 @@ public class Server {
 	private static final int PORT = 19999;
 	private final static int RMI_PORT = 28469;
 
+	private static ArrayList<Controller> listOfControllers = new ArrayList<>();
+	
 	private static Model game;
 	private static Controller controller;
 	private static ServerSocketView serverSocketView;
@@ -72,7 +74,7 @@ public class Server {
 		System.out.println("SERVER: Controller Created");
 	}
 
-	private void startRMIServer() throws RemoteException, AlreadyBoundException {
+	private void startRMIServer() throws AlreadyBoundException, RemoteException {
 
 		// create the registry to publish remote objects
 		Registry createdRegistry = LocateRegistry.createRegistry(RMI_PORT);
@@ -91,8 +93,7 @@ public class Server {
 		rmiView.registerMyObserver(controller);
 		controller.registerMyObserver(rmiView);
 
-		// this view observes the model
-		game.registerMyObserver(rmiView);
+		
 
 		try {
 			ServerViewRemote viewRemote = (ServerViewRemote) UnicastRemoteObject.exportObject(rmiView, 0);
@@ -133,7 +134,6 @@ public class Server {
 	}
 
 	private static void registerObservers() {
-		game.registerMyObserver(serverSocketView);
 		serverSocketView.registerMyObserver(controller);
 		controller.registerMyObserver(serverSocketView);
 	}
@@ -149,7 +149,7 @@ public class Server {
 	}
 
 	public static void launchAndCreateNewGame() {
-
+		listOfControllers.add(controller);
 		modelIndex++;
 		threadPool.submit(controller);
 		game = new Model(modelIndex);
@@ -158,6 +158,18 @@ public class Server {
 		createRMIServerView();
 		System.out.println("SERVER: ----> Game #" + modelIndex + " created");
 
+	}
+
+	public static ArrayList<Controller> getListOfControllers() {
+		return listOfControllers;
+	}
+
+	public static void setListOfControllers(ArrayList<Controller> listOfControllers) {
+		Server.listOfControllers = listOfControllers;
+	}
+
+	public static Controller getController() {
+		return controller;
 	}
 
 }
