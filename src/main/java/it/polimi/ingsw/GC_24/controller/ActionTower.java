@@ -67,7 +67,7 @@ public class ActionTower extends Action {
 	@Override
 	public List<ImmediateEffect> run() {
 		this.takeRealCost();
-		this.payCoinsforOccupiedTower();
+//	this.payCoinsforOccupiedTower();
 		this.payValue(new Servant(this.servants));
 		this.placeFamiliar();
 
@@ -96,12 +96,12 @@ public class ActionTower extends Action {
 		return false;
 	}
 
-	public void payCoinsforOccupiedTower() {
+/*	public void payCoinsforOccupiedTower() {
 		if (player.getPermanentEffect("noCoinsForOccupiedTower") == null) {
 			if (zone.isOccupied())
 				this.payValue(new Coin(3));
 		}
-	}
+	}*/
 
 	public void takeEffectsAndRemoveCard() {
 		ImmediateEffect im = towerPlace.getCorrespondingCard().getImmediateEffect();
