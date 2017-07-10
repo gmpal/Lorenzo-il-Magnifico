@@ -5,7 +5,11 @@ import java.util.*;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.cards.Buildings;
 import it.polimi.ingsw.GC_24.model.cards.Development;
-
+/**
+ * this type of effect lets the player perform a production without
+ * placing a family member, setting a starting value that can be increased with
+ * servants
+ */
 public class PerformProduction extends PerformActivity {
 
 	/**

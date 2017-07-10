@@ -19,6 +19,10 @@ import it.polimi.ingsw.GC_24.model.values.SetOfValues;
 import it.polimi.ingsw.GC_24.network.Server;
 import it.polimi.ingsw.GC_24.observers.MyObservable;
 
+/**
+ * This class represent a game. Every model has a list of players, the board,
+ * the dice, the deck of cards and all the elements that are useful to play.
+ */
 public class Model extends MyObservable implements Serializable {
 
 	/**
@@ -48,7 +52,7 @@ public class Model extends MyObservable implements Serializable {
 	private int counter;
 
 	private static Timer timer;
-	private Timers timers=new Timers();
+	private Timers timers = new Timers();
 	private int countingModelSent = 0;
 	private List<String> urlExcommunication = new ArrayList<>();
 

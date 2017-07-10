@@ -10,6 +10,12 @@ import it.polimi.ingsw.GC_24.model.personalboard.PersonalBoard;
 import it.polimi.ingsw.GC_24.model.places.Place;
 import it.polimi.ingsw.GC_24.model.values.*;
 
+/**
+ * This class represent a single player. It has a name, a family, a personal
+ * board, the resources (SetOfValues), the permanent effect activated and the
+ * boolean "lastExcommunication" that tell if the player has taken the last
+ * excommunication.
+ */
 public class Player implements Serializable {
 
 	/**
@@ -25,11 +31,11 @@ public class Player implements Serializable {
 	public boolean autoCompleted = false;
 	private List<PermanentEffect> activePermanentEffects = new ArrayList<>();
 	private List<Leader> leaderOneTimePerTurn = new ArrayList<>();
-	private boolean lastExcommunication=false;
+	private boolean lastExcommunication = false;
 
 	// Constructor
 
-	public Player(String name, int playerNumber){
+	public Player(String name, int playerNumber) {
 		this.myColour = null;
 		this.myName = name;
 		this.myFamily = null;
@@ -39,8 +45,8 @@ public class Player implements Serializable {
 	}
 
 	// constructor for tests
-	
-	public Player(int playerNumber){
+
+	public Player(int playerNumber) {
 		this.myColour = null;
 		this.myName = null;
 		this.myFamily = null;
@@ -48,6 +54,7 @@ public class Player implements Serializable {
 		this.myValues = new SetOfValues();
 		this.playerNumber = playerNumber;
 	}
+
 	public Player(String name, PlayerColour colour) {
 		this.myColour = colour;
 		this.myName = name;
@@ -188,7 +195,6 @@ public class Player implements Serializable {
 		this.activePermanentEffects = activePermanentEffects;
 	}
 
-
 	public List<Leader> getLeaderOneTimePerTurn() {
 		return leaderOneTimePerTurn;
 	}
@@ -196,6 +202,7 @@ public class Player implements Serializable {
 	public void setLeaderOneTimePerTurn(List<Leader> leaderOneTimePerTurn) {
 		this.leaderOneTimePerTurn = leaderOneTimePerTurn;
 	}
+
 	public boolean hasLastExcommunication() {
 		return lastExcommunication;
 	}

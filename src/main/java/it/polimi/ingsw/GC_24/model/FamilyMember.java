@@ -3,9 +3,13 @@ package it.polimi.ingsw.GC_24.model;
 import it.polimi.ingsw.GC_24.model.dice.Die;
 import it.polimi.ingsw.GC_24.model.dice.DieColour;
 
+/**
+ * This class represent a single familyMember of the family of the player. It
+ * can be neutral or colored (same color of the corresponding player), available
+ * or not available. It has a die value for make action.
+ */
 public class FamilyMember implements java.io.Serializable {
-	
-	
+
 	/**
 	 * 
 	 */
@@ -15,10 +19,10 @@ public class FamilyMember implements java.io.Serializable {
 	private DieColour memberColour;
 	private boolean neutral;
 	private PlayerColour playerColour;
-	
-	//constructors
 
-	/**creates a family member with a value*/
+	// constructors
+
+	/** creates a family member with a value */
 	public FamilyMember(PlayerColour playerColour, Die die) {
 		this.memberValue = die.getValue();
 		this.available = true;
@@ -26,42 +30,43 @@ public class FamilyMember implements java.io.Serializable {
 		this.neutral = false;
 		this.playerColour = playerColour;
 	}
-	
-	/**creates a neutral family member*/
+
+	/** creates a neutral family member */
 	public FamilyMember(PlayerColour playerColour) {
 		this.memberValue = 0;
 		this.available = true;
 		this.memberColour = null;
-		this.neutral=true;
+		this.neutral = true;
 		this.playerColour = playerColour;
 	}
-	
-	
-	/**sets a family member value and colour from a SetOfDice*/
+
+	/** sets a family member value and colour from a SetOfDice */
 	public void setMember(Die die) {
 		this.setMemberColour(die.getColour());
 		this.setMemberValue(die.getValue());
 		this.setNeutral(false);
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append( "Status = "+isAvailableString()+ " , Value = " + memberValue );
-		if (memberColour!=null){
+		builder.append("Status = " + isAvailableString() + " , Value = " + memberValue);
+		if (memberColour != null) {
 			builder.append(" , Colour = " + memberColour);
-		}else {
+		} else {
 			builder.append(" , Colour = NEUTRAL");
 		}
 		return builder.toString();
 	}
-	
-	public String isAvailableString(){
-		if(this.isAvailable()){return "available";}
-		else return "Not available";
+
+	public String isAvailableString() {
+		if (this.isAvailable()) {
+			return "available";
+		} else
+			return "Not available";
 
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -96,36 +101,45 @@ public class FamilyMember implements java.io.Serializable {
 		return true;
 	}
 
-	//getters and setters
+	// getters and setters
 	public int getMemberValue() {
 		return memberValue;
 	}
+
 	public void setMemberValue(int memberValue) {
 		this.memberValue = memberValue;
 	}
+
 	public boolean isAvailable() {
 		return available;
 	}
+
 	public void setAvailable(boolean available) {
 		this.available = available;
 	}
+
 	public DieColour getMemberColour() {
 		return memberColour;
 	}
+
 	public void setMemberColour(DieColour memberColour) {
 		this.memberColour = memberColour;
 	}
+
 	public boolean isNeutral() {
 		return neutral;
 	}
+
 	public void setNeutral(boolean neutral) {
 		this.neutral = neutral;
 	}
+
 	public PlayerColour getPlayerColour() {
 		return playerColour;
 	}
+
 	public void setPlayerColour(PlayerColour playerColour) {
 		this.playerColour = playerColour;
 	}
-	
+
 }

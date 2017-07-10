@@ -8,6 +8,10 @@ import it.polimi.ingsw.GC_24.model.cards.Development;
 import it.polimi.ingsw.GC_24.model.places.Place;
 import it.polimi.ingsw.GC_24.model.places.TowerPlace;
 
+/**
+ * This class represent the board of the game. It has all the object that there
+ * are on it.
+ */
 public class Board implements java.io.Serializable {
 
 	/**

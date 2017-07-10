@@ -32,7 +32,7 @@ import it.polimi.ingsw.GC_24.model.values.*;
 
 /**
  * This class set the serialization and the deserialization of abstract class.
- * The subclasses are registered with "RuntimeTypeAdapterFactory"
+ * The subclasses are registered with "RuntimeTypeAdapterFactory".
  */
 public class GsonBuilders {
 	public GsonBuilders() {
