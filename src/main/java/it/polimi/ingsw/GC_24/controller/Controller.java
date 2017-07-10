@@ -822,6 +822,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	private void handleAction(Map<String, Object> request) {
+		
 		System.out.println("Controller --> Sto gestendo un'azione");
 		StringTokenizer tokenizer = new StringTokenizer((String) request.get("action"));
 
@@ -860,8 +861,12 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			TowerPlace placeRequested = (TowerPlace) this.game.getBoard().getZoneFromString(tempZone)
 					.getPlaceFromStringOrFirstIfZero(tempFloor);
 			if (placeRequested.isAvailable()) {
-				tempCost = placeRequested.getCorrespondingCard().getCost();
-			}	
+
+				tempCost = new SetOfValues(placeRequested.getCorrespondingCard().getCost());
+				System.out.println("SE place è available TEMPCOST prima di inizare l'azione"+tempCost);
+			}
+			else System.out.println("TEMP COST NON SETTATo"+tempCost);
+
 		}
 		System.out.println("Controller --> Inviando la richiesta di creazione azione in fabbrica...");
 		this.action = actionFactory.makeAction(game, tempFamiliar, tempZone, tempFloor, tempServants, tempCost,

@@ -40,24 +40,41 @@ public class ActionTower extends Action {
 
 	@Override
 	public String verify() {
-		System.out.println(player.getMyValues());
+		System.out.println("VALUES PRIMA DI INIZIARE IL VERIFY" + player.getMyValues());
+		System.out.println("COST PRIMA DI INIZIARE IL VERIFY" + temporaryCardCost);
 		String answerToPlayer = "Answer: \n";
 		answerToPlayer = verifyIfEnoughServants(answerToPlayer);
-
+		System.out.println("*** finito il verifyIfEnoughServants");
+		System.out.println(player.getMyValues());
+		System.out.println(temporaryCardCost);
 		answerToPlayer = verifyIfEnoughServantsForThisPlace(answerToPlayer);
-
+		System.out.println("***  finito il  verifyIfEnoughServantsForThisPlace");
+		System.out.println(player.getMyValues());
+		System.out.println(temporaryCardCost);
 		answerToPlayer = verifyFamilyMemberAvailability(answerToPlayer);
-
+		System.out.println("*** finito il  verifyFamilyMemberAvailability");
+		System.out.println(player.getMyValues());
+		System.out.println(temporaryCardCost);
 		answerToPlayer = verifyPlaceAvailability(answerToPlayer);
-
+		System.out.println("*** finito il  verifyPlaceAvailability");
+		System.out.println(player.getMyValues());
+		System.out.println(temporaryCardCost);
 		answerToPlayer = verifyZoneOccupiedByMe(answerToPlayer);
-
+		System.out.println("*** finito il  verifyZoneOccupiedByMe");
+		System.out.println(player.getMyValues());
+		System.out.println(temporaryCardCost);
 		answerToPlayer = verifyTerritorySpaceAvailability(answerToPlayer);
-
+		System.out.println("*** finito il  verifyTerritorySpaceAvailability");
+		System.out.println(player.getMyValues());
+		System.out.println(temporaryCardCost);
 		answerToPlayer = verifyBoardSpaceAvailability(answerToPlayer);
-
+		System.out.println("*** finito il  verifyBoardSpaceAvailability");
+		System.out.println(player.getMyValues());
+		System.out.println(temporaryCardCost);
 		answerToPlayer = verifyCardResources(answerToPlayer);
-
+		System.out.println("*** finito il  verifyCardResources");
+		System.out.println(player.getMyValues());
+		System.out.println(temporaryCardCost);
 		if (answerToPlayer.equals("Answer: \n"))
 			return "ok";
 
@@ -137,20 +154,27 @@ public class ActionTower extends Action {
 	 */
 	public String verifyCardResources(String answerToPlayer) {
 		if (towerPlace.getCorrespondingCard() != null) {
+			System.out.println("***carta non nulla");
+			
 			String typeOfCard = towerPlace.getCorrespondingCard().getType();
+			System.out.println("*** carta tipo"+typeOfCard);
 			if (typeOfCard.equalsIgnoreCase("Venture")) {
+				System.out.println("*** è una ventures");
 				Ventures specificCard = (Ventures) towerPlace.getCorrespondingCard();
 				Value requirement = specificCard.getRequiredMilitaryPoints();
 				SetOfValues cost1 = specificCard.getCost();
 				SetOfValues cost2 = specificCard.getAlternativeCost();
 				if (temporaryCardCost.equals(cost2) && !this.player.getMyValues().doIHaveEnoughOfThis(requirement)) {
+					System.out.println("*** Non hai i requirements");
 					return answerToPlayer
 							+ "You don't have the EXTRA REQUIREMENTS for this card! Choose another card \n";
 				} else if (temporaryCardCost.equals(cost1) && !this.player.getMyValues().doIHaveThisSet(cost1)) {
+					System.out.println("*** non hai le values ");
 					return answerToPlayer + "You don't have the VALUES for this card! Choose another card \n";
 				}
 			}
 			if (player.getPermanentEffect("discountCoinsCard") != null) {
+				System.out.println("*** hai un discount ");
 				SubSetOfValues pes = (SubSetOfValues) player.getPermanentEffect("discountCoinsCard");
 				temporaryCardCost.getCoins().subQuantity(pes.getSubSet().getCoins().getQuantity());
 				if (temporaryCardCost.getCoins().getQuantity() < 0) {
@@ -158,9 +182,11 @@ public class ActionTower extends Action {
 				}
 			}
 			if ((player.getPermanentEffect("noCoinsForOccupiedTower") == null && this.zone.isOccupied())){
+				System.out.println("*** noCoinsForOccupiedTower");
 				temporaryCardCost.getCoins().addQuantity(3);
 			}
 			if (!player.getMyValues().doIHaveThisSet(temporaryCardCost)) {
+				System.out.println("*** Io non ho il temporaryCardCost "+temporaryCardCost);
 				return answerToPlayer + "You don't have enough resources to take this card! Choose another card \n";
 			}			
 		}

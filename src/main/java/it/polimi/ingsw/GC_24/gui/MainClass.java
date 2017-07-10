@@ -533,13 +533,15 @@ public class MainClass extends Application {
 			} else if (result.get() == buttonTypeTwo) {
 			    answer = "characters";
 			} else if (result.get() == buttonTypeThree) {
-			    answer = "buildings";
+			    answer = "buildingjs";
 			} else if (result.get() == buttonTypeFour) {
 			    answer = "ventures";
 			} else {
 			   //nothing
 			}
 			
+		} else {
+			answer = request;
 		}
 			
 		answer = chooseNewCardFloor(answer);
