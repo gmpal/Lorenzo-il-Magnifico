@@ -114,24 +114,7 @@ public class TestActionTower {
 		assertEquals((new NoValueEffectFromTowerPlace("noValueEffectFromTowerPlace")).toString(),
 				"No Value Effect From Tower Place: when you place a family member on a tower place you won't get the values anymore ");
 	}
-
-	@Test
-	public void testPayCoinsforOccupiedTowerWithEffect() {
-		p1.setMyValues(set1);
-		game.getBoard().getTowerTerritories().getPlacesArray().get(3).setAvailable(false);
-		p1.getActivePermanentEffects().add(new CustomizedPermanentEffect("noCoinsForOccupiedTower", null));
-		actionTower.payCoinsforOccupiedTower();
-		assertEquals((new Coin(4)), p1.getMyValues().getCoins());
-	}
-
-	@Test
-	public void testPayCoinsforOccupiedTowerWithoutEffect() {
-		p1.setMyValues(set1);
-		game.getBoard().getTowerTerritories().getPlacesArray().get(3).setAvailable(false);
-		actionTower.payCoinsforOccupiedTower();
-		assertEquals(new Coin(1), p1.getMyValues().getCoins());
-	}
-
+	
 	@Test
 	public void testTakeEffectsAndRemoveCardListEffect() {
 		actionTower.takeEffectsAndRemoveCard();
