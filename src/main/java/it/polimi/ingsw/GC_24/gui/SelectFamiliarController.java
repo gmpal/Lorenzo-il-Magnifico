@@ -83,10 +83,10 @@ public class SelectFamiliarController {
 
 	public void submitAction(ActionEvent buttonClick) {
 		action = action + " " + servantsTextField.getText();
-		System.out.println("Action ready: " + action);
+		;
 		Stage actualScene = (Stage) submitFamiliarButton.getScene().getWindow();
 		actualScene.close();
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@"+action);
+		;
 		mainClass.getView().sendAction(action);
 		
 		

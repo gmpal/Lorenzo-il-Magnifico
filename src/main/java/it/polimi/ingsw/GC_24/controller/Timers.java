@@ -37,7 +37,7 @@ public class Timers {
 				time = Integer.parseInt(line);
 			}
 		} catch (IOException e) {
-			System.out.println("There is a problem with the configuration file");
+			;
 		}
 		return time;
 	}

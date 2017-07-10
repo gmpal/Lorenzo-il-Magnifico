@@ -10,6 +10,10 @@ import it.polimi.ingsw.GC_24.model.effects.permanent.ChangeServantsValue;
 import it.polimi.ingsw.GC_24.model.places.Place;
 import it.polimi.ingsw.GC_24.model.values.Value;
 
+/**
+ * This class generalizes all the different Action classes, and it includes the
+ * methods used by each of them
+ */
 public abstract class Action {
 
 	protected FamilyMember familyMember;
@@ -21,6 +25,14 @@ public abstract class Action {
 	private List<String> placementEverywhereLeaderEffect = new ArrayList<>();
 
 	// constructor
+
+	/**
+	 * This constructor is particular because it contains a condition: if the
+	 * familiar name equals a particular string, this constructor creates a fake
+	 * action to execute in order to use chooseNewCard effect. It also check if the
+	 * permanent effect ChangedServantsValue is active and changes the servants
+	 * value
+	 */
 	public Action(Model game, String familiar, String zone, String floor, String servants) {
 		this.player = game.getCurrentPlayer();
 
@@ -128,6 +140,7 @@ public abstract class Action {
 
 	}
 
+	/** Self-explanatory */
 	public String verifyFamilyMemberAvailability(String answerToPlayer) {
 		if (!this.familyMember.isAvailable()) {
 			return answerToPlayer + "Sorry, this familiar is not available! \n";
@@ -135,6 +148,7 @@ public abstract class Action {
 			return answerToPlayer;
 	}
 
+	/** Self-explanatory */
 	public String verifyZoneOccupiedByMe(String answerToPlayer) {
 		if (this.zone.isThereSameColour(this.familyMember)) {
 			return answerToPlayer
@@ -153,7 +167,7 @@ public abstract class Action {
 		}
 		return answerToPlayer;
 	}
-
+	/** Self-explanatory */
 	public String verifyIfEnoughServantsForThisPlace(String answerToPlayer) {
 		int placeCostRequired = this.place.getCostDice();
 		if (placeCostRequired > (this.familyMember.getMemberValue() + this.servants)) {
@@ -162,7 +176,7 @@ public abstract class Action {
 		return answerToPlayer;
 	}
 
-	// shared run methods
+
 
 	/**
 	 * This method put a familiar on a place and set to false the availability of
@@ -171,18 +185,18 @@ public abstract class Action {
 	 */
 	public void placeFamiliar() {
 		if (!placeEveryWhere()) {
-			
+
 			place.setFamMemberOnPlace(familyMember);
 		} else {
 			placementEverywhereLeaderEffect.add(zoneString + " " + player.getMyColour().toString());
 		}
 		familyMember.setAvailable(false);
 	}
-
+	/** Self-explanatory */
 	public void payValue(Value value) {
 		value.subValuefromSet(player.getMyValues());
 	}
-
+	/** Self-explanatory */
 	public void takeValueFromPlace() {
 		if (place.getValue().getEffectValues() != null) {
 			place.getValue().getEffectValues().addTwoSetsOfValues(player.getMyValues());

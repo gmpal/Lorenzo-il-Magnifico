@@ -32,12 +32,12 @@ public class Exchange extends ImmediateEffect {
 	@Override
 	public void giveImmediateEffect(Player player) {
 		immediateEffectsFromExchange=new ArrayList<>();
-		System.out.println("Taking the effects");
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@"+finalExchange+"\n@@@@@@@@@@@@@@@@@@@@@");
+		;
+		;
 		ImmediateEffect im = finalExchange.getImmediateEffect();
 		finalExchange.getSet().subTwoSetsOfValues(player.getMyValues());
-		System.out.println("Subtracting the sets... : new set");
-		System.out.println(player.getMyValues());
+		;
+		;
 		if (im instanceof ValueEffect) {
 			((ValueEffect) im).giveImmediateEffect(player);
 		} else if(im!=null){

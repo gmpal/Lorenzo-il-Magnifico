@@ -589,7 +589,7 @@ public class GameBoardController implements Initializable {
 
 	public void setMainApp(MainClass mainClass) {
 		this.mainClass = mainClass;
-		System.out.println("------------------> MAIN CLASS SETTED:" + mainClass);
+		;
 	}
 
 	public Label getPlayer1label() {

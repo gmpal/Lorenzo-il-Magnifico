@@ -5,12 +5,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import it.polimi.ingsw.GC_24.observers.MyObservable;
 import it.polimi.ingsw.GC_24.observers.MyObserver;
 
-//TODO: davvero con le hashMap?
 public class ServerRMIView extends MyObservable implements ServerViewRemote, MyObserver {
-	
+
 	/**
 	 * 
 	 */
@@ -18,19 +20,36 @@ public class ServerRMIView extends MyObservable implements ServerViewRemote, MyO
 
 	HashMap<String, Object> hm = new HashMap<>();
 
-	private Set<ClientViewRemote> clients;
+	private ArrayList<ClientViewRemote> clients;
+	private ArrayList<String> names = new ArrayList<>();
 	private int i = 0;
 
 	public ServerRMIView() {
-		this.clients = new HashSet<>();
+		this.clients = new ArrayList<ClientViewRemote>();
+
 	}
 
 	@Override
 	public void registerClient(ClientViewRemote clientStub) throws RemoteException {
 		i++;
-		System.out.println("CLIENT #" + i + " REGISTRATO");
 		this.clients.add(clientStub);
+		String name = clientStub.getPlayerName();
+		names.add(name);
 
+	}
+
+	private void handleDisconnection(int i) {
+		
+		System.out.println(names.get(i)+" DISCONNESSO");
+		String name = names.get(i);
+		clients.remove(i);
+		sendNameDisconnectedToController(name);
+	}
+
+	private void sendNameDisconnectedToController(String name) {
+		hm = new HashMap<>();
+		hm.put("ClientRMIClosed", name);
+		notifyMyObservers(hm);
 	}
 
 	@Override
@@ -42,11 +61,15 @@ public class ServerRMIView extends MyObservable implements ServerViewRemote, MyO
 		try {
 			this.handleRequestFromServer(request);
 
-		} catch (RemoteException e) {
-			System.out.println("PLAYER DISCONNESSO");
-			//e.printStackTrace();
+		} catch (RemoteException e1) {
+			for (int i = 0; i < clients.size(); i++) {
+				try {
+					clients.get(i).ping();
+				} catch (RemoteException e2) {
+					handleDisconnection(i);
+				}
+			}
 		}
-
 	}
 
 	private void handleRequestFromServer(HashMap<String, Object> request) throws RemoteException {
@@ -55,56 +78,56 @@ public class ServerRMIView extends MyObservable implements ServerViewRemote, MyO
 
 			if (command.contains("currentPlayerName")) {
 				String currentPlayerName = (String) request.get("currentPlayerName");
-				System.out.println("RMI Server View --> Ricevuto qualcosa per un singolo giocatore");
+				;
 
 				if (currentPlayerName.equals(clientstub.getPlayerName())) {
 
 					if (command.contains("exchangeParamRequest")) {
-						System.out.println("RMI Server View ---> Ricevuta richiesta exchangeParamRequest");
+						;
 						String question = (String) request.get("exchangeParamRequest");
 						String answer = clientstub.askForExchange(question);
 						sendAnswerForParameters(answer);
 					}
 					if (command.contains("activityParamRequest")) {
-						System.out.println("RMI Server View ---> Ricevuta richiesta activityParamRequest");
+						;
 						String question = (String) request.get("activityParamRequest");
 						String answer = clientstub.askForServantsForHarvestOrProduction(question);
 						sendAnswerForParameters(answer);
 					}
 
 					if (command.contains("councilParamRequest")) {
-						System.out.println("RMI Server View ---> Ricevuta richiesta councilParamRequest");
+						;
 						String question = (String) request.get("councilParamRequest");
 						String answer = clientstub.askForCouncilPrivilege(question);
 						sendAnswerForParameters(answer);
 					}
 
 					if (command.contains("chooseNewCard")) {
-						System.out.println("RMI Server View ---> Ricevuta richiesta chooseNewCard");
+						;
 						String question = (String) request.get("chooseNewCard");
 						String answer = clientstub.askForChooseNewCard(question);
 						sendAnswerForParameters(answer);
 					}
-					
+
 					if (command.contains("vatican")) {
-						System.out.println("RMI Server View ---> Ricevuta richiesta vaticano");
+						;
 						String answer = clientstub.askForVatican();
 						sendAnswerVatican(answer);
 					}
 
 					if (command.contains("doubleCost")) {
-						System.out.println("RMI Server View --> Ricevuto un costo alternativo");
+						;
 						String response = clientstub.chooseAlternativeCost((String) request.get("doubleCost"));
 						sendAlternativeCost(response);
 					}
-					
+
 					if (command.contains("urlExcommunication")) {
 						ArrayList<String> urlExcommunication = (ArrayList<String>) request.get("urlExcommunication");
 						clientstub.updateUrlExcommunication(urlExcommunication);
 					}
 
 					if (command.contains("problems")) {
-						System.out.println("RMI Server View ---> Ricevuti problemi");
+						;
 						clientstub.show((String) request.get("problems"));
 					}
 
@@ -112,13 +135,13 @@ public class ServerRMIView extends MyObservable implements ServerViewRemote, MyO
 						clientstub.parsePersonalInformations((String[]) request.get("personalInformation"));
 					}
 					if (command.contains("sale")) {
-						System.out.println("RMI Server View ---> Ricevuta richiesta sconto multiplo");
+						;
 						String alternativeSale = clientstub.chooseAlternativeSale((String) request.get(command));
 						sendAlternativeSale(alternativeSale);
 					}
 
 					if (command.contains("urlPersonalBoard")) {
-						System.out.println("CSV ---> Ricevuta urlPersonalBoard");
+						;
 						ArrayList<String> urlPersonalBoard = (ArrayList<String>) request.get("urlPersonalBoard");
 						clientstub.updateUrlPersonalBoard(urlPersonalBoard);
 					}
@@ -134,51 +157,51 @@ public class ServerRMIView extends MyObservable implements ServerViewRemote, MyO
 			}
 
 			if (command.contains("actionDone")) {
-				System.out.println("RMI Server View ---> Ricevuta segnalazione di azione completata ");
+				;
 				clientstub.signalCompletedAction();
 
 			}
-			
+
 			if (command.contains("rankings")) {
-				System.out.println("RMI Server View ---> Ricevuta rankings ");
+				;
 				clientstub.updateRankings((String) request.get("rankings"));
 
 			}
-			
+
 			if (command.contains("urlExcommunication")) {
 				ArrayList<String> urlExcommunication = (ArrayList<String>) request.get("urlExcommunication");
 				clientstub.updateUrlExcommunication(urlExcommunication);
 			}
-			
+
 			if (command.contains("urlBoard")) {
 				ArrayList<String> urlBoard = (ArrayList<String>) request.get("urlBoard");
 				clientstub.updateUrlBoard(urlBoard);
 			}
-			
+
 			if (command.contains("urlColour")) {
 				ArrayList<String> urlColour = (ArrayList<String>) request.get("urlColour");
 				clientstub.updateUrlColour(urlColour);
 			}
-			
+
 			if (command.contains("info")) {
-				System.out.println("RMI Server View ---> Ricevute informazioni da mostrare a video");
+				;
 				clientstub.show((String) request.get("info"));
 
 			}
 
 			if (command.contains("startPlaying")) {
-				System.out.println("RMI Server View ---> Ricevuta richiesta di avviamento partita");
+				;
 				clientstub.startPlaying();
 
 			}
 			if (command.contains("Turns")) {
-				System.out.println("RMI Server View ---> Ricevuti turni ");
+				;
 				ArrayList<String> playerTurn = (ArrayList<String>) request.get("Turns");
 				clientstub.updateTurn(playerTurn);
 
 			}
 			if (command.contains("currentPlayer")) {
-				System.out.println("RMI Server View ---> Ricevuto giocatore corrente ");
+				;
 				String currentPlayer = (String) request.get("currentPlayer");
 				clientstub.updateCurrentPlayerAndSetMyTurn(currentPlayer);
 

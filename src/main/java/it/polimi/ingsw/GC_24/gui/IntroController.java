@@ -77,7 +77,7 @@ public class IntroController {
 				sendInfoButton.setDisable(true);
 				if (mainClass.getInterfaceChosen().equals("CLI")) {
 					mainClass.getPrimaryStage().close();
-					System.out.println("Waiting for other players...");
+					;
 					
 				}
 			}

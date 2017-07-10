@@ -74,7 +74,7 @@ public class MainClass extends Application {
 	public void start(Stage primaryStage) throws Exception {
 
 		StringProperty s = new SimpleStringProperty();
-		s.set("fake");
+		s.set("");
 		for (int i = 0; i < 4; i++) {
 			turnList.add(s);
 		}
@@ -284,22 +284,22 @@ public class MainClass extends Application {
 	}
 
 	private void setBindings(GameBoardController gameBoardController) throws MalformedURLException {
-		System.out.println(turnList);
-		System.out.println(view.getPlayerNumber());
+		;
+		;
 		if (view.getPlayerNumber() == 1) {
-			System.out.println("Tile giocatore 1");
+			;
 			gameBoardController.getBonusTile().setImage(new Image ((new File("src/main/java/it/polimi/ingsw/GC_24/img/bonustiles/Immagine1.png")).toURI().toURL().toString()));
 		}
 		if (view.getPlayerNumber() == 2) {
-			System.out.println("Tile giocatore 2");
+			;
 			gameBoardController.getBonusTile().setImage(new Image ((new File("src/main/java/it/polimi/ingsw/GC_24/img/bonustiles/Immagine2.png")).toURI().toURL().toString()));
 		}
 		if (view.getPlayerNumber() == 3) {
-			System.out.println("Tile giocatore 3");
+			;
 			gameBoardController.getBonusTile().setImage(new Image ((new File("src/main/java/it/polimi/ingsw/GC_24/img/bonustiles/Immagine3.png")).toURI().toURL().toString()));
 		}
 		if (view.getPlayerNumber() == 4) {
-			System.out.println("Tile giocatore 4");
+			;
 			gameBoardController.getBonusTile().setImage(new Image ((new File("src/main/java/it/polimi/ingsw/GC_24/img/bonustiles/Immagine4.png")).toURI().toURL().toString()));
 		}
 		
@@ -340,7 +340,7 @@ public class MainClass extends Application {
 		gameBoardController.getWoodsLabel().textProperty().bind(this.getMyWoods());
 		gameBoardController.getStonesLabel().textProperty().bind(this.getMyStones());
 
-		System.out.println("Tutti i binding fatti!!");
+		;
 
 	}
 
@@ -375,7 +375,7 @@ public class MainClass extends Application {
 	}
 
 	public void updateUrlPersonalBoard(ArrayList<String> urlPersonalBoard) throws MalformedURLException {
-		System.out.println(urlPersonalBoard);
+		;
 
 		for (int i = 0; i < 28; i++) {
 			String url = new File(urlPersonalBoard.get(i)).toURI().toURL().toString();
@@ -545,7 +545,7 @@ public class MainClass extends Application {
 		}
 			
 		answer = chooseNewCardFloor(answer);
-		System.out.println("*********************************"+answer);
+		;
 		synchronized (((ViewGUI) view).getWaitingForParameters()){
 			((ViewGUI) view).setChooseNewCardAnswer(answer);
 			((ViewGUI) view).getWaitingForParameters().notify();
@@ -693,9 +693,9 @@ public class MainClass extends Application {
 		//ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
 
 		alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo);
-		System.out.println("Tutto pronto...");
+		;
 		Optional<ButtonType> result = alert.showAndWait();
-		System.out.println("Chiesto! ");
+		;
 		if (result.get() == buttonTypeOne){
 		    answer = "1";
 		} else if (result.get() == buttonTypeTwo) {

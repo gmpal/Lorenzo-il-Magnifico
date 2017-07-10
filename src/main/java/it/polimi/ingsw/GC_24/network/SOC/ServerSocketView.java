@@ -21,7 +21,7 @@ public class ServerSocketView extends MyObservable implements Runnable, MyObserv
 	private ObjectOutputStream objToClient;
 	private ObjectInputStream objFromClient;
 	private boolean stop= false;
-
+	private String name;
 	// constructor --> Receive a socket and creates Scanner and PrintWriter
 	public ServerSocketView(Socket socket) throws IOException {
 		this.socket = socket;
@@ -44,21 +44,24 @@ public class ServerSocketView extends MyObservable implements Runnable, MyObserv
 			while (!stop) {
 
 				Map<String, Object> request = (Map<String, Object>) objFromClient.readObject();
-				System.out.println("ServerIn: received from client: " + request);
+				if (request.containsKey("player")) {
+					String name = (String) request.get("player");
+					this.name = name;
+				}
 
 				this.notifyMyObservers(request);
 			}
 		} catch (ClassNotFoundException ioe) {
 			ioe.printStackTrace();
 		} catch (EOFException eof) {
-			System.out.println("SERVERIn: end of file reached");
+			
 		} catch (SocketException e) {
-			System.out.println("Player disconnected");
+			
 			
 			stop = true;
 			try {
 				this.socket.close();
-				System.out.println("TUTTO CHIUSO");
+				
 				sendDisconnectionRequest();
 			} catch (IOException e1) {
 
@@ -73,7 +76,7 @@ public class ServerSocketView extends MyObservable implements Runnable, MyObserv
 
 	private void sendDisconnectionRequest() {
 		HashMap<String, Object> disconnectionHashmap = new HashMap<>();
-		disconnectionHashmap.put("clientClosed", null);
+		disconnectionHashmap.put("clientSocketClosed", null);
 		this.notifyMyObservers(disconnectionHashmap);
 	}
 
@@ -88,7 +91,6 @@ public class ServerSocketView extends MyObservable implements Runnable, MyObserv
 			objToClient.flush();
 			objToClient.reset();
 
-			System.out.println("ServerOut: I have sent" + change);
 
 		}catch(IOException e) {
 			e.printStackTrace();
@@ -98,6 +100,14 @@ public class ServerSocketView extends MyObservable implements Runnable, MyObserv
 
 	public Socket getSocket() {
 		return socket;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

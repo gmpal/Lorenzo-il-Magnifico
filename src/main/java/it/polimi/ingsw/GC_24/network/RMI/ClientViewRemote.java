@@ -50,7 +50,7 @@ public interface ClientViewRemote extends Remote {
 
 	public abstract String askForVatican() throws RemoteException;
 
-
+	public abstract void ping() throws RemoteException;
 
 	public abstract void updateRankings(String string) throws RemoteException;
 	

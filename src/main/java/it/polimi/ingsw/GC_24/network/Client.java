@@ -42,7 +42,7 @@ public class Client {
 	public void startSocketClient(View view) throws IOException {
 
 		Socket socket = new Socket(IP, SOCKETPORT);
-		System.out.println("CLIENT: Connection established");
+		;
 
 		ObjectOutputStream objToServer = new ObjectOutputStream(socket.getOutputStream());
 		objToServer.flush();
@@ -52,11 +52,8 @@ public class Client {
 
 		executor.submit(clientSocketView);
 
-		clientSocketView.registerMyObserver(view);
-
 		view.registerMyObserver(clientSocketView);
-		// TODO:sistemare quando creiamo la GUI
-		// minimodel is created inside the view
+		
 	}
 
 	public void startRMIClient(View view) throws IOException, NotBoundException {

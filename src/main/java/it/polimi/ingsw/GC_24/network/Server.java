@@ -67,9 +67,9 @@ public class Server {
 	// constructor
 	public Server() throws RemoteException {
 		game = new Model(modelIndex);
-		System.out.println("SERVER: Model Created");
+		;
 		controller = new Controller(game);
-		System.out.println("SERVER: Controller Created");
+		;
 	}
 
 	private void startRMIServer() throws RemoteException, AlreadyBoundException {
@@ -77,7 +77,7 @@ public class Server {
 		// create the registry to publish remote objects
 		Registry createdRegistry = LocateRegistry.createRegistry(RMI_PORT);
 		registry = createdRegistry;
-		System.out.println("Constructing the RMI registry");
+		;
 
 		// Create the RMI View, that will be shared with the client
 		createRMIServerView();
@@ -110,21 +110,21 @@ public class Server {
 	public static void startSocketServer() throws IOException, InterruptedException {
 
 		ServerSocket serverSocket = new ServerSocket(PORT);
-		System.out.println("SERVER: ServerSocket created");
+		;
 
 		while (true) {
 			try {
 				i++;
-				System.out.println("SERVER: Waiting connection number" + i);
+				;
 				Socket socket = serverSocket.accept();
-				System.out.println("Connection #" + i + " done");
+				;
 				createServerSocketView(socket);
 				registerObservers();
 				
 
 			} catch (Exception e) {
 				e.printStackTrace();
-				System.out.println("PLAYER DISCONNESSO, CHE SI FA?");
+				;
 				break;
 			}
 		}
@@ -156,7 +156,7 @@ public class Server {
 		controller = new Controller(game);
 		PlayerColour.resetValues();
 		createRMIServerView();
-		System.out.println("SERVER: ----> Game #" + modelIndex + " created");
+		;
 
 	}
 

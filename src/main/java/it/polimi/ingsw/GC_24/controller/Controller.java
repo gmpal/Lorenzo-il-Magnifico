@@ -33,6 +33,10 @@ import it.polimi.ingsw.GC_24.network.SOC.ServerSocketView;
 import it.polimi.ingsw.GC_24.observers.MyObservable;
 import it.polimi.ingsw.GC_24.observers.MyObserver;
 
+/**
+ * This class contains all the controller logic and methods. They will be
+ * explained one by one
+ */
 public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	private final Model game;
@@ -58,7 +62,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	private Timers timers = new Timers();
 	private Timer t1;
 
-	// locks
+	/** These locks are used to wait for specific answers */
 	private Object tempCostWaiting = new Object();
 	private Object actionWaiting = new Object();
 	private Object waitingForSalesChoice = new Object();
@@ -78,59 +82,59 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	/**
 	 * This run method encapsulates the game logic. It handles the turns,
-	 * communicates the turnArray and decides when players start playing.
+	 * communicates the turnArray, sends the information when needed and makes the
+	 * players start playing.
 	 */
-
 	@Override
 	public void run() {
-
-		System.out.println("Controller partito!!!");
+		// sets the model based on the players list
 		game.setModel(game.getPlayers());
-		System.out.println("model settato!!!");
+
 		this.currentPlayer = game.getCurrentPlayer();
-		System.out.println("Current PLayer settato!!!");
+
 		sendPersonalInformationToEveryOne();
 
-		System.out.println("Informazioni inviate!!!");
 		playerTurn = game.getPlayers();
-		System.out.println("turni presi!!!");
+
 		game.setGameState(State.PERIOD1_ROUND1);
 		sendUrlExcommunication();
 
+		// until the game is ENDED
 		while (!game.getGameState().equals(State.ENDED)) {
-			System.out.println("GAME STATE: " + game.getGameState());
-
+			// clears the board
 			game.getBoard().clear();
-
+			// deals the cards
 			game.getCards().dealCards(game.getBoard(), cardsIndex / 2 + 1);
+
+			// sends various informations
 			sendBoardInformation();
 			sendUrlColor(game.getBoard().urlPlayerColour());
 			sendPersonalInformationToEveryOne();
-			
 			sendTurnArray(playerTurn);
 
-			System.out.println("Controller: everything clear and model sent");
 			for (int j = 0; j < 4; j++) {
-
+				// cycle for consuming all the family members for all the players
 				for (int i = 0; i < playerTurn.size(); i++) {
-					// one family member gone for each player
+					// cycle for consuming one family members for all the players
+
+					// sends various informations
 					sendUrlBoard(game.getBoard().allUrl());
 					sendUrlColor(game.getBoard().urlPlayerColour());
-					// reset the current player
+
 					this.currentPlayer = game.getCurrentPlayer();
-					System.out.println("Current Player is ---> " + this.currentPlayer.getMyName());
+					// sends the current player (to update the turns)
 					sendCurrentPlayer();
-					System.out.println(game.getCurrentPlayer().getMyBoard().urlPersonalBoard()+"387659827659287659823765928745692746592387569248375629876");
-					System.out.println("Controller --> Current Player Sent");
-					System.out.println("Controller --> Are  they already playing? " + alreadyPlaying);
+
 					if (!alreadyPlaying) {
 						letThemPlay();
-						System.out.println("Controller --> Play request sent!");
+
 					}
 
 					/*
 					 * This block waits for a player doing an action, because after an action the
-					 * game-currentPlayer is updated
+					 * game-currentPlayer is updated. If the action done before the timer, it stops
+					 * the timer, otherwise it does startTimerForPlayerAction() content. TIMER READ
+					 * FROM FILE
 					 */
 
 					t1 = new Timer();
@@ -157,11 +161,18 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			}
 			// it's time to look at the council palace for turn updates!
 			councilTurnArray = game.getBoard().getCouncilPalace().getTemporaryTurn();
+
+			// sends useful informations
 			updateListOfPlayerTurn(councilTurnArray);
 			sendTurnArray(playerTurn);
-			// let's go to next state
+
+			// increments the state
 			game.incrementState();
+
+			// check if there are activated One-Time-per-Turn leaders, and sets them not in
+			// use
 			checkToActivateLeader();
+			// increments the cardsindex, useful for dealing
 			cardsIndex++;
 			// and repeat everything til state "ENDED"
 		}
@@ -169,13 +180,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	}
 
-	public void sendRankings() {
-		String rankings = game.getRanking().toString();
-		hashMap = new HashMap<>();
-		hashMap.put("rankings", rankings);
-		notifyMyObservers(hashMap);
-	}
-
+	/** Sends the board information in order to update it */
 	public void sendBoardInformation() {
 
 		String[] boardInformation = game.prepareBoardInformation();
@@ -185,11 +190,21 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 		game.setRanking(new Ranking(playerTurn));
 		sendRankings();
-		System.out.println(game.getRanking());
-		System.out.println(playerTurn);
 
 	}
 
+	/** sends the rankings of the game */
+	public void sendRankings() {
+		String rankings = game.getRanking().toString();
+		hashMap = new HashMap<>();
+		hashMap.put("rankings", rankings);
+		notifyMyObservers(hashMap);
+	}
+
+	/**
+	 * sends useful informations to every player, temporary changing the
+	 * currentPlayer to use the sendToCurrentPlayer method
+	 */
 	public void sendPersonalInformationToEveryOne() {
 		Player actualCurrentPlayer = currentPlayer;
 		for (Player p : game.getPlayers()) {
@@ -201,6 +216,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		currentPlayer = actualCurrentPlayer;
 	}
 
+	/** sends useful informations to currentplayer */
 	public void sendPersonalInformation() {
 		String[] personalInformation = game.preparePersonalInformation(currentPlayer);
 		hashMap = new HashMap<>();
@@ -223,6 +239,10 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		sendPersonalInformationToEveryOne();
 	}
 
+	/**
+	 * This methods starts the timer for the player action and notify everyone if
+	 * somebody loses their turn
+	 */
 	private void startTimerForPlayerAction(Timer t1) {
 		t1.schedule(new TimerTask() {
 			public void run() {
@@ -259,7 +279,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	/** This methods returns the winner of the game using victoryPoints */
-
 	public Player winnerOfTheGame() {
 		List<Integer> finalVictoryPoints = new ArrayList<>();
 		List<Player> winners = new ArrayList<>();
@@ -441,6 +460,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		notifyMyObservers(hashMap);
 	}
 
+	/** This methods sends the currentPlayer */
 	private void sendCurrentPlayer() {
 
 		hashMap = new HashMap<>();
@@ -461,18 +481,15 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		notifyMyObservers(hashMap);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public synchronized <C> void update(C change) {
-
-		System.out.println("Controller: i received this :" + change);
 
 		Thread t1 = new Thread(new Runnable() {
 			public void run() {
 				String answer;
 				try {
 					answer = handleRequestFromClient((Map<String, Object>) change);
-					System.out.println("--------------" + answer);
+
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -533,46 +550,47 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	 */
 	private String handleRequestFromClient(Map<String, Object> request) throws IOException {
 
-		System.out.println("Controller --> ricevuto una richiesta dal client");
-
 		Set<String> command = request.keySet();
-		System.out.println(command);
 
+		/** this contains the playerName and adds the player to the current Game */
 		if (command.contains("player")) {
-			System.out.println("Controller --> Ricevuto un giocatore");
+
 			String name = (String) request.get("player");
 			game.setTempName(name);
 			game.addPlayer();
 			return "player connected";
 
 		}
-
+		/** chosen Cost of double cost cards */
 		else if (command.contains("chosenCost")) {
 			synchronized (tempCostWaiting) {
-				System.out.println("Controller --> Ricevuta la scelta di un costo doppio");
+
 				this.tempCostString = (String) request.get("chosenCost");
 				tempCostWaiting.notify();
 			}
 			return "Controller: chosen cost updated";
 
 		}
-
+		/** action request from client */
 		else if (command.contains("action")) {
-			System.out.println("Controller --> Ricevuta un'azione di piazzamento ");
+
 			handleAction(request);
 			String answer = verifyAction(this.action);
 			if (!answer.equals("ok")) {
 				incorrenctActionHandling(answer);
 
 			} else {
-				System.out.println("sono rentrejsoilifghakygvukryeyyyyyyyyyyyyyyyyyy");
+
 				t1.cancel();
 				correctActionExecute();
 			}
 		}
-
+		/**
+		 * generic answer for parameters, it depends on the effect and is handled
+		 * differenctly
+		 */
 		else if (command.contains("answerForParameters")) {
-			System.out.println("Controller --> Ricevuta la risposta di parametri ");
+
 			synchronized (waitingForParametersChoose) {
 				this.parametersAnswer = (String) request.get("answerForParameters");
 				this.parametersChosen = true;
@@ -580,8 +598,10 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			}
 			return "parameters updated";
 
-		} else if (command.contains("answerForsale")) {
-			System.out.println("Controller --> Ricevuta la scelta di uno dei due sconti sul prezzo ");
+		}
+		/** answer for double sale cards */
+		else if (command.contains("answerForsale")) {
+
 			String setOfSales = (String) request.get("answerForsale");
 			synchronized (waitingForSalesChoice) {
 				if (setOfSales.equals("2")) {
@@ -593,43 +613,42 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			return "sale chosen";
 
 		}
+		/**
+		 * communicates the client disconnection and handles it, unregistering the
+		 * serverSocketView from the controller observers and removing the player from
+		 * their game turnList
+		 */
+		else if (command.contains("clientSocketClosed")) {
 
-		else if (command.contains("clientClosed")) {
-
-			int playerIndex = 0;
-			System.out.println(this.getMyObservers());
+			String name = "";
 			for (int i = 0; i < this.getMyObservers().size(); i++) {
 				if (!(this.getMyObservers().get(i) instanceof ServerRMIView)) {
 					ServerSocketView serverSocketView = (ServerSocketView) this.getMyObservers().get(i);
 					if (serverSocketView.getSocket().isClosed()) {
-						playerIndex = this.getMyObservers().indexOf(serverSocketView);
+						name = serverSocketView.getName();
 						this.unregisterMyObserver(serverSocketView);
 						i--;
 					}
 				}
 			}
-			System.out.println(this.getMyObservers());
-			System.out.println("Indice del giocatore: " + playerIndex);
-			String name = "";
-			String colour = "";
-
-			for (int i = 0; i < playerTurn.size(); i++) {
-				if (playerTurn.get(i).getPlayerNumber() == playerIndex) {
-					name = playerTurn.get(i).getMyName();
-					colour = playerTurn.get(i).getMyColour().toString();
-					if (currentPlayer.equals(playerTurn.get(i))) {
-						if (i == playerTurn.size() - 1) {
-							game.setCurrentPlayer(playerTurn.get(0));
-						} else {
-							game.setCurrentPlayer(playerTurn.get(i + 1));
-						}
-						this.currentPlayer = game.getCurrentPlayer();
-					}
-					playerTurn.remove(playerTurn.get(i));
+			int position = 0;
+			for (Player p : playerTurn) {
+				if (p.getMyName().equals(name)) {
+					position = playerTurn.indexOf(p);
 				}
 			}
 
-			sendInfo("\nPlayer " + name + ", colour " + colour + ", disconnected, you can just keep playing!\n");
+			if (currentPlayer.getMyName().equals(name)) {
+				if (currentPlayer.equals(playerTurn.get(playerTurn.size() - 1))) {
+					game.setCurrentPlayer(playerTurn.get(0));
+				} else {
+					game.setCurrentPlayer(playerTurn.get((playerTurn.indexOf(currentPlayer)) + 1));
+				}
+				this.currentPlayer = game.getCurrentPlayer();
+			}
+			playerTurn.remove(playerTurn.get(position));
+
+			sendInfo("\nPlayer " + name + ", disconnected, you can just keep playing!\n");
 			if (playerTurn.size() == 1) {
 				sendInfo("\nGame ended\n");
 				gameEndHandler();
@@ -637,55 +656,53 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				sendCurrentPlayer();
 			}
 
-			/*
-			 * int indexOfCurrentPlayer = 0; // saving actual current PlayerIndex for (int j
-			 * = 0; j < playerTurn.size(); j++) { if
-			 * (currentPlayer.equals(playerTurn.get(j))) { indexOfCurrentPlayer = j; }
-			 * String name = ""; String colour = ""; int indexRemoved = 0; for (int i = 0; i
-			 * < playerTurn.size(); i++) { currentPlayer = playerTurn.get(i); try {
-			 * System.out.println("Trying to send to "+currentPlayer);
-			 * sendPersonalInformation(); } catch (Exception e) {
-			 * System.out.println("EXCEPTIONAL"); name = playerTurn.get(i).getMyName();
-			 * colour = playerTurn.get(i).getMyColour().toString(); indexRemoved = i;
-			 * playerTurn.remove(i); break; } } if (indexRemoved < indexOfCurrentPlayer) {
-			 * currentPlayer = playerTurn.get(indexOfCurrentPlayer-1); } else if
-			 * (indexRemoved > indexOfCurrentPlayer) { currentPlayer =
-			 * playerTurn.get(indexOfCurrentPlayer); } else { if (indexOfCurrentPlayer ==
-			 * playerTurn.size()) { currentPlayer = playerTurn.get(0); }else { currentPlayer
-			 * = playerTurn.get(indexOfCurrentPlayer); } } sendInfo(name + ", player #" +
-			 * indexOfCurrentPlayer + ", colour " + colour + ", disconnected");
-			 * sendCurrentPlayer(); }
-			 */
-		} else if (command.contains("addPlayer")) {
+		}else if (command.contains("ClientRMIClosed")) {
+			String name = (String) request.get("ClientRMIClosed");
+			int position = 0;
+			for (Player p : playerTurn) {
+				if (p.getMyName().equals(name)) {
+					position = playerTurn.indexOf(p);
+				}
+			}
+
+			if (currentPlayer.getMyName().equals(name)) {
+				if (currentPlayer.equals(playerTurn.get(playerTurn.size() - 1))) {
+					game.setCurrentPlayer(playerTurn.get(0));
+				} else {
+					game.setCurrentPlayer(playerTurn.get((playerTurn.indexOf(currentPlayer)) + 1));
+				}
+				this.currentPlayer = game.getCurrentPlayer();
+			}
+			playerTurn.remove(playerTurn.get(position));
+
+			sendInfo("\nPlayer " + name + ", disconnected, you can just keep playing!\n");
+			if (playerTurn.size() == 1) {
+				sendInfo("\nGame ended\n");
+				gameEndHandler();
+			} else {
+				sendCurrentPlayer();
+			}
+			
+		} else if (command.contains("addPlayer"))
+
+		{
 			game.addPlayer();
 
 		} else if (command.contains("leader")) {
-			System.out.println("Controller --> Ricevuta un'azione leader");
-			handleAndVerifyLeader(request);
 
+			handleAndVerifyLeader(request);
+			/** contains the answer for excommunication request */
 		} else if (command.contains("answerForVatican")) {
-			System.out.println("Controller --> Ricevuta la scelta di supporto al vaticano ");
+
 			String answer = (String) request.get("answerForVatican");
 			giveExcommunication(answer);
 			synchronized (waitingForVaticanChoice) {
 				vaticanChosen = true;
 				waitingForVaticanChoice.notify();
 			}
-		} else if (command.contains("disconnection")) {
-			System.out.println("Controller --> Request to disconnect received ");
-			handleDisconnection();
 		}
 
-		else {
-			System.out.println("Controller --> COMANDO NON RICONOSCIUTO ");
-			return "bad command";
-		}
-
-		return null;
-
-	}
-
-	private void handleDisconnection() {
+		return "bad command";
 
 	}
 
@@ -696,7 +713,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	 * and will give a council privilege o the player
 	 */
 	private void handleAndVerifyLeader(Map<String, Object> request) {
-		System.out.println("Controller --> Sto gestendo un leader");
+		;
 		StringTokenizer tokenizer = new StringTokenizer((String) request.get("leader"));
 
 		String actionLeader = tokenizer.nextToken();
@@ -722,15 +739,16 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				leaderDiscardCouncilPrivilege.giveImmediateEffect(currentPlayer);
 				currentPlayer.getMyBoard().getPersonalLeader().remove(index);
 				sendPersonalInformationToEveryOne();
-			//	sendUrlPersonalBoard(game.getCurrentPlayer().getMyBoard().urlPersonalBoard());
+				// sendUrlPersonalBoard(game.getCurrentPlayer().getMyBoard().urlPersonalBoard());
 				awakenSleepingClient();
 			}
 		}
 
 	}
 
+	/** This method verifies the leader availability */
 	public String verifyAvailabilityLeader(int index, String feedback) {
-		if (index > (currentPlayer.getMyBoard().getPersonalLeader().size()-1)) {
+		if (index > (currentPlayer.getMyBoard().getPersonalLeader().size() - 1)) {
 			return feedback + "This card has already been chosen\n";
 		} else if (currentPlayer.getMyBoard().getPersonalLeader().get(index).isInUse()) {
 			return feedback + "This card is already in use\n";
@@ -821,9 +839,9 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				.getQuantity() <= currentPlayer.getMyValues().getFaithPoints().getQuantity();
 	}
 
+	/** This method handles the action request from the client */
 	private void handleAction(Map<String, Object> request) {
-		
-		System.out.println("Controller --> Sto gestendo un'azione");
+
 		StringTokenizer tokenizer = new StringTokenizer((String) request.get("action"));
 
 		String tempFamiliar = tokenizer.nextToken();
@@ -833,7 +851,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 		/**
 		 * Sees if there's an interactive permanent effect WITH DOUBLE SALE before doing
-		 * an action, because this particular effect requires user interaction
+		 * an action, because this particular effect requires user interaction. If yes,
+		 * it asks and wait.
 		 */
 		IncreaseDieValueCard pe = PermanentEffectWithAlternativeSale(
 				(IncreaseDieValueCard) currentPlayer.getPermanentEffect("increaseDieValueCard"));
@@ -855,25 +874,27 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			}
 		}
 
+		// ventures need to be handled differently
 		if (tempZone.equalsIgnoreCase("ventures")) {
 			handleVentures(tempZone, tempFloor);
-		} else if(tempZone.equalsIgnoreCase("characters")||tempZone.equalsIgnoreCase("territories")||tempZone.equalsIgnoreCase("buildings")) {
+		} else if (tempZone.equalsIgnoreCase("characters") || tempZone.equalsIgnoreCase("territories")
+				|| tempZone.equalsIgnoreCase("buildings")) {
 			TowerPlace placeRequested = (TowerPlace) this.game.getBoard().getZoneFromString(tempZone)
 					.getPlaceFromStringOrFirstIfZero(tempFloor);
 			if (placeRequested.isAvailable()) {
-
+				// takes the cost of the card
 				tempCost = new SetOfValues(placeRequested.getCorrespondingCard().getCost());
-				System.out.println("SE place è available TEMPCOST prima di inizare l'azione"+tempCost);
+
 			}
-			else System.out.println("TEMP COST NON SETTATo"+tempCost);
 
 		}
-		System.out.println("Controller --> Inviando la richiesta di creazione azione in fabbrica...");
+		// creates the corresponding action
 		this.action = actionFactory.makeAction(game, tempFamiliar, tempZone, tempFloor, tempServants, tempCost,
 				saleForPermanentEffect);
 
 	}
 
+	/** self-explanatory */
 	private void askForSale(IncreaseDieValueCard pe) {
 		saleForPermanentEffect = pe.getSale();
 		alternativeSale = pe.getAlternativeSale();
@@ -887,28 +908,28 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 	}
 
 	private String verifyAction(Action action2) {
-		System.out.println(currentPlayer.getMyValues());
-		System.out.println("Controller --> Sto verificando ed eseguendo un'azione ");
+
 		String responseToActionVerify = action.verify();
 		return responseToActionVerify;
 	}
 
+	/**
+	 * This methods executes the correct action. Handles the interactive effects (if
+	 * any) and checks for excommunication. then sends useful information and
+	 * proceeds with turn
+	 */
 	private void correctActionExecute() {
-		System.out.println("Controller --> La verifica dell'azione è andata a buon fine ");
+
 		List<ImmediateEffect> interactiveEffects = action.run();
 		this.handleInteractiveEffects(interactiveEffects);
-		System.out.println("Controller --> Conclusa gestione dei costi interattivi ");
-	//	sendUrlPersonalBoard(game.getCurrentPlayer().getMyBoard().urlPersonalBoard());
 
 		checkForExcommunication();
-	
 
 		sendBoardInformation();
 		sendPersonalInformationToEveryOne();
 		sendUrlColor(game.getBoard().urlPlayerColour());
 		notifyToProceedWithTurns();
 		awakenSleepingClient();
-		System.out.println("Controller --> Richiesta di risveglio inviata");
 
 	}
 
@@ -934,8 +955,9 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		}
 	}
 
+	/** This method assignes leader effects */
 	private void assignLeaderEffects(int index) {
-		System.out.println("Controller --> La verifica dell' attivazione della carta leader è andata a buon fine ");
+
 		Leader card = currentPlayer.getMyBoard().getPersonalLeader().get(index);
 
 		if (card.getImmediateEffectLeader() != null) {
@@ -956,9 +978,9 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		}
 		game.changeInDieValue(currentPlayer);
 		sendPersonalInformationToEveryOne();
-	//	sendUrlPersonalBoard(game.getCurrentPlayer().getMyBoard().urlPersonalBoard());
+		// sendUrlPersonalBoard(game.getCurrentPlayer().getMyBoard().urlPersonalBoard());
 		awakenSleepingClient();
-		System.out.println("Controller --> Richiesta di risveglio inviata");
+
 	}
 
 	private void askForSupportVatican() {
@@ -980,39 +1002,40 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	}
 
+	/**
+	 * This method starts after the choose new card action if everything was okay,
+	 * then sends useful informations
+	 */
 	private void correctChooseNewCardExecute() {
 
-		System.out.println("Controller --> La verifica dell'azione è andata a buon fine ");
 		List<ImmediateEffect> interactiveEffects = action.run();
 		this.handleInteractiveEffects(interactiveEffects);
-		System.out.println("Controller --> Conclusa gestione dei costi interattivi ");
+
 		sendBoardInformation();
 		sendUrlBoard(game.getBoard().getUrlList());
 		sendPersonalInformationToEveryOne();
-	//	sendUrlPersonalBoard(game.getCurrentPlayer().getMyBoard().urlPersonalBoard());
 
 	}
 
 	private void incorrenctLeaderHandling(String feedback) {
-		System.out.println("Controller --> L'attivazione della carta leader non ha superato i controlli");
+
 		sendProblemsToCurrentPlayer(feedback);
-		System.out.println("Controller --> Inviata richiesta di problemi al client");
+
 		awakenSleepingClient();
 
 	}
 
 	private void incorrenctActionHandling(String responseToActionVerify) {
-		System.out.println("Controller --> L'azione non ha superato i controlli");
+
 		sendProblemsToCurrentPlayer(responseToActionVerify);
-		System.out.println("Controller --> Inviata richiesta di problemi al client");
+
 		awakenSleepingClient();
 	}
 
 	private void notifyToProceedWithTurns() {
-		System.out.println(
-				"Controller --> Sto aggiornando il turno e risvegliando il metodo run() che era in attesa di una mia azione ");
+
 		synchronized (actionWaiting) {
-			// QUESTO MI FAREBBE CAMBIARE GIOCATORE
+
 			incrementTurn();
 			actionWaiting.notify();
 		}
@@ -1033,85 +1056,79 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		notifyMyObservers(hashMap);
 	}
 
-	/* Subito dopo run() */
+	/**
+	 * This method handles the interactive effects of an action, for each effect it
+	 * asks for parameters, the handles the answer (for choose new card
+	 * differently). Then handles the new generated effects until there are no more
+	 */
 	private void handleInteractiveEffects(List<ImmediateEffect> interactiveEffects) {
-		System.out.println("Controller --> Iniziando a gestire gli effetti interattivi ");
-		System.out.println("Controller --> lista: " + interactiveEffects);
+
 		List<ImmediateEffect> secondaryInteractiveEffects = new ArrayList<>();
 
 		if (!interactiveEffects.isEmpty()) {
-			System.out.println("Controller --> La lista contiene qualcosa");
-			int i = 0;
 
 			for (ImmediateEffect effect : interactiveEffects) {
 				sendBoardInformation();
 				sendPersonalInformationToEveryOne();
-		//		sendUrlPersonalBoard(game.getCurrentPlayer().getMyBoard().urlPersonalBoard());
-				i++;
-				System.out.println("Controller --> Gestendo l'effetto specifico #" + i + "of "
-						+ interactiveEffects.size() + ": " + effect);
 
 				askAndWaitForParameters(effect);
 
-				System.out.println("Controller -->  Finito di gestire l'effetto specifico#" + i + "of "
-						+ interactiveEffects.size() + ": " + effect);
-
 				if (effect instanceof ChooseNewCard) {
-					System.out.println("Controller --> è un chooseNewCard, creo l'azione corrispondente");
+
 					if (!parametersAnswer.contains("null")) {
 						String response = createNewActionForChooseNewCard(((ChooseNewCard) effect).getDieValue(),
 								effect);
-						// until my choose new card verify is correct I create
-						// another one
+
 						while (!response.equals("ok")) {
 							response = createNewActionForChooseNewCard(((ChooseNewCard) effect).getDieValue(), effect);
 						}
 						correctChooseNewCardExecute();
 					}
 				} else {
-					System.out.println("Controller --> non è un chooseNewCard");
-					System.out.println("Controller --> faccio il GiveImmediateEffect()");
+
 					effect.giveImmediateEffect(currentPlayer);
-					System.out.println("Controller --> fatto il give immediate Effect");
+
 				}
 
 				secondaryInteractiveEffects = effect.addAllNewEffectsToThisSet(secondaryInteractiveEffects);
 
 			}
 			if (!secondaryInteractiveEffects.isEmpty()) {
-				System.out.println("Controller --> la lista non è vuota");
-				System.out.println("Controller --> ecco la lista: " + secondaryInteractiveEffects);
-				System.out.println("Controller --> la sto gestendo ");
+
 				handleInteractiveEffects(secondaryInteractiveEffects);
-				System.out.println("Controller --> Finito di gestire la lista secondaria");
+
 			}
 
 		}
 	}
 
+	/**
+	 * This methods creates the fake action request for the method handleAction(),
+	 * in order to create a fake action for choose new card effect. This fake action
+	 * simulates the use of a neutral family member in order to prevent the tower
+	 * from resulting occupied
+	 */
 	private String createNewActionForChooseNewCard(int dieValue, ImmediateEffect effect) {
 		String finalActionRequest = "fakeFamiliarForChooseNewCard " + this.parametersAnswer;
-		System.out.println("Controller --> Sto creando un'azione corrispondente");
+
 		hashMap = new HashMap<>();
 		hashMap.put("action", finalActionRequest);
 		handleAction(hashMap);
-		System.out.println("Controller --> Azione per choose new Card creata ");
-		System.out.println(this.action);
-		System.out.println(this.action.getFamilyMember());
+
 		this.action.getFamilyMember().setMemberValue(dieValue);
-		System.out.println("Controller --> Valore del dado del familiare fittizio settato");
+
 		String response = verifyAction(this.action);
 		if (!response.equals("ok")) {
-			System.out.println("Controller --> L'azione Choose New Card non ha superato i controlli");
+
 			hashMap = new HashMap<>();
 			hashMap.put("problems", response);
 			sendToCurrentPlayer(hashMap);
-			System.out.println("Controller --> Inviata richiesta di problemi al client, e richiesta parametri");
+
 			askAndWaitForParameters(effect);
 			return response;
 
 		} else {
-			System.out.println("Controller --> verifica ed esecuzione dell'azione completata ");
+
 			return response;
 
 		}
@@ -1147,20 +1164,22 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			}
 			if (!(effect instanceof ChooseNewCard)) {
 				effect.assignParameters(parametersAnswer);
-				System.out.println("Controller --> Parametri assegnati");
+
 			}
 		}
 	}
 
+	/**
+	 * Everything that passes through this method is received and interpreted only
+	 * by the current player
+	 */
 	private void sendToCurrentPlayer(HashMap<String, Object> hashMap2) {
 		String name = currentPlayer.getMyName();
 		hashMap2.put("currentPlayerName", name);
 		notifyMyObservers(hashMap2);
 	}
 
-	// "Choose sale: (1,2)\n" + "1." + increase.getSale() + "\n2." +
-	// increase.getAlternativeSale()
-
+	/** Checks if there's a Permanent effect with alternative sale */
 	private IncreaseDieValueCard PermanentEffectWithAlternativeSale(IncreaseDieValueCard pe) {
 		if (pe != null && pe.getAlternativeSale() != null) {
 			return pe;
@@ -1168,6 +1187,10 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		return null;
 	}
 
+	/**
+	 * Every string that passes through this method is received and interpreted only
+	 * by the current player
+	 */
 	private void sendProblemsToCurrentPlayer(String responseToActionVerify) {
 		hashMap = new HashMap<>();
 		hashMap.put("problems", responseToActionVerify);
@@ -1177,10 +1200,11 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 
 	/**
 	 * If the player wants to take a ventures card, this method let him choose which
-	 * one of the double costs to take (if a double cost exists).
+	 * one of the double costs to take (if a double cost exists), then waits for the
+	 * answer.
 	 */
 	private void handleVentures(String tempZone, String tempFloor) {
-		System.out.println("Controller --> Sto gestendo una carta venture per il doppio costo... ");
+		;
 		TowerPlace placeRequested = (TowerPlace) this.game.getBoard().getZoneFromString(tempZone)
 				.getPlaceFromStringOrFirstIfZero(tempFloor);
 		Ventures cardRequested = (Ventures) placeRequested.getCorrespondingCard();
@@ -1188,7 +1212,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			SetOfValues cost1 = cardRequested.getCost();
 			SetOfValues cost2 = cardRequested.getAlternativeCost();
 			if (!cost1.isEmpty() && cost2 != null) {
-				System.out.println("Controller --> C'è un doppio costo, invio l'interazione ");
+
 				MilitaryPoint requirements = cardRequested.getRequiredMilitaryPoints();
 				String request = "Cost1: " + cost1.toString() + "\nCost2: " + cost2.toString() + "\nRequest for cost2 :"
 						+ requirements.toString();
@@ -1219,15 +1243,12 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					tempCost = cost2;
 				}
 
-				System.out.println("Controller --> L'utente ha scelto, mi sono risvegliato ");
-				System.out.println("Controller --> SCELTA DELL UTENTE: " + tempCost);
-
 			} else if (cost1.isEmpty() && cost2 != null) {
-				System.out.println("Controller --> c'è solo il costo 2, costo 1 è "+cost1+"costo2 è "+cost2);
+
 				tempCost = cost2;
 			}
 		}
-		System.out.println("Controller --> Fine gestione carta Venture : tempcost definitivo" +tempCost);
+
 	}
 
 	// getters and setters
