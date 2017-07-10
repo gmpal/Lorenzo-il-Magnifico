@@ -10,6 +10,10 @@ import it.polimi.ingsw.GC_24.model.effects.permanent.ChangeServantsValue;
 import it.polimi.ingsw.GC_24.model.places.Place;
 import it.polimi.ingsw.GC_24.model.values.Value;
 
+/**
+ * This class generalizes all the different Action classes, and it includes the
+ * methods used by each of them
+ */
 public abstract class Action {
 
 	protected FamilyMember familyMember;
@@ -21,6 +25,14 @@ public abstract class Action {
 	private List<String> placementEverywhereLeaderEffect = new ArrayList<>();
 
 	// constructor
+
+	/**
+	 * This constructor is particular because it contains a condition: if the
+	 * familiar name equals a particular string, this constructor creates a fake
+	 * action to execute in order to use chooseNewCard effect. It also check if the
+	 * permanent effect ChangedServantsValue is active and changes the servants
+	 * value
+	 */
 	public Action(Model game, String familiar, String zone, String floor, String servants) {
 		this.player = game.getCurrentPlayer();
 
@@ -138,12 +150,14 @@ public abstract class Action {
 	 *         warning will be delivered to the player at the end of the action's
 	 *         verifies
 	 */
+
 	public String verifyFamilyMemberAvailability(String answerToPlayer) {
 		if (!this.familyMember.isAvailable()) {
 			return answerToPlayer + "Sorry, this familiar is not available! \n";
 		} else
 			return answerToPlayer;
 	}
+
 
 	/**
 	 * this method verifies if the area in which the player wants to put his family
@@ -155,6 +169,7 @@ public abstract class Action {
 	 *         warning will be delivered to the player at the end of the action's
 	 *         verifies
 	 */
+
 	public String verifyZoneOccupiedByMe(String answerToPlayer) {
 		if (this.zone.isThereSameColour(this.familyMember)) {
 			return answerToPlayer
@@ -184,6 +199,7 @@ public abstract class Action {
 	 *         warning will be delivered to the player at the end of the action's
 	 *         verifies
 	 */
+
 	public String verifyIfEnoughServantsForThisPlace(String answerToPlayer) {
 		int placeCostRequired = this.place.getCostDice();
 		if (placeCostRequired > (this.familyMember.getMemberValue() + this.servants)) {
@@ -192,7 +208,7 @@ public abstract class Action {
 		return answerToPlayer;
 	}
 
-	// shared run methods
+
 
 	/**
 	 * This method put a familiar on a place and set to false the availability of
@@ -209,6 +225,7 @@ public abstract class Action {
 		familyMember.setAvailable(false);
 	}
 
+
 	/**
 	 * this method assign to the player the cost of the servants he needs to pay
 	 * 
@@ -222,6 +239,7 @@ public abstract class Action {
 	 * this method assigns to the player the bonus he gets from putting their family
 	 * member on the place
 	 */
+
 	public void takeValueFromPlace() {
 		if (place.getValue().getEffectValues() != null) {
 			place.getValue().getEffectValues().addTwoSetsOfValues(player.getMyValues());

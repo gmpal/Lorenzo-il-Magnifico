@@ -7,7 +7,7 @@ import java.util.Timer;
 import it.polimi.ingsw.GC_24.observers.MyObservable;
 import it.polimi.ingsw.GC_24.observers.MyObserver;
 
-public abstract class View extends MyObservable implements MyObserver {
+public abstract class View extends MyObservable {
 	
 	public View (String name ) {
 		this.name = name;
@@ -98,7 +98,7 @@ public abstract class View extends MyObservable implements MyObserver {
 		hm = new HashMap<>();
 		hm.put("player", name);
 		this.notifyMyObservers(hm);
-		System.out.println("Your name has been sent");
+		;
 	}
 	
 	public void parseBoardInformation(String[] boardInformation) {

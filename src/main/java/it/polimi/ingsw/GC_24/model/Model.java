@@ -89,7 +89,7 @@ public class Model extends MyObservable implements Serializable {
 				completeDeck.add(gson.fromJson(line, Excommunication.class));
 			}
 		} catch (IOException e) {
-			System.out.println("There is a problem with the configuration file");
+			;
 		}
 		Random randomExcommunication = new Random();
 		int randomInt;
@@ -103,24 +103,24 @@ public class Model extends MyObservable implements Serializable {
 	public void addPlayer() {
 
 		counter++;
-		System.out.println("Model --> Contatore incrementato");
+		;
 		Player player = new Player(tempName, counter);
 		this.getPlayers().add(player);
-		System.out.println("Model: PLAYER " + player);
-		System.out.println("Model: Player #" + counter + "added to Game #" + getModelNumber());
+		;
+		;
 
 		incrementState();
-		System.out.println("Model --> stato incrementato");
-		System.out.println(getGameState());
-		System.out.println("Model --> model inviato");
+		;
+		;
+		;
 
 		if (getGameState().equals(State.WAITINGFORPLAYERTHREE)) {
-			System.out.println("Model: Timer Starting");
+			;
 			timer = new Timer();
 			timer.schedule(new TimerTask() {
 				@Override
 				public void run() {
-					System.out.println("Model: *TIME UP*");
+					;
 
 					Server.launchAndCreateNewGame();
 				}
@@ -157,7 +157,7 @@ public class Model extends MyObservable implements Serializable {
 
 		createExcommunicationDeck();
 
-		System.out.println(this.excommunicationDeck);
+		;
 
 		// Setting the players
 		for (Player p : players) {
@@ -375,7 +375,7 @@ public class Model extends MyObservable implements Serializable {
 				correspondingValue.add(gson.fromJson(line, SetOfValues.class));
 			}
 		} catch (IOException e) {
-			System.out.println("There is a problem with the configuration file");
+			;
 		}
 	}
 

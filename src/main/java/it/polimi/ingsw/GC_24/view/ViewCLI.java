@@ -287,6 +287,7 @@ public class ViewCLI extends View {
 	}
 
 	public void showTurnSituation() {
+		System.out.println("You are "+name+", number"+playerNumber+" colour "+colour);
 		System.out.println("\nThe players' turn for this round is:\n");
 		for (int i = 0, j = 1; i < playersTurn.size(); i++, j++) {
 			System.out.println(j + ") " + playersTurn.get(i).toString() + "\n");
@@ -569,10 +570,6 @@ public class ViewCLI extends View {
 		System.out.println(message);
 	}
 
-	@Override
-	public <C> void update(C change) {
-		// TODO: staccare la view dal observable
-	}
 
 	@Override
 	public void setRankings(String rankings) {

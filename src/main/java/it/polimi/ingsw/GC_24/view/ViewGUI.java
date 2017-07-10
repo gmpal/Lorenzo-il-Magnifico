@@ -37,11 +37,6 @@ public class ViewGUI extends View {
 		Platform.runLater(() -> mainClass.showGameBoard());
 	}
 
-	@Override
-	public <C> void update(C change) {
-		// TODO Auto-generated method stub
-
-	}
 
 	@Override
 	public void show(String message) {
@@ -67,16 +62,16 @@ public class ViewGUI extends View {
 	
 	@Override
 	public String chooseAlternativeCost(String request) {
-		System.out.println("GUI choosing alternative cost");
+		;
 
 		Platform.runLater(() -> mainClass.chooseAlternativeCost(request));
 
-		System.out.println("Metodo maincLass partito");
+		;
 		synchronized (waitingForParameters) {
 			alternativeCostAnswer = "";
 			while (alternativeCostAnswer.equals("")) {
 				try {
-					System.out.println("In attesa");
+					;
 					waitingForParameters.wait();
 				} catch (InterruptedException e) {
 					e.printStackTrace();

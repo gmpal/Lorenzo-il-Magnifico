@@ -110,7 +110,12 @@ public class ClientRMIView extends MyObservable implements ClientViewRemote, MyO
 	public void updateUrlPersonalBoard(ArrayList<String> urlPersonalBoard) throws RemoteException {
 		view.setUrlPersonalBoard(urlPersonalBoard);
 	}
-
+	@Override
+	public void ping() throws RemoteException {
+		//to see if player is connected
+		
+	}
+	
 	@Override
 	public void updateUrlBoard(ArrayList<String> urlBoard) throws RemoteException {
 		view.setUrlBoard(urlBoard);
@@ -170,6 +175,8 @@ public class ClientRMIView extends MyObservable implements ClientViewRemote, MyO
 			serverStub.sendAnswerVatican(playerRequest);
 		}
 	}
+
+
 
 
 

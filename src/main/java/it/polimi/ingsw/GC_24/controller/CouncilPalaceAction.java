@@ -7,7 +7,7 @@ import it.polimi.ingsw.GC_24.model.Model;
 import it.polimi.ingsw.GC_24.model.board.CouncilPalace;
 import it.polimi.ingsw.GC_24.model.effects.immediate.ImmediateEffect;
 import it.polimi.ingsw.GC_24.model.places.CouncilPlace;
-
+/**This class represents the particular action referred to the council palace*/
 public class CouncilPalaceAction extends Action {
 	private List<ImmediateEffect> immediateEffects = new ArrayList<>();
 	private CouncilPlace councilPlace;
