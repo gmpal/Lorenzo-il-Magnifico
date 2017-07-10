@@ -149,7 +149,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 							}
 						}
 					}
-					sendUrlPersonalBoard(game.getCurrentPlayer().getMyBoard().urlPersonalBoard());
+					//sendUrlPersonalBoard(game.getCurrentPlayer().getMyBoard().urlPersonalBoard());
 					t1.cancel();
 
 					/* Repeats until the players are finished */
@@ -892,12 +892,13 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		List<ImmediateEffect> interactiveEffects = action.run();
 		this.handleInteractiveEffects(interactiveEffects);
 		System.out.println("Controller --> Conclusa gestione dei costi interattivi ");
+		sendUrlPersonalBoard(game.getCurrentPlayer().getMyBoard().urlPersonalBoard());
+
 		checkForExcommunication();
 		notifyToProceedWithTurns();
 
 		sendBoardInformation();
 		sendPersonalInformationToEveryOne();
-		sendUrlPersonalBoard(game.getCurrentPlayer().getMyBoard().urlPersonalBoard());
 		sendUrlColor(game.getBoard().urlPlayerColour());
 		awakenSleepingClient();
 		System.out.println("Controller --> Richiesta di risveglio inviata");
@@ -1179,7 +1180,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		if (cardRequested != null) {
 			SetOfValues cost1 = cardRequested.getCost();
 			SetOfValues cost2 = cardRequested.getAlternativeCost();
-			if (cost1 != null && cost2 != null) {
+			if (!cost1.isEmpty() && cost2 != null) {
 				System.out.println("Controller --> C'è un doppio costo, invio l'interazione ");
 				MilitaryPoint requirements = cardRequested.getRequiredMilitaryPoints();
 				String request = "Cost1: " + cost1.toString() + "\nCost2: " + cost2.toString() + "\nRequest for cost2 :"
@@ -1214,6 +1215,8 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				System.out.println("Controller --> L'utente ha scelto, mi sono risvegliato ");
 				System.out.println("Controller --> SCELTA DELL UTENTE: " + tempCost);
 
+			} else if (cost1.isEmpty() && cost2 != null) {
+				tempCost = cost2;
 			}
 		}
 		System.out.println("Controller --> Fine gestione carta Venture ");

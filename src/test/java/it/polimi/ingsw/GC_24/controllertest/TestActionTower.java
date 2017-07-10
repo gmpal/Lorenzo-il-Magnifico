@@ -185,7 +185,7 @@ public class TestActionTower {
 		assertEquals(new SetOfValues(), actionTower1.getTemporaryCardCost());
 	}
 
-	@Test
+	/*@Test
 	public void testVerifyMoneyForTowerOccupiedWithCoinZoneOccupiedNoPermanentEffect() {
 		game.getBoard().getTowerTerritories().getPlacesArray().get(2)
 				.setFamMemberOnPlace(p2.getMyFamily().getMember1());
@@ -221,7 +221,7 @@ public class TestActionTower {
 		actionTower.getPlayer().getMyValues().setCoins(new Coin(2));
 		String g = actionTower.verifyMoneyForTowerOccupied("ok");
 		assertEquals("ok", g);
-	}
+	}*/
 
 	@Test
 	public void testVerifyCardResourcesWithoutCard() {
