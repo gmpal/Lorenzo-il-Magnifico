@@ -48,8 +48,6 @@ public class ActionTower extends Action {
 
 		answerToPlayer = verifyZoneOccupiedByMe(answerToPlayer);
 
-	//	answerToPlayer = verifyMoneyForTowerOccupied(answerToPlayer);
-
 		answerToPlayer = verifyTerritorySpaceAvailability(answerToPlayer);
 
 		answerToPlayer = verifyBoardSpaceAvailability(answerToPlayer);
@@ -137,17 +135,7 @@ public class ActionTower extends Action {
 		System.out.println(temporaryCardCost);
 	}
 
-	/**
-	 * This method checks if you have enough money to put the familyMember in a
-	 * tower occupied (3 coins)
-	 */
-	/**public int verifyMoneyForTowerOccupied() {
-		if (player.getPermanentEffect("noCoinsForOccupiedTower") == null && this.zone.isOccupied()
-				&& this.player.getMyValues().getCoins().getQuantity() < 3) {
-			return 3;
-		} else
-			return answerToPlayer;
-	}*/
+
 
 	/**
 	 * It checks if you have the resources for taking the card in the place you're
@@ -177,7 +165,6 @@ public class ActionTower extends Action {
 					temporaryCardCost.getCoins().setQuantity(0);
 				}
 			}
-
 			if ((player.getPermanentEffect("noCoinsForOccupiedTower") == null && this.zone.isOccupied())){
 				temporaryCardCost.getCoins().addQuantity(3);
 			}
