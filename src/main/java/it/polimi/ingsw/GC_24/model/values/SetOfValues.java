@@ -83,7 +83,10 @@ public class SetOfValues implements Serializable {
 
 	/** Returns true if my SetOfValues contains the cost Set */
 	public boolean doIHaveThisSet(SetOfValues cost) {
+		System.out.println("cost to check: "+cost);
 		SetOfValues tempSet = new SetOfValues(this);
+		System.out.println("my resources "+this);
+		System.out.println("difference "+cost.subTwoSetsOfValues(tempSet));
 		return (cost.subTwoSetsOfValues(tempSet)).isAcceptable();
 		// this-cost >=0;
 	}

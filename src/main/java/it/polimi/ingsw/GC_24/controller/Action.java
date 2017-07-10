@@ -171,6 +171,7 @@ public abstract class Action {
 	 */
 	public void placeFamiliar() {
 		if (!placeEveryWhere()) {
+			
 			place.setFamMemberOnPlace(familyMember);
 		} else {
 			placementEverywhereLeaderEffect.add(zoneString + " " + player.getMyColour().toString());
