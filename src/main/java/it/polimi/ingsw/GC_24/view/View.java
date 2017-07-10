@@ -241,4 +241,9 @@ public abstract class View extends MyObservable implements MyObserver {
 	public void setUrlColour(ArrayList<String> urlColour) {
 		//Overridden in viewGUI
 	}
+
+
+	public String getPersonalLeaders() {
+		return personalLeaders;
+	}
 }
