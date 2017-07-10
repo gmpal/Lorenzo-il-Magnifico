@@ -87,7 +87,12 @@ public class Exchange extends ImmediateEffect {
 
 	@Override
 	public List<ImmediateEffect> addAllNewEffectsToThisSet(List<ImmediateEffect> secondaryInteractiveEffects) {
-		secondaryInteractiveEffects.addAll(getImmediateEffectsFromExchange());
+		for (int i = 0; i < getImmediateEffectsFromExchange().size(); i++) {
+			ImmediateEffect im = getImmediateEffectsFromExchange().get(i);
+			if (im != null) {
+				secondaryInteractiveEffects.add(im);
+			}
+		}
 		return secondaryInteractiveEffects;
 	}
 
