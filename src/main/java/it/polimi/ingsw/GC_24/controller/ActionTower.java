@@ -15,7 +15,7 @@ import it.polimi.ingsw.GC_24.model.values.*;
 
 public class ActionTower extends Action {
 	private List<ImmediateEffect> immediateEffects = new ArrayList<>();
-	private SetOfValues temporaryCardCost;
+	private SetOfValues temporaryCardCost= new SetOfValues();
 	private TowerPlace towerPlace;
 	private SetOfValues setOfSales = new SetOfValues();
 	private int valueOfFakeFamiliar;
@@ -31,7 +31,11 @@ public class ActionTower extends Action {
 		super(game, familiar, zone, floor, servants);
 		this.towerPlace = (TowerPlace) this.place;
 		this.temporaryCardCost = cost;
-		this.setOfSales = setOfSale;
+		if (setOfSale == null) {
+			this.setOfSales = new SetOfValues();
+		}else {
+			this.setOfSales = setOfSale;
+		}
 	}
 
 	@Override
@@ -82,17 +86,15 @@ public class ActionTower extends Action {
 	@Override
 	public List<ImmediateEffect> run() {
 		this.takeRealCost();
-//	this.payCoinsforOccupiedTower();
 		this.payValue(new Servant(this.servants));
+	
 		this.placeFamiliar();
-
 		if (!isThereNoValueEffect()) {
 			this.takeValueFromPlace();
 		}
 		this.takeCardAndPay();
 		this.takeEffectsAndRemoveCard();
 		this.giveValueEffect(immediateEffects);
-
 		return immediateEffects;
 	}
 
@@ -111,13 +113,6 @@ public class ActionTower extends Action {
 		return false;
 	}
 
-/*	public void payCoinsforOccupiedTower() {
-		if (player.getPermanentEffect("noCoinsForOccupiedTower") == null) {
-			if (zone.isOccupied())
-				this.payValue(new Coin(3));
-		}
-	}*/
-
 	public void takeEffectsAndRemoveCard() {
 		ImmediateEffect im = towerPlace.getCorrespondingCard().getImmediateEffect();
 		ImmediateEffect im1 = towerPlace.getCorrespondingCard().getImmediateEffect1();
@@ -131,7 +126,6 @@ public class ActionTower extends Action {
 	}
 
 	public void takeCardAndPay() {
-		// Mine - cost --> Then set
 		setOfSales.subTwoSetsOfValues(temporaryCardCost);
 		this.player.setMyValues(temporaryCardCost.subTwoSetsOfValues(this.player.getMyValues()));
 		if (towerPlace.getCorrespondingCard().getType().equalsIgnoreCase("character")) {
@@ -146,10 +140,8 @@ public class ActionTower extends Action {
 	public void takeRealCost() {
 		if (temporaryCardCost.isEmpty()) {
 			TowerPlace towerPlace = (TowerPlace) this.place;
-			System.out.println(towerPlace.toString());
 			this.temporaryCardCost = setOfSales.subTwoSetsOfValues(towerPlace.getCorrespondingCard().getCost());
 		}
-		System.out.println(temporaryCardCost);
 	}
 
 
@@ -193,13 +185,10 @@ public class ActionTower extends Action {
 				System.out.println("*** noCoinsForOccupiedTower");
 				temporaryCardCost.getCoins().addQuantity(3);
 			}
-			
 			if (!player.getMyValues().doIHaveThisSet(temporaryCardCost)) {
 				System.out.println("*** Io non ho il temporaryCardCost "+temporaryCardCost);
 				return answerToPlayer + "You don't have enough resources to take this card! Choose another card \n";
-			}
-			
-			
+			}			
 		}
 		return answerToPlayer;
 	}
@@ -285,14 +274,21 @@ public class ActionTower extends Action {
 	 * @return increment die value.
 	 */
 	public int getIncrementDieValueFromPermanentEffect() {
+		System.out.println("ENTRATO IN INCREMENT DIE VALUE FROM PERMANENT EFFECT");
 		int incrementDieValueFromPermanentEffect = 0;
 		List<PermanentEffect> peList = player.getPermanentEffectList("increaseDieValueCard");
+		System.out.println("peList --> lista dei permanent effectsdi questo tipo :"+ peList);
 		for (int i = 0; i < peList.size(); i++) {
+			System.out.println("scorrendo gli effetti");
 			IncreaseDieValueCard pe = (IncreaseDieValueCard) peList.get(i);
+			System.out.println("pe in questo momento "+pe);
 			if ((pe.getPersonalCards() != null && (pe.getPersonalCards().getType().equalsIgnoreCase(zoneString)))||pe.getPersonalCards()==null) {
 				incrementDieValueFromPermanentEffect += pe.getIncreaseDieValue();
-				if (pe.getAlternativeSale() == null) {
+				System.out.println("QUESTO E' incrementDieValueFromPermanentEffect" + Integer.toString(incrementDieValueFromPermanentEffect));
+				if (pe.getSale()!= null && pe.getAlternativeSale() == null) {
+					System.out.println("ALTERNATIVE SALE E' NULL");
 					setOfSales = pe.getSale();
+					System.out.println("ECCO IL NUOVO SETOFSALES--> "+setOfSales);
 				}
 			}
 		}

@@ -159,6 +159,8 @@ public class MainClass extends Application {
 			tokenizer.nextToken();
 			this.myWoods.setValue(tokenizer.nextToken());
 
+		} else {
+			this.myWoods.setValue("0");
 		}
 		if (values.contains("stones")) {
 			while (!token.equals("stones")) {
@@ -167,6 +169,8 @@ public class MainClass extends Application {
 			tokenizer.nextToken();
 			this.myStones.setValue(tokenizer.nextToken());
 
+		} else {
+			this.myStones.setValue("0");
 		}
 		if (values.contains("coins")) {
 			while (!token.equals("coins")) {
@@ -175,6 +179,8 @@ public class MainClass extends Application {
 			tokenizer.nextToken();
 			this.myCoins.setValue(tokenizer.nextToken());
 
+		}else {
+			this.myCoins.setValue("0");
 		}
 		if (values.contains("servants")) {
 			while (!token.equals("servants")) {
@@ -183,6 +189,8 @@ public class MainClass extends Application {
 			tokenizer.nextToken();
 			this.myServants.setValue(tokenizer.nextToken());
 
+		}else {
+			this.myServants.setValue("0");
 		}
 	}
 
@@ -599,13 +607,15 @@ public class MainClass extends Application {
 		ChoiceDialog<String> dialog = new ChoiceDialog<>("0", choices);
 		dialog.setTitle("Number of servants you want to use ");
 		dialog.setContentText("Choose your number of servants:");
-
+		
 		// Traditional way to get the response value.
 		Optional<String> result = dialog.showAndWait();
 		if (result.isPresent()){
 			servants =  result.get();
+		}else {
+			servants = "null";
 		}
-		
+				
 		answer = answer + " " + servants;
 		return answer;
 	}

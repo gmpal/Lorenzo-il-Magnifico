@@ -17,7 +17,7 @@ public class Exchange extends ImmediateEffect {
 	 * 
 	 */
 	private static final long serialVersionUID = 5137569904363140061L;
-	private List<ImmediateEffect> immediateEffectsFromExchange = new ArrayList<>();
+	private List<ImmediateEffect> immediateEffectsFromExchange;
 	private ExchangePackage exchangePackage;
 	private ExchangePackage exchangePackage1;
 	private ExchangePackage finalExchange;
@@ -31,14 +31,16 @@ public class Exchange extends ImmediateEffect {
 
 	@Override
 	public void giveImmediateEffect(Player player) {
+		immediateEffectsFromExchange=new ArrayList<>();
 		System.out.println("Taking the effects");
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@"+finalExchange+"\n@@@@@@@@@@@@@@@@@@@@@");
 		ImmediateEffect im = finalExchange.getImmediateEffect();
 		finalExchange.getSet().subTwoSetsOfValues(player.getMyValues());
 		System.out.println("Subtracting the sets... : new set");
 		System.out.println(player.getMyValues());
 		if (im instanceof ValueEffect) {
 			((ValueEffect) im).giveImmediateEffect(player);
-		} else {
+		} else if(im!=null){
 			immediateEffectsFromExchange.add(im);
 		}
 	}
@@ -87,7 +89,12 @@ public class Exchange extends ImmediateEffect {
 
 	@Override
 	public List<ImmediateEffect> addAllNewEffectsToThisSet(List<ImmediateEffect> secondaryInteractiveEffects) {
-		secondaryInteractiveEffects.addAll(getImmediateEffectsFromExchange());
+		for (int i = 0; i < getImmediateEffectsFromExchange().size(); i++) {
+			ImmediateEffect im = getImmediateEffectsFromExchange().get(i);
+			if (im != null) {
+				secondaryInteractiveEffects.add(im);
+			}
+		}
 		return secondaryInteractiveEffects;
 	}
 
