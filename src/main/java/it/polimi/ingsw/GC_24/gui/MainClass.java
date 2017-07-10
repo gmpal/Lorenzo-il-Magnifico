@@ -19,6 +19,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.ScrollPane;
@@ -533,7 +534,9 @@ public class MainClass extends Application {
 		ButtonType buttonTypeTwo = new ButtonType("2");
 		ButtonType buttonTypeThree = new ButtonType("3");
 		ButtonType buttonTypeFour = new ButtonType("4");
-		//ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+		
+		
+		ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
 
 		alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo,buttonTypeThree,buttonTypeFour);
 		
@@ -547,8 +550,8 @@ public class MainClass extends Application {
 			floor = "3";
 		} else if (result.get() == buttonTypeFour) {
 			floor = "4";
-		} else {
-		   //nothing
+		}else {
+			floor = "null";
 		}
 		
 		answer = answer + " " + floor;

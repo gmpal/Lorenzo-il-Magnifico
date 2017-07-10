@@ -1,10 +1,14 @@
 package it.polimi.ingsw.GC_24.gui;
 
+import java.io.File;
+
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,6 +22,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -516,7 +521,7 @@ public class GameBoardController implements Initializable {
 		}
 	}
 
-	public void leaderMenu(ActionEvent rightClick) {
+	public void leaderMenu(ActionEvent rightClick) throws MalformedURLException {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Leader Card Options");
 		alert.setHeaderText("What do you want to do with your leader card? :");
