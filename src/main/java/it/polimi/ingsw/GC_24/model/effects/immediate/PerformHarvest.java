@@ -5,6 +5,11 @@ import java.util.*;
 import it.polimi.ingsw.GC_24.model.Player;
 import it.polimi.ingsw.GC_24.model.cards.*;
 
+/**
+ * this type of effect lets the player perform a harvest without
+ * placing a family member, setting a starting value that can be increased with
+ * servants
+ */
 public class PerformHarvest extends PerformActivity {
 
 	/**

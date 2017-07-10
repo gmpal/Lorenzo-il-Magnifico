@@ -8,6 +8,11 @@ import com.google.gson.Gson;
 import it.polimi.ingsw.GC_24.devCardJsonFile.GsonBuilders;
 import it.polimi.ingsw.GC_24.model.values.SetOfValues;
 
+/**
+ * This class represent the bonus tile that have the resources given to players
+ * when they do harvest or production before to give the effect of territory
+ * cards or building cards, it is taken from the configuration file.
+ */
 public class BonusTile implements java.io.Serializable {
 
 	/**

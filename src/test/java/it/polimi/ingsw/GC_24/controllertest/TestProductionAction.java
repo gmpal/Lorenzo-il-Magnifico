@@ -47,13 +47,13 @@ public class TestProductionAction {
 		action = new ProductionAction(game, "2", "production", "1", "0");
 		action2 = new ProductionAction(game, "1", "production", "1", "2");
 	}
-	
+
 	@Test
 	public void testVerify() {
 		assertEquals("ok", action2.verify());
 	}
-	
-	@Test 
+
+	@Test
 	public void testVerifyWrong() {
 		player.getMyValues().getServants().setQuantity(1);
 		player.getMyFamily().getMember1().setMemberValue(0);
@@ -62,11 +62,11 @@ public class TestProductionAction {
 		assertEquals("Answer: \nYou don't have enough servants to use! \n"
 				+ "Sorry, this familiar is not available! \nSorry, place not available!\n", action2.verify());
 	}
-	
+
 	@Test
 	public void testGetFinalActionValue() {
 		action.getFinalActionValue();
 		int finalValue = action.getFamilyMember().getMemberValue() + 4;
-		assertEquals(finalValue,action.getFinalValue());
+		assertEquals(finalValue, action.getFinalValue());
 	}
 }

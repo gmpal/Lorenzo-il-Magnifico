@@ -2,6 +2,11 @@ package it.polimi.ingsw.GC_24.model.cards;
 
 import it.polimi.ingsw.GC_24.model.values.SetOfValues;
 
+/**
+ * This class represent the requirements used on the leader cards. They can be a
+ * number of card of a particular type or simply a set of resources
+ * (SetOfValues).
+ */
 public class Requirements implements java.io.Serializable {
 
 	/**

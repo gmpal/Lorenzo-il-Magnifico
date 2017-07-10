@@ -26,7 +26,7 @@ public class Timers {
 	 *            fileName
 	 * @return int time
 	 */
-	public static int takeTimer(String fileName) {
+	public int takeTimer(String fileName) {
 		BufferedReader br;
 		int time = 0;
 		String line;

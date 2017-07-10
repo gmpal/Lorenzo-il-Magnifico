@@ -31,6 +31,7 @@ public class TestActionTower {
 	Characters c1, c2;
 	Ventures v1;
 	Buildings b1;
+	SetOfValues set6;
 
 	@Before
 	public void setUp() {
@@ -58,7 +59,7 @@ public class TestActionTower {
 		c1 = new Characters("character", null, "character", set1, null,
 				new IncreaseDieValueCard("increase", null, 2, set3, new SetOfValues()), null, 1);
 		c2 = new Characters("character", null, "character", set1, null, null, null, 1);
-		v1 = new Ventures("ciao", null, "venture", null, null, new VictoryPoint(3), new MilitaryPoint(0), null, null, 1);
+		v1 = new Ventures("ciao", null, "venture", new SetOfValues(), null, new VictoryPoint(3), new MilitaryPoint(0), null, null, 1);
 		b1 = new Buildings("building", null, 1, "building", new SetOfValues(), null, null, null, null, 1);
 
 		towerPlace1.setCorrespondingCard(t1);
@@ -80,13 +81,20 @@ public class TestActionTower {
 		set2 = new SetOfValues();
 		set4 = new SetOfValues();
 		set5 = new SetOfValues();
+		set6 = new SetOfValues();
 
 		set3.setMilitaryPoints(new MilitaryPoint(3));
 		set2.setMilitaryPoints(new MilitaryPoint(4));
 		set2.setCoins(new Coin(5));
 		set4.setCoins(new Coin(4));
 		set5.setCoins(new Coin(6));
+		set6.setCoins(new Coin(20));
+		set6.setWoods(new Wood(20));
+		set6.setStones(new Stone(20));
+		set6.setServants(new Servant(20));
+		set6.setMilitaryPoints(new MilitaryPoint(20));
 
+		
 		actionTower = new ActionTower(game, "1", "territories", "1", "0", new SetOfValues(), new SetOfValues());
 		actionTower1 = new ActionTower(game, "2", "territories", "1", "0", new SetOfValues(), new SetOfValues());
 		actionTower2 = new ActionTower(game, "1", "territories", "1", "0", set2, set3);
@@ -184,6 +192,7 @@ public class TestActionTower {
 	@Test
 	public void testVerifyCardResourcesWithCardWithResources() {
 		actionTower3.getPlayer().getMyValues().setMilitaryPoints(new MilitaryPoint(5));
+		actionTower3.getPlayer().setMyValues(set6);
 		String s = actionTower3.verifyCardResources("ok");
 		assertEquals("ok", s);
 	}
@@ -217,7 +226,7 @@ public class TestActionTower {
 		actionTower5.getPlayer().getActivePermanentEffects().add(new SubSetOfValues("discountCoinsCard", set5));
 		actionTower5.getPlayer().getMyValues().setMilitaryPoints(new MilitaryPoint(5));
 		String s = actionTower5.verifyCardResources("ok");
-		assertEquals("ok", s);
+		assertEquals(actionTower3.getTemporaryCardCost().getCoins().getQuantity(), 0);
 	}
 
 	/**
