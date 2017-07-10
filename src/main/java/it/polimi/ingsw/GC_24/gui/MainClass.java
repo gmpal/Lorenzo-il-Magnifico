@@ -275,8 +275,26 @@ public class MainClass extends Application {
 		}
 	}
 
-	private void setBindings(GameBoardController gameBoardController) {
+	private void setBindings(GameBoardController gameBoardController) throws MalformedURLException {
 		System.out.println(turnList);
+		System.out.println(view.getPlayerNumber());
+		if (view.getPlayerNumber() == 1) {
+			System.out.println("Tile giocatore 1");
+			gameBoardController.getBonusTile().setImage(new Image ((new File("src/main/java/it/polimi/ingsw/GC_24/img/bonustiles/Immagine1.png")).toURI().toURL().toString()));
+		}
+		if (view.getPlayerNumber() == 2) {
+			System.out.println("Tile giocatore 2");
+			gameBoardController.getBonusTile().setImage(new Image ((new File("src/main/java/it/polimi/ingsw/GC_24/img/bonustiles/Immagine2.png")).toURI().toURL().toString()));
+		}
+		if (view.getPlayerNumber() == 3) {
+			System.out.println("Tile giocatore 3");
+			gameBoardController.getBonusTile().setImage(new Image ((new File("src/main/java/it/polimi/ingsw/GC_24/img/bonustiles/Immagine3.png")).toURI().toURL().toString()));
+		}
+		if (view.getPlayerNumber() == 4) {
+			System.out.println("Tile giocatore 4");
+			gameBoardController.getBonusTile().setImage(new Image ((new File("src/main/java/it/polimi/ingsw/GC_24/img/bonustiles/Immagine4.png")).toURI().toURL().toString()));
+		}
+		
 		// Setting the bindings for players labels
 		gameBoardController.getPlayer1label().textProperty().bind(turnList.get(0));
 		gameBoardController.getPlayer2label().textProperty().bind(turnList.get(1));

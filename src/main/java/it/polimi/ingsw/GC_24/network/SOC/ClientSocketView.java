@@ -83,7 +83,6 @@ public class ClientSocketView extends MyObservable implements Runnable, MyObserv
 		if (command.contains("currentPlayerName")) {
 			System.out.println("CSV --> Ricevuto qualcosa per un singolo giocatore");
 			String currentPlayerName = (String) request.get("currentPlayerName");
-			// TODO:alternativa al cast
 			if (currentPlayerName.equals(view.getName())) {
 
 				if (command.contains("exchangeParamRequest")) {
@@ -142,9 +141,11 @@ public class ClientSocketView extends MyObservable implements Runnable, MyObserv
 				}
 				
 				if (command.contains("personalInformation")) {
+					System.out.println("HO RICEVUTO LE INFORMATION PERSONALI");
 					view.parsePersonalInformations((String[]) request.get("personalInformation"));
+					System.out.println("HO FINITO DI PARSARE LE INFORMAZIONI PERSONALI");
 				}
-			}
+			}	
 		}
 		if (command.contains("boardInformation")) {
 			System.out.println("CSV ---> Ricevute information board");
@@ -218,7 +219,7 @@ public class ClientSocketView extends MyObservable implements Runnable, MyObserv
 			System.out.println("CSV ---> Ricevuto numero client");
 			System.out.println(request);
 			int playerNumber = (int) request.get("clientNumber");
-			System.out.println(playerNumber);
+			view.setPlayerNumber(playerNumber);
 			int modelNumber = (int) request.get("modelNumber");
 		}
 

@@ -244,7 +244,7 @@ public class Model extends MyObservable implements Serializable {
 	 * the client --> it only uses strings to avoid casting from client issues
 	 */
 	public String[] preparePersonalInformation(Player p) {
-		String[] personalInformation = new String[10];
+		String[] personalInformation = new String[11];
 		personalInformation[0] = p.getMyBoard().getPersonalTerritories().toString();
 		personalInformation[1] = p.getMyBoard().getPersonalBuildings().toString();
 		personalInformation[2] = p.getMyBoard().getPersonalCharacters().toString();
@@ -255,6 +255,7 @@ public class Model extends MyObservable implements Serializable {
 		personalInformation[7] = p.getMyColour().toString();
 		personalInformation[8] = p.getActivePermanentEffects().toString();
 		personalInformation[9] = p.getLeaderOneTimePerTurn().toString();
+		personalInformation[10] = Integer.toString(p.getPlayerNumber());
 		return personalInformation;
 
 	}

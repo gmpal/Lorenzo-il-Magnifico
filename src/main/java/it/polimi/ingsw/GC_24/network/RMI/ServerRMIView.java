@@ -43,8 +43,8 @@ public class ServerRMIView extends MyObservable implements ServerViewRemote, MyO
 			this.handleRequestFromServer(request);
 
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("PLAYER DISCONNESSO");
+			//e.printStackTrace();
 		}
 
 	}
@@ -117,7 +117,12 @@ public class ServerRMIView extends MyObservable implements ServerViewRemote, MyO
 						sendAlternativeSale(alternativeSale);
 					}
 
-				
+					if (command.contains("urlPersonalBoard")) {
+						System.out.println("CSV ---> Ricevuta urlPersonalBoard");
+						ArrayList<String> urlPersonalBoard = (ArrayList<String>) request.get("urlPersonalBoard");
+						clientstub.updateUrlPersonalBoard(urlPersonalBoard);
+					}
+
 				}
 
 			}
