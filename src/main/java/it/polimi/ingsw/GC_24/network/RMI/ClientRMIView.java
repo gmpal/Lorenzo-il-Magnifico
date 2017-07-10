@@ -20,21 +20,21 @@ public class ClientRMIView extends MyObservable implements ClientViewRemote, MyO
 
 	@Override
 	public void show(String message) throws RemoteException {
-		System.out.println("RMI Client View -->");
+		
 		view.show(message);
 
 	}
 
 	@Override
 	public void signalCompletedAction() throws RemoteException {
-		System.out.println("RMI Client View --> signalCompletedAction ");
+		
 		view.communicateActionDone();
 
 	}
 
 	@Override
 	public void startPlaying() throws RemoteException {
-		System.out.println("RMI Client View --> startPlaying ");
+		
 		new Thread(new Runnable() {
 			public void run() {
 				view.play();
@@ -44,54 +44,47 @@ public class ClientRMIView extends MyObservable implements ClientViewRemote, MyO
 
 	@Override
 	public void updateTurn(ArrayList<String> turn) throws RemoteException {
-		System.out.println("RMI Client View --> updateTurn ");
+		
 		view.updateTurn(turn);
 	}
 
 	@Override
 	public void updateCurrentPlayerAndSetMyTurn(String currentPlayer) throws RemoteException {
-		System.out.println("RMI Client View --> updateCurrentPlayerAndSetMyTurn");
 		view.setMyTurn(currentPlayer);
 	}
 
 	@Override
 	public String chooseAlternativeCost(String request) throws RemoteException {
-		System.out.println("RMI Client View --> ChooseAlternativeCost ");
 		String response = view.chooseAlternativeCost(request);
 		return response;
 	}
 
 	@Override
 	public String chooseAlternativeSale(String increase) throws RemoteException {
-		System.out.println("RMI Client View --> ChooseAlternativeSale ");
 		String response = view.chooseSale(increase);
 		return response;
 	}
 
 	@Override
 	public String askForCouncilPrivilege(String request) {
-		System.out.println("RMI Client View --> askForCouncilPrivilege ");
 		String response = view.askForCouncilPrivilege(request);
 		return response;
 	}
 
 	@Override
 	public String askForExchange(String request) {
-		System.out.println("RMI Client View --> askForExchange ");
 		String response = view.askForExchange(request);
 		return response;
 	}
 
 	@Override
 	public String askForServantsForHarvestOrProduction(String request) {
-		System.out.println("RMI Client View --> askForServantsForHarvestOrProduction ");
 		String response = view.askForServantsForHarvestOrProduction(request);
 		return response;
 	}
 
 	@Override
 	public String askForChooseNewCard(String request) {
-		System.out.println("RMI Client View --> askForChooseNewCard ");
 		String response = view.askForChooseNewCard(request);
 		return response;
 	}
@@ -104,14 +97,12 @@ public class ClientRMIView extends MyObservable implements ClientViewRemote, MyO
 
 	@Override
 	public void parseBoardInformations(String[] boardInformations) throws RemoteException {
-		System.out.println("RMI Client View --> parseBoardInformations ");
 		view.parseBoardInformation(boardInformations);
 
 	}
 
 	@Override
 	public void parsePersonalInformations(String[] personalInformations) throws RemoteException {
-		System.out.println("RMI Client View --> parsePersonalInformations ");
 		view.parsePersonalInformations(personalInformations);
 	}
 

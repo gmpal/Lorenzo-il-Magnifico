@@ -37,12 +37,12 @@
                                     <ImageView fx:id="personalVentures04" fitHeight="139.0" fitWidth="95.0" layoutX="340.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
                                     <ImageView fx:id="personalVentures05" fitHeight="139.0" fitWidth="95.0" layoutX="444.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
                                     <ImageView fx:id="personalVentures06" fitHeight="139.0" fitWidth="95.0" layoutX="551.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
-                                    <ImageView fx:id="personalBuildings01" fitHeight="139.0" fitWidth="95.0" layoutX="17.0" layoutY="160.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
-                                    <ImageView fx:id="personalBuildings02" fitHeight="139.0" fitWidth="95.0" layoutX="122.0" layoutY="160.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
-                                    <ImageView fx:id="personalBuildings03" fitHeight="139.0" fitWidth="95.0" layoutX="232.0" layoutY="160.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
-                                    <ImageView fx:id="personalBuildings04" fitHeight="139.0" fitWidth="95.0" layoutX="337.0" layoutY="160.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
-                                    <ImageView fx:id="personalBuildings05" fitHeight="139.0" fitWidth="95.0" layoutX="441.0" layoutY="160.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
-                                    <ImageView fx:id="personalBuildings06" fitHeight="139.0" fitWidth="95.0" layoutX="548.0" layoutY="160.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                                    <ImageView fx:id="personalCharacters01" fitHeight="139.0" fitWidth="95.0" layoutX="17.0" layoutY="160.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                                    <ImageView fx:id="personalCharacters02" fitHeight="139.0" fitWidth="95.0" layoutX="122.0" layoutY="160.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                                    <ImageView fx:id="personalCharacters03" fitHeight="139.0" fitWidth="95.0" layoutX="232.0" layoutY="160.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                                    <ImageView fx:id="personalCharacters04" fitHeight="139.0" fitWidth="95.0" layoutX="337.0" layoutY="160.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                                    <ImageView fx:id="personalCharacters05" fitHeight="139.0" fitWidth="95.0" layoutX="441.0" layoutY="160.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                                    <ImageView fx:id="personalCharacters06" fitHeight="139.0" fitWidth="95.0" layoutX="548.0" layoutY="160.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
                                  </children>
                               </AnchorPane>
                               <AnchorPane id="personalBoard" prefHeight="450.0" prefWidth="660.0" stylesheets="@../img/pane.css" VBox.vgrow="NEVER">
@@ -67,12 +67,12 @@
                                           <Font name="System Bold" size="25.0" />
                                        </font>
                                     </Label>
-                                    <ImageView fx:id="personalCharacters01" fitHeight="139.0" fitWidth="95.0" layoutX="13.0" layoutY="18.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
-                                    <ImageView fx:id="personalCharacters02" fitHeight="139.0" fitWidth="95.0" layoutX="118.0" layoutY="18.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
-                                    <ImageView fx:id="personalCharacters03" fitHeight="139.0" fitWidth="95.0" layoutX="228.0" layoutY="18.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
-                                    <ImageView fx:id="personalCharacters04" fitHeight="139.0" fitWidth="95.0" layoutX="351.0" layoutY="18.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
-                                    <ImageView fx:id="personalCharacters05" fitHeight="139.0" fitWidth="95.0" layoutX="453.0" layoutY="18.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
-                                    <ImageView fx:id="personalCharacters06" fitHeight="139.0" fitWidth="95.0" layoutX="551.0" layoutY="18.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                                    <ImageView fx:id="personalBuildings01" fitHeight="139.0" fitWidth="95.0" layoutX="13.0" layoutY="18.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                                    <ImageView fx:id="personalBuildings02" fitHeight="139.0" fitWidth="95.0" layoutX="118.0" layoutY="18.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                                    <ImageView fx:id="personalBuildings03" fitHeight="139.0" fitWidth="95.0" layoutX="228.0" layoutY="18.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                                    <ImageView fx:id="personalBuildings04" fitHeight="139.0" fitWidth="95.0" layoutX="351.0" layoutY="18.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                                    <ImageView fx:id="personalBuildings05" fitHeight="139.0" fitWidth="95.0" layoutX="453.0" layoutY="18.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
+                                    <ImageView fx:id="personalBuildings06" fitHeight="139.0" fitWidth="95.0" layoutX="551.0" layoutY="18.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
                                     <ImageView fx:id="personalTerritories01" fitHeight="139.0" fitWidth="95.0" layoutX="17.0" layoutY="210.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
                                     <ImageView fx:id="personalTerritories02" fitHeight="139.0" fitWidth="95.0" layoutX="122.0" layoutY="210.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
                                     <ImageView fx:id="personalTerritories03" fitHeight="139.0" fitWidth="95.0" layoutX="232.0" layoutY="210.0" onMouseClicked="#cardZooming" pickOnBounds="true" preserveRatio="true" />
@@ -379,6 +379,11 @@
                               </AnchorPane>
                            </content>
                         </ScrollPane>
+                        <ImageView fx:id="bonusTile" fitHeight="364.0" fitWidth="80.0" layoutX="1056.0" layoutY="358.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/bonustiles/personalbonustile_1.png" />
+                           </image>
+                        </ImageView>
                      </children>
                   </AnchorPane>
                </content>

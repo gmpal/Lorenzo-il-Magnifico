@@ -1,7 +1,5 @@
 package it.polimi.ingsw.GC_24.gui;
 
-import java.io.File;
-
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -9,20 +7,16 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -260,6 +254,11 @@ public class GameBoardController implements Initializable {
 	private ImageView whiteDie = new ImageView();
 	@FXML
 	private ImageView orangeDie = new ImageView();
+	
+	@FXML
+	private ImageView bonusTile = new ImageView();
+	
+	
 
 	@FXML
 	private Button leaderButton01 = new Button();
@@ -341,12 +340,12 @@ public class GameBoardController implements Initializable {
 		allTheImages.add(characters02);
 		allTheImages.add(characters03);
 		allTheImages.add(characters04);
-
+		
 		allTheImages.add(buildings01);
 		allTheImages.add(buildings02);
 		allTheImages.add(buildings03);
 		allTheImages.add(buildings04);
-
+		
 		allTheImages.add(ventures01);
 		allTheImages.add(ventures02);
 		allTheImages.add(ventures03);
@@ -522,6 +521,7 @@ public class GameBoardController implements Initializable {
 	}
 
 	public void leaderMenu(ActionEvent rightClick) throws MalformedURLException {
+		if (mainClass.getView().isMyTurn()) {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Leader Card Options");
 		alert.setHeaderText("What do you want to do with your leader card? :");
@@ -564,6 +564,9 @@ public class GameBoardController implements Initializable {
 			}
 		} else {
 			// nothing
+		}
+		}else {
+			mainClass.showMessage("It's not your turn, you can't do this action.");
 		}
 	}
 
@@ -663,6 +666,14 @@ public class GameBoardController implements Initializable {
 
 	public void setPersonalImages(ArrayList<ImageView> personalImages) {
 		this.personalImages = personalImages;
+	}
+
+	public ImageView getBonusTile() {
+		return bonusTile;
+	}
+
+	public void setBonusTile(ImageView bonusTile) {
+		this.bonusTile = bonusTile;
 	}
 
 }
