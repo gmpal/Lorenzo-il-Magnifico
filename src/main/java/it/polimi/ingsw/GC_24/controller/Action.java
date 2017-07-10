@@ -128,6 +128,16 @@ public abstract class Action {
 
 	}
 
+	/**
+	 * this method checks if the family member the player selected to perform this
+	 * action is still available or it it has already been used
+	 * 
+	 * @param answerToPlayer
+	 * @return a string with the answer to the player, if the the check is positive,
+	 *         then the string is the same as the parameter, otherwise a string of
+	 *         warning will be delivered to the player at the end of the action's
+	 *         verifies
+	 */
 	public String verifyFamilyMemberAvailability(String answerToPlayer) {
 		if (!this.familyMember.isAvailable()) {
 			return answerToPlayer + "Sorry, this familiar is not available! \n";
@@ -135,6 +145,16 @@ public abstract class Action {
 			return answerToPlayer;
 	}
 
+	/**
+	 * this method verifies if the area in which the player wants to put his family
+	 * member is already occupied by one, without counting the neutral family member
+	 * 
+	 * @param answerToPlayer
+	 * @return a string with the answer to the player, if the the check is positive,
+	 *         then the string is the same as the parameter, otherwise a string of
+	 *         warning will be delivered to the player at the end of the action's
+	 *         verifies
+	 */
 	public String verifyZoneOccupiedByMe(String answerToPlayer) {
 		if (this.zone.isThereSameColour(this.familyMember)) {
 			return answerToPlayer
@@ -154,6 +174,16 @@ public abstract class Action {
 		return answerToPlayer;
 	}
 
+	/**
+	 * this method verifies if the player has enough servants to put their family
+	 * member in the place he wants
+	 * 
+	 * @param answerToPlayer
+	 * @return a string with the answer to the player, if the the check is positive,
+	 *         then the string is the same as the parameter, otherwise a string of
+	 *         warning will be delivered to the player at the end of the action's
+	 *         verifies
+	 */
 	public String verifyIfEnoughServantsForThisPlace(String answerToPlayer) {
 		int placeCostRequired = this.place.getCostDice();
 		if (placeCostRequired > (this.familyMember.getMemberValue() + this.servants)) {
@@ -171,7 +201,7 @@ public abstract class Action {
 	 */
 	public void placeFamiliar() {
 		if (!placeEveryWhere()) {
-			
+
 			place.setFamMemberOnPlace(familyMember);
 		} else {
 			placementEverywhereLeaderEffect.add(zoneString + " " + player.getMyColour().toString());
@@ -179,10 +209,19 @@ public abstract class Action {
 		familyMember.setAvailable(false);
 	}
 
+	/**
+	 * this method assign to the player the cost of the servants he needs to pay
+	 * 
+	 * @param value
+	 */
 	public void payValue(Value value) {
 		value.subValuefromSet(player.getMyValues());
 	}
 
+	/**
+	 * this method assigns to the player the bonus he gets from putting their family
+	 * member on the place
+	 */
 	public void takeValueFromPlace() {
 		if (place.getValue().getEffectValues() != null) {
 			place.getValue().getEffectValues().addTwoSetsOfValues(player.getMyValues());

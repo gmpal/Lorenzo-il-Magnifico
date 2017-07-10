@@ -15,7 +15,7 @@ import it.polimi.ingsw.GC_24.model.values.*;
 
 public class ActionTower extends Action {
 	private List<ImmediateEffect> immediateEffects = new ArrayList<>();
-	private SetOfValues temporaryCardCost= new SetOfValues();
+	private SetOfValues temporaryCardCost = new SetOfValues();
 	private TowerPlace towerPlace;
 	private SetOfValues setOfSales = new SetOfValues();
 	private int valueOfFakeFamiliar;
@@ -33,7 +33,7 @@ public class ActionTower extends Action {
 		this.temporaryCardCost = cost;
 		if (setOfSale == null) {
 			this.setOfSales = new SetOfValues();
-		}else {
+		} else {
 			this.setOfSales = setOfSale;
 		}
 	}
@@ -87,7 +87,7 @@ public class ActionTower extends Action {
 	public List<ImmediateEffect> run() {
 		this.takeRealCost();
 		this.payValue(new Servant(this.servants));
-	
+
 		this.placeFamiliar();
 		if (!isThereNoValueEffect()) {
 			this.takeValueFromPlace();
@@ -113,6 +113,10 @@ public class ActionTower extends Action {
 		return false;
 	}
 
+	/**
+	 * this method remove the card from its place on the board and adds the
+	 * immediate effects to an arrayLists
+	 */
 	public void takeEffectsAndRemoveCard() {
 		ImmediateEffect im = towerPlace.getCorrespondingCard().getImmediateEffect();
 		ImmediateEffect im1 = towerPlace.getCorrespondingCard().getImmediateEffect1();
@@ -125,6 +129,9 @@ public class ActionTower extends Action {
 		towerPlace.setCorrespondingCard(null);
 	}
 
+	/**
+	 * this method gives the card to the player and makes them pay
+	 */
 	public void takeCardAndPay() {
 		setOfSales.subTwoSetsOfValues(temporaryCardCost);
 		this.player.setMyValues(temporaryCardCost.subTwoSetsOfValues(this.player.getMyValues()));
@@ -137,6 +144,10 @@ public class ActionTower extends Action {
 		towerPlace.getCorrespondingCard().setCardOnPersonalBoard(player.getMyBoard());
 	}
 
+	/**
+	 * this method calculate the real cost of the card, including the discounts on
+	 * the cost that might be given from the permanent effect of a card
+	 */
 	public void takeRealCost() {
 		if (temporaryCardCost.isEmpty()) {
 			TowerPlace towerPlace = (TowerPlace) this.place;
@@ -144,20 +155,24 @@ public class ActionTower extends Action {
 		}
 	}
 
-
-
 	/**
-	 * It checks if you have the resources for taking the card in the place you're
+	 * * It checks if you have the resources for taking the card in the place you're
 	 * trying to put your Family Member in. It's necessary to distinguish Venture
 	 * cards because of the extra requirements needed. If you satisfy the
 	 * requirement, this methods checks if you have the resources for this card
+	 * 
+	 * @param answerToPlayer
+	 * @return a string with the answer to the player, if the the check is positive,
+	 *         then the string is the same as the parameter, otherwise a string of
+	 *         warning will be delivered to the player at the end of the action's
+	 *         verifies
 	 */
 	public String verifyCardResources(String answerToPlayer) {
 		if (towerPlace.getCorrespondingCard() != null) {
 			System.out.println("***carta non nulla");
-			
+
 			String typeOfCard = towerPlace.getCorrespondingCard().getType();
-			System.out.println("*** carta tipo"+typeOfCard);
+			System.out.println("*** carta tipo" + typeOfCard);
 			if (typeOfCard.equalsIgnoreCase("Venture")) {
 				System.out.println("*** è una ventures");
 				Ventures specificCard = (Ventures) towerPlace.getCorrespondingCard();
@@ -181,18 +196,28 @@ public class ActionTower extends Action {
 					temporaryCardCost.getCoins().setQuantity(0);
 				}
 			}
-			if ((player.getPermanentEffect("noCoinsForOccupiedTower") == null && this.zone.isOccupied())){
+			if ((player.getPermanentEffect("noCoinsForOccupiedTower") == null && this.zone.isOccupied())) {
 				System.out.println("*** noCoinsForOccupiedTower");
 				temporaryCardCost.getCoins().addQuantity(3);
 			}
 			if (!player.getMyValues().doIHaveThisSet(temporaryCardCost)) {
-				System.out.println("*** Io non ho il temporaryCardCost "+temporaryCardCost);
+				System.out.println("*** Io non ho il temporaryCardCost " + temporaryCardCost);
 				return answerToPlayer + "You don't have enough resources to take this card! Choose another card \n";
-			}			
+			}
 		}
 		return answerToPlayer;
 	}
 
+	/**
+	 * this method if the player has enough military points to place their family
+	 * member in the Territories Tower
+	 * 
+	 * @param answerToPlayer
+	 * @return a string with the answer to the player, if the the check is positive,
+	 *         then the string is the same as the parameter, otherwise a string of
+	 *         warning will be delivered to the player at the end of the action's
+	 *         verifies
+	 */
 	public String verifyTerritorySpaceAvailability(String answerToPlayer) {
 
 		TowerPlace tempTowerPlace = (TowerPlace) this.place;
@@ -225,6 +250,16 @@ public class ActionTower extends Action {
 
 	}
 
+	/**
+	 * this method verifies if the player has enough space on their punch board to
+	 * take the card
+	 * 
+	 * @param answerToPlayer
+	 * @return a string with the answer to the player, if the the check is positive,
+	 *         then the string is the same as the parameter, otherwise a string of
+	 *         warning will be delivered to the player at the end of the action's
+	 *         verifies
+	 */
 	public String verifyBoardSpaceAvailability(String answerToPlayer) {
 		TowerPlace tempTowerPlace = (TowerPlace) this.place;
 		if (tempTowerPlace.getCorrespondingCard() != null) {
@@ -253,6 +288,16 @@ public class ActionTower extends Action {
 		return answerToPlayer;
 	}
 
+	/**
+	 * this method verifies if the player has selected enough servants to place the
+	 * family member on the desired place
+	 * 
+	 * @param answerToPlayer
+	 * @return a string with the answer to the player, if the the check is positive,
+	 *         then the string is the same as the parameter, otherwise a string of
+	 *         warning will be delivered to the player at the end of the action's
+	 *         verifies
+	 */
 	@Override
 	public String verifyIfEnoughServantsForThisPlace(String answerToPlayer) {
 		int placeCostRequired = this.place.getCostDice();
@@ -277,18 +322,20 @@ public class ActionTower extends Action {
 		System.out.println("ENTRATO IN INCREMENT DIE VALUE FROM PERMANENT EFFECT");
 		int incrementDieValueFromPermanentEffect = 0;
 		List<PermanentEffect> peList = player.getPermanentEffectList("increaseDieValueCard");
-		System.out.println("peList --> lista dei permanent effectsdi questo tipo :"+ peList);
+		System.out.println("peList --> lista dei permanent effectsdi questo tipo :" + peList);
 		for (int i = 0; i < peList.size(); i++) {
 			System.out.println("scorrendo gli effetti");
 			IncreaseDieValueCard pe = (IncreaseDieValueCard) peList.get(i);
-			System.out.println("pe in questo momento "+pe);
-			if ((pe.getPersonalCards() != null && (pe.getPersonalCards().getType().equalsIgnoreCase(zoneString)))||pe.getPersonalCards()==null) {
+			System.out.println("pe in questo momento " + pe);
+			if ((pe.getPersonalCards() != null && (pe.getPersonalCards().getType().equalsIgnoreCase(zoneString)))
+					|| pe.getPersonalCards() == null) {
 				incrementDieValueFromPermanentEffect += pe.getIncreaseDieValue();
-				System.out.println("QUESTO E' incrementDieValueFromPermanentEffect" + Integer.toString(incrementDieValueFromPermanentEffect));
-				if (pe.getSale()!= null && pe.getAlternativeSale() == null) {
+				System.out.println("QUESTO E' incrementDieValueFromPermanentEffect"
+						+ Integer.toString(incrementDieValueFromPermanentEffect));
+				if (pe.getSale() != null && pe.getAlternativeSale() == null) {
 					System.out.println("ALTERNATIVE SALE E' NULL");
 					setOfSales = pe.getSale();
-					System.out.println("ECCO IL NUOVO SETOFSALES--> "+setOfSales);
+					System.out.println("ECCO IL NUOVO SETOFSALES--> " + setOfSales);
 				}
 			}
 		}

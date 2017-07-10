@@ -2,6 +2,11 @@ package it.polimi.ingsw.GC_24.model.values;
 
 import java.io.Serializable;
 
+/**
+ * this class gathers the resources and the points in one single set. It is
+ * useful when initializing the values of a player and to set the costs and the
+ * value effects to be removed from or given to the player respectively
+ */
 public class SetOfValues implements Serializable {
 
 	/**
@@ -83,10 +88,10 @@ public class SetOfValues implements Serializable {
 
 	/** Returns true if my SetOfValues contains the cost Set */
 	public boolean doIHaveThisSet(SetOfValues cost) {
-		System.out.println("cost to check: "+cost);
+		System.out.println("cost to check: " + cost);
 		SetOfValues tempSet = new SetOfValues(this);
-		System.out.println("my resources "+this);
-		System.out.println("difference "+cost.subTwoSetsOfValues(tempSet));
+		System.out.println("my resources " + this);
+		System.out.println("difference " + cost.subTwoSetsOfValues(tempSet));
 		return (cost.subTwoSetsOfValues(tempSet)).isAcceptable();
 		// this-cost >=0;
 	}
@@ -121,7 +126,10 @@ public class SetOfValues implements Serializable {
 	public int numberResources() {
 		return this.coins.quantity + this.servants.quantity + this.stones.quantity + this.woods.quantity;
 	}
-
+	
+	/**
+	 * @return true if all the values are 0, false otherwise
+	 */
 	public boolean isEmpty() {
 		return (woods.getQuantity() == 0 && stones.getQuantity() == 0 && coins.getQuantity() == 0
 				&& servants.getQuantity() == 0 && faithPoints.getQuantity() == 0 && militaryPoints.getQuantity() == 0

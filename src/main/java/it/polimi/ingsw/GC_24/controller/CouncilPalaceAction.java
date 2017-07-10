@@ -41,7 +41,6 @@ public class CouncilPalaceAction extends Action {
 	private void updateTurn() {
 		CouncilPalace palace = (CouncilPalace) this.zone; 		
 		palace.updateTurn(this.player);
-		//TODO: gestione del Turno nella logica di gioco
 	}
 
 	private void takeEffectFromCouncil() {
