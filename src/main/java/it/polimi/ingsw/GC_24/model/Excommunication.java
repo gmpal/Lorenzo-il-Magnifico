@@ -6,6 +6,14 @@ import it.polimi.ingsw.GC_24.model.effects.Effect;
 import it.polimi.ingsw.GC_24.model.effects.permanent.PermanentEffect;
 import it.polimi.ingsw.GC_24.model.values.FaithPoint;
 
+/**
+ * This class represent an excommunication card object. Every excommunication
+ * card has a permanentEffect or a generic effect (Effect), a round, a
+ * requirements and an url useful for GUI.
+ * 
+ * @author Carlo
+ *
+ */
 public class Excommunication implements Serializable {
 
 	/**

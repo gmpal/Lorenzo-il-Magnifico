@@ -13,6 +13,10 @@ import it.polimi.ingsw.GC_24.model.effects.permanent.SubSetOfValues;
 import it.polimi.ingsw.GC_24.model.places.TowerPlace;
 import it.polimi.ingsw.GC_24.model.values.*;
 
+/**
+ * This class create an action when the player wants to place a familiar in a
+ * tower. It is created by ActionFactory class.
+ */
 public class ActionTower extends Action {
 	private List<ImmediateEffect> immediateEffects = new ArrayList<>();
 	private SetOfValues temporaryCardCost = new SetOfValues();

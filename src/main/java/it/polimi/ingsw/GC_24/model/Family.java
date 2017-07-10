@@ -2,6 +2,11 @@ package it.polimi.ingsw.GC_24.model;
 
 import it.polimi.ingsw.GC_24.model.dice.SetOfDice;
 
+/**
+ * This class represent the set of family member of the player. Every family is
+ * composed by four familiar, one of them is neutral. The familiar not neutral
+ * has a corresponding value of die.
+ */
 public class Family implements java.io.Serializable {
 
 	/**
@@ -68,21 +73,21 @@ public class Family implements java.io.Serializable {
 	}
 
 	/**
-	 * @return true if all the family members in the family are available,
-	 *         false otherwise.
+	 * @return true if all the family members in the family are available, false
+	 *         otherwise.
 	 */
 	public boolean isFull() {
 		return member1.isAvailable() && member2.isAvailable() && member3.isAvailable() && member4.isAvailable();
 	}
-	
+
 	/**
-	 * @return true if all the family members in the family are not available,
-	 *         false otherwise.
+	 * @return true if all the family members in the family are not available, false
+	 *         otherwise.
 	 */
 	public boolean isEmpty() {
 		return !member1.isAvailable() && !member2.isAvailable() && !member3.isAvailable() && !member4.isAvailable();
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

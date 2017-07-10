@@ -13,6 +13,8 @@ import it.polimi.ingsw.GC_24.model.board.Board;
 import it.polimi.ingsw.GC_24.model.places.*;
 import it.polimi.ingsw.GC_24.model.values.SetOfValues;;
 
+/**This class represent the complete deck of the game. It contains all the development cards and the leader cards.
+ * They are taken from file configuration.*/
 public class Deck implements Serializable {
 
 	/**
