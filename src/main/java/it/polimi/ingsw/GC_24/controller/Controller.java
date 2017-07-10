@@ -838,7 +838,7 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 		IncreaseDieValueCard pe = PermanentEffectWithAlternativeSale(
 				(IncreaseDieValueCard) currentPlayer.getPermanentEffect("increaseDieValueCard"));
 
-		if (pe != null && pe.getPersonalCards().getType().equals(tempZone)) {
+		if (pe != null && pe.getPersonalCards().getType().equalsIgnoreCase(tempZone)) {
 
 			askForSale(pe);
 			synchronized (waitingForSalesChoice) {
@@ -853,7 +853,6 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 					}
 				}
 			}
-
 		}
 
 		if (tempZone.equalsIgnoreCase("ventures")) {
@@ -862,10 +861,12 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 			TowerPlace placeRequested = (TowerPlace) this.game.getBoard().getZoneFromString(tempZone)
 					.getPlaceFromStringOrFirstIfZero(tempFloor);
 			if (placeRequested.isAvailable()) {
+
 				tempCost = new SetOfValues(placeRequested.getCorrespondingCard().getCost());
 				System.out.println("SE place è available TEMPCOST prima di inizare l'azione"+tempCost);
 			}
 			else System.out.println("TEMP COST NON SETTATo"+tempCost);
+
 		}
 		System.out.println("Controller --> Inviando la richiesta di creazione azione in fabbrica...");
 		this.action = actionFactory.makeAction(game, tempFamiliar, tempZone, tempFloor, tempServants, tempCost,
@@ -1222,10 +1223,11 @@ public class Controller extends MyObservable implements MyObserver, Runnable {
 				System.out.println("Controller --> SCELTA DELL UTENTE: " + tempCost);
 
 			} else if (cost1.isEmpty() && cost2 != null) {
+				System.out.println("Controller --> c'è solo il costo 2, costo 1 è "+cost1+"costo2 è "+cost2);
 				tempCost = cost2;
 			}
 		}
-		System.out.println("Controller --> Fine gestione carta Venture ");
+		System.out.println("Controller --> Fine gestione carta Venture : tempcost definitivo" +tempCost);
 	}
 
 	// getters and setters
