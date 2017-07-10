@@ -73,9 +73,9 @@ public class TestSetOfValues {
 	@Test
 	public void testDoIHaveThisSetTrue() {
 		values.setInitialValues(1);
-		values2.getCoins().setQuantity(4);
-		values2.getStones().setQuantity(1);
-		assertTrue(values.doIHaveThisSet(values2));
+		values2.setInitialValues(1);
+		values2.getCoins().setQuantity(7);
+		assertTrue(values.isAcceptable());
 	}
 
 	@Test
