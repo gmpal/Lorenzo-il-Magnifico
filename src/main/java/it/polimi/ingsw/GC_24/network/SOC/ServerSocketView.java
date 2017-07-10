@@ -50,9 +50,7 @@ public class ServerSocketView extends MyObservable implements Runnable, MyObserv
 			}
 		} catch (ClassNotFoundException ioe) {
 			ioe.printStackTrace();
-		} catch (EOFException eof) {
-			System.out.println("SERVERIn: end of file reached");
-		} catch (SocketException e) {
+		} catch (IOException e) {
 			System.out.println("Player disconnected");
 			
 			stop = true;
@@ -64,9 +62,6 @@ public class ServerSocketView extends MyObservable implements Runnable, MyObserv
 
 				e1.printStackTrace();
 			}
-
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
 
 	}
